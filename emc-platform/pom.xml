@@ -20,11 +20,6 @@
     <dependencies>
         <dependency>
             <groupId>com.huak</groupId>
-            <artifactId>emc-common</artifactId>
-            <version>${emc.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.huak</groupId>
             <artifactId>emc-service-sysmagent-api</artifactId>
             <version>${emc.service.sysmagent.api.version}</version>
         </dependency>
