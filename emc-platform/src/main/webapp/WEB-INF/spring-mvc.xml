@@ -40,7 +40,7 @@
             <mvc:exclude-mapping path="/generateVc"/>
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/script/**"/>
-            <bean class="com.huak.interceptor.SessionInterceptor"></bean>
+            <bean class="com.huak.interce.SessionInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
