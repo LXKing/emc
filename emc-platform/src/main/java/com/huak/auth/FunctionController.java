@@ -1,3 +1,4 @@
+/*
 package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Map;
 
+*/
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -24,7 +26,8 @@ import java.util.Map;
  * Date: 2016/9/29<BR>
  * Description:  功能控制器   <BR>
  * Function List:  <BR>
- */
+ *//*
+
 @Controller
 @RequestMapping("/function")
 public class FunctionController {
@@ -44,11 +47,13 @@ public class FunctionController {
         return "/auth/function/function_list";
     }
 
-    /**
+    */
+/**
      * 初始化
      * @param paramsMap
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/list",method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String,String> paramsMap){
@@ -127,10 +132,12 @@ public class FunctionController {
         return jo.toJSONString();
     }
 
-    /**
+    */
+/**
      * @param ids
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
     public String deleteRoles(String ids){
@@ -168,3 +175,4 @@ public class FunctionController {
         return jo.toJSONString();
     }
 }
+*/

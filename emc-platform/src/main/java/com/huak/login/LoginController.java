@@ -1,3 +1,4 @@
+/*
 package com.huak.login;
 
 import com.alibaba.fastjson.JSONArray;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -30,7 +32,8 @@ import java.util.Map;
  * Date: 2016/8/23<BR>
  * Description:     <BR>
  * Function List:  <BR>
- */
+ *//*
+
 @Controller
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -144,3 +147,4 @@ public class LoginController {
         }
     }
 }
+*/

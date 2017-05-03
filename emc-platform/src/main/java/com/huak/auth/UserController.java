@@ -1,3 +1,4 @@
+/*
 package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -31,8 +33,11 @@ import java.util.Map;
  * Date: 2016/8/24<BR>
  * Description:   用户  <BR>
  * Function List:  <BR>
- */
-@Controller
+ *//*
+
+@Controller*/
+/**//*
+
 @RequestMapping("/user")
 public class UserController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -183,13 +188,15 @@ public class UserController {
         return jo.toJSONString();
     }
 
-    /**
+    */
+/**
      * 为什么用POST请求
      * 因为DELETE请求接收不到数组 fuck
      *
      * @param ids
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String deleteUsers(String ids) {
@@ -208,10 +215,12 @@ public class UserController {
         return jo.toJSONString();
     }
 
-    /**
+    */
+/**
      * @param id
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(@PathVariable("id") Long id) {
@@ -352,3 +361,4 @@ public class UserController {
     }
 
 }
+*/

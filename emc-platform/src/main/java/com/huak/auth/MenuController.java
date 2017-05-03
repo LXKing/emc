@@ -1,3 +1,4 @@
+/*
 package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Map;
 
+*/
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -23,7 +25,8 @@ import java.util.Map;
  * Date: 2016/8/31<BR>
  * Description:  系统菜单   <BR>
  * Function List:  <BR>
- */
+ *//*
+
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
@@ -41,11 +44,13 @@ public class MenuController {
         return "/auth/menu/menu_list";
     }
 
-    /**
+    */
+/**
      * 初始化
      * @param paramsMap
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/list",method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String,String> paramsMap){
@@ -126,10 +131,12 @@ public class MenuController {
         return jo.toJSONString();
     }
 
-    /**
+    */
+/**
      * @param id
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteMenu(@PathVariable("id") Long id){
@@ -166,3 +173,4 @@ public class MenuController {
         return jo.toJSONString();
     }
 }
+*/
