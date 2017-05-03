@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+
+    <!--<mapping path="*/edit*" decorator="/WEB-INF/layouts/default.jsp"/>-->
+
+    <mapping path="/main" decorator="/WEB-INF/layouts/main.jsp"/>
+
+    <mapping path="/static/*" exclue="true" />
+
+</sitemesh>

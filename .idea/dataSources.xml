@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1918691698">
+    <data-source source="LOCAL" name="MySQL - eccp@localhost" uuid="2fc3bd7f-95c0-4f75-b1d0-180a587531a5">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/eccp</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>df9bdf98df99df9edf9fdf9cdf9ddf92</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries>
+        <library>
+          <url>file://D:/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+
