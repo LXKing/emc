@@ -1,6 +1,7 @@
 package com.huak.season.model;
 
 public class Season {
+
     private String id;
 
     private String comid;
