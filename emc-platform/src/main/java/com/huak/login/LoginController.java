@@ -1,8 +1,7 @@
-/*
 package com.huak.login;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-*/
-/**
+/*
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
  * File name:  com.huak.login<BR>
@@ -32,14 +30,14 @@ import java.util.Map;
  * Date: 2016/8/23<BR>
  * Description:     <BR>
  * Function List:  <BR>
- *//*
+ */
 
 @Controller
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Resource
-    private UserService userService;
+/*    @Resource
+    private UserService userService;*/
     @Resource
     private Producer captchaProducer;
 
@@ -63,8 +61,12 @@ public class LoginController {
     public String loginIn(HttpServletRequest request, String login, String pwd, String vc) {
         logger.info("登录后台");
         HttpSession session = request.getSession();
+        Map<String,String> user = new HashMap<>();
+        user.put("1","1");
+        session.setAttribute(com.huak.common.Constants.SESSION_KEY, user);
         JSONObject jo = new JSONObject();
-        try {
+        jo.put("isLogin", true);
+        /*try {
             String kpvc = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
             // 校验验证码
             if (kpvc.equals(vc)) {
@@ -109,7 +111,7 @@ public class LoginController {
             jo.put("isLogin", false);
             jo.put("msg", "登录异常");
             logger.error("登录异常" + e.getMessage());
-        }
+        }*/
 
         return jo.toJSONString();
     }
@@ -147,4 +149,3 @@ public class LoginController {
         }
     }
 }
-*/

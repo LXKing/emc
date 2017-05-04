@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -23,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MainController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping(value = "/index")
-    public String index(HttpServletRequest request) {
+    @RequestMapping(method = RequestMethod.GET)
+    public String index() {
 
         System.out.println("");
         logger.info("");
