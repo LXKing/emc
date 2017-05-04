@@ -27,9 +27,7 @@
     </context:component-scan>
 
     <!--属性文件-->
-    <context:property-placeholder
-            location="classpath*:application-service.properties,classpath*:application-env.properties"
-            ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath*:application-service.properties,classpath*:application-env.properties" />
 
     <!--aop切面-->
     <aop:aspectj-autoproxy proxy-target-class="true"/>

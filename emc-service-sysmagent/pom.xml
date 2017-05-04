@@ -21,8 +21,8 @@
     <dependencies>
         <dependency>
             <groupId>com.huak</groupId>
-            <artifactId>emc-dao</artifactId>
-            <version>${emc.dao.version}</version>
+            <artifactId>emc-service-sysmagent-api</artifactId>
+            <version>${emc.service.sysmagent.api.version}</version>
         </dependency>
     </dependencies>
 

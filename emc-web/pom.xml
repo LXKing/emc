@@ -18,14 +18,6 @@
         <maven.compiler.target>${java.target.version}</maven.compiler.target>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.huak</groupId>
-            <artifactId>emc-service-sysmagent</artifactId>
-            <version>${emc.service.sysmagent.version}</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <finalName>emc-web</finalName>
         <resources>

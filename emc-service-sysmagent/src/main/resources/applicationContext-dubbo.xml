@@ -15,8 +15,6 @@
     <dubbo:protocol name="dubbo" port="20880"/>
     <!-- 具体的实现bean -->
     <bean id="seasonService" class="com.huak.season.SeasonServiceImpl"/>
-
-
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.huak.season.SeasonService" ref="seasonService"/>
 </beans>
