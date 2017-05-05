@@ -29,4 +29,9 @@ public class MainController {
         logger.info("");
         return "index";
     }
+
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String home(){
+        return "home";
+    }
 }
