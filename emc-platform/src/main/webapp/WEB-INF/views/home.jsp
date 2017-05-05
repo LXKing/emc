@@ -1,18 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="include.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
 
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--360浏览器优先以webkit内核解析-->
-
-
     <title>H+ 后台主题UI框架 - 主页示例</title>
 
-    <jsp:include page="include.jsp"></jsp:include>
+    <jsp:include page="head.jsp"></jsp:include>
     
 
 </head>
@@ -34,7 +28,7 @@
             <small>移动设备访问请扫描以下二维码：</small>
             <br>
             <br>
-            <img src="img/qr_code.png" width="100%" style="max-width:264px;">
+            <img src="${platform}/static/Hplus/img/qr_code.png" width="100%" style="max-width:264px;">
             <br>
         </div>
         <div class="col-sm-5">
@@ -501,7 +495,7 @@
                             <br>如果图片太小，可以点击图片放大。
                         </div>
                         <p id="pay-qrcode">
-                            <a href="javascript:;"><img src="img/pay.png" width="100%" alt="请使用手机支付宝或者微信扫码支付">
+                            <a href="javascript:;"><img src="${platform}/static/Hplus/img/pay.png" width="100%" alt="请使用手机支付宝或者微信扫码支付">
                             </a>
                         </p>
 
@@ -606,7 +600,7 @@
         </div>
     </script>
 
-    <!-- 全局js -->
+<%--    <!-- 全局js -->
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/bootstrap.min.js?v=3.3.6"></script>
     <script src="js/plugins/layer/layer.min.js"></script>
@@ -615,7 +609,7 @@
     <script src="js/content.js"></script>
 
     <!-- 欢迎信息 -->
-    <script src="js/welcome.js"></script>
+    <script src="js/welcome.js"></script>--%>
 </body>
 
 </html>
