@@ -15,10 +15,15 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/task
 	   http://www.springframework.org/schema/task/spring-task-3.0.xsd ">
-    <!-- 自动扫描且只扫描@Controller -->
+    <!-- 自动扫描 -->
     <context:component-scan base-package="com.huak" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+    <context:component-scan base-package="com.huak.init" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>
+
+    <context:property-placeholder location="classpath:application-env.properties" ignore-unresolvable="true" />
 
     <mvc:resources mapping="/static/**" location="/static/"/>
     <mvc:resources mapping="/script/**" location="/script/"/>

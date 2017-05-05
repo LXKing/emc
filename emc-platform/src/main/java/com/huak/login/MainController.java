@@ -34,4 +34,9 @@ public class MainController {
     public String home(){
         return "home";
     }
+
+    @RequestMapping(value = "/ztree", method = RequestMethod.GET)
+    public String ztree(){
+        return "org/list";
+    }
 }

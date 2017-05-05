@@ -1,30 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>能源管控中心后台管理系统 - 登录</title>
-    <link href="${ctx}/static/Hplus/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${ctx}/static/Hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${ctx}/static/Hplus/css/animate.css" rel="stylesheet">
-    <link href="${ctx}/static/Hplus/css/style.css" rel="stylesheet">
-    <link href="${ctx}/static/Hplus/css/login.css" rel="stylesheet">
+    <link href="${platform}/static/Hplus/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${platform}/static/Hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="${platform}/static/Hplus/css/animate.css" rel="stylesheet">
+    <link href="${platform}/static/Hplus/css/style.css" rel="stylesheet">
+    <link href="${platform}/static/Hplus/css/login.css" rel="stylesheet">
 
-    <script src="${ctx}/static/Hplus/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${ctx}/static/Hplus/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="${ctx}/static/Hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="${ctx}/static/Hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="${ctx}/static/Hplus/js/plugins/layer/layer.min.js"></script>
+    <script src="${platform}/static/Hplus/js/jquery.min.js?v=2.1.4"></script>
+    <script src="${platform}/static/Hplus/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="${platform}/static/Hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="${platform}/static/Hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="${platform}/static/Hplus/js/plugins/layer/layer.min.js"></script>
     <!-- jQuery Validation plugin javascript-->
-    <script src="${ctx}/static/Hplus/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="${ctx}/static/Hplus/js/plugins/validate/messages_zh.min.js"></script>
-    <script src="${ctx}/script/login/huak.login.js"></script>
+    <script src="${platform}/static/Hplus/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="${platform}/static/Hplus/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="${platform}/script/login/huak.login.js"></script>
     <script>
-        var ctx = '${ctx}';
+        var ctx = '${platform}';
     </script>
 
 </head>
@@ -61,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <input type="text" maxlength="4" name="vc" style="width: 63%;margin-top: 0px;color: #333;" class="form-control col-xs-8" placeholder="点击图片切换验证码" />
-                        <img class="ver-code-img" src="${ctx}/generateVc" />
+                        <img class="ver-code-img" src="${platform}/generateVc" />
                 </div>
                 <a href="">忘记密码了？</a>
                 <button type="submit" id="login" class="btn btn-success btn-block">登录</button>
