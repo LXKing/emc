@@ -26,4 +26,5 @@ public interface SeasonService {
     public int insert(Season season);
 
     public PageResult<Season> queryByPage(String name, Page page);
+
 }
