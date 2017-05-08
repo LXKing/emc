@@ -39,4 +39,20 @@ public class MainController {
     public String ztree(){
         return "org/list";
     }
+
+    /*
+     员工菜单
+     */
+    @RequestMapping(value = "/employe", method = RequestMethod.GET)
+    public String employe(){
+        return "org/employee/list";
+    }
+
+    /*
+    菜单管理
+    */
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    public String menu(){
+        return "org/menu/list";
+    }
 }
