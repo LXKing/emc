@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huak.org.dao.OrgDao">
-  <resultMap id="BaseResultMap" type="com.huak.org.model.Org">
+<mapper namespace="com.huak.org.dao.UnitDao">
+  <resultMap id="BaseResultMap" type="com.huak.org.model.Unit">
     <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COUNTY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -14,35 +14,34 @@
       <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="GROUP_TYPE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     ID, PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, PUBLIC_AREA, 
-    DWELL_AREA, GROUP_TYPE_ID
+    DWELL_AREA
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_emc_org
-    where ID = #{id,jdbcType=VARCHAR}
+    from t_emc_org_unit
+    where ID = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org
-    where ID = #{id,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_emc_org_unit
+    where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org (ID, PROVINCE_ID, CITY_ID, 
+  <insert id="insert" parameterType="com.huak.org.model.Unit">
+    insert into t_emc_org_unit (ID, PROVINCE_ID, CITY_ID, 
       COUNTY_ID, TOWN_ID, VILLAGE_ID, 
       ADDR, LNG, LAT, PUBLIC_AREA, 
-      DWELL_AREA, GROUP_TYPE_ID)
-    values (#{id,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
+      DWELL_AREA)
+    values (#{id,jdbcType=BIGINT}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
       #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
       #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, 
-      #{dwellArea,jdbcType=DOUBLE}, #{groupTypeId,jdbcType=BIGINT})
+      #{dwellArea,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org
+  <insert id="insertSelective" parameterType="com.huak.org.model.Unit">
+    insert into t_emc_org_unit
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -77,13 +76,10 @@
       <if test="dwellArea != null">
         DWELL_AREA,
       </if>
-      <if test="groupTypeId != null">
-        GROUP_TYPE_ID,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="provinceId != null">
         #{provinceId,jdbcType=VARCHAR},
@@ -115,13 +111,10 @@
       <if test="dwellArea != null">
         #{dwellArea,jdbcType=DOUBLE},
       </if>
-      <if test="groupTypeId != null">
-        #{groupTypeId,jdbcType=BIGINT},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Org">
-    update t_emc_org
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Unit">
+    update t_emc_org_unit
     <set>
       <if test="provinceId != null">
         PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
@@ -153,14 +146,11 @@
       <if test="dwellArea != null">
         DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
       </if>
-      <if test="groupTypeId != null">
-        GROUP_TYPE_ID = #{groupTypeId,jdbcType=BIGINT},
-      </if>
     </set>
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Org">
-    update t_emc_org
+  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Unit">
+    update t_emc_org_unit
     set PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
       CITY_ID = #{cityId,jdbcType=VARCHAR},
       COUNTY_ID = #{countyId,jdbcType=VARCHAR},
@@ -170,13 +160,12 @@
       LNG = #{lng,jdbcType=DOUBLE},
       LAT = #{lat,jdbcType=DOUBLE},
       PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
-      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
-      GROUP_TYPE_ID = #{groupTypeId,jdbcType=BIGINT}
-    where ID = #{id,jdbcType=VARCHAR}
+      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
-  <resultMap id="BaseResultMap" type="com.huak.org.model.Org">
+  <resultMap id="BaseResultMap" type="com.huak.org.model.Unit">
     <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COUNTY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -187,35 +176,34 @@
       <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="GROUP_TYPE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     ID, PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, PUBLIC_AREA, 
-    DWELL_AREA, GROUP_TYPE_ID
+    DWELL_AREA
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_emc_org
-    where ID = #{id,jdbcType=VARCHAR}
+    from t_emc_org_unit
+    where ID = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org
-    where ID = #{id,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_emc_org_unit
+    where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org (ID, PROVINCE_ID, CITY_ID, 
+  <insert id="insert" parameterType="com.huak.org.model.Unit">
+    insert into t_emc_org_unit (ID, PROVINCE_ID, CITY_ID, 
       COUNTY_ID, TOWN_ID, VILLAGE_ID, 
       ADDR, LNG, LAT, PUBLIC_AREA, 
-      DWELL_AREA, GROUP_TYPE_ID)
-    values (#{id,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
+      DWELL_AREA)
+    values (#{id,jdbcType=BIGINT}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
       #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
       #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, 
-      #{dwellArea,jdbcType=DOUBLE}, #{groupTypeId,jdbcType=BIGINT})
+      #{dwellArea,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org
+  <insert id="insertSelective" parameterType="com.huak.org.model.Unit">
+    insert into t_emc_org_unit
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -250,13 +238,10 @@
       <if test="dwellArea != null">
         DWELL_AREA,
       </if>
-      <if test="groupTypeId != null">
-        GROUP_TYPE_ID,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="provinceId != null">
         #{provinceId,jdbcType=VARCHAR},
@@ -288,13 +273,10 @@
       <if test="dwellArea != null">
         #{dwellArea,jdbcType=DOUBLE},
       </if>
-      <if test="groupTypeId != null">
-        #{groupTypeId,jdbcType=BIGINT},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Org">
-    update t_emc_org
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Unit">
+    update t_emc_org_unit
     <set>
       <if test="provinceId != null">
         PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
@@ -326,14 +308,11 @@
       <if test="dwellArea != null">
         DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
       </if>
-      <if test="groupTypeId != null">
-        GROUP_TYPE_ID = #{groupTypeId,jdbcType=BIGINT},
-      </if>
     </set>
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Org">
-    update t_emc_org
+  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Unit">
+    update t_emc_org_unit
     set PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
       CITY_ID = #{cityId,jdbcType=VARCHAR},
       COUNTY_ID = #{countyId,jdbcType=VARCHAR},
@@ -343,8 +322,7 @@
       LNG = #{lng,jdbcType=DOUBLE},
       LAT = #{lat,jdbcType=DOUBLE},
       PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
-      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
-      GROUP_TYPE_ID = #{groupTypeId,jdbcType=BIGINT}
-    where ID = #{id,jdbcType=VARCHAR}
+      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

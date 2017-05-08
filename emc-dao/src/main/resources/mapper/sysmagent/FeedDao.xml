@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huak.dao.FeedDao">
-  <resultMap id="BaseResultMap" type="com.huak.model.Feed">
+<mapper namespace="com.huak.org.dao.FeedDao">
+  <resultMap id="BaseResultMap" type="com.huak.org.model.Feed">
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="FEED_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -37,7 +37,7 @@
     delete from t_emc_org_feed
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huak.model.Feed">
+  <insert id="insert" parameterType="com.huak.org.model.Feed">
     insert into t_emc_org_feed (ID, FEED_TYPE, HEAT_TYPE, 
       INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, 
       STEAMTURBINE_NUM, PROVINCE_ID, CITY_ID, 
@@ -51,7 +51,7 @@
       #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, 
       #{dwellArea,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.huak.model.Feed">
+  <insert id="insertSelective" parameterType="com.huak.org.model.Feed">
     insert into t_emc_org_feed
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -160,7 +160,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huak.model.Feed">
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Feed">
     update t_emc_org_feed
     <set>
       <if test="feedType != null">
@@ -214,7 +214,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.model.Feed">
+  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Feed">
     update t_emc_org_feed
     set FEED_TYPE = #{feedType,jdbcType=TINYINT},
       HEAT_TYPE = #{heatType,jdbcType=TINYINT},
