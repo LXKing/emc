@@ -5,7 +5,6 @@
 
 <head>
     <jsp:include page="head.jsp"></jsp:include>
-
     <script type="application/javascript">
         $(function() {
             //下拉框js
@@ -60,7 +59,7 @@
             <a class="J_menuItem" href="${platform}/main/ztree" data-index="0">组织机构</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/menu.html" data-index="0">菜单管理</a>
+            <a class="J_menuItem" href="${platform}/main/menu" data-index="0">菜单管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/juese.html">角色管理</a>
@@ -69,7 +68,7 @@
             <a class="J_menuItem" href="html/yonghu.html">用户管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/employes.html">员工管理</a>
+            <a class="J_menuItem" href="${platform}/main/employe">员工管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/gongneng.html">功能管理</a>

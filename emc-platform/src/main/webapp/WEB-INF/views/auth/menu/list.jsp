@@ -1,30 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<jsp:include page="../../include.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
 
 <head>
-
-    <meta charset="utf-8">
+    <jsp:include page="../../head.jsp"></jsp:include>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
     <title>H+ 后台主题UI框架 - 个人资料</title>
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
-    <script src="../js/jquery.min.js?v=2.1.4"></script>
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="../css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="../css/animate.css" rel="stylesheet">
-    <link href="../css/style.css?v=4.1.0" rel="stylesheet">
-    <link href="../css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/ztree/css/metroStyle/metroStyle.css" type="text/css">
-    <script type="text/javascript" src="../css/ztree/js/jquery.ztree.core.js"></script>
-    <script type="text/javascript" src="../css/ztree/js/jquery.ztree.excheck.js"></script>
-    <script type="text/javascript" src="../css/ztree/js/jquery.ztree.exedit.js"></script>
-    <script src="../js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="../js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="../js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-    <script src="../js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
     <SCRIPT type="text/javascript">
         <!--
         var setting = {
@@ -102,16 +89,16 @@
         $(function(){
 
             $('#mytab').bootstrapTable({
-                 data:[{
-                  menu_name:"组织机构管理",
-                  url: '/eccp/eccp-platform/org/list',
-                  frontorback: '前台',
-                  id:"1"
+                data:[{
+                    menu_name:"组织机构管理",
+                    url: '/eccp/eccp-platform/org/list',
+                    frontorback: '前台',
+                    id:"1"
                 }, {
-                     menu_name:"菜单管理",
-                     url: '/eccp/eccp-platform/menu/list',
-                     frontorback: '前台',
-                     id:"2"
+                    menu_name:"菜单管理",
+                    url: '/eccp/eccp-platform/menu/list',
+                    frontorback: '前台',
+                    id:"2"
                 }],
                 url:"",
                 dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
@@ -181,8 +168,8 @@
                         html += "<p>" + key + ":" + val +  "</p>"
                     });
                     return html;
-                 }
-        });
+                }
+            });
 
             function tableHeight() {
                 return $(window).height() - 50;
@@ -248,13 +235,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                </form>
+                            </form>
                         </div>
 
 
-                     </div>
-                 </div>
-             </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

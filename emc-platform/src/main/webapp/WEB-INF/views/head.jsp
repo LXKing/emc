@@ -48,6 +48,9 @@
 <script src="${platform}/static/Hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script src="${platform}/static/Hplus/js/plugins/layer/extend/layer.ext.js"></script>
 <!-- Data picker -->
+<script src="${platform}/static/Hplus/js/plugins/layer/laydate/laydate.js"></script>
+<script  src="${platform}/static/Hplus/js/plugins/daterangepicker/moment.js"> </script>
+<script  src="${platform}/static/Hplus/js/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="${platform}/static/Hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 <!-- Bootstrap table -->
 <script src="${platform}/static/Hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
