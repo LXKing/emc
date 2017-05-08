@@ -1,7 +1,6 @@
 package com.huak.auth.dao;
 
 import com.huak.auth.model.Role;
-import com.huak.model.Role;
 
 public interface RoleDao {
     int deleteByPrimaryKey(String id);
