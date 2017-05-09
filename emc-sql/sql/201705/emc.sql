@@ -113,8 +113,7 @@ drop table if exists t_emc_org;
 create table t_emc_org
 (
    ID                   varchar(32) not null comment '机构主键',
-   PROVINCE_ID          varchar(12) not null comment '省主键
-            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
    CITY_ID              varchar(12) not null comment '市主键',
    COUNTY_ID            varchar(12) not null comment '县主键',
    TOWN_ID              varchar(12) comment '乡主键',
@@ -124,10 +123,7 @@ create table t_emc_org
    LAT                  double(10,6) comment '纬度',
    PUBLIC_AREA          double not null default 0 comment '公建面积',
    DWELL_AREA           double not null default 0 comment '居民面积',
-   GROUP_TYPE_ID        bigint not null comment '集团性质
-            来源于字典T_ECC_SYS_DICTIONARY
-            集团内
-            集团外',
+   GROUP_TYPE_ID        bigint not null comment '集团性质 来源于字典T_ECC_SYS_DICTIONARY 集团内 集团外',
    primary key (ID)
 );
 
@@ -142,21 +138,13 @@ drop table if exists t_emc_org_feed;
 create table t_emc_org_feed
 (
    ID                   varchar(32) not null comment '机构主键',
-   FEED_TYPE            tinyint not null comment '热源性质
-            来源字典表
-            1:热电 2:区域锅炉房 3:核电 4:工业余热
-            ',
-   HEAT_TYPE            tinyint not null comment '供热类型
-            来源字典表
-            区域供热
-            集中供热
-            尖峰供热',
+   FEED_TYPE            tinyint not null comment '热源性质 来源字典表 1:热电 2:区域锅炉房 3:核电 4:工业余热 ',
+   HEAT_TYPE            tinyint not null comment '供热类型 来源字典表 区域供热 集中供热 尖峰供热',
    INSTALL_CAPACITY     double not null comment '装机容量(MW)',
    HEAT_CAPACITY        double not null default 0 comment '供热能力(㎡)',
    BOILER_NUM           int not null default 0 comment '锅炉数量(自动计算)',
    STEAMTURBINE_NUM     int not null default 0 comment '汽机数量(自动计算)',
-   PROVINCE_ID          varchar(12) not null comment '省主键
-            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
    CITY_ID              varchar(12) not null comment '市主键',
    COUNTY_ID            varchar(12) not null comment '县主键',
    TOWN_ID              varchar(12) comment '乡主键',
@@ -180,13 +168,8 @@ drop table if exists t_emc_org_node;
 create table t_emc_org_node
 (
    ID                   varchar(32) not null comment '机构主键',
-   MANAGE_TYPE_ID       varchar(32) not null comment '管理类型
-            来源于字典表
-            0-统管
-            1-自管
-            2-代管',
-   PROVINCE_ID          varchar(12) not null comment '省主键
-            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   MANAGE_TYPE_ID       varchar(32) not null comment '管理类型 来源于字典表 0-统管 1-自管 2-代管',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
    CITY_ID              varchar(12) not null comment '市主键',
    COUNTY_ID            varchar(12) not null comment '县主键',
    TOWN_ID              varchar(12) comment '乡主键',
@@ -225,8 +208,7 @@ drop table if exists t_emc_org_ban;
 create table t_emc_org_ban
 (
    ORG_ID               varchar(32) not null comment '机构主键',
-   PROVINCE_ID          varchar(12) not null comment '省主键
-            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
    CITY_ID              varchar(12) not null comment '市主键',
    COUNTY_ID            varchar(12) not null comment '县主键',
    TOWN_ID              varchar(12) comment '乡主键',
@@ -250,8 +232,7 @@ drop table if exists t_emc_org_unit;
 create table t_emc_org_unit
 (
    ID                   bigint not null comment '机构主键',
-   PROVINCE_ID          varchar(12) not null comment '省主键
-            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
    CITY_ID              varchar(12) not null comment '市主键',
    COUNTY_ID            varchar(12) not null comment '县主键',
    TOWN_ID              varchar(12) comment '乡主键',
@@ -275,9 +256,7 @@ drop table if exists t_emc_org_secondne;
 create table t_emc_org_secondne
 (
    ID                   varchar(32) not null comment '机构主键',
-   NET_TYPE_ID          varchar(32) not null comment '管线类型
-            来源字典表
-            干线、支线、连通线、户线',
+   NET_TYPE_ID          varchar(32) not null comment '管线类型 来源字典表 干线、支线、连通线、户线',
    LENGTH               double not null default 0 comment '管线长度(管段长度生成)',
    CELL_NUM             int not null default 0 comment '小室数量',
    PART_NUM             int not null default 0 comment '管段数量',
@@ -296,9 +275,7 @@ drop table if exists t_emc_org_oncenet;
 create table t_emc_org_oncenet
 (
    ID                   varchar(32) not null comment '机构主键',
-   NET_TYPE_ID          varchar(32) not null comment '管线类型
-            来源字典表
-            干线、支线、连通线、户线',
+   NET_TYPE_ID          varchar(32) not null comment '管线类型 来源字典表  干线、支线、连通线、户线',
    LENGTH               double not null default 0 comment '管线长度(管段长度生成)',
    CELL_NUM             int not null default 0 comment '小室数量',
    PART_NUM             int not null default 0 comment '管段数量',
