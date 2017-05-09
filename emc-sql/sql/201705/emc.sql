@@ -102,3 +102,209 @@ create table t_emc_auth_menu_func_rel
   MENU_ID              varbinary(64) not null comment '菜单id'
 );
 alter table t_emc_auth_menu_func_rel comment '菜单功能关系表';
+
+
+/*组织机构   功能2017年5月9日 12:59:12*/
+drop table if exists t_emc_org;
+
+/*==============================================================*/
+/* Table: t_emc_org                                             */
+/*==============================================================*/
+create table t_emc_org
+(
+   ID                   varchar(32) not null comment '机构主键',
+   PROVINCE_ID          varchar(12) not null comment '省主键
+            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(64) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   PUBLIC_AREA          double not null default 0 comment '公建面积',
+   DWELL_AREA           double not null default 0 comment '居民面积',
+   GROUP_TYPE_ID        bigint not null comment '集团性质
+            来源于字典T_ECC_SYS_DICTIONARY
+            集团内
+            集团外',
+   primary key (ID)
+);
+
+alter table t_emc_org comment '组织机构表';
+
+
+drop table if exists t_emc_org_feed;
+
+/*==============================================================*/
+/* Table: t_emc_org_feed                                        */
+/*==============================================================*/
+create table t_emc_org_feed
+(
+   ID                   varchar(32) not null comment '机构主键',
+   FEED_TYPE            tinyint not null comment '热源性质
+            来源字典表
+            1:热电 2:区域锅炉房 3:核电 4:工业余热
+            ',
+   HEAT_TYPE            tinyint not null comment '供热类型
+            来源字典表
+            区域供热
+            集中供热
+            尖峰供热',
+   INSTALL_CAPACITY     double not null comment '装机容量(MW)',
+   HEAT_CAPACITY        double not null default 0 comment '供热能力(㎡)',
+   BOILER_NUM           int not null default 0 comment '锅炉数量(自动计算)',
+   STEAMTURBINE_NUM     int not null default 0 comment '汽机数量(自动计算)',
+   PROVINCE_ID          varchar(12) not null comment '省主键
+            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(64) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   PUBLIC_AREA          double not null default 0 comment '公建面积',
+   DWELL_AREA           double not null default 0 comment '居民面积',
+   primary key (ID)
+);
+
+alter table t_emc_org_feed comment '热源基本信息表';
+
+
+drop table if exists t_emc_org_node;
+
+/*==============================================================*/
+/* Table: t_emc_org_node                                        */
+/*==============================================================*/
+create table t_emc_org_node
+(
+   ID                   varchar(32) not null comment '机构主键',
+   MANAGE_TYPE_ID       varchar(32) not null comment '管理类型
+            来源于字典表
+            0-统管
+            1-自管
+            2-代管',
+   PROVINCE_ID          varchar(12) not null comment '省主键
+            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(64) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   PUBLIC_AREA          double not null default 0 comment '公建面积',
+   DWELL_AREA           double not null default 0 comment '居民面积',
+   primary key (ID)
+);
+
+alter table t_emc_org_node comment '热力站基本信息表';
+
+
+drop table if exists t_emc_org_room;
+
+/*==============================================================*/
+/* Table: t_emc_org_room                                        */
+/*==============================================================*/
+create table t_emc_org_room
+(
+   ORG_ID               varchar(32) not null comment '机构主键',
+   DWELL_AREA           double not null comment '居民面积',
+   primary key (ORG_ID)
+);
+
+alter table t_emc_org_room comment '房间基本信息表';
+
+
+drop table if exists t_emc_org_ban;
+
+/*==============================================================*/
+/* Table: t_emc_org_ban                                         */
+/*==============================================================*/
+create table t_emc_org_ban
+(
+   ORG_ID               varchar(32) not null comment '机构主键',
+   PROVINCE_ID          varchar(12) not null comment '省主键
+            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(64) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   PUBLIC_AREA          double not null default 0 comment '公建面积',
+   DWELL_AREA           double not null default 0 comment '居民面积',
+   primary key (ORG_ID)
+);
+
+alter table t_emc_org_ban comment '建筑基本信息表';
+
+
+drop table if exists t_emc_org_unit;
+
+/*==============================================================*/
+/* Table: t_emc_org_unit                                        */
+/*==============================================================*/
+create table t_emc_org_unit
+(
+   ID                   bigint not null comment '机构主键',
+   PROVINCE_ID          varchar(12) not null comment '省主键
+            关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(64) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   PUBLIC_AREA          double not null default 0 comment '公建面积',
+   DWELL_AREA           double not null default 0 comment '居民面积',
+   primary key (ID)
+);
+
+alter table t_emc_org_unit comment '单元基本信息表';
+
+
+drop table if exists t_emc_org_secondne;
+
+/*==============================================================*/
+/* Table: t_emc_org_secondne                                    */
+/*==============================================================*/
+create table t_emc_org_secondne
+(
+   ID                   varchar(32) not null comment '机构主键',
+   NET_TYPE_ID          varchar(32) not null comment '管线类型
+            来源字典表
+            干线、支线、连通线、户线',
+   LENGTH               double not null default 0 comment '管线长度(管段长度生成)',
+   CELL_NUM             int not null default 0 comment '小室数量',
+   PART_NUM             int not null default 0 comment '管段数量',
+   MEDIUM               varchar(32) not null comment '输送介质',
+   primary key (ID)
+);
+
+alter table t_emc_org_secondne comment '二次管线基本信息表';
+
+
+drop table if exists t_emc_org_oncenet;
+
+/*==============================================================*/
+/* Table: t_emc_org_oncenet                                     */
+/*==============================================================*/
+create table t_emc_org_oncenet
+(
+   ID                   varchar(32) not null comment '机构主键',
+   NET_TYPE_ID          varchar(32) not null comment '管线类型
+            来源字典表
+            干线、支线、连通线、户线',
+   LENGTH               double not null default 0 comment '管线长度(管段长度生成)',
+   CELL_NUM             int not null default 0 comment '小室数量',
+   PART_NUM             int not null default 0 comment '管段数量',
+   MEDIUM               varchar(32) not null comment '输送介质',
+   primary key (ID)
+);
+
+alter table t_emc_org_oncenet comment '一次管网基本信息表';
+

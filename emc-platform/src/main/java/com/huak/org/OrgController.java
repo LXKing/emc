@@ -1,4 +1,4 @@
-package com.huak.login;
+package com.huak.org;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
+import com.huak.org.model.Administrative;
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Function List:  <BR>
  */
 @Controller
-@RequestMapping("/main")
-public class MainController {
+@RequestMapping("/org")
+public class OrgController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(method = RequestMethod.GET)
@@ -30,6 +32,9 @@ public class MainController {
         return "index";
     }
 
+    @Resource
+    private OrgService orgService;
+
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(){
         return "home";
@@ -37,6 +42,8 @@ public class MainController {
 
     @RequestMapping(value = "/ztree", method = RequestMethod.GET)
     public String ztree(){
+        System.out.print("-------------------controller----------------------------");
+        Administrative as =orgService.selectAdministrator();
         return "org/orgtree/list";
     }
 
@@ -49,14 +56,4 @@ public class MainController {
     public String node(){
         return "org/node/list";
     }
-
-    /*
-     员工菜单
-     */
-    @RequestMapping(value = "/employe", method = RequestMethod.GET)
-    public String employe(){
-        return "org/employee/list";
-    }
-
-
 }

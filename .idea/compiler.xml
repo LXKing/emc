@@ -32,6 +32,7 @@
         <module name="emc-platform" />
         <module name="emc-service-sysmagent" />
         <module name="emc-service-sysmagent-api" />
+        <module name="emc-sql" />
         <module name="emc-web" />
       </profile>
     </annotationProcessing>
