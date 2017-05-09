@@ -285,3 +285,24 @@ create table t_emc_org_oncenet
 
 alter table t_emc_org_oncenet comment '一次管网基本信息表';
 
+/**
+  角色表
+  sunbinbin
+  2017/5/9 14:03
+ */
+drop table if exists t_emc_auth_role;
+/*==============================================================*/
+/* Table: t_emc_role                                            */
+/*==============================================================*/
+create table t_emc_auth_role
+(
+  ID                   varchar(32) not null comment '角色主键',
+  ROLE_NAME            varchar(16) not null comment '角色名称',
+  ROLE_DES             varchar(32) not null comment '角色描述',
+  MEMO                 varchar(255) comment '备注',
+  CREATOR              varchar(64) not null comment '创建者',
+  CREATE_TIME          datetime not null comment '创建时间',
+  primary key (ID)
+);
+
+alter table t_emc_auth_role comment '角色基本信息表';
