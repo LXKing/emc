@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huak.org.dao.FeedDao">
+  <resultMap id="BaseResultMap" type="com.huak.org.model.Feed">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FEED_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="HEAT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="INSTALL_CAPACITY" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="HEAT_CAPACITY" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="BOILER_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="STEAMTURBINE_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="COUNTY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TOWN_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="VILLAGE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ADDR" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LNG" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM, 
+    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, PUBLIC_AREA, 
+    DWELL_AREA
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_emc_org_feed
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_emc_org_feed
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huak.org.model.Feed">
+    insert into t_emc_org_feed (ID, FEED_TYPE, HEAT_TYPE, 
+      INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, 
+      STEAMTURBINE_NUM, PROVINCE_ID, CITY_ID, 
+      COUNTY_ID, TOWN_ID, VILLAGE_ID, 
+      ADDR, LNG, LAT, PUBLIC_AREA, 
+      DWELL_AREA)
+    values (#{id,jdbcType=VARCHAR}, #{feedType,jdbcType=TINYINT}, #{heatType,jdbcType=TINYINT}, 
+      #{installCapacity,jdbcType=DOUBLE}, #{heatCapacity,jdbcType=DOUBLE}, #{boilerNum,jdbcType=INTEGER}, 
+      #{steamturbineNum,jdbcType=INTEGER}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
+      #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
+      #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, 
+      #{dwellArea,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huak.org.model.Feed">
+    insert into t_emc_org_feed
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="feedType != null">
+        FEED_TYPE,
+      </if>
+      <if test="heatType != null">
+        HEAT_TYPE,
+      </if>
+      <if test="installCapacity != null">
+        INSTALL_CAPACITY,
+      </if>
+      <if test="heatCapacity != null">
+        HEAT_CAPACITY,
+      </if>
+      <if test="boilerNum != null">
+        BOILER_NUM,
+      </if>
+      <if test="steamturbineNum != null">
+        STEAMTURBINE_NUM,
+      </if>
+      <if test="provinceId != null">
+        PROVINCE_ID,
+      </if>
+      <if test="cityId != null">
+        CITY_ID,
+      </if>
+      <if test="countyId != null">
+        COUNTY_ID,
+      </if>
+      <if test="townId != null">
+        TOWN_ID,
+      </if>
+      <if test="villageId != null">
+        VILLAGE_ID,
+      </if>
+      <if test="addr != null">
+        ADDR,
+      </if>
+      <if test="lng != null">
+        LNG,
+      </if>
+      <if test="lat != null">
+        LAT,
+      </if>
+      <if test="publicArea != null">
+        PUBLIC_AREA,
+      </if>
+      <if test="dwellArea != null">
+        DWELL_AREA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="feedType != null">
+        #{feedType,jdbcType=TINYINT},
+      </if>
+      <if test="heatType != null">
+        #{heatType,jdbcType=TINYINT},
+      </if>
+      <if test="installCapacity != null">
+        #{installCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="heatCapacity != null">
+        #{heatCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="boilerNum != null">
+        #{boilerNum,jdbcType=INTEGER},
+      </if>
+      <if test="steamturbineNum != null">
+        #{steamturbineNum,jdbcType=INTEGER},
+      </if>
+      <if test="provinceId != null">
+        #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="countyId != null">
+        #{countyId,jdbcType=VARCHAR},
+      </if>
+      <if test="townId != null">
+        #{townId,jdbcType=VARCHAR},
+      </if>
+      <if test="villageId != null">
+        #{villageId,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="publicArea != null">
+        #{publicArea,jdbcType=DOUBLE},
+      </if>
+      <if test="dwellArea != null">
+        #{dwellArea,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Feed">
+    update t_emc_org_feed
+    <set>
+      <if test="feedType != null">
+        FEED_TYPE = #{feedType,jdbcType=TINYINT},
+      </if>
+      <if test="heatType != null">
+        HEAT_TYPE = #{heatType,jdbcType=TINYINT},
+      </if>
+      <if test="installCapacity != null">
+        INSTALL_CAPACITY = #{installCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="heatCapacity != null">
+        HEAT_CAPACITY = #{heatCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="boilerNum != null">
+        BOILER_NUM = #{boilerNum,jdbcType=INTEGER},
+      </if>
+      <if test="steamturbineNum != null">
+        STEAMTURBINE_NUM = #{steamturbineNum,jdbcType=INTEGER},
+      </if>
+      <if test="provinceId != null">
+        PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        CITY_ID = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="countyId != null">
+        COUNTY_ID = #{countyId,jdbcType=VARCHAR},
+      </if>
+      <if test="townId != null">
+        TOWN_ID = #{townId,jdbcType=VARCHAR},
+      </if>
+      <if test="villageId != null">
+        VILLAGE_ID = #{villageId,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        ADDR = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        LNG = #{lng,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        LAT = #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="publicArea != null">
+        PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
+      </if>
+      <if test="dwellArea != null">
+        DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Feed">
+    update t_emc_org_feed
+    set FEED_TYPE = #{feedType,jdbcType=TINYINT},
+      HEAT_TYPE = #{heatType,jdbcType=TINYINT},
+      INSTALL_CAPACITY = #{installCapacity,jdbcType=DOUBLE},
+      HEAT_CAPACITY = #{heatCapacity,jdbcType=DOUBLE},
+      BOILER_NUM = #{boilerNum,jdbcType=INTEGER},
+      STEAMTURBINE_NUM = #{steamturbineNum,jdbcType=INTEGER},
+      PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
+      CITY_ID = #{cityId,jdbcType=VARCHAR},
+      COUNTY_ID = #{countyId,jdbcType=VARCHAR},
+      TOWN_ID = #{townId,jdbcType=VARCHAR},
+      VILLAGE_ID = #{villageId,jdbcType=VARCHAR},
+      ADDR = #{addr,jdbcType=VARCHAR},
+      LNG = #{lng,jdbcType=DOUBLE},
+      LAT = #{lat,jdbcType=DOUBLE},
+      PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
+      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
