@@ -7947,7 +7947,7 @@ form .red {
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 }
 .pagination {
-    width: 100%;
+    /*width: 100%;*/
 }
 .has-success .chosen-single {
     border-color: #468847;

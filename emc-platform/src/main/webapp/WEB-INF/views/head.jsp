@@ -20,8 +20,8 @@
 <%-- css--%>
 <link href="${platform}/static/Hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
 <link href="${platform}/static/Hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-<link href="${platform}/static/Hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 <link href="${platform}/static/Hplus/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="${platform}/static/Hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 <link href="${platform}/static/Hplus/css/animate.css" rel="stylesheet">
 <link href="${platform}/static/Hplus/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <link href="${platform}/static/Hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -52,16 +52,10 @@
 <script  src="${platform}/static/Hplus/js/plugins/daterangepicker/moment.js"> </script>
 <script  src="${platform}/static/Hplus/js/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="${platform}/static/Hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap table -->
-<script src="${platform}/static/Hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="${platform}/static/Hplus/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="${platform}/static/Hplus/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
 <!-- Toastr script -->
 <script src="${platform}/static/Hplus/js/plugins/toastr/toastr.min.js"></script>
-<%--ztree--%>
-<script src="${platform}/static/Hplus/plugins/ztree/js/jquery.ztree.core.js"></script>
-<script src="${platform}/static/Hplus/plugins/ztree/js/jquery.ztree.excheck.js"></script>
-<script src="${platform}/static/Hplus/plugins/ztree/js/jquery.ztree.exedit.js"></script>
+
 <%--进度条--%>
 <script src="${platform}/static/Hplus/js/plugins/pace/pace.min.js"></script>
 <%--icheck--%>
@@ -71,6 +65,14 @@
 <script src="${platform}/static/Hplus/js/contabs.js"></script>
 <script src="${platform}/static/Hplus/js/content.js?v=1.0.0"></script>
 <script src="${platform}/static/Hplus/js/jquery-jtemplates.js"></script>
+<!-- Bootstrap table -->
+<script src="${platform}/static/Hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="${platform}/static/Hplus/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="${platform}/static/Hplus/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<%--ztree--%>
+<script src="${platform}/static/Hplus/plugins/ztree/js/jquery.ztree.core.js"></script>
+<script src="${platform}/static/Hplus/plugins/ztree/js/jquery.ztree.excheck.js"></script>
+<script src="${platform}/static/Hplus/plugins/ztree/js/jquery.ztree.exedit.js"></script>
 <%--chosen--%>
 <script src="${platform}/static/Hplus/js/plugins/chosen/chosen.jquery.js"></script>
 
