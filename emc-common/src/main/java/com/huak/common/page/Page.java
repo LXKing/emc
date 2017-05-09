@@ -1,5 +1,7 @@
 package com.huak.common.page;
 
+import java.io.Serializable;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -11,7 +13,7 @@ package com.huak.common.page;
  * Description:  分页对象   <BR>
  * Function List:  <BR>
  */
-public class Page {
+public class Page implements Serializable {
     private int pageNo = 1; // 当前页
     private int pageSize = 10; // 每页多少行
     private long total; // 共多少行

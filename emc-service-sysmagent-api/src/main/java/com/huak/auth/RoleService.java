@@ -3,7 +3,6 @@ package com.huak.auth;
 import com.huak.auth.model.Role;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import org.springframework.stereotype.Service;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
  * Description:     <BR>
  * Function List:  <BR>
  */
-@Service
 public interface RoleService {
     public PageResult<Role> queryByPage(String name, Page page);
 }
