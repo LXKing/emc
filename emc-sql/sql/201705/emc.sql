@@ -105,6 +105,8 @@ alter table t_emc_auth_menu_func_rel comment '菜单功能关系表';
 
 
 /*组织机构   功能2017年5月9日 12:59:12*/
+
+
 drop table if exists t_emc_org;
 
 /*==============================================================*/
@@ -113,21 +115,21 @@ drop table if exists t_emc_org;
 create table t_emc_org
 (
    ID                   varchar(32) not null comment '机构主键',
-   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
-   CITY_ID              varchar(12) not null comment '市主键',
-   COUNTY_ID            varchar(12) not null comment '县主键',
-   TOWN_ID              varchar(12) comment '乡主键',
-   VILLAGE_ID           varchar(12) comment '村主键',
-   ADDR                 varchar(64) not null comment '详细地址',
-   LNG                  double(10,6) comment '经度',
-   LAT                  double(10,6) comment '纬度',
-   PUBLIC_AREA          double not null default 0 comment '公建面积',
-   DWELL_AREA           double not null default 0 comment '居民面积',
-   GROUP_TYPE_ID        bigint not null comment '集团性质 来源于字典T_ECC_SYS_DICTIONARY 集团内 集团外',
+   COM_ID               varchar(32) comment '公司',
+   ORG_CODE             varchar(16) not null comment '机构代码',
+   ORG_NAME             varchar(64) not null comment '机构名称',
+   SHORT_NAME           varchar(32) comment '简称',
+   P_ORG_ID             bigint not null comment '上级组织机构主键',
+   TYPE_ID              bigint not null comment '类型',
+   CREATOR              bigint not null comment '创建者',
+   CREATE_TIME          datetime not null comment '创建时间',
+   MEMO                 varchar(255) comment '备注',
+   SEQ                  int not null comment '排序',
+   AREA                 double comment '面积',
    primary key (ID)
 );
 
-alter table t_emc_org comment '组织机构表';
+alter table t_emc_org comment '公司组织机构父表';
 
 
 drop table if exists t_emc_org_feed;
