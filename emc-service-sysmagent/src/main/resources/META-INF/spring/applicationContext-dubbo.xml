@@ -28,7 +28,9 @@
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
     <bean id="menuService" class="com.huak.auth.MenuServiceImpl"/>
-    <dubbo:service interface="com.huak.auth.MenuService" ref="menuService"/>
+    <dubbo:service interface="com.huak.auth.MenuService" ref="menuService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
 
     <!--组织机构接口-->
     <bean id="orgService" class="com.huak.org.OrgServiceImpl"></bean>
