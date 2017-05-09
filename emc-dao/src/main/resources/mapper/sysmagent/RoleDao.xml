@@ -8,7 +8,7 @@
       <arg column="ROLE_DES" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
@@ -29,7 +29,7 @@
       MEMO, CREATOR, CREATE_TIME
       )
     values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleDes,jdbcType=VARCHAR}, 
-      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.huak.auth.model.Role">
@@ -71,7 +71,7 @@
         #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,7 +91,7 @@
         CREATOR = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
@@ -102,7 +102,17 @@
       ROLE_DES = #{roleDes,jdbcType=VARCHAR},
       MEMO = #{memo,jdbcType=VARCHAR},
       CREATOR = #{creator,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectPageByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_role
+        where 1=1
+        <if test="roleName != null and roleName !=''">
+            and  ROLE_NAME like CONCAT('%',#{roleName},'%')
+        </if>
+        order by id
+    </select>
 </mapper>
