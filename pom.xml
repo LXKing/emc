@@ -177,12 +177,22 @@
             <artifactId>zookeeper</artifactId>
             <version>3.4.8</version>
         </dependency>
+<!--        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.1</version>
+        </dependency>
         <!--servlet包-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
-            <scope>provided</scope>
+           <!-- <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -407,7 +417,7 @@
   <name>emc</name>
   <url>http://maven.apache.org</url>
 
-    <profiles>
+<!--    <profiles>
         <profile>
             <id>env-develop</id>
             <activation>
@@ -430,6 +440,6 @@
                 <war.name>ROOT-${project.artifactId}</war.name>
             </properties>
         </profile>
-    </profiles>
+    </profiles>-->
 
 </project>
