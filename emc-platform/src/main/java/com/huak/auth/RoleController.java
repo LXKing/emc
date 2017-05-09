@@ -1,6 +1,8 @@
 package com.huak.auth;
 
+import com.huak.auth.model.Role;
 import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,7 @@ public class RoleController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String listPage(ModelMap modelMap){
         logger.info("转至系统角色列表页");
-        roleService.queryByPage("系统",new Page());
+        PageResult<Role> roles = roleService.queryByPage("系统",new Page());
         modelMap.put("demo","demo");
         return "/auth/role/list";
     }
