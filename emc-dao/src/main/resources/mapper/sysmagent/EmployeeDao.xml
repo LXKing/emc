@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huak.org.dao.EmployeeDao">
-    <resultMap id="BaseResultMap" type="com.huak.model.Employee">
+    <resultMap id="BaseResultMap" type="com.huak.org.model.Employee">
         <constructor>
             <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="EMP_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     delete from t_emc_org_employee
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.huak.model.Employee">
+    <insert id="insert" parameterType="com.huak.org.model.Employee">
     insert into t_emc_org_employee (ID, EMP_NAME, EMP_CODE, 
       EMP_TEL, ADDR, ORG_ID, 
       EMP_AGE, EMP_GENDER, EMP_BIRTHDAY, 
@@ -43,7 +43,7 @@
       #{email,jdbcType=VARCHAR}, #{empMobilephone,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.huak.model.Employee">
+    <insert id="insertSelective" parameterType="com.huak.org.model.Employee">
         insert into t_emc_org_employee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -122,7 +122,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.huak.model.Employee">
+    <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Employee">
         update t_emc_org_employee
         <set>
             <if test="empName != null">
@@ -161,7 +161,7 @@
         </set>
         where ID = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.huak.model.Employee">
+    <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Employee">
     update t_emc_org_employee
     set EMP_NAME = #{empName,jdbcType=VARCHAR},
       EMP_CODE = #{empCode,jdbcType=VARCHAR},
