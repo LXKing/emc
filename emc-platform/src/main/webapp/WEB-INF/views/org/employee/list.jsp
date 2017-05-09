@@ -1,12 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:include page="../../include.jsp"></jsp:include>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
-    <jsp:include page="../../head.jsp"></jsp:include>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>用户列表</title>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <!---->
+    <link rel="stylesheet" href="../css/ztree/css/metroStyle/metroStyle.css" type="text/css">
+    <link href="../css/plugins/datapicker/daterangepicker-bs3.css"rel="stylesheet">
+    <link href="../css/plugins/datapicker/font-awesome.min.css">
+    <link href="../css/plugins/datapicker/bootstrap.min.css">
+    <link href="../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../css/mystyle.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../js/bootstrap.min.js?v=3.3.6"></script>
+    <!-- layerDate plugin javascript -->
+    <script type="text/javascript" src="../js/plugins/daterangepicker/moment.js"> </script>
+    <script type="text/javascript" src="../js/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Bootstrap table -->
+    <script src="../js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="../js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!--下拉框chosen-->
+    <script src="../js/plugins/chosen/chosen.jquery.js"></script>
+    <!-- layerDate plugin javascript -->
+    <script src="../js/plugins/layer/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../css/ztree/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../css/ztree/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="../css/ztree/js/jquery.ztree.exedit.js"></script>
+
     <script type="application/javascript">
 
         $(function() {
@@ -219,6 +246,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <!--<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="control-label col-sm-5 col-xs-5 col-md-5 col-lg-5">创建时间</label>-->
+                                    <!--<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">-->
+                                        <!--<div class="input-prepend input-group">-->
+                                            <!--<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>-->
+                                            <!--<input type="text" readonly  style="width: 150px;font-size: 13px;" name="reservation" id="reservation" class="form-control" value="2014-5-21 - 2014-6-21" />-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-5 col-xs-5 col-md-5 col-lg-5">手机号</label>
@@ -273,11 +312,13 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7  btn-group">
+
                                 <button type="button" class="btn btn-sm btn-info" onclick="addRole()">
                                     <i class="fa fa-plus"></i>添加
                                 </button>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
+
                                 <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>

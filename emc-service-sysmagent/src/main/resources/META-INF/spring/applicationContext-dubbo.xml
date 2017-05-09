@@ -33,4 +33,10 @@
     <dubbo:service interface="com.huak.auth.MenuService" ref="menuService"/>
     <bean id="roleService" class="com.huak.auth.RoleServiceImpl"/>
     <dubbo:service interface="com.huak.auth.RoleService" ref="roleService"/>
+
+
+    <!-- 组织机构接口配置-->
+    <bean id="orgService" class="com.huak.org.OrgServiceImpl" />
+    <dubbo:service interface="com.huak.org.OrgService" ref="orgService"/>
+
 </beans>

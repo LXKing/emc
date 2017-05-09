@@ -22,6 +22,7 @@
         <option value="$PROJECT_DIR$/eccp-api/pom.xml" />
         <option value="$PROJECT_DIR$/emc-bean/pom.xml" />
         <option value="$PROJECT_DIR$/emc-service/pom.xml" />
+        <option value="$PROJECT_DIR$/emc-sql/pom.xml" />
       </set>
     </option>
   </component>

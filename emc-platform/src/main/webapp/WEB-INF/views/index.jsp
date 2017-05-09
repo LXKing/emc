@@ -56,7 +56,7 @@
     </a>
     <ul class="nav nav-second-level">
         <li>
-            <a class="J_menuItem" href="${platform}/main/ztree" data-index="0">组织机构</a>
+            <a class="J_menuItem" href="${platform}/org/ztree" data-index="0">组织机构</a>
         </li>
         <li>
             <a class="J_menuItem" href="${platform}/menu/list" data-index="0">菜单管理</a>
@@ -86,10 +86,10 @@
             <a class="J_menuItem" href="html/message_list.html">站内信管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/reyuan.html">热源管理</a>
+            <a class="J_menuItem" href="${platform}/org/feed">热源管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/relizhan.html">热力站管理</a>
+            <a class="J_menuItem" href="${platform}/org/node">热力站管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/relizhanxitong.html">热力站系统管理</a>

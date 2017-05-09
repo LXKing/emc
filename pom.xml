@@ -14,7 +14,7 @@
         <module>emc-generator</module><!--mybatis自动生成架包-->
         <module>emc-service-sysmagent</module>
         <module>emc-service-sysmagent-api</module>
-        <module>emc-sql</module>
+        <!--<module>emc-sql</module>-->
         <!--业务层-->
     </modules>
     <packaging>pom</packaging>
