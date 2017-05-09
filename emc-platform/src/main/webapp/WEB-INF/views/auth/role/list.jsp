@@ -96,6 +96,7 @@
                 });
             });
     </script>
+    <script type="application/javascript" src="${platform}/script/auth/huak.auth.role.list.js"></script>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -211,7 +212,7 @@
         </div>
     </div>
 </div>
-
+<div id="role-layer-div" style="display: none"></div>
 
 <!--<div id="layer-div" style="display: none"></div>
 

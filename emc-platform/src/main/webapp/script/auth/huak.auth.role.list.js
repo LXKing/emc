@@ -6,14 +6,14 @@
  * Date: 2016/8/30<BR>
  */
 $(function () {
-    getRoleList();
+    //getRoleList();
 });
 function getRoleList() {
     var index = layer.load(1, {
         shade: [0.1, '#fff'] //0.1透明度的白色背景
     });
-    $.ajax({
-        url: ctx + '/role/list',
+    /*$.ajax({
+        url: platform + '/role/list',
         timeout: 5000,
         type: 'POST',//注意在传参数时，加：_method:'PATCH'　将对应后台的PATCH请求方法
         dataType: 'json',
@@ -44,7 +44,7 @@ function getRoleList() {
                 layer.msg("加载超时");
             }
         }
-    });
+    });*/
 }
 //layer
 function editRole() {
@@ -58,8 +58,8 @@ function editRole() {
         return false;
     }
 
-    $.get(ctx + '/role/edit/' + id, function (result) {
-        $('#layer-div').html(result);
+    $.get(_platform + '/role/edit/' + id, function (result) {
+        $('#role-layer-div').html(result);
     });
     layer.open({
         area: ['600px', '500px'],
@@ -73,16 +73,16 @@ function editRole() {
         closeBtn: 1, //不显示关闭按钮
         shift: 2,
         shadeClose: true, //开启遮罩关闭
-        content: $('#layer-div')
+        content: $('#role-layer-div')
     });
 }
 
 function addRole() {
-    $.get(ctx + '/role/add', function (result) {
-        $('#layer-div').html(result);
+    $.get(_platform + '/role/add', function (result) {
+        $('#role-layer-div').html(result);
     });
     layer.open({
-        area: ['500px', '500px'],
+        area: ['800px', '580px'],
         type: 1,
         title: '添加角色',
         btn: ['保存', '取消'],
@@ -93,7 +93,7 @@ function addRole() {
         closeBtn: 1, //不显示关闭按钮
         shift: 2,
         shadeClose: true, //开启遮罩关闭
-        content: $('#layer-div')
+        content: $('#role-layer-div')
     });
 }
 
@@ -111,7 +111,7 @@ function deleteRoles() {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: ctx + '/role/delete',
+            url: _platform + '/role/delete',
             data: {ids: ids},
             type: 'POST',
             dataType: 'json',
@@ -137,7 +137,7 @@ function deleteRole(id) {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: ctx + '/role/delete/' + id,
+            url: _platform + '/role/delete/' + id,
             type: 'DELETE',
             dataType: 'json',
             success: function (result) {
@@ -164,5 +164,5 @@ function roleAuthPage(){
         layer.msg("请选择一个角色进行授权");
         return false;
     }
-    $("#content-main").empty().load(ctx + '/role/auth?id=' + id);
+    $("#content-main").empty().load(_platform + '/role/auth?id=' + id);
 }

@@ -81,6 +81,7 @@
 <script src="${platform}/static/Hplus/js/pcctv.js"></script>
 <script src="${platform}/static/Hplus/js/org.js"></script>--%>
 <script type="text/javascript">
+    var _platform = '${platform}';
     layer.config({
         extend: ['skin/moon/style.css'] //加载新皮肤
         /*skin: 'layer-ext-moon' //一旦设定，所有弹层风格都采用此主题。*/

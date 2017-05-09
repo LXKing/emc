@@ -40,6 +40,10 @@ public class RoleController {
         return "/auth/role/list";
     }
 
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public String addPage() {
+        return "/auth/role/add";
+    }
    /* @RequestMapping(value = "/list",method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String,String> paramsMap,Page page){
@@ -83,10 +87,7 @@ public class RoleController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public String addPage() {
-        return "/auth/role/role_add";
-    }
+
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
