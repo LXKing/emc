@@ -6,12 +6,14 @@ import com.huak.auth.model.Menu;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 /**
  * Created by MR-BIN on 2017/5/8.
  */
+@Service
 public class MenuServiceImpl implements MenuService{
 
     @Resource
