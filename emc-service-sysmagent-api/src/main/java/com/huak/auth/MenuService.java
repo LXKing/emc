@@ -16,5 +16,5 @@ public interface MenuService {
    public Menu selectByPrimaryKey(String id);
 
    public int updateByPrimaryKey(Menu record);
-   public PageResult<Menu> queryByPage(String name, Page page);
+   public PageResult<Menu> queryByPage( Page page);
 }

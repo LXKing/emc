@@ -48,11 +48,5 @@ public class MainController {
         return "org/employee/list";
     }
 
-    /*
-    菜单管理
-    */
-    @RequestMapping(value = "/menu", method = RequestMethod.GET)
-    public String menu(){
-        return "org/menu/list";
-    }
+
 }

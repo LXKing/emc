@@ -14,46 +14,53 @@
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
     <SCRIPT type="text/javascript">
         <!--
-        var setting = {
-            view: {
-                addHoverDom: addHoverDom,
-                removeHoverDom: removeHoverDom,
-                selectedMulti: false,
-                fontCss:{color:"blue"}
-            },
-            check: {
-                enable: true
-            },
-            data: {
-                simpleData: {
+        $(function(){
+            var setting = {
+                async: {
+                    enable: true,
+                    type: "post",
+                    url: "${platform}/menu/list",
+                    autoParam: ["id", "name"]
+                },
+                view: {
+                    addHoverDom: addHoverDom,
+                    removeHoverDom: removeHoverDom,
+                    selectedMulti: false,
+                    fontCss:{color:"blue"}
+                },
+
+                check: {
                     enable: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                edit: {
+                    enable: true
+                },
+                callback:{
+                    beforeEditName:beforeEdt
                 }
-            },
-            edit: {
-                enable: true
-            },
-            callback:{
-                beforeEditName:beforeEdt
-            }
-        };
+            };
 
-        var zNodes =[
-            { id:1, pId:null, name:"前台菜单", open:true},
-            { id:2, pId:null, name:"后台菜单"},
-            { id:12, pId:2, name:"组织机构管理"},
-            { id:121, pId:2, name:"权限管理"},
-            { id:122, pId:2, name:"用户管理"},
-            { id:123, pId:2, name:"角色管理"},
-            { id:124, pId:1, name:"统计分析"},
-            { id:123, pId:1, name:"热力站统计"},
-            { id:124, pId:1, name:"热力站填报"},
-            { id:125, pId:1, name:"热源填报"},
-            { id:126, pId:1, name:"热源能耗统计"},
-            { id:127, pId:1, name:"对标管理"},
-            { id:128, pId:1, name:"专家管理"}
-        ];
+            var zNodes =[
+                { id:1, pId:null, name:"前台菜单", open:true},
+                { id:2, pId:null, name:"后台菜单"},
+                { id:12, pId:2, name:"组织机构管理"},
+                { id:121, pId:2, name:"权限管理"},
+                { id:122, pId:2, name:"用户管理"},
+                { id:123, pId:2, name:"角色管理"},
+                { id:124, pId:1, name:"统计分析"},
+                { id:123, pId:1, name:"热力站统计"},
+                { id:124, pId:1, name:"热力站填报"},
+                { id:125, pId:1, name:"热源填报"},
+                { id:126, pId:1, name:"热源能耗统计"},
+                { id:127, pId:1, name:"对标管理"},
+                { id:128, pId:1, name:"专家管理"}
+            ];
 
-        $(document).ready(function(){
 
             //页面说明
             console.info("页面说明：\n左侧菜单树:是系统菜单的树形结构。\n" +
@@ -62,8 +69,8 @@
                     "【添加】【删除】【修改】【检索】\n" +
                     "字段：\n菜单名称、菜单上级\n" +
                     "创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
-            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-        });
+            $.fn.zTree.init($("#treeDemo"), setting);
+        })
 
         var newCount = 1;
         function addHoverDom(treeId, treeNode) {
@@ -86,95 +93,6 @@
             alert("添加菜单！");
         }
 
-        $(function(){
-
-            $('#mytab').bootstrapTable({
-                data:[{
-                    menu_name:"组织机构管理",
-                    url: '/eccp/eccp-platform/org/list',
-                    frontorback: '前台',
-                    id:"1"
-                }, {
-                    menu_name:"菜单管理",
-                    url: '/eccp/eccp-platform/menu/list',
-                    frontorback: '前台',
-                    id:"2"
-                }],
-                url:"",
-                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
-                height: tableHeight(),//高度调整
-                search: true,//是否搜索
-                pagination: true,//是否分页
-                pageSize: 20,//单页记录数
-                pageList: [5, 10, 20, 50],//分页步进值
-                sidePagination: "server",//服务端分页
-                contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
-                dataType: "json",//期待返回数据类型
-                method: "post",//请求方式
-                searchAlign: "left",//查询框对齐方式
-                queryParamsType: "limit",//查询参数组织方式
-                queryParams: function getParams(params) {
-                    //params obj
-                    params.other = "otherInfo";
-                    return params;
-                },
-                searchOnEnterKey: false,//回车搜索
-                showRefresh: true,//刷新按钮
-                showColumns: true,//列选择按钮
-                buttonsAlign: "left",//按钮对齐方式
-                toolbar: "#toolbar",//指定工具栏
-                toolbarAlign: "right",//工具栏对齐方式
-                columns: [
-                    {
-                        title: "全选",
-                        field: "select",
-                        checkbox: true,
-                        width: 25,//宽度
-                        align: "center",//水平
-                        valign: "middle"//垂直
-                    },
-                    {
-                        title: "菜单名称",//标题
-                        field: "menu_name",//键名
-                        sortable: true,//是否可排序
-                        order: "desc"//默认排序方式
-                    },
-                    {
-                        field: "url",
-                        title: "链接",
-                        sortable: true,
-                        titleTooltip: "菜单链接"
-                    },
-                    {
-                        field: "frontorback",
-                        title: "前后台",
-                        sortable: true
-                    },
-                    {
-                        field: "id",
-                        title: "操作",
-                        formatter: 'infoFormatter'//对本列数据做格式化
-                    }
-                ],
-//                onClickRow: function(row, $element) {
-//                    //$element是当前tr的jquery对象
-//                    $element.css("background-color", "green");
-//                },//单击row事件
-                locale: "zh-CN",//中文支持,
-                detailView: false, //是否显示详情折叠
-                detailFormatter: function(index, row, element) {
-                    var html = '';
-                    $.each(row, function(key, val){
-                        html += "<p>" + key + ":" + val +  "</p>"
-                    });
-                    return html;
-                }
-            });
-
-            function tableHeight() {
-                return $(window).height() - 50;
-            }
-        });
         //-->
     </SCRIPT>
 </head>

@@ -19,5 +19,5 @@ public interface MenuDao {
 
     int updateByPrimaryKey(Menu record);
 
-    List<Menu> selectPageByName(@Param("name")String name);
+    List<Menu> selectPageByName();
 }
