@@ -1,7 +1,5 @@
 package com.huak.auth.model;
 
-import java.util.Date;
-
 public class Role {
     private String id;
 
@@ -13,9 +11,9 @@ public class Role {
 
     private String creator;
 
-    private Date createTime;
+    private String createTime;
 
-    public Role(String id, String roleName, String roleDes, String memo, String creator, Date createTime) {
+    public Role(String id, String roleName, String roleDes, String memo, String creator, String createTime) {
         this.id = id;
         this.roleName = roleName;
         this.roleDes = roleDes;
@@ -68,11 +66,11 @@ public class Role {
         this.creator = creator == null ? null : creator.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }

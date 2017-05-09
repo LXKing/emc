@@ -1,22 +1,16 @@
-/*
 package com.huak.auth;
 
-import com.alibaba.fastjson.JSONObject;
-import com.huak.auth.service.RoleService;
-import com.huak.common.Constants;
 import com.huak.common.page.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
-*/
-/**
+/*
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
  * File name:  com.huak.auth<BR>
@@ -26,7 +20,7 @@ import java.util.Map;
  * Date: 2016/8/30<BR>
  * Description:   角色  <BR>
  * Function List:  <BR>
- *//*
+ */
 
 @Controller
 @RequestMapping("/role")
@@ -39,11 +33,12 @@ public class RoleController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String listPage(ModelMap modelMap){
         logger.info("转至系统角色列表页");
+        roleService.queryByPage("系统",new Page());
         modelMap.put("demo","demo");
-        return "/auth/role/role_list";
+        return "/auth/role/list";
     }
 
-    @RequestMapping(value = "/list",method = RequestMethod.PATCH)
+   /* @RequestMapping(value = "/list",method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String,String> paramsMap,Page page){
         logger.info("角色列表页分页查询");
@@ -109,13 +104,12 @@ public class RoleController {
         return jo.toJSONString();
     }
 
-    */
-/**
+*
      * 为什么用POST请求
      * 因为DELETE请求接收不到数组 fuck
      * @param ids
      * @return
-     *//*
+
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
@@ -134,11 +128,10 @@ public class RoleController {
         }
         return jo.toJSONString();
     }
-    */
-/**
+*
      * @param id
      * @return
-     *//*
+
 
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     @ResponseBody
@@ -219,6 +212,5 @@ public class RoleController {
             logger.error("选择角色列表页分页查询异常" + e.getMessage());
         }
         return jo.toJSONString();
-    }
+    }*/
 }
-*/

@@ -62,7 +62,7 @@
             <a class="J_menuItem" href="${platform}/menu/list" data-index="0">菜单管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/juese.html">角色管理</a>
+            <a class="J_menuItem" href="${platform}/role/list">角色管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/yonghu.html">用户管理</a>

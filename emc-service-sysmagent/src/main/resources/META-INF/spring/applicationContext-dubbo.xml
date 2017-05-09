@@ -19,4 +19,6 @@
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.huak.season.SeasonService" ref="seasonService"/>
     <dubbo:service interface="com.huak.auth.MenuService" ref="menuService"/>
+    <bean id="roleService" class="com.huak.auth.RoleServiceImpl"/>
+    <dubbo:service interface="com.huak.auth.RoleService" ref="roleService"/>
 </beans>
