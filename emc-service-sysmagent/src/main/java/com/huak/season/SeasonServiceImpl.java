@@ -6,6 +6,7 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.season.dao.SeasonDao;
 import com.huak.season.model.Season;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
  * Description:     <BR>
  * Function List:  <BR>
  */
+@Service
 public class SeasonServiceImpl implements SeasonService {
     @Resource
     private SeasonDao seasonDao;

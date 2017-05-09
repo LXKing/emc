@@ -269,4 +269,4 @@ CREATE TABLE t_emc_user_model (
   SORTNO tinyint(4) NOT NULL COMMENT '排序(升序)',
   PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户模块表';
-drop table if exists t_emc_role;
+

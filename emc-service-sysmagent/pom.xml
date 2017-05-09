@@ -19,6 +19,11 @@
     </properties>
 
     <dependencies>
+            <dependency>
+                <groupId>com.huak</groupId>
+                <artifactId>emc-dao</artifactId>
+                <version>${emc.dao.version}</version>
+            </dependency>
         <dependency>
             <groupId>com.huak</groupId>
             <artifactId>emc-service-sysmagent-api</artifactId>
