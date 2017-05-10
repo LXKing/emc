@@ -24,14 +24,6 @@
     delete from t_emc_auth_role
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huak.auth.model.Role">
-    insert into t_emc_auth_role (ID, ROLE_NAME, ROLE_DES, 
-      MEMO, CREATOR, CREATE_TIME
-      )
-    values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleDes,jdbcType=VARCHAR}, 
-      #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.huak.auth.model.Role">
     insert into t_emc_auth_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -96,16 +88,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.auth.model.Role">
-    update t_emc_auth_role
-    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
-      ROLE_DES = #{roleDes,jdbcType=VARCHAR},
-      MEMO = #{memo,jdbcType=VARCHAR},
-      CREATOR = #{creator,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-    <select id="selectPageByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_auth_role

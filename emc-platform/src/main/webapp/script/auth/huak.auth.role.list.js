@@ -5,13 +5,101 @@
  * Version: v 1.0      <BR>
  * Date: 2016/8/30<BR>
  */
+var $table = $('#exampleTableFromData'),
+    $remove = $('#remove'),
+    selections = [];
 $(function () {
-    //getRoleList();
+    alert("1");
+    $table.bootstrapTable({
+        height: getHeight()+20,//高度
+        cache:false,//禁用 AJAX 数据缓存
+        url:_platform+'/role/list?_method=PATCH',//获取数据的Servlet地址
+        method: 'POST',//使用POST请求到服务器获取数据
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "json",
+        idField:"ID",
+        pagination:true,//是否分页
+        pageSize:10,//每页显示的记录数
+        pageNumber:1,//当前第几页
+        pageList:[10,30,50],//记录数可选列表
+        search: false,  //是否启用查询
+        striped:true,//表格显示条纹
+        showColumns: false,//不显示隐藏列
+        sidePagination: "server", //服务端请求
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType : "limit",
+        queryParams: function queryParams(params){
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize
+            };
+            return param;
+        },formatLoadingMessage: function () {
+            return "请稍等，正在加载中...";
+        }
+
+
+        /*responseHandler: function(res){
+         return {
+         "rows": res.rows,
+         "total": res.total
+         };
+         },
+         columns: [
+         [
+         {
+         field:'ID',title:'ID',visible:false
+         },{
+         title: '角色名称',
+         field: 'roleName',
+         align: 'center'
+         }, {
+         title: '类型',
+         field: 'CONFIGNAME',
+         align: 'center'
+         }, {
+         title: '分支名称',
+         field: 'MNAME',
+         align: 'center'
+         }, {
+         title: '计量器具编号',
+         field: 'MEASURINGINSNO',
+         align: 'center'
+         }, {
+         title: '计量器具名称',
+         field: 'MEASURINGINSNAME',
+         align: 'center'
+         }, {
+         title: '安装位置',
+         field: 'INSTALLATIONLOCATION',
+         align: 'center'
+         }, {
+         title: '运行状态',
+         field: 'FUNCTIONSTATUS',
+         align: 'center'
+         },{
+         title: '操作',
+         field: 'ID',
+         align: 'center',
+         formatter: function(value, row, index){
+         return  '<a  class="btn btn-mini btn-info"   onclick="add(\''+row.UNID+'\',\''+row.MID+'\',\''+row.FUNCTIONSTATUS+'\');"  title="添加"><i class="icon-plus"></i></a>'+
+         '<a  class="btn btn-mini btn-info"   onclick="update(\''+row.UNID+'\',\''+row.MID+'\',\''+row.FUNCTIONSTATUS+'\',\''+row.ID+'\');"  title="修改"><i class="icon-edit"></i></a>'+
+         '<a class="btn btn-mini btn-primary" onclick="change(\''+row.UNID+'\',\''+row.MID+'\',\''+row.FUNCTIONSTATUS+'\',\''+row.ID+'\');"  title="换表"><i class="icon-wrench"></i></a>';
+         }
+         }
+         ]
+         ]*/
+        // mobileResponsive: true,
+    });
+    alert("2");
+    $table.bootstrapTable('refresh');
 });
 function getRoleList() {
-    var index = layer.load(1, {
+
+    /*var index = layer.load(1, {
         shade: [0.1, '#fff'] //0.1透明度的白色背景
-    });
+    });*/
     /*$.ajax({
         url: platform + '/role/list',
         timeout: 5000,
@@ -46,6 +134,10 @@ function getRoleList() {
         }
     });*/
 }
+
+function getHeight() {
+    return $(window).height() - 130;
+}
 //layer
 function editRole() {
     var id = getCheckValues();
@@ -62,7 +154,7 @@ function editRole() {
         $('#role-layer-div').html(result);
     });
     layer.open({
-        area: ['600px', '500px'],
+        area: ['800px', '580px'],
         type: 1,
         title: '编辑角色',
         btn: ['保存', '取消'],

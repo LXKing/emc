@@ -8,26 +8,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wrapper wrapper-content">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="roleAddForm" role="form">
+
                 <div class="form-group">
-                    <label class="col-sm-3  control-label"><span class="red">*</span>角色名称：</label>
-                    <div class="col-sm-8">
-                        <input id="roleName" name="roleName" class="form-control" type="text" maxlength="8" placeholder="请输入角色名称">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>角色名称：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input id="roleName" name="roleName" class="form-control" type="text" maxlength="8"
+                               placeholder="请输入角色名称">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label"><span class="red">*</span>角色描述：</label>
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>角色描述：</label>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="roleDes" class="form-control" type="text" maxlength="16" placeholder="请输入角色描述">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">备注：</label>
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">备注：</label>
 
-                    <div class="col-sm-8">
-                        <textarea class="form-control" rows="6" maxlength="125" name="memo" placeholder="请输入备注"></textarea>
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <textarea class="form-control" rows="6" maxlength="125" name="memo"
+                                  placeholder="请输入备注"></textarea>
 
                     </div>
                 </div>
@@ -61,15 +67,15 @@
     //以下为官方示例
     $(function () {
 
-        $.validator.addMethod("checkUnique", function(value, element) {
+        $.validator.addMethod("checkUnique", function (value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
-                url:_platform+'/role/check',
-                type:'POST',
-                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {roleName:$('#roleName').val()},
+                url: _platform + '/role/check',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {roleName: $('#roleName').val()},
                 dataType: 'json',
-                success:function(result) {
+                success: function (result) {
                     if (!result.flag) {
                         deferred.reject();
                     } else {
@@ -88,7 +94,7 @@
         });
         //下拉框信息绑定
         $('select').change(function () {
-            if($(this).find('option:first').val()!=$(this).val()){
+            if ($(this).find('option:first').val() != $(this).val()) {
                 $(this).siblings('.help-block').remove();
             }
             return false;
@@ -96,22 +102,22 @@
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
         $("#roleAddForm").validate({
-            onsubmit:true,// 是否在提交是验证
+            onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
             onfocusout: function (element) {
-                if ($(element).val()==null||$(element).val()=="") {
+                if ($(element).val() == null || $(element).val() == "") {
                     $(element).closest('.form-group').removeClass('has-error');
                     $(element).siblings('.help-block').remove();
-                }else{
+                } else {
                     $(element).valid();
                 }
             },
-            onkeyup :false,// 是否在敲击键盘时验证
+            onkeyup: false,// 是否在敲击键盘时验证
             rules: {
                 roleName: {
                     required: true,
-                    minlength: 2,
-                    checkUnique: true
+                    minlength: 2
+                    //checkUnique: true
                 },
                 roleDes: {
                     required: true
@@ -126,20 +132,20 @@
                     required: icon + "请输入角色描述"
                 }
             },
-            submitHandler:function(){
+            submitHandler: function () {
                 var index = layer.load(1, {
-                    shade: [0.1,'#fff'] //0.1透明度的白色背景
+                    shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url:_platform + '/role/add',
-                    data:$('#roleAddForm').serialize(),
-                    type:'POST',
-                    dataType:'json',
-                    success:function(result) {
-                        if(result.flag){
+                    url: _platform + '/role/add',
+                    data: $('#roleAddForm').serialize(),
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.flag) {
                             layer.closeAll();
                             layer.msg(result.msg);
-                        }else{
+                        } else {
                             layer.close(index);
                             layer.msg(result.msg);
                         }

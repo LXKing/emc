@@ -45,56 +45,13 @@
                 //下拉框js
                 $(".chosen-select").chosen();
 
-                //bootstrapTable
-                var bt_data = [{
-                    "Tid": "1",
-                    "jsmc": "超级管理员",
-                    "bz": "后台运营的超级管理员",
-                    "cjjg": "华热科技",
-                    "cjz": "超级管理员",
-                    "cjsj": "2017-01-01 15:23:23",
-                    "cz": '<a title="编辑" class="btn btn-xs btn-info" onclick="editRole()"> <i class="fa fa-edit"></i></a>&nbsp;' +
-                            '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i></a>&nbsp;' +
-                            '<a title="授权权限" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i></a>'
-                }, {
-                    "Tid": "2",
-                    "jsmc": "企业管理员",
-                    "bz": "客户系统的企业管理员",
-                    "cjjg": "华热科技",
-                    "cjz": "超级管理员",
-                    "cjsj": "2017-01-01 15:23:56",
-                    "cz": '<a title="编辑" class="btn btn-xs btn-info" onclick="editRole()"> <i class="fa fa-edit"></i></a>&nbsp;' +
-                            '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i></a>&nbsp;' +
-                            '<a title="授权权限" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i></a>'
-                }, {
-                    "Tid": "2",
-                    "jsmc": "企业管理员",
-                    "bz": "客户系统的企业管理员",
-                    "cjjg": "华热科技",
-                    "cjz": "超级管理员",
-                    "cjsj": "2017-01-01 15:23:56",
-                    "cz": '<button type="button" class="btn btn-xs btn-info" onclick="editRole()"> <i class="fa fa-edit"></i>编辑</button>&nbsp;<button type="button" class="btn btn-xs btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i>删除</button>&nbsp;<button type="button" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i>角色授权</button>'
-                }, {
-                    "Tid": "2",
-                    "jsmc": "企业管理员",
-                    "bz": "客户系统的企业管理员",
-                    "cjjg": "华热科技",
-                    "cjz": "超级管理员",
-                    "cjsj": "2017-01-01 15:23:56",
-                    "cz": '<button type="button" class="btn btn-xs btn-info" onclick="editRole()"> <i class="fa fa-edit"></i>编辑</button>&nbsp;<button type="button" class="btn btn-xs btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i>删除</button>&nbsp;<button type="button" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i>角色授权</button>'
-                }];
 
-
-                $('#exampleTableFromData').bootstrapTable({
-                    data: bt_data,
-                    pagination:true,
-                    striped:true,
-                    pageSize:2,
-                    pageList:[2,10,30],
-                    height:480
-                    // mobileResponsive: true,
-                });
             });
+
+
+            function search(){
+                $table.bootstrapTable('refresh');
+            }
     </script>
     <script type="application/javascript" src="${platform}/script/auth/huak.auth.role.list.js"></script>
 </head>
@@ -194,17 +151,6 @@
                     </form>
                     <div class="example">
                     <table id="exampleTableFromData" data-mobile-responsive="true">
-                        <thead>
-                        <tr>
-                            <th data-field="Tid">ID</th>
-                            <th data-field="jsmc">角色名称</th>
-                            <th data-field="bz">备注</th>
-                            <th data-field="cjjg">创建机构</th>
-                            <th data-field="cjz">创建者</th>
-                            <th data-field="cjsj">创建时间</th>
-                            <th data-field="cz">操作</th>
-                        </tr>
-                        </thead>
                     </table>
                     </div>
                 </div>

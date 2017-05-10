@@ -4,6 +4,8 @@ import com.huak.auth.model.Role;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 
+import java.util.Map;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -16,5 +18,13 @@ import com.huak.common.page.PageResult;
  * Function List:  <BR>
  */
 public interface RoleService {
-    public PageResult<Role> queryByPage(String name, Page page);
+    public int deleteByPrimaryKey(String id);
+
+    public int insertSelective(Role record);
+
+    public Role selectByPrimaryKey(String id);
+
+    public int updateByPrimaryKeySelective(Role record);
+
+    public PageResult<Role> queryByPage(Map<String,Object> paramsMap, Page page);
 }
