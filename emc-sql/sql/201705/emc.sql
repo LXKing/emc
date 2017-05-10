@@ -308,3 +308,8 @@ create table t_emc_auth_role
 );
 
 alter table t_emc_auth_role comment '角色基本信息表';
+
+/*
+时间2017年5月10日08:13:59
+*/
+alter table t_emc_auth_role modify column CREATOR varchar(32);
