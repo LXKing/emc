@@ -86,7 +86,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(readOnly = true)
     public PageResult<Role> queryByPage(Map<String,Object> paramsMap, Page page) {
-        PageHelper.startPage(page.getPageNo(), page.getPageSize());
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(roleDao.selectPageByMap(paramsMap));
     }
 }

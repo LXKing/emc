@@ -28,14 +28,14 @@ public class Convert {
         com.huak.common.page.Page p = new com.huak.common.page.Page();
         if (datas instanceof Page) {
             Page page = (Page) datas;
-            p.setPageNo(page.getPageNum());
+            p.setPageNumber(page.getPageNum());
             p.setPageSize(page.getPageSize());
             p.setTotal(page.getTotal());
             p.setPages(page.getPages());
             result.setList(page.getResult());
             result.setPage(p);
         } else {
-            p.setPageNo(1);
+            p.setPageNumber(1);
             p.setPageSize(datas.size());
             p.setTotal(datas.size());
             result.setList(datas);

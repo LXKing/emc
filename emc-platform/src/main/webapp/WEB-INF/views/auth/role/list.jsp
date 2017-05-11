@@ -39,11 +39,11 @@
                         start.max = datas; //结束日选好后，重置开始日的最大日期
                     }
                 };
-                laydate(start);
-                laydate(end);
+                //laydate(start);
+                //laydate(end);
 
                 //下拉框js
-                $(".chosen-select").chosen();
+                //$(".chosen-select").chosen();
 
 
             });
@@ -53,7 +53,7 @@
                 $table.bootstrapTable('refresh');
             }
     </script>
-    <script type="application/javascript" src="${platform}/script/auth/huak.auth.role.list.js"></script>
+    <script src="${platform}/script/auth/huak.auth.role.list.js"></script>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -150,8 +150,8 @@
                         </div>
                     </form>
                     <div class="example">
-                    <table id="exampleTableFromData" data-mobile-responsive="true">
-                    </table>
+                        <table id="role-table-list">
+                        </table>
                     </div>
                 </div>
             </div>

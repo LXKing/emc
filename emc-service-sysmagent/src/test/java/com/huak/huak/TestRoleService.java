@@ -37,7 +37,7 @@ public class TestRoleService extends BaseTest {
         roleService.deleteByPrimaryKey("1");
     }
 
-    @Test
+    //@Test
     @Rollback
     public void testInsertSelective() {
         Role role = new Role();
@@ -57,7 +57,7 @@ public class TestRoleService extends BaseTest {
         System.err.println(role.getRoleName());
     }
 
-    @Test
+    //@Test
     @Rollback
     public void testUpdateByPrimaryKeySelective() {
         Role role = new Role();
@@ -66,12 +66,14 @@ public class TestRoleService extends BaseTest {
         roleService.updateByPrimaryKeySelective(role);
     }
 
-    //@Test
+    @Test
     @Rollback
     public void testQueryByPage() {
         Map paramsMap = new HashMap<String, Object>();
-        paramsMap.put("roleName", "系统");
-        PageResult<Role> roles = roleService.queryByPage(paramsMap, new Page());
+        Page page = new Page();
+        page.setPageNumber(2);
+
+        PageResult<Role> roles = roleService.queryByPage(paramsMap, page);
         for (Role role : roles.getList()) {
             System.err.println(role.getRoleName());
         }

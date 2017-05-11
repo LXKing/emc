@@ -14,20 +14,20 @@ import java.io.Serializable;
  * Function List:  <BR>
  */
 public class Page implements Serializable {
-    private int pageNo = 1; // 当前页
-    private int pageSize = 10; // 每页多少行
-    private long total; // 共多少行
-    private int pages; // 共多少页
+    public int pageNumber = 1; // 当前页
+    public int pageSize = 10; // 每页多少行
+    public long total; // 共多少行
+    public int pages; // 共多少页
 
-    public int getPageNo() {
-        return pageNo;
+    public int getPageNumber() {
+        return pageNumber;
     }
 
-    public void setPageNo(int pageNo) {
-        if (pageNo < 1) {
-            this.pageNo = 1;
+    public void setPageNumber(int pageNumber) {
+        if (pageNumber < 1) {
+            this.pageNumber = 1;
         } else {
-            this.pageNo = pageNo;
+            this.pageNumber = pageNumber;
         }
     }
 
