@@ -317,12 +317,12 @@ alter table t_emc_auth_role modify column CREATOR varchar(32);
 /**
 2017年5月12日14:35:55
  */
- drop table if exists t_ecc_auth_func;
+ drop table if exists t_emc_auth_func;
 
 /*==============================================================*/
 /* Table: T_ECC_AUTH_FUNC                                       */
 /*==============================================================*/
-create table t_ecc_auth_func
+create table t_emc_auth_func
 (
    ID              varchar(32) not null comment '功能主键',
    MENU_ID              varchar(32) not null comment '菜单主键',
@@ -333,4 +333,4 @@ create table t_ecc_auth_func
    primary key (ID)
 );
 
-alter table t_ecc_auth_func comment '功能基本信息表';
+alter table t_emc_auth_func comment '功能基本信息表';
