@@ -2,9 +2,11 @@ package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Role;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,7 +51,7 @@ public class RoleController {
 
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
-    public String listPost(@RequestParam Map<String, Object> paramsMap,Page page) {
+    public String listPost(@RequestParam Map<String, Object> paramsMap, Page page) {
         logger.info("角色列表页分页查询");
 
         JSONObject jo = new JSONObject();
@@ -63,7 +70,7 @@ public class RoleController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(Role role,HttpServletRequest request) {
+    public String add(Role role, HttpServletRequest request) {
         logger.info("添加角色");
 
         JSONObject jo = new JSONObject();
@@ -113,32 +120,6 @@ public class RoleController {
         }
         return jo.toJSONString();
     }
-
-
-    /**
-     * 为什么用POST请求
-     * 因为DELETE请求接收不到数组 fuck
-     *
-     * @param ids
-     * @return
-     */
- /*   @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @ResponseBody
-    public String deleteRoles(String ids) {
-        logger.info("批量删除角色");
-
-        JSONObject jo = new JSONObject();
-        jo.put(Constants.FLAG, false);
-        try {
-            roleService.deleteByPrimaryKey(ids);
-            jo.put(Constants.FLAG, true);
-            jo.put(Constants.MSG, "删除角色成功");
-        } catch (Exception e) {
-            logger.error("删除角色异常" + e.getMessage());
-            jo.put(Constants.MSG, "删除角色失败");
-        }
-        return jo.toJSONString();
-    }*/
 
     /**
      * @param id
@@ -212,17 +193,46 @@ public class RoleController {
     }*/
 
 
-   /* @RequestMapping(value = "/user/select", method = RequestMethod.PATCH)
-    @ResponseBody
-    public String userSelect(@RequestParam Map<String, String> paramsMap, Page page) {
-        logger.info("选择角色列表页分页查询");
+    /* @RequestMapping(value = "/user/select", method = RequestMethod.PATCH)
+     @ResponseBody
+     public String userSelect(@RequestParam Map<String, String> paramsMap, Page page) {
+         logger.info("选择角色列表页分页查询");
 
-        JSONObject jo = new JSONObject();
+         JSONObject jo = new JSONObject();
+         try {
+             jo.put(Constants.LIST, roleService.findSelectByPage(paramsMap, page));
+         } catch (Exception e) {
+             logger.error("选择角色列表页分页查询异常" + e.getMessage());
+         }
+         return jo.toJSONString();
+     }*/
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(@RequestParam Map<String, Object> paramsMap, HttpServletResponse response) {
+        logger.info("导出角色列表EXCEL");
+        String workBookName = "角色列表";//文件名
+        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+        cellName.put("ID", "主键");
+        cellName.put("ROLE_NAME", "角色名称");
+        cellName.put("ROLE_DES", "角色说明");
+        cellName.put("memo", "备注");
+        List<Map<String, Object>> cellValues = null;//列值
+        OutputStream out = null;
         try {
-            jo.put(Constants.LIST, roleService.findSelectByPage(paramsMap, page));
+            cellValues = roleService.exportRoles(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
         } catch (Exception e) {
-            logger.error("选择角色列表页分页查询异常" + e.getMessage());
+            logger.error("导出角色列表EXCEL异常" + e.getMessage());
         }
-        return jo.toJSONString();
-    }*/
+    }
+
 }

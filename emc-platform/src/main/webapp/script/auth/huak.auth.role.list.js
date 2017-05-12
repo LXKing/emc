@@ -5,8 +5,9 @@
  * Version: v 1.0      <BR>
  * Date: 2016/8/30<BR>
  */
+var bTable;
 $(function () {
-    $('#role-table-list').bootstrapTable({
+    bTable = $('#role-table-list').bootstrapTable({
         height: getHeight() + 30,//高度
         cache: false,//禁用 AJAX 数据缓存
         url: _platform + '/role/list',//获取数据的Servlet地址
@@ -27,6 +28,7 @@ $(function () {
         queryParamsType: "undefined",
         queryParams: function queryParams(params) {
             var param = {
+                roleName:$('input[name="roleName"]').val(),
                 _method: "PATCH",
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
@@ -67,12 +69,23 @@ $(function () {
                 align: 'center'
             },
             {
+                title: '备注',
+                field: 'memo',
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value.length>20){
+                        return '<span title="'+value+'">'+value.substr(0,20)+'</span>';
+                    }
+                    return value;
+                }
+            },
+            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info" onclick="editRole("+row.id+")"> <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i></a>&nbsp;' +
+                    return '<a title="编辑" class="btn btn-xs btn-info" onclick="editRole(&quot;'+row.id+'&quot;)"> <i class="fa fa-edit"></i></a>&nbsp;' +
+                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRole(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' +
                         '<a title="授权权限" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i></a>';
                 }
             }
@@ -81,10 +94,47 @@ $(function () {
 
 
     });
-});
 
-function getHeight() {
-    return $(window).height() - 130;
+    //页面说明
+    console.info("页面说明：\n1.系统默认2个角色为超级管理员和企业管理员；\n" +
+        "2.管理员用户才能进行管理且只能看到自己创建的角色；\n" +
+        "功能：\n" +
+        "【添加】【删除】【修改】【授权权限】【检索】【重置】【导出EXCEL】\n" +
+        "字段：\n角色主键、角色名称、角色备注\n" +
+        "创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        //min: laydate.now(), //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+
+    //下拉框js
+    $(".chosen-select").chosen();
+
+});
+function search(){
+    $('#role-table-list').bootstrapTable('refresh');
 }
 //layer
 function addRole() {
@@ -127,40 +177,6 @@ function editRole(id) {
     });
 }
 
-
-
-function deleteRoles() {
-
-    var ids = getCheckValues();
-    if (ids.length == 0) {
-        layer.msg("请选择要删除的角色");
-        return false;
-    }
-    layer.confirm('您是否确定删除所选角色？', {
-        btn: ['确定', '取消'] //按钮
-    }, function () {
-        var index = layer.load(1, {
-            shade: [0.1, '#fff'] //0.1透明度的白色背景
-        });
-        $.ajax({
-            url: _platform + '/role/delete',
-            data: {ids: ids},
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                if (result.flag) {
-                    layer.closeAll();
-                    $("#content-main").empty().load(ctx + '/role/list');
-                    layer.msg(result.msg);
-                } else {
-                    layer.close(index);
-                    layer.msg(result.msg);
-                }
-            }
-        });
-    });
-}
-
 function deleteRole(id) {
     layer.confirm('您是否确定删除角色？', {
         btn: ['确定', '取消'] //按钮
@@ -175,8 +191,8 @@ function deleteRole(id) {
             success: function (result) {
                 if (result.flag) {
                     layer.closeAll();
-                    $("#content-main").empty().load(ctx + '/role/list');
                     layer.msg(result.msg);
+                    $('#role-table-list').bootstrapTable("refresh");
                 } else {
                     layer.close(index);
                     layer.msg(result.msg);

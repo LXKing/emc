@@ -4,6 +4,7 @@ import com.huak.auth.model.Role;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,4 +28,6 @@ public interface RoleService {
     public int updateByPrimaryKeySelective(Role record);
 
     public PageResult<Role> queryByPage(Map<String,Object> paramsMap, Page page);
+
+    public List<Map<String,Object>> exportRoles(Map<String, Object> paramsMap);
 }

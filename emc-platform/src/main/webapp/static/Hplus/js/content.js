@@ -66,7 +66,18 @@ function WinMove() {
             connectWith: connect,
             tolerance: 'pointer',
             forcePlaceholderSize: true,
-            opacity: 0.8,
+            opacity: 0.8
         })
         .disableSelection();
 };
+
+function getHeight() {
+    return $(window).height() - 130;
+}
+
+//导出EXCEL按钮绑定事件
+$(document).on('click', '.excel-export-btn', function () {
+    var $from = $(this).parents('from');
+    var url = $(this).attr('export-url') + '?' + $from.serialize();
+    window.open(url);
+});

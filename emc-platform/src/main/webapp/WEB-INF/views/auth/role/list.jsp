@@ -6,49 +6,6 @@
 <head>
     <jsp:include page="../../head.jsp"></jsp:include>
     <script type="application/javascript">
-
-            $(function() {
-                //页面说明
-                console.info("页面说明：\n1.系统默认2个角色为超级管理员和企业管理员；\n" +
-                        "2.管理员用户才能进行管理且只能看到自己创建的角色；\n" +
-                        "功能：\n" +
-                        "【添加】【删除】【修改】【授权权限】【检索】【重置】【导出EXCEL】\n" +
-                        "字段：\n角色主键、角色名称、角色备注\n" +
-                        "创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
-
-                //日期范围限制
-                var start = {
-                    elem: '#start',
-                    format: 'YYYY/MM/DD hh:mm:ss',
-                    //min: laydate.now(), //设定最小日期为当前日期
-                    max: '2099-06-16 23:59:59', //最大日期
-                    istime: true,
-                    istoday: false,
-                    choose: function (datas) {
-                        end.min = datas; //开始日选好后，重置结束日的最小日期
-                        end.start = datas //将结束日的初始值设定为开始日
-                    }
-                };
-                var end = {
-                    elem: '#end',
-                    format: 'YYYY/MM/DD hh:mm:ss',
-                    max: '2099-06-16 23:59:59',
-                    istime: true,
-                    istoday: false,
-                    choose: function (datas) {
-                        start.max = datas; //结束日选好后，重置开始日的最大日期
-                    }
-                };
-                //laydate(start);
-                //laydate(end);
-
-                //下拉框js
-                //$(".chosen-select").chosen();
-
-
-            });
-
-
             function search(){
                 $table.bootstrapTable('refresh');
             }
@@ -140,10 +97,10 @@
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
 
-                                <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 搜索
+                                <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 导出Excel
+                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
                                 </button>
 
                             </div>
