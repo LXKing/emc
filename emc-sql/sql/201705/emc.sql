@@ -313,3 +313,24 @@ alter table t_emc_auth_role comment '角色基本信息表';
 时间2017年5月10日08:13:59
 */
 alter table t_emc_auth_role modify column CREATOR varchar(32);
+
+/**
+2017年5月12日14:35:55
+ */
+ drop table if exists t_ecc_auth_func;
+
+/*==============================================================*/
+/* Table: T_ECC_AUTH_FUNC                                       */
+/*==============================================================*/
+create table t_ecc_auth_func
+(
+   ID              varchar(32) not null comment '功能主键',
+   MENU_ID              varchar(32) not null comment '菜单主键',
+   UNAME                varchar(32) not null comment '唯一名称 功能唯一标识',
+   FUNC_NAME            varchar(32) not null comment '功能名称',
+   ISSEARCH              tinyint not null comment '是否查询 0-是 1-否',
+   SEQ                  int not null comment '排序',
+   primary key (ID)
+);
+
+alter table t_ecc_auth_func comment '功能基本信息表';
