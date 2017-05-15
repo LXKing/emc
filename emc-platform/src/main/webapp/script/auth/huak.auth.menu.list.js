@@ -162,7 +162,28 @@ $(function(){
     };
 
     function clickNode(e,treeId,treeNode){
+        $.ajax({
+            type: "post",
+            url: _platform+"/menu/detail",
+            data: {id:treeNode.id},
+            dataType: "json",
+            success: function (data) {
+                var menutype =data.menu.menuType;
+                if(menutype == "0"){
+                    $("#menuType").val("通用");
+                }else if(menutype == '1'){
+                    $("#menuType").val("前台");
+                }else{
+                    $("#menuType").val("后台");
+                }
 
+                $("#menuName").val(data.menu.menuName);
+                $("#menuUrl").val(data.menu.menuUrl);
+            },
+            error: function(data) {
+
+            }
+        });
     }
 
 });
