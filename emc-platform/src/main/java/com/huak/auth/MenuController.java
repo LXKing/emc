@@ -44,7 +44,6 @@ public class MenuController {
     @Resource
     private MenuService menuService;
 
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
         logger.info("转至系统菜单列表页");
@@ -130,10 +129,6 @@ public class MenuController {
             Map<String,String> user = (Map<String, String>) session.getAttribute(Constants.SESSION_KEY);
             menu.setCreator(user.get("1"));
             menu.setId(UUIDGenerator.getUUID());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Date date = new Date();
-            String nowTime = sdf.format(date);
-            menu.setCreatTime(nowTime);
             menuService.insert(menu);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加菜单成功");
@@ -202,4 +197,6 @@ public class MenuController {
         }
         return jo.toJSONString();
     }
+
+
 }

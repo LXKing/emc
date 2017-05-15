@@ -1474,6 +1474,7 @@
                     return;
                 }
 
+
                 $$(node, setting).remove();
                 data.removeNodeCache(setting, node);
                 data.removeSelectedNode(setting, node);

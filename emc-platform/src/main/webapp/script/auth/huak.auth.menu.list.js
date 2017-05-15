@@ -1,4 +1,8 @@
 $(function(){
+    /**
+     * ztree 初始化配置
+     * @type {{async: {enable: boolean, type: string, url: string, autoParam: string[]}, view: {addHoverDom: addHoverDom, removeHoverDom: removeHoverDom, selectedMulti: boolean, fontCss: {color: string}}, check: {enable: boolean}, data: {key: {name: string}, simpleData: {enable: boolean, idKey: string, pIdKey: string, rootPId: null}}, edit: {enable: boolean}, callback: {beforeEditName: beforeEdt, beforeRemove: beforeRemove, onClick: clickNode}}}
+     */
         var setting = {
             async: {
                 enable: true,
@@ -47,6 +51,12 @@ $(function(){
                 "创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
         $.fn.zTree.init($("#menuTree"), setting);
     var newCount = 1;
+
+    /**
+     * 获取焦点时显示编辑图标
+     * @param treeId
+     * @param treeNode
+     */
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
@@ -59,31 +69,45 @@ $(function(){
             return false;
         });
     };
+
+    /**
+     * 点击删除按钮时，出发触发回调函数
+     *
+     * @param treeId
+     * @param treeNode
+     */
     function beforeRemove(treeId, treeNode) {
         if(treeNode.isParent){
             layer.confirm('该节点是父节点,是否删除该节点以及其子节点？', {
-                btn: ['确定','否'] //按钮
+                btn: ['确定','取消'] //按钮
             }, function(){
-                onRemove(treeId,treeNode);
-            }, function(){
-                return ;
+                return  onRemove(treeId,treeNode);
             });
         }else{
             layer.confirm('是否删除该节点？', {
                 btn: ['确定','否'] //按钮
             }, function(){
-                onRemove(treeId,treeNode);
-            }, function(){
-                 return ;
+                return  onRemove(treeId,treeNode);
             });
         }
-
+        return false;
     };
 
+    /**
+     * 失去焦点时，移除编辑按钮
+     * @param treeId
+     * @param treeNode
+     */
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_"+treeNode.tId).unbind().remove();
     };
 
+    /**
+     * 点击编辑按钮时，触发回调函数
+     *
+     * @param treeId
+     * @param treeNode
+     */
     function beforeEdt(treeId,treeNode){
         $.get(_platform + '/menu/edit',{id:treeNode.id,menuType:0}, function (result) {
             $('#menu-layer-div').html(result);
@@ -108,6 +132,11 @@ $(function(){
 
     }
 
+    /**
+     * 删除方法自定义
+     * @param treeId
+     * @param treeNode
+     */
     function onRemove(treeId,treeNode){
         var zTree = $.fn.zTree.getZTreeObj("menuTree");
         var paramsArray = new Array();
@@ -128,14 +157,14 @@ $(function(){
             dataType: "json",
             success: function (data) {
                 layer.msg(data.msg);
-
+                zTree.removeNode(treeNode);
             },
             error: function(data) {
                 layer.msg(data.msg);
             }
         });
 
-        return;
+        return true;
     }
 
     function addData(treeId,treeNode){

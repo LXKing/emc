@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>菜单路径：</label>
                     <div class="col-sm-8">
-                        <input id="menuUrl" name="menuUrl"  value="${menu.menuUrl}" class="form-control" type="text" maxlength="8" placeholder="请输入菜单路径">
+                        <input id="menuUrl" name="menuUrl"  value="${menu.menuUrl}" class="form-control" type="text" maxlength="128" placeholder="请输入菜单路径">
                     </div>
                 </div>
                     <input id="pMenuId" name="pMenuId" value="${menu.pMenuId}" hidden="hidden"/>

@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>菜单路径：</label>
                     <div class="col-sm-8">
-                        <input id="menuUrl" name="menuUrl" class="form-control" type="text" maxlength="8" placeholder="请输入菜单路径">
+                        <input id="menuUrl" name="menuUrl" class="form-control" type="text" maxlength="128" placeholder="请输入菜单路径">
                     </div>
                 </div>
                     <input id="pMenuId" name="pMenuId" value="${pId}" hidden="hidden"/>
@@ -55,12 +55,13 @@
     $(function () {
 
         $.validator.addMethod("checkUnique", function(value, element) {
+
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
                 url:_platform+'/menu/check',
                 type:'POST',
                 async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {menuName:$('#menuName').val()},
+                data: {menuName:value},
                 dataType: 'json',
                 success:function(result) {
                     if (!result.flag) {

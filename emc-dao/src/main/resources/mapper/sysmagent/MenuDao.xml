@@ -25,7 +25,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR, CREAT_TIME, MENU_TYPE, P_MENU_AF_ID
+        ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR,CREAT_TIME, MENU_TYPE, P_MENU_AF_ID
     </sql>
     <sql id="Base_Column_List_Vo">
         ID, MENU_NAME, P_MENU_ID,  MENU_TYPE, P_MENU_AF_ID
