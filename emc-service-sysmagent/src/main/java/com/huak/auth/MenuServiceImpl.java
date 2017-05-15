@@ -3,6 +3,7 @@ package com.huak.auth;
 import com.github.pagehelper.PageHelper;
 import com.huak.auth.dao.MenuDao;
 import com.huak.auth.model.Menu;
+import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -19,6 +20,8 @@ public class MenuServiceImpl implements MenuService{
 
     @Resource
     private MenuDao menuDao;
+    @Resource
+    private DateDao dateDao;
 
     @Override
     public int deleteByPrimaryKey(String id) {
@@ -27,6 +30,7 @@ public class MenuServiceImpl implements MenuService{
 
     @Override
     public int insert(Menu record) {
+        record.setCreatTime(dateDao.getTime());
         return menuDao.insert(record);
     }
 

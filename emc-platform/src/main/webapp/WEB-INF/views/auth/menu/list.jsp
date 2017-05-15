@@ -34,13 +34,21 @@
                     <div class="row">
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                             <form class="form-horizontal" id="addForm" role="form">
-                                <input name="dicId" value="${object.dicId}" type="hidden"/>
+                                <input name="id"  type="hidden"/>
+                                <div class="form-group">
+                                    <div class="td">
+                                        <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">菜单属性：</label>
+                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                            <input id="menuType" readonly class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="td">
                                         <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">菜单名称：</label>
 
                                         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                            <input class="form-control" readonly value="组织机构管理" type="text">
+                                            <input class="form-control" id="menuName" readonly  type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -48,26 +56,19 @@
                                     <div class="td">
                                         <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">菜单链接：</label>
                                         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                            <input name="dicCode" class="form-control" readonly value="/eccp/eccp-platform/org/list" type="text">
+                                            <input  class="form-control" id="menuUrl" readonly  type="text">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="td">
-                                        <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">唯一编码：</label>
-                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                            <input name="dicDes" value="org" readonly class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="td">
-                                        <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">前后台：</label>
-                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                            <input name="dicName" readonly value="后台" class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                </div>
+                                <%--<div class="form-group">--%>
+                                    <%--<div class="td">--%>
+                                        <%--<label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">创建时间：</label>--%>
+                                        <%--<div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">--%>
+                                            <%--<input id="createtime"  readonly class="form-control" type="text">--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+
                             </form>
                         </div>
 
