@@ -1,43 +1,46 @@
 package com.huak.org.model;
 
-public class Org {
+import java.io.Serializable;
+import java.util.Date;
+
+public class Org implements Serializable{
     private String id;
 
-    private String provinceId;
+    private String comId;
 
-    private String cityId;
+    private String orgCode;
 
-    private String countyId;
+    private String orgName;
 
-    private String townId;
+    private String shortName;
 
-    private String villageId;
+    private String pOrgId;
 
-    private String addr;
+    private Long typeId;
 
-    private Double lng;
+    private Long creator;
 
-    private Double lat;
+    private Date createTime;
 
-    private Double publicArea;
+    private String memo;
 
-    private Double dwellArea;
+    private Integer seq;
 
-    private Long groupTypeId;
+    private Double area;
 
-    public Org(String id, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea, Long groupTypeId) {
+    public Org(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, Long typeId, Long creator, Date createTime, String memo, Integer seq, Double area) {
         this.id = id;
-        this.provinceId = provinceId;
-        this.cityId = cityId;
-        this.countyId = countyId;
-        this.townId = townId;
-        this.villageId = villageId;
-        this.addr = addr;
-        this.lng = lng;
-        this.lat = lat;
-        this.publicArea = publicArea;
-        this.dwellArea = dwellArea;
-        this.groupTypeId = groupTypeId;
+        this.comId = comId;
+        this.orgCode = orgCode;
+        this.orgName = orgName;
+        this.shortName = shortName;
+        this.pOrgId = pOrgId;
+        this.typeId = typeId;
+        this.creator = creator;
+        this.createTime = createTime;
+        this.memo = memo;
+        this.seq = seq;
+        this.area = area;
     }
 
     public Org() {
@@ -52,91 +55,91 @@ public class Org {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getProvinceId() {
-        return provinceId;
+    public String getComId() {
+        return comId;
     }
 
-    public void setProvinceId(String provinceId) {
-        this.provinceId = provinceId == null ? null : provinceId.trim();
+    public void setComId(String comId) {
+        this.comId = comId == null ? null : comId.trim();
     }
 
-    public String getCityId() {
-        return cityId;
+    public String getOrgCode() {
+        return orgCode;
     }
 
-    public void setCityId(String cityId) {
-        this.cityId = cityId == null ? null : cityId.trim();
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode == null ? null : orgCode.trim();
     }
 
-    public String getCountyId() {
-        return countyId;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setCountyId(String countyId) {
-        this.countyId = countyId == null ? null : countyId.trim();
+    public void setOrgName(String orgName) {
+        this.orgName = orgName == null ? null : orgName.trim();
     }
 
-    public String getTownId() {
-        return townId;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setTownId(String townId) {
-        this.townId = townId == null ? null : townId.trim();
+    public void setShortName(String shortName) {
+        this.shortName = shortName == null ? null : shortName.trim();
     }
 
-    public String getVillageId() {
-        return villageId;
+    public String getpOrgId() {
+        return pOrgId;
     }
 
-    public void setVillageId(String villageId) {
-        this.villageId = villageId == null ? null : villageId.trim();
+    public void setpOrgId(String pOrgId) {
+        this.pOrgId = pOrgId;
     }
 
-    public String getAddr() {
-        return addr;
+    public Long getTypeId() {
+        return typeId;
     }
 
-    public void setAddr(String addr) {
-        this.addr = addr == null ? null : addr.trim();
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
 
-    public Double getLng() {
-        return lng;
+    public Long getCreator() {
+        return creator;
     }
 
-    public void setLng(Double lng) {
-        this.lng = lng;
+    public void setCreator(Long creator) {
+        this.creator = creator;
     }
 
-    public Double getLat() {
-        return lat;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setLat(Double lat) {
-        this.lat = lat;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Double getPublicArea() {
-        return publicArea;
+    public String getMemo() {
+        return memo;
     }
 
-    public void setPublicArea(Double publicArea) {
-        this.publicArea = publicArea;
+    public void setMemo(String memo) {
+        this.memo = memo == null ? null : memo.trim();
     }
 
-    public Double getDwellArea() {
-        return dwellArea;
+    public Integer getSeq() {
+        return seq;
     }
 
-    public void setDwellArea(Double dwellArea) {
-        this.dwellArea = dwellArea;
+    public void setSeq(Integer seq) {
+        this.seq = seq;
     }
 
-    public Long getGroupTypeId() {
-        return groupTypeId;
+    public Double getArea() {
+        return area;
     }
 
-    public void setGroupTypeId(Long groupTypeId) {
-        this.groupTypeId = groupTypeId;
+    public void setArea(Double area) {
+        this.area = area;
     }
 }
