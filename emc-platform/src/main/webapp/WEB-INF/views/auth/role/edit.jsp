@@ -9,14 +9,15 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="roleAddForm" role="form">
-
+            <form class="form-horizontal" id="roleEditForm" role="form">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="id" value="${role.id}">
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>角色名称：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input id="roleName" name="roleName" class="form-control" type="text" maxlength="8"
+                        <input id="roleName" name="roleName" class="form-control" type="text" maxlength="8" value="${role.roleName}"
                                placeholder="请输入角色名称">
                     </div>
                 </div>
@@ -25,7 +26,7 @@
                             class="red">*</span>角色描述：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="roleDes" class="form-control" type="text" maxlength="16" placeholder="请输入角色描述">
+                        <input name="roleDes" class="form-control" type="text" maxlength="16" value="${role.roleDes}" placeholder="请输入角色描述">
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,7 +34,7 @@
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <textarea class="form-control" rows="6" maxlength="125" name="memo"
-                                  placeholder="请输入备注"></textarea>
+                                  placeholder="请输入备注">${role.memo}</textarea>
 
                     </div>
                 </div>
@@ -101,7 +102,7 @@
         });
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
-        $("#roleAddForm").validate({
+        $("#roleEditForm").validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
             onfocusout: function (element) {
@@ -137,8 +138,8 @@
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url: _platform + '/role/add',
-                    data: $('#roleAddForm').serialize(),
+                    url: _platform + '/role/edit',
+                    data: $('#roleEditForm').serialize(),
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {

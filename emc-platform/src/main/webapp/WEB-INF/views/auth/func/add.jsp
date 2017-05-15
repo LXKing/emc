@@ -9,73 +9,86 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="roleAddForm" role="form">
 
+            <form class="form-horizontal" id="funcAddForm" role="form"  >
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>角色名称：</label>
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">所属菜单：</label>
 
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input id="roleName" name="roleName" class="form-control" type="text" maxlength="8"
-                               placeholder="请输入角色名称">
+                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                        <input name="pMenuName" class="form-control" value="${menu.menu_name}" type="text" disabled>
+                        <input type="hidden" name="menuId" value="${menu.menu_id}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>角色描述：</label>
+                    <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>功能名称：</label>
+
+                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                        <input name="funcName" class="form-control" type="text" value="查询" maxlength="16" placeholder="请输入功能名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>唯一标识：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="roleDes" class="form-control" type="text" maxlength="16" placeholder="请输入角色描述">
+                        <input id="uName" name="uName" class="form-control" value="${menu.uname}Search" type="text" maxlength="32" placeholder="请输入唯一标识">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>排序：</label>
+
+                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                        <input name="seq" class="form-control" value="1" type="text" maxlength="3" placeholder="请输入排序值,查询为1">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">备注：</label>
 
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                         <textarea class="form-control" rows="6" maxlength="125" name="memo"
                                   placeholder="请输入备注"></textarea>
-
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
 </div>
 <script>
     //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
     $.validator.setDefaults({
+        ignore: ":hidden:not(select)",//校验chosen
         highlight: function (element) {
             $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
         success: function (element) {
-            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
         },
         errorElement: "span",
         errorPlacement: function (error, element) {
             if (element.is(":radio") || element.is(":checkbox")) {
-                error.appendTo(element.parent().parent().parent());
-            } else {
-                error.appendTo(element.parent());
+                error.insertAfter(element.parent().parent());
+            } else if(element.is("select")){
+                error.insertAfter(element.next());
+            }else{
+                error.insertAfter(element);
             }
         },
         errorClass: "help-block m-b-none m-t-xs",
         validClass: "help-block m-b-none m-t-none"
-
-
     });
 
     //以下为官方示例
     $(function () {
 
-        $.validator.addMethod("checkUnique", function (value, element) {
+        $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
-                url: _platform + '/role/check',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {roleName: $('#roleName').val()},
+                url:ctx+'/func/check/uname',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {uName:$('#uName').val()},
                 dataType: 'json',
-                success: function (result) {
+                success:function(result) {
                     if (!result.flag) {
                         deferred.reject();
                     } else {
@@ -85,7 +98,13 @@
             });
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
-        }, "角色名称已存在");
+        }, "唯一标识已存在");
+
+        // 英文名称验证
+        $.validator.addMethod("isEnglishName", function(value, element) {
+            var tel = /^\w+$/;
+            return this.optional(element) || (tel.test(value));
+        }, "请输入英文名称");
 
         //提示信息绑定
         $('input:not(:submit):not(:button)').mousedown(function () {
@@ -101,7 +120,7 @@
         });
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
-        $("#roleAddForm").validate({
+        $("#funcAddForm").validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
             onfocusout: function (element) {
@@ -114,39 +133,48 @@
             },
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
-                roleName: {
+                funcName: {
                     required: true,
                     minlength: 2
-                    //checkUnique: true
                 },
-                roleDes: {
+                uName: {
+                    required: true,
+                    checkUnique:true,
+                    minlength: 4,
+                    isEnglishName:true
+                },
+                seq: {
                     required: true
                 }
             },
             messages: {
-                roleName: {
-                    required: icon + "请输入角色名称",
-                    minlength: icon + "角色名称必须2个字符以上"
+                funcName: {
+                    required: icon + "请输入菜单名称",
+                    minlength: icon + "功能名称必须2个字符以上"
                 },
-                roleDes: {
-                    required: icon + "请输入角色描述"
+                uName: {
+                    required: icon + "请输入唯一标识",
+                    minlength: icon + "唯一标识必须4个字符以上"
+                },
+                seq: {
+                    required: icon + "请输入排序值"
                 }
             },
             submitHandler: function () {
                 var index = layer.load(1, {
-                    shade: [0.1, '#fff'] //0.1透明度的白色背景
+                    shade: [0.1,'#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url: _platform + '/role/add',
-                    data: $('#roleAddForm').serialize(),
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function (result) {
-                        if (result.flag) {
+                    url:ctx + '/func/add',
+                    data:$('#funcAddForm').serialize(),
+                    type:'POST',
+                    dataType:'json',
+                    success:function(result) {
+                        if(result.flag){
                             layer.closeAll();
                             layer.msg(result.msg);
-                            $('#role-table-list').bootstrapTable("refresh");
-                        } else {
+                            $('#func-table-list').bootstrapTable("refresh");
+                        }else{
                             layer.close(index);
                             layer.msg(result.msg);
                         }

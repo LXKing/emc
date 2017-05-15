@@ -7,7 +7,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,15 +22,9 @@ import java.util.Map;
  * @author yx
  *         创建时间：2012-12-27上午9:54:29
  */
-@Component
 public class CommonExcelExport {
 
-    public void excelExport(HttpServletResponse response,
-                            java.util.Map<String, String> cellName,                                //列标题
-                            java.util.List<Map<String, Object>> cellValues,                    //列值
-                            String workBookName) throws IOException {                                            //工作簿名称
-        OutputStream out = null;
-        //获取居民信息
+    public static HSSFWorkbook excelExport(Map<String, String> cellName,List<Map<String, Object>> cellValues ) throws IOException {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet();
         HSSFRow row = sheet.createRow((int) 0);
@@ -47,7 +40,7 @@ public class CommonExcelExport {
             Map<String, Object> ret = cellValues.get(j);
             int icell = 0;
             for (Map.Entry<String, String> entry : cellName.entrySet()) {
-                Object value = ret.get(entry.getKey().toLowerCase());
+                Object value = ret.get(entry.getKey().toUpperCase());
                 String cellValue = "";
                 if (value != null) {
                     cellValue = value.toString();
@@ -57,17 +50,7 @@ public class CommonExcelExport {
             }
         }
 
-        //response输出流导出excel
-
-        String mimetype = "application/vnd.ms-excel";
-        response.setContentType(mimetype);
-        response.setCharacterEncoding("UTF-8");
-        String fileName = workBookName + ".xls";
-        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
-        out = response.getOutputStream();
-        wb.write(out);
-        out.flush();
-        out.close();
+        return wb;
 
     }
 

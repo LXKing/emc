@@ -17,4 +17,6 @@ public interface RoleDao {
     int updateByPrimaryKeySelective(Role record);
 
     List<Role> selectPageByMap(Map<String,Object> paramsMap);
+
+    List<Map<String,Object>> exportRoles(Map<String, Object> paramsMap);
 }

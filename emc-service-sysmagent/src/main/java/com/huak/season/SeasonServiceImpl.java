@@ -43,7 +43,7 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     public PageResult<Season> queryByPage(String name, Page page) {
-        PageHelper.startPage(page.getPageNo(),page.getPageSize());
+        PageHelper.startPage(page.getPageNumber(),page.getPageSize());
         return Convert.convert(seasonDao.selectPageByName(name));
     }
 

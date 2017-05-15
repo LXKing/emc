@@ -71,7 +71,7 @@
             <a class="J_menuItem" href="${platform}/main/employe">员工管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/gongneng.html">功能管理</a>
+            <a class="J_menuItem" href="${platform}/func/list">功能管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/rizhi.html">业务日志</a>

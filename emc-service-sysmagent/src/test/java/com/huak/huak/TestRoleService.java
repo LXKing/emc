@@ -12,6 +12,7 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,7 +38,7 @@ public class TestRoleService extends BaseTest {
         roleService.deleteByPrimaryKey("1");
     }
 
-    @Test
+    //@Test
     @Rollback
     public void testInsertSelective() {
         Role role = new Role();
@@ -57,7 +58,7 @@ public class TestRoleService extends BaseTest {
         System.err.println(role.getRoleName());
     }
 
-    @Test
+    //@Test
     @Rollback
     public void testUpdateByPrimaryKeySelective() {
         Role role = new Role();
@@ -70,10 +71,23 @@ public class TestRoleService extends BaseTest {
     @Rollback
     public void testQueryByPage() {
         Map paramsMap = new HashMap<String, Object>();
-        paramsMap.put("roleName", "系统");
-        PageResult<Role> roles = roleService.queryByPage(paramsMap, new Page());
+        Page page = new Page();
+        page.setPageNumber(2);
+
+        PageResult<Role> roles = roleService.queryByPage(paramsMap, page);
         for (Role role : roles.getList()) {
             System.err.println(role.getRoleName());
+        }
+    }
+
+    @Test
+    @Rollback
+    public void testExportRoles() {
+        Map paramsMap = new HashMap<String, Object>();
+
+        List<Map<String, Object>> roles = roleService.exportRoles(paramsMap);
+        for (Map<String, Object> role : roles) {
+            System.err.println(role.get("role_name"));
         }
     }
 

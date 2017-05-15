@@ -98,4 +98,14 @@
         </if>
         order by id
     </select>
+    <select id="exportRoles" parameterType="java.util.HashMap" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_role
+        where 1=1
+        <if test="roleName != null and roleName !=''">
+            and  ROLE_NAME like CONCAT('%',#{roleName},'%')
+        </if>
+        order by id
+    </select>
 </mapper>
