@@ -82,8 +82,22 @@ public class MenuController {
     public String add(@RequestParam Map<String, Object> paramsMap, Model model) {
         model.addAttribute("pId",paramsMap.get("pId"));
         model.addAttribute("menuType",paramsMap.get("menuType"));
-        logger.info("转至系统菜单列表页");
+        logger.info("转至系统菜单添加页");
         return "auth/menu/add";
+    }
+
+
+    /**
+     *转至系统菜修改页面
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String eidt(@RequestParam Map<String, Object> paramsMap, Model model) {
+        Menu menu = menuService.selectByPrimaryKey(paramsMap.get("id").toString());
+        model.addAttribute("menu",menu);
+        logger.info("转至系统菜单修改页");
+        return "auth/menu/edit";
     }
 
 
@@ -130,4 +144,40 @@ public class MenuController {
         return jo.toJSONString();
     }
 
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(Menu menu,HttpServletRequest request) {
+        logger.info("修改菜单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            // TODO 添加session，创建者
+            menuService.updateByPrimaryKey(menu);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "修改菜单成功");
+        } catch (Exception e) {
+            logger.error("修改菜单异常" + e.getMessage());
+            jo.put(Constants.MSG, "修改菜单失败");
+        }
+        return jo.toJSONString();
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteNode(@RequestParam  String ids ) {
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            boolean flag = menuService.delete(ids);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "删除菜单成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("删除菜单异常" + e.getMessage());
+            jo.put(Constants.MSG, "删除菜单失败");
+        }
+        return jo.toJSONString();
+    }
 }

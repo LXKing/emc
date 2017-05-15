@@ -26,4 +26,6 @@ public interface MenuDao {
     List<Map<String,Object>> selectMenuTree(Map<String, String> params);
 
     int selectCheck(Map<String, String> paramsMap);
+
+    int delete(String[] ids);
 }

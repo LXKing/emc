@@ -57,4 +57,10 @@ public class MenuServiceImpl implements MenuService{
     public int checkMenuName(Map<String, String> paramsMap) {
         return menuDao.selectCheck(paramsMap);
     }
+
+    @Override
+    public boolean delete(String id) {
+         String[] ids =id.split(",");
+         return menuDao.delete(ids)>0?true:false;
+    }
 }

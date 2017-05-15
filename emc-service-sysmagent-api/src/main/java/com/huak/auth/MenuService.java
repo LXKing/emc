@@ -23,4 +23,6 @@ public interface MenuService {
    public List<Map<String,Object>> selectTree(Map<String,String> params);
 
     int checkMenuName(Map<String, String> paramsMap);
+
+    boolean delete(String ids);
 }

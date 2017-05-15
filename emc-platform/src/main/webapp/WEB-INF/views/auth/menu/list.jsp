@@ -21,7 +21,7 @@
                     <h5>菜单管理</h5>
                 </div>
                 <div  class="ibox-content">
-                    <ul id="treeDemo" class="ztree"></ul>
+                    <ul id="menuTree" class="ztree"></ul>
                 </div>
             </div>
         </div>
