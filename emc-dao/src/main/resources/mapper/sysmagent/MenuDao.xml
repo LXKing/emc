@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huak.auth.dao.MenuDao">
-    <resultMap id="BaseResultMap" type="com.huak.auth.model.Menu">
+    <resultMap id="BaseResultMap" type="com.huak.auth.model.Menu" >
         <constructor>
             <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="MENU_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="MENU_URL" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="P_MENU_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="CREAT_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="CREAT_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="MENU_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
             <arg column="P_MENU_AF_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
+
+    <resultMap id="TreeResultMap" type="java.util.Map" >
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MENU_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="P_MENU_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MENU_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="P_MENU_AF_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+
     <sql id="Base_Column_List">
         ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR, CREAT_TIME, MENU_TYPE, P_MENU_AF_ID
+    </sql>
+    <sql id="Base_Column_List_Vo">
+        ID, MENU_NAME, P_MENU_ID,  MENU_TYPE, P_MENU_AF_ID
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -127,4 +141,42 @@
       P_MENU_AF_ID = #{pMenuAfId,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectPageByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_menu
+        where 1=1
+        <if test="menuName != null and menuName !=''">
+            and  MENU_NAME like CONCAT('%',#{menuName},'%')
+        </if>
+        order by id
+    </select>
+
+
+
+    <select id="selectMenuTree"  resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        ID as id, MENU_NAME as name, P_MENU_ID as pId,
+        (case WHEN
+        emc_func_menu_haschild(ID)>0 then 'true' else 'false' end) open
+        from t_emc_auth_menu
+        where 1=1
+        <if test="menuName != null and menuName !=''">
+            and  MENU_NAME like CONCAT('%',#{menuName},'%')
+        </if>
+        order by id
+    </select>
+
+    <select id="selectCheck"  resultType="java.lang.Integer" parameterType="java.util.Map">
+        select
+          count(1)
+        from t_emc_auth_menu
+        where 1=1
+        and  MENU_NAME = #{menuName}
+        order by id
+    </select>
+
+
+
 </mapper>

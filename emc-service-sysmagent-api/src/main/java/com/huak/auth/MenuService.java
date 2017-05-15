@@ -4,6 +4,9 @@ import com.huak.auth.model.Menu;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by MR-BIN on 2017/5/8.
  */
@@ -16,5 +19,8 @@ public interface MenuService {
    public Menu selectByPrimaryKey(String id);
 
    public int updateByPrimaryKey(Menu record);
-   public PageResult<Menu> queryByPage( Page page);
+   public PageResult<Menu> queryByPage( Map<String, String> parmas,Page page);
+   public List<Map<String,Object>> selectTree(Map<String,String> params);
+
+    int checkMenuName(Map<String, String> paramsMap);
 }

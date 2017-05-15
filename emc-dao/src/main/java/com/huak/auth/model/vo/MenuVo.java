@@ -1,37 +1,27 @@
-package com.huak.auth.model;
+package com.huak.auth.model.vo;
 
+/**
+ * Created by MR-BIN on 2017/5/10.
+ */
+public class MenuVo {
 
-import java.io.Serializable;
-
-public class Menu implements Serializable{
     private String id;
-
     private String menuName;
-
-    private String menuUrl;
-
     private String pMenuId;
-
-    private String creator;
-
-    private String creatTime;
-
     private Byte menuType;
-
     private String pMenuAfId;
+    private String open;
 
-    public Menu(String id, String menuName, String menuUrl, String pMenuId, String creator, String creatTime, Byte menuType, String pMenuAfId) {
+    public MenuVo(String id, String menuName, String pMenuId, Byte menuType, String pMenuAfId,String open) {
         this.id = id;
         this.menuName = menuName;
-        this.menuUrl = menuUrl;
         this.pMenuId = pMenuId;
-        this.creator = creator;
-        this.creatTime = creatTime;
         this.menuType = menuType;
         this.pMenuAfId = pMenuAfId;
+        this.open = open ;
     }
 
-    public Menu() {
+    public MenuVo() {
         super();
     }
 
@@ -51,13 +41,6 @@ public class Menu implements Serializable{
         this.menuName = menuName == null ? null : menuName.trim();
     }
 
-    public String getMenuUrl() {
-        return menuUrl;
-    }
-
-    public void setMenuUrl(String menuUrl) {
-        this.menuUrl = menuUrl == null ? null : menuUrl.trim();
-    }
 
     public String getpMenuId() {
         return pMenuId;
@@ -65,22 +48,6 @@ public class Menu implements Serializable{
 
     public void setpMenuId(String pMenuId) {
         this.pMenuId = pMenuId == null ? null : pMenuId.trim();
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator == null ? null : creator.trim();
-    }
-
-    public String getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(String creatTime) {
-        this.creatTime = creatTime;
     }
 
     public Byte getMenuType() {
@@ -98,4 +65,14 @@ public class Menu implements Serializable{
     public void setpMenuAfId(String pMenuAfId) {
         this.pMenuAfId = pMenuAfId == null ? null : pMenuAfId.trim();
     }
+
+    public String getOpen(){
+        return this.open;
+    }
+
+    public void setOpen(String open){
+        this.open = open ;
+    }
+
+
 }

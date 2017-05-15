@@ -2,10 +2,10 @@ package com.huak.auth.dao;
 
 
 import com.huak.auth.model.Menu;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface MenuDao {
@@ -21,5 +21,9 @@ public interface MenuDao {
 
     int updateByPrimaryKey(Menu record);
 
-    List<Menu> selectPageByName();
+    List<Menu> selectPageByName(Map<String,String> params);
+
+    List<Map<String,Object>> selectMenuTree(Map<String, String> params);
+
+    int selectCheck(Map<String, String> paramsMap);
 }
