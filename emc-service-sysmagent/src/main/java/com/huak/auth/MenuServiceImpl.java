@@ -42,7 +42,7 @@ public class MenuServiceImpl implements MenuService{
 
     @Override
     public PageResult<Menu> queryByPage(Map<String, String> params, Page page) {
-        PageHelper.startPage(page.getPageNo(), page.getPageSize());
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         List<Menu> data = menuDao.selectPageByName(params);
         return Convert.convert(data);
     }

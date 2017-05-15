@@ -64,17 +64,17 @@ $(function(){
             layer.confirm('该节点是父节点,是否删除该节点以及其子节点？', {
                 btn: ['确定','否'] //按钮
             }, function(){
-
+                onRemove(treeId,treeNode);
             }, function(){
-
+                return ;
             });
         }else{
             layer.confirm('是否删除该节点？', {
                 btn: ['确定','否'] //按钮
             }, function(){
-
+                onRemove(treeId,treeNode);
             }, function(){
-
+                 return ;
             });
         }
 
