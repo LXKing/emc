@@ -55,7 +55,6 @@ $(function(){
         var btn = $("#addBtn_"+treeNode.tId);
         if (btn) btn.bind("click", function(){
             addData(treeId,treeNode);
-
             return false;
         });
     };
