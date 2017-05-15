@@ -109,8 +109,6 @@ function beforeRemove(treeId,treeNode){
     }, function(){
         onRemove(treeId,treeNode);
         return true;
-    }, function(){
-        return false;
     });
     return false;
 }
