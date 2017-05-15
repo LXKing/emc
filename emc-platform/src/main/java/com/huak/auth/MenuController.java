@@ -57,7 +57,7 @@ public class MenuController {
      * @return
      */
 
-    @RequestMapping(value = "/listTree", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/tree", method = RequestMethod.POST)
     @ResponseBody
     public  List<Map<String,Object>> list(@RequestParam Map<String, String> paramsMap) {
         logger.info("菜单列表页查询");
@@ -177,6 +177,28 @@ public class MenuController {
             e.printStackTrace();
             logger.error("删除菜单异常" + e.getMessage());
             jo.put(Constants.MSG, "删除菜单失败");
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *根据ID查询菜单详情
+     * sunbinbin
+     * @return string
+     */
+    @ResponseBody
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    public String detail(@RequestParam  String id) {
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Menu menu = menuService.selectByPrimaryKey(id);
+            jo.put("menu", menu);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("根据ID查询菜单失败" + e.getMessage());
+            jo.put(Constants.MSG, "根据ID查询菜单失败");
         }
         return jo.toJSONString();
     }

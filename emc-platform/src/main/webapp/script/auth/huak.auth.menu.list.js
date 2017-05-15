@@ -1,10 +1,9 @@
-var locate = _platform;
 $(function(){
         var setting = {
             async: {
                 enable: true,
-                type: "GET",
-                url:_platform+"/menu/listTree",
+                type: "POST",
+                url:_platform+"/menu/list/tree",
                 autoParam: ["id", "name"]
             },
             view: {
@@ -33,7 +32,8 @@ $(function(){
             },
             callback:{
                 beforeEditName:beforeEdt,
-                beforeRemove:beforeRemove
+                beforeRemove:beforeRemove,
+                onClick:clickNode
             }
         };
 
@@ -108,7 +108,7 @@ $(function(){
 
     }
 
-    function onRemove(e,treeId,treeNode){
+    function onRemove(treeId,treeNode){
         var zTree = $.fn.zTree.getZTreeObj("menuTree");
         var paramsArray = new Array();
         if(treeNode.isParent){
@@ -160,6 +160,10 @@ $(function(){
             }
         });
     };
+
+    function clickNode(e,treeId,treeNode){
+
+    }
 
 });
 
