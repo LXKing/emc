@@ -31,6 +31,10 @@
     <dubbo:service interface="com.huak.auth.MenuService" ref="menuService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
+    <bean id="funcService" class="com.huak.auth.FuncServiceImpl"></bean>
+    <dubbo:service interface="com.huak.auth.FuncService" ref="funcService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
 
     <!--组织机构接口-->
     <bean id="orgService" class="com.huak.org.OrgServiceImpl"></bean>
