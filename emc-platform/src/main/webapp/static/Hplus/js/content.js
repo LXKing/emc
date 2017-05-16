@@ -81,3 +81,61 @@ $(document).on('click', '.excel-export-btn', function () {
     var url = $(this).attr('export-url') + '?' + $from.serialize();
     window.open(url);
 });
+
+//绑定弹出层小
+$(document).on('click', '.top-layer-min', function () {
+    var $this = $(this);
+    var url = $this.attr("layer-url");
+    var title = $this.attr("layer-title");
+    var form = $this.attr("layer-form-id");
+    var $top = $(top.document);
+    var layerDiv = '<div id="layer-div"></div>';
+    $top.find('body').append(layerDiv);
+    $.get(url, function (result) {
+        $top.find("#layer-div").html(result);
+        top.layer.open({
+            area: ['800px', '580px'],
+            type: 1,
+            title: title,
+            btn: ['保存', '取消'],
+            yes: function () {
+                $top.find("#"+form).submit();
+            },
+            skin: 'layer-ext-moon', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            shift: 2,//出场动画
+            shadeClose: true, //开启遮罩关闭
+            content: $top.find("#layer-div")
+        });
+    });
+});
+//绑定弹出层满
+$(document).on('click', '.top-layer-max', function () {
+    var $this = $(this);
+    var url = $this.attr("layer-url");
+    var title = $this.attr("layer-title");
+    var form = $this.attr("layer-form-id");
+
+    var width = top.document.body.clientWidth+"px";
+    var height = top.document.body.clientHeight+"px";
+    var $top = $(top.document);
+    var layerDiv = '<div id="layer-div"></div>';
+    $top.find('body').append(layerDiv);
+    $.get(url, function (result) {
+        $top.find("#layer-div").html(result);
+        top.layer.open({
+            area: [width, height],
+            type: 1,
+            title: title,
+            btn: ['保存', '取消'],
+            yes: function () {
+                $top.find("#"+form).submit();
+            },
+            skin: 'layer-ext-moon', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            shift: 2,//出场动画
+            shadeClose: true, //开启遮罩关闭
+            content: $top.find("#layer-div")
+        });
+    });
+});

@@ -1,6 +1,8 @@
 package com.huak.org.model;
 
-public class Unit {
+import java.io.Serializable;
+
+public class Unit implements Serializable {
     private Long id;
 
     private String provinceId;

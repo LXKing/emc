@@ -51,7 +51,7 @@ public class RoleController {
 
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
-    public String listPost(@RequestParam Map<String, Object> paramsMap, Page page) {
+    public String list(@RequestParam Map<String, Object> paramsMap, Page page) {
         logger.info("角色列表页分页查询");
 
         JSONObject jo = new JSONObject();

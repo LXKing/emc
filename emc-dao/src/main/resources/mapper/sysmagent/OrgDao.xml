@@ -4,22 +4,22 @@
   <resultMap id="BaseResultMap" type="com.huak.org.model.Org">
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="COUNTY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="TOWN_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="VILLAGE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ADDR" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="LNG" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="GROUP_TYPE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ORG_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ORG_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SHORT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="P_ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TYPE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="CREATOR" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SEQ" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, PUBLIC_AREA, 
-    DWELL_AREA, GROUP_TYPE_ID
+    ID, COM_ID, ORG_CODE, ORG_NAME, SHORT_NAME, P_ORG_ID, TYPE_ID, CREATOR, CREATE_TIME, 
+    MEMO, SEQ, AREA
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -32,14 +32,14 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org (ID, PROVINCE_ID, CITY_ID, 
-      COUNTY_ID, TOWN_ID, VILLAGE_ID, 
-      ADDR, LNG, LAT, PUBLIC_AREA, 
-      DWELL_AREA, GROUP_TYPE_ID)
-    values (#{id,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
-      #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
-      #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, 
-      #{dwellArea,jdbcType=DOUBLE}, #{groupTypeId,jdbcType=BIGINT})
+    insert into t_emc_org (ID, COM_ID, ORG_CODE, 
+      ORG_NAME, SHORT_NAME, P_ORG_ID, 
+      TYPE_ID, CREATOR, CREATE_TIME, 
+      MEMO, SEQ, AREA)
+    values (#{id,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{pOrgId,jdbcType=VARCHAR},
+      #{typeId,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{memo,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{area,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Org">
     insert into t_emc_org
@@ -47,131 +47,147 @@
       <if test="id != null">
         ID,
       </if>
-      <if test="provinceId != null">
-        PROVINCE_ID,
+      <if test="comId != null">
+        COM_ID,
       </if>
-      <if test="cityId != null">
-        CITY_ID,
+      <if test="orgCode != null">
+        ORG_CODE,
       </if>
-      <if test="countyId != null">
-        COUNTY_ID,
+      <if test="orgName != null">
+        ORG_NAME,
       </if>
-      <if test="townId != null">
-        TOWN_ID,
+      <if test="shortName != null">
+        SHORT_NAME,
       </if>
-      <if test="villageId != null">
-        VILLAGE_ID,
+      <if test="pOrgId != null">
+        P_ORG_ID,
       </if>
-      <if test="addr != null">
-        ADDR,
+      <if test="typeId != null">
+        TYPE_ID,
       </if>
-      <if test="lng != null">
-        LNG,
+      <if test="creator != null">
+        CREATOR,
       </if>
-      <if test="lat != null">
-        LAT,
+      <if test="createTime != null">
+        CREATE_TIME,
       </if>
-      <if test="publicArea != null">
-        PUBLIC_AREA,
+      <if test="memo != null">
+        MEMO,
       </if>
-      <if test="dwellArea != null">
-        DWELL_AREA,
+      <if test="seq != null">
+        SEQ,
       </if>
-      <if test="groupTypeId != null">
-        GROUP_TYPE_ID,
+      <if test="area != null">
+        AREA,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="provinceId != null">
-        #{provinceId,jdbcType=VARCHAR},
+      <if test="comId != null">
+        #{comId,jdbcType=VARCHAR},
       </if>
-      <if test="cityId != null">
-        #{cityId,jdbcType=VARCHAR},
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
       </if>
-      <if test="countyId != null">
-        #{countyId,jdbcType=VARCHAR},
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
       </if>
-      <if test="townId != null">
-        #{townId,jdbcType=VARCHAR},
+      <if test="shortName != null">
+        #{shortName,jdbcType=VARCHAR},
       </if>
-      <if test="villageId != null">
-        #{villageId,jdbcType=VARCHAR},
+      <if test="pOrgId != null">
+        #{pOrgId,jdbcType=VARCHAR},
       </if>
-      <if test="addr != null">
-        #{addr,jdbcType=VARCHAR},
+      <if test="typeId != null">
+        #{typeId,jdbcType=BIGINT},
       </if>
-      <if test="lng != null">
-        #{lng,jdbcType=DOUBLE},
+      <if test="creator != null">
+        #{creator,jdbcType=BIGINT},
       </if>
-      <if test="lat != null">
-        #{lat,jdbcType=DOUBLE},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="publicArea != null">
-        #{publicArea,jdbcType=DOUBLE},
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
       </if>
-      <if test="dwellArea != null">
-        #{dwellArea,jdbcType=DOUBLE},
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
       </if>
-      <if test="groupTypeId != null">
-        #{groupTypeId,jdbcType=BIGINT},
+      <if test="area != null">
+        #{area,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Org">
     update t_emc_org
     <set>
-      <if test="provinceId != null">
-        PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
+      <if test="comId != null">
+        COM_ID = #{comId,jdbcType=VARCHAR},
       </if>
-      <if test="cityId != null">
-        CITY_ID = #{cityId,jdbcType=VARCHAR},
+      <if test="orgCode != null">
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       </if>
-      <if test="countyId != null">
-        COUNTY_ID = #{countyId,jdbcType=VARCHAR},
+      <if test="orgName != null">
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
       </if>
-      <if test="townId != null">
-        TOWN_ID = #{townId,jdbcType=VARCHAR},
+      <if test="shortName != null">
+        SHORT_NAME = #{shortName,jdbcType=VARCHAR},
       </if>
-      <if test="villageId != null">
-        VILLAGE_ID = #{villageId,jdbcType=VARCHAR},
+      <if test="pOrgId != null">
+        P_ORG_ID = #{pOrgId,jdbcType=VARCHAR},
       </if>
-      <if test="addr != null">
-        ADDR = #{addr,jdbcType=VARCHAR},
+      <if test="typeId != null">
+        TYPE_ID = #{typeId,jdbcType=BIGINT},
       </if>
-      <if test="lng != null">
-        LNG = #{lng,jdbcType=DOUBLE},
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=BIGINT},
       </if>
-      <if test="lat != null">
-        LAT = #{lat,jdbcType=DOUBLE},
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="publicArea != null">
-        PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
       </if>
-      <if test="dwellArea != null">
-        DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
+      <if test="seq != null">
+        SEQ = #{seq,jdbcType=INTEGER},
       </if>
-      <if test="groupTypeId != null">
-        GROUP_TYPE_ID = #{groupTypeId,jdbcType=BIGINT},
+      <if test="area != null">
+        AREA = #{area,jdbcType=DOUBLE},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Org">
     update t_emc_org
-    set PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
-      CITY_ID = #{cityId,jdbcType=VARCHAR},
-      COUNTY_ID = #{countyId,jdbcType=VARCHAR},
-      TOWN_ID = #{townId,jdbcType=VARCHAR},
-      VILLAGE_ID = #{villageId,jdbcType=VARCHAR},
-      ADDR = #{addr,jdbcType=VARCHAR},
-      LNG = #{lng,jdbcType=DOUBLE},
-      LAT = #{lat,jdbcType=DOUBLE},
-      PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
-      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
-      GROUP_TYPE_ID = #{groupTypeId,jdbcType=BIGINT}
+    set COM_ID = #{comId,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      P_ORG_ID = #{pOrgId,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=BIGINT},
+      CREATOR = #{creator,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=INTEGER},
+      AREA = #{area,jdbcType=DOUBLE}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectOrgAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org
+
+        order by ID
+    </select>
+    <!-- CheckOrgName -->
+    <select id="CheckOrgName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org
+        where ORG_NAME = #{orgName,jdbcType=VARCHAR}
+
+    </select>
 </mapper>

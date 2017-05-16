@@ -1,6 +1,8 @@
 package com.huak.org.model;
 
-public class Feed {
+import java.io.Serializable;
+
+public class Feed implements Serializable {
     private String id;
 
     private Byte feedType;
