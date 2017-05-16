@@ -457,7 +457,7 @@
             <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                 <form role="search" class="navbar-form-custom custom-styl-2" method="post" action="search_results.html">
                     <div class="form-group">
-                        <select name="searchOrg" class="chosen-select form-control">
+                        <select name="searchComp" class="chosen-select form-control">
                             <option value="">北京华热科技有限公司</option>
                             <option value="0">北京热力集团</option>
                             <option value="1">天津大港</option>

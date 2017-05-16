@@ -113,11 +113,11 @@ $(function(){
      * @param treeNode
      */
     function beforeEdt(treeId,treeNode){
-        $.get(_platform + '/menu/edit',{id:treeNode.id,menuType:0}, function (result) {
+        $.get(_platform + '/menu/edit',{id:treeNode.id}, function (result) {
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['500px', '580px'],
+            area: ['600px', '420px'],
             type: 1,
             title: '修改菜单',
             btn: ['保存', '取消'],

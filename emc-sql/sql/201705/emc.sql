@@ -22,7 +22,9 @@ create table t_emc_auth_menu
   primary key (ID)
 );
 alter table t_emc_auth_menu comment '权限菜单';
-
+alter table t_emc_auth_menu add SEQ int not Null;
+alter table t_emc_auth_menu change P_MENU_AF_ID TYPE varchar(128) NOT NULL;
+alter table t_emc_auth_menu change    TYPE   TYPE   TINYINT;
 /*用户表
   2017年5月5日15:10:10
   sunbinbin
@@ -183,9 +185,8 @@ create table t_emc_org_node
    DWELL_AREA           double not null default 0 comment '居民面积',
    primary key (ID)
 );
-
 alter table t_emc_org_node comment '热力站基本信息表';
-
+ALTER TABLE t_emc_org_node DROP PRIMARY KEY ;
 
 drop table if exists t_emc_org_room;
 
@@ -334,3 +335,23 @@ create table t_emc_auth_func
 );
 
 alter table t_emc_auth_func comment '功能基本信息表';
+
+/**
+2017年5月16日14:51:27
+ */
+drop table if exists t_emc_sys_dic;
+
+/*==============================================================*/
+/* Table: t_emc_sys_dic                                         */
+/*==============================================================*/
+create table t_emc_sys_dic
+(
+   ID                   varchar(32) not null comment '字典主键',
+   DES                  varchar(16) not null comment '字典名称',
+   TYPE_US              varchar(32) not null comment '字典类型',
+   TYPE_ZH              varchar(32) not null comment '字典类型名称',
+   SEQ                  int not null comment '排序',
+   primary key (ID)
+);
+
+alter table t_emc_sys_dic comment '系统字典表';

@@ -1,8 +1,9 @@
 package com.huak.org.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Employee {
+public class Employee  implements Serializable {
     private String id;
 
     private String empName;
