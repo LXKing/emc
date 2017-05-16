@@ -41,5 +41,9 @@
     <dubbo:service interface="com.huak.org.OrgService" ref="orgService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
-
+    <!--系统-->
+    <bean id="sysDicService" class="com.huak.sys.SysDicServiceImpl"></bean>
+    <dubbo:service interface="com.huak.sys.SysDicService" ref="sysDicService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
 </beans>
