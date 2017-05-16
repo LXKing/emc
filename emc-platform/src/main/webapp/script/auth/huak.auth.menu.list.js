@@ -113,7 +113,7 @@ $(function(){
      * @param treeNode
      */
     function beforeEdt(treeId,treeNode){
-        $.get(_platform + '/menu/edit',{id:treeNode.id,menuType:0}, function (result) {
+        $.get(_platform + '/menu/edit',{id:treeNode.id}, function (result) {
             $('#menu-layer-div').html(result);
         });
         layer.open({
