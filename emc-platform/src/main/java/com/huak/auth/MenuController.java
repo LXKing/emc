@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,8 +76,9 @@ public class MenuController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(@RequestParam Map<String, Object> paramsMap, Model model) {
-        model.addAttribute("pId",paramsMap.get("pId"));
-        model.addAttribute("menuType",paramsMap.get("menuType"));
+        Menu menu = menuService.selectByPrimaryKey(paramsMap.get("pId").toString());
+        model.addAttribute("pId",menu.getId());
+        model.addAttribute("menuType",menu.getMenuType());
         logger.info("转至系统菜单添加页");
         return "auth/menu/add";
     }
@@ -99,7 +97,11 @@ public class MenuController {
         return "auth/menu/edit";
     }
 
-
+    /**
+     *名称唯一性校验
+     * sunbinbin
+     * @return string
+     */
     @RequestMapping(value = "/check", method = RequestMethod.POST)
     @ResponseBody
     public String checkUnique(@RequestParam Map<String, String> paramsMap) {
@@ -117,6 +119,12 @@ public class MenuController {
         return jo.toJSONString();
     }
 
+    /**
+     * 添加菜单入库
+     * @param menu
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(Menu menu,HttpServletRequest request) {
@@ -139,7 +147,12 @@ public class MenuController {
         return jo.toJSONString();
     }
 
-
+    /**
+     * 修改菜单并修改数据库记录
+     * @param menu
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
     public String edit(Menu menu,HttpServletRequest request) {
@@ -159,6 +172,11 @@ public class MenuController {
     }
 
 
+    /**
+     * 删除数据并删除数据库记录
+     * @param ids
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteNode(@RequestParam  String ids ) {

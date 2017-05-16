@@ -5,11 +5,10 @@
         <div class="col-sm-12">
             <form class="form-horizontal" id="menuEditForm" role="form">
                 <div class="form-group">
-                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单类型：</label>
+                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单属性：</label>
                     <select name="menuType" class="chosen-select">
-                        <option <c:if test="${menu.menuType eq 0}">selected="selected" </c:if>  value="0">通用</option>
-                        <option <c:if test="${menu.menuType eq 1}">selected="selected" </c:if>  value="1">前台</option>
-                        <option <c:if test="${menu.menuType eq 2}">selected="selected" </c:if>  value="2">后台</option>
+                        <option <c:if test="${menu.menuType eq 0}">selected="selected" </c:if>  value="0">前台</option>
+                        <option <c:if test="${menu.menuType eq 1}">selected="selected" </c:if>  value="1">后台</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -24,6 +23,20 @@
                         <input id="menuUrl" name="menuUrl"  value="${menu.menuUrl}" class="form-control" type="text" maxlength="128" placeholder="请输入菜单路径">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单类型：</label>
+                    <select name="type" class="chosen-select">
+                        <option <c:if test="${menu.type eq 0}">selected="selected" </c:if>  value="0">模块</option>
+                        <option <c:if test="${menu.type eq 1}">selected="selected" </c:if>  value="1">菜单</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单序号：</label>
+                    <div class="col-sm-8">
+                        <input id="seq" name="seq" value="${menu.seq}" class="form-control" type="text" maxlength="8" placeholder="请输入菜单名称">
+                    </div>
+                </div>
                     <input id="pMenuId" name="pMenuId" value="${menu.pMenuId}" hidden="hidden"/>
                     <input id="id" name="id" value="${menu.id}" hidden="hidden"/>
             </form>
@@ -31,7 +44,8 @@
     </div>
 </div>
 <script>
-    //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
+
+
     $.validator.setDefaults({
         highlight: function (element) {
             $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -51,9 +65,9 @@
         validClass: "help-block m-b-none m-t-none"
     });
 
+
     //以下为官方示例
     $(function () {
-
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             if("${menu.menuName}" == $("#menuName").val()){
@@ -75,7 +89,6 @@
                     }
                 });
             }
-
             return deferred.state() == "resolved" ? true : false;
         }, "菜单名称已存在");
 
@@ -91,7 +104,6 @@
             }
             return false;
         });
-        // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
         $("#menuEditForm").validate({
             onsubmit:true,// 是否在提交是验证
@@ -113,6 +125,12 @@
                 },
                 menuUrl: {
                     required: true
+                },
+                type:{
+                    required: true
+                },
+                seq:{
+                    required: true
                 }
             },
             messages: {
@@ -122,6 +140,12 @@
                 },
                 menuUrl: {
                     required: icon + "请输入菜单路径"
+                },
+                type:{
+                    required: icon + "请选择菜单类型"
+                },
+                seq:{
+                    required: icon + "请填写菜单序号"
                 }
             },
             submitHandler:function(){

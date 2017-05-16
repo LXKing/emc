@@ -9,15 +9,15 @@ public class MenuVo {
     private String menuName;
     private String pMenuId;
     private Byte menuType;
-    private String pMenuAfId;
+    private Byte type;
     private String open;
 
-    public MenuVo(String id, String menuName, String pMenuId, Byte menuType, String pMenuAfId,String open) {
+    public MenuVo(String id, String menuName, String pMenuId, Byte menuType, Byte type,String open) {
         this.id = id;
         this.menuName = menuName;
         this.pMenuId = pMenuId;
         this.menuType = menuType;
-        this.pMenuAfId = pMenuAfId;
+        this.type = type;
         this.open = open ;
     }
 
@@ -58,12 +58,12 @@ public class MenuVo {
         this.menuType = menuType;
     }
 
-    public String getpMenuAfId() {
-        return pMenuAfId;
+    public Byte getType() {
+        return type;
     }
 
-    public void setpMenuAfId(String pMenuAfId) {
-        this.pMenuAfId = pMenuAfId == null ? null : pMenuAfId.trim();
+    public void setType(Byte type) {
+        this.type = type;
     }
 
     public String getOpen(){

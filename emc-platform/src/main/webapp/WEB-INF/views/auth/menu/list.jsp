@@ -60,14 +60,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%--<div class="form-group">--%>
-                                    <%--<div class="td">--%>
-                                        <%--<label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">创建时间：</label>--%>
-                                        <%--<div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">--%>
-                                            <%--<input id="createtime"  readonly class="form-control" type="text">--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
+                                <div class="form-group">
+                                    <div class="td">
+                                        <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">菜单序号：</label>
+                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                            <input  class="form-control" id="seq" readonly  type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="td">
+                                        <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3  control-label">菜单类型：</label>
+                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                            <input id="type"  readonly class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
 
                             </form>
                         </div>

@@ -8,9 +8,8 @@
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>菜单类型：</label>
                     <select name="menuType" class="chosen-select" disabled="disabled">
-                        <option <c:if test="${menuType eq 0}">selected="selected" </c:if>  value="0">通用</option>
-                        <option <c:if test="${menuType eq 1}">selected="selected" </c:if>  value="1">前台</option>
-                        <option <c:if test="${menuType eq 2}">selected="selected" </c:if>  value="2">后台</option>
+                        <option <c:if test="${menuType eq 1}">selected="selected" </c:if>  value="0">前台</option>
+                        <option <c:if test="${menuType eq 2}">selected="selected" </c:if>  value="1">后台</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -23,6 +22,20 @@
                     <label class="col-sm-3  control-label"><span class="red">*</span>菜单路径：</label>
                     <div class="col-sm-8">
                         <input id="menuUrl" name="menuUrl" class="form-control" type="text" maxlength="128" placeholder="请输入菜单路径">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单类型：</label>
+                    <select name="type" class="chosen-select" >
+                        <option  value="0">模块</option>
+                        <option   value="1">菜单</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单序号：</label>
+                    <div class="col-sm-8">
+                        <input id="seq" name="seq" class="form-control" type="text" maxlength="128" placeholder="请输入菜单序号">
                     </div>
                 </div>
                     <input id="pMenuId" name="pMenuId" value="${pId}" hidden="hidden"/>
@@ -109,6 +122,12 @@
                 },
                 menuUrl: {
                     required: true
+                },
+                seq:{
+                    required: true
+                },
+                type:{
+                    required: true
                 }
             },
             messages: {
@@ -118,6 +137,12 @@
                 },
                 menuUrl: {
                     required: icon + "请输入菜单路径"
+                },
+                seq :{
+                    required: icon + "请输入序号"
+                },
+                type:{
+                    required: icon + "请选择菜单类型"
                 }
             },
             submitHandler:function(){
