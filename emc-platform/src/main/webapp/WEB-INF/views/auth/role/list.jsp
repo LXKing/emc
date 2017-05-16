@@ -79,7 +79,7 @@
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
 
-                                    <button type="button" class="btn btn-sm btn-info" onclick="addRole()">
+                                    <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="roleAddForm" layer-title="添加角色" layer-url="${platform}/role/add">
                                         <i class="fa fa-plus"></i>添加
                                     </button>
 
@@ -117,28 +117,5 @@
 </div>
 <div id="role-layer-div" style="display: none"></div>
 
-<!--<div id="layer-div" style="display: none"></div>
-
-<%--jtemplement 模板--%>
-<textarea id="tpl-list" style="display: none">
-    {#foreach $T.data as item}
-    <tr>
-        <td>
-            <input type="checkbox" class="i-checks" value="{$T.item.role_id}" name="input[]">
-        </td>
-        <td>{$T.item.role_name}</td>
-        <td>{$T.item.role_des}</td>
-        <td title="{$T.item.memo}">{formatText($T.item.memo,10)}</td>
-        <td>
-            <a class="btn btn-white btn-xs btn-bitbucket" title="查看">
-                <i class="fa fa-file-text-o"></i>
-            </a>
-                <a class="btn btn-danger btn-xs btn-bitbucket" title="删除" onclick="deleteRole('{$T.item.role_id}')">
-                    <i class="fa fa-trash-o"></i>
-                </a>
-        </td>
-    </tr>
-    {#/for}
-</textarea>-->
 </body>
 </html>
