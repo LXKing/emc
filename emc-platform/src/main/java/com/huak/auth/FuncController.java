@@ -2,7 +2,9 @@
 package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.auth.model.Func;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,7 +44,6 @@ public class FuncController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String listPage(){
         logger.info("转至系统功能列表页");
-
         return "/auth/func/list";
     }
 
@@ -55,7 +56,7 @@ public class FuncController {
 
     @RequestMapping(value = "/list",method = RequestMethod.PATCH)
     @ResponseBody
-    public String list(Map<String,Object> paramsMap){
+    public String list(@RequestParam Map<String,Object> paramsMap){
         logger.info("功能列表页查询");
 
         JSONObject jo = new JSONObject();
@@ -68,12 +69,12 @@ public class FuncController {
     }
 
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
-    public String editPage(Model model, @PathVariable("id") Long id){
+    public String editPage(Model model, @PathVariable("id") String id){
         logger.info("跳转功能编辑页");
         try {
-           // Map<String,String> function = functionService.getFunction(id);
-            //model.addAttribute("function",function);
-           // model.addAttribute("menu",menuService.getMenu(Long.valueOf(function.get("menu_id"))));
+            Func func = funcService.selectByPrimaryKey(id);
+            model.addAttribute("func",func);
+            model.addAttribute("menu",menuService.selectByPrimaryKey(func.getMenuId()));
         } catch (Exception e) {
             logger.error("跳转功能编辑页异常" + e.getMessage());
         }
@@ -82,13 +83,13 @@ public class FuncController {
 
     @RequestMapping(value = "/edit",method = RequestMethod.PUT)
     @ResponseBody
-    public String edit(@RequestParam Map<String,String> paramsMap){
+    public String edit(Func func){
         logger.info("修改功能");
 
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG ,false);
         try {
-           // functionService.editFunction(paramsMap);
+            funcService.updateByPrimaryKeySelective(func);
             jo.put(Constants.FLAG ,true);
             jo.put(Constants.MSG ,"修改功能成功");
             //重新加载缓存
@@ -100,11 +101,11 @@ public class FuncController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public String addPage(Long menuId, Model model) {
+    @RequestMapping(value = "/add/{menuId}",method = RequestMethod.GET)
+    public String addPage(@PathVariable("menuId") String menuId, Model model) {
         logger.info("跳转功能添加页");
         try {
-            //model.addAttribute("menu",menuService.getMenu(menuId));
+            model.addAttribute("menu",menuService.selectByPrimaryKey(menuId));
         } catch (Exception e) {
             logger.error("跳转功能添加页异常" + e.getMessage());
         }
@@ -113,46 +114,43 @@ public class FuncController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public String add(@RequestParam Map<String,String> paramsMap){
+    public String add(Func func){
         logger.info("添加功能");
 
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG ,false);
         try {
-           // functionService.addFunction(paramsMap);
+            func.setId(UUIDGenerator.getUUID());
+            funcService.insertSelective(func);
             jo.put(Constants.FLAG ,true);
             jo.put(Constants.MSG ,"添加功能成功");
             //重新加载缓存
             //functionInitBean.afterPropertiesSet();
         } catch (Exception e) {
-            logger.info("添加功能异常" + e.getMessage());
+            logger.error("添加功能异常" + e.getMessage());
             jo.put(Constants.MSG ,"添加功能失败");
         }
         return jo.toJSONString();
     }
 
-
-/**
-     * @param ids
+    /**
+     * @param id
      * @return
      */
-
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteRoles(String ids){
-        logger.info("批量删除功能");
+    public String delete(@PathVariable("id") String id) {
+        logger.info("删除功能");
 
         JSONObject jo = new JSONObject();
-        jo.put(Constants.FLAG ,false);
+        jo.put(Constants.FLAG, false);
         try {
-           // functionService.deleteFunctions(ids);
-            jo.put(Constants.FLAG ,true);
-            jo.put(Constants.MSG ,"删除功能成功");
-            //重新加载缓存
-            //functionInitBean.afterPropertiesSet();
+            funcService.deleteByPrimaryKey(id);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "删除功能成功");
         } catch (Exception e) {
-            logger.info("删除功能异常" + e.getMessage());
-            jo.put(Constants.MSG ,"删除功能失败");
+            logger.error("删除功能异常" + e.getMessage());
+            jo.put(Constants.MSG, "删除功能失败");
         }
         return jo.toJSONString();
     }
