@@ -66,6 +66,9 @@
 
     //以下为官方示例
     $(function () {
+        var $form = $(top.document).find("#roleAddForm");
+        // validate signup form on keyup and submit
+        var icon = "<i class='fa fa-times-circle'></i> ";
 
         $.validator.addMethod("checkUnique", function (value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
@@ -99,9 +102,8 @@
             }
             return false;
         });
-        // validate signup form on keyup and submit
-        var icon = "<i class='fa fa-times-circle'></i> ";
-        $("#roleAddForm").validate({
+
+        $form.validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
             onfocusout: function (element) {
@@ -133,22 +135,22 @@
                 }
             },
             submitHandler: function () {
-                var index = layer.load(1, {
+                var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
                     url: _platform + '/role/add',
-                    data: $('#roleAddForm').serialize(),
+                    data: $form.serialize(),
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {
                         if (result.flag) {
-                            layer.closeAll();
-                            layer.msg(result.msg);
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
                             $('#role-table-list').bootstrapTable("refresh");
                         } else {
                             layer.close(index);
-                            layer.msg(result.msg);
+                            top.layer.msg(result.msg);
                         }
                     }
                 });
