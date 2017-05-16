@@ -24,7 +24,7 @@ $(function () {
         //queryParamsType: "undefined",
         queryParams: function queryParams(params) {
             var param = {
-                funcName:$('input[name="funcName"]').val(),
+                menuId:$('input[name="menuId"]').val(),
                 _method: "PATCH"
             };
             return param;
@@ -85,66 +85,64 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info" onclick="editFunc(&quot;'+row.id+'&quot;)"> <i class="fa fa-edit"></i></a>&nbsp;' +
+                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="funcEditForm" layer-title="编辑功能" layer-url="'+_platform+'/func/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
                         '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteFunc(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>';
                 }
             }
 
         ]
-
-
     });
+
+    /*菜单树*/
+    var setting = {
+        async: {
+            enable: true,
+            type: "POST",
+            url:_platform+"/menu/list/tree",
+            autoParam: ["id", "name"]
+        },
+        view: {
+            selectedMulti: false
+        },
+        data: {
+            key : {
+                name : "name"
+            },
+            simpleData : {
+                enable : true,
+                idKey : "id",
+                pIdKey : "pId",
+                rootPId : null
+            }
+        },
+        callback:{
+            onClick:function(event, treeId, treeNode){
+                $('input[name="menuId"]').val(treeNode.id);
+                $('#func-table-list').bootstrapTable('refresh');
+            }
+        }
+    };
+
+    $.fn.zTree.init($("#menuTreeFunc"), setting);
 
 });
-function search(){
-    $('#func-table-list').bootstrapTable('refresh');
-}
 //layer
 function addFunc() {
-    $.get(_platform + '/func/add', function (result) {
-        $('#func-layer-div').html(result);
-    });
-    layer.open({
-        area: ['800px', '580px'],
-        type: 1,
-        title: '添加功能',
-        btn: ['保存', '取消'],
-        yes: function () {
-            $("#funcAddForm").submit();
-        },
-        skin: 'layer-ext-moon', //样式类名
-        closeBtn: 1, //不显示关闭按钮
-        shift: 2,
-        shadeClose: true, //开启遮罩关闭
-        content: $('#func-layer-div')
-    });
+    var menuId = $('input[name="menuId"]').val();
+    if(menuId==1||menuId==null){
+        top.layer.msg("请选择要添加的菜单");
+        return false;
+    }
+    var url = _platform + '/func/add/'+menuId;
+    openLayer(url,"添加功能","funcAddForm");
 }
 
-function editFunc(id) {
-    $.get(_platform + '/func/edit/' + id, function (result) {
-        $('#func-layer-div').html(result);
-    });
-    layer.open({
-        area: ['800px', '580px'],
-        type: 1,
-        title: '编辑功能',
-        btn: ['保存', '取消'],
-        yes: function () {
-            $("#funcEditForm").submit();
-        },
-        skin: 'layer-ext-moon', //样式类名
-        closeBtn: 1, //不显示关闭按钮
-        shift: 2,
-        shadeClose: true, //开启遮罩关闭
-        content: $('#func-layer-div')
-    });
-}
 
 function deleteFunc(id) {
-    layer.confirm('您是否确定删除功能？', {
+    top.layer.confirm('您是否确定删除功能？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var index = layer.load(1, {
+        var index = top.layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
@@ -153,12 +151,12 @@ function deleteFunc(id) {
             dataType: 'json',
             success: function (result) {
                 if (result.flag) {
-                    layer.closeAll();
-                    layer.msg(result.msg);
+                    top.layer.closeAll();
+                    top.layer.msg(result.msg);
                     $('#func-table-list').bootstrapTable("refresh");
                 } else {
-                    layer.close(index);
-                    layer.msg(result.msg);
+                    top.layer.close(index);
+                    top.layer.msg(result.msg);
                 }
             }
         });

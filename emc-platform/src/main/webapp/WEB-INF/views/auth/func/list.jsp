@@ -108,7 +108,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div>
-                        <ul id="treeDemo" class="ztree"></ul>
+                        <ul id="menuTreeFunc" class="ztree"></ul>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form id="funcs-form" role="form" class="form-horizontal m-t">
-                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="menuId" value="1">
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">

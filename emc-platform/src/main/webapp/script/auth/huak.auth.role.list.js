@@ -138,7 +138,7 @@ function search(){
 }
 
 function deleteRole(id) {
-    layer.confirm('您是否确定删除角色？', {
+    top.layer.confirm('您是否确定删除角色？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = top.layer.load(1, {

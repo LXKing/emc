@@ -10,7 +10,9 @@
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
 
-            <form class="form-horizontal" id="funcAddForm" role="form"  >
+            <form class="form-horizontal" id="funcEditForm" role="form"  >
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="id" value="${func.id}">
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">所属菜单：</label>
 
@@ -23,14 +25,14 @@
                     <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>功能名称：</label>
 
                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                        <input name="funcName" class="form-control" type="text" value="查询" maxlength="16" placeholder="请输入功能名称">
+                        <input name="funcName" class="form-control" type="text" value="${func.funcName}" maxlength="16" placeholder="请输入功能名称">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>唯一标识：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="uname" class="form-control" value="Search" type="text" maxlength="32" placeholder="请输入唯一标识">
+                        <input name="uname" class="form-control" value="${func.uname}" type="text" maxlength="32" placeholder="请输入唯一标识">
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,8 +40,8 @@
 
                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                         <select name="issearch" class="chosen-select form-control">
-                            <option value="1">否</option>
-                            <option value="0">是</option>
+                            <option value="1" ${func.issearch eq 1?'selected':''}>否</option>
+                            <option value="0" ${func.issearch eq 0?'selected':''}>是</option>
                         </select>
                     </div>
                 </div>
@@ -47,7 +49,7 @@
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>排序：</label>
 
                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                        <input name="seq" class="form-control" value="1" type="text" maxlength="3" placeholder="请输入排序值,查询为1">
+                        <input name="seq" class="form-control" value="${func.seq}" type="text" maxlength="3" placeholder="请输入排序值,查询为1">
                     </div>
                 </div>
 
@@ -85,7 +87,7 @@
         //下拉框js
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
 
-        var $form = $(top.document).find("#funcAddForm");
+        var $form = $(top.document).find("#funcEditForm");
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
         $.validator.addMethod("checkUnique", function(value, element) {
@@ -172,7 +174,7 @@
                     shade: [0.1,'#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url:_platform + '/func/add',
+                    url:_platform + '/func/edit',
                     data:$form.serialize(),
                     type:'POST',
                     dataType:'json',
