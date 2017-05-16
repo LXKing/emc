@@ -452,7 +452,8 @@
             if (this.options.width != null) {
                 return this.options.width;
             } else {
-                return "" + this.form_field.offsetWidth + "px";
+                return '100%';
+                //return "" + this.form_field.offsetWidth + "px";
             }
         };
 
