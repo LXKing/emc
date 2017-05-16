@@ -117,7 +117,7 @@ $(function(){
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['500px', '580px'],
+            area: ['600px', '420px'],
             type: 1,
             title: '修改菜单',
             btn: ['保存', '取消'],
