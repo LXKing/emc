@@ -335,3 +335,23 @@ create table t_emc_auth_func
 );
 
 alter table t_emc_auth_func comment '功能基本信息表';
+
+/**
+2017年5月16日14:51:27
+ */
+drop table if exists t_emc_sys_dic;
+
+/*==============================================================*/
+/* Table: t_emc_sys_dic                                         */
+/*==============================================================*/
+create table t_emc_sys_dic
+(
+   ID                   varchar(32) not null comment '字典主键',
+   DES                  varchar(16) not null comment '字典名称',
+   TYPE_US              varchar(32) not null comment '字典类型',
+   TYPE_ZH              varchar(32) not null comment '字典类型名称',
+   SEQ                  int not null comment '排序',
+   primary key (ID)
+);
+
+alter table t_emc_sys_dic comment '系统字典表';
