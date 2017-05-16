@@ -32,6 +32,10 @@ $(function(){
                 }
             },
             edit: {
+                drag:{
+                    isCopy:false,
+                    isMove:false
+                },
                 enable: true
             },
             callback:{
@@ -113,7 +117,7 @@ $(function(){
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['500px', '380px'],
+            area: ['500px', '580px'],
             type: 1,
             title: '修改菜单',
             btn: ['保存', '取消'],
@@ -168,11 +172,11 @@ $(function(){
     }
 
     function addData(treeId,treeNode){
-        $.get(_platform + '/menu/add',{pId:treeNode.id,menuType:0}, function (result) {
+        $.get(_platform + '/menu/add',{pId:treeNode.id}, function (result) {
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['500px', '380px'],
+            area: ['600px', '420px'],
             type: 1,
             title: '添加菜单',
             btn: ['保存', '取消'],
@@ -197,15 +201,19 @@ $(function(){
             data: {id:treeNode.id},
             dataType: "json",
             success: function (data) {
+                debugger;
                 var menutype =data.menu.menuType;
+                var type = data.menu.type;
                 if(menutype == "0"){
-                    $("#menuType").val("通用");
-                }else if(menutype == '1'){
                     $("#menuType").val("前台");
-                }else{
+                }else
                     $("#menuType").val("后台");
-                }
 
+                if(type == "0"){
+                    $("#type").val("模块");
+                }else
+                    $("#type").val("菜单");
+                $("#seq").val(data.menu.seq);
                 $("#menuName").val(data.menu.menuName);
                 $("#menuUrl").val(data.menu.menuUrl);
             },

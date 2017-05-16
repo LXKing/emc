@@ -18,9 +18,11 @@ public class Menu implements Serializable{
 
     private Byte menuType;
 
-    private String pMenuAfId;
+    private Byte type;
 
-    public Menu(String id, String menuName, String menuUrl, String pMenuId, String creator, String creatTime, Byte menuType, String pMenuAfId) {
+    private Integer seq;
+
+    public Menu(String id, String menuName, String menuUrl, String pMenuId, String creator, String creatTime, Byte menuType, Byte type,Integer seq) {
         this.id = id;
         this.menuName = menuName;
         this.menuUrl = menuUrl;
@@ -28,7 +30,8 @@ public class Menu implements Serializable{
         this.creator = creator;
         this.creatTime = creatTime;
         this.menuType = menuType;
-        this.pMenuAfId = pMenuAfId;
+        this.type = type;
+        this.seq = seq;
     }
 
     public Menu() {
@@ -91,11 +94,19 @@ public class Menu implements Serializable{
         this.menuType = menuType;
     }
 
-    public String getpMenuAfId() {
-        return pMenuAfId;
+    public Byte getType() {
+        return type;
     }
 
-    public void setpMenuAfId(String pMenuAfId) {
-        this.pMenuAfId = pMenuAfId == null ? null : pMenuAfId.trim();
+    public void setType(Byte type) {
+        this.type = type ;
+    }
+
+    public Integer getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
     }
 }
