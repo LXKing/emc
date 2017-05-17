@@ -142,8 +142,9 @@ $(function () {
 });
 
 function queryParams(params) {
+    debugger;
     return {
-        orgId:$("#orgId").val(),
+        orgId:top.orgId,
         stationName:$('input[name="stationName"]').val(),
         _method: "PATCH",
         pageNumber: params.pageNumber,
@@ -153,6 +154,7 @@ function queryParams(params) {
 }
 
 function treeNodeClick(e,treeId,treeNode){
+    top.orgId = treeNode.id;
     search();
 }
 
