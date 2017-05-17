@@ -1,5 +1,6 @@
 package com.huak.init;
 
+import com.huak.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,6 +32,7 @@ public class ClassPathAware implements InitializingBean, ServletContextAware {
     private String platPath;
     @Value("${web.url}")
     private String webPath;
+
     /**
      * Invoked by a BeanFactory after it has set all bean properties supplied
      * (and satisfied BeanFactoryAware and ApplicationContextAware).
@@ -44,8 +46,8 @@ public class ClassPathAware implements InitializingBean, ServletContextAware {
     @Override
     public void afterPropertiesSet() throws Exception {
         logger.info("----开始加载绝对路径----");
-        servletContext.setAttribute("platform",platPath);
-        servletContext.setAttribute("web",webPath);
+        servletContext.setAttribute(Constants.PLATFORM, platPath);
+        servletContext.setAttribute(Constants.WEB, webPath);
         logger.info("----加载绝对路径成功----");
     }
 
