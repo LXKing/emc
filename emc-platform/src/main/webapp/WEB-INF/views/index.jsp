@@ -65,7 +65,7 @@
             <a class="J_menuItem" href="${platform}/role/list">角色管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/yonghu.html">用户管理</a>
+            <a class="J_menuItem" href="${platform}/user/list">用户管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="${platform}/main/employe">员工管理</a>
