@@ -41,6 +41,17 @@
     <dubbo:service interface="com.huak.org.OrgService" ref="orgService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
+
+    <!--组织机构接口-->
+    <bean id="feedService" class="com.huak.org.FeedServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.FeedService" ref="feedService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
+    <!--组织机构接口-->
+    <bean id="onecenetService" class="com.huak.org.OncenetServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.OncenetService" ref="onecenetService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
     <!--系统-->
     <bean id="sysDicService" class="com.huak.sys.SysDicServiceImpl"></bean>
     <dubbo:service interface="com.huak.sys.SysDicService" ref="sysDicService" timeout="300" loadbalance="random"
