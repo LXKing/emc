@@ -80,7 +80,7 @@
             <a class="J_menuItem" href="html/muban.html">模板文件</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/dictionary_list.html">字典管理</a>
+            <a class="J_menuItem" href="${platform}/sys/dic/list">字典管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/message_list.html">站内信管理</a>

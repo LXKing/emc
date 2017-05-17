@@ -1,14 +1,20 @@
 package com.huak.init;
 
 import com.huak.common.Constants;
+import com.huak.sys.SysDicService;
+import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -17,21 +23,18 @@ import javax.servlet.ServletContext;
  * Author:  lichao  <BR>
  * Project:emc    <BR>
  * Version: v 1.0      <BR>
- * Date: 2017/5/5<BR>
- * Description:    实现ServletConfigAware初始化路径到Application中 <BR>
+ * Date: 2017/5/17<BR>
+ * Description:   字典缓存  <BR>
  * Function List:  <BR>
  */
 @Component
-public class ClassPathAware implements InitializingBean, ServletContextAware {
-
+public class SysDicAware implements InitializingBean, ServletContextAware {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private ServletContext servletContext;
 
-    @Value("${platform.url}")
-    private String platPath;
-    @Value("${web.url}")
-    private String webPath;
+    @Resource
+    private SysDicService sysDicService;
 
     /**
      * Invoked by a BeanFactory after it has set all bean properties supplied
@@ -45,10 +48,24 @@ public class ClassPathAware implements InitializingBean, ServletContextAware {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        logger.info("----开始加载绝对路径----");
-        servletContext.setAttribute(Constants.PLATFORM, platPath);
-        servletContext.setAttribute(Constants.WEB, webPath);
-        logger.info("----加载绝对路径成功----");
+        logger.info("----开始缓存系统字典----");
+        Map sysDicMap = new HashMap<String, List<SysDic>>();
+        List<Map<String, Object>> typeList = sysDicService.queryGroup(new HashMap<String, Object>());
+        List<SysDic> sysDicList = sysDicService.queryAll(new HashMap<String, Object>());
+        for (Map<String, Object> map : typeList) {
+            List<SysDic> dics = new ArrayList<>();
+            String typeUs = map.get("typeUs").toString();
+            for (SysDic sysDic : sysDicList) {
+                if (sysDic.getTypeUs().equals(typeUs)) {
+                    dics.add(sysDic);
+                }
+            }
+            sysDicMap.put(typeUs, dics);
+        }
+
+        //存入Application
+        servletContext.setAttribute(Constants.SYS_DIC, sysDicMap);
+        logger.info("----缓存系统字典成功----");
     }
 
     /**

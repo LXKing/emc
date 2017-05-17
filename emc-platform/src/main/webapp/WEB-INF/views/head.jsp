@@ -80,6 +80,9 @@
 <script src="${platform}/static/Hplus/js/treegrid.js"></script>
 <script src="${platform}/static/Hplus/js/pcctv.js"></script>
 <script src="${platform}/static/Hplus/js/org.js"></script>--%>
+
+<%--emc项目组脚本--%>
+<script src="${platform}/static/Hplus/js/emc.js"></script>
 <script type="text/javascript">
     var _platform = '${platform}';
     layer.config({

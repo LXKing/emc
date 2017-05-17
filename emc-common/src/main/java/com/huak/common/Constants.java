@@ -38,8 +38,12 @@ public class Constants {
     /*新增或者保存 0 SAVE 1 UPDATE*/
     public final static String SAVE_OR_UPDATE = "saveOrUpdate";
 
-    /*字典类型 MAP<Object>*/
-    public final static String DIC_TYPE_LIST = "dictypeList";
+    /*字典*/
+    public final static String SYS_DIC = "sysDic";
+    /*后台系统*/
+    public final static String PLATFORM = "platform";
+    /*前台系统*/
+    public final static String WEB = "web";
     /*字典 MAP<类型标识，字典列表>*/
     public final static String DIC = "dicList";
     /*字典 MAP<类型主键，字典列表>*/
