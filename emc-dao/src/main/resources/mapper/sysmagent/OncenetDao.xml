@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huak.org.dao.OncenetDao">
+  <resultMap id="BaseResultMap" type="com.huak.org.model.Oncenet">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NET_TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LENGTH" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="CELL_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PART_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="MEDIUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NET_TYPE_ID, LENGTH, CELL_NUM, PART_NUM, MEDIUM
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_emc_org_oncenet
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_emc_org_oncenet
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huak.org.model.Oncenet">
+    insert into t_emc_org_oncenet (ID, NET_TYPE_ID, LENGTH, 
+      CELL_NUM, PART_NUM, MEDIUM
+      )
+    values (#{id,jdbcType=VARCHAR}, #{netTypeId,jdbcType=VARCHAR}, #{length,jdbcType=DOUBLE}, 
+      #{cellNum,jdbcType=INTEGER}, #{partNum,jdbcType=INTEGER}, #{medium,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huak.org.model.Oncenet">
+    insert into t_emc_org_oncenet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="netTypeId != null">
+        NET_TYPE_ID,
+      </if>
+      <if test="length != null">
+        LENGTH,
+      </if>
+      <if test="cellNum != null">
+        CELL_NUM,
+      </if>
+      <if test="partNum != null">
+        PART_NUM,
+      </if>
+      <if test="medium != null">
+        MEDIUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="netTypeId != null">
+        #{netTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="cellNum != null">
+        #{cellNum,jdbcType=INTEGER},
+      </if>
+      <if test="partNum != null">
+        #{partNum,jdbcType=INTEGER},
+      </if>
+      <if test="medium != null">
+        #{medium,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Oncenet">
+    update t_emc_org_oncenet
+    <set>
+      <if test="netTypeId != null">
+        NET_TYPE_ID = #{netTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        LENGTH = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="cellNum != null">
+        CELL_NUM = #{cellNum,jdbcType=INTEGER},
+      </if>
+      <if test="partNum != null">
+        PART_NUM = #{partNum,jdbcType=INTEGER},
+      </if>
+      <if test="medium != null">
+        MEDIUM = #{medium,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Oncenet">
+    update t_emc_org_oncenet
+    set NET_TYPE_ID = #{netTypeId,jdbcType=VARCHAR},
+      LENGTH = #{length,jdbcType=DOUBLE},
+      CELL_NUM = #{cellNum,jdbcType=INTEGER},
+      PART_NUM = #{partNum,jdbcType=INTEGER},
+      MEDIUM = #{medium,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org_oncenet
+        where 1=1
+        <if test="netTypeId != null and netTypeId !=''">
+            and  NET_TYPE_ID =  #{cellNum,jdbcType=TINYINT}
+        </if>
+        <if test="cellNum != null and cellNum !=''">
+            and CELL_NUM = #{cellNum,jdbcType=TINYINT}
+        </if>
+        order by id
+    </select>
+</mapper>
