@@ -110,7 +110,7 @@ var common_org_tree = null;
 $(document).ready( function (e) {
     var $this =$(this.getElementsByClassName("org-tree"));
     $this.html("<div id='temp_org_tree' class='ztree'></div>");
-    if(common_org_tree == null){
+    if($this.length>0){
         $.ajax({
                 url:_platform + '/common/org/tree',
                 type: "POST",
@@ -118,34 +118,12 @@ $(document).ready( function (e) {
                 cache:false,
                 success:function (data) {
                     var setting = {
-                        view: {
-                            selectedMulti: false,
-                            fontCss:{color:"blue"}
-                        },
-                        check: {
-                            enable: false
-                        },
-                        data: {
-                            simpleData: {
-                                enable: true,
-                                idKey: "id",
-                                pIdKey: "pId",
-                                system:"Name",
-                                rootPId: ""
-                            }
-                        },
-                        async : { // 是否异步加载 相当于ajax
-                            enable : true//设置 zTree 是否开启异步加载模式
-                            //默认值：false
-                        },
-
-                        edit: {
-                            enable: false
-                        },
-                        callback: {
-                            onClick:null//点击节点触发的事件
-
-                        }
+                        view: {selectedMulti: false,fontCss:{color:"blue"}},
+                        check: { enable: false },
+                        data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
+                        async : { enable : true },
+                        edit: {enable: false },
+                        callback: { onClick:treeNodeClick }
                     };
                     var nodes='';
                     var zNodes ='[';
@@ -157,7 +135,8 @@ $(document).ready( function (e) {
                     };
                     var newnodes=zNodes.substring(0,zNodes.length-1);
                     nodes= newnodes+"]";
-                    $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+                   top.orgTree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+
                 }
         });
     }

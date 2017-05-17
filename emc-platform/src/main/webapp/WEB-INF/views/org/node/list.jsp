@@ -1,96 +1,118 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../../include.jsp"></jsp:include>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
-    <title>热力站列表页面</title>
     <jsp:include page="../../head.jsp"></jsp:include>
-    <%--<script src="${platform}/script/org/huak.org.node.list.js"></script>--%>
-    <SCRIPT type="text/javascript">
-        <!--
-        var setting = {
-            view: {
-                addHoverDom: addHoverDom,
-                removeHoverDom: removeHoverDom,
-                selectedMulti: false,
-                fontCss:{color:"blue"}
-            },
-            check: {
-                enable: true
-            },
-            data: {
-                simpleData: {
-                    enable: true
-                }
-            },
-            edit: {
-                enable: true
-            }
-        };
-
-        var zNodes =[
-            {id:0,pId:null,name:"华热科技发展有限公司"},
-            { id:1, pId:0, name:"热力集团", open:true},
-            { id:11, pId:0, name:"天津大河"},
-            { id:12, pId:0, name:"海淀分公司"},
-            { id:121, pId:12, name:"双榆树中心"},
-            { id:122, pId:12, name:"海淀技术部"},
-            { id:123, pId:12, name:"小营热力站"},
-            { id:124, pId:12, name:"小营热源厂"}
-        ];
-
-        $(document).ready(function(){
-            //页面说明
-            console.info("页面说明：系统登录用户选择企业或者公司后显示该企业或者公司的组织机构\n" +
-                    "功能：\n【添加】【删除】【修改】\n" +
-                    "字段：\n组织机构名称、上级组织机构\n" +
-                    "以树显示组织机构，所以有隐藏字段：\n创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
-            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-        });
-
-        var newCount = 1;
-        function addHoverDom(treeId, treeNode) {
-            var sObj = $("#" + treeNode.tId + "_span");
-            if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
-            var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-                    + "' title='add node' onfocus='this.blur();'></span>";
-            sObj.after(addStr);
-            var btn = $("#addBtn_"+treeNode.tId);
-            if (btn) btn.bind("click", function(){
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
-                return false;
-            });
-        };
-        function removeHoverDom(treeId, treeNode) {
-            $("#addBtn_"+treeNode.tId).unbind().remove();
-        };
-        //-->
-    </SCRIPT>
+    <script type="application/javascript">
+        function search(){
+            $table.bootstrapTable('refresh');
+        }
+    </script>
+    <script src="${platform}/script/org/huak.org.node.list.js"></script>
 </head>
-
 <body class="gray-bg">
-    <div class="wrapper wrapper-content  animated fadeInRight">
-
-        <div class="row">
-
-            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-
-                <div class="ibox float-e-margins" style="height: 100%">
-
-                    <div class="ibox-content">
-                        <h3>组织机构信息</h3>
-                        <div id="jstree1">
-                            <ul id="treeDemo" class="ztree"></ul>
-                        </div>
-                     </div>
-                 </div>
-             </div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content ">组织机构
+                    <div class="org-tree"></div>
+                </div>
+            </div>
         </div>
 
+        <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form id="roles-form" role="form" class="form-horizontal m-t">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" id="pageNo" name="pageNo" value="1">
+
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">站名称</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <input type="text" class="form-control" name="roleName" placeholder="请输入站名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">创建者</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <input type="text" class="form-control" name="roleName" placeholder="请输入创建者">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">状态</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <select name="useStatus" class="chosen-select form-control">
+                                            <option value="">全部</option>
+                                            <option value="0">启用</option>
+                                            <option value="1">禁用</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2 col-xs-2 col-md-2 col-lg-2">创建时间</label>
+                                    <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                        <input id="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
+                                    </div>
+                                    <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                        <input id="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
+
+                                <button type="button" class="btn btn-sm btn-info" onclick="addRole()"><i class="fa fa-plus"></i>添加</button>
+                                <button type="button" class="btn btn-sm btn-danger " onclick="addRole()"><i class="fa fa-unlock-alt"></i>禁用</button>
+                                <button type="button" class="btn btn-sm btn-danger " onclick="addRole()"><i class="fa fa-unlock"></i>启用</button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i>删除</button>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="deleteRoles()"><i class="fa fa-key"></i>重置密码</button>
+                                <!--<button type="button" class="btn btn-sm btn-info" onclick="editRole()">
+                                    <i class="fa fa-edit"></i>编辑
+                                </button>
+
+                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteRoles()">
+                                    <i class="fa fa-trash-o"></i>删除
+                                </button>
+
+                                <button type="button" class="btn btn-sm btn-warning" onclick="roleAuthPage()">
+                                    <i class="fa fa-wrench"></i>角色授权
+                                </button>-->
+                            </div>
+                            <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
+
+                                <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 搜索</button>
+                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 导出Excel</button>
+
+                            </div>
+                        </div>
+                    </form>
+                    <div class="example">
+                        <table id="station-table-list">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
 </body>
-
 </html>
+
