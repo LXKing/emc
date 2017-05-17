@@ -234,4 +234,18 @@
       DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org_feed
+        where 1=1
+        <if test="feedType != null and feedType !=''">
+            and  FEED_TYPE =  #{feedType,jdbcType=TINYINT}
+        </if>
+        <if test="heatType != null and heatType !=''">
+            and HEAT_TYPE = #{heatType,jdbcType=TINYINT}
+        </if>
+        order by id
+    </select>
 </mapper>
