@@ -84,6 +84,7 @@ $(document).on('click', '.excel-export-btn', function () {
 
 //绑定弹出层小
 $(document).on('click', '.top-layer-min', function () {
+    debugger;
     var $this = $(this);
     var url = $this.attr("layer-url");
     var title = $this.attr("layer-title");
@@ -104,6 +105,67 @@ $(document).on('click', '.top-layer-max', function () {
     var height = top.document.body.clientHeight+"px";
     openLayer(url,title,form,width,height);
 });
+
+var common_org_tree = null;
+$(document).ready( function (e) {
+    var $this =$(this.getElementsByClassName("org-tree"));
+    $this.html("<div id='temp_org_tree' class='ztree'></div>");
+    if(common_org_tree == null){
+        $.ajax({
+                url:_platform + '/common/org/tree',
+                type: "POST",
+                async:true,
+                cache:false,
+                success:function (data) {
+                    var setting = {
+                        view: {
+                            selectedMulti: false,
+                            fontCss:{color:"blue"}
+                        },
+                        check: {
+                            enable: false
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true,
+                                idKey: "id",
+                                pIdKey: "pId",
+                                system:"Name",
+                                rootPId: ""
+                            }
+                        },
+                        async : { // 是否异步加载 相当于ajax
+                            enable : true//设置 zTree 是否开启异步加载模式
+                            //默认值：false
+                        },
+
+                        edit: {
+                            enable: false
+                        },
+                        callback: {
+                            onClick:null//点击节点触发的事件
+
+                        }
+                    };
+                    var nodes='';
+                    var zNodes ='[';
+                    for (var i=0;i<data.length;i++){
+                        var orgName='"' + data[i].orgName + '"';
+                        var id='"' + data[i].id + '"';
+                        var pid='"' + data[i].pOrgId + '"';
+                        zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
+                    };
+                    var newnodes=zNodes.substring(0,zNodes.length-1);
+                    nodes= newnodes+"]";
+                    $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+                }
+        });
+    }
+});
+
+
+
+
 
 function openLayer(url,title,form,width,height){
     if(width==null||width=='undefined'){
