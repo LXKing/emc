@@ -106,7 +106,9 @@ $(document).on('click', '.top-layer-max', function () {
     openLayer(url,title,form,width,height);
 });
 
-var common_org_tree = null;
+/**
+ * 单位公共树
+ */
 $(document).ready( function (e) {
     var $this =$(this.getElementsByClassName("org-tree"));
     $this.html("<div id='temp_org_tree' class='ztree'></div>");
@@ -134,6 +136,7 @@ $(document).ready( function (e) {
          });
 
     }
+    function treeNodeClick(e,treeId,treeNode){ }
 });
 
 
