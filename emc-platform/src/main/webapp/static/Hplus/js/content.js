@@ -132,6 +132,7 @@ $(document).ready( function (e) {
             nodes= newnodes+"]";
             top.orgTree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
          });
+
     }
 });
 
