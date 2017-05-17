@@ -136,10 +136,10 @@ $(document).ready( function (e) {
          });
 
     }
-    function treeNodeClick(e,treeId,treeNode){ }
+
 });
 
-
+var treeNodeClick = function(e,treeId,treeNode){ };
 
 
 
