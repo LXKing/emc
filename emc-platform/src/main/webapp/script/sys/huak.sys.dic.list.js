@@ -102,35 +102,6 @@ $(function () {
         "字段：\n字典主键、字典名称、字典备注\n" +
         "创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
 
-    //日期范围限制
-    var start = {
-        elem: '#start',
-        format: 'YYYY/MM/DD hh:mm:ss',
-        //min: laydate.now(), //设定最小日期为当前日期
-        max: '2099-06-16 23:59:59', //最大日期
-        istime: true,
-        istoday: false,
-        choose: function (datas) {
-            end.min = datas; //开始日选好后，重置结束日的最小日期
-            end.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    var end = {
-        elem: '#end',
-        format: 'YYYY/MM/DD hh:mm:ss',
-        max: '2099-06-16 23:59:59',
-        istime: true,
-        istoday: false,
-        choose: function (datas) {
-            start.max = datas; //结束日选好后，重置开始日的最大日期
-        }
-    };
-    laydate(start);
-    laydate(end);
-
-    //下拉框js
-    $(".chosen-select").chosen();
-
 });
 function search(){
     $('#dic-table-list').bootstrapTable('refresh');
@@ -160,7 +131,10 @@ function deleteRole(id) {
         });
     });
 }
-
+function addDic() {
+    var url = _platform + '/sys/dic/add?'+$("#dics-form").serialize();
+    openLayer(url,"添加字典","dicAddForm");
+}
 function dicAuthPage() {
     var id = getCheckValues();
     if (id.length == 0) {

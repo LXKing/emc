@@ -54,7 +54,8 @@ public class SysDicController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(@RequestParam Map<String, Object> paramsMap,Model model) {
+        model.addAllAttributes(paramsMap);
         return "/sys/dic/add";
     }
 

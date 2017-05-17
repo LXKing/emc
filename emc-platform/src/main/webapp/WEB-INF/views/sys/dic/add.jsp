@@ -16,7 +16,7 @@
                             class="red">*</span>字典名称：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="des" class="form-control" type="text" maxlength="8"
+                        <input name="des" class="form-control" type="text" maxlength="8" value="${des}"
                                placeholder="请输入字典名称">
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                             class="red">*</span>字典类型(英文)：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeUs" class="form-control" type="text" maxlength="32" placeholder="请输入字典类型(英文)">
+                        <input name="typeUs" class="form-control" value="${typeUs}" type="text" maxlength="32" placeholder="请输入字典类型(英文)">
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,7 +33,7 @@
                             class="red">*</span>字典类型(中文)：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeZh" class="form-control" type="text" maxlength="16" placeholder="请输入字典类型(中文)">
+                        <input name="typeZh" class="form-control" value="${typeZh}" type="text" maxlength="16" placeholder="请输入字典类型(中文)">
                     </div>
                 </div>
                 <div class="form-group">

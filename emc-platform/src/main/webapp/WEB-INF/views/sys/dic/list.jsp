@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
 
-                                    <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="dicAddForm" layer-title="添加字典" layer-url="${platform}/sys/dic/add">
+                                    <button type="button" class="btn btn-sm btn-info " onclick="addDic()">
                                         <i class="fa fa-plus"></i>添加
                                     </button>
 
