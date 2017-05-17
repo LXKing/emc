@@ -111,34 +111,27 @@ $(document).ready( function (e) {
     var $this =$(this.getElementsByClassName("org-tree"));
     $this.html("<div id='temp_org_tree' class='ztree'></div>");
     if($this.length>0){
-        $.ajax({
-                url:_platform + '/common/org/tree',
-                type: "POST",
-                async:true,
-                cache:false,
-                success:function (data) {
-                    var setting = {
-                        view: {selectedMulti: false,fontCss:{color:"blue"}},
-                        check: { enable: false },
-                        data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
-                        async : { enable : true },
-                        edit: {enable: false },
-                        callback: { onClick:treeNodeClick }
-                    };
-                    var nodes='';
-                    var zNodes ='[';
-                    for (var i=0;i<data.length;i++){
-                        var orgName='"' + data[i].orgName + '"';
-                        var id='"' + data[i].id + '"';
-                        var pid='"' + data[i].pOrgId + '"';
-                        zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
-                    };
-                    var newnodes=zNodes.substring(0,zNodes.length-1);
-                    nodes= newnodes+"]";
-                   top.orgTree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
-
-                }
-        });
+        $.post(_platform + '/common/org/tree',function(data){
+            var setting = {
+                view: {selectedMulti: false,fontCss:{color:"blue"}},
+                check: { enable: false },
+                data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
+                async : { enable : true },
+                edit: {enable: false },
+                callback: { onClick:treeNodeClick }
+            };
+            var nodes='';
+            var zNodes ='[';
+            for (var i=0;i<data.length;i++){
+                var orgName='"' + data[i].orgName + '"';
+                var id='"' + data[i].id + '"';
+                var pid='"' + data[i].pOrgId + '"';
+                zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
+            };
+            var newnodes=zNodes.substring(0,zNodes.length-1);
+            nodes= newnodes+"]";
+            top.orgTree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+         });
     }
 });
 
