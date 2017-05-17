@@ -86,7 +86,7 @@
             <a class="J_menuItem" href="html/message_list.html">站内信管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="${platform}/org/feed">热源管理</a>
+            <a class="J_menuItem" href="${platform}/feed/list">热源管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="${platform}/org/node">热力站管理</a>
@@ -95,7 +95,7 @@
             <a class="J_menuItem" href="html/relizhanxitong.html">热力站系统管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/yiciwang.html">一次网管理</a>
+            <a class="J_menuItem" href="${platform}/oncenet/list">一次网管理</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/ercixian.html">二次线管理</a>
