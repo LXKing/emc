@@ -17,8 +17,8 @@ $(document).on('click', '.top-layer-min', function () {
     var title = $this.attr("layer-title");
     var form = $this.attr("layer-form-id");
 
-    var width = top.document.body.clientWidth*0.7+"px";
-    var height = top.document.body.clientHeight*0.85+"px";
+    var width = 0.7;
+    var height = 0.85;
     openLayer(url,title,form,width,height);
 });
 //绑定弹出层满
@@ -28,17 +28,21 @@ $(document).on('click', '.top-layer-max', function () {
     var title = $this.attr("layer-title");
     var form = $this.attr("layer-form-id");
 
-    var width = top.document.body.clientWidth+"px";
-    var height = top.document.body.clientHeight+"px";
+    var width = 1;
+    var height = 1;
     openLayer(url,title,form,width,height);
 });
 
 function openLayer(url,title,form,width,height){
     if(width==null||width=='undefined'){
         width = top.document.body.clientWidth*0.7+"px";
+    }else{
+        width = top.document.body.clientWidth*width+"px";
     }
     if(height==null||height=='undefined'){
         height = top.document.body.clientHeight*0.85+"px";
+    }else{
+        height = top.document.body.clientHeight*height+"px";
     }
 
     var $top = $(top.document);
@@ -67,3 +71,39 @@ $(document).on('click', '.emc-search', function () {
     var tableId = $(this).attr("bootstrap-table-id");
     $("#"+tableId).bootstrapTable("refresh");
 });
+
+
+/**
+ * 单位公共树
+ */
+$(document).ready( function (e) {
+    var $this =$(this.getElementsByClassName("org-tree"));
+    $this.html("<div id='temp_org_tree' class='ztree'></div>");
+    if($this.length>0){
+        $.post(_platform + '/common/org/tree',function(data){
+            var setting = {
+                view: {selectedMulti: false,fontCss:{color:"blue"}},
+                check: { enable: false },
+                data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
+                async : { enable : true },
+                edit: {enable: false },
+                callback: { onClick:treeNodeClick }
+            };
+            var nodes='';
+            var zNodes ='[';
+            for (var i=0;i<data.length;i++){
+                var orgName='"' + data[i].orgName + '"';
+                var id='"' + data[i].id + '"';
+                var pid='"' + data[i].pOrgId + '"';
+                zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
+            };
+            var newnodes=zNodes.substring(0,zNodes.length-1);
+            nodes= newnodes+"]";
+            top.orgTree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+        });
+
+    }
+
+});
+
+var treeNodeClick = function(e,treeId,treeNode){ };
