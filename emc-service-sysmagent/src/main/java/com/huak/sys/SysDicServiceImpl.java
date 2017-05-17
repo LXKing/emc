@@ -1,7 +1,6 @@
 package com.huak.sys;
 
 import com.github.pagehelper.PageHelper;
-import com.huak.auth.model.Role;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -70,5 +69,11 @@ public class SysDicServiceImpl implements SysDicService {
     @Transactional(readOnly = true)
     public List<SysDic> queryAll(Map<String, Object> paramsMap) {
         return sysDicDao.selectAllByMap(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> queryGroup(Map<String, Object> paramsMap) {
+        return sysDicDao.selectGroup(paramsMap);
     }
 }

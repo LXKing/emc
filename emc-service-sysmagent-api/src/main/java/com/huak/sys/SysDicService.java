@@ -32,4 +32,6 @@ public interface SysDicService {
     public List<Map<String,Object>> exportRoles(Map<String, Object> paramsMap);
 
     public List<SysDic> queryAll(Map<String,Object> paramsMap);
+
+    public List<Map<String, Object>> queryGroup(Map<String, Object> paramsMap);
 }

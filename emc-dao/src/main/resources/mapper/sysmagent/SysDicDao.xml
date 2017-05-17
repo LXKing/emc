@@ -127,4 +127,17 @@
         </if>
         order by TYPE_US,SEQ ASC
     </select>
+    <select id="selectGroup" parameterType="java.util.HashMap" resultType="java.util.Map">
+        select TYPE_US typeUs, TYPE_ZH typeZh
+        from t_emc_sys_dic
+        where 1=1
+        <if test="typeZh != null and typeZh !=''">
+            and  TYPE_ZH like CONCAT('%',#{typeZh},'%')
+        </if>
+        <if test="typeUs != null and typeUs !=''">
+            and  TYPE_US like CONCAT('%',#{typeUs},'%')
+        </if>
+        GROUP by TYPE_US,TYPE_ZH
+        order by TYPE_US DESC
+    </select>
 </mapper>

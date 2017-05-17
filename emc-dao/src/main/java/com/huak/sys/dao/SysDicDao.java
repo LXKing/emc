@@ -21,4 +21,6 @@ public interface SysDicDao {
     List<Map<String,Object>> exportSysDics(Map<String, Object> paramsMap);
 
     List<SysDic> selectAllByMap(Map<String,Object> paramsMap);
+
+    List<Map<String,Object>> selectGroup(Map<String, Object> paramsMap);
 }
