@@ -36,4 +36,5 @@ public interface OrgService {
 
     public boolean updateOrg(Org org);
 
+    public List<Map<String,Object>> selectOrgByMap(Map<String,Object> params);
 }
