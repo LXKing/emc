@@ -6,10 +6,13 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.huak.auth.model.User;
+import com.huak.auth.model.vo.OrgEmpVo;
 
 @Repository
 public interface UserDao {
 
 	List<User> selectPageByMap(Map<String, String> paramsMap);
+
+	List<OrgEmpVo> selectOrgEmpById(String orgId);
 
 }

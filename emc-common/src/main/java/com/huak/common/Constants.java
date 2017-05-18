@@ -29,8 +29,10 @@ public class Constants {
     /*修改页面返回实体对象*/
     public final static String OBJECT = "object";
 
-    /*菜单功能*/
-    public final static String MENUS = "menus";
+    /*授权菜单功能*/
+    public final static String GRANT_MENU_AFTER = "grantMenuAfter";
+    /*授权菜单功能*/
+    public final static String GRANT_MENU_BEFORE = "grantMenuBefore";
     /*子菜单*/
     public final static String CHILDREN_MENUS = "children";
     /*功能*/

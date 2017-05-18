@@ -8,6 +8,8 @@ import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
@@ -66,5 +68,11 @@ public class MenuServiceImpl implements MenuService{
     public boolean delete(String id) {
          String[] ids =id.split(",");
          return menuDao.delete(ids)>0?true:false;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String,Object>> selectAuthByMap(Map<String, Object> params) {
+        return menuDao.selectAuthByMap(params);
     }
 }

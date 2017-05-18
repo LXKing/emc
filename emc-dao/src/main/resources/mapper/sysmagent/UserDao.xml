@@ -16,6 +16,11 @@
     <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="OrgEmpResultMap" type="com.huak.auth.model.vo.OrgEmpVo" >
+    <id column="ORGID" property="orgId" jdbcType="VARCHAR" />
+    <result column="EMPID" property="empId" jdbcType="VARCHAR" />
+    <result column="EMPNAME" property="empName" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     ID, LOGIN, PASSWORD, USER_NAME, MOBILE, MAIL, LOGIN_TIME, LAST_LOGIN_TIME, LOGIN_NUM, 
     USE_STATUS, MEMO, CREATOR, CREATE_TIME
@@ -26,6 +31,12 @@
     from t_emc_auth_user
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+  
+<!--   selectOrgEmpById -->
+  <select id="selectOrgEmpById" parameterType="java.lang.String" resultMap="OrgEmpResultMap">
+  	select ID EMPID,EMP_NAME EMPNAME,ORG_ID ORGID from t_emc_org_employee where ORG_ID=#{orgId,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectPageByMap" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	select 
   	 <include refid="Base_Column_List" />

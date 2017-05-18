@@ -55,6 +55,7 @@ function openLayer(url,title,form,width,height){
             type: 1,
             title: title,
             btn: ['保存', '取消'],
+            maxmin:true,
             yes: function () {
                 $top.find("#"+form).submit();
             },

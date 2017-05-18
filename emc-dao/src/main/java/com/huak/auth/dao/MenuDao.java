@@ -28,4 +28,6 @@ public interface MenuDao {
     int selectCheck(Map<String, String> paramsMap);
 
     int delete(String[] ids);
+
+    List<Map<String,Object>> selectAuthByMap(Map<String, Object> params);
 }

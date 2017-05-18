@@ -25,4 +25,6 @@ public interface MenuService {
     int checkMenuName(Map<String, String> paramsMap);
 
     boolean delete(String ids);
+
+   public List<Map<String,Object>> selectAuthByMap(Map<String,Object> params);
 }
