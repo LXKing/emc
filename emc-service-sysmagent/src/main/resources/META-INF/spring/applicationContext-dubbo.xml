@@ -30,7 +30,7 @@
     <bean id="menuService" class="com.huak.auth.MenuServiceImpl"/>
     <dubbo:service interface="com.huak.auth.MenuService" ref="menuService" timeout="300" loadbalance="random"
                    executes="200"
-                   actives="0" owner="emc" version="2.0"/>
+                   actives="0" owner="emc" version="1.0"/>
     <bean id="funcService" class="com.huak.auth.FuncServiceImpl"></bean>
     <dubbo:service interface="com.huak.auth.FuncService" ref="funcService" timeout="300" loadbalance="random"
                    executes="200"
@@ -59,6 +59,11 @@
                    actives="0" owner="emc" version="1.0"/>
     <bean id="nodeService" class="com.huak.org.NodeServiceImpl"></bean>
     <dubbo:service interface="com.huak.org.NodeService" ref="nodeService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
+
+    <bean id="administrativeService" class="com.huak.sys.AdministrativeImpl"></bean>
+    <dubbo:service interface="com.huak.sys.AdministrativeService" ref="administrativeService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
 </beans>
