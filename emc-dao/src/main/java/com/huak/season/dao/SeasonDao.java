@@ -1,11 +1,13 @@
 package com.huak.season.dao;
 
 
+import com.huak.org.model.Oncenet;
 import com.huak.season.model.Season;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface SeasonDao {
@@ -22,4 +24,7 @@ public interface SeasonDao {
     int updateByPrimaryKey(Season record);
 
     List<Season> selectPageByName(@Param("name")String name);
+
+
+    List<Season> selectPageByMap(Map<String,Object> paramsMap);
 }

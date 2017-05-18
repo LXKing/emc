@@ -1,6 +1,8 @@
 package com.huak.season.model;
 
-public class Season {
+import java.io.Serializable;
+
+public class Season implements Serializable{
 
     private String id;
 
