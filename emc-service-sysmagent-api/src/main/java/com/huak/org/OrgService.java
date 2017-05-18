@@ -1,9 +1,12 @@
 package com.huak.org;
 
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
+import com.huak.season.model.Season;
 import org.springframework.stereotype.Service;
+import com.huak.org.model.Administrative;
 import com.huak.org.model.Org;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/5/9.
@@ -14,6 +17,14 @@ import java.util.Map;
 public interface OrgService {
 
     public boolean delete(String id);
+
+    public int insert(Administrative season);
+
+    public PageResult<Administrative> queryByPage(String name, Page page);
+
+    public Administrative  selectAdministrator();
+
+    List<Administrative> selectAll();
 
     List<Org> selectOrgAll();
 
