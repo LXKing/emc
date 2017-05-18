@@ -6,7 +6,7 @@ import com.huak.season.model.Season;
 import org.springframework.stereotype.Service;
 import com.huak.org.model.Administrative;
 import com.huak.org.model.Org;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/5/9.
@@ -36,4 +36,5 @@ public interface OrgService {
 
     public boolean updateOrg(Org org);
 
+    public List<Map<String,Object>> selectOrgByMap(Map<String,Object> params);
 }

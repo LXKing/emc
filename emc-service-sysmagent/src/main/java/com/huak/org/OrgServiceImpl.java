@@ -12,7 +12,7 @@ import com.huak.org.OrgService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/5/9.
@@ -20,6 +20,7 @@ import java.util.List;
 
 @Service
 public class OrgServiceImpl implements OrgService {
+
 
     @Resource
     private AdministrativeDao administrativeDao;
@@ -59,22 +60,12 @@ public class OrgServiceImpl implements OrgService {
         return null;
     }
 
-    @Override
-    public List<Administrative>  selectAll() {
-        System.out.print("----------------------service-------------------------");
-        List<Administrative> lad = administrativeDao.selectAll();
-        for (int i=0;i<lad.size();i++){
-
-            System.out.println(lad.get(i).getAdmName());
-
-        }
-        return lad;
-    }
 
     @Override
     public Administrative selectAdministrator() {
         return null;
     }
+
 
     @Override
     public List<Org> selectOrgAll() {
@@ -117,5 +108,15 @@ public class OrgServiceImpl implements OrgService {
               flag=true;
           }
         return flag;
+    }
+
+    @Override
+    public List<Administrative> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectOrgByMap(Map<String, Object> params) {
+        return orgDao.selectOrgByMap(params);
     }
 }

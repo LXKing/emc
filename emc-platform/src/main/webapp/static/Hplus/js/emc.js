@@ -83,7 +83,7 @@ $(document).ready( function (e) {
     if($this.length>0){
         $.post(_platform + '/common/org/tree',function(data){
             var setting = {
-                view: {selectedMulti: false,fontCss:{color:"blue"}},
+                view: {selectedMulti: false,fontCss:{color:"black"}},
                 check: { enable: false },
                 data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
                 async : { enable : true },

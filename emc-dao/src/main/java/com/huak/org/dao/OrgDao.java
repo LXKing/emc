@@ -4,6 +4,7 @@ import com.huak.org.model.Org;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface OrgDao {
@@ -22,4 +23,6 @@ public interface OrgDao {
     List<Org> selectOrgAll();
 
     List<Org> CheckOrgName(String orgName);
+
+    List<Map<String,Object>> selectOrgByMap(Map<String,Object> params);
 }

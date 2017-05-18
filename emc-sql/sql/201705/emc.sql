@@ -121,7 +121,7 @@ create table t_emc_org
    ORG_CODE             varchar(16) not null comment '机构代码',
    ORG_NAME             varchar(64) not null comment '机构名称',
    SHORT_NAME           varchar(32) comment '简称',
-   P_ORG_ID             bigint not null comment '上级组织机构主键',
+   P_ORG_ID             varchar(32) not null comment '上级组织机构主键',
    TYPE_ID              bigint not null comment '类型',
    CREATOR              bigint not null comment '创建者',
    CREATE_TIME          datetime not null comment '创建时间',
@@ -371,3 +371,17 @@ create table t_emc_role_func_rel
 );
 
 alter table t_emc_role_func_rel comment '角色权限功能表';
+
+drop table if exists t_emc_company;
+
+/*==============================================================*/
+/* Table: t_emc_company                                         */
+/*==============================================================*/
+create table t_emc_company
+(
+   id                   varchar(32) not null comment '公司主键',
+   cname                varchar(64) comment '公司名称',
+   primary key (id)
+);
+
+alter table t_emc_company comment '公司信息表';

@@ -48,36 +48,44 @@ function PCAS() {
  * @param id1 缺失参数，省份主键
  * @param data1 省份缓存数据
  * @constructor
- * adm_code: "110000000000", adm_name: "北京市", p_code: "0", adm_level: "1", lng: "116.395645",p_code:"0"
+ * ADM_CODE: "110000000000", ADM_NAME: "北京市", P_CODE: "0", adm_level: "1", lng: "116.395645",P_CODE:"0"
  *
  */
 function PCAS1(ele1, data1, id1) {
-    var $element = $("#" + ele1);
+    var $element = $(top.document).find("#" + ele1);
+    if($element.length<1){
+        $element = $("#"+ele1);
+    }
     var json = eval(data1);
     $element.html('<option value="">请选择省份</option>');
     $.each(json, function (idx, item) {
-        if (id1 == item.adm_code) {
-            $element.append('<option selected value="' + item.adm_code + '">' + item.adm_name + '</option>');
+        if (id1 == item.ADM_CODE) {
+            $element.append('<option selected value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
         } else {
-            $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
         }
     });
 }
 
 function PCAS2(ele1, data1, id1, ele2, data2, id2) {
     new PCAS1(ele1, data1, id1);
-
-    var $element = $("#" + ele2);
-    var $parent = $("#" + ele1);
+    var $element =  $(top.document).find("#" + ele2);
+    var $parent =  $(top.document).find("#" + ele1);
+    if($element.length<1){
+        $element = $("#"+ele2);
+    }
+    if($parent.length<1){
+        $parent = $("#"+ele1);
+    }
     var json = eval(data2);
     if (id1 != null && "" != id1) {
         $element.html('<option value="">请选择市</option>');
         $.each(json, function (idx, item) {
-            if ($parent.val() == item.p_code) {
-                if (id2 == item.adm_code) {
-                    $element.append('<option selected value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            if ($parent.val() == item.P_CODE) {
+                if (id2 == item.ADM_CODE) {
+                    $element.append('<option selected value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                 } else {
-                    $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+                    $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                 }
             }
         });
@@ -86,8 +94,8 @@ function PCAS2(ele1, data1, id1, ele2, data2, id2) {
     $parent.on('change', function () {
         $element.html('<option value="">请选择市</option>');
         $.each(json, function (idx, item) {
-            if ($parent.val() == item.p_code) {
-                $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            if ($parent.val() == item.P_CODE) {
+                $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
             }
         });
         $element.chosen("destroy").chosen();
@@ -98,17 +106,23 @@ function PCAS2(ele1, data1, id1, ele2, data2, id2) {
 function PCAS3(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3) {
     new PCAS2(ele1, data1, id1, ele2, data2, id2);
 
-    var $element = $("#" + ele3);
-    var $parent = $("#" + ele2);
+    var $element = $(top.document).find("#" + ele3);
+    var $parent = $(top.document).find("#" + ele2);
+    if($element.length<1){
+        $element = $("#"+ele3);
+    }
+    if($parent.length<1){
+        $parent = $("#"+ele2);
+    }
     var json = eval(data3);
     if (id2 != null && "" != id2) {
         $element.html('<option value="">请选择县</option>');
         $.each(json, function (idx, item) {
-            if ($parent.val() == item.p_code) {
-                if (id3 == item.adm_code) {
-                    $element.append('<option selected value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            if ($parent.val() == item.P_CODE) {
+                if (id3 == item.ADM_CODE) {
+                    $element.append('<option selected value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                 } else {
-                    $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+                    $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                 }
             }
         });
@@ -117,8 +131,8 @@ function PCAS3(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3) {
     $parent.on('change', function () {
         $element.html('<option value="">请选择县</option>');
         $.each(json, function (idx, item) {
-            if ($parent.val() == item.p_code) {
-                $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            if ($parent.val() == item.P_CODE) {
+                $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
             }
         });
         $element.chosen("destroy").chosen();
@@ -128,18 +142,23 @@ function PCAS3(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3) {
 
 function PCAS4(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4, id4) {
     new PCAS3(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3);
-
-    var $element = $("#" + ele4);
-    var $parent = $("#" + ele3);
+    var $element = $(top.document).find("#" + ele4);
+    var $parent = $(top.document).find("#" + ele3);
+    if($element.length<1){
+        $element = $("#"+ele4);
+    }
+    if($parent.length<1){
+        $parent = $("#"+ele3);
+    }
     var json = eval(data4);
     if (id3 != null && "" != id3) {
         $element.html('<option value="">请选择镇(乡)</option>');
         $.each(json, function (idx, item) {
-            if ($parent.val() == item.p_code) {
-                if (id4 == item.adm_code) {
-                    $element.append('<option selected value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            if ($parent.val() == item.P_CODE) {
+                if (id4 == item.ADM_CODE) {
+                    $element.append('<option selected value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                 } else {
-                    $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+                    $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                 }
             }
         });
@@ -148,8 +167,8 @@ function PCAS4(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4
     $parent.on('change', function () {
         $element.html('<option value="">请选择镇(乡)</option>');
         $.each(json, function (idx, item) {
-            if ($parent.val() == item.p_code) {
-                $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+            if ($parent.val() == item.P_CODE) {
+                $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
             }
         });
         $element.chosen("destroy").chosen();
@@ -178,8 +197,14 @@ function PCAS4(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4
 function PCAS5(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4, id4, ele5, id5) {
     new PCAS4(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4, id4);
 
-    var $element = $("#" + ele5);
-    var $parent = $("#" + ele4);
+    var $element = $(top.document).find("#" + ele5);
+    var $parent = $(top.document).find("#" + ele4);
+    if($element.length<1){
+        $element = $("#"+ele5);
+    }
+    if($parent.length<1){
+        $parent = $("#"+ele4);
+    }
     if (id4 != null && "" != id4) {
         $element.html('<option value="">请选择村</option>');
 
@@ -190,10 +215,10 @@ function PCAS5(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4
             dataType: 'json',
             success: function (result) {
                 $.each(result.data, function (idx, item) {
-                    if (id5 == item.adm_code) {
-                        $element.append('<option selected value="' + item.adm_code + '">' + item.adm_name + '</option>');
+                    if (id5 == item.ADM_CODE) {
+                        $element.append('<option selected value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                     } else {
-                        $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+                        $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                     }
                 });
                 $element.chosen("destroy").chosen();
@@ -214,7 +239,7 @@ function PCAS5(ele1, data1, id1, ele2, data2, id2, ele3, data3, id3, ele4, data4
                 dataType: 'json',
                 success: function (result) {
                     $.each(result.data, function (idx, item) {
-                        $element.append('<option value="' + item.adm_code + '">' + item.adm_name + '</option>');
+                        $element.append('<option value="' + item.ADM_CODE + '">' + item.ADM_NAME + '</option>');
                     });
                     $element.chosen("destroy").chosen();
                 }

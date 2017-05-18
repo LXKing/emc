@@ -77,26 +77,11 @@
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
 
-                                <button type="button" class="btn btn-sm btn-info" onclick="addRole()"><i class="fa fa-plus"></i>添加</button>
-                                <button type="button" class="btn btn-sm btn-danger " onclick="addRole()"><i class="fa fa-unlock-alt"></i>禁用</button>
-                                <button type="button" class="btn btn-sm btn-danger " onclick="addRole()"><i class="fa fa-unlock"></i>启用</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteRoles()"><i class="fa fa-trash-o"></i>删除</button>
-                                <button type="button" class="btn btn-sm btn-warning" onclick="deleteRoles()"><i class="fa fa-key"></i>重置密码</button>
-                                <!--<button type="button" class="btn btn-sm btn-info" onclick="editRole()">
-                                    <i class="fa fa-edit"></i>编辑
-                                </button>
-
-                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteRoles()">
-                                    <i class="fa fa-trash-o"></i>删除
-                                </button>
-
-                                <button type="button" class="btn btn-sm btn-warning" onclick="roleAuthPage()">
-                                    <i class="fa fa-wrench"></i>角色授权
-                                </button>-->
+                                <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="stationAddForm" layer-title="添加热力站" layer-url="${platform}/station/add"
+                                        ><i class="fa fa-plus"></i>添加</button>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
-
-                                <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 搜索</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索</button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
                                 <button type="button" class="btn btn-sm btn-primary" onclick="getRoleList()"> 导出Excel</button>
 
