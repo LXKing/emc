@@ -1,0 +1,187 @@
+package com.huak.auth.model;
+
+import java.util.Date;
+
+public class User {
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String id;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String login;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String password;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String userName;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String mobile;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String mail;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private Date loginTime;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private Date lastLoginTime;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private Integer loginNum;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String useStatus;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String memo;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private String creator;
+
+    /**
+     *
+     * @preserve 声明此方法不被JOC混淆
+     */
+    private Date createTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login == null ? null : login.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail == null ? null : mail.trim();
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public Integer getLoginNum() {
+        return loginNum;
+    }
+
+    public void setLoginNum(Integer loginNum) {
+        this.loginNum = loginNum;
+    }
+
+    public String getUseStatus() {
+        return useStatus;
+    }
+
+    public void setUseStatus(String useStatus) {
+        this.useStatus = useStatus == null ? null : useStatus.trim();
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo == null ? null : memo.trim();
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+}

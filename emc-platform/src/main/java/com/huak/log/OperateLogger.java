@@ -27,6 +27,12 @@ public class OperateLogger {
 	@Autowired
 	private OperateLogService logService;
 
+	/**
+	 * 监听com.huak包和子包下的以Controller结尾的类中的所有方法
+	 * @param jp
+	 * @return
+	 * @throws Throwable
+	 */
 	@Around("execution(* com.huak..*Controller.*(..))")
 	public Object operateLogger(ProceedingJoinPoint jp) throws Throwable {
 		//获取插入点信息
@@ -43,9 +49,9 @@ public class OperateLogger {
 		Method method = msig.getMethod();
 		String methodName = method.getName();
 		//获取日志注解中的描述信息
-		String optKey = method.getAnnotation(EMCLog.class)==null?"":method.getAnnotation(EMCLog.class).key();
-		String optType = method.getAnnotation(EMCLog.class)==null?"":method.getAnnotation(EMCLog.class).type();
-		String optName = method.getAnnotation(EMCLog.class)==null?"":method.getAnnotation(EMCLog.class).name();
+		String optKey = method.getAnnotation(EMCLog.class)==null?"":method.getAnnotation(EMCLog.class).key();//操作模块
+		String optType = method.getAnnotation(EMCLog.class)==null?"":method.getAnnotation(EMCLog.class).type();//操作类型
+		String optName = method.getAnnotation(EMCLog.class)==null?"":method.getAnnotation(EMCLog.class).name();//操作名称
 		//获取request中的信息
 		Object[] params = jp.getArgs();
 		HttpServletRequest request = null;
@@ -54,21 +60,23 @@ public class OperateLogger {
 				request = (HttpServletRequest)param;break;
 			}
 		}
+		//如果方法的形参中没有HttpServletRequest参数时request为null，从框架中获取request
 		if(request == null){
 			request = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest();
 		}
 		if(request!=null){
-			String ip = getIpAddr(request);
-			String host = request.getRemoteHost();
-			String port = request.getRemotePort()+"";
-			String uri = request.getRequestURI();
-			String url = request.getRequestURL().toString();
+			String ip = getIpAddr(request);//获取客户机ip地址
+			String host = request.getRemoteHost();//获取客户机名称
+			String port = request.getRemotePort()+"";//获取客户机端口
+			String uri = request.getRequestURI();//访问资源
+			String url = request.getRequestURL().toString();//访问url
 			log.setRemoteIp(ip);
 			log.setRemoteName(host);
 			log.setRemotePort(port);
 			log.setReqUri(uri);
 			log.setReqUrl(url);
 		}
+		//封装操作日志信息
 		log.setId(UUIDGenerator.getUUID());
 		log.setOptName(optName);
 		log.setOptKey(optKey);
@@ -76,8 +84,10 @@ public class OperateLogger {
 		log.setClassName(className);
 		log.setMethodName(methodName);
 		log.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		//从session信息中获取当前操作者
 		log.setCreator(request.getSession().getAttribute(Constants.SESSION_KEY)==null
 				?"":request.getSession().getAttribute(Constants.SESSION_KEY).toString());
+		//保存操作日志
 		logService.saveOperateLog(log);
 		return jp.proceed();
 	}
