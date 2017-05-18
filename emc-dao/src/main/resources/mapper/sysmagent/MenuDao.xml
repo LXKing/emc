@@ -194,4 +194,27 @@
         <foreach  index="index" item="id" collection="array" open="(" separator="," close=")"> #{id} </foreach>
     </delete>
 
+    <select id="selectAuthByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        ID id,
+        MENU_NAME menuName,
+        MENU_URL menuUrl,
+        P_MENU_ID pMenuId,
+        CREATOR creator,
+        CREAT_TIME createTime,
+        MENU_TYPE menuType,
+        TYPE type,SEQ seq
+        from t_emc_auth_menu
+        where 1=1
+        <if test="menuName != null and menuName !=''">
+            and  MENU_NAME = #{menuName}
+        </if>
+        <if test="menuType != null and menuType !=''">
+            and  MENU_TYPE = #{menuType}
+        </if>
+        <if test="pMenuId != null and pMenuId !=''">
+            and  P_MENU_ID = #{pMenuId}
+        </if>
+        order by SEQ ASC
+    </select>
 </mapper>

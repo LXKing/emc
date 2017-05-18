@@ -86,7 +86,7 @@ $(function () {
                 formatter:function(value,row,index){
                     return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="roleEditForm" layer-title="编辑角色" layer-url="'+_platform+'/role/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
                         '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRole(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' +
-                        '<a title="授权权限" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i></a>';
+                        '<a title="授权权限" class="btn btn-xs btn-warning  top-layer-max" layer-form-id="roleAuthFrom" layer-title="授权功能" layer-url="'+_platform+'/role/grant/'+row.id+'"><i class="fa fa-wrench"></i></a>';
                 }
             }
 
@@ -162,15 +162,3 @@ function deleteRole(id) {
     });
 }
 
-function roleAuthPage() {
-    var id = getCheckValues();
-    if (id.length == 0) {
-        layer.msg("请选择要授权的角色");
-        return false;
-    }
-    if (id.split(',').length > 1) {
-        layer.msg("请选择一个角色进行授权");
-        return false;
-    }
-    $("#content-main").empty().load(_platform + '/role/auth?id=' + id);
-}

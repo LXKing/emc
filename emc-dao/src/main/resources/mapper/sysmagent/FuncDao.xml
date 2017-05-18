@@ -96,7 +96,7 @@
         <if test="menuId != null and menuId !=''">
             and  MENU_ID = #{menuId}
         </if>
-        order by id
+        order by ISSEARCH ASC ,SEQ ASC
     </select>
 
 </mapper>

@@ -2,7 +2,9 @@ package com.huak.auth;
 
 import com.github.pagehelper.PageHelper;
 import com.huak.auth.dao.RoleDao;
+import com.huak.auth.dao.RoleFuncRelDao;
 import com.huak.auth.model.Role;
+import com.huak.auth.model.RoleFuncRel;
 import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
@@ -30,6 +32,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Resource
     private RoleDao roleDao;
+    @Resource
+    private RoleFuncRelDao roleFuncRelDao;
     @Resource
     private DateDao dateDao;
 
@@ -100,5 +104,30 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(readOnly = true)
     public List<Map<String, Object>> exportRoles(Map<String, Object> paramsMap) {
         return roleDao.exportRoles(paramsMap);
+    }
+
+    /**
+     * 查询角色权限
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<RoleFuncRel> selectGrantByRoleKey(String id) {
+        return roleFuncRelDao.selectGrantByRoleKey(id);
+    }
+
+    /**
+     * 角色授权
+     * @param roleId
+     * @param rels
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public void grantRoleFunc(String roleId,List<RoleFuncRel> rels){
+        roleFuncRelDao.deleteRelByRole(roleId);
+        for(RoleFuncRel rel:rels){
+            roleFuncRelDao.insert(rel);
+        }
     }
 }

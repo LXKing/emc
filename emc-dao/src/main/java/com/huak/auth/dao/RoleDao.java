@@ -19,4 +19,6 @@ public interface RoleDao {
     List<Role> selectPageByMap(Map<String,Object> paramsMap);
 
     List<Map<String,Object>> exportRoles(Map<String, Object> paramsMap);
+
+    List<Map<String,Object>> selectGrantByKey(String id);
 }

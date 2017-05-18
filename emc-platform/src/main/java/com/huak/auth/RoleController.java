@@ -2,6 +2,7 @@ package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Role;
+import com.huak.auth.model.RoleFuncRel;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,8 @@ public class RoleController {
 
     @Resource
     private RoleService roleService;
+    @Resource
+    private MenuService menuService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
@@ -160,28 +164,32 @@ public class RoleController {
         return jo.toJSONString();
     }
 */
-   /* @RequestMapping(value = "/auth", method = RequestMethod.GET)
-    public String authPage(Model model, Long id) {
+    @RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
+    public String grantPage(Model model,@PathVariable("id") String id) {
         logger.info("跳转角色授权页");
         try {
-            model.addAttribute("role", roleService.getRole(id));
-            model.addAttribute("auth", roleService.getAuth(id));
+            model.addAttribute("role", roleService.selectByPrimaryKey(id));
+            model.addAttribute("auth", roleService.selectGrantByRoleKey(id));
         } catch (Exception e) {
             logger.error("跳转角色授权页异常" + e.getMessage());
         }
-        return "/auth/role/role_auth";
+        return "/auth/role/grant";
     }
-*/
-    /*@RequestMapping(value = "/auth", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/grant", method = RequestMethod.POST)
     @ResponseBody
-    public String auth(Long roleId, String funcIds) {
+    public String grant(String roleId,String[] funcId) {
         logger.info("角色授权");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
 
         try {
-            String[] fids = funcIds.split(",");
-            roleService.updAuth(roleId, fids);
+            List<RoleFuncRel> rels = new ArrayList<>();
+            for(String fid:funcId){
+                RoleFuncRel rel = new RoleFuncRel(roleId,fid);
+                rels.add(rel);
+            }
+            roleService.grantRoleFunc(roleId,rels);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "角色授权成功");
         } catch (Exception e) {
@@ -190,17 +198,17 @@ public class RoleController {
         }
 
         return jo.toJSONString();
-    }*/
+    }
 
 
-    /* @RequestMapping(value = "/user/select", method = RequestMethod.PATCH)
+/*     @RequestMapping(value = "/select/list", method = RequestMethod.PATCH)
      @ResponseBody
-     public String userSelect(@RequestParam Map<String, String> paramsMap, Page page) {
+     public String userSelect(@RequestParam Map<String, Object> paramsMap, Page page) {
          logger.info("选择角色列表页分页查询");
 
          JSONObject jo = new JSONObject();
          try {
-             jo.put(Constants.LIST, roleService.findSelectByPage(paramsMap, page));
+             jo.put(Constants.LIST, roleService.queryByPage(paramsMap, page));
          } catch (Exception e) {
              logger.error("选择角色列表页分页查询异常" + e.getMessage());
          }
