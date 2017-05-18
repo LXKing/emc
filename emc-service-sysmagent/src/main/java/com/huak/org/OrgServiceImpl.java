@@ -21,8 +21,7 @@ import java.util.List;
 @Service
 public class OrgServiceImpl implements OrgService {
 
-    @Resource
-    private AdministrativeDao administrativeDao;
+
     @Resource
     private OrgDao orgDao;
 
@@ -59,17 +58,6 @@ public class OrgServiceImpl implements OrgService {
         return null;
     }
 
-    @Override
-    public List<Administrative>  selectAll() {
-        System.out.print("----------------------service-------------------------");
-        List<Administrative> lad = administrativeDao.selectAll();
-        for (int i=0;i<lad.size();i++){
-
-            System.out.println(lad.get(i).getAdmName());
-
-        }
-        return lad;
-    }
 
     @Override
     public Administrative selectAdministrator() {
@@ -117,5 +105,15 @@ public class OrgServiceImpl implements OrgService {
               flag=true;
           }
         return flag;
+    }
+
+    @Override
+    public List<Administrative> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectOrgByMap(Map<String, Object> params) {
+        return null;
     }
 }
