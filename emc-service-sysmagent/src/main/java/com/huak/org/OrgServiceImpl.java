@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/5/9.
@@ -23,12 +24,9 @@ public class OrgServiceImpl implements OrgService {
 
 
     @Resource
+    private AdministrativeDao administrativeDao;
+    @Resource
     private OrgDao orgDao;
-
-    @Override
-    public int insert(Administrative season) {
-        return 0;
-    }
 
     @Override
     @Transactional(readOnly = false)
@@ -53,16 +51,9 @@ public class OrgServiceImpl implements OrgService {
         return flag;
     }
 
-    @Override
-    public PageResult<Administrative> queryByPage(String name, Page page) {
-        return null;
-    }
 
 
-    @Override
-    public Administrative selectAdministrator() {
-        return null;
-    }
+
 
     @Override
     public List<Org> selectOrgAll() {
@@ -107,10 +98,7 @@ public class OrgServiceImpl implements OrgService {
         return flag;
     }
 
-    @Override
-    public List<Administrative> selectAll() {
-        return null;
-    }
+
 
     @Override
     public List<Map<String, Object>> selectOrgByMap(Map<String, Object> params) {

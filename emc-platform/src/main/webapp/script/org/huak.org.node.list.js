@@ -142,7 +142,6 @@ $(function () {
 });
 
 function queryParams(params) {
-    debugger;
     return {
         orgId:top.orgId,
         stationName:$('input[name="stationName"]').val(),
@@ -152,6 +151,8 @@ function queryParams(params) {
     };
 
 }
+
+
 
 function treeNodeClick(e,treeId,treeNode){
     top.orgId = treeNode.id;

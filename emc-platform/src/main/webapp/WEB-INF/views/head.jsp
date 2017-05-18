@@ -64,6 +64,7 @@
 <script src="${platform}/static/Hplus/js/hplus.js?v=4.1.0"></script>
 <script src="${platform}/static/Hplus/js/contabs.js"></script>
 <script src="${platform}/static/Hplus/js/content.js?v=1.0.0"></script>
+<script src="${platform}/static/Hplus/js/pcctv.js"></script>
 <script src="${platform}/static/Hplus/js/jquery-jtemplates.js"></script>
 <!-- Bootstrap table -->
 <script src="${platform}/static/Hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>

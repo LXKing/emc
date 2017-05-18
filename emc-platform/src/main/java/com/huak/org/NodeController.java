@@ -6,11 +6,13 @@ import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Node;
+import com.huak.org.model.Org;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,6 +37,8 @@ public class NodeController {
     @Resource
     private NodeService nodeService;
 
+    @Resource
+    private OrgService orgService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
@@ -57,7 +61,15 @@ public class NodeController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(ModelMap modelMap) {
+        try {
+            Node obj = new Node();
+
+            modelMap.put(Constants.OBJECT,obj);
+        } catch (Exception e) {
+            logger.error("跳转到热力站编辑页出错！");
+            e.printStackTrace();
+        }
         return "/org/node/add";
     }
 
@@ -165,4 +177,6 @@ public class NodeController {
             logger.error("导出热力站列表EXCEL异常" + e.getMessage());
         }
     }
+
+
 }
