@@ -1,8 +1,11 @@
-package com.huak.season;
+package com.huak.sys;
 
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.model.Oncenet;
 import com.huak.season.model.Season;
+
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -23,6 +26,6 @@ public interface SeasonService {
 
     public int insert(Season season);
 
-    public PageResult<Season> queryByPage(String name, Page page);
+    public PageResult<Season> queryByPage(Map<String,Object> paramsMap, Page page);
 
 }

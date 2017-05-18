@@ -190,4 +190,46 @@
         where ORG_NAME = #{orgName,jdbcType=VARCHAR}
 
     </select>
+
+
+    <select id="selectOrgByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org
+        where 1=1
+        <if test="comId != null and comId !=''">
+            and   COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="orgCode != null and orgCode !=''">
+            and  ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+        </if>
+        <if test="orgName != null and orgName !=''">
+            and ORG_NAME = #{orgName,jdbcType=VARCHAR}
+        </if>
+        <if test="shortName != null and shortName !=''">
+            and SHORT_NAME = #{shortName,jdbcType=VARCHAR}
+        </if>
+        <if test="pOrgId != null and pOrgId !=''">
+            and P_ORG_ID = #{pOrgId,jdbcType=VARCHAR}
+        </if>
+        <if test="typeId != null and typeId !=''">
+            and TYPE_ID = #{typeId,jdbcType=BIGINT}
+        </if>
+        <if test="creator != null and creator !=''">
+            and CREATOR = #{creator,jdbcType=BIGINT}
+        </if>
+        <if test="createTime != null and createTime !=''">
+            and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="memo != null and memo !=''">
+            and MEMO = #{memo,jdbcType=VARCHAR}
+        </if>
+        <if test="seq != null and seq !=''">
+            and SEQ = #{seq,jdbcType=INTEGER}
+        </if>
+        <if test="area != null and area !=''">
+            and AREA = #{area,jdbcType=DOUBLE}
+        </if>
+        order by SEQ ASC
+    </select>
 </mapper>
