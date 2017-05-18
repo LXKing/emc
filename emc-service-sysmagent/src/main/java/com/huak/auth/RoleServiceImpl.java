@@ -130,4 +130,10 @@ public class RoleServiceImpl implements RoleService {
             roleFuncRelDao.insert(rel);
         }
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Long checkRoleName(Map<String, Object> paramsMap) {
+        return roleDao.checkRoleName(paramsMap);
+    }
 }
