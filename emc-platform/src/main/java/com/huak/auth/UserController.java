@@ -1,5 +1,6 @@
 package com.huak.auth;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.huak.auth.model.User;
+import com.huak.auth.model.vo.OrgEmpVo;
 import com.huak.common.Constants;
 import com.huak.common.page.Page;
 
@@ -58,6 +62,21 @@ public class UserController {
         }
         return jo.toJSONString();
     }
+    
+    @RequestMapping(value = "/org/emp", method = RequestMethod.POST)
+    @ResponseBody
+    public String orgEmp(String orgId) {
+        logger.info("查询某组织节点下的所有员工");
+        String result = "";
+        ObjectMapper om = new ObjectMapper();
+        try {
+            List<OrgEmpVo> oeList = userService.queryOrgEmpByOrgId(orgId);
+            result = om.writeValueAsString(oeList);
+        } catch (Exception e) {
+            logger.error("查询某组织节点下的所有员工" + e.getMessage());
+        }
+        return result;
+    }
 //
 //    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 //    public String editPage(Model model, @PathVariable("id") Long id) {
@@ -92,25 +111,25 @@ public class UserController {
     public String addPage() {
         return "/auth/user/add";
     }
-//
-//    @RequestMapping(value = "/add", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String add(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("添加用户");
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(User user) {
+        logger.info("添加用户");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
 //            paramsMap.put("password", reversibleEncryption.encode(paramsMap.get("password")));
 //            userService.addUser(paramsMap);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "添加用户成功");
-//        } catch (Exception e) {
-//            logger.error("添加用户异常" + e.getMessage());
-//            jo.put(Constants.MSG, "添加用户失败");
-//        }
-//        return jo.toJSONString();
-//    }
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "添加用户成功");
+        } catch (Exception e) {
+            logger.error("添加用户异常" + e.getMessage());
+            jo.put(Constants.MSG, "添加用户失败");
+        }
+        return jo.toJSONString();
+    }
 //
 //    @RequestMapping(value = "/check/phone", method = RequestMethod.POST)
 //    @ResponseBody
