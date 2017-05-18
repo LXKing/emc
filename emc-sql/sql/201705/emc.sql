@@ -355,3 +355,19 @@ create table t_emc_sys_dic
 );
 
 alter table t_emc_sys_dic comment '系统字典表';
+
+/**
+2017年5月17日13:03:29
+ */
+ drop table if exists t_emc_role_func_rel;
+
+/*==============================================================*/
+/* Table: t_emc_role_func_rel                                   */
+/*==============================================================*/
+create table t_emc_role_func_rel
+(
+   ROLE_ID              varchar(32) not null comment '角色主键',
+   FUNC_ID              varchar(32) not null comment '功能主键'
+);
+
+alter table t_emc_role_func_rel comment '角色权限功能表';
