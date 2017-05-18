@@ -1,8 +1,6 @@
 package com.huak.org.model;
 
-import java.io.Serializable;
-
-public class Administrative implements Serializable{
+public class Administrative {
     private String admCode;
 
     private String admName;

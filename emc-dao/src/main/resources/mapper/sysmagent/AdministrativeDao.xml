@@ -116,4 +116,14 @@
       LAT = #{lat,jdbcType=DOUBLE}
     where ADM_CODE = #{admCode,jdbcType=VARCHAR}
   </update>
+
+    <select id="findAllByLevel"  resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_sys_administrative where 1=1
+        <if test="admLevel != null and admLevel !=''">
+            and  ADM_LEVEL = #{admLevel,jdbcType=TINYINT}
+        </if>
+        order by ADM_LEVEL
+    </select>
 </mapper>

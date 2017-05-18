@@ -1,13 +1,15 @@
-package com.huak.org.dao;
+package com.huak.org;
+
 
 import com.huak.org.model.Administrative;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public interface AdministrativeDao {
+/**
+ * Created by MR-BIN on 2017/5/17.
+ */
+public interface AdministrativeService {
     int deleteByPrimaryKey(String admCode);
 
     int insert(Administrative record);
