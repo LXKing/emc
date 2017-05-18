@@ -1,4 +1,4 @@
-package com.huak.season;
+package com.huak.sys;
 
 import com.github.pagehelper.PageHelper;
 import com.huak.common.page.Convert;
@@ -6,10 +6,12 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.season.dao.SeasonDao;
 import com.huak.season.model.Season;
+import com.huak.sys.SeasonService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -41,11 +43,16 @@ public class SeasonServiceImpl implements SeasonService {
         return seasonDao.insert(season);
     }
 
+//    @Override
+//    public PageResult<Season> queryByPage(String name, Page page) {
+//        PageHelper.startPage(page.getPageNumber(),page.getPageSize());
+//        return Convert.convert(seasonDao.selectPageByName(name));
+//    }
     @Override
-    public PageResult<Season> queryByPage(String name, Page page) {
-        PageHelper.startPage(page.getPageNumber(),page.getPageSize());
-        return Convert.convert(seasonDao.selectPageByName(name));
+    @Transactional(readOnly = true)
+    public PageResult<Season> queryByPage(Map<String, Object> paramsMap, Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert(seasonDao.selectPageByMap(paramsMap));
     }
-
 
 }
