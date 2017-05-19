@@ -79,7 +79,7 @@ $(document).on('click', '.emc-search', function () {
  */
 var comm_tree = null;
 var setting = {
-    view: {selectedMulti: false,fontCss:{color:"black"}},
+    view: {selectedMulti: true,fontCss:{color:"black"}},
     check: { enable: false },
     data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
     async : { enable : true },
@@ -110,8 +110,7 @@ $(document).ready( function (e) {
                 nodes = lightId.split(",");
                 for(var i=0;i<nodes.length;i++){
                     var node = treeObj.getNodeByParam("id",nodes[i]);
-                    comm_tree.selectNode(node);
-
+                    treeObj.selectNode(node,true);
                 }
 
             }
