@@ -27,13 +27,17 @@
      * @type {{}}
      */
     treeBox.prototype = {
+        initOptions:function(opts){
+            this.setting = (opts.setting == undefined || opts.setting == "" || opts.url == null) ? undefined : opts.setting;
+            this.zNodes = (opts.zNodes == undefined || opts.zNodes == "" || opts.zNodes == null) ? undefined : opts.zNodes;
+        },
         //生成div
         createElement: function () {
             var position = this.$element.position();
             var left = position.left;
             var top = position.top + this.$element.outerHeight();
 
-            var _ele = '<div id="tree-box" class="tree-box" style="position: absolute; left: ' + left + 'px; top: ' + top + 'px;">' +
+            var _ele = '<div id="tree-box" class="tree-box" style="position: absolute; left: ' + left + 'px; top: ' + top + 'px;width:'+this.$element.outerWidth()+'px">' +
                 '<div><ul id="tree-box-ztree" class="ztree"></ul></div>' +
                 '</div>';
             return _ele;
@@ -42,13 +46,18 @@
 
     $.fn.treeBox = function (options) {
         var box = new treeBox(this, options);
-
+        box.initOptions(options);
         this.on('click', function (event) {
             $(this).after(box.createElement());
+            var $boxTree = $("#tree-box-ztree");
+
+            if($boxTree.length==0){
+                $boxTree = $(top.document).find("#tree-box-ztree");
+            }
             if(box.zNodes == undefined || opts.url == "" || opts.url == null){
-                $.fn.zTree.init($("#tree-box-ztree"), box.setting);
+                $.fn.zTree.init($boxTree, box.options.setting);
             }else{
-                $.fn.zTree.init($("#tree-box-ztree"), box.setting, box.zNodes);
+                $.fn.zTree.init($boxTree, box.options.setting, box.options.zNodes);
             }
             $(document).bind("click", bodyDown);
             event.stopPropagation();//阻止冒泡
@@ -58,10 +67,13 @@
     }
 
     function bodyDown(event) {
+        var $boxTree = $("#tree-box");
+        if($boxTree == undefined || $boxTree == null ){
+            $boxTree = $(top.document).find("#tree-box");
+        }
         if (!(event.target.id == "tree-box" || $(event.target).parents("#tree-box").length > 0)) {
-            $("#tree-box").remove();
+            $boxTree.remove();
             $(document).unbind("click", bodyDown);
         }
     }
-
 })(jQuery, document);
