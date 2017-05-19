@@ -103,7 +103,7 @@ $(document).ready( function (e) {
             };
             var newnodes=zNodes.substring(0,zNodes.length-1);
             nodes= newnodes+"]";
-            var comm_tree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+            top.comm_tree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
             var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
             var nodes = [];
             if(lightId != "" && lightId != undefined){
@@ -114,7 +114,6 @@ $(document).ready( function (e) {
                 }
             }
         });
-
     }
 
 });
