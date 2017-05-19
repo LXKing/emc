@@ -71,13 +71,16 @@
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
 
-        $.validator.addMethod("checkUnique", function (value, element) {
+        $.validator.addMethod("checkName", function (value, element) {
+            if(value =='${role.roleName}'){
+               return true;
+            }
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
-                url: _platform + '/role/check',
+                url: _platform + '/role/check/name',
                 type: 'POST',
                 async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {roleName: $('#roleName').val()},
+                data: {roleName: value},
                 dataType: 'json',
                 success: function (result) {
                     if (!result.flag) {
@@ -119,8 +122,8 @@
             rules: {
                 roleName: {
                     required: true,
-                    minlength: 2
-                    //checkUnique: true
+                    minlength: 2,
+                    checkName: true
                 },
                 roleDes: {
                     required: true

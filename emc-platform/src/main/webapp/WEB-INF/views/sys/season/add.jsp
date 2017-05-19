@@ -9,34 +9,33 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="roleAddForm" role="form">
+            <form class="form-horizontal" id="seasonAddForm" role="form">
 
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>角色名称：</label>
+                            class="red">*</span>名称：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input id="roleName" name="roleName" class="form-control" type="text" maxlength="8"
-                               placeholder="请输入角色名称">
+                        <input name="name" class="form-control" type="text" maxlength="16" placeholder="请输入名称">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>角色描述：</label>
+                            class="red">*</span>开始时间：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="roleDes" class="form-control" type="text" maxlength="16" placeholder="请输入角色描述">
+                        <input name="sdate" class="form-control" type="text" maxlength="16" placeholder="请输入开始时间">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">备注：</label>
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>结束时间：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <textarea class="form-control" rows="6" maxlength="125" name="memo"
-                                  placeholder="请输入备注"></textarea>
-
+                        <input name="edate" class="form-control" type="text" maxlength="16" placeholder="请输入结束时间">
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -66,18 +65,16 @@
 
     //以下为官方示例
     $(function () {
-        var $form = $(top.document).find("#roleAddForm");
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
-
-        $.validator.addMethod("checkName", function (value, element) {
-            debugger
+        var $form = $(top.document).find("#oncenetAddForm");
+        $.validator.addMethod("checkUnique", function (value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
-                url: _platform + '/role/check/name',
+                url: _platform + '/feed/check',
                 type: 'POST',
                 async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {roleName: value},
+                data: {roleName: $('#roleName').val()},
                 dataType: 'json',
                 success: function (result) {
                     if (!result.flag) {
@@ -119,8 +116,8 @@
             rules: {
                 roleName: {
                     required: true,
-                    minlength: 2,
-                    checkName: true
+                    minlength: 2
+                    //checkUnique: true
                 },
                 roleDes: {
                     required: true
@@ -139,8 +136,9 @@
                 var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
+                alert($form.serialize());
                 $.ajax({
-                    url: _platform + '/role/add',
+                    url: _platform + '/oncenet/addvalue',
                     data: $form.serialize(),
                     type: 'POST',
                     dataType: 'json',
@@ -148,9 +146,9 @@
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            $('#role-table-list').bootstrapTable("refresh");
+                            $('#oncenet-table-list').bootstrapTable("refresh");
                         } else {
-                            layer.close(index);
+                            top.layer.close(index);
                             top.layer.msg(result.msg);
                         }
                     }

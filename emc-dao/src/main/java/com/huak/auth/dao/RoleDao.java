@@ -21,4 +21,6 @@ public interface RoleDao {
     List<Map<String,Object>> exportRoles(Map<String, Object> paramsMap);
 
     List<Map<String,Object>> selectGrantByKey(String id);
+
+    Long checkRoleName(Map<String, Object> paramsMap);
 }

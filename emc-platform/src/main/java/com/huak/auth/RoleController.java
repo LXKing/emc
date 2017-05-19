@@ -147,9 +147,9 @@ public class RoleController {
         return jo.toJSONString();
     }
 
-   /* @RequestMapping(value = "/check", method = RequestMethod.POST)
+    @RequestMapping(value = "/check/name", method = RequestMethod.POST)
     @ResponseBody
-    public String checkUnique(@RequestParam Map<String, String> paramsMap) {
+    public String checkRoleName(@RequestParam Map<String, Object> paramsMap) {
         logger.info("角色名称唯一性校验");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
@@ -163,7 +163,7 @@ public class RoleController {
         }
         return jo.toJSONString();
     }
-*/
+
     @RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
     public String grantPage(Model model,@PathVariable("id") String id) {
         logger.info("跳转角色授权页");

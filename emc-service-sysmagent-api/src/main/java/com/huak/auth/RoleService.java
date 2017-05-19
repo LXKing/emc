@@ -4,7 +4,6 @@ import com.huak.auth.model.Role;
 import com.huak.auth.model.RoleFuncRel;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +34,7 @@ public interface RoleService {
 
     public List<RoleFuncRel> selectGrantByRoleKey(String id);
 
-    @Transactional(readOnly = false)
     void grantRoleFunc(String roleId, List<RoleFuncRel> rels);
+
+    Long checkRoleName(Map<String, Object> paramsMap);
 }
