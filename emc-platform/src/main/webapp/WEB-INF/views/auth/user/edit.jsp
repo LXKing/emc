@@ -2,32 +2,33 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="userAddForm" role="form">
-            	<input type="hidden" name="orgId" id="orgId">
+            <form class="form-horizontal" id="userEditForm" role="form">
                 <div class="form-group">
+                	<input type="hidden" id="id" name="id" value="${user.id }">
+                	<input type="hidden" id="orgId" name="orgId" value="${user.orgId }">
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>中文名称：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="userName" class="form-control" type="text" maxlength="16" placeholder="请输入用户中文名称">
+                        <input name="userName" class="form-control" type="text" maxlength="16" placeholder="请输入用户中文名称" value="${user.userName }">
                     </div>
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>联系电话：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="mobile" class="form-control" type="text" maxlength="16" placeholder="请输入用户联系电话">
+                        <input name="mobile" class="form-control" type="text" maxlength="16" placeholder="请输入用户联系电话" value="${user.mobile }">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>登录账号：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="login" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录账号">
+                        <input name="login" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录账号" value="${user.login }">
                     </div>
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>电子邮箱：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="mail" class="form-control" type="text" maxlength="16" placeholder="请输入用户电子邮箱">
+                        <input name="mail" class="form-control" type="text" maxlength="16" placeholder="请输入用户电子邮箱" value="${user.mail }">
                     </div>
                 </div>
                 <div class="form-group">
                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>登录密码：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input id="password" name="password" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录密码">
+                        <input id="password" name="password" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录密码" value="${user.password }">
                     </div>
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>使用状态：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
@@ -40,7 +41,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>组织机构：</label>
 	                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-	                    	<ul id="org" class="user-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
+	                    	<ul id="org" class="user-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;" value="${user.orgId }"></ul>
 	                    </div>
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>所属员工：</label>
                     <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
@@ -51,7 +52,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>备注说明：</label>
                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8"> 
-                        <textarea class="form-control" rows="4" maxlength="125" name="memo" placeholder="请输入备注"></textarea>
+                        <textarea class="form-control" rows="4" maxlength="125" id="memo" name="memo" placeholder="请输入备注"></textarea>
                     </div>
                 </div>
             </form>
@@ -113,7 +114,6 @@ function orgTreeNodeClick(){
 	var _tree = top.addUserOrgTree;
 	var nodes = _tree.getSelectedNodes();
 	var selectedNode = nodes[0];
-	top.$('#orgId').val(selectedNode.id);
 	//根据机构id，查询所属此机构的员工
 	$.post(_platform + '/user/org/emp',{
 		orgId:selectedNode.id
@@ -127,15 +127,18 @@ function orgTreeNodeClick(){
 				selectHtmlStr += "<option value='"+empId+"'>"+empName+"</option>";
 			}
 			top.$('#empId').html(selectHtmlStr);
+			top.$('#orgId').val(selectedNode.id);
 		}
 	},'json');
 }
 
 $(function () {
+	top.$('#memo').text('${user.memo}');
 	//初始化组织机构树
 	initOrgTree();
+	//默认选中
 	//获取表单元素
- 	var $form = $(top.document).find("#userAddForm");
+ 	var $form = $(top.document).find("#userEditForm");
     var icon = "<i class='fa fa-times-circle'></i> ";
     //提示信息绑定
     $('input:not(:submit):not(:button)').mousedown(function () {
@@ -174,8 +177,7 @@ $(function () {
             },
             login: {
                 required: true,
-                isLogin: true,
-                loginUnique:true
+                isLogin: true
             },
             password: {
                 required: true,
@@ -212,9 +214,8 @@ $(function () {
             var index = top.layer.load(1, {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
-            console.log(top.$('#orgId').val());
             $.ajax({
-                url: _platform + '/user/add',
+                url: _platform + '/user/edit',
                 data: $form.serialize(),
                 type: 'POST',
                 dataType: 'json',
@@ -262,25 +263,25 @@ $(function () {
 	    return this.optional(element) || (tel.test(value));
 	}, icon + "邮箱格式不正确，请重新输入");
 	
-    $.validator.addMethod("loginUnique", function(value, element) {
-        var deferred = $.Deferred();//创建一个延迟对象
-        $.ajax({
-            url:_platform+'/user/check/login',
-            type:'POST',
-            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {login:top.$('input[name="login"]').val()},
-            dataType: 'json',
-            success:function(result) {
-                if (!result.flag) {
-                    deferred.reject();
-                } else {
-                    deferred.resolve();
-                }
-            }
-        });
-        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-        return deferred.state() == "resolved" ? true : false;
-    }, icon + "登录账号已存在");
+//     $.validator.addMethod("loginUnique", function(value, element) {
+//         var deferred = $.Deferred();//创建一个延迟对象
+//         $.ajax({
+//             url:ctx+'/user/check/login',
+//             type:'POST',
+//             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+//             data: {login:$('#login').val()},
+//             dataType: 'json',
+//             success:function(result) {
+//                 if (!result.flag) {
+//                     deferred.reject();
+//                 } else {
+//                     deferred.resolve();
+//                 }
+//             }
+//         });
+//         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+//         return deferred.state() == "resolved" ? true : false;
+//     }, icon + "登录账号已存在");
 
 });
 </script>

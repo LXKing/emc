@@ -74,7 +74,7 @@
             <a class="J_menuItem" href="${platform}/func/list">功能管理</a>
         </li>
         <li>
-            <a class="J_menuItem" href="html/rizhi.html">业务日志</a>
+            <a class="J_menuItem" href="${platform}/log/list">业务日志</a>
         </li>
         <li>
             <a class="J_menuItem" href="html/muban.html">模板文件</a>
