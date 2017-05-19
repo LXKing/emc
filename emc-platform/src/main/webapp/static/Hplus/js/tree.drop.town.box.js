@@ -68,7 +68,7 @@
 
     function bodyDown(event) {
         var $boxTree = $("#tree-box");
-        if($boxTree == undefined || $boxTree == null ){
+        if($boxTree.length==0 ){
             $boxTree = $(top.document).find("#tree-box");
         }
         if (!(event.target.id == "tree-box" || $(event.target).parents("#tree-box").length > 0)) {
