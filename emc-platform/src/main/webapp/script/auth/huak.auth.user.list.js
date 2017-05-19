@@ -101,7 +101,7 @@ $(function () {
                 formatter:function(value,row,index){
                     return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="userEditForm" layer-title="编辑用户" layer-url="'+_platform+'/user/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
                         '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteUser(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' +
-                        '<a title="授权权限" class="btn btn-xs btn-warning" onclick="roleAuthPage()"><i class="fa fa-wrench"></i></a>';
+                        '<a title="授权角色" class="btn btn-xs btn-warning  top-layer-max" layer-form-id="grant-role-from" layer-title="授权角色" layer-url="'+_platform+'/user/grant/'+row.id+'"><i class="fa fa-wrench"></i></a>';
                 }
             }
 

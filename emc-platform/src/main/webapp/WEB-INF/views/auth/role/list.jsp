@@ -73,25 +73,11 @@
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-
                                     <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="roleAddForm" layer-title="添加角色" layer-url="${platform}/role/add">
                                         <i class="fa fa-plus"></i>添加
                                     </button>
-
-                                    <!--<button type="button" class="btn btn-sm btn-info" onclick="editRole()">
-                                        <i class="fa fa-edit"></i>编辑
-                                    </button>
-
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteRoles()">
-                                        <i class="fa fa-trash-o"></i>删除
-                                    </button>
-
-                                    <button type="button" class="btn btn-sm btn-warning" onclick="roleAuthPage()">
-                                        <i class="fa fa-wrench"></i>角色授权
-                                    </button>-->
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
-
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="role-table-list"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
@@ -110,7 +96,6 @@
         </div>
     </div>
 </div>
-<div id="role-layer-div" style="display: none"></div>
 
 </body>
 </html>

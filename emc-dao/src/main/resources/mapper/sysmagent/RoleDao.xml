@@ -125,4 +125,21 @@
             and  creator = #{creator}
         </if>
     </select>
+
+    <select id="getRoleByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_role,t_emc_auth_role_user_rel
+        where id = role_id
+        and user_id=#{userId}
+    </select>
+
+    <delete id="deleteRoleByUser" parameterType="java.util.HashMap">
+        delete from t_emc_auth_role_user_rel
+        where role_id = #{roleId} and user_id=#{userId}
+    </delete>
+
+    <insert id="grantRoleByUser" parameterType="java.util.HashMap">
+        insert into t_emc_auth_role_user_rel(role_id,user_id) values(#{roleId},#{userId})
+    </insert>
 </mapper>

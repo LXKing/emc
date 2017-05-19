@@ -3,6 +3,10 @@ package com.huak.login;
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.huak.auth.UserService;
+import com.huak.auth.model.User;
+import com.huak.auth.type.UserStatusType;
+import com.huak.base.ReversibleEncryption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -36,10 +38,12 @@ import java.util.Map;
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-/*    @Resource
-    private UserService userService;*/
+    @Resource
+    private UserService userService;
     @Resource
     private Producer captchaProducer;
+    @Resource
+    private ReversibleEncryption reversibleEncryption;
 
     @RequestMapping(value = "/login")
     public String login() {
@@ -61,12 +65,9 @@ public class LoginController {
     public String loginIn(HttpServletRequest request, String login, String pwd, String vc) {
         logger.info("登录后台");
         HttpSession session = request.getSession();
-        Map<String,String> user = new HashMap<>();
-        user.put("1","1");
-        session.setAttribute(com.huak.common.Constants.SESSION_KEY, user);
         JSONObject jo = new JSONObject();
         jo.put("isLogin", true);
-        /*try {
+        try {
             String kpvc = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
             // 校验验证码
             if (kpvc.equals(vc)) {
@@ -78,22 +79,22 @@ public class LoginController {
             }
             // 校验用户密码
             pwd = reversibleEncryption.encode(pwd);
-            Map<String, String> paramsMap = new HashMap<>();
-            paramsMap.put("login", login);
-            paramsMap.put("pwd", pwd);
-            Map<String, String> user = userService.findByLoginAndPwd(paramsMap);
+            User loginUser = new User();
+            loginUser.setLogin(login);
+            loginUser.setPassword(pwd);
+            User user = userService.findByLoginAndPwd(loginUser);
             if (user != null) {
-                if (UserStatusType.ENABLE.getKey() == Integer.valueOf(user.get("use_status"))) {
+                if (UserStatusType.ENABLE.getKey() == Integer.valueOf(user.getUseStatus())) {
                     //登录成功存入用户信息、权限到session，跳转到首页
-                    Long id = Long.valueOf(user.get("user_id"));
+                    String id = user.getId();
                     //用户(公司部门)
                     session.setAttribute(com.huak.common.Constants.SESSION_KEY, userService.getUser(id));
                     //菜单
-                    session.setAttribute(com.huak.common.Constants.SESSION_MENU_KEY, userService.getBackMenus(id));
+                    //session.setAttribute(com.huak.common.Constants.SESSION_MENU_KEY, userService.getBackMenus(id));
                     //角色
-                    session.setAttribute(com.huak.common.Constants.SESSION_ROLE_KEY, JSONArray.toJSON(userService.getRoles(id)));
+                    session.setAttribute(com.huak.common.Constants.SESSION_ROLE_KEY, userService.getRole(id));
                     //权限
-                    session.setAttribute(com.huak.common.Constants.SESSION_AUTH_KEY, userService.getAuths(id));
+                    //session.setAttribute(com.huak.common.Constants.SESSION_AUTH_KEY, userService.getAuths(id));
                     jo.put("isLogin", true);
                 } else {
                     jo.put("isLogin", false);
@@ -111,7 +112,7 @@ public class LoginController {
             jo.put("isLogin", false);
             jo.put("msg", "登录异常");
             logger.error("登录异常" + e.getMessage());
-        }*/
+        }
 
         return jo.toJSONString();
     }

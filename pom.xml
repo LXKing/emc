@@ -426,7 +426,7 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>src/main/resources/env/${package.target}</directory>
+                                    <directory>src/main/resources</directory>
                                 </resource>
                             </resources>
                         </configuration>

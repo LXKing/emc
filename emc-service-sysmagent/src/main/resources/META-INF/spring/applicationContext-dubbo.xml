@@ -77,4 +77,9 @@
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
 
+    <bean id="reversibleEncryption" class="com.huak.base.ReversibleEncryptionImpl"></bean>
+    <dubbo:service interface="com.huak.base.ReversibleEncryption" ref="reversibleEncryption" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
+
 </beans>

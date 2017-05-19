@@ -362,5 +362,34 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
+    public String grantPage(Model model,@PathVariable("id") String id) {
+        logger.info("跳转分配角色页");
+        try {
+            model.addAttribute("user", userService.getUser(id));
+            model.addAttribute("role", userService.getRole(id));
+        } catch (Exception e) {
+            logger.error("跳转分配角色页异常" + e.getMessage());
+        }
+        return "/auth/user/grant";
+    }
+
+    @RequestMapping(value = "/grant", method = RequestMethod.POST)
+    @ResponseBody
+    public String grant(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("用户分配角色");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            userService.grantRole(paramsMap);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "分配角色成功");
+        } catch (Exception e) {
+            logger.error("用户分配角色异常" + e.getMessage());
+            jo.put(Constants.MSG, "分配角色失败");
+        }
+        return jo.toJSONString();
+    }
 }
 

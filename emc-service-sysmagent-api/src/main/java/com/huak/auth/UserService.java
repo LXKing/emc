@@ -1,12 +1,13 @@
 package com.huak.auth;
 
-import java.util.List;
-import java.util.Map;
-
+import com.huak.auth.model.Role;
 import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -87,4 +88,22 @@ public interface UserService {
 	 */
 	List<Map<String, Object>> exportUser(Map<String, String> paramsMap);
 
+    /**
+     * 根据用户获取角色
+     * @param userId
+     * @return
+     */
+    Role getRole(String userId);
+
+    /**
+     * 给用户分配角色
+     */
+    void grantRole(Map<String, Object> paramsMap );
+
+    /**
+     * 根据账号密码查询用户
+     * @param user
+     * @return
+     */
+    User findByLoginAndPwd(User user);
 }

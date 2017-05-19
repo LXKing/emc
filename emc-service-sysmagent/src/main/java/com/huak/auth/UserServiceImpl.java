@@ -1,23 +1,24 @@
 package com.huak.auth;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.github.pagehelper.PageHelper;
+import com.huak.auth.dao.RoleDao;
 import com.huak.auth.dao.UserDao;
+import com.huak.auth.model.Role;
 import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
 import com.huak.common.des.DESUtil;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
 	@Resource
 	private UserDao userDao;
+
+    @Resource
+    private RoleDao roleDao;
 
 	/**
 	 * 分页查询用户信息
@@ -192,4 +196,39 @@ public class UserServiceImpl implements UserService {
 		}
 		return userList;
 	}
+
+    /**
+     * 根据用户获取角色
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Role getRole(String userId) {
+        return roleDao.getRoleByUser(userId);
+    }
+
+    /**
+     * 给用户分配角色
+     *
+     * @param paramsMap
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public void grantRole(Map<String, Object> paramsMap) {
+        roleDao.deleteRoleByUser(paramsMap);
+        roleDao.grantRoleByUser(paramsMap);
+    }
+
+    /**
+     * 根据账号密码查询用户
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public User findByLoginAndPwd(User user) {
+        return userDao.findByLoginAndPwd(user);
+    }
 }

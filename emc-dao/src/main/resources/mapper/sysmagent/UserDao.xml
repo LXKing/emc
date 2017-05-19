@@ -277,4 +277,11 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="findByLoginAndPwd" parameterType="com.huak.auth.model.User" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_user
+        where LOGIN=#{login} and PASSWORD=#{password}
+    </select>
 </mapper>

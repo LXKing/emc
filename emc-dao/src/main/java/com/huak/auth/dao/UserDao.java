@@ -1,12 +1,11 @@
 package com.huak.auth.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.stereotype.Repository;
-
 import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserDao {
@@ -81,4 +80,5 @@ public interface UserDao {
 	 */
 	List<Map<String, Object>> selectUser2Excel(Map<String, String> paramsMap);
 
+    User findByLoginAndPwd(User user);
 }

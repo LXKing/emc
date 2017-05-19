@@ -1,5 +1,6 @@
 package com.huak.interce;
 
+import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -48,7 +48,7 @@ public class SessionInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Map<String, String> user = (Map<String, String>) request.getSession().getAttribute(Constants.SESSION_KEY);
+        User user = (User) request.getSession().getAttribute(Constants.SESSION_KEY);
         if (user == null) {
             if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
                 response.setHeader(Constants.SESSION_STATUS, "timeout");//在响应头设置session状态
