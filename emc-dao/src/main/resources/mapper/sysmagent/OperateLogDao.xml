@@ -16,6 +16,37 @@
     <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
     <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID,OPT_NAME,OPT_TYPE,OPT_KEY,CLASS_NAME,METHOD_NAME,REMOTE_IP,REMOTE_NAME,REMOTE_PORT,REQ_URI,REQ_URL,CREATE_TIME,CREATOR
+  </sql>
+  
+  <!-- 查询日志列表信息 -->
+  <select id="selectPageByMap" parameterType="java.util.Map" resultMap="BaseResultMap" >
+  	select 
+  	 <include refid="Base_Column_List" />
+    from t_emc_operatelog
+    where 1=1 
+    <if test="optName!=null and optName!=''"> and OPT_NAME LIKE CONCAT('%',#{optName,jdbcType=VARCHAR},'%')</if>
+    <if test="optType!=null and optType!=''"> and OPT_TYPE = #{optType,jdbcType=VARCHAR}</if>
+    <if test="optKey!=null and optKey!=''">and OPT_KEY LIKE CONCAT('%',#{optKey,jdbcType=VARCHAR},'%')</if>
+    <if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=VARCHAR}</if>
+    <if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=VARCHAR}</if>
+  </select>
+  
+  <!-- selectLog2Excel 导出符合条件的日志信息到excel -->
+  <select id="selectLog2Excel" parameterType="java.util.Map" resultType="java.util.Map" >
+  	select 
+  	 <include refid="Base_Column_List" />
+    from t_emc_operatelog
+    where 1=1 
+    <if test="optName!=null and optName!=''"> and OPT_NAME LIKE CONCAT('%',#{optName,jdbcType=VARCHAR},'%')</if>
+    <if test="optType!=null and optType!=''"> and OPT_TYPE = #{optType,jdbcType=VARCHAR}</if>
+    <if test="optKey!=null and optKey!=''">and OPT_KEY LIKE CONCAT('%',#{optKey,jdbcType=VARCHAR},'%')</if>
+    <if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=VARCHAR}</if>
+    <if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=VARCHAR}</if>
+  </select>
+  
   <insert id="insertByPrimaryKeySelective" parameterType="com.huak.log.model.OperateLog" >
     insert into t_emc_operatelog (ID, OPT_NAME, OPT_TYPE, 
       OPT_KEY, CLASS_NAME, METHOD_NAME, 

@@ -51,7 +51,6 @@ public class UserController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage(ModelMap modelMap) {
         logger.info("转至系统用户列表页");
-        modelMap.put("demo", "demo");
         return "/auth/user/list";
     }
 

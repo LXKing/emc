@@ -135,12 +135,6 @@ function initDateBox(ids){
 		}
 	}
 }
-/**
- * 点击“搜索”按钮事件
- */
-function searchUser(){
-	$('#user-table-list').bootstrapTable('refresh');
-}
 
 /**
  * 获取页面表单中的input和select元素的name和value，并放入param对象中
@@ -276,6 +270,7 @@ function enableUser() {
         }
     });
 }
+<<<<<<< HEAD
 
 /**
  * 获取被选中的用户的id数组
@@ -327,6 +322,59 @@ function deleteUsers() {
 }
 
 /**
+=======
+
+/**
+ * 获取被选中的用户的id数组
+ * @returns {Array}
+ */
+function getCheckedIds(){
+	var ts= $('#user-table-list').bootstrapTable('getSelections');
+	var ids = [];
+	for(var i=0;i<ts.length;i++){
+		ids.push(ts[i].id);
+	}
+	return ids;
+}
+
+/**
+ * 批量删除用户
+ * @returns {Boolean}
+ */
+function deleteUsers() {
+
+    var ids = getCheckedIds();
+    if (ids.length == 0) {
+        layer.msg("请选择要删除的用户");
+        return false;
+    }
+    layer.confirm('您是否确定删除所选用户？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        var index = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.ajax({
+            url: _platform + '/user/delete',
+            data: {ids: ids.join()},
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag) {
+                    layer.closeAll();
+                    $('#user-table-list').bootstrapTable("refresh");
+                    layer.msg(result.msg);
+                } else {
+                    layer.close(index);
+                    layer.msg(result.msg);
+                }
+            }
+        });
+    });
+}
+
+/**
+>>>>>>> userdev
  * 删除用户
  * @param id
  */

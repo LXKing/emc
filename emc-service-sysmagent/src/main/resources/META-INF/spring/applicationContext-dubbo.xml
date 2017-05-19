@@ -66,6 +66,11 @@
     <dubbo:service interface="com.huak.auth.UserService" ref="userService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
+    <!-- 日志 -->
+    <bean id="loggerService" class="com.huak.log.OperateLogServiceImpl"></bean>
+    <dubbo:service interface="com.huak.log.OperateLogService" ref="loggerService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
 
     <bean id="administrativeService" class="com.huak.org.AdministrativeImpl"></bean>
     <dubbo:service interface="com.huak.org.AdministrativeService" ref="administrativeService" timeout="300" loadbalance="random"
