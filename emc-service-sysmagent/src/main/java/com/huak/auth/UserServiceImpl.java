@@ -1,6 +1,5 @@
 package com.huak.auth;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +90,7 @@ public class UserServiceImpl implements UserService {
 	public int editUser(User user) throws Exception{
 		int ret = 0;
 		try{
-			String password = DESUtil.decrypt(user.getPassword(), desKey);
+			String password = DESUtil.encrypt(user.getPassword(), desKey);
 			user.setPassword(password);
 			ret = userDao.updateUser(user);
 		}catch(Exception e){

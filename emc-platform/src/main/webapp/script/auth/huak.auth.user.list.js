@@ -135,12 +135,6 @@ function initDateBox(ids){
 		}
 	}
 }
-/**
- * 点击“搜索”按钮事件
- */
-function searchUser(){
-	$('#user-table-list').bootstrapTable('refresh');
-}
 
 /**
  * 获取页面表单中的input和select元素的name和value，并放入param对象中

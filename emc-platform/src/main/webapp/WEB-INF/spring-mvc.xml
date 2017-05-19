@@ -23,6 +23,7 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
     </context:component-scan>
 
+	<bean class="com.huak.log.OperateLogger"></bean>
     <context:property-placeholder location="classpath:application-env.properties" ignore-unresolvable="true" />
 
     <mvc:resources mapping="/static/**" location="/static/"/>

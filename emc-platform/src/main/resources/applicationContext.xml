@@ -31,7 +31,8 @@
     <dubbo:reference id="funcService"    interface="com.huak.auth.FuncService" timeout="12000"  check="true" version="1.0"/>
     <dubbo:reference id="sysDicService"    interface="com.huak.sys.SysDicService" timeout="12000"  check="true" version="1.0"/>
     <dubbo:reference id="userService"    interface="com.huak.auth.UserService" timeout="12000"  check="true" version="1.0"/>
-
+	<!-- 日志 -->
+	<dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="12000"  check="true" version="1.0"/>
 
     <!-- 验证码 -->
     <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
