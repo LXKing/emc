@@ -98,6 +98,9 @@
             <a class="J_menuItem" href="${platform}/oncenet/list">一次网管理</a>
         </li>
         <li>
+            <a class="J_menuItem" href="${platform}/season/list">采暖季</a>
+        </li>
+        <li>
             <a class="J_menuItem" href="html/ercixian.html">二次线管理</a>
         </li>
         <li>
