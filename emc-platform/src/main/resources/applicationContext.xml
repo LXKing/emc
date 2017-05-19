@@ -25,7 +25,7 @@
     <dubbo:reference id="onecenetService"    interface="com.huak.org.OncenetService" timeout="12000"  check="true" version="1.0" />
     <dubbo:reference id="nodeService"    interface="com.huak.org.NodeService" timeout="12000"  check="true" version="1.0" />
     <!--组织机构代理服务结束-->
-    <dubbo:reference id="seasonService"    interface="com.huak.season.SeasonService" timeout="12000"  check="true" version="1.0" />
+    <dubbo:reference id="seasonService"    interface="com.huak.sys.SeasonService" timeout="12000"  check="true" version="1.0" />
     <dubbo:reference id="roleService"    interface="com.huak.auth.RoleService" timeout="12000"  check="true" version="1.0"/>
     <dubbo:reference id="menuService"    interface="com.huak.auth.MenuService" timeout="12000"  check="true" version="1.0"/>
     <dubbo:reference id="funcService"    interface="com.huak.auth.FuncService" timeout="12000"  check="true" version="1.0"/>
