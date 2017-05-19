@@ -77,15 +77,7 @@ $(document).on('click', '.emc-search', function () {
 /**
  * 单位公共树
  */
-var comm_tree = null;
-var setting = {
-    view: {selectedMulti: true,fontCss:{color:"black"}},
-    check: { enable: false },
-    data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
-    async : { enable : true },
-    edit: {enable: false },
-    callback: { onClick:treeNodeClick }
-};
+
 $(document).ready( function (e) {
     var $this =$(this.getElementsByClassName("org-tree"));
     var lightId = $this.attr("light");
@@ -93,6 +85,14 @@ $(document).ready( function (e) {
     $this.html("<div id='temp_org_tree' class='ztree'></div>");
     if($this.length>0){
         $.post(_platform + '/common/org/tree',function(data){
+            var setting = {
+                view: {selectedMulti: true,fontCss:{color:"black"}},
+                check: { enable: false },
+                data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
+                async : { enable : true },
+                edit: {enable: false },
+                callback: { onClick:treeNodeClick }
+            };
             var nodes='';
             var zNodes ='[';
             for (var i=0;i<data.length;i++){
