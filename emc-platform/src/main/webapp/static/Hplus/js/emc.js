@@ -112,7 +112,6 @@ $(document).ready( function (e) {
                     var node = treeObj.getNodeByParam("id",nodes[i]);
                     treeObj.selectNode(node,true);
                 }
-
             }
         });
 
