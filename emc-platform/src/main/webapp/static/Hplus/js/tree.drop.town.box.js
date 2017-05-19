@@ -5,6 +5,11 @@
  * Version: v 1.0      <BR>
  * Date: 2017/5/19<BR>
  *     树下拉框
+ *     基于ztree写的
+ *     使用时先定义ztree 的setting
+ *     然后调用就行了，如
+ *     var setting={};
+ *     $('input').treeBox({setting:setting});
  */
 (function ($) {
     var treeBox = function (ele, options) {
