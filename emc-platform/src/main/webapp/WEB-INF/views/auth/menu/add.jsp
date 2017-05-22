@@ -14,8 +14,8 @@
                     <label class="col-sm-3  control-label"><span class="red">*</span>菜单类型：</label>
                     <div class="col-sm-8">
                         <select name="menuType" class="chosen-select " style="width:360px" disabled="disabled">
-                            <option <c:if test="${menuType eq 1}">selected="selected" </c:if>  value="0">前台</option>
-                            <option <c:if test="${menuType eq 2}">selected="selected" </c:if>  value="1">后台</option>
+                            <option <c:if test="${menuType eq 0}">selected="selected" </c:if>  value="0">前台</option>
+                            <option <c:if test="${menuType eq 1}">selected="selected" </c:if>  value="1">后台</option>
                         </select>
                     </div>
                 </div>
