@@ -95,7 +95,7 @@ public class LoginController {
                     //角色
                     session.setAttribute(com.huak.common.Constants.SESSION_ROLE_KEY, userService.getRole(id));
                     //权限
-                    //session.setAttribute(com.huak.common.Constants.SESSION_AUTH_KEY, userService.getAuths(id));
+                    session.setAttribute(com.huak.common.Constants.SESSION_AUTH_KEY, userService.getAuths(id));
                     jo.put("isLogin", true);
                 } else {
                     jo.put("isLogin", false);

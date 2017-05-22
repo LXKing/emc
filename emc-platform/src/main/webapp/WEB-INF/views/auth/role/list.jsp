@@ -73,16 +73,24 @@
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
+                                <c:if test="${sessionScope._auth['roleAdd']}">
                                     <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="roleAddForm" layer-title="添加角色" layer-url="${platform}/role/add">
                                         <i class="fa fa-plus"></i>添加
                                     </button>
+                                </c:if>
+                                <input type="hidden" id="roleUpdate" value="${sessionScope._auth['roleUpdate']}">
+                                <input type="hidden" id="roleDelete" value="${sessionScope._auth['roleDelete']}">
+                                <input type="hidden" id="roleGrant" value="${sessionScope._auth['roleGrant']}">
+
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="role-table-list"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <c:if test="${sessionScope._auth['roleExport']}">
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
                                 </button>
+                                </c:if>
 
                             </div>
                         </div>

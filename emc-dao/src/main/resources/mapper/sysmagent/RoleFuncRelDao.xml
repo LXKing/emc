@@ -17,7 +17,7 @@
     </delete>
     <select id="selectGrantByRoleKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        ROLE_ID roleId, FUNC_ID funcId
+        ROLE_ID, FUNC_ID
         from t_emc_auth_role_func_rel
         where ROLE_ID = #{roleId,jdbcType=VARCHAR}
     </select>
