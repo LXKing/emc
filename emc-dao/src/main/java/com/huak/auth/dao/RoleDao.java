@@ -23,4 +23,10 @@ public interface RoleDao {
     List<Map<String,Object>> selectGrantByKey(String id);
 
     Long checkRoleName(Map<String, Object> paramsMap);
+
+    Role getRoleByUser(String userId);
+
+    void deleteRoleByUser(Map<String, Object> paramsMap);
+
+    void grantRoleByUser(Map<String, Object> paramsMap);
 }

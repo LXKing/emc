@@ -1,8 +1,9 @@
 package com.huak.auth.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable{
     /**
      *
      * @preserve 声明此方法不被JOC混淆
@@ -80,8 +81,19 @@ public class User {
      * @preserve 声明此方法不被JOC混淆
      */
     private Date createTime;
+    
+    private String orgId;
+    
 
-    public String getId() {
+    public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+
+	public String getId() {
         return id;
     }
 

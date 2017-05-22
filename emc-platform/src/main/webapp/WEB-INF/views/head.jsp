@@ -84,6 +84,7 @@
 
 <%--emc项目组脚本--%>
 <script src="${platform}/static/Hplus/js/emc.js"></script>
+<script src="${platform}/static/Hplus/js/tree.drop.town.box.js"></script>
 <script type="text/javascript">
     var _platform = '${platform}';
     layer.config({

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Func;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
+import com.huak.init.MenuAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,8 @@ public class FuncController {
     private MenuService menuService;
     @Resource
     private FuncService funcService;
-
-/*
     @Resource
-    private FunctionInitBean functionInitBean;*/
+    private MenuAware menuAware;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String listPage(){
@@ -93,7 +92,7 @@ public class FuncController {
             jo.put(Constants.FLAG ,true);
             jo.put(Constants.MSG ,"修改功能成功");
             //重新加载缓存
-           // functionInitBean.afterPropertiesSet();
+            menuAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("修改功能异常" + e.getMessage());
             jo.put(Constants.MSG ,"修改功能失败");
@@ -125,7 +124,7 @@ public class FuncController {
             jo.put(Constants.FLAG ,true);
             jo.put(Constants.MSG ,"添加功能成功");
             //重新加载缓存
-            //functionInitBean.afterPropertiesSet();
+            menuAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("添加功能异常" + e.getMessage());
             jo.put(Constants.MSG ,"添加功能失败");
@@ -148,6 +147,8 @@ public class FuncController {
             funcService.deleteByPrimaryKey(id);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "删除功能成功");
+            //重新加载缓存
+            menuAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("删除功能异常" + e.getMessage());
             jo.put(Constants.MSG, "删除功能失败");

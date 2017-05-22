@@ -24,9 +24,7 @@ public class MainController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
-
-        System.out.println("");
-        logger.info("");
+        logger.info("跳转首页");
         return "index";
     }
 

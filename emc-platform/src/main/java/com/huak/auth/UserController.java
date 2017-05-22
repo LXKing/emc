@@ -1,14 +1,22 @@
 package com.huak.auth;
 
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,22 +26,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 
-
 /**
- * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
- * ProjectName:eccp<BR>
- * File name:  com.huak.auth<BR>
- * Author:  lichao  <BR>
- * Project:eccp    <BR>
- * Version: v 1.0      <BR>
- * Date: 2016/8/24<BR>
- * Description:   用户  <BR>
- * Function List:  <BR>
+ * 用户controller
+ * @author Administrator
  */
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -42,13 +43,23 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    /**
+     * 跳转到列表页面
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage(ModelMap modelMap) {
         logger.info("转至系统用户列表页");
-        modelMap.put("demo", "demo");
         return "/auth/user/list";
     }
 
+    /**
+     * 根据条件查询列表信息
+     * @param paramsMap
+     * @param page
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String, String> paramsMap, Page page) {
@@ -63,6 +74,11 @@ public class UserController {
         return jo.toJSONString();
     }
     
+    /**
+     * 根据orgid查询此机构下的员工
+     * @param orgId
+     * @return
+     */
     @RequestMapping(value = "/org/emp", method = RequestMethod.POST)
     @ResponseBody
     public String orgEmp(String orgId) {
@@ -77,297 +93,303 @@ public class UserController {
         }
         return result;
     }
-//
-//    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-//    public String editPage(Model model, @PathVariable("id") Long id) {
-//        logger.info("跳转编辑用户页");
-//        try {
-//            model.addAttribute("obj", userService.getUser(id));
-//        } catch (Exception e) {
-//            logger.error("跳转编辑页异常" + e.getMessage());
-//        }
-//        return "/auth/user/user_edit";
-//    }
-//
-//    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-//    @ResponseBody
-//    public String edit(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("编辑用户");
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            userService.editUser(paramsMap);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "编辑用户成功");
-//        } catch (Exception e) {
-//            logger.error("编辑用户异常" + e.getMessage());
-//            jo.put(Constants.MSG, "编辑用户失败");
-//        }
-//        return jo.toJSONString();
-//    }
-//
+    
+    /**
+     * 跳转到添加用户页面
+     * @return
+     */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPage() {
         return "/auth/user/add";
     }
 
+    /**
+     * 添加用户信息
+     * @param request
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(User user) {
+    public String add(HttpServletRequest request,User user) {
         logger.info("添加用户");
 
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-//            paramsMap.put("password", reversibleEncryption.encode(paramsMap.get("password")));
-//            userService.addUser(paramsMap);
-            jo.put(Constants.FLAG, true);
-            jo.put(Constants.MSG, "添加用户成功");
+        	String userId = request.getSession().getAttribute(Constants.SESSION_KEY).toString();
+        	user.setCreator(userId);
+        	user.setId(UUIDGenerator.getUUID());
+            int ret = userService.addUser(user);
+            if(ret<=0){
+            	jo.put(Constants.MSG, "添加用户失败");
+            }else{
+            	jo.put(Constants.FLAG, true);
+            	jo.put(Constants.MSG, "添加用户成功");
+            }
         } catch (Exception e) {
             logger.error("添加用户异常" + e.getMessage());
-            jo.put(Constants.MSG, "添加用户失败");
+            
         }
         return jo.toJSONString();
     }
-//
-//    @RequestMapping(value = "/check/phone", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String checkPhone(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("手机号唯一性校验");
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            Long num = userService.checkPhone(paramsMap);
-//            if (num == 0) {
-//                jo.put(Constants.FLAG, true);
-//            }
-//        } catch (Exception e) {
-//            logger.error("手机号唯一性校验异常" + e.getMessage());
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/check/login", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String checkLogin(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("登录账号唯一性校验");
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            Long num = userService.checkLogin(paramsMap);
-//            if (num == 0) {
-//                jo.put(Constants.FLAG, true);
-//            }
-//        } catch (Exception e) {
-//            logger.error("登录账号唯一性校验异常" + e.getMessage());
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/check/jobNum", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String checkJobNum(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("工号唯一性校验");
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            Long num = userService.checkJobNum(paramsMap);
-//            if (num == 0) {
-//                jo.put(Constants.FLAG, true);
-//            }
-//        } catch (Exception e) {
-//            logger.error("工号唯一性校验异常" + e.getMessage());
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//
-//    @RequestMapping(value = "/reset/pwd", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String resetPwd(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("重置密码");
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            String pwd = userService.resetPwd(paramsMap);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "重置密码成功,密码为【" + pwd + "】");
-//        } catch (Exception e) {
-//            jo.put(Constants.MSG, "重置密码失败");
-//            logger.error("重置密码异常" + e.getMessage());
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    /**
-//     * 为什么用POST请求
-//     * 因为DELETE请求接收不到数组 fuck
-//     * @param ids
-//     * @return
-//     */
-//
-//    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String deleteUsers(String ids) {
-//        logger.info("批量删除用户");
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            userService.deleteUsers(ids);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "删除用户成功");
-//        } catch (Exception e) {
-//            logger.error("删除用户异常" + e.getMessage());
-//            jo.put(Constants.MSG, "删除用户失败");
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    /**
-//     * @param id
-//     * @return
-//     */
-//
-//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-//    @ResponseBody
-//    public String delete(@PathVariable("id") Long id) {
-//        logger.info("删除用户");
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            userService.deleteUsers(id.toString());
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "删除用户成功");
-//        } catch (Exception e) {
-//            logger.error("删除用户异常" + e.getMessage());
-//            jo.put(Constants.MSG, "删除用户失败");
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/status", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String status(@RequestParam Map<String, String> paramsMap) {
-//        logger.info("修改用户可用状态");
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            userService.updStatus(paramsMap);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "修改成功");
-//        } catch (Exception e) {
-//            logger.error("修改用户可用状态异常" + e.getMessage());
-//            jo.put(Constants.MSG, "修改失败");
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/role", method = RequestMethod.GET)
-//    public String rolePage(Model model, Long id) {
-//        logger.info("跳转分配角色页");
-//        try {
-//            model.addAttribute("obj", userService.getUser(id));
-//            model.addAttribute("roles", userService.getRoles(id));
-//        } catch (Exception e) {
-//            logger.error("跳转分配角色页异常" + e.getMessage());
-//        }
-//        return "/auth/user/user_role";
-//    }
-//
-//    @RequestMapping(value = "/role", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String role(Long userId, Long[] roleIds) {
-//        logger.info("用户分配角色");
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            userService.setRoles(userId, roleIds);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "分配角色成功");
-//        } catch (Exception e) {
-//            logger.error("用户分配角色异常" + e.getMessage());
-//            jo.put(Constants.MSG, "分配角色失败");
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/update/pwd", method = RequestMethod.GET)
-//    public String updatePwdPage() {
-//        logger.info("跳转修改密码页");
-//        return "/auth/user/user_pwd";
-//    }
-//
-//    @RequestMapping(value = "/update/pwd", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String updatePwd(@RequestParam Map<String, String> paramsMap, HttpServletRequest request) {
-//        logger.info("修改密码");
-//
-//        JSONObject jo = new JSONObject();
-//
-//        HttpSession session = request.getSession(false);
-//        Map<String, Object> user = (Map<String, Object>) session.getAttribute(Constants.SESSION_KEY);
-//        paramsMap.put("id", user.get("user_id").toString());
-//        jo.put(Constants.FLAG, false);
-//        try {
-//            userService.updPwd(paramsMap);
-//            jo.put(Constants.FLAG, true);
-//            jo.put(Constants.MSG, "修改密码成功");
-//        } catch (Exception e) {
-//            logger.error("修改密码异常" + e.getMessage());
-//            jo.put(Constants.MSG, "修改密码失败");
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/check/pwd", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String checkPwd(@RequestParam Map<String, String> paramsMap, HttpServletRequest request) {
-//        logger.info("原始密码校验");
-//        JSONObject jo = new JSONObject();
-//
-//        HttpSession session = request.getSession(false);
-//        Map<String, Object> user = (Map<String, Object>) session.getAttribute(Constants.SESSION_KEY);
-//        jo.put(Constants.FLAG, false);
-//
-//        try {
-//            String password = reversibleEncryption.decode(user.get("password").toString());
-//            String originalPwd = paramsMap.get("originalPwd");
-//            if (password.equals(originalPwd)) {
-//                jo.put(Constants.FLAG, true);
-//            }
-//        } catch (Exception e) {
-//            logger.error("原始密码校验异常" + e.getMessage());
-//        }
-//        return jo.toJSONString();
-//    }
-//
-//    @RequestMapping(value = "/export", method = RequestMethod.GET)
-//    public void export(@RequestParam Map<String, String> paramsMap, HttpServletResponse response) {
-//        logger.info("导出用户列表EXCEL");
-//        String workBookName = "用户列表";//文件名
-//        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-//        cellName.put("user_id", "用户主键");
-//        cellName.put("room_id", "房间主键");
-//        cellName.put("part_id", "部门主键");
-//        cellName.put("login", "登录账号");
-//        cellName.put("password", "密码");
-//        cellName.put("login_time", "登录时间");
-//        cellName.put("last_login_time", "上次登录时间");
-//        cellName.put("login_num", "登录次数");
-//        cellName.put("use_status", "使用状态");
-//        List<Map<String, Object>> cellValues = null;//列值
-//        try {
-//            cellValues = userService.exportUser(paramsMap);
-//            commonExcelExport.excelExport(response, cellName, cellValues, workBookName);
-//        } catch (Exception e) {
-//            logger.error("导出用户列表EXCEL异常" + e.getMessage());
-//        }
-//    }
+    
+    /**
+     * 校验登录账号唯一性
+     * @param login
+     * @return
+     */
+    @RequestMapping(value = "/check/login", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkLogin(String login) {
+        logger.info("登录账号唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = userService.checkLogin(login);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("登录账号唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+    
+    /**
+     * 跳转到编辑页面
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editPage(Model model, @PathVariable("id") String id) {
+	    logger.info("跳转编辑用户页");
+	    try {
+	    	User user = userService.getUser(id);
+	    	if(user!=null){
+	    		model.addAttribute("user", user);
+	    	}
+	    } catch (Exception e) {
+	        logger.error("跳转编辑页异常" + e.getMessage());
+	    }
+	    return "/auth/user/edit";
+    }
+    
+    /**
+     * 编辑用户信息
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(User user) {
+        logger.info("编辑用户");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            int ret = userService.editUser(user);
+            if(ret<=0){
+            	jo.put(Constants.MSG, "编辑用户失败");
+            }else{
+            	jo.put(Constants.FLAG, true);
+            	jo.put(Constants.MSG, "编辑用户成功");
+            }
+        } catch (Exception e) {
+            logger.error("编辑用户异常" + e.getMessage());
+            jo.put(Constants.MSG, "编辑用户失败");
+        }
+        return jo.toJSONString();
+    }
 
+    /**
+     * 批量删除用户信息
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteUsers(String[] ids) {
+        logger.info("批量删除用户");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            int ret = userService.removeUsers(ids);
+            if(ret<=0 || ret!=ids.length){
+            	jo.put(Constants.MSG, "删除用户失败");
+            }else{
+            	jo.put(Constants.FLAG, true);
+            	jo.put(Constants.MSG, "删除用户成功");
+            }
+        } catch (Exception e) {
+            logger.error("删除用户异常" + e.getMessage());
+            jo.put(Constants.MSG, "删除用户失败");
+        }
+        return jo.toJSONString();
+    }
+    
+    /**
+     * 删除用户信息
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String delete(@PathVariable("id") String id) {
+        logger.info("删除用户");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+        	String[] ids = new String[1];
+        	ids[0] = id;
+            int ret = userService.removeUsers(ids);
+            if(ret<=0){
+            	jo.put(Constants.MSG, "删除用户失败");
+            }else {
+            	jo.put(Constants.FLAG, true);
+            	jo.put(Constants.MSG, "删除用户成功");
+			}
+        } catch (Exception e) {
+            logger.error("删除用户异常" + e.getMessage());
+            jo.put(Constants.MSG, "删除用户失败");
+        }
+        return jo.toJSONString();
+    }
+    
+    /**
+     * 重置用户密码
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/reset/pwd", method = RequestMethod.POST)
+    @ResponseBody
+    public String resetPwd(String[] ids) {
+        logger.info("重置密码");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            String pwd = userService.resetPwd(ids);
+            if(pwd==null){
+            	jo.put(Constants.MSG, "重置密码失败");
+            }else{
+            	jo.put(Constants.FLAG, true);
+            	jo.put(Constants.MSG, "重置密码成功,密码为【" + pwd + "】");
+            }
+        } catch (Exception e) {
+            jo.put(Constants.MSG, "重置密码失败");
+            logger.error("重置密码异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     * 禁用/启用用户
+     * @param status
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/status/{status}", method = RequestMethod.POST)
+    @ResponseBody
+    public String status(@PathVariable("status") String status,String[] ids) {
+        logger.info("修改用户可用状态");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            int ret = userService.editUseStatus(status,ids);
+            if(ret==-1){
+            	jo.put(Constants.MSG, "修改失败");
+            }else{
+            	jo.put(Constants.FLAG, true);
+            	jo.put(Constants.MSG, "修改成功");
+            }
+        } catch (Exception e) {
+            logger.error("修改用户可用状态异常" + e.getMessage());
+            jo.put(Constants.MSG, "修改失败");
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     * 导出用户信息
+     * @param paramsMap
+     * @param response
+     */
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(@RequestParam Map<String, String> param, HttpServletResponse response) {
+        logger.info("导出用户列表EXCEL");
+        try {
+        	
+        	JSONObject jo = new JSONObject();
+	        jo.put(Constants.FLAG, false);
+	        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+	        cellName.put("id", "用户主键");
+	        cellName.put("org_id", "部门主键");
+	        cellName.put("login", "登录账号");
+	        cellName.put("password", "密码");
+	        cellName.put("login_time", "登录时间");
+	        cellName.put("last_login_time", "上次登录时间");
+	        cellName.put("login_num", "登录次数");
+	        cellName.put("use_status", "使用状态");
+	        cellName.put("mobile", "联系电话");
+	        cellName.put("mail", "电子邮件");
+	        cellName.put("user_name", "用户名称");
+	        cellName.put("memo", "备注说明");
+	        cellName.put("creator", "创建者");
+	        cellName.put("create_time", "创建时间");
+	        List<Map<String, Object>> cellValues = userService.exportUser(param);
+            if(cellValues==null){
+            	jo.put(Constants.MSG, "导出失败");
+            }else if(cellValues.size()==0){
+            	jo.put(Constants.MSG, "没有数据要导出");
+            }else{
+            	jo.put(Constants.MSG, "导出失败");
+            	HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            	OutputStream out = response.getOutputStream();
+            	//输出Excel文件  
+            	String mimetype = "application/vnd.ms-excel";
+                response.setContentType(mimetype);
+                response.setCharacterEncoding("UTF-8");
+                String fileName = "userInfo.xls";
+                response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+                wb.write(out);
+                out.flush();
+            }
+        } catch (Exception e) {
+            logger.error("导出用户列表EXCEL异常" + e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
+    public String grantPage(Model model,@PathVariable("id") String id) {
+        logger.info("跳转分配角色页");
+        try {
+            model.addAttribute("user", userService.getUser(id));
+            model.addAttribute("role", userService.getRole(id));
+        } catch (Exception e) {
+            logger.error("跳转分配角色页异常" + e.getMessage());
+        }
+        return "/auth/user/grant";
+    }
+
+    @RequestMapping(value = "/grant", method = RequestMethod.POST)
+    @ResponseBody
+    public String grant(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("用户分配角色");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            userService.grantRole(paramsMap);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "分配角色成功");
+        } catch (Exception e) {
+            logger.error("用户分配角色异常" + e.getMessage());
+            jo.put(Constants.MSG, "分配角色失败");
+        }
+        return jo.toJSONString();
+    }
 }
 
