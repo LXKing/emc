@@ -84,8 +84,15 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="dicEditForm" layer-title="编辑字典" layer-url="'+_platform+'/sys/dic/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteDic(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>';
+                    var html = "";
+                    if($("#sysDicUpdate").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="dicEditForm" layer-title="编辑字典" layer-url="'+_platform+'/sys/dic/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                    }
+                    if($("#sysDicDelete").val()){
+                        html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteDic(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>';
+                    }
+                    return  html;
+
                 }
             }
 
