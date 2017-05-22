@@ -85,8 +85,15 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="funcEditForm" layer-title="编辑功能" layer-url="'+_platform+'/func/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteFunc(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>';
+                    var html = "";
+                    if($("#funcUpdate").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="funcEditForm" layer-title="编辑功能" layer-url="'+_platform+'/func/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                    }
+                    if($("#funcDelete").val()){
+                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteFunc(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>';
+                    }
+                    return  html;
+
                 }
             }
 
