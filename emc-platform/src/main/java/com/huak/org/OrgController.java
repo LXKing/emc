@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -116,7 +117,7 @@ public class OrgController {
             org.setCreator(new Long(1001));
 
             org.setId(UUIDGenerator.getUUID());
-           boolean flag = orgService.insertOrg(org);
+            boolean flag = orgService.insertOrg(org);
             jo.put(Constants.FLAG, flag);
             jo.put(Constants.MSG, "添加机构成功");
         } catch (Exception e) {

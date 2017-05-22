@@ -113,4 +113,11 @@ public interface UserService {
      * @return
      */
     List<Map<String,Object>> getBackMenus(String id,String pMenuId);
+
+    /**
+     * 查询用户权限
+     * @param id
+     * @return
+     */
+    Map<String, Boolean> getAuths(String id);
 }

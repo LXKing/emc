@@ -83,4 +83,6 @@ public interface UserDao {
     User findByLoginAndPwd(User user);
 
     List<Map<String,Object>> selectMenusByUser(Map<String, Object> paramsMap);
+
+    List<Map<String,Object>> getAuthByUser(String id);
 }

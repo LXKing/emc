@@ -1,4 +1,5 @@
 $(function () {
+	initTreeBox();
 	//用户列表
 	var userTable = $('#user-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
@@ -25,7 +26,7 @@ $(function () {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
             };
-            formsParam(param,'user-form',true);
+            formsParam(param,'user-form',false);
             return param;
         }, formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
@@ -110,7 +111,22 @@ $(function () {
 	//初始化日期控件
 	initDateBox(['cStartTime','cEndTime','lStartTime','lEndTime']);
 });
-
+//组织机构树点击节点事件
+var treeNodeClick = function(e,treeId,treeNode){ 
+	var orgId = treeNode.id;
+	var orgName = treeNode.name;
+	$("#orgId").val(orgId);
+	$("input[name='orgName']").val(orgName);
+};
+//初始化treebox
+function initTreeBox(){
+	if($.fn.zTree.getZTreeObj("temp_org_tree")==null){
+		setTimeout('initTreeBox()',50)
+	}else{
+		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+		var box = $('input[name="orgName"]').treeBox({setting:treeObj.setting,zNodes:treeObj.getNodes()});
+	}
+}
 /**
  * 初始化日期框
  * @param ids
@@ -270,7 +286,6 @@ function enableUser() {
         }
     });
 }
-<<<<<<< HEAD
 
 /**
  * 获取被选中的用户的id数组
@@ -322,9 +337,6 @@ function deleteUsers() {
 }
 
 /**
-=======
-
-/**
  * 获取被选中的用户的id数组
  * @returns {Array}
  */
@@ -374,7 +386,6 @@ function deleteUsers() {
 }
 
 /**
->>>>>>> userdev
  * 删除用户
  * @param id
  */

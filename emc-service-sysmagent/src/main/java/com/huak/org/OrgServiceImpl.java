@@ -1,5 +1,6 @@
 package com.huak.org;
 
+import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -25,7 +26,8 @@ public class OrgServiceImpl implements OrgService {
     private AdministrativeDao administrativeDao;
     @Resource
     private OrgDao orgDao;
-
+    @Resource
+    private DateDao dateDao;
     @Override
     public int insert(Administrative season) {
         return 0;
@@ -76,6 +78,7 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public boolean insertOrg(Org org) {
         boolean flag=false;
+        org.setCreateTime(dateDao.getTime());
         int i =orgDao.insert(org);
         if(i>0){
             flag=true;

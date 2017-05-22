@@ -55,6 +55,7 @@
   	 <include refid="Base_Column_List" />
     from t_emc_auth_user
     where 1=1
+    <if test="orgId!=null and orgId!=''"> and ORG_ID = #{orgId,jdbcType=VARCHAR}</if>
     <if test="userName!=null and userName!=''"> and USER_NAME LIKE CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
     <if test="userAccount!=null and userAccount!=''"> and LOGIN LIKE CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')</if>
   	<if test="userStatus!=null and userStatus!=''"> and USE_STATUS = #{userStatus,jdbcType=VARCHAR}</if>
@@ -292,7 +293,8 @@
 	tm.MENU_URL menuUrl,
 	tm.P_MENU_ID pMenuId,
 	tm.MENU_TYPE menuType,
-	tm.SEQ seq
+	tm.SEQ seq,
+	tm.MENU_ICON menuIcon
 FROM
 	t_emc_auth_user tu,
 	t_emc_auth_role tr,
@@ -310,5 +312,23 @@ AND tu.ID = #{id}
 AND tm.MENU_TYPE = #{menuType}
 AND tm.P_MENU_ID = #{pMenuId}
 GROUP BY tm.ID
+order by tm.SEQ
+    </select>
+
+    <select id="getAuthByUser" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+	tf.UNAME uname
+FROM
+	t_emc_auth_user tu,
+	t_emc_auth_role tr,
+	t_emc_auth_role_user_rel tru,
+	t_emc_auth_func tf,
+	t_emc_auth_role_func_rel trf
+WHERE
+	tu.ID = tru.USER_ID
+AND tr.ID = tru.ROLE_ID
+AND tr.ID = trf.ROLE_ID
+AND tf.ID = trf.FUNC_ID
+AND tu.ID = #{id}
     </select>
 </mapper>

@@ -267,4 +267,21 @@ public class UserServiceImpl implements UserService {
 
         return menus;
     }
+
+    /**
+     * 查询用户权限
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Boolean> getAuths(String id) {
+        List<Map<String,Object>> auths =  userDao.getAuthByUser(id);
+        Map<String, Boolean> authMap = new HashMap<>();
+        for (Map<String, Object> map: auths){
+            authMap.put(map.get("uname").toString(),true);
+        }
+        return  authMap;
+    }
 }

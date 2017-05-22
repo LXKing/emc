@@ -5,9 +5,8 @@
  * Version: v 1.0      <BR>
  * Date: 2016/8/30<BR>
  */
-var bTable;
 $(function () {
-    bTable = $('#role-table-list').bootstrapTable({
+    $('#role-table-list').bootstrapTable({
         height: getHeight() + 30,//高度
         cache: false,//禁用 AJAX 数据缓存
         url: _platform + '/role/list',//获取数据的Servlet地址
@@ -84,9 +83,19 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="roleEditForm" layer-title="编辑角色" layer-url="'+_platform+'/role/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRole(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' +
-                        '<a title="授权功能" class="btn btn-xs btn-warning  top-layer-max" layer-form-id="roleAuthFrom" layer-title="授权功能" layer-url="'+_platform+'/role/grant/'+row.id+'"><i class="fa fa-wrench"></i></a>';
+                    var html = "";
+
+                    if($("#roleUpdate").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="roleEditForm" layer-title="编辑角色" layer-url="'+_platform+'/role/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                    }
+                    if($("#roleDelete").val()){
+                        html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteRole(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                    }
+                    if($("#roleGrant").val()){
+                        html += '<a title="授权功能" class="btn btn-xs btn-warning  top-layer-max" layer-form-id="roleAuthFrom" layer-title="授权功能" layer-url="'+_platform+'/role/grant/'+row.id+'"><i class="fa fa-wrench"></i></a>';
+                    }
+                    return html;
+
                 }
             }
 
