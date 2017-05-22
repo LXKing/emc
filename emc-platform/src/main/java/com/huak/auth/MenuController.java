@@ -3,6 +3,7 @@ package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Menu;
+import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
@@ -134,8 +135,8 @@ public class MenuController {
         try {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
-            Map<String,String> user = (Map<String, String>) session.getAttribute(Constants.SESSION_KEY);
-            menu.setCreator(user.get("1"));
+            User user = (User) session.getAttribute(Constants.SESSION_KEY);
+            menu.setCreator(user.getId());
             menu.setId(UUIDGenerator.getUUID());
             menuService.insert(menu);
             jo.put(Constants.FLAG, true);
