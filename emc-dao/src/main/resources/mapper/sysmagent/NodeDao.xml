@@ -21,6 +21,7 @@
     ID, MANAGE_TYPE_ID, PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, 
     LAT, PUBLIC_AREA, DWELL_AREA
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -177,13 +178,47 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from t_emc_org_node
-        where 1=1
-        order by id
-    </select>
+  <select id="selectPageByMap" resultMap="queryForListMap" parameterType="java.util.Map">
+       SELECT
+         B.ID, B.COM_ID, B.ORG_CODE, B.ORG_NAME, B.SHORT_NAME,
+         (select c.ORG_NAME from t_emc_org c where c.id =B. P_ORG_ID) P_ORG_ID,
+        B.TYPE_ID, B.CREATOR,B.CREATE_TIME,
+        B.MEMO, B.SEQ, B.AREA, A.MANAGE_TYPE_ID, A.PROVINCE_ID, A.CITY_ID, A.COUNTY_ID, A.TOWN_ID, A.VILLAGE_ID, A.ADDR, A.LNG,
+        A.LAT, A.PUBLIC_AREA, A.DWELL_AREA
+
+
+        FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID
+  </select>
+
+  <resultMap id="queryForListMap" type="com.huak.org.model.vo.NodeVo">
+      <constructor>
+          <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="ORG_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="ORG_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="SHORT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="P_ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="SEQ" javaType="java.lang.Integer" jdbcType="INTEGER" />
+          <arg column="AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+          <arg column="MANAGE_TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="COUNTY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="TOWN_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="VILLAGE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="ADDR" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <arg column="LNG" javaType="java.lang.Double" jdbcType="DOUBLE" />
+          <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
+          <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+          <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+
+      </constructor>
+  </resultMap>
+
     <select id="export" parameterType="java.util.HashMap" resultType="java.util.Map">
         select
         <include refid="Base_Column_List" />
@@ -191,4 +226,6 @@
         where 1=1
         order by id
     </select>
+
+
 </mapper>

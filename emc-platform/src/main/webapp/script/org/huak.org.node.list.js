@@ -53,7 +53,7 @@ $(function () {
             },
             {
                 title: '热力站名称',
-                field: 'stationName',
+                field: 'orgName',
                 align: 'center'
             },
             {
@@ -152,7 +152,19 @@ function queryParams(params) {
 
 }
 
-
+function addStation(){
+    var treeNode = top.comm_tree.getSelectedNodes();
+    var ts = $(top.document).find("[name='searchComp']").val();
+    if(treeNode.length<1){
+        layer.msg("请先选择一个组织机构！");
+        return;
+    }
+    if(treeNode.length>1){
+        layer.warn("只能选择一个上级组织！");
+        return;
+    }
+    openLayer(_platform+"/station/add/"+treeNode[0].id+"/"+ts,"添加热力站","stationAddForm",null,null);
+}
 
 function treeNodeClick(e,treeId,treeNode){
     top.orgId = treeNode.id;
