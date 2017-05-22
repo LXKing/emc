@@ -36,7 +36,9 @@ $(function(){
                     isCopy:false,
                     isMove:false
                 },
-                enable: true
+                enable: true,
+                showRemoveBtn: showRemoveBtn,
+                showRenameBtn:showRenameBtn
             },
             callback:{
                 beforeEditName:beforeEdt,
@@ -45,6 +47,34 @@ $(function(){
             }
         };
 
+
+    //是否显示编辑按钮
+    function  showRenameBtn(treeId, treeNode){
+        var flag = $("#menuUpdateAuth").val();
+        if(treeNode.noEditBtn != undefined && treeNode.noEditBtn){
+            return false;
+        }else{
+            if(flag){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+//是否显示删除按钮
+    function showRemoveBtn(treeId, treeNode){
+        var flag = $("#menuDeleteAuth").val();
+        if(treeNode.noRemoveBtn != undefined && treeNode.noRemoveBtn){
+            return false;
+        }else
+        {
+            if(flag){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
 
         //页面说明
         console.info("页面说明：\n左侧菜单树:是系统菜单的树形结构。\n" +
@@ -62,16 +92,20 @@ $(function(){
      * @param treeNode
      */
     function addHoverDom(treeId, treeNode) {
-        var sObj = $("#" + treeNode.tId + "_span");
-        if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
-        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-            + "' title='add node' onfocus='this.blur();'></span>";
-        sObj.after(addStr);
-        var btn = $("#addBtn_"+treeNode.tId);
-        if (btn) btn.bind("click", function(){
-            addData(treeId,treeNode);
-            return false;
-        });
+        var flag = $("#menuAddAuth").val();
+        if(flag){
+            var sObj = $("#" + treeNode.tId + "_span");
+
+            if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+            var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+                + "' title='add node' onfocus='this.blur();'></span>";
+            sObj.after(addStr);
+            var btn = $("#addBtn_"+treeNode.tId);
+            if (btn) btn.bind("click", function(){
+                addData(treeId,treeNode);
+                return false;
+            });
+        }
     };
 
     /**
@@ -146,8 +180,6 @@ $(function(){
         /*选中指定节点*/
         treeObj.selectNode(parentNode);
         treeObj.reAsyncChildNodes(parentNode, type, silent);
-//        var zTree = $.fn.zTree.getZTreeObj("menuTree");
-//        zTree.reAsyncChildNodes(null,"refresh",false);
     }
 
 
