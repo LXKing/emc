@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="include.jsp"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -53,14 +52,14 @@
 <%--菜单--%>
 <c:forEach var="oneMenu" items="${_menu}" >
     <c:if test="${oneMenu.menuUrl ne '#'}">
-        <li <c:if test="${oneMenu.menuName eq '首页'}"> class="active"</c:if> >
-            <a class="J_menuItem" href="${platform}${oneMenu.menuUrl}"><i class="fa ${oneMenu.menuIcon}"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
+        <li>
+            <a class="J_menuItem" href="${platform}${oneMenu.menuUrl}"><i class="fa fa-columns"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
         </li>
     </c:if>
     <c:if test="${oneMenu.menuUrl eq '#'}">
     <li>
         <a href="#">
-            <i class="fa ${oneMenu.menuIcon}"></i>
+            <i class="fa fa-folder-open"></i>
             <span class="nav-label">${oneMenu.menuName}</span>
             <span class="fa arrow"></span>
         </a>
@@ -220,7 +219,7 @@
         <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
     </div>
     <div class="row J_mainContent" id="content-main">
-        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${platform}/main/home" frameborder="0" data-id="${platform}/main/home" seamless></iframe>
+        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${platform}/main/home" frameborder="0" data-id="index_v1.html" seamless></iframe>
     </div>
     <div class="footer">
         <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>

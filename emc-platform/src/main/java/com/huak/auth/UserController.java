@@ -123,8 +123,8 @@ public class UserController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-        	String userId = request.getSession().getAttribute(Constants.SESSION_KEY).toString();
-        	user.setCreator(userId);
+        	User u = (User) request.getSession().getAttribute(Constants.SESSION_KEY);
+        	user.setCreator(u.getId());
         	user.setId(UUIDGenerator.getUUID());
             int ret = userService.addUser(user);
             if(ret<=0){
