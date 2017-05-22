@@ -180,8 +180,7 @@
     <select id="selectMenuTree"  resultType="java.util.Map" parameterType="java.util.Map">
         select
         ID as id, MENU_NAME as name, P_MENU_ID as pId,
-        (case WHEN
-        emc_func_menu_haschild(ID)>0 then 'true' else 'false' end) open
+        'true' open
         from t_emc_auth_menu
         where 1=1
         <if test="menuName != null and menuName !=''">
