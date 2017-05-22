@@ -54,7 +54,7 @@
 <%--菜单--%>
 <c:forEach var="oneMenu" items="${_menu}" >
     <c:if test="${oneMenu.menuUrl ne '#'}">
-        <li>
+        <li <c:if test="${oneMenu.menuName eq '首页'}">class="active" </c:if>>
             <a class="J_menuItem" href="${platform}${oneMenu.menuUrl}"><i class="fa ${oneMenu.menuIcon}"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
         </li>
     </c:if>
