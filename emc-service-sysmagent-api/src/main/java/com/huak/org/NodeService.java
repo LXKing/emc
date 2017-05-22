@@ -3,6 +3,7 @@ package com.huak.org;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.org.model.Node;
+import com.huak.org.model.vo.NodeVo;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public interface NodeService {
 
     int insert(Node record);
 
-    int insertSelective(Node record);
+    int insertSelective(NodeVo record);
 
     Node selectById(String id);
 
@@ -23,7 +24,7 @@ public interface NodeService {
 
     int updateByPrimaryKey(Node record);
 
-    public PageResult<Node> queryByPage(Map<String,Object> paramsMap, Page page);
+    public PageResult<NodeVo> queryByPage(Map<String, Object> paramsMap, Page page);
 
     List<Map<String,Object>> exportExcel(Map<String, Object> paramsMap);
 }

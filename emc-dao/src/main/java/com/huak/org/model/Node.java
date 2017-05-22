@@ -1,6 +1,8 @@
 package com.huak.org.model;
 
-public class Node {
+import java.io.Serializable;
+
+public class Node implements Serializable{
     private String id;
 
     private String manageTypeId;

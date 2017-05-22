@@ -1,12 +1,14 @@
 package com.huak.org;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Node;
 import com.huak.org.model.Org;
+import com.huak.org.model.vo.NodeVo;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,11 +62,12 @@ public class NodeController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage(ModelMap modelMap) {
+    @RequestMapping(value = "/add/{pOrgId}/{comId}", method = RequestMethod.GET)
+    public String addPage(@PathVariable("pOrgId") String pOrgId,@PathVariable("comId") String comId,ModelMap modelMap) {
         try {
-            Node obj = new Node();
-
+            NodeVo obj = new NodeVo();
+            obj.setpOrgId(pOrgId);
+            obj.setComId(comId);
             modelMap.put(Constants.OBJECT,obj);
         } catch (Exception e) {
             logger.error("跳转到热力站编辑页出错！");
@@ -75,7 +78,7 @@ public class NodeController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(Node node, HttpServletRequest request) {
+    public String add(NodeVo node, HttpServletRequest request) {
         logger.info("添加热力站");
 
         JSONObject jo = new JSONObject();
@@ -83,10 +86,9 @@ public class NodeController {
         try {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
-
-
-
+            User user = (User) session.getAttribute(Constants.SESSION_KEY);
             node.setId(UUIDGenerator.getUUID());
+            node.setCreator(user.getId());
             nodeService.insertSelective(node);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加热力站成功");

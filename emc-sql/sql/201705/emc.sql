@@ -23,6 +23,7 @@ create table t_emc_auth_menu
 );
 alter table t_emc_auth_menu comment '权限菜单';
 alter table t_emc_auth_menu add SEQ int not Null;
+alter table t_emc_auth_menu add MENU_ICON varchar(64) ;
 alter table t_emc_auth_menu change P_MENU_AF_ID TYPE varchar(128) NOT NULL;
 alter table t_emc_auth_menu change    TYPE   TYPE   TINYINT;
 /*用户表

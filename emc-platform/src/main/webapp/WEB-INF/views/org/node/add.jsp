@@ -32,6 +32,38 @@ $.validator.setDefaults({
 
 //以下为官方示例
 $(function () {
+
+//    /*菜单树*/
+//    var setting = {
+//        async: {
+//            enable: true,
+//            type: "POST",
+//            url:_platform+"/menu/list/tree",
+//            autoParam: ["id", "name"]
+//        },
+//        view: {
+//            selectedMulti: false
+//        },
+//        data: {
+//            key : {
+//                name : "name"
+//            },
+//            simpleData : {
+//                enable : true,
+//                idKey : "id",
+//                pIdKey : "pId",
+//                rootPId : null
+//            }
+//        },
+//        callback:{
+//            onClick:function(event, treeId, treeNode){
+//                $('input[name="menuId"]').val(treeNode.id);
+//                $('#func-table-list').bootstrapTable('refresh');
+//            }
+//        }
+//    };
+//     $(top.document).find('#orgCode').treeBox({setting:setting});
+
     var icon = "<i class='fa fa-times-circle'></i> ";
     new PCAS('province','${province}','','city','${city}','','county','${county}','','town','${town}','');
     $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
@@ -41,7 +73,7 @@ $(function () {
         var deferred = $.Deferred();//创建一个延迟对象
         var newcode = $(top.document).find("#orgCode").val();
         $.ajax({
-            url:_platform+'/node/check',
+            url:_platform+'/common/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
             data: {orgCode:newcode},
@@ -60,9 +92,9 @@ $(function () {
 
     $.validator.addMethod("nodeNameUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        var orgName = $('input[name="orgName"]').val();
+        var orgName =  $(top.document).find("#orgName").val();
         $.ajax({
-            url:_platform+'/common/check/org',
+            url:_platform+'/common/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
             data: {orgName:orgName},
@@ -187,10 +219,10 @@ $(function () {
         },
         submitHandler: function () {
             var index = top.layer.load(1, {
-                shade: [0.1,'#fff'] //0.1透明度的白色背景
+                shade: [0.5,'#fff'] //0.1透明度的白色背景
             });
             $.ajax({
-                url:_platform + '/node/add',
+                url:_platform + '/station/add',
                 data:$form.serialize(),
                 type: 'POST',
                 dataType: 'json',
@@ -199,12 +231,19 @@ $(function () {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
                         $('#station-table-list').bootstrapTable("refresh");
+                        return true;
                     } else {
-                        layer.close(index);
+//                        layer.close(index);
                         top.layer.msg(result.msg);
+                        return false;
                     }
+                },
+                error:function(){
+                    top.layer.msg("请求服务器失败！");
+                    return false;
                 }
             });
+            return false;
         }
     });
 });
@@ -216,8 +255,10 @@ $(function () {
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-
                     <form class="form-horizontal" id="stationAddForm" role="form">
+                        <input type="hidden" name="typeId" value="19a76720ee044ed5953f2b3cb5cb7a21"/>
+                        <input type="hidden" name="pOrgId" value="${object.pOrgId}"/>
+                        <input type="hidden" name="comId" value="${object.comId}"/>
                         <div class="form-group">
                             <label class="col-sm-2  control-label"><span class="red">*</span>热力站编码：</label>
                             <div class="col-sm-5">
@@ -227,7 +268,7 @@ $(function () {
                         <div class="form-group">
                             <label class="col-sm-2  control-label"><span class="red">*</span>热力站名称：</label>
                             <div class="col-sm-5">
-                                <input name="orgName" class="form-control"  type="text" maxlength="64" placeholder="请输入热力站名称">
+                                <input name="orgName" id="orgName" class="form-control"  type="text" maxlength="64" placeholder="请输入热力站名称">
                             </div>
                         </div>
                         <div class="form-group">

@@ -2,6 +2,7 @@ package com.huak.org.dao;
 
 
 import com.huak.org.model.Node;
+import com.huak.org.model.vo.NodeVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface NodeDao {
 
     int updateByPrimaryKey(Node record);
 
-    List<Node> selectPageByMap(Map<String, Object> paramsMap);
+    List<NodeVo> selectPageByMap(Map<String, Object> paramsMap);
 
     List<Map<String,Object>> export(Map<String, Object> paramsMap);
 }

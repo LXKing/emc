@@ -8,7 +8,6 @@ import com.huak.org.model.Org;
 import org.springframework.stereotype.Service;
 import com.huak.org.dao.AdministrativeDao;
 import com.huak.org.dao.OrgDao;
-import com.huak.org.OrgService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;

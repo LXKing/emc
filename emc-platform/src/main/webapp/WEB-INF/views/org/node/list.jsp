@@ -76,9 +76,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-
-                                <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="stationAddForm" layer-title="添加热力站" layer-url="${platform}/station/add"
-                                        ><i class="fa fa-plus"></i>添加</button>
+                                <button type="button"  onclick="addStation()" class="btn btn-sm btn-info "><i class="fa fa-plus"></i>添加</button>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索</button>
@@ -89,8 +87,7 @@
                         </div>
                     </form>
                     <div class="example">
-                        <table id="station-table-list">
-                        </table>
+                        <table id="station-table-list"></table>
                     </div>
                 </div>
             </div>
