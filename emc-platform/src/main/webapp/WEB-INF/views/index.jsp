@@ -55,7 +55,7 @@
 <c:forEach var="oneMenu" items="${_menu}" >
     <c:if test="${oneMenu.menuUrl ne '#'}">
         <li <c:if test="${oneMenu.menuName eq '首页'}">class="active" </c:if>>
-            <a class="J_menuItem" href="${platform}${oneMenu.menuUrl}"><i class="fa ${oneMenu.menuIcon}"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
+            <a class="J_menuItem" data-index="0" href="${platform}${oneMenu.menuUrl}"><i class="fa ${oneMenu.menuIcon}"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
         </li>
     </c:if>
     <c:if test="${oneMenu.menuUrl eq '#'}">
@@ -199,7 +199,7 @@
         </button>
         <nav class="page-tabs J_menuTabs">
             <div class="page-tabs-content">
-                <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                <a href="javascript:;" class="active J_menuTab" data-id="${platform}/main/home">首页</a>
             </div>
         </nav>
         <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -221,7 +221,7 @@
         <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
     </div>
     <div class="row J_mainContent" id="content-main">
-        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${platform}/main/home" frameborder="0" data-id="index_v1.html" seamless></iframe>
+        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${platform}/main/home" frameborder="0" data-id="${platform}/main/home" seamless></iframe>
     </div>
     <div class="footer">
         <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
