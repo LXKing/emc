@@ -8,17 +8,17 @@
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.huak.auth.model.RoleFuncRel">
-    insert into t_emc_role_func_rel (ROLE_ID, FUNC_ID)
+    insert into t_emc_auth_role_func_rel (ROLE_ID, FUNC_ID)
     values (#{roleId,jdbcType=VARCHAR}, #{funcId,jdbcType=VARCHAR})
   </insert>
     <delete id="deleteRelByRole" parameterType="java.lang.String">
-       delete from t_emc_role_func_rel
+       delete from t_emc_auth_role_func_rel
         where ROLE_ID = #{roleId,jdbcType=VARCHAR}
     </delete>
     <select id="selectGrantByRoleKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         ROLE_ID roleId, FUNC_ID funcId
-        from t_emc_role_func_rel
+        from t_emc_auth_role_func_rel
         where ROLE_ID = #{roleId,jdbcType=VARCHAR}
     </select>
 </mapper>

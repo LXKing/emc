@@ -139,6 +139,8 @@ public class MenuAware implements InitializingBean, ServletContextAware {
 
         servletContext.setAttribute(Constants.GRANT_MENU_BEFORE, beforeMenu);
         servletContext.setAttribute(Constants.GRANT_MENU_AFTER, afterMenu);
+        servletContext.setAttribute(Constants.GRANT_MENU_AFTER_ID,afterMenu.get("id"));
+        servletContext.setAttribute(Constants.GRANT_MENU_BEFORE_ID,beforeMenu.get("id"));
         logger.info("----缓存系统功能菜单结束------");
     }
 

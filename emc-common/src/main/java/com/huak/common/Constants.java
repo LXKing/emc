@@ -82,6 +82,8 @@ public class Constants {
 
     /* 管理员账号*/
     public final static String ADMIN_LOGIN = "admin";
+    public static final String GRANT_MENU_AFTER_ID = "afterMenuId";
+    public static final String GRANT_MENU_BEFORE_ID = "beforeMenuId";
     
     /* 操作类型--新增*/
     public final static String OPT_TYPE_INSERT = "0";
