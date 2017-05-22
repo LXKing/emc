@@ -9,7 +9,6 @@ public class Company {
         this.id = id;
         this.cname = cname;
     }
-
     public Company() {
         super();
     }
