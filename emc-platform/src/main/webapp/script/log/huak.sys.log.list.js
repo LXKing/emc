@@ -63,10 +63,10 @@ $(function () {
                 formatter:function(value,row,index){
                 	var str = "";
                     switch(value){
-                    	case 0:str="增";break;
-                    	case 1:str="删";break;
-                    	case 2:str="改";break;
-                    	case 3:str="查";break;
+                    	case '0':str="增加";break;
+                    	case '1':str="删除";break;
+                    	case '2':str="修改";break;
+                    	case '3':str="查询";break;
                     }
                     return str;
                 }
