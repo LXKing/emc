@@ -1,8 +1,8 @@
 package com.huak.auth.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable{
     /**
      *
      * @preserve 声明此方法不被JOC混淆
@@ -43,13 +43,13 @@ public class User {
      *
      * @preserve 声明此方法不被JOC混淆
      */
-    private Date loginTime;
+    private String loginTime;
 
     /**
      *
      * @preserve 声明此方法不被JOC混淆
      */
-    private Date lastLoginTime;
+    private String lastLoginTime;
 
     /**
      *
@@ -79,7 +79,7 @@ public class User {
      *
      * @preserve 声明此方法不被JOC混淆
      */
-    private Date createTime;
+    private String createTime;
     
     private String orgId;
     
@@ -140,19 +140,19 @@ public class User {
         this.mail = mail == null ? null : mail.trim();
     }
 
-    public Date getLoginTime() {
+    public String getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Date loginTime) {
+    public void setLoginTime(String loginTime) {
         this.loginTime = loginTime;
     }
 
-    public Date getLastLoginTime() {
+    public String getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
+    public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
@@ -188,11 +188,11 @@ public class User {
         this.creator = creator == null ? null : creator.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }

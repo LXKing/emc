@@ -8,14 +8,14 @@
     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
     <result column="MAIL" property="mail" jdbcType="VARCHAR" />
-    <result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
-    <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="LOGIN_TIME" property="loginTime" jdbcType="VARCHAR" />
+    <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="VARCHAR" />
     <result column="LOGIN_NUM" property="loginNum" jdbcType="INTEGER" />
     <result column="USE_STATUS" property="useStatus" jdbcType="VARCHAR" />
     <result column="MEMO" property="memo" jdbcType="VARCHAR" />
     <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
     <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
   </resultMap>
   
   <!-- 查询组织机构和员工关系的resultMap -->
@@ -59,10 +59,10 @@
     <if test="userAccount!=null and userAccount!=''"> and LOGIN LIKE CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')</if>
   	<if test="userStatus!=null and userStatus!=''"> and USE_STATUS = #{userStatus,jdbcType=VARCHAR}</if>
   	<if test="creator!=null and creator!=''"> and CREATOR LIKE CONCAT('%',#{creator,jdbcType=VARCHAR},'%')</if>
-  	<if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=TIMESTAMP}</if>
-  	<if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=TIMESTAMP}</if>
-  	<if test="lStartTime!=null and lStartTime!=''"> and LOGIN_TIME >= #{lStartTime,jdbcType=TIMESTAMP}</if>
-  	<if test="lEndTime!=null and lEndTime!=''"> and LOGIN_TIME &lt;= #{lEndTime,jdbcType=TIMESTAMP}</if>
+  	<if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=VARCHAR}</if>
+  	<if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=VARCHAR}</if>
+  	<if test="lStartTime!=null and lStartTime!=''"> and LOGIN_TIME >= #{lStartTime,jdbcType=VARCHAR}</if>
+  	<if test="lEndTime!=null and lEndTime!=''"> and LOGIN_TIME &lt;= #{lEndTime,jdbcType=VARCHAR}</if>
   </select>
   
   <!-- selectUser2Excel 导出符合条件的用户信息到excel -->
@@ -75,10 +75,10 @@
     <if test="userAccount!=null and userAccount!=''"> and LOGIN LIKE CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')</if>
   	<if test="userStatus!=null and userStatus!=''"> and USE_STATUS = #{userStatus,jdbcType=VARCHAR}</if>
   	<if test="creator!=null and creator!=''"> and CREATOR LIKE CONCAT('%',#{creator,jdbcType=VARCHAR},'%')</if>
-  	<if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=TIMESTAMP}</if>
-  	<if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=TIMESTAMP}</if>
-  	<if test="lStartTime!=null and lStartTime!=''"> and LOGIN_TIME >= #{lStartTime,jdbcType=TIMESTAMP}</if>
-  	<if test="lEndTime!=null and lEndTime!=''"> and LOGIN_TIME &lt;= #{lEndTime,jdbcType=TIMESTAMP}</if>
+  	<if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=VARCHAR}</if>
+  	<if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=VARCHAR}</if>
+  	<if test="lStartTime!=null and lStartTime!=''"> and LOGIN_TIME >= #{lStartTime,jdbcType=VARCHAR}</if>
+  	<if test="lEndTime!=null and lEndTime!=''"> and LOGIN_TIME &lt;= #{lEndTime,jdbcType=VARCHAR}</if>
   </select>
   
   <!-- 删除用户信息，可批量 -->
@@ -98,9 +98,9 @@
       CREATE_TIME)
     values (#{id,jdbcType=VARCHAR}, #{login,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
-      #{loginTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginTime,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=VARCHAR}, #{loginNum,jdbcType=INTEGER}, 
       #{useStatus,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR},#{orgId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=VARCHAR})
   </insert>
   
   <!-- 新增用户 -->
@@ -170,10 +170,10 @@
         #{mail,jdbcType=VARCHAR},
       </if>
       <if test="loginTime != null" >
-        #{loginTime,jdbcType=TIMESTAMP},
+        #{loginTime,jdbcType=VARCHAR},
       </if>
       <if test="lastLoginTime != null" >
-        #{lastLoginTime,jdbcType=TIMESTAMP},
+        #{lastLoginTime,jdbcType=VARCHAR},
       </if>
       <if test="loginNum != null" >
         #{loginNum,jdbcType=INTEGER},
@@ -230,10 +230,10 @@
         MAIL = #{mail,jdbcType=VARCHAR},
       </if>
       <if test="loginTime != null" >
-        LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+        LOGIN_TIME = #{loginTime,jdbcType=VARCHAR},
       </if>
       <if test="lastLoginTime != null" >
-        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=VARCHAR},
       </if>
       <if test="loginNum != null" >
         LOGIN_NUM = #{loginNum,jdbcType=INTEGER},
@@ -254,7 +254,7 @@
         CREATE_TIME = now(),
       </if>
       <if test="createTime!=null">
-      	CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      	CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
@@ -267,14 +267,14 @@
       USER_NAME = #{userName,jdbcType=VARCHAR},
       MOBILE = #{mobile,jdbcType=VARCHAR},
       MAIL = #{mail,jdbcType=VARCHAR},
-      LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
-      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      LOGIN_TIME = #{loginTime,jdbcType=VARCHAR},
+      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=VARCHAR},
       LOGIN_NUM = #{loginNum,jdbcType=INTEGER},
       USE_STATUS = #{useStatus,jdbcType=VARCHAR},
       MEMO = #{memo,jdbcType=VARCHAR},
       ORG_ID = #{orgId,jdbcType=VARCHAR},
       CREATOR = #{creator,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
