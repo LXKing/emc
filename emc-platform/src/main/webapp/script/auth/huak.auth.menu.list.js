@@ -117,7 +117,7 @@ $(function(){
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['600px', '420px'],
+            area: ['600px', '480px'],
             type: 1,
             title: '修改菜单',
             btn: ['保存', '取消'],
@@ -191,7 +191,7 @@ $(function(){
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['600px', '420px'],
+            area: ['600px', '480px'],
             type: 1,
             title: '添加菜单',
             btn: ['保存', '取消'],
