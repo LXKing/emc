@@ -284,4 +284,31 @@
         from t_emc_auth_user
         where LOGIN=#{login} and PASSWORD=#{password}
     </select>
+
+    <select id="selectMenusByUser"  parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+	tm.ID id,
+	tm.MENU_NAME menuName,
+	tm.MENU_URL menuUrl,
+	tm.P_MENU_ID pMenuId,
+	tm.MENU_TYPE menuType,
+	tm.SEQ seq
+FROM
+	t_emc_auth_user tu,
+	t_emc_auth_role tr,
+	t_emc_auth_role_user_rel tru,
+	t_emc_auth_func tf,
+	t_emc_auth_menu tm,
+	t_emc_auth_role_func_rel trf
+WHERE
+	tu.ID = tru.USER_ID
+AND tr.ID = tru.ROLE_ID
+AND tr.ID = trf.ROLE_ID
+AND tf.ID = trf.FUNC_ID
+AND tf.MENU_ID = tm.ID
+AND tu.ID = #{id}
+AND tm.MENU_TYPE = #{menuType}
+AND tm.P_MENU_ID = #{pMenuId}
+GROUP BY tm.ID
+    </select>
 </mapper>

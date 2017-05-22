@@ -87,10 +87,11 @@ public class LoginController {
                 if (UserStatusType.ENABLE.getKey() == Integer.valueOf(user.getUseStatus())) {
                     //登录成功存入用户信息、权限到session，跳转到首页
                     String id = user.getId();
+                    String pMenuId = session.getServletContext().getAttribute(com.huak.common.Constants.GRANT_MENU_AFTER_ID).toString();
                     //用户(公司部门)
                     session.setAttribute(com.huak.common.Constants.SESSION_KEY, userService.getUser(id));
                     //菜单
-                    //session.setAttribute(com.huak.common.Constants.SESSION_MENU_KEY, userService.getBackMenus(id));
+                    session.setAttribute(com.huak.common.Constants.SESSION_MENU_KEY, userService.getBackMenus(id,pMenuId));
                     //角色
                     session.setAttribute(com.huak.common.Constants.SESSION_ROLE_KEY, userService.getRole(id));
                     //权限

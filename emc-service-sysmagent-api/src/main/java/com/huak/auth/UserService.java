@@ -106,4 +106,11 @@ public interface UserService {
      * @return
      */
     User findByLoginAndPwd(User user);
+
+    /**
+     * 查询后台菜单
+     * @param id
+     * @return
+     */
+    List<Map<String,Object>> getBackMenus(String id,String pMenuId);
 }
