@@ -25,6 +25,9 @@
                 </div>
             </div>
         </div>
+        <input id="menuAddAuth" VALUE="${sessionScope._auth['menuAdd']}" type="hidden"/>
+        <input id="menuUpdateAuth" VALUE="${sessionScope._auth['menuUpdate']}"  type="hidden"/>
+        <input id="menuDeleteAuth" VALUE="${sessionScope._auth['menuDelete']}"  type="hidden"/>
         <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
