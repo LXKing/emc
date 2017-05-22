@@ -105,6 +105,9 @@ function initOrgTree(){
             var newnodes=zNodes.substring(0,zNodes.length-1);
             nodes= newnodes+"]";
             top.addUserOrgTree = $.fn.zTree.init($temptree, setting, eval("(" + nodes + ")"));
+            var treeObject = top.addUserOrgTree;
+            var node = treeObject.getNodeByParam("id",'${user.orgId}');
+            treeObject.selectNode(node,true);
         });
     }
 }
