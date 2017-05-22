@@ -74,7 +74,9 @@
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="log-table-list"> 搜索</button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="exportLog()"> 导出Excel</button>
+                                <c:if test="${sessionScope._auth['logExport'] }">
+                                	<button type="button" class="btn btn-sm btn-primary" onclick="exportLog()"> 导出Excel</button>
+                                </c:if>
                             </div>
                         </div>
                     </form>

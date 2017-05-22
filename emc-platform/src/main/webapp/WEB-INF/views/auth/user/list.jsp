@@ -107,18 +107,32 @@
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
 
-                                <button type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/user/add" layer-title="新增用户" layer-form-id="userAddForm" ><i class="fa fa-plus"></i>添加</button>
-                                <button type="button" class="btn btn-sm btn-danger " onclick="disableUser()"><i class="fa fa-unlock-alt"></i>禁用</button>
-                                <button type="button" class="btn btn-sm btn-danger " onclick="enableUser()"><i class="fa fa-unlock"></i>启用</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteUsers()"><i class="fa fa-trash-o"></i>删除</button>
-                                <button type="button" class="btn btn-sm btn-warning" onclick="resetPassword()"><i class="fa fa-key"></i>重置密码</button>
+								<c:if test="${sessionScope._auth['userInsert'] }">
+                                	<button type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/user/add" layer-title="新增用户" layer-form-id="userAddForm" ><i class="fa fa-plus"></i>添加</button>
+                                </c:if>
+                                <c:if test="${sessionScope._auth['userDisable'] }">
+                                	<button type="button" class="btn btn-sm btn-danger " onclick="disableUser()"><i class="fa fa-unlock-alt"></i>禁用</button>
+                                </c:if>
+                                <c:if test="${sessionScope._auth['userEnable'] }">
+                                	<button type="button" class="btn btn-sm btn-danger " onclick="enableUser()"><i class="fa fa-unlock"></i>启用</button>
+                                </c:if>
+                                <c:if test="${sessionScope._auth['userBatchDelete'] }">
+                                	<button type="button" class="btn btn-sm btn-danger" onclick="deleteUsers()"><i class="fa fa-trash-o"></i>删除</button>
+                                </c:if>
+                                <c:if test="${sessionScope._auth['userResetPwd'] }">
+                                	<button type="button" class="btn btn-sm btn-warning" onclick="resetPassword()"><i class="fa fa-key"></i>重置密码</button>
+                           		</c:if>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
 
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="user-table-list"> 搜索</button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="exportUser()"> 导出Excel</button>
-
+                                <c:if test="${sessionScope._auth['userExport'] }">
+                                	<button type="button" class="btn btn-sm btn-primary" onclick="exportUser()"> 导出Excel</button>
+                                </c:if>
+								<input id="userUpdate" type="hidden" value="${ sessionScope._auth['userUpdate']}">
+								<input id="userDelete" type="hidden" value="${ sessionScope._auth['userDelete']}">
+								<input id="userGrant" type="hidden" value="${ sessionScope._auth['userGrant']}">
                             </div>
                         </div>
                     </form>
