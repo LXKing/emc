@@ -385,3 +385,11 @@ create table t_emc_company
 );
 
 alter table t_emc_company comment '公司信息表';
+
+
+/**
+2017年5月22日09:05:51
+ */
+ ALTER TABLE t_emc_role_func_rel RENAME t_emc_auth_role_func_rel;
+
+ DROP TABLE t_emc_auth_menu_func_rel;

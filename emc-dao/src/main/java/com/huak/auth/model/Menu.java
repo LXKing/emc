@@ -22,7 +22,9 @@ public class Menu implements Serializable{
 
     private Integer seq;
 
-    public Menu(String id, String menuName, String menuUrl, String pMenuId, String creator, String creatTime, Byte menuType, Byte type,Integer seq) {
+    private String menuIcon;
+
+    public Menu(String id, String menuName, String menuUrl, String pMenuId, String creator, String creatTime, Byte menuType, Byte type,Integer seq,String menuIcon) {
         this.id = id;
         this.menuName = menuName;
         this.menuUrl = menuUrl;
@@ -32,6 +34,7 @@ public class Menu implements Serializable{
         this.menuType = menuType;
         this.type = type;
         this.seq = seq;
+        this.menuIcon = menuIcon;
     }
 
     public Menu() {
@@ -108,5 +111,13 @@ public class Menu implements Serializable{
 
     public void setSeq(Integer seq) {
         this.seq = seq;
+    }
+
+    public String getMenuIcon() {
+        return menuIcon;
+    }
+
+    public void setMenuIcon(String menuIcon) {
+        this.menuIcon = menuIcon;
     }
 }

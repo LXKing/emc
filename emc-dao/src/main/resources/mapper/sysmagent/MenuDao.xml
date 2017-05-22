@@ -12,6 +12,7 @@
             <arg column="MENU_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
             <arg column="TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
             <arg column="SEQ" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="MENU_ICON" javaType="java.lang.String" jdbcType="INTEGER" />
         </constructor>
     </resultMap>
 
@@ -26,14 +27,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR,CREAT_TIME, MENU_TYPE, TYPE,SEQ
+        ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR,CREAT_TIME, MENU_TYPE, TYPE,SEQ,MENU_ICON
     </sql>
     <sql id="Base_Column_List_Vo">
         ID, MENU_NAME, P_MENU_ID,  MENU_TYPE, TYPE
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR,CREAT_TIME, MENU_TYPE, TYPE,SEQ
+        ID, MENU_NAME, MENU_URL, P_MENU_ID, CREATOR,CREAT_TIME, MENU_TYPE, TYPE,SEQ,MENU_ICON
         from t_emc_auth_menu
         where ID = #{id,jdbcType=VARCHAR}
     </select>
@@ -44,10 +45,10 @@
     <insert id="insert" parameterType="com.huak.auth.model.Menu">
         insert into t_emc_auth_menu (ID, MENU_NAME, MENU_URL,
         P_MENU_ID, CREATOR, CREAT_TIME,
-        MENU_TYPE, TYPE,SEQ)
+        MENU_TYPE, TYPE,SEQ,MENU_ICON)
         values (#{id,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR},
         #{pMenuId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creatTime,jdbcType=VARCHAR},
-        #{menuType,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{seq,jdbcType=INTEGER})
+        #{menuType,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{seq,jdbcType=INTEGER},#{menuIcon,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.huak.auth.model.Menu">
         insert into t_emc_auth_menu
@@ -79,6 +80,9 @@
             <if test="seq != null">
                 SEQ,
             </if>
+            <if test="menuIcon != null">
+                MENU_ICON,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -97,7 +101,7 @@
                 #{creator,jdbcType=VARCHAR},
             </if>
             <if test="creatTime != null">
-                #{creatTime,jdbcType=TIMESTAMP},
+                #{creatTime,jdbcType=VARCHAR},
             </if>
             <if test="menuType != null">
                 #{menuType,jdbcType=TINYINT},
@@ -107,6 +111,9 @@
             </if>
             <if test="seq != null">
                 #{seq,jdbcType=INTEGER}
+            </if>
+            <if test="menuIcon != null">
+                #{menuIcon,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -135,7 +142,10 @@
                 TYPE = #{type,jdbcType=TINYINT},
             </if>
             <if test="seq != null">
-                TYPE = #{seq,jdbcType=INTEGER},
+                SEQ = #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="menuIcon != null">
+               MENU_ICON = #{menuIcon,jdbcType=VARCHAR},
             </if>
         </set>
         where ID = #{id,jdbcType=VARCHAR}
@@ -149,7 +159,8 @@
       CREAT_TIME = #{creatTime,jdbcType=VARCHAR},
       MENU_TYPE = #{menuType,jdbcType=TINYINT},
       TYPE = #{type,jdbcType=TINYINT},
-      SEQ = #{seq,jdbcType=INTEGER}
+      SEQ = #{seq,jdbcType=INTEGER},
+       MENU_ICON = #{menuIcon,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -203,7 +214,7 @@
         CREATOR creator,
         CREAT_TIME createTime,
         MENU_TYPE menuType,
-        TYPE type,SEQ seq
+        TYPE type,SEQ seq,MENU_ICON
         from t_emc_auth_menu
         where 1=1
         <if test="menuName != null and menuName !=''">

@@ -81,4 +81,6 @@ public interface UserDao {
 	List<Map<String, Object>> selectUser2Excel(Map<String, String> paramsMap);
 
     User findByLoginAndPwd(User user);
+
+    List<Map<String,Object>> selectMenusByUser(Map<String, Object> paramsMap);
 }

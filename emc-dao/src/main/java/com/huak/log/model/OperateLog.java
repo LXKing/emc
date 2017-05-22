@@ -1,6 +1,8 @@
 package com.huak.log.model;
 
-public class OperateLog {
+import java.io.Serializable;
+
+public class OperateLog implements Serializable{
     /**
      *主键
      * @preserve 声明此方法不被JOC混淆

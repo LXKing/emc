@@ -27,8 +27,8 @@
         <span><img alt="image" class="img-circle" src="${platform}/static/Hplus/img/profile_small.jpg" /></span>
         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
-                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                               <span class="block m-t-xs"><strong class="font-bold">${_user.userName}</strong></span>
+                                <span class="text-muted text-xs block">${_role.roleName}<b class="caret"></b></span>
                                 </span>
         </a>
         <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -461,12 +461,8 @@
                 <form role="search" class="navbar-form-custom custom-styl-2" method="post" action="search_results.html">
                     <div class="form-group">
                         <select name="searchComp" class="chosen-select form-control">
-                            <option value="">北京华热科技有限公司</option>
-                            <option value="0">北京热力集团</option>
-                            <option value="1">天津大港</option>
-                            <option value="1">天津大港</option>
-                            <option value="1">天津大港</option>
-                            <option value="1">天津大港</option>
+                            <option value="0">北京华热科技有限公司</option>
+                            <option value="1">北京热力集团</option>
                         </select>
                     </div>
                 </form>

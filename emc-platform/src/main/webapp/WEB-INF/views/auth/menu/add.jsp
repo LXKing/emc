@@ -40,7 +40,12 @@
                     </select>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>菜单图标：</label>
+                    <div class="col-sm-8">
+                        <input id="menuIcon" name="menuIcon" class="form-control" type="text" maxlength="128" placeholder="请输入菜单图标">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>菜单序号：</label>
                     <div class="col-sm-8">

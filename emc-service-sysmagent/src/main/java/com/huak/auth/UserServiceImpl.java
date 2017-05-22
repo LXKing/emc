@@ -1,6 +1,7 @@
 package com.huak.auth;
 
 import com.github.pagehelper.PageHelper;
+import com.huak.auth.dao.MenuDao;
 import com.huak.auth.dao.RoleDao;
 import com.huak.auth.dao.UserDao;
 import com.huak.auth.model.Role;
@@ -15,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private RoleDao roleDao;
+
+    @Resource
+    private MenuDao menuDao;
 
 	/**
 	 * 分页查询用户信息
@@ -230,5 +231,40 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByLoginAndPwd(User user) {
         return userDao.findByLoginAndPwd(user);
+    }
+
+    /**
+     * 查询后台菜单
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> getBackMenus(String id,String pMenuId) {
+        List<Map<String, Object>> menus = new LinkedList<>();
+
+        Map<String, Object> paramsMap = new HashMap<>();
+        //查询后台一级菜单
+        paramsMap.put("menuType",1);
+        paramsMap.put("id",id);
+        paramsMap.put("pMenuId",pMenuId);
+        List<Map<String, Object>> afterMenus = userDao.selectMenusByUser(paramsMap);
+        //查询二级菜单
+        for (Map<String, Object> oneMap:afterMenus){
+            paramsMap.put("pMenuId",oneMap.get("id"));
+            List<Map<String, Object>> oneMenus = userDao.selectMenusByUser(paramsMap);
+            List<Map<String, Object>> oneMenusNew = new LinkedList<>();
+            for(Map<String, Object> twoMap:oneMenus){
+                paramsMap.put("pMenuId",twoMap.get("id"));
+                List<Map<String, Object>> twoMenus = userDao.selectMenusByUser(paramsMap);
+                twoMap.put("menus",twoMenus);
+                oneMenusNew.add(twoMap);
+            }
+            oneMap.put("menus",oneMenusNew);
+            menus.add(oneMap);
+        }
+
+        return menus;
     }
 }

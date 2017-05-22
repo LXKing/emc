@@ -37,6 +37,7 @@ public class LoggerController {
      * @param modelMap
      * @return
      */
+	@EMCLog(key="日志管理",name="跳转到日志列表页面",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage(ModelMap modelMap) {
         logger.info("转至系统日志列表页");
@@ -49,6 +50,7 @@ public class LoggerController {
      * @param page
      * @return
      */
+	@EMCLog(key="日志管理",name="根据条件查询日志列表信息",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String, String> paramsMap, Page page) {
@@ -68,6 +70,7 @@ public class LoggerController {
      * @param paramsMap
      * @param response
      */
+	@EMCLog(key="日志管理",name="导出日志信息到Excel",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, String> param, HttpServletResponse response) {
         logger.info("导出业务日志EXCEL");

@@ -1,6 +1,8 @@
 package com.huak.auth.model.vo;
 
-public class OrgEmpVo {
+import java.io.Serializable;
+
+public class OrgEmpVo implements Serializable{
 
 	private String orgId;
 	private String empId;

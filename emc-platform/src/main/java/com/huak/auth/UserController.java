@@ -30,6 +30,7 @@ import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
+import com.huak.log.EMCLog;
 
 /**
  * 用户controller
@@ -48,6 +49,7 @@ public class UserController {
      * @param modelMap
      * @return
      */
+    @EMCLog(key="用户管理",name="跳转到用户列表页面",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage(ModelMap modelMap) {
         logger.info("转至系统用户列表页");
@@ -60,6 +62,7 @@ public class UserController {
      * @param page
      * @return
      */
+    @EMCLog(key="用户管理",name="查询用户列表",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String, String> paramsMap, Page page) {
@@ -79,6 +82,7 @@ public class UserController {
      * @param orgId
      * @return
      */
+    @EMCLog(key="用户管理",name="查询某组织结构下的员工",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/org/emp", method = RequestMethod.POST)
     @ResponseBody
     public String orgEmp(String orgId) {
@@ -98,6 +102,7 @@ public class UserController {
      * 跳转到添加用户页面
      * @return
      */
+    @EMCLog(key="用户管理",name="跳转到新增用户页面",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPage() {
         return "/auth/user/add";
@@ -109,6 +114,7 @@ public class UserController {
      * @param user
      * @return
      */
+    @EMCLog(key="新增用户",name="新增用户信息",type=Constants.OPT_TYPE_INSERT)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(HttpServletRequest request,User user) {
@@ -117,8 +123,8 @@ public class UserController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-        	String userId = request.getSession().getAttribute(Constants.SESSION_KEY).toString();
-        	user.setCreator(userId);
+        	User u = (User) request.getSession().getAttribute(Constants.SESSION_KEY);
+        	user.setCreator(u.getId());
         	user.setId(UUIDGenerator.getUUID());
             int ret = userService.addUser(user);
             if(ret<=0){
@@ -139,6 +145,7 @@ public class UserController {
      * @param login
      * @return
      */
+    @EMCLog(key="新增用户",name="校验登录账号唯一性",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/check/login", method = RequestMethod.POST)
     @ResponseBody
     public String checkLogin(String login) {
@@ -162,6 +169,7 @@ public class UserController {
      * @param id
      * @return
      */
+    @EMCLog(key="用户管理",name="跳转到修改用户列表页面",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editPage(Model model, @PathVariable("id") String id) {
 	    logger.info("跳转编辑用户页");
@@ -181,6 +189,7 @@ public class UserController {
      * @param user
      * @return
      */
+    @EMCLog(key="编辑用户",name="编辑用户信息",type=Constants.OPT_TYPE_UPDATE)
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
     public String edit(User user) {
@@ -207,6 +216,7 @@ public class UserController {
      * @param ids
      * @return
      */
+    @EMCLog(key="删除用户",name="批量删除用户信息",type=Constants.OPT_TYPE_DELETE)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String deleteUsers(String[] ids) {
@@ -234,6 +244,7 @@ public class UserController {
      * @param id
      * @return
      */
+    @EMCLog(key="删除用户",name="删除用户信息",type=Constants.OPT_TYPE_DELETE)
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(@PathVariable("id") String id) {
@@ -263,6 +274,7 @@ public class UserController {
      * @param ids
      * @return
      */
+    @EMCLog(key="重置密码",name="重置用户密码",type=Constants.OPT_TYPE_UPDATE)
     @RequestMapping(value = "/reset/pwd", method = RequestMethod.POST)
     @ResponseBody
     public String resetPwd(String[] ids) {
@@ -290,6 +302,7 @@ public class UserController {
      * @param ids
      * @return
      */
+    @EMCLog(key="用户管理",name="禁用/启用用户管理",type=Constants.OPT_TYPE_UPDATE)
     @RequestMapping(value = "/status/{status}", method = RequestMethod.POST)
     @ResponseBody
     public String status(@PathVariable("status") String status,String[] ids) {
@@ -317,6 +330,7 @@ public class UserController {
      * @param paramsMap
      * @param response
      */
+    @EMCLog(key="用户管理",name="导出用户信息",type=Constants.OPT_TYPE_SELECT)
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, String> param, HttpServletResponse response) {
         logger.info("导出用户列表EXCEL");

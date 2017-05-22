@@ -117,7 +117,7 @@ $(function(){
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['600px', '420px'],
+            area: ['600px', '480px'],
             type: 1,
             title: '修改菜单',
             btn: ['保存', '取消'],
@@ -130,11 +130,26 @@ $(function(){
             shadeClose: true, //开启遮罩关闭
             content: $('#menu-layer-div'),
             end:function(){
-                $.fn.zTree.init($("#menuTree"), setting);
+                refreshParentNode(treeId,treeNode);
             }
         });
 
     }
+
+
+    function refreshParentNode(treeId,treeNode) {
+        var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+            type = "refresh";
+            silent = false;
+        /*根据 zTree 的唯一标识 tId 快速获取节点 JSON 数据对象*/
+        var parentNode = treeObj.getNodeByTId(treeId);
+        /*选中指定节点*/
+        treeObj.selectNode(parentNode);
+        treeObj.reAsyncChildNodes(parentNode, type, silent);
+//        var zTree = $.fn.zTree.getZTreeObj("menuTree");
+//        zTree.reAsyncChildNodes(null,"refresh",false);
+    }
+
 
     /**
      * 删除方法自定义
@@ -176,7 +191,7 @@ $(function(){
             $('#menu-layer-div').html(result);
         });
         layer.open({
-            area: ['600px', '420px'],
+            area: ['600px', '480px'],
             type: 1,
             title: '添加菜单',
             btn: ['保存', '取消'],
@@ -188,8 +203,8 @@ $(function(){
             shift: 2,
             shadeClose: true, //开启遮罩关闭
             content: $('#menu-layer-div'),
-            end:function(){
-                $.fn.zTree.init($("#menuTree"), setting);
+            end:function(e){
+                refreshParentNode(treeId,treeNode);
             }
         });
     };
@@ -201,7 +216,6 @@ $(function(){
             data: {id:treeNode.id},
             dataType: "json",
             success: function (data) {
-                debugger;
                 var menutype =data.menu.menuType;
                 var type = data.menu.type;
                 if(menutype == "0"){
