@@ -55,13 +55,13 @@
 <c:forEach var="oneMenu" items="${_menu}" >
     <c:if test="${oneMenu.menuUrl ne '#'}">
         <li>
-            <a class="J_menuItem" href="${platform}${oneMenu.menuUrl}"><i class="fa fa-columns"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
+            <a class="J_menuItem" href="${platform}${oneMenu.menuUrl}"><i class="fa ${oneMenu.menuIcon}"></i> <span class="nav-label">${oneMenu.menuName}</span></a>
         </li>
     </c:if>
     <c:if test="${oneMenu.menuUrl eq '#'}">
     <li>
         <a href="#">
-            <i class="fa fa-folder-open"></i>
+            <i class="fa ${oneMenu.menuIcon}"></i>
             <span class="nav-label">${oneMenu.menuName}</span>
             <span class="fa arrow"></span>
         </a>
