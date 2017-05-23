@@ -98,9 +98,8 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑角色" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' +
-                        '<a title="授权权限" class="btn btn-xs btn-warning" onclick="stationAuthPage()"><i class="fa fa-wrench"></i></a>';
+                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
+                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' ;
                 }
             }
 
@@ -108,6 +107,42 @@ $(function () {
 
 
     });
+
+    var deletestation = function (id){
+        var ids;
+        if(id == undefined){
+            ids= getCheckValues("nodeListTable");
+            if (ids.length == 0) {
+                layer.msg("至少选择一条记录进行删除！");
+                return false;
+            }
+        }else{
+            ids = id;
+        }
+        top.layer.confirm('是否删除数据？', {
+            btn: ['删除', '取消'] //按钮
+        }, function () {
+            var index = top.layer.load(1, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            $.ajax({
+                url: _platform + '/station/delete',
+                type: 'POST',
+                dataType: 'json',
+                data: {id: ids},
+                success: function (result) {
+                    if (result.flag) {
+                        layer.closeAll();
+                        layer.msg(result.msg);
+                        getNodeList();
+                    } else {
+                        layer.close(index);
+                        layer.msg(result.msg);
+                    }
+                }
+            });
+        });
+    }
 
 
     //日期范围限制
@@ -146,7 +181,6 @@ function queryParams(params) {
     return {
         pOrgId:top.orgId,
         stationName:$('input[name="stationName"]').val(),
-        _method: "PATCH",
         pageNumber: params.pageNumber,
         pageSize: params.pageSize
     };
@@ -176,7 +210,7 @@ function search(){
 }
 
 function deletestation(id) {
-    layer.confirm('您是否确定删除角色？', {
+    top.layer.confirm('您是否确定删除该热力站？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = top.layer.load(1, {

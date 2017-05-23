@@ -231,6 +231,7 @@ $(function () {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
                         $('#station-table-list').bootstrapTable("refresh");
+                        var tree = top.comm_ztree ;
                         return true;
                     } else {
 //                        layer.close(index);
@@ -259,6 +260,7 @@ $(function () {
                         <input type="hidden" name="typeId" value="19a76720ee044ed5953f2b3cb5cb7a21"/>
                         <input type="hidden" name="pOrgId" value="${object.pOrgId}"/>
                         <input type="hidden" name="comId" value="${object.comId}"/>
+                        <input type="hidden" name="status" value="${object.status}"/>
                         <div class="form-group">
                             <label class="col-sm-2  control-label"><span class="red">*</span>热力站编码：</label>
                             <div class="col-sm-5">

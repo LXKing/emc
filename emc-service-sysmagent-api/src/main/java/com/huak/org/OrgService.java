@@ -43,4 +43,7 @@ public interface OrgService {
     List<Company> selectCompanyAll();
 
     List<SysDic>  selectSysDicAll(String code);
+
+    List<Map<String, Object>> selectOrgTree(Map<String, String> paramsMap);
+
 }

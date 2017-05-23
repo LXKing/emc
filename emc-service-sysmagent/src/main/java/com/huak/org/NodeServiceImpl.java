@@ -38,6 +38,9 @@ public class NodeServiceImpl implements NodeService{
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
+        if(orgDao.deleteByPrimaryKey(id)>0){
+           return  nodeDao.deleteByPrimaryKey(id);
+        }
         return 0;
     }
 
@@ -54,14 +57,14 @@ public class NodeServiceImpl implements NodeService{
         org.setComId(record.getComId());
         org.setpOrgId(record.getpOrgId());
         org.setArea(record.getArea());
-//        org.setCreateTime(dateDao.getTime());
+        org.setCreateTime(dateDao.getTime());
        // org.setCreator(record.getCreator());
         org.setId(record.getId());
         org.setOrgCode(record.getOrgCode());
         org.setMemo(record.getMemo());
         org.setOrgName(record.getOrgName());
         org.setSeq(record.getSeq());
-     //   org.setTypeId(record.getTypeId());
+        org.setTypeId(record.getTypeId());
         Node node = new Node();
         node.setAddr(record.getAddr());
         node.setCityId(record.getCityId());
@@ -75,6 +78,7 @@ public class NodeServiceImpl implements NodeService{
         node.setPublicArea(record.getPublicArea());
         node.setTownId(record.getTownId());
         node.setVillageId(record.getVillageId());
+        node.setStatus((byte)0);
         if(orgDao.insert(org)>0){
             return  nodeDao.insert(node);
         }
@@ -185,7 +189,39 @@ public class NodeServiceImpl implements NodeService{
 
     @Override
     @Transactional(readOnly = false)
-    public int update(Node record) {
+    public int update(NodeVo record) {
+        Org org = new Org();
+        org.setId(record.getId());
+        org.setComId(record.getComId());
+        org.setpOrgId(record.getpOrgId());
+        org.setArea(record.getArea());
+        org.setCreateTime(dateDao.getTime());
+        org.setCreator(record.getCreator());
+        org.setId(record.getId());
+        org.setOrgCode(record.getOrgCode());
+        org.setMemo(record.getMemo());
+        org.setOrgName(record.getOrgName());
+        org.setSeq(record.getSeq());
+        org.setTypeId(record.getTypeId());
+        org.setShortName(record.getShortName());
+        Node node = new Node();
+        node.setId(record.getId());
+        node.setAddr(record.getAddr());
+        node.setCityId(record.getCityId());
+        node.setCountyId(record.getCountyId());
+        node.setDwellArea(record.getDwellArea());
+        node.setId(record.getId());
+        node.setLat(record.getLat());
+        node.setLng(record.getLng());
+        node.setManageTypeId(record.getManageTypeId());
+        node.setProvinceId(record.getProvinceId());
+        node.setPublicArea(record.getPublicArea());
+        node.setTownId(record.getTownId());
+        node.setVillageId(record.getVillageId());
+        node.setStatus(record.getStatus());
+        if(orgDao.updateByPrimaryKey(org)>0){
+            return  nodeDao.updateByPrimaryKey(node);
+        }
         return 0;
     }
 
@@ -206,6 +242,13 @@ public class NodeServiceImpl implements NodeService{
             e.printStackTrace();
         }
         return Convert.convert(nodes);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public NodeVo selectVoById(String id) {
+        NodeVo node = nodeDao.selectVoById(id);
+        return node;
     }
 
     @Override

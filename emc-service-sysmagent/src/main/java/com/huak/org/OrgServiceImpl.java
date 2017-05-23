@@ -147,4 +147,10 @@ public class OrgServiceImpl implements OrgService {
         map.put("typeUs",code);
         return sysDicDao.selectAllByMap(map);
     }
+
+    @Override
+    public List<Map<String, Object>> selectOrgTree(Map<String, String> paramsMap) {
+        List<Map<String, Object>> data = orgDao.selectOrgTree(paramsMap);
+        return data;
+    }
 }

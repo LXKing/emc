@@ -25,4 +25,6 @@ public interface OrgDao {
     List<Org> CheckOrgName(String orgName);
 
     List<Map<String,Object>> selectOrgByMap(Map<String,Object> params);
+
+    List<Map<String,Object>> selectOrgTree(Map<String, String> paramsMap);
 }

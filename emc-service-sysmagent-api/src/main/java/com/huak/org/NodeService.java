@@ -20,11 +20,13 @@ public interface NodeService {
 
     Node selectById(String id);
 
-    int update(Node record);
+    int update(NodeVo record);
 
     int updateByPrimaryKey(Node record);
 
     public PageResult<NodeVo> queryByPage(Map<String, Object> paramsMap, Page page);
 
     List<Map<String,Object>> exportExcel(Map<String, Object> paramsMap);
+
+    NodeVo selectVoById(String id);
 }

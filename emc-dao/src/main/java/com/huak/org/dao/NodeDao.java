@@ -25,4 +25,6 @@ public interface NodeDao {
     List<NodeVo> selectPageByMap(Map<String, Object> paramsMap);
 
     List<Map<String,Object>> export(Map<String, Object> paramsMap);
+
+    NodeVo selectVoById(String id);
 }

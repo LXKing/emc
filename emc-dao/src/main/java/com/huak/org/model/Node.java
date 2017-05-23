@@ -26,8 +26,11 @@ public class Node implements Serializable{
     private Double publicArea;
 
     private Double dwellArea;
+    private Byte status;
 
-    public Node(String id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea) {
+
+
+    public Node(String id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea,Byte status) {
         this.id = id;
         this.manageTypeId = manageTypeId;
         this.provinceId = provinceId;
@@ -40,6 +43,8 @@ public class Node implements Serializable{
         this.lat = lat;
         this.publicArea = publicArea;
         this.dwellArea = dwellArea;
+        this.status = status;
+
     }
 
     public Node() {
@@ -140,5 +145,13 @@ public class Node implements Serializable{
 
     public void setDwellArea(Double dwellArea) {
         this.dwellArea = dwellArea;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

@@ -31,12 +31,13 @@ public class CommonController {
 
     @ResponseBody
     @RequestMapping(value = "/org/tree", method = RequestMethod.POST)
-    public Object orgtree(Model model,HttpServletResponse response){
+    public List<Map<String,Object>> orgtree(@RequestParam Map<String, String> paramsMap,HttpServletResponse response){
         logger.info("查询组织机构树");
+        JSONObject jo = new JSONObject();
         int i=0;
         System.out.println("--------------"+i++);
-        List<Org> as = orgService.selectOrgAll();
-        return JSON.toJSON(as);
+        List<Map<String,Object>> as = orgService.selectOrgTree(paramsMap);
+        return as;
     }
 
 

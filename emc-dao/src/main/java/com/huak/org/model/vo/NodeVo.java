@@ -54,9 +54,11 @@ public class NodeVo implements Serializable{
 
     private Double dwellArea;
 
+    private Byte status;
+
     public NodeVo(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area
                   , String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea
-    ) {
+               ,Byte status) {
         this.id = id;
         this.comId = comId;
         this.orgCode = orgCode;
@@ -80,6 +82,7 @@ public class NodeVo implements Serializable{
         this.lat = lat;
         this.publicArea = publicArea;
         this.dwellArea = dwellArea;
+        this.status = status;
     }
 
     public NodeVo() {
@@ -270,4 +273,11 @@ public class NodeVo implements Serializable{
         this.dwellArea = dwellArea;
     }
 
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
 }

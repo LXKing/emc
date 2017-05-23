@@ -86,24 +86,15 @@ $(document).ready( function (e) {
     if($this.length>0){
         $.post(_platform + '/common/org/tree',function(data){
             var setting = {
+                async : { enable : true,url: _platform + '/common/org/tree',autoParam:["id"]},
                 view: {selectedMulti: true,fontCss:{color:"black"}},
                 check: { enable: false },
                 data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
-                async : { enable : true },
                 edit: {enable: false },
                 callback: { onClick:treeNodeClick }
             };
-            var nodes='';
-            var zNodes ='[';
-            for (var i=0;i<data.length;i++){
-                var orgName='"' + data[i].orgName + '"';
-                var id='"' + data[i].id + '"';
-                var pid='"' + data[i].pOrgId + '"';
-                zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
-            };
-            var newnodes=zNodes.substring(0,zNodes.length-1);
-            nodes= newnodes+"]";
-            top.comm_tree = $.fn.zTree.init($("#temp_org_tree"), setting, eval("(" + nodes + ")"));
+            top.comm_tree = $.fn.zTree.init($("#temp_org_tree"), setting);
+            top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree");
             var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
             var nodes = [];
             if(lightId != "" && lightId != undefined){

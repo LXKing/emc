@@ -182,6 +182,26 @@
 
         order by ID
     </select>
+
+<!--该方法仅供公共树插件使用-->
+
+    <select id="selectOrgTree"  resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        ID as id, ORG_NAME as name, P_ORG_ID as pId,
+        'true' open
+        from t_emc_org
+        where 1=1
+        <if test="comId != null and comId !=''">
+          AND  COM_ID = #{comId,jdbcType=VARCHAR},
+        </if>
+        <!--插件局部刷新传过来的是id,需要刷新以id为父节点的所有子节点-->
+        <if test="id != null and id !=''">
+          AND  P_ORG_ID = #{id,jdbcType=VARCHAR}
+        </if>
+        order by seq
+    </select>
+
+
     <!-- CheckOrgName -->
     <select id="CheckOrgName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

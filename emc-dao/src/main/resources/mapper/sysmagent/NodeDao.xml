@@ -15,11 +15,12 @@
       <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+        <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     ID, MANAGE_TYPE_ID, PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, 
-    LAT, PUBLIC_AREA, DWELL_AREA
+    LAT, PUBLIC_AREA, DWELL_AREA,STATUS
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -36,12 +37,12 @@
     insert into t_emc_org_node (ID, MANAGE_TYPE_ID, PROVINCE_ID, 
       CITY_ID, COUNTY_ID, TOWN_ID, 
       VILLAGE_ID, ADDR, LNG, 
-      LAT, PUBLIC_AREA, DWELL_AREA
+      LAT, PUBLIC_AREA, DWELL_AREA,STATUS
       )
     values (#{id,jdbcType=VARCHAR}, #{manageTypeId,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, 
       #{cityId,jdbcType=VARCHAR}, #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, 
       #{villageId,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, 
-      #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, #{dwellArea,jdbcType=DOUBLE}
+      #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, #{dwellArea,jdbcType=DOUBLE}, #{status,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Node">
@@ -83,6 +84,9 @@
       <if test="dwellArea != null">
         DWELL_AREA,
       </if>
+        <if test="status != null">
+            STATUS,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -121,6 +125,9 @@
       <if test="dwellArea != null">
         #{dwellArea,jdbcType=DOUBLE},
       </if>
+        <if test="status != null">
+            #{status,jdbcType=TINYINT},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Node">
@@ -159,6 +166,9 @@
       <if test="dwellArea != null">
         DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
       </if>
+        <if test="status != null">
+            STATUS = #{status,jdbcType=TINYINT},
+        </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -174,20 +184,32 @@
       LNG = #{lng,jdbcType=DOUBLE},
       LAT = #{lat,jdbcType=DOUBLE},
       PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
-      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
+      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
+       STATUS = #{status,jdbcType=TINYINT}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
   <select id="selectPageByMap" resultMap="queryForListMap" parameterType="java.util.Map">
        SELECT
          B.ID, B.COM_ID, B.ORG_CODE, B.ORG_NAME, B.SHORT_NAME,
-         (select c.ORG_NAME from t_emc_org c where c.id =B. P_ORG_ID) P_ORG_ID,
+         (select c.ORG_NAME from t_emc_org c where c.id =B.P_ORG_ID) P_ORG_ID,
         B.TYPE_ID, B.CREATOR,B.CREATE_TIME,
         B.MEMO, B.SEQ, B.AREA, A.MANAGE_TYPE_ID, A.PROVINCE_ID, A.CITY_ID, A.COUNTY_ID, A.TOWN_ID, A.VILLAGE_ID, A.ADDR, A.LNG,
-        A.LAT, A.PUBLIC_AREA, A.DWELL_AREA
-        FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID
+        A.LAT, A.PUBLIC_AREA, A.DWELL_AREA,A.STATUS
+        FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID AND A.STATUS = '0'
         AND P_ORG_ID = #{pOrgId,jdbcType=VARCHAR}
   </select>
+
+    <select id="selectVoById"  resultMap="queryForListMap"  parameterType="java.lang.String">
+        SELECT
+        B.ID, B.COM_ID, B.ORG_CODE, B.ORG_NAME, B.SHORT_NAME,
+        B.P_ORG_ID,
+        B.TYPE_ID, B.CREATOR,B.CREATE_TIME,
+        B.MEMO, B.SEQ, B.AREA, A.MANAGE_TYPE_ID, A.PROVINCE_ID, A.CITY_ID, A.COUNTY_ID, A.TOWN_ID, A.VILLAGE_ID, A.ADDR, A.LNG,
+        A.LAT, A.PUBLIC_AREA, A.DWELL_AREA,A.STATUS
+        FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID AND A.STATUS = '0'
+        AND B.ID = #{id,jdbcType=VARCHAR}
+    </select>
 
   <resultMap id="queryForListMap" type="com.huak.org.model.vo.NodeVo">
       <constructor>
@@ -214,7 +236,7 @@
           <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
           <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
           <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-
+          <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
       </constructor>
   </resultMap>
 

@@ -188,6 +188,7 @@ create table t_emc_org_node
 );
 alter table t_emc_org_node comment '热力站基本信息表';
 ALTER TABLE t_emc_org_node DROP PRIMARY KEY ;
+alter table t_emc_org_node add STATUS TYPEINT not Null;
 
 drop table if exists t_emc_org_room;
 

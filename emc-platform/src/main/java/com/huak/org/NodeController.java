@@ -48,7 +48,7 @@ public class NodeController {
         return "/org/node/list";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap, Page page) {
         logger.info("热力站列表页分页查询");
@@ -68,6 +68,7 @@ public class NodeController {
             NodeVo obj = new NodeVo();
             obj.setpOrgId(pOrgId);
             obj.setComId(comId);
+            obj.setStatus((byte)0);
             modelMap.put(Constants.OBJECT,obj);
         } catch (Exception e) {
             logger.error("跳转到热力站编辑页出错！");
@@ -103,22 +104,22 @@ public class NodeController {
     public String editPage(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改热力站页");
         try {
-            model.addAttribute("role", nodeService.selectById(id));
+            model.addAttribute("node", nodeService.selectVoById(id));
         } catch (Exception e) {
             logger.error("跳转修改热力站页异常" + e.getMessage());
         }
         return "/org/node/edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String edit(Node node) {
+    public String edit(NodeVo node) {
         logger.info("修改热力站");
 
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            nodeService.updateByPrimaryKey(node);
+            nodeService.update(node);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "修改热力站成功");
         } catch (Exception e) {
