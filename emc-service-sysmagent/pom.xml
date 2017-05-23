@@ -29,6 +29,29 @@
             <artifactId>emc-service-sysmagent-api</artifactId>
             <version>${emc.service.sysmagent.api.version}</version>
         </dependency>
+
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.huak.main.Container</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <version>${emc.service.sysmagent.version}</version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

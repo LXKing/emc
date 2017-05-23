@@ -88,7 +88,7 @@
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
                                 <c:if test="${sessionScope._auth['roleExport']}">
-                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
+                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/role/export"> 导出Excel
                                 </button>
                                 </c:if>
 

@@ -1,6 +1,8 @@
 package com.huak.org.model;
 
-public class Company {
+import java.io.Serializable;
+
+public class Company implements Serializable{
     private String id;
 
     private String cname;
