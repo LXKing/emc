@@ -380,8 +380,8 @@ drop table if exists t_emc_company;
 /*==============================================================*/
 create table t_emc_company
 (
-   id                   varchar(32) not null comment '公司主键',
-   cname                varchar(64) comment '公司名称',
+   ID                   varchar(32) not null comment '公司主键',
+   CNAME                varchar(64) comment '公司名称',
    primary key (id)
 );
 
@@ -394,3 +394,9 @@ alter table t_emc_company comment '公司信息表';
  ALTER TABLE t_emc_role_func_rel RENAME t_emc_auth_role_func_rel;
 
  DROP TABLE t_emc_auth_menu_func_rel;
+
+/**
+  2017年5月23日 10:26:22 修改org表中字段类型
+ */
+ alter table t_emc_org modify column TYPE_ID VARCHAR(32);
+ alter table t_emc_org modify column CREATOR VARCHAR(32);

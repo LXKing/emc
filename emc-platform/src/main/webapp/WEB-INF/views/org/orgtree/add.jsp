@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lichao
@@ -31,7 +32,6 @@
 
     //以下为官方示例
     $(function () {
-
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//
             var orgName = $('.orgNameID').val();
@@ -98,7 +98,7 @@
         messages: {
             orgName: {
                 required: icon + "请输入机构名称",
-                        minlength: icon + "角色名称必须2个字符以上"
+                        minlength: icon + "机构名称必须2个字符以上"
             },
             orgCode: {
                 required: icon + "请输入机构代码"
@@ -161,11 +161,42 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">备注：</label>
+                    <label class="col-sm-3  control-label"><span class="red">*</span>公司：</label>
 
                     <div class="col-sm-8">
-                        <textarea class="form-control" rows="6" maxlength="125" name="memo" placeholder="请输入备注"></textarea>
+                        <select id="comId" name="comId" class="chosen-select form-control">
+                            <option value="">请选择公司</option>
+                        <c:forEach items="${company}" var="item" varStatus="status" >
+                                <option value="${item.id}">${item.cname}</option>
+                        </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>类型：</label>
 
+                    <div class="col-sm-8">
+                        <select id="typeId" name="typeId" class="chosen-select form-control">
+                            <option value="">请选择类型</option>
+                            <c:forEach items="${sysdic}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+                                <option value="${item.id}">${item.des}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="red">*</span>排序值：</label>
+
+                    <div class="col-sm-8">
+                        <input name="seq" class="form-control" type="text" maxlength="16" placeholder="请输入排序值">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">备注：</label>
+                    <div class="col-sm-8">
+                        <input name="memo"   class="form-control" type="text" maxlength="255" placeholder="请输入备注">
                     </div>
                 </div>
             </form>

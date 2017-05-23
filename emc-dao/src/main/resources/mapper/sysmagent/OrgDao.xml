@@ -10,7 +10,7 @@
       <arg column="SHORT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="P_ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="CREATOR" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SEQ" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -38,7 +38,7 @@
       MEMO, SEQ, AREA)
     values (#{id,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
       #{orgName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{pOrgId,jdbcType=VARCHAR},
-      #{typeId,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{createTime,jdbcType=VARCHAR},
+      #{typeId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
       #{memo,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{area,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Org">
@@ -101,10 +101,10 @@
         #{pOrgId,jdbcType=VARCHAR},
       </if>
       <if test="typeId != null">
-        #{typeId,jdbcType=BIGINT},
+        #{typeId,jdbcType=VARCHAR},
       </if>
       <if test="creator != null">
-        #{creator,jdbcType=BIGINT},
+        #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=VARCHAR},
@@ -142,7 +142,7 @@
         TYPE_ID = #{typeId,jdbcType=VARCHAR},
       </if>
       <if test="creator != null">
-        CREATOR = #{creator,jdbcType=BIGINT},
+        CREATOR = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         CREATE_TIME = #{createTime,jdbcType=VARCHAR},
@@ -167,7 +167,7 @@
       SHORT_NAME = #{shortName,jdbcType=VARCHAR},
       P_ORG_ID = #{pOrgId,jdbcType=VARCHAR},
       TYPE_ID = #{typeId,jdbcType=VARCHAR},
-      CREATOR = #{creator,jdbcType=BIGINT},
+      CREATOR = #{creator,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       MEMO = #{memo,jdbcType=VARCHAR},
       SEQ = #{seq,jdbcType=INTEGER},
@@ -216,7 +216,7 @@
             and TYPE_ID = #{typeId,jdbcType=VARCHAR}
         </if>
         <if test="creator != null and creator !=''">
-            and CREATOR = #{creator,jdbcType=BIGINT}
+            and CREATOR = #{creator,jdbcType=VARCHAR}
         </if>
         <if test="createTime != null and createTime !=''">
             and CREATE_TIME = #{createTime,jdbcType=VARCHAR}

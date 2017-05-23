@@ -2,6 +2,7 @@ package com.huak.sys;
 
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.model.Feed;
 import com.huak.org.model.Oncenet;
 import com.huak.season.model.Season;
 
@@ -28,4 +29,7 @@ public interface SeasonService {
 
     public PageResult<Season> queryByPage(Map<String,Object> paramsMap, Page page);
 
+    boolean checkName(String name);
+
+    public int updateByPrimaryKeySelective(Season record);
 }

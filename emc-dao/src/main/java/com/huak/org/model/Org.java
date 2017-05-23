@@ -18,7 +18,7 @@ public class Org implements Serializable{
 
     private String typeId;
 
-    private Long creator;
+    private String creator;
 
     private String createTime;
 
@@ -28,7 +28,7 @@ public class Org implements Serializable{
 
     private Double area;
 
-    public Org(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, Long creator, String createTime, String memo, Integer seq, Double area) {
+    public Org(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area) {
         this.id = id;
         this.comId = comId;
         this.orgCode = orgCode;
@@ -103,11 +103,11 @@ public class Org implements Serializable{
         this.typeId = typeId;
     }
 
-    public Long getCreator() {
+    public String getCreator() {
         return creator;
     }
 
-    public void setCreator(Long creator) {
+    public void setCreator(String creator) {
         this.creator = creator;
     }
 

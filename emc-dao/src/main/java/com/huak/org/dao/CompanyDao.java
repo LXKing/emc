@@ -21,4 +21,6 @@ public interface CompanyDao {
     List<Map<String,Object>> exportCompanys(Map<String, Object> paramsMap);
 
     List<Company> selectAllByMap(Map<String,Object> paramsMap);
+
+    List<Company> selectCompanyAll();
 }

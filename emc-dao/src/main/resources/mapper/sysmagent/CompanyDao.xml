@@ -79,4 +79,11 @@
         </if>
         order by id
     </select>
+    <select id="selectCompanyAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_company
+
+        order by ID
+    </select>
 </mapper>

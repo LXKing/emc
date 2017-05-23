@@ -12,7 +12,7 @@
     $(function () {
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
-        var $form = $(top.document).find("#seasonAddForm");
+        var $form = $(top.document).find("#seasonEditForm");
         //初始化采暖季度下拉框
         var yearSpan = 10;//上下跨度
         var year = Number(today.substr(0, 4));
@@ -63,28 +63,28 @@
         //下拉框js
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
         debugger;
-        $.validator.addMethod("checkSeason", function (value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
-            console.log(value);
-            alert("校验采暖季度");
-            var name = $(top.document).find('#season').val();
-            $.ajax({
-                url: _platform + '/season/addvalue',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {season: $('#season').val()},
-                dataType: 'json',
-                success: function (result) {
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
-                    }
-                }
-            });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, "采暖季度已存在");
+//        $.validator.addMethod("checkSeason", function (value, element) {
+//            var deferred = $.Deferred();//创建一个延迟对象
+//            console.log(value);
+//            alert("校验采暖季度");
+//            var name = $(top.document).find('#season').val();
+//            $.ajax({
+//                url: _platform + '/season/addvalue',
+//                type: 'POST',
+//                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+//                data: {season: $('#season').val()},
+//                dataType: 'json',
+//                success: function (result) {
+//                    if (!result.flag) {
+//                        deferred.reject();
+//                    } else {
+//                        deferred.resolve();
+//                    }
+//                }
+//            });
+//            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+//            return deferred.state() == "resolved" ? true : false;
+//        }, "采暖季度已存在");
 
         //验证时间是否在采暖季度之间
         $.validator.addMethod("dateSeason", function (value, element, param) {
@@ -160,9 +160,15 @@
                 var index = layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
+                alert(123);
                 $.ajax({
-                    url: _platform + '/season/addvalue',
-                    data: {name:$(top.document).find('#season').val(),sdate:$(top.document).find('#start').val(),edate:$(top.document).find('#end').val()},
+                    url: _platform + '/season/editvalue',
+                    data: {
+                           id:$(top.document).find('#id').val(),
+                           name:$(top.document).find('#season').val(),
+                           sdate:$(top.document).find('#start').val(),
+                           edate:$(top.document).find('#end').val()
+                          },
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {
@@ -185,13 +191,15 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
-            <form class="form-horizontal" id="seasonAddForm" rseasonAddFormole="form">
+            <form class="form-horizontal" id="seasonEditForm" rseasonAddFormole="form">
+                <input type="hidden" name="id" id="id" value="${season.id}" />
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>采暖季度：</label>
 
                     <div class="col-sm-8">
                         <select id="season" name="season" class="chosen-select form-control">
-                            <option value="">请选择采暖季度</option>
+
+                            <option value="">${season.name}</option>
                         </select>
                     </div>
                 </div>
@@ -199,7 +207,7 @@
                     <label class="col-sm-3 control-label"><span class="red">*</span>开始时间：</label>
 
                     <div class="col-sm-8">
-                        <input id="start" type="text" class="laydate-icon  form-control layer-date"  name="sDate"
+                        <input id="start" type="text" value="${season.sdate}" class="laydate-icon  form-control layer-date"  name="sDate"
                                placeholder="请选择开始时间"/>
                     </div>
                 </div>
@@ -207,7 +215,7 @@
                     <label class="col-sm-3 control-label"><span class="red">*</span>结束时间：</label>
 
                     <div class="col-sm-8">
-                        <input id="end" type="text" class="laydate-icon  form-control layer-date"  name="eDate"
+                        <input id="end" type="text" value="${season.edate}" class="laydate-icon  form-control layer-date"  name="eDate"
                                placeholder="请选择结束时间"/>
                     </div>
                 </div>
@@ -239,8 +247,5 @@
 
 
     });
-
-
-
 
 </script>
