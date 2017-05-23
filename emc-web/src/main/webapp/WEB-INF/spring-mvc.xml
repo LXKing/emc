@@ -16,14 +16,14 @@
        http://www.springframework.org/schema/task
 	   http://www.springframework.org/schema/task/spring-task-3.0.xsd ">
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.huak" use-default-filters="false">
+    <context:component-scan base-package="com.huak.web" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-    <context:component-scan base-package="com.huak.init" use-default-filters="false">
+    <context:component-scan base-package="com.huak.web.init" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
     </context:component-scan>
 
-    <!--<context:property-placeholder location="classpath:application-env.properties" ignore-unresolvable="true" />-->
+    <context:property-placeholder location="classpath:application-env.properties" ignore-unresolvable="true" />
 
     <mvc:resources mapping="/static/**" location="/static/"/>
     <mvc:resources mapping="/script/**" location="/script/"/>
@@ -39,13 +39,14 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/index"/>
             <mvc:exclude-mapping path="/login"/>
             <mvc:exclude-mapping path="/login-in"/>
             <mvc:exclude-mapping path="/login-out"/>
             <mvc:exclude-mapping path="/generateVc"/>
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/script/**"/>
-            <bean class="com.huak.interce.SessionInterceptor"></bean>
+            <bean class="com.huak.web.interce.SessionInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 

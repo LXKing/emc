@@ -1,0 +1,70 @@
+{
+    "success": "true",
+    "message": "信息(包括错误信息)",
+    "data": {
+	    "projectId":"1",
+	    "water":{                    
+			"yearDate": [            
+				"15-11",
+				"15-12",
+				"16-01",
+				"16-02",
+				"16-03"
+			],
+			"waterEnergy": [         
+				{
+					"typeName": "改造后",
+					"waterEnergyDetail": [
+						"600",
+						"300",
+						"500",
+						"400",
+						"620"
+					]
+				},
+				{
+					"typeName": "改造前",
+					"waterEnergyDetail": [
+						"810",
+						"500",
+						"700",
+						"500",
+						"720"
+					]
+				}
+			]
+		},
+		"electric":{				 
+			"yearDate": [            
+				"15-11",
+				"15-12",
+				"16-01",
+				"16-02",
+				"16-03"
+			],
+			"electricEnergy": [
+				{
+					"typeName": "改造后",
+					"electricEnergyDetail": [
+						"600",
+						"300",
+						"500",
+						"400",
+						"620"
+						
+					]
+				},
+				{
+					"typeName": "改造前",
+					"electricEnergyDetail": [
+						"810",
+						"500",
+						"700",
+						"500",
+						"720"
+					]
+				}
+			]
+		}
+    }
+}

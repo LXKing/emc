@@ -1,0 +1,21 @@
+{
+    "success": "true",
+    "message": "信息(包括错误信息)",
+    "data": {
+        "projectId":"1",
+        "projectName":"2015年无人值守站", 
+        "projectNumber":"HUAK90070816",  	  
+		"projectContent":"2015年两项资金项目", 
+		"projectState":"已完成",                
+		"startDate":"2017-05-01", 			  
+		"endDate":"2017-05-08",	              
+		"implemenPurpose": "自动化改造",	   	  
+		"personinCharge": "张云峰",			  
+		"beforeEnergy": "1000",			      
+		"afterEnergy": "800",			          
+		"changeRate": "20",	
+		"changeRateState"	: "2",	          
+		"projectEvaluate": "无论从管理模式…"
+
+    }
+}

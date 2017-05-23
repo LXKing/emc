@@ -1,9 +1,8 @@
 package com.huak.init;
 
 import com.alibaba.fastjson.JSONArray;
-import com.huak.init.bean.AdminLevelType;
+import com.huak.sys.type.AdminLevelType;
 import com.huak.org.AdministrativeService;
-import com.huak.org.dao.AdministrativeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
