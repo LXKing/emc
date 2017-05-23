@@ -1,5 +1,6 @@
 package com.huak.org.dao;
 
+import com.huak.org.model.Oncenet;
 import com.huak.org.model.vo.Secondnet;
 
 import java.util.List;
