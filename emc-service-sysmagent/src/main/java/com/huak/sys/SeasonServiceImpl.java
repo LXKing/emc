@@ -1,6 +1,7 @@
 package com.huak.sys;
 
 import com.github.pagehelper.PageHelper;
+import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,11 +30,13 @@ import java.util.Map;
 public class SeasonServiceImpl implements SeasonService {
     @Resource
     private SeasonDao seasonDao;
-
+    @Resource
+    private DateDao dateDao;
     public Season selectByPrimaryKey(String id){
        return seasonDao.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int delete(String id){
         return seasonDao.deleteByPrimaryKey(id);
     }
@@ -55,4 +59,19 @@ public class SeasonServiceImpl implements SeasonService {
         return Convert.convert(seasonDao.selectPageByMap(paramsMap));
     }
 
+    @Override
+    public boolean checkName(String name) {
+        boolean flag=false;
+        List<Season> list = seasonDao.CheckName(name);
+        if(list.size()>0){
+            flag=true;
+        }
+        return flag;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public int updateByPrimaryKeySelective(Season record) {
+        return seasonDao.updateByPrimaryKeySelective(record);
+    }
 }
