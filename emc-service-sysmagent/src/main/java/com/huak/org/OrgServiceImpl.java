@@ -138,6 +138,7 @@ public class OrgServiceImpl implements OrgService {
         return companyDao.selectCompanyAll();
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public List<SysDic> selectSysDicAll(String code) {
