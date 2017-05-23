@@ -1,9 +1,12 @@
 package com.huak.org;
 
 import com.alibaba.fastjson.JSON;
+import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
+import com.huak.org.model.Company;
 import com.huak.org.model.Org;
+import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -70,13 +73,23 @@ public class OrgController {
 
     @RequestMapping(value = "/addnode/{id}", method = RequestMethod.GET)
     public String addNode(Model model, @PathVariable("id") String id){
+        String code = "orgType";
+        List<Company> company = orgService.selectCompanyAll();
+        List<SysDic> dic = orgService.selectSysDicAll(code);
         model.addAttribute("id",id);
+        model.addAttribute("company",company);
+        model.addAttribute("sysdic",dic);
         return "org/orgtree/add";
     }
     @RequestMapping(value = "/editnode/{id}", method = RequestMethod.GET)
     public String editPage(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改机构页");
         try {
+            String code = "orgType";
+            List<Company> company = orgService.selectCompanyAll();
+            List<SysDic> dic = orgService.selectSysDicAll(code);
+            model.addAttribute("company",company);
+            model.addAttribute("sysdic",dic);
             model.addAttribute("org", orgService.selectByPrimaryKey(id));
         } catch (Exception e) {
             logger.error("跳转修改机构页异常" + e.getMessage());
@@ -114,7 +127,8 @@ public class OrgController {
             try {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
-            org.setCreator(new Long(1001));
+           User user =  (User)session.getAttribute(Constants.SESSION_KEY);
+            org.setCreator(user.getId());
 
             org.setId(UUIDGenerator.getUUID());
             boolean flag = orgService.insertOrg(org);
