@@ -165,7 +165,7 @@ function beforeRename(treeId,treeNode,newName,isCancel){
 }
 function onRename(e, treeId, treeNode, isCancel) {
     //需要对名字做判定的，可以来这里写~~
-    alert(treeNode.id+"---"+treeNode.name);
+    //alert(treeNode.id+"---"+treeNode.name);
        var id = treeNode.id;
     $.get(_platform + '/org/editnode/' + id, function (result) {
         $('#orgtree-layer-div').html(result);
