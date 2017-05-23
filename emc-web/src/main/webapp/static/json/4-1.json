@@ -1,0 +1,90 @@
+﻿{
+    "success": "true",
+    "message": "信息(包括错误信息)",
+    "data": {
+        "pageCount": "52",
+        "pageNow": "1",
+        "alarmTable": [
+            {
+                "compId": "1",
+                "heatSource": "二炮司令部",
+                "alarmGrade": "1",
+                "alarmContent": "碳排放高于标准值800万m3，描述文字占位",
+                "delayDays": "8",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "2",
+                "heatSource": "二炮司令部",
+                "alarmGrade": "2",
+                "alarmContent": "2014年两会周转项目",
+                "delayDays": "4",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "3",
+                "heatSource": "2013年无人值守站项目",
+                "alarmGrade": "3",
+                "alarmContent": "碳排放高于标准值800万m3，描述文字占位",
+                "delayDays": "5",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "4",
+                "heatSource": "2014年二次网站项目",
+                "alarmGrade": "4",
+                "alarmContent": "2014年两会周转项目",
+                "delayDays": "9",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "5",
+                "heatSource": "2013年无人值守站项目",
+                "alarmGrade": "5",
+                "alarmContent": "碳排放高于标准值800万m3，描述文字占位",
+                "delayDays": "4",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "6",
+                "heatSource": "2014年二次网站项目",
+                "alarmGrade": "2",
+                "alarmContent": "2014年两会周转项目",
+                "delayDays": "4",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "7",
+                "heatSource": "2013年无人值守站项目",
+                "alarmGrade": "4",
+                "alarmContent": "碳排放高于标准值800万m3，描述文字占位",
+                "delayDays": "5",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "8",
+                "heatSource": "2014年二次网站项目",
+                "alarmGrade": "4",
+                "alarmContent": "2014年两会周转项目",
+                "delayDays": "7",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "9",
+                "heatSource": "2013年无人值守站项目",
+                "alarmGrade": "3",
+                "alarmContent": "2013年两会周转项目",
+                "delayDays": "8",
+                "alarmDate": "2016-08-24 10:28:00"
+            },
+            {
+                "compId": "10",
+                "heatSource": "2014年二次网站项目",
+                "alarmGrade": "4",
+                "alarmContent": "2014年两会周转项目",
+                "delayDays": "6",
+                "alarmDate": "2016-08-24 10:28:00"
+            }
+        ]
+    }
+}

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lichao
@@ -31,7 +32,6 @@
 
     //以下为官方示例
     $(function () {
-
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//
             var orgName = $('.orgNameID').val();
@@ -113,7 +113,7 @@
                 shade: [0.1,'#fff'] //0.1透明度的白色背景
             });
             var data = $('#orgTreeAddForm').serialize();
-            alert(data);
+            //alert(data);
             $.ajax({
                     url:_platform + '/org/tree/edit',
                     data:$('#orgTreeAddForm').serialize(),
@@ -161,11 +161,39 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>公司：</label>
+
+                    <div class="col-sm-8">
+                        <select id="comId" name="comId" class="chosen-select form-control">
+                            <c:forEach items="${company}" var="item" varStatus="status" >
+                                <option <c:if test="${org.comId eq item.id}">selected="selected" </c:if> value="${item.id}">${item.cname}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>类型：</label>
+
+                    <div class="col-sm-8">
+                        <select id="typeId" name="typeId" class="chosen-select form-control">
+                            <c:forEach items="${sysdic}" var="item" varStatus="status" >
+                                <option <c:if test="${org.typeId eq item.id}">selected="selected" </c:if> value="${item.id}">${item.des}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="red">*</span>排序值：</label>
+
+                    <div class="col-sm-8">
+                        <input name="seq" class="form-control"  value="${org.seq}" type="text" maxlength="16" placeholder="请输入排序值">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">备注：</label>
 
                     <div class="col-sm-8">
-                        <textarea class="form-control" rows="6"   value="${org.memo} maxlength="125" name="memo" placeholder="请输入备注"></textarea>
-
+                        <input name="memo"  value="${org.memo}"  class="form-control" type="text" maxlength="255">
                     </div>
                 </div>
             </form>

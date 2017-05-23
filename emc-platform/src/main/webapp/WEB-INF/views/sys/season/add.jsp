@@ -6,33 +6,209 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script>
+    //以下为官方示例
+    var today = '2016-06-16';
+    $(function () {
+        // validate signup form on keyup and submit
+        var icon = "<i class='fa fa-times-circle'></i> ";
+        var $form = $(top.document).find("#seasonAddForm");
+        //初始化采暖季度下拉框
+        var yearSpan = 10;//上下跨度
+        var year = Number(today.substr(0, 4));
+        console.info(year)
+        for (var i = 0 - yearSpan; i < yearSpan; i++) {
+            var year1 = year + i;
+            var year2 = year + i + 1;
+            $(top.document).find("#season").append('<option value="' + year1 + '-' + year2 + '">' + year1 + '-' + year2 + '</option>');
+        }
+        $(top.document).find("#season").chosen();
+
+        $(top.document).find("#season").on('change', function () {
+            var season = $(this).val();
+            var date1 = season.substr(0, 4) + "-11-15";
+            var date2 = season.substr(5, 9) + "-03-15";
+            $(top.document).find('#start').val(date1);
+            $(top.document).find('#end').val(date2);
+        });
+
+        //初始化时间插件
+        //日期范围限制
+
+        var start = {
+            elem: '#start',
+            format: 'YYYY/MM/DD ',
+            //min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-06-16 ', //最大日期
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'YYYY/MM/DD ',
+            max: '2099-06-16',
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        top.laydate(start);
+        top.laydate(end);
+
+        //下拉框js
+        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
+        debugger;
+        $.validator.addMethod("checkSeason", function (value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            console.log(value);
+            alert("校验采暖季度");
+            var name = $(top.document).find('#season').val();
+            $.ajax({
+                url: _platform + '/season/addvalue',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {season: $('#season').val()},
+                dataType: 'json',
+                success: function (result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, "采暖季度已存在");
+
+        //验证时间是否在采暖季度之间
+        $.validator.addMethod("dateSeason", function (value, element, param) {
+
+            var season = $(top.document).find(param).val();
+            //alert("验证时间是否在采暖季度之间"+season);
+            var date1 = season.substr(0, 4) + "-01-01";
+            var date2 = season.substr(5, 9) + "-12-31";
+            return this.optional(element) || ((value >= date1) && (value <= date2));
+        }, icon + "开始或结束时间不在采暖季度之间");
+
+        //验证结束时间是否大于开始时间
+        $.validator.addMethod("isGt", function (value, element, param) {
+            //alert("验证结束时间是否大于开始时间");
+            var startDate = $(top.document).find(param).val();
+            return this.optional(element) || (value > startDate);
+        }, icon + "结束时间必须大于开始时间");
+
+        //提示信息绑定
+        $(top.document).find('input:not(:submit):not(:button)').mousedown(function () {
+            //alert("提示绑定信息");
+            $(this).closest('.form-group').removeClass('has-error');
+            $(this).siblings('.help-block').remove();
+        });
+        //下拉框信息绑定
+        $(top.document).find('select').change(function () {
+            //alert("下拉框信息绑定");
+            if ($(this).find('option:first').val() != $(this).val()) {
+                $(this).siblings('.help-block').remove();
+            }
+            return false;
+        });
+
+        $form.validate({
+            onsubmit: true,// 是否在提交是验证
+            //移开光标:如果有内容,则进行验证
+            onfocusout: function (element) {
+                if ($(element).val() == null || $(element).val() == "") {
+                    $(element).closest('.form-group').removeClass('has-error');
+                    $(element).siblings('.help-block').remove();
+                } else {
+                    $(element).valid();
+                }
+            },
+            onkeyup: false,// 是否在敲击键盘时验证
+            rules: {
+                season: {
+                    required: true,
+                    checkSeason: '#season'
+                },
+                sDate: {
+                    required: true,
+                    dateSeason: '#season'
+                },
+                eDate: {
+                    required: true,
+                    dateSeason: '#season',
+                    isGt: '#start'
+                }
+            },
+            messages: {
+                season: {
+                    required: icon + "请选择采暖季度"
+                },
+                sDate: {
+                    required: icon + "请选择开始时间"
+                },
+                eDate: {
+                    required: icon + "请选择结束时间"
+                }
+            },
+            submitHandler: function () {
+                var index = layer.load(1, {
+                    shade: [0.1, '#fff'] //0.1透明度的白色背景
+                });
+                $.ajax({
+                    url: _platform + '/season/addvalue',
+                    data: {name:$(top.document).find('#season').val(),sdate:$(top.document).find('#start').val(),edate:$(top.document).find('#end').val()},
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) {
+                        alert(result.flag);
+                        if (result.flag) {
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            $(top.document).find('#season-table-list').bootstrapTable("refresh");
+                        } else {
+                            top.layer.close(index);
+                            top.layer.msg(result.msg);
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
 <div class="wrapper wrapper-content">
     <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="seasonAddForm" role="form">
-
+        <div class="col-sm-12">
+            <form class="form-horizontal" id="seasonAddForm" rseasonAddFormole="form">
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>名称：</label>
+                    <label class="col-sm-3  control-label"><span class="red">*</span>采暖季度：</label>
 
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="name" class="form-control" type="text" maxlength="16" placeholder="请输入名称">
+                    <div class="col-sm-8">
+                        <select id="season" name="season" class="chosen-select form-control">
+                            <option value="">请选择采暖季度</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>开始时间：</label>
+                    <label class="col-sm-3 control-label"><span class="red">*</span>开始时间：</label>
 
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="sdate" class="form-control" type="text" maxlength="16" placeholder="请输入开始时间">
+                    <div class="col-sm-8">
+                        <input id="start" type="text" class="laydate-icon  form-control layer-date"  name="sDate"
+                               placeholder="请选择开始时间"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>结束时间：</label>
+                    <label class="col-sm-3 control-label"><span class="red">*</span>结束时间：</label>
 
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="edate" class="form-control" type="text" maxlength="16" placeholder="请输入结束时间">
+                    <div class="col-sm-8">
+                        <input id="end" type="text" class="laydate-icon  form-control layer-date"  name="eDate"
+                               placeholder="请选择结束时间"/>
                     </div>
                 </div>
 
@@ -43,6 +219,7 @@
 <script>
     //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
     $.validator.setDefaults({
+        ignore: ":hidden:not(select)",//校验chosen
         highlight: function (element) {
             $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -63,98 +240,7 @@
 
     });
 
-    //以下为官方示例
-    $(function () {
-        // validate signup form on keyup and submit
-        var icon = "<i class='fa fa-times-circle'></i> ";
-        var $form = $(top.document).find("#oncenetAddForm");
-        $.validator.addMethod("checkUnique", function (value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url: _platform + '/feed/check',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {roleName: $('#roleName').val()},
-                dataType: 'json',
-                success: function (result) {
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
-                    }
-                }
-            });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, "角色名称已存在");
 
-        //提示信息绑定
-        $('input:not(:submit):not(:button)').mousedown(function () {
-            $(this).closest('.form-group').removeClass('has-error');
-            $(this).siblings('.help-block').remove();
-        });
-        //下拉框信息绑定
-        $('select').change(function () {
-            if ($(this).find('option:first').val() != $(this).val()) {
-                $(this).siblings('.help-block').remove();
-            }
-            return false;
-        });
 
-        $form.validate({
-            onsubmit: true,// 是否在提交是验证
-            //移开光标:如果有内容,则进行验证
-            onfocusout: function (element) {
-                if ($(element).val() == null || $(element).val() == "") {
-                    $(element).closest('.form-group').removeClass('has-error');
-                    $(element).siblings('.help-block').remove();
-                } else {
-                    $(element).valid();
-                }
-            },
-            onkeyup: false,// 是否在敲击键盘时验证
-            rules: {
-                roleName: {
-                    required: true,
-                    minlength: 2
-                    //checkUnique: true
-                },
-                roleDes: {
-                    required: true
-                }
-            },
-            messages: {
-                roleName: {
-                    required: icon + "请输入角色名称",
-                    minlength: icon + "角色名称必须2个字符以上"
-                },
-                roleDes: {
-                    required: icon + "请输入角色描述"
-                }
-            },
-            submitHandler: function () {
-                var index = top.layer.load(1, {
-                    shade: [0.1, '#fff'] //0.1透明度的白色背景
-                });
-                alert($form.serialize());
-                $.ajax({
-                    url: _platform + '/oncenet/addvalue',
-                    data: $form.serialize(),
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function (result) {
-                        if (result.flag) {
-                            top.layer.closeAll();
-                            top.layer.msg(result.msg);
-                            $('#oncenet-table-list').bootstrapTable("refresh");
-                        } else {
-                            top.layer.close(index);
-                            top.layer.msg(result.msg);
-                        }
-                    }
-                });
-            }
-        });
 
-    });
 </script>

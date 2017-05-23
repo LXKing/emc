@@ -34,8 +34,9 @@
     <dubbo:reference id="userService"    interface="com.huak.auth.UserService" timeout="12000"  check="true" version="1.0" />
     <dubbo:reference id="reversibleEncryption"    interface="com.huak.base.ReversibleEncryption" timeout="12000"  check="true" version="1.0" />
     <dubbo:reference id="companyService"    interface="com.huak.org.CompanyService" timeout="12000"  check="true" version="1.0" />
+    <dubbo:reference id="secondnetService"    interface="com.huak.org.SecondnetService" timeout="12000"  check="true" version="1.0" />
 
-	<!-- 日志 -->
+    <!-- 日志 -->
 	<dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="12000"  check="true" version="1.0"/>
 
     <!-- 验证码 -->

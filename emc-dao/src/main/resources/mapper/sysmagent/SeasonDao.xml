@@ -114,4 +114,10 @@
 
         order by id
     </select>
+    <select id="CheckName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_heat_season
+        where NAME = #{name,jdbcType=VARCHAR}
+    </select>
 </mapper>
