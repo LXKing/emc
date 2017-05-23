@@ -185,9 +185,8 @@
         B.TYPE_ID, B.CREATOR,B.CREATE_TIME,
         B.MEMO, B.SEQ, B.AREA, A.MANAGE_TYPE_ID, A.PROVINCE_ID, A.CITY_ID, A.COUNTY_ID, A.TOWN_ID, A.VILLAGE_ID, A.ADDR, A.LNG,
         A.LAT, A.PUBLIC_AREA, A.DWELL_AREA
-
-
         FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID
+        AND P_ORG_ID = #{pOrgId,jdbcType=VARCHAR}
   </select>
 
   <resultMap id="queryForListMap" type="com.huak.org.model.vo.NodeVo">
