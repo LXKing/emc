@@ -82,4 +82,9 @@
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
 
+    <bean id="companyService" class="com.huak.org.CompanyServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.CompanyService" ref="companyService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
+
 </beans>

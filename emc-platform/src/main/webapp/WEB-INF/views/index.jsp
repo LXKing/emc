@@ -97,12 +97,8 @@
                 <form role="search" class="navbar-form-custom custom-styl-2" method="post" action="search_results.html">
                     <div class="form-group">
                         <select name="searchComp" class="chosen-select form-control">
-                            <option value="">北京华热科技有限公司</option>
-                            <option value="0">北京热力集团</option>
-                            <option value="1">天津大港</option>
-                            <option value="1">天津大港</option>
-                            <option value="1">天津大港</option>
-                            <option value="1">天津大港</option>
+                            <option value="1">北京华热科技有限公司</option>
+                            <option value="2">北京热力集团</option>
                         </select>
                     </div>
                 </form>

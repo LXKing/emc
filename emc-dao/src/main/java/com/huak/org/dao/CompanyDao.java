@@ -1,11 +1,14 @@
 package com.huak.org.dao;
 
-import com.huak.model.Company;
+import com.huak.org.model.Company;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
+@Repository
 public interface CompanyDao {
     int deleteByPrimaryKey(String id);
-
-    int insert(Company record);
 
     int insertSelective(Company record);
 
@@ -13,5 +16,9 @@ public interface CompanyDao {
 
     int updateByPrimaryKeySelective(Company record);
 
-    int updateByPrimaryKey(Company record);
+    List<Company> selectPageByMap(Map<String,Object> paramsMap);
+
+    List<Map<String,Object>> exportCompanys(Map<String, Object> paramsMap);
+
+    List<Company> selectAllByMap(Map<String,Object> paramsMap);
 }

@@ -20,10 +20,7 @@
     delete from t_emc_company
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huak.org.model.Company">
-    insert into t_emc_company (id, cname)
-    values (#{id,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.huak.org.model.Company">
     insert into t_emc_company
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -52,9 +49,34 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Company">
-    update t_emc_company
-    set cname = #{cname,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_company
+        where 1=1
+        <if test="cname != null and cname !=''">
+            and  CNAME like CONCAT('%',#{cname},'%')
+        </if>
+        order by id
+    </select>
+    <select id="exportCompanys" parameterType="java.util.HashMap" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_company
+        where 1=1
+        <if test="cname != null and cname !=''">
+            and  CNAME like CONCAT('%',#{cname},'%')
+        </if>
+        order by id
+    </select>
+    <select id="selectAllByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_company
+        where 1=1
+        <if test="cname != null and cname !=''">
+            and  CNAME like CONCAT('%',#{cname},'%')
+        </if>
+        order by id
+    </select>
 </mapper>

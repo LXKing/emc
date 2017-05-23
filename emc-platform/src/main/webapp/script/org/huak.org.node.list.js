@@ -58,7 +58,7 @@ $(function () {
             },
             {
                 title: '上级单位',
-                field: 'org',
+                field: 'pOrgId',
                 align: 'center'
             },
 
@@ -141,15 +141,15 @@ $(function () {
 
 });
 
+var params =null;
 function queryParams(params) {
     return {
-        orgId:top.orgId,
+        pOrgId:top.orgId,
         stationName:$('input[name="stationName"]').val(),
         _method: "PATCH",
         pageNumber: params.pageNumber,
         pageSize: params.pageSize
     };
-
 }
 
 function addStation(){

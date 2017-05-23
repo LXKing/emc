@@ -18,6 +18,14 @@
         <maven.compiler.target>${java.target.version}</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.huak</groupId>
+            <artifactId>emc-service-home-api</artifactId>
+            <version>${emc.service.home.api.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <finalName>emc-web</finalName>
         <resources>
