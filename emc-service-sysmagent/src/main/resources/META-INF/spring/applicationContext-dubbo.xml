@@ -86,5 +86,8 @@
     <dubbo:service interface="com.huak.org.CompanyService" ref="companyService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="emc" version="1.0"/>
-
+    <bean id="secondnetService" class="com.huak.org.SecondnetServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.SecondnetService" ref="secondnetService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="emc" version="1.0"/>
 </beans>
