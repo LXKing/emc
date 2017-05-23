@@ -4,8 +4,12 @@ import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.dao.CompanyDao;
 import com.huak.org.model.Administrative;
+import com.huak.org.model.Company;
 import com.huak.org.model.Org;
+import com.huak.sys.dao.SysDicDao;
+import com.huak.sys.model.SysDic;
 import org.springframework.stereotype.Service;
 import com.huak.org.dao.AdministrativeDao;
 import com.huak.org.dao.OrgDao;
@@ -28,6 +32,12 @@ public class OrgServiceImpl implements OrgService {
     private OrgDao orgDao;
     @Resource
     private DateDao dateDao;
+    @Resource
+    private CompanyDao companyDao;
+    @Resource
+    private SysDicDao sysDicDao;
+
+
     @Override
     public int insert(Administrative season) {
         return 0;
@@ -120,5 +130,20 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public List<Map<String, Object>> selectOrgByMap(Map<String, Object> params) {
         return orgDao.selectOrgByMap(params);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Company> selectCompanyAll() {
+        return companyDao.selectCompanyAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SysDic> selectSysDicAll(String code) {
+        Map<String,Object> map = new  HashMap<String,Object>();
+        //Map<K,V> map = new HashMap<K,V>();
+        map.put("typeUs",code);
+        return sysDicDao.selectAllByMap(map);
     }
 }
