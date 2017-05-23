@@ -243,6 +243,6 @@ function deleteFeed(id) {
     });
 }
 function treeNodeClick(e,treeId,treeNode){
-    alert(123);
+    //alert(123);
     search();
 }
