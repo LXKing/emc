@@ -166,7 +166,7 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {
-                        alert(result.flag);
+                        //alert(result.flag);
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
