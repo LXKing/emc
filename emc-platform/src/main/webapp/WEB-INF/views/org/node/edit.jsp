@@ -160,8 +160,6 @@ $(function () {
             townId:{
                 required: true
             }
-
-
         },
         messages: {
             orgId: {
@@ -226,11 +224,8 @@ $(function () {
             return false;
         }
     });
-
-
 });
 function refreshNodes() {
-    debugger;
     var treeNode = top.comm_tree.getSelectedNodes();
     var treeObj =  top.comm_ztree;
     type = "refresh";
