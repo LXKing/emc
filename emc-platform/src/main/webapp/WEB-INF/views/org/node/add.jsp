@@ -247,7 +247,6 @@ $(function () {
             return false;
         }
     });
-
     function refreshNodes() {
         var treeNode = top.comm_tree.getSelectedNodes();
         var treeObj =  top.comm_ztree;

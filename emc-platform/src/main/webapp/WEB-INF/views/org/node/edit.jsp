@@ -235,7 +235,6 @@ function refreshNodes() {
     treeObj.selectNode(treeNode[0]);
     treeObj.reAsyncChildNodes(treeNode[0], "refresh");
 }
-
 </script>
 </head>
 
