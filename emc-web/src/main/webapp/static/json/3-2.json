@@ -1,0 +1,42 @@
+{
+    "success": "true",
+    "message": "信息(包括错误信息)",
+    "data": {
+    	"projectId":"1",                         
+		"targetValue":{
+			"water":{
+				"numEnergy":"400",       			     
+				"changeRate": "16",	
+				"changeRateState": "1"	          
+			},
+			"electric":{
+				"numEnergy":"267",       			     
+				"changeRate": "10",	
+				"changeRateState": "2"		         
+			},
+			"heat":{
+				"numEnergy":"562",       			    
+				"changeRate": "18",
+				"changeRateState": "1"			          
+			}
+		},
+    	"siteTable":[
+    		{
+    			"projectId":"1",  
+    			"sitetNumber":"1694",               
+				"siteName":"翠微路24号站", 		    
+				"subordinateUnit":"西八里中心",	    
+				"serviceStation": "西八里中心",	   	     
+				"managementType": "1"	       	     
+    		},
+    		{
+    			"projectId":"2",  
+    			"sitetNumber":"4770",               
+				"siteName":"48班中学", 		    
+				"subordinateUnit":"融泽嘉园中心",	    
+				"serviceStation": "融泽嘉园中心",	   	     
+				"managementType": "2"	       	     
+    		}
+    	]
+    }
+}
