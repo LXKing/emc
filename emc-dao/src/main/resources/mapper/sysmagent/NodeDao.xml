@@ -198,6 +198,15 @@
         A.LAT, A.PUBLIC_AREA, A.DWELL_AREA,A.STATUS
         FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID AND A.STATUS = '0'
         AND P_ORG_ID = #{pOrgId,jdbcType=VARCHAR}
+      <if test="orgName != null and orgName != ''">
+          and  B.ORG_NAME LIKE CONCAT('%',#{orgName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="creator != null and creator != '' ">
+          and  B.CREATOR = #{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="manageTypeId != null  and manageTypeId != ''">
+          and  A.MANAGE_TYPE_ID = #{manageTypeId,jdbcType=VARCHAR}
+      </if>
   </select>
 
     <select id="selectVoById"  resultMap="queryForListMap"  parameterType="java.lang.String">

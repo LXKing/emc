@@ -146,42 +146,43 @@ $(function () {
     }
 
 
-    //日期范围限制
-    var start = {
-        elem: '#start',
-        format: 'YYYY/MM/DD hh:mm:ss',
-        //min: laydate.now(), //设定最小日期为当前日期
-        max: '2099-06-16 23:59:59', //最大日期
-        istime: true,
-        istoday: false,
-        choose: function (datas) {
-            end.min = datas; //开始日选好后，重置结束日的最小日期
-            end.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    var end = {
-        elem: '#end',
-        format: 'YYYY/MM/DD hh:mm:ss',
-        max: '2099-06-16 23:59:59',
-        istime: true,
-        istoday: false,
-        choose: function (datas) {
-            start.max = datas; //结束日选好后，重置开始日的最大日期
-        }
-    };
-    laydate(start);
-    laydate(end);
+//    //日期范围限制
+//    var start = {
+//        elem: '#start',
+//        format: 'YYYY/MM/DD hh:mm:ss',
+//        //min: laydate.now(), //设定最小日期为当前日期
+//        max: '2099-06-16 23:59:59', //最大日期
+//        istime: true,
+//        istoday: false,
+//        choose: function (datas) {
+//            end.min = datas; //开始日选好后，重置结束日的最小日期
+//            end.start = datas //将结束日的初始值设定为开始日
+//        }
+//    };
+//    var end = {
+//        elem: '#end',
+//        format: 'YYYY/MM/DD hh:mm:ss',
+//        max: '2099-06-16 23:59:59',
+//        istime: true,
+//        istoday: false,
+//        choose: function (datas) {
+//            start.max = datas; //结束日选好后，重置开始日的最大日期
+//        }
+//    };
+//    laydate(start);
+//    laydate(end);
 
     //下拉框js
     $(".chosen-select").chosen();
 
 });
 
-var params =null;
 function queryParams(params) {
     return {
         pOrgId:top.orgId,
-        stationName:$('input[name="stationName"]').val(),
+        orgName:$('input[name="orgName"]').val(),
+        creator:$("#creator").val(),
+        manageTypeId:$("#manageTypeId").val(),
         pageNumber: params.pageNumber,
         pageSize: params.pageSize
     };
@@ -226,6 +227,7 @@ function deletestation(id) {
                     top.layer.closeAll();
                     top.layer.msg(result.msg);
                     $('#station-table-list').bootstrapTable("refresh");
+                    refreshNodes();
                 } else {
                     top.layer.close(index);
                     top.layer.msg(result.msg);
@@ -235,3 +237,13 @@ function deletestation(id) {
     });
 }
 
+function refreshNodes() {
+    var treeNode = top.comm_tree.getSelectedNodes();
+    var treeObj =  top.comm_ztree;
+    type = "refresh";
+    silent = false;
+    /*根据 zTree 的唯一标识 tId 快速获取节点 JSON 数据对象*/
+    /*选中指定节点*/
+    treeObj.selectNode(treeNode[0]);
+    treeObj.reAsyncChildNodes(treeNode[0], "refresh");
+}
