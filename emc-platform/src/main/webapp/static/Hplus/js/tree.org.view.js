@@ -61,7 +61,6 @@ var Org = (function(window) {
                     }
                 });
                 return top.comm_tree;
-
         }
     }
 
