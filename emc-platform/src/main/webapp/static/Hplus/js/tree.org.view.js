@@ -11,8 +11,6 @@
  *     var setting={};
  *     $('input').treeBox({setting:setting});
  */
-
-var Org = (function(window) {
     var Org = function(options) {
         return new Org.fn.init(options);
     }
@@ -26,22 +24,22 @@ var Org = (function(window) {
             }
         },
         view: function(options) {
-                $.post(_platform + '/common/org/tree',function(data){
                     this.class ="."+options.class;
                     var $this =$(top.document).find(this.class);
                     if($this.length<1){
                         $this = $(this.class)
                     }
                     if($this.length>0) {
-                        var lightId = $this.attr("light");
-                        $this.html("<div id='temp_org_tree' class='ztree'></div>");
+
+                        top.lightId = $this.attr("light");
+                        $this.html("<div id='temp_org_tree' light='"+ top.lightId+"' class='ztree'></div>");
                         var setting = {
                             async: { enable: true, url: _platform + '/common/org/tree', autoParam: ["id"]},
                             view: {selectedMulti: true, fontCss: {color: "black"}},
                             check: { enable: false },
                             data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system: "Name", rootPId: "" } },
                             edit: {enable: false },
-                            callback: { onClick: treeNodeClick }
+                            callback: { onClick: treeNodeClick,onAsyncSuccess: zTreeOnAsyncSuccess}
                         };
                         var obj = $(top.document).find("#temp_org_tree");
                         if(obj.length<1){
@@ -49,25 +47,25 @@ var Org = (function(window) {
                         }
                         top.comm_tree = $.fn.zTree.init(obj, setting);
                         top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree");
-                        var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-                        var nodes = [];
-                        if (lightId != "" && lightId != undefined) {
-                            nodes = lightId.split(",");
-                            for (var i = 0; i < nodes.length; i++) {
-                                var node = treeObj.getNodeByParam("id", nodes[i]);
-                                treeObj.selectNode(node, true);
-                            }
-                        }
                     }
-                });
                 return top.comm_tree;
         }
     }
-
+    var zTreeOnAsyncSuccess = function(){
+        var lightId = top.lightId;
+        top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree");
+        var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+        var nodes = [];
+        if (lightId != "" && lightId != undefined) {
+            nodes = lightId.split(",");
+            for (var i = 0; i < nodes.length; i++) {
+                var node = treeObj.getNodeByParam("id", nodes[i]);
+                treeObj.selectNode(node, true);
+            }
+        }
+        }
     Org.fn.init.prototype = Org.fn;
 
-    return Org;
-})(jQuery);
 
 
 
