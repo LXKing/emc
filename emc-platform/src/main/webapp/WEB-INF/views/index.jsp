@@ -9,9 +9,25 @@
     <jsp:include page="head.jsp"></jsp:include>
     <script type="application/javascript">
         $(function() {
-            //下拉框js
-            $(".chosen-select").chosen();
-
+            //顶部公司加载
+            $.ajax({
+                url: _platform + '/company/lista',
+                type: 'POST',
+                dataType: 'json',
+                data:{},
+                success: function (result) {
+                    var data = result.list;
+                    var optionHtml='';
+                    for(var i =0;i<data.length;i++){
+                        optionHtml+='<option value="'+data[i].id+'">'+data[i].cname+'</option>'
+                    }
+                    //alert(optionHtml);
+                    $(".chosen-select").append(optionHtml);
+                    //$(".chosen-select").find("option[text='北京华热科技发展有限公司']").attr("selected",true);
+                    //下拉框js
+                    $(".chosen-select").chosen();
+                }
+            });
         });
     </script>
 </head>
@@ -97,8 +113,7 @@
                 <form role="search" class="navbar-form-custom custom-styl-2" method="post" action="search_results.html">
                     <div class="form-group">
                         <select name="searchComp" class="chosen-select form-control">
-                            <option value="1">北京华热科技有限公司</option>
-                            <option value="2">北京热力集团</option>
+
                         </select>
                     </div>
                 </form>
