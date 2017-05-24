@@ -1,4 +1,9 @@
 $(function () {
+	userSearOrg = new Org({
+        class:"org-tree"
+    });
+	userSearOrg.initTree();
+	
 	initTreeBox();
 	//用户列表
 	var userTable = $('#user-table-list').bootstrapTable({
