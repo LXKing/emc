@@ -63,7 +63,7 @@
     <bean id="nodeService" class="com.huak.org.NodeServiceImpl"></bean>
     <dubbo:service interface="com.huak.org.NodeService" ref="nodeService" timeout="300" loadbalance="random"
                    executes="200"
-                   actives="0" owner="emc" version="2.0"/>
+                   actives="0" owner="emc" version="${service.version}"/>
     <!-- 用户 -->
     <bean id="userService" class="com.huak.auth.UserServiceImpl"></bean>
     <dubbo:service interface="com.huak.auth.UserService" ref="userService" timeout="300" loadbalance="random"
