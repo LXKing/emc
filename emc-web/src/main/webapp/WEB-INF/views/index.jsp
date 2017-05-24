@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="s" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -5,213 +10,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <title>华热能管系统</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="decorator" content="main"/>
+    <title>华热能管系统-首页</title>
 
-    <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="${web}/static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="${web}/static/assets/css/font-awesome.css" />
 
-    <!-- text fonts -->
-    <link rel="stylesheet" href="${web}/static/assets/css/ace-fonts.css" />
+    <script>
+        startTime("#date_today");
+    </script>
 
-    <!-- ace styles -->
-    <link rel="stylesheet" href="${web}/static/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <!-- inline scripts related to this page -->
+    <script>
+        $(function(){
 
-    <!-- page specific plugin styles -->
-    <link rel="stylesheet" href="${web}/static/css/huarestyle.css" />
-    <link rel="stylesheet" href="${web}/static/css/homemian.css" />
+            //$("#header").load("header.html",function(){});
+            //$("#footer").load("footer.html",function(){});
 
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="${web}/static/assets/css/ace-part2.css" class="ace-main-stylesheet" />
-    <![endif]-->
+            $(".select-boxbtnAlarm .btnAlarm").click(function(){
+                $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
 
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="${web}/static/assets/css/ace-ie.css" />
-    <![endif]-->
+                var thisText = $(this).text();
+                if (thisText == "自定义" ) {
+                    $(".select-boxWdate input").attr("disabled",false).removeClass("time-input-disable");
+                }else{
+                    $(".select-boxWdate input").attr("disabled",true).addClass("time-input-disable");
+                }
+            });
 
-    <!-- ace settings handler -->
-    <script src="${web}/static/assets/js/ace-extra.js"></script>
+        });
 
-    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
-    <!--[if lte IE 8]>
-    <script src="${web}/static/assets/js/html5shiv.js"></script>
-    <script src="${web}/static/assets/js/respond.js"></script>
-    <![endif]-->
-    <!--[if lt IE 9]>
-    <script src="${web}/static/js/Bsie/selectivizr.js"></script>
-    <![endif]-->
+        /*website*/
+        var websiteheight;
+        websiteheight = $("#website").height() - 12;
+        $(".index_menuBox").height(websiteheight);
+
+        window.onresize = function(){
+            chart01.resize();
+            chart02.resize();
+            chart03.resize();
+            chart04.resize();
+            myChartEnergy.resize();
+            chart05.resize();
+            myChartQualified.resize();
+            myChartCarbon.resize();
+
+            websiteheight = $("#website").height() - 12;
+            $(".index_menuBox").height(websiteheight);
+        };
+
+        function typefun(these,code){
+            $(these).addClass("on").siblings().removeClass("on");
+            $("#website").attr("src","${web}/static/img/index/websitet_cs0"+code+".png");
+
+            if(code == 6){
+                $(".PeopleTabdiv").show();
+                $(".otherTabdiv").hide();
+                myChartQualified.resize();
+                myChartCarbon.resize();
+            }else{
+                $(".PeopleTabdiv").hide();
+                $(".otherTabdiv").show();
+            }
+        };
+    </script>
 
 </head>
 <body>
-<div id="header">
-    <!--顶部导航条-->
-    <div id="navbar" class="navbar navbar-default">
-        <script type="text/javascript">
-            try{ace.settings.check('navbar' , 'fixed')}catch(e){}
-        </script>
-        <div class="navbar-container" id="navbar-container">
-            <!--<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
-                <span class="sr-only">Toggle sidebar</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>-->
-            <div class="navbar-header pull-left">
-                <a href="index.html" class="navbar-brand">
-                    <img src="img/logo.png" width="296" height="31" alt="华热能源管控" />
-                </a>
-            </div>
-            <div class="navbar-buttons navbar-header pull-right" role="navigation">
-                <ul class="nav ace-nav" id="ace-nav">
-                    <li class="navlh">
-                        <a href="index.html">
-                            <div class="icon-hm"></div>
-                            <p>首页</p>
-                        </a>
-                    </li>
-                    <li class="navlh ">
-                        <a href="energy_analysis.html">
-                            <div class="icon-nh"></div>
-                            <p>能耗分析</p>
-                        </a>
-                    </li>
-                    <li class="navlh">
-                        <a href="#">
-                            <div class="icon-cb"></div>
-                            <p>成本管控</p>
-                        </a>
-                    </li>
-                    <li class="navlh">
-                        <a href="#">
-                            <div class="icon-tp"></div>
-                            <p>碳排管理</p>
-                        </a>
-                    </li>
-                    <li class="navlh">
-                        <a href="alarm_mgr.html">
-                            <div class="icon-bj"></div>
-                            <p>报警管理</p>
-                        </a>
-                    </li>
-                    <li class="navlh">
-                        <a href="project_assess.html">
-                            <div class="icon-pg"></div>
-                            <p>项目后评估</p>
-                        </a>
-                    </li>
-                    <li class="navlh">
-                        <a href="#">
-                            <div class="icon-aq"></div>
-                            <p>安全与后台</p>
-                        </a>
-                    </li>
-
-                    <li class="tijian bordertopnone">
-                        <a href="#">
-                            <img src="img/tijian.png" alt="" />
-                        </a>
-                    </li>
-
-                    <li class="tianqi clearfix bordertopnone">
-                        <div class="right-tianqi">
-                            <span id="date_today" class="date_today"></span>
-                            <iframe name="tianqiiframe" id="tianqiiframe" src="http://i.tianqi.com/index.php?c=code&id=99&color=%23a3abb8&icon=3&num=1" width="120" height="32" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-                        </div>
-
-                    </li>
-                    <li class="light-blue bordertopnone">
-                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <span class="navline-left"></span>
-                            <img class="nav-user-photo" src="img/manager.png" alt="管理员" />
-								<span class="user-info">管理员
-								</span>
-                            <i class="ace-icon fa fa-caret-down"></i>
-                        </a>
-
-                        <!--<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                            <li>
-                                <a href="#">
-                                    <i class="ace-icon fa fa-cog"></i>
-                                    Settings
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="profile.html">
-                                    <i class="ace-icon fa fa-user"></i>
-                                    Profile
-                                </a>
-                            </li>
-
-                            <li class="divider"></li>
-
-                            <li>
-                                <a href="#">
-                                    <i class="ace-icon fa fa-power-off"></i>
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>-->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="main-container">
-<div class="clearfix row no-margin index_header">
-
-    <!--面包屑导航-->
-    <div class="bread-crumb pull-left">
-        当前位置：<a href="javascript:;">[<var class="xmhpg"  style="color: #666;">首页 - 能源流概况</var>]</a>
-    </div>
-
-    <div class="mianTop pull-right">
-        <div class="selectbg clearfix col-lg-12">
-
-            <div class="select-box">
-                <div class="clearfix h-selectbox">
-                    <div class="x-selectfree fl">
-                        <div class="x-sfbgbox">
-                            <div class="x-sfleft1 x-sfw1">
-                                <input type="text" value="集团总览" readonly="readonly">
-                            </div>
-                            <div class="x-sfright1"></div>
-                        </div>
-                        <div class="x-sfoption x-sfoption1">
-                            <p value="1111">北京公司</p>
-                            <p value="2222">上海公司</p>
-                            <p value="3333">南京集团</p>
-                        </div>
-                        <input type="hidden" value="1111"/>
-                    </div>
-                </div>
-            </div>
-            <div class="select-box select-boxbtnAlarm clearfix">
-                <a href="javascript:;" class="btnAlarm btnAlarm-on">集中供暖</a>
-                <a href="javascript:;" class="btnAlarm ">区域供暖</a>
-            </div>
-
-            <div class="select-box select-boxbtnAlarm clearfix">
-                <a href="javascript:;" class="btnAlarm ">本年度</a>
-                <a href="javascript:;" class="btnAlarm btnAlarm-on">本采暖季</a>
-                <a href="javascript:;" class="btnAlarm ">自定义</a>
-            </div>
-            <div class="select-box select-boxWdate">
-                <input id="begin" class="Wdate time-input time-input-disable" disabled="disabled" value="2017-05-01" type="text" onFocus="var end=$dp.$('end');WdatePicker({onpicked:function(){end.focus();},readOnly:true,maxDate:'#F{$dp.$D(\'end\')}'})"/>
-                <span>至</span>
-                <input id="end" class="Wdate time-input time-input-disable" disabled="disabled" value="2017-05-08" type="text" onFocus="WdatePicker({readOnly:true,minDate:'#F{$dp.$D(\'begin\')}'})"/>
-            </div>
-
-        </div>
-    </div>
-</div>
 <div class="index_mainbody  ">
 <div class="index_menubg">
-    <img src="img/index/websitet_cs01.png" id="website" style="min-width: 1346px;max-width: 1920px;" width="100%" />
+    <img src="${web}/static/img/index/websitet_cs01.png" id="website" style="min-width: 1346px;max-width: 1920px;" width="100%" />
     <div class="index_menu clearfix" id="index_menu">
 
         <div class="index_menuBox index_menuBoxAll on pull-left" onclick="typefun(this,1)">
@@ -540,11 +406,11 @@
                     <span class="cb-title" id="qs-title" style="display: none;">成本 (单位: 万元)</span>
                     <div class="cb-title-right clearfix">
 											<span class="cb-cut-date">
-												<a href="javascript:selectYear(-1);"><img src="img/icons/icon001.png" /></a>
-												<label id="branchcost-year">2016年</label> 
-												<a href="javascript:selectYear(1);"><img src="img/icons/icon002.png" /></a>
+												<a href="javascript:selectYear(-1);"><img src="${web}/static/img/icons/icon001.png" /></a>
+												<label id="branchcost-year">2016年</label>
+												<a href="javascript:selectYear(1);"><img src="${web}/static/img/icons/icon002.png" /></a>
 											</span>
-											
+
 											<span class="button-group">
 												<a href="javascript:cutNh();" id="bg-left" class="bg-left button-group-act">能耗</a><a href="javascript:cutQs();" id="bg-right" class="bg-right">趋势</a>
 											</span>
@@ -609,78 +475,7 @@
 </div>
 
 </div>
-</div>
 
-<div id="footer"><!--footerload加载--></div>
 
-<script src="js/jquery/jquery.min.js"></script>
-<script src="js/echarts/echarts3/echarts.min.js"></script>
-<script src="js/echarts/echarts3/dist/ecStat.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="js/My97DatePicker/WdatePicker.js"></script>
-
-<script src="js/public.js"></script>
-
-<script src="js/index.js"></script>
-
-<script src="js/navscript.js"></script>
-<script>
-    startTime("#date_today");
-</script>
-
-<!-- inline scripts related to this page -->
-<script>
-    $(function(){
-
-        //$("#header").load("header.html",function(){});
-        $("#footer").load("footer.html",function(){});
-
-        $(".select-boxbtnAlarm .btnAlarm").click(function(){
-            $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-
-            var thisText = $(this).text();
-            if (thisText == "自定义" ) {
-                $(".select-boxWdate input").attr("disabled",false).removeClass("time-input-disable");
-            }else{
-                $(".select-boxWdate input").attr("disabled",true).addClass("time-input-disable");
-            }
-        });
-
-    });
-
-    /*website*/
-    var websiteheight;
-    websiteheight = $("#website").height() - 12;
-    $(".index_menuBox").height(websiteheight);
-
-    window.onresize = function(){
-        chart01.resize();
-        chart02.resize();
-        chart03.resize();
-        chart04.resize();
-        myChartEnergy.resize();
-        chart05.resize();
-        myChartQualified.resize();
-        myChartCarbon.resize();
-
-        websiteheight = $("#website").height() - 12;
-        $(".index_menuBox").height(websiteheight);
-    };
-
-    function typefun(these,code){
-        $(these).addClass("on").siblings().removeClass("on");
-        $("#website").attr("src","img/index/websitet_cs0"+code+".png");
-
-        if(code == 6){
-            $(".PeopleTabdiv").show();
-            $(".otherTabdiv").hide();
-            myChartQualified.resize();
-            myChartCarbon.resize();
-        }else{
-            $(".PeopleTabdiv").hide();
-            $(".otherTabdiv").show();
-        }
-    };
-</script>
 </body>
 </html>

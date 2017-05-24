@@ -1,5 +1,5 @@
 ﻿$.ajax({
-	url : "json/h-1.json",
+	url : _web + "/static/json/h-1.json",
 	type : "GET",
 	dataType: "json",
 	error : function(request) {

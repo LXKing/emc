@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layouts/">
+    <excludes>
+        <!--跳过静态资源-->
+        <pattern>/static/*</pattern>
+        <pattern>/script/*</pattern>
+    </excludes>
+
+    <!--默认的装饰器-->
+    <decorator name="default" page="default.jsp"/>
+    <!--主要的装饰器-->
+    <decorator name="main" page="main.jsp"/>
+    <!--主要4的装饰器-->
+    <decorator name="main_4" page="main_4.jsp"/>
+    <!--没有登录之前-->
+    <decorator name="nologin" page="nologin.jsp"/>
+    <!--首页的装饰器-->
+    <decorator name="index" page="index.jsp"/>
+    <!--头尾的装饰器-->
+    <decorator name="hfer" page="hfer.jsp"/>
+    <!--头尾的装饰器-->
+    <decorator name="hfer_4" page="hfer_4.jsp"/>
+    <!--错误页面装饰器-->
+    <decorator name="error" page="error.jsp"/>
+    <!--IE7模式-->
+    <decorator name="main_ie7mode" page="main_ie7mode.jsp"/>
+
+</decorators>
