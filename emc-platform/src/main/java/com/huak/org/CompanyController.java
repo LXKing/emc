@@ -163,4 +163,19 @@ public class CompanyController {
         }
     }
 
+    @RequestMapping(value = "/lista", method = RequestMethod.POST)
+    @ResponseBody
+    public String list() {
+        logger.info("首页顶部显示下拉框");
+
+        JSONObject jo = new JSONObject();
+        Map<String,Object> paramsMap=null;
+        try {
+            jo.put(Constants.LIST, companyService.selectAllByMap(paramsMap));
+        } catch (Exception e) {
+            logger.error("首页顶部显示下拉框" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
 }

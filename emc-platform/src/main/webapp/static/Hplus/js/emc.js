@@ -74,38 +74,3 @@ $(document).on('click', '.emc-search', function () {
 });
 
 
-/**
- * 单位公共树
- */
-
-$(document).ready( function (e) {
-    var $this =$(this.getElementsByClassName("org-tree"));
-    var lightId = $this.attr("light");
-
-    $this.html("<div id='temp_org_tree' class='ztree'></div>");
-    if($this.length>0){
-        $.post(_platform + '/common/org/tree',function(data){
-            var setting = {
-                async : { enable : true,url: _platform + '/common/org/tree',autoParam:["id"]},
-                view: {selectedMulti: true,fontCss:{color:"black"}},
-                check: { enable: false },
-                data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
-                edit: {enable: false },
-                callback: { onClick:treeNodeClick }
-            };
-            top.comm_tree = $.fn.zTree.init($("#temp_org_tree"), setting);
-            top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree");
-            var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-            var nodes = [];
-            if(lightId != "" && lightId != undefined){
-                nodes = lightId.split(",");
-                for(var i=0;i<nodes.length;i++){
-                    var node = treeObj.getNodeByParam("id",nodes[i]);
-                    treeObj.selectNode(node,true);
-                }
-            }
-        });
-    }
-
-});
-var treeNodeClick = function(e,treeId,treeNode){ };

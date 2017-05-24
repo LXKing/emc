@@ -8,6 +8,10 @@
 var bTable;
 
 $(function () {
+    var org = new Org({
+        class:"org-tree"
+    });
+    org.initTree();
     bTable = $('#station-table-list').bootstrapTable({
         height: "100%",//高度
         cache: false,//禁用 AJAX 数据缓存
