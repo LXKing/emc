@@ -7,6 +7,11 @@
  */
 var bTable;
 $(function () {
+
+    var org = new Org({
+        class:"org-tree"
+    });
+    org.initTree();
 //    var setting = {
 //        view: {
 //            addHoverDom: addHoverDom,

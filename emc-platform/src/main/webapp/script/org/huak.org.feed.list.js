@@ -7,6 +7,10 @@
  */
 var bTable;
 $(function () {
+    var org = new Org({
+        class:"org-tree"
+    });
+    org.initTree();
     /*查询热源列表页*/
     bootstraplist();
     //页面说明
