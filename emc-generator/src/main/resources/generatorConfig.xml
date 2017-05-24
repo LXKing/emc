@@ -23,7 +23,6 @@
                         userId="${jdbc.userId}"
                         password="${jdbc.password}">
         </jdbcConnection>
-
         <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -86,9 +85,9 @@
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false"/>-->
 
-        <table tableName="t_emc_org_unit" domainObjectName="Unit" mapperName="UnitDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
+        <table tableName="t_emc_company" domainObjectName="Company" mapperName="CompanyDao"
+                                                      enableCountByExample="false" enableUpdateByExample="false"
+                                                      enableDeleteByExample="false" enableSelectByExample="false"
+                                                      selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>  

@@ -73,3 +73,4 @@ $(document).on('click', '.emc-search', function () {
     $("#"+tableId).bootstrapTable("refresh");
 });
 
+
