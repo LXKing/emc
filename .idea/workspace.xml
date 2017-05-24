@@ -2,46 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="be7e747f-0b38-48e4-84a5-3a5e414c3bcf" name="Default" comment="" />
-    <list id="fd5ac0a8-9e2e-4f07-b809-7aab0b61fcd8" name="qita" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_5_8.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/auth/TestMenuService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="DELETED" beforePath="D:\workSp\code\.idea\libraries\Maven__org_slf4j_slf4j_log4j12_1_6_1.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml" afterPath="$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-common/emc-common.iml" afterPath="$PROJECT_DIR$/emc-common/emc-common.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-dao/emc-dao.iml" afterPath="$PROJECT_DIR$/emc-dao/emc-dao.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-generator/emc-generator.iml" afterPath="$PROJECT_DIR$/emc-generator/emc-generator.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-platform/emc-platform.iml" afterPath="$PROJECT_DIR$/emc-platform/emc-platform.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-service-sysmagent-api/emc-service-sysmagent-api.iml" afterPath="$PROJECT_DIR$/emc-service-sysmagent-api/emc-service-sysmagent-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-service-sysmagent/emc-service-sysmagent.iml" afterPath="$PROJECT_DIR$/emc-service-sysmagent/emc-service-sysmagent.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-web/emc-web.iml" afterPath="$PROJECT_DIR$/emc-web/emc-web.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc.iml" afterPath="$PROJECT_DIR$/emc.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/emc_platform_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/emc_platform_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/emc_web_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/emc_web_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-generator/src/main/resources/generator.properties" afterPath="$PROJECT_DIR$/emc-generator/src/main/resources/generator.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-generator/src/main/resources/generatorConfig.xml" afterPath="$PROJECT_DIR$/emc-generator/src/main/resources/generatorConfig.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
-    <list default="true" id="d851b22a-a1d0-45b8-bc07-cd5972ca3aee" name="Failed commit: Default" comment="热力站添加">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/NodeDao.xml" afterPath="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/NodeDao.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/NodeService.java" afterPath="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/NodeService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml" afterPath="$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-platform/src/main/webapp/script/org/huak.org.node.list.js" afterPath="$PROJECT_DIR$/emc-platform/src/main/webapp/script/org/huak.org.node.list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/list.jsp" afterPath="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/list.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/web.xml" />
-    </list>
-    <list id="be8f0e76-d587-4d21-bb16-d9220a9971b5" name="Failed commit: Failed commit: Default" comment="修改菜单问题" />
+    <list id="fd5ac0a8-9e2e-4f07-b809-7aab0b61fcd8" name="qita" comment="" />
+    <list default="true" id="d851b22a-a1d0-45b8-bc07-cd5972ca3aee" name="Failed commit: Default" comment="组织机构文件生成第一次提交" />
     <ignored path="eccp.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
-    <file path="$PROJECT_DIR$/emc-generator/src/main/resources/generatorConfig.xml" ignored="false" />
-    <file path="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/auth/TestMenuService.java" ignored="false" />
-    <file path="$PROJECT_DIR$/emc-generator/src/main/resources/generator.properties" ignored="false" />
-    <file path="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java" ignored="false" />
-    <file path="$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml" ignored="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,103 +24,81 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="hideWarnings" value="true" />
+    <option name="HIDE_WARNINGS" value="true" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="eccp" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="NodeController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/NodeController.java">
+      <file leaf-file-name="OrgController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/OrgController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="427" max-vertical-offset="2988">
-              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1298" max-vertical-offset="4312">
+              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestOrgService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java">
+      <file leaf-file-name="applicationContext.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.72" vertical-offset="1175" max-vertical-offset="1710">
-              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NodeService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/NodeService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="462" max-vertical-offset="1540">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NodeDao.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/NodeDao.java">
+      <file leaf-file-name="OrgService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/OrgService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-              <caret line="24" column="32" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="242" max-vertical-offset="1210">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NodeDao.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/NodeDao.xml">
+      <file leaf-file-name="OrgServiceImpl.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/OrgServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.206897" vertical-offset="3325" max-vertical-offset="4788">
-              <caret line="206" column="54" selection-start-line="206" selection-start-column="54" selection-end-line="206" selection-end-column="54" />
-              <folding>
-                <marker date="1495589534718" expanded="true" signature="1595:1705" placeholder="select from ..t_emc_org_node..." />
-                <marker date="1495589534718" expanded="true" signature="1790:1854" placeholder="delete from ..." />
-                <marker date="1495589534718" expanded="true" signature="1934:2521" placeholder="insert into ..." />
-                <marker date="1495589534718" expanded="true" signature="2610:4654" placeholder="insert into ..." />
-                <marker date="1495589534718" expanded="true" signature="4781:5996" placeholder="update t_emc..." />
-                <marker date="1495589534718" expanded="true" signature="6088:6698" placeholder="update t_emc..." />
-                <marker date="1495589534718" expanded="true" signature="6809:7449" placeholder="SELECT B.ID,..t_emc_org_node..." />
-                <marker date="1495589534718" expanded="true" signature="6809:7437" placeholder="SELECT B.ID,..t_emc_org_node..." />
-                <marker date="1495589534718" expanded="true" signature="6809:7557" placeholder="SELECT B.ID,..t_emc_org_node..." />
-                <marker date="1495589534718" expanded="true" signature="6809:7699" placeholder="SELECT B.ID,..t_emc_org_node..." />
-                <marker date="1495589534718" expanded="true" signature="6889:6946" placeholder="select c.ORG..t_emc_org..." />
-                <marker date="1495589534718" expanded="true" signature="7827:8260" placeholder="SELECT B.ID,..t_emc_org_node..." />
-                <marker date="1495589534718" expanded="true" signature="10467:10584" placeholder="select from ..t_emc_org_node..." />
-              </folding>
+            <state vertical-scroll-proportion="0.6308244" vertical-offset="0" max-vertical-offset="3564">
+              <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdministrativeDao.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/AdministrativeDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="352" max-vertical-offset="638">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoleController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/RoleController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="770" max-vertical-offset="5544">
+              <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="list.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/list.jsp">
+        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/orgtree/list.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.1538463" vertical-offset="702" max-vertical-offset="2124">
-              <caret line="45" column="91" selection-start-line="45" selection-start-column="91" selection-end-line="45" selection-end-column="91" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/edit.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.769231" vertical-offset="3798" max-vertical-offset="6768">
-              <caret line="228" column="0" selection-start-line="228" selection-start-column="0" selection-end-line="237" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="huak.org.node.list.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/script/org/huak.org.node.list.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="7.116667" vertical-offset="4001" max-vertical-offset="4572">
-              <caret line="246" column="36" selection-start-line="246" selection-start-column="36" selection-end-line="246" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="968" max-vertical-offset="1210">
+              <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -176,57 +118,57 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/sys/model/Administrative.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/sys/AdministrativeService.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/sys/AdministrativeImpl.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/AdministrativeDao.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/AdministrativeService.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/AdministrativeImpl.java" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/init/AdministrativeInitAware.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/AdministrativeDao.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/head.jsp" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/static/Hplus/js/pcctv.js" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/season/SeasonServiceImpl.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/season/TestSeasonService.java" />
-        <option value="$PROJECT_DIR$/emc-generator/emc-generator.iml" />
-        <option value="$PROJECT_DIR$/emc-generator/src/main/resources/generator.properties" />
-        <option value="$PROJECT_DIR$/emc-generator/src/main/resources/generatorConfig.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/static/Hplus/js/tree.drop.town.box.js" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/MenuController.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/auth/model/Menu.java" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/auth/menu/add.jsp" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/auth/menu/edit.jsp" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/auth/TestMenuService.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/MenuDao.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/auth/menu/list.jsp" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/script/auth/huak.auth.menu.list.js" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/CompanyDao.java" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/index.jsp" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/NodeDao.java" />
-        <option value="$PROJECT_DIR$/emc-sql/sql/201705/emc.sql" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Node.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/vo/NodeVo.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/NodeServiceImpl.java" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/NodeController.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/OrgService.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/OrgDao.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/OrgServiceImpl.java" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/common/CommonController.java" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/static/Hplus/js/emc.js" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/OrgDao.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/add.jsp" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/secondnetDao.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/application-service.properties" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/spring-mvc.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/edit.jsp" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml" />
+        <option value="$PROJECT_DIR$/emc-platform/emc-platform.iml" />
+        <option value="$PROJECT_DIR$/emc-sql/emc-sql.iml" />
+        <option value="$PROJECT_DIR$/emc-sql/sql/init001.sql" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/add.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/banlist.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/feed/feedlist.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/ban/banlist.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/ban/ban_list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/ban/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/employee/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/unit/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/room/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/oncenet/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/secondnetlinepart/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/companytree/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/feed/list.jsp" />
         <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/list.jsp" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/NodeService.java" />
-        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java" />
-        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/NodeDao.xml" />
-        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/script/org/huak.org.node.list.js" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/login/MainController.java" />
+        <option value="$PROJECT_DIR$/emc-generator/src/main/resources/generator.properties" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Administrative.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Room.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Org.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Feed.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/RoomDao.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/OrgDao.java" />
+        <option value="$PROJECT_DIR$/emc-generator/src/main/java/com/huak/dao/NodeDao.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Node.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/BanDao.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Ban.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/FeedDao.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Unit.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/NodeDao.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/UnitDao.java" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/FeedDao.xml" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/OrgDao.xml" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/RoomDao.xml" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/MainController.java" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/index.jsp" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/orgtree/list.jsp" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/AdministrativeDao.xml" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/AdministrativeDao.java" />
+        <option value="$PROJECT_DIR$/emc-generator/src/main/resources/generatorConfig.xml" />
+        <option value="$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/UnitDao.xml" />
+        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/auth/RoleServiceImpl.java" />
+        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/main/Container.java" />
+        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml" />
+        <option value="$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/OrgService.java" />
+        <option value="$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/OrgServiceImpl.java" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml" />
+        <option value="$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/OrgController.java" />
       </list>
     </option>
   </component>
@@ -241,8 +183,8 @@
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="localRepository" value="D:\.m2\repository" />
-        <option name="mavenHome" value="D:\apache-maven-3.2.1" />
-        <option name="userSettingsFile" value="D:\apache-maven-3.2.1\conf\settings.xml" />
+        <option name="mavenHome" value="D:\hr\apache-maven-3.2.1" />
+        <option name="userSettingsFile" value="D:\hr\apache-maven-3.2.1\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -260,46 +202,8 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="emc-service-sysmagent" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
           <option name="myItemId" value="emc-generator" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="emc-generator" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Run Configurations" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RunConfigurationsNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="emc-generator" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Lifecycle" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -335,8 +239,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1296" />
+    <option name="height" value="786" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -346,19 +250,103 @@
             <id />
           </State>
           <State>
+            <id>AOP</id>
+          </State>
+          <State>
+            <id>Android</id>
+          </State>
+          <State>
             <id>Android Lint</id>
+          </State>
+          <State>
+            <id>Class structure</id>
+          </State>
+          <State>
+            <id>Code maturity issues</id>
+          </State>
+          <State>
+            <id>Code style issues</id>
+          </State>
+          <State>
+            <id>Code style issuesJavaScript</id>
+          </State>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+          <State>
+            <id>Control FlowGroovy</id>
+          </State>
+          <State>
+            <id>Control flow issues</id>
+          </State>
+          <State>
+            <id>Control flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Data flow issuesGroovy</id>
+          </State>
+          <State>
+            <id>Error handling</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>Google Web Toolkit issues</id>
           </State>
           <State>
             <id>Groovy</id>
           </State>
           <State>
-            <id>JSP Inspections</id>
+            <id>J2ME issues</id>
           </State>
           <State>
-            <id>OtherGroovy</id>
+            <id>Java EE issues</id>
           </State>
           <State>
-            <id>Play</id>
+            <id>Java language level issues</id>
+          </State>
+          <State>
+            <id>Java language level migration aids</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Javadoc issues</id>
+          </State>
+          <State>
+            <id>Maven</id>
+          </State>
+          <State>
+            <id>Memory issues</id>
+          </State>
+          <State>
+            <id>Performance issues</id>
+          </State>
+          <State>
+            <id>Portability issues</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsGroovy</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsJavaScript</id>
+          </State>
+          <State>
+            <id>Probable bugs</id>
+          </State>
+          <State>
+            <id>Probable bugsCoffeeScript</id>
+          </State>
+          <State>
+            <id>Probable bugsGroovy</id>
+          </State>
+          <State>
+            <id>Probable bugsJavaScript</id>
           </State>
           <State>
             <id>Security issues</id>
@@ -367,9 +355,29 @@
             <id>Spring Model</id>
           </State>
           <State>
+            <id>TestNG</id>
+          </State>
+          <State>
             <id>Threading issues</id>
           </State>
+          <State>
+            <id>Threading issuesGroovy</id>
+          </State>
+          <State>
+            <id>Validity issuesGroovy</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+          <State>
+            <id>XSLT</id>
+          </State>
         </expanded-state>
+        <selected-state>
+          <State>
+            <id>ServletWithoutMappingInspection</id>
+          </State>
+        </selected-state>
       </profile-state>
     </entry>
   </component>
@@ -388,20 +396,6 @@
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
-  <component name="ProjectStructureProblems">
-    <ignored-problems>
-      <problem id="invalid-module-dependency(module:emc,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="invalid-module-dependency(module:emc-common,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="invalid-module-dependency(module:emc-dao,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="invalid-module-dependency(module:emc-generator,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="invalid-module-dependency(module:emc-platform,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="invalid-module-dependency(module:emc-service-sysmagent,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="invalid-module-dependency(module:emc-service-sysmagent-api,Maven: org.springframework:spring:2.5.6.SEC03)" />
-      <problem id="library-invalid-classes-path(library:project:Maven: com.huak:emc-dao:1.0-SNAPSHOT)" />
-      <problem id="unused-library(library:project:Maven: com.huak:emc-dao:1.0-SNAPSHOT)" />
-      <problem id="unused-library(library:project:Maven: org.slf4j:slf4j-log4j12:1.5.8)" />
-    </ignored-problems>
-  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages ProjectPane="false" />
@@ -415,6 +409,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -429,7 +425,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -439,7 +435,131 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc-service-sysmagent-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc-service-sysmagent-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huak" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc-service-sysmagent-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huak" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc-service-sysmagent-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huak" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="auth" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -453,7 +573,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -471,7 +591,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -505,7 +625,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -520,6 +640,18 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="huak" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -527,25 +659,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
+              <option name="myItemId" value="emc-service-sysmagent" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -557,79 +675,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="huak" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -643,11 +697,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
+              <option name="myItemId" value="emc-service-sysmagent" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -659,23 +713,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="huak" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node" />
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -685,11 +735,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
+              <option name="myItemId" value="emc-service-sysmagent" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -701,15 +751,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="huak" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -723,39 +773,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="emc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="auth" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
+              <option name="myItemId" value="emc-generator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -765,37 +787,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
+              <option name="myItemId" value="emc-generator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -817,47 +813,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc-platform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-dao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc-dao" />
+              <option name="myItemId" value="emc-generator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -869,36 +829,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="emc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="emc-dao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -908,15 +848,15 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="E:/ecc/product/base/code" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.51599145" />
     <property name="dynamic.classpath" value="false" />
-    <property name="options.lastSelected" value="MavenSettings" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -954,56 +894,150 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="879" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="105" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="95" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="134" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="102" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="135" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="101" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="918" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="895" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="120" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="98" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="127" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="105" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="126" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="105" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="919" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="898" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.huak.service.impl" />
-    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="groovy.util.GroovyTestCase" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.huak.service.impl" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.huak.org" />
       <recent name="com.huak.org.model" />
       <recent name="com.huak.org.dao" />
-      <recent name="com.huak.sys.model" />
-      <recent name="com.huak.sys.dao" />
+      <recent name="com.huak.cos.dao" />
+      <recent name="com.huak.cos.service.impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\workSp\code\emc-dao\src\main\resources\mapper\sysmagent" />
-      <recent name="D:\workSp\code\emc-platform\src\main\java\com\huak\init\bean" />
-      <recent name="D:\workSp\code\emc-platform\src\main\webapp\script\common" />
-      <recent name="D:\workSp\code\emc-platform\src\main\webapp\WEB-INF\views\common" />
-      <recent name="D:\workSp\code\emc-platform\src\main\webapp\WEB-INF\views\org\node" />
+      <recent name="D:\project\emc\emc-dao\src\main\resources\mapper\sysmagent" />
+      <recent name="D:\project\emc\emc-platform\src\main\webapp\WEB-INF\views\org\orgtree" />
+      <recent name="D:\project\emc\emc-platform\src\main\webapp\WEB-INF\views\org\companytree" />
+      <recent name="D:\project\emc\emc-platform\src\main\webapp\script\org" />
+      <recent name="D:\project\emc\emc-platform\src\main\webapp\WEB-INF\views\org\secondnetlinepart" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.huak.season" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\workSp\code\emc-platform\src\main\webapp\WEB-INF\views\common\org" />
+      <recent name="D:\project\emc\emc-platform\src\main\webapp\WEB-INF\views\org\ban" />
       <recent name="E:\emc\code\emc\emc-dao\src\main\resources\mapper\sysmagent" />
       <recent name="E:\emc\code\emc\emc-dao\src\main\resources\mapper" />
       <recent name="D:\project\eccp\eccp-platform\src\main\webapp\WEB-INF\views\Hplus\html" />
       <recent name="D:\project\eccp\eccp-platform\src\main\webapp\WEB-INF\views" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.huak.season" />
-    </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestOrgService.testQueryByPage">
+  <component name="RunManager" selected="Application.Container">
+    <configuration default="false" name="DESUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.huak.common.des.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.huak.common.des.DESUtil" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="eccp-common" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="UUIDGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.huak.common.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.huak.common.UUIDGenerator" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="eccp-common" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="StringUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.huak.common.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.huak.common.StringUtils" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="eccp-common" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="eccp-service [clean]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map>
+                <entry key="env-develop" value="true" />
+              </map>
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/eccp-service" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="false" name="Container" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1022,140 +1056,8 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="emc-service-sysmagent" />
       <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestOrgService.testSelectByPrimaryKey" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.huak.org.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="emc-service-sysmagent" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.huak.org" />
-      <option name="MAIN_CLASS_NAME" value="com.huak.org.TestOrgService" />
-      <option name="METHOD_NAME" value="testSelectByPrimaryKey" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestOrgService.testInsertSelective" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.huak.org.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="emc-service-sysmagent" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.huak.org" />
-      <option name="MAIN_CLASS_NAME" value="com.huak.org.TestOrgService" />
-      <option name="METHOD_NAME" value="testInsertSelective" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestOrgService.testUpdateByPrimaryKeySelective" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.huak.org.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="emc-service-sysmagent" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.huak.org" />
-      <option name="MAIN_CLASS_NAME" value="com.huak.org.TestOrgService" />
-      <option name="METHOD_NAME" value="testUpdateByPrimaryKeySelective" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestOrgService.testQueryByPage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.huak.org.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="emc-service-sysmagent" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.huak.org" />
-      <option name="MAIN_CLASS_NAME" value="com.huak.org.TestOrgService" />
-      <option name="METHOD_NAME" value="testQueryByPage" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -1472,7 +1374,7 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="emc-web" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.70-eccp-1" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+    <configuration default="false" name="emc-web" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.59" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <deployment>
         <artifact name="emc-web:war exploded">
           <settings>
@@ -1549,10 +1451,9 @@
         </option>
       </method>
     </configuration>
-    <configuration default="false" name="emc-platform" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.70-eccp-2" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+    <configuration default="false" name="emc-platform" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.59" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <option name="COMMON_VM_ARGUMENTS" value="-server -XX:PermSize=128M -XX:MaxPermSize=1024m" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
-      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
         <artifact name="emc-platform:war exploded">
           <settings>
@@ -1634,19 +1535,19 @@
       <item index="1" class="java.lang.String" itemvalue="Maven.emc-generator [mybatis-generator:generate]" />
       <item index="2" class="java.lang.String" itemvalue="Tomcat Server.emc-web" />
       <item index="3" class="java.lang.String" itemvalue="Tomcat Server.emc-platform" />
-      <item index="4" class="java.lang.String" itemvalue="Application.Container" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.TestOrgService.testSelectByPrimaryKey" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.TestOrgService.testInsertSelective" />
-      <item index="7" class="java.lang.String" itemvalue="JUnit.TestOrgService.testUpdateByPrimaryKeySelective" />
-      <item index="8" class="java.lang.String" itemvalue="JUnit.TestOrgService.testQueryByPage" />
+      <item index="4" class="java.lang.String" itemvalue="Application.DESUtil" />
+      <item index="5" class="java.lang.String" itemvalue="Application.UUIDGenerator" />
+      <item index="6" class="java.lang.String" itemvalue="Application.StringUtils" />
+      <item index="7" class="java.lang.String" itemvalue="Maven.eccp-service [clean]" />
+      <item index="8" class="java.lang.String" itemvalue="Application.Container" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.Container" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestOrgService.testQueryByPage" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestOrgService.testUpdateByPrimaryKeySelective" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestOrgService.testSelectByPrimaryKey" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestOrgService.testInsertSelective" />
+        <item index="1" class="java.lang.String" itemvalue="Application.StringUtils" />
+        <item index="2" class="java.lang.String" itemvalue="Application.UUIDGenerator" />
+        <item index="3" class="java.lang.String" itemvalue="Application.DESUtil" />
+        <item index="4" class="java.lang.String" itemvalue="Maven.eccp-service [clean]" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -1826,57 +1727,23 @@
       <workItem from="1493251839332" duration="1237000" />
       <workItem from="1493255622461" duration="2829000" />
       <workItem from="1493771413244" duration="2974000" />
-      <workItem from="1494307313498" duration="1177000" />
-      <workItem from="1494309129944" duration="1327000" />
-      <workItem from="1494310495193" duration="943000" />
-      <workItem from="1494311457074" duration="1420000" />
-      <workItem from="1494313638649" duration="8793000" />
-      <workItem from="1494379450569" duration="15262000" />
-      <workItem from="1494397797754" duration="2319000" />
-      <workItem from="1494400310000" duration="10361000" />
-      <workItem from="1494807293135" duration="620000" />
-      <workItem from="1494808587906" duration="14755000" />
-      <workItem from="1494824922083" duration="12954000" />
-      <workItem from="1494893573581" duration="8602000" />
-      <workItem from="1494902725864" duration="3871000" />
-      <workItem from="1494909394103" duration="24000" />
-      <workItem from="1494909438317" duration="5774000" />
-      <workItem from="1494915291652" duration="2800000" />
-      <workItem from="1494918115127" duration="9130000" />
-      <workItem from="1494981026075" duration="10372000" />
-      <workItem from="1494993054178" duration="7266000" />
-      <workItem from="1495004886138" duration="270000" />
-      <workItem from="1495005179443" duration="71000" />
-      <workItem from="1495005261143" duration="6431000" />
-      <workItem from="1495067017434" duration="779000" />
-      <workItem from="1495067827964" duration="19309000" />
-      <workItem from="1495092916302" duration="60000" />
-      <workItem from="1495093072136" duration="2041000" />
-      <workItem from="1495095150483" duration="110000" />
-      <workItem from="1495095271088" duration="55000" />
-      <workItem from="1495095336092" duration="84000" />
-      <workItem from="1495095432068" duration="235000" />
-      <workItem from="1495095680643" duration="3394000" />
-      <workItem from="1495153050500" duration="11295000" />
-      <workItem from="1495169658449" duration="2650000" />
-      <workItem from="1495172338391" duration="12386000" />
-      <workItem from="1495185051397" duration="1053000" />
-      <workItem from="1495413175347" duration="7984000" />
-      <workItem from="1495421197386" duration="15699000" />
-      <workItem from="1495442271722" duration="1970000" />
-      <workItem from="1495500440505" duration="7689000" />
-      <workItem from="1495508156482" duration="1150000" />
-      <workItem from="1495509339018" duration="117000" />
-      <workItem from="1495509474867" duration="1699000" />
-      <workItem from="1495514255562" duration="9658000" />
-      <workItem from="1495524010842" duration="1223000" />
-      <workItem from="1495525251975" duration="429000" />
-      <workItem from="1495527268509" duration="12000" />
-      <workItem from="1495527297208" duration="4000" />
-      <workItem from="1495527315142" duration="4884000" />
-      <workItem from="1495585315611" duration="16000" />
-      <workItem from="1495585395601" duration="2354000" />
-      <workItem from="1495587773189" duration="2053000" />
+      <workItem from="1493799451781" duration="62000" />
+      <workItem from="1493799570570" duration="3718000" />
+      <workItem from="1493858970720" duration="2976000" />
+      <workItem from="1493876340030" duration="307000" />
+      <workItem from="1493876651197" duration="4333000" />
+      <workItem from="1493943818838" duration="2463000" />
+      <workItem from="1493971130999" duration="2420000" />
+      <workItem from="1493974720578" duration="35000" />
+      <workItem from="1493974769702" duration="35000" />
+      <workItem from="1494203210387" duration="3229000" />
+      <workItem from="1494206479529" duration="17477000" />
+      <workItem from="1494229911113" duration="2060000" />
+      <workItem from="1494232004035" duration="3057000" />
+      <workItem from="1494289840878" duration="1440000" />
+      <workItem from="1494291338957" duration="2382000" />
+      <workItem from="1494293751253" duration="8206000" />
+      <workItem from="1495606423466" duration="1030000" />
     </task>
     <task id="LOCAL-00001" summary="项目初始化">
       <created>1471998996194</created>
@@ -2454,187 +2321,31 @@
       <created>1493774387807</created>
       <updated>1493774387808</updated>
     </task>
-    <task id="LOCAL-00145" summary="代理服务">
-      <created>1494309444653</created>
-      <updated>1494309444653</updated>
+    <task id="LOCAL-00145" summary="组织机构文件生成第二次提交修改">
+      <created>1494230079221</created>
+      <updated>1494230079221</updated>
     </task>
-    <task id="LOCAL-00146" summary="sql">
-      <created>1494309839043</created>
-      <updated>1494309839043</updated>
+    <task id="LOCAL-00146" summary="组织机构文件生成第一次提交修改">
+      <created>1494230136836</created>
+      <updated>1494230136836</updated>
     </task>
-    <task id="LOCAL-00147" summary="sql">
-      <created>1494312175081</created>
-      <updated>1494312175081</updated>
+    <task id="LOCAL-00147" summary="组织机构文件生成第一次提交修改">
+      <created>1494233009136</created>
+      <updated>1494233009136</updated>
     </task>
-    <task id="LOCAL-00148" summary="sql">
-      <created>1494810751073</created>
-      <updated>1494810751073</updated>
+    <task id="LOCAL-00148" summary="组织机构文件生成第一次提交">
+      <created>1494291928348</created>
+      <updated>1494291928348</updated>
     </task>
-    <task id="LOCAL-00149" summary="sql">
-      <created>1494811109672</created>
-      <updated>1494811109672</updated>
+    <task id="LOCAL-00149" summary="组织机构文件生成第一次提交">
+      <created>1494292954431</created>
+      <updated>1494292954431</updated>
     </task>
-    <task id="LOCAL-00150" summary="sql">
-      <created>1494825439092</created>
-      <updated>1494825439092</updated>
-    </task>
-    <task id="LOCAL-00151" summary="sql">
-      <created>1494826592794</created>
-      <updated>1494826592794</updated>
-    </task>
-    <task id="LOCAL-00152" summary="sql">
-      <created>1494828012275</created>
-      <updated>1494828012275</updated>
-    </task>
-    <task id="LOCAL-00153" summary="sql">
-      <created>1494836461338</created>
-      <updated>1494836461338</updated>
-    </task>
-    <task id="LOCAL-00154" summary="sql">
-      <created>1494909274588</created>
-      <updated>1494909274588</updated>
-    </task>
-    <task id="LOCAL-00155" summary="sql">
-      <created>1494909336973</created>
-      <updated>1494909336973</updated>
-    </task>
-    <task id="LOCAL-00156" summary="sql">
-      <created>1494910568715</created>
-      <updated>1494910568715</updated>
-    </task>
-    <task id="LOCAL-00157" summary="sql">
-      <created>1494910811889</created>
-      <updated>1494910811889</updated>
-    </task>
-    <task id="LOCAL-00158" summary="sql">
-      <created>1494917007133</created>
-      <updated>1494917007133</updated>
-    </task>
-    <task id="LOCAL-00159" summary="sql">
-      <created>1495000671249</created>
-      <updated>1495000671249</updated>
-    </task>
-    <task id="LOCAL-00160" summary="sql">
-      <created>1495000684955</created>
-      <updated>1495000684955</updated>
-    </task>
-    <task id="LOCAL-00161" summary="sql">
-      <created>1495000716357</created>
-      <updated>1495000716357</updated>
-    </task>
-    <task id="LOCAL-00162" summary="qita">
-      <created>1495001169130</created>
-      <updated>1495001169130</updated>
-    </task>
-    <task id="LOCAL-00163" summary="qita">
-      <created>1495001203334</created>
-      <updated>1495001203334</updated>
-    </task>
-    <task id="LOCAL-00164" summary="sql">
-      <created>1495001292819</created>
-      <updated>1495001292819</updated>
-    </task>
-    <task id="LOCAL-00165" summary="sql">
-      <created>1495002040301</created>
-      <updated>1495002040301</updated>
-    </task>
-    <task id="LOCAL-00166" summary="sql">
-      <created>1495002125303</created>
-      <updated>1495002125303</updated>
-    </task>
-    <task id="LOCAL-00167" summary="sql">
-      <created>1495002424238</created>
-      <updated>1495002424238</updated>
-    </task>
-    <task id="LOCAL-00168" summary="sql">
-      <created>1495002645094</created>
-      <updated>1495002645094</updated>
-    </task>
-    <task id="LOCAL-00169" summary="行政区划">
-      <created>1495068336656</created>
-      <updated>1495068336656</updated>
-    </task>
-    <task id="LOCAL-00170" summary="行政区划">
-      <created>1495094317098</created>
-      <updated>1495094317098</updated>
-    </task>
-    <task id="LOCAL-00171" summary="行政区划">
-      <created>1495094427150</created>
-      <updated>1495094427150</updated>
-    </task>
-    <task id="LOCAL-00172" summary="树高亮">
-      <created>1495158531857</created>
-      <updated>1495158531857</updated>
-    </task>
-    <task id="LOCAL-00173" summary="树">
-      <created>1495159774506</created>
-      <updated>1495159774506</updated>
-    </task>
-    <task id="LOCAL-00174" summary="树">
-      <created>1495159847789</created>
-      <updated>1495159847789</updated>
-    </task>
-    <task id="LOCAL-00175" summary="全局树">
-      <created>1495160478300</created>
-      <updated>1495160478300</updated>
-    </task>
-    <task id="LOCAL-00176" summary="行政区划">
-      <created>1495160939469</created>
-      <updated>1495160939469</updated>
-    </task>
-    <task id="LOCAL-00177" summary="下拉树">
-      <created>1495172148216</created>
-      <updated>1495172148216</updated>
-    </task>
-    <task id="LOCAL-00178" summary="加密">
-      <created>1495185752734</created>
-      <updated>1495185752734</updated>
-    </task>
-    <task id="LOCAL-00179" summary="行政区划">
-      <created>1495413698656</created>
-      <updated>1495413698656</updated>
-    </task>
-    <task id="LOCAL-00180" summary="行政区划">
-      <created>1495414581344</created>
-      <updated>1495414581344</updated>
-    </task>
-    <task id="LOCAL-00181" summary="行政区划">
-      <created>1495422863608</created>
-      <updated>1495422863608</updated>
-    </task>
-    <task id="LOCAL-00182" summary="改公司id">
-      <created>1495430832484</created>
-      <updated>1495430832484</updated>
-    </task>
-    <task id="LOCAL-00183" summary="热力站管理">
-      <created>1495435898141</created>
-      <updated>1495435898141</updated>
-    </task>
-    <task id="LOCAL-00184" summary="菜单权限控制">
-      <created>1495441659825</created>
-      <updated>1495441659825</updated>
-    </task>
-    <task id="LOCAL-00185" summary="菜单打开">
-      <created>1495441734646</created>
-      <updated>1495441734646</updated>
-    </task>
-    <task id="LOCAL-00186" summary="热力站添加">
-      <created>1495500853197</created>
-      <updated>1495500853197</updated>
-    </task>
-    <task id="LOCAL-00187" summary="热力站添加">
-      <created>1495524934088</created>
-      <updated>1495524934088</updated>
-    </task>
-    <task id="LOCAL-00188" summary="热力站添加">
-      <created>1495524964156</created>
-      <updated>1495524964156</updated>
-    </task>
-    <option name="localTasksCounter" value="189" />
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1740693000" />
+    <option name="totallyTimeSpent" value="1560989000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2657,71 +2368,71 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1296" height="786" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.83360523" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2365416" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19591528" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32626426" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952693" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49918434" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27382752" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.73735726" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20953101" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.80750406" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38662317" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.295764" sideWeight="0.50233644" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20717782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.49312976" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23676012" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19591528" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53115267" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32866043" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2990654" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.289644" sideWeight="0.50155765" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1682243" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20873787" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.758567" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32443365" sideWeight="0.5045872" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2071651" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.40015128" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17776097" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47634584" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45310137" sideWeight="0.49532712" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3980424" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23624596" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.340458" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.289644" sideWeight="0.49688473" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.67912775" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32744783" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47040498" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3613707" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.83360523" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19591528" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32626426" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952693" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.73735726" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20953101" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.80750406" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6199377" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19591528" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53115267" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32866043" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1682243" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20873787" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.758567" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32744783" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20717782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47634584" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45310137" sideWeight="0.49532712" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2071651" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.340458" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.289644" sideWeight="0.49688473" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3980424" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.67912775" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2365416" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49918434" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27382752" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38662317" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.295764" sideWeight="0.50233644" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23676012" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47040498" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2990654" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.289644" sideWeight="0.50155765" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3613707" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32443365" sideWeight="0.5045872" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.40015128" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17776097" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23624596" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2740,6 +2451,17 @@
       <TodoPanelSettings />
     </option>
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
+    <MESSAGE value="code生成" />
+    <MESSAGE value="能源类型管理" />
+    <MESSAGE value="能源单价管理" />
+    <MESSAGE value="能源单价管理完成" />
+    <MESSAGE value="计量器具管理添加选择设备插件" />
+    <MESSAGE value="模板文件管理样式" />
+    <MESSAGE value="static" />
+    <MESSAGE value="静态页面" />
+    <MESSAGE value="角色静态页面" />
+    <MESSAGE value="角色和用户" />
+    <MESSAGE value="用户和员工关系" />
     <MESSAGE value="功能管理" />
     <MESSAGE value="业务日志静态页" />
     <MESSAGE value="模板文件" />
@@ -2751,21 +2473,10 @@
     <MESSAGE value="整合项目" />
     <MESSAGE value="格式化" />
     <MESSAGE value="配置dubbo" />
-    <MESSAGE value="代理服务" />
-    <MESSAGE value="qita" />
-    <MESSAGE value="sql" />
-    <MESSAGE value="树高亮" />
-    <MESSAGE value="树" />
-    <MESSAGE value="全局树" />
-    <MESSAGE value="下拉树" />
-    <MESSAGE value="加密" />
-    <MESSAGE value="行政区划" />
-    <MESSAGE value="改公司id" />
-    <MESSAGE value="热力站管理" />
-    <MESSAGE value="菜单权限控制" />
-    <MESSAGE value="菜单打开" />
-    <MESSAGE value="热力站添加" />
-    <option name="LAST_COMMIT_MESSAGE" value="热力站添加" />
+    <MESSAGE value="组织机构文件生成第二次提交修改" />
+    <MESSAGE value="组织机构文件生成第一次提交修改" />
+    <MESSAGE value="组织机构文件生成第一次提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="组织机构文件生成第一次提交" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2793,30 +2504,6 @@
           <properties />
           <option name="timeStamp" value="166" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/RoleController.java</url>
-          <line>63</line>
-          <properties />
-          <option name="timeStamp" value="195" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/NodeServiceImpl.java</url>
-          <line>43</line>
-          <properties />
-          <option name="timeStamp" value="247" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java</url>
-          <line>3</line>
-          <properties />
-          <option name="timeStamp" value="261" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java</url>
-          <line>78</line>
-          <properties />
-          <option name="timeStamp" value="262" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/eccp-service/src/main/java/com/huak/base/service/impl/ReversibleEncryptionImpl.java</url>
           <line>21</line>
@@ -2827,7 +2514,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="263" />
+      <option name="time" value="187" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -2835,406 +2522,330 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58943087" vertical-offset="3868" max-vertical-offset="11646">
-          <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="245" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Java/jdk1.7.0_12/src.zip!/java/net/DualStackPlainSocketImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26027396" vertical-offset="3988" max-vertical-offset="4572">
-          <caret line="258" column="22" selection-start-line="258" selection-start-column="22" selection-end-line="258" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Org.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1782">
-          <caret line="20" column="16" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.3799284" vertical-offset="857" max-vertical-offset="2052">
-          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-sql/sql/201705/emc.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4681648" vertical-offset="3010" max-vertical-offset="7254">
-          <caret line="189" column="45" selection-start-line="189" selection-start-column="45" selection-end-line="189" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/auth/model/Menu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.19354838" vertical-offset="414" max-vertical-offset="1548">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/auth/TestMenuService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50766283" vertical-offset="779" max-vertical-offset="1530">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/OrgController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1728" max-vertical-offset="3042">
-          <caret line="130" column="41" selection-start-line="130" selection-start-column="41" selection-end-line="130" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/vo/NodeVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.3954546" vertical-offset="0" max-vertical-offset="3456">
-          <caret line="84" column="29" selection-start-line="84" selection-start-column="29" selection-end-line="84" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/OrgService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7226027" vertical-offset="262" max-vertical-offset="846">
-          <caret line="46" column="29" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/auth/MenuServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33214286" vertical-offset="498" max-vertical-offset="1152">
-          <caret line="56" column="36" selection-start-line="56" selection-start-column="11" selection-end-line="56" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/MenuController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37328768" vertical-offset="520" max-vertical-offset="3762">
-          <caret line="58" column="36" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/.m2/repository/org/springframework/spring-web/4.2.0.RELEASE/spring-web-4.2.0.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14625229" vertical-offset="3466" max-vertical-offset="4608">
-          <caret line="228" column="0" selection-start-line="228" selection-start-column="0" selection-end-line="228" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/OrgDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.739726" vertical-offset="0" max-vertical-offset="584">
-          <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/script/auth/huak.auth.menu.list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.6795096" vertical-offset="0" max-vertical-offset="5058">
-          <caret line="85" column="49" selection-start-line="85" selection-start-column="6" selection-end-line="85" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/auth/menu/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="1800">
-          <caret line="12" column="78" selection-start-line="12" selection-start-column="78" selection-end-line="12" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/OrgServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1864" max-vertical-offset="2448">
-          <caret line="152" column="56" selection-start-line="152" selection-start-column="56" selection-end-line="152" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/OrgDao.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5068493" vertical-offset="3232" max-vertical-offset="4680">
-          <caret line="196" column="46" selection-start-line="196" selection-start-column="46" selection-end-line="196" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/common/CommonController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="134" max-vertical-offset="1026">
-          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/static/Hplus/js/emc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.7740805" vertical-offset="0" max-vertical-offset="2088">
-          <caret line="88" column="91" selection-start-line="88" selection-start-column="91" selection-end-line="88" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/emc-service-sysmagent-api.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.191956" vertical-offset="1199" max-vertical-offset="1746">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41785714" vertical-offset="0" max-vertical-offset="576">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="8568">
-          <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/emc-platform.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.7399619" vertical-offset="1433" max-vertical-offset="2196">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-home-api/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23034735" vertical-offset="0" max-vertical-offset="576">
-          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2632541" vertical-offset="540" max-vertical-offset="1116">
-          <caret line="38" column="49" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/applicationContext-mybatis.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="666">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/resources/logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.18431373" vertical-offset="47" max-vertical-offset="918">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="774">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/applicationContext-db.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25714287" vertical-offset="54" max-vertical-offset="1206">
-          <caret line="11" column="61" selection-start-line="11" selection-start-column="61" selection-end-line="11" selection-end-column="61" />
-          <folding>
-            <element signature="e#749#765#0" expanded="false" />
-            <element signature="e#803#816#0" expanded="false" />
-            <element signature="e#859#877#0" expanded="false" />
-            <element signature="e#920#938#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/jdbc.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/application-service.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="288">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-service.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="617" max-vertical-offset="1296">
-          <caret line="25" column="92" selection-start-line="25" selection-start-column="82" selection-end-line="25" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="1782">
-          <caret line="50" column="31" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/spring-mvc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="468" max-vertical-offset="1494">
-          <caret line="26" column="69" selection-start-line="26" selection-start-column="69" selection-end-line="26" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/resources/application-env.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24657534" vertical-offset="0" max-vertical-offset="584">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/auth/menu/edit.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13211009" vertical-offset="0" max-vertical-offset="3492">
-          <caret line="4" column="37" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/add.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1044" max-vertical-offset="7128">
-          <caret line="58" column="27" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36263737" vertical-offset="270" max-vertical-offset="1260">
-          <caret line="26" column="120" selection-start-line="26" selection-start-column="120" selection-end-line="26" selection-end-column="120" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="836" max-vertical-offset="3564">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-38.88" vertical-offset="0" max-vertical-offset="1818">
-          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="352" max-vertical-offset="2156">
+          <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/AdministrativeDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="352" max-vertical-offset="638">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/RoleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="770" max-vertical-offset="5544">
+          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/orgtree/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="968" max-vertical-offset="1210">
+          <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/.m2/repository/org/springframework/spring-context/4.2.0.RELEASE/spring-context-4.2.0.RELEASE.jar!/org/springframework/stereotype/Repository.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5480427" vertical-offset="17" max-vertical-offset="323">
+          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/season/dao/SeasonDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46060607" vertical-offset="0" max-vertical-offset="570">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Feed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2508">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Org.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1843">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Room.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17272727" vertical-offset="0" max-vertical-offset="513">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-generator/src/main/resources/generator.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="190">
+          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/OrgDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="62" max-vertical-offset="456">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/RoomDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17579909" vertical-offset="18" max-vertical-offset="456">
+          <caret line="5" column="10" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Unit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.089411765" vertical-offset="0" max-vertical-offset="1710">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/emc-dao.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8825449" vertical-offset="1363" max-vertical-offset="1976">
+          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/login/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40293637" vertical-offset="342" max-vertical-offset="1026">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/login/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33278957" vertical-offset="119" max-vertical-offset="2603">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/UnitDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="456">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="19266">
+          <caret line="63" column="13" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/FeedDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="437">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/AdministrativeDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="171" max-vertical-offset="2356">
+          <caret line="23" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-generator/src/main/resources/generatorConfig.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1653" max-vertical-offset="1881">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/SeasonDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2109">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/RoomDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="494" max-vertical-offset="1235">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/RoleDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="2337">
+          <caret line="34" column="29" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/OrgDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="817" max-vertical-offset="3458">
+          <caret line="43" column="29" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/FeedDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="833" max-vertical-offset="4598">
+          <caret line="53" column="29" selection-start-line="53" selection-start-column="14" selection-end-line="53" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/unitDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="893" max-vertical-offset="3249">
+          <caret line="47" column="11" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-common/src/main/java/com/huak/common/page/PageResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37871286" vertical-offset="151" max-vertical-offset="722">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/.m2/repository/org/springframework/spring-context/4.2.0.RELEASE/spring-context-4.2.0.RELEASE.jar!/org/springframework/stereotype/Service.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45118734" vertical-offset="0" max-vertical-offset="379">
+          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/model/Administrative.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0971867" vertical-offset="0" max-vertical-offset="1178">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/auth/RoleService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="47" max-vertical-offset="475">
+          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/auth/RoleServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="171" max-vertical-offset="646">
+          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/main/Container.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="432">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="73" max-vertical-offset="494">
+          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.192" vertical-offset="1197" max-vertical-offset="7030">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/.m2/repository/org/springframework/spring-web/4.2.0.RELEASE/spring-web-4.2.0.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3313253" vertical-offset="308" max-vertical-offset="817">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/AdministrativeDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="456">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/java/com/huak/org/dao/NodeDao.java">
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/companytree/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-          <caret line="24" column="32" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.2777778" vertical-offset="171" max-vertical-offset="1957">
+          <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/orgtree/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="968" max-vertical-offset="1210">
+          <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/list.jsp">
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/auth/RoleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1538463" vertical-offset="702" max-vertical-offset="2124">
-          <caret line="45" column="91" selection-start-line="45" selection-start-column="91" selection-end-line="45" selection-end-column="91" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="770" max-vertical-offset="5544">
+          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/test/java/com/huak/org/TestOrgService.java">
+    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/OrgService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.72" vertical-offset="1175" max-vertical-offset="1710">
-          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/MenuDao.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55535716" vertical-offset="3019" max-vertical-offset="4230">
-          <caret line="185" column="52" selection-start-line="185" selection-start-column="34" selection-end-line="185" selection-end-column="52" />
-          <folding>
-            <marker date="1495441677725" expanded="true" signature="-1:-1" placeholder="select ID as..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-dao/src/main/resources/mapper/sysmagent/NodeDao.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.206897" vertical-offset="3325" max-vertical-offset="4788">
-          <caret line="206" column="54" selection-start-line="206" selection-start-column="54" selection-end-line="206" selection-end-column="54" />
-          <folding>
-            <marker date="1495589534718" expanded="true" signature="1595:1705" placeholder="select from ..t_emc_org_node..." />
-            <marker date="1495589534718" expanded="true" signature="1790:1854" placeholder="delete from ..." />
-            <marker date="1495589534718" expanded="true" signature="1934:2521" placeholder="insert into ..." />
-            <marker date="1495589534718" expanded="true" signature="2610:4654" placeholder="insert into ..." />
-            <marker date="1495589534718" expanded="true" signature="4781:5996" placeholder="update t_emc..." />
-            <marker date="1495589534718" expanded="true" signature="6088:6698" placeholder="update t_emc..." />
-            <marker date="1495589534718" expanded="true" signature="6809:7449" placeholder="SELECT B.ID,..t_emc_org_node..." />
-            <marker date="1495589534718" expanded="true" signature="6809:7437" placeholder="SELECT B.ID,..t_emc_org_node..." />
-            <marker date="1495589534718" expanded="true" signature="6809:7557" placeholder="SELECT B.ID,..t_emc_org_node..." />
-            <marker date="1495589534718" expanded="true" signature="6809:7699" placeholder="SELECT B.ID,..t_emc_org_node..." />
-            <marker date="1495589534718" expanded="true" signature="6889:6946" placeholder="select c.ORG..t_emc_org..." />
-            <marker date="1495589534718" expanded="true" signature="7827:8260" placeholder="SELECT B.ID,..t_emc_org_node..." />
-            <marker date="1495589534718" expanded="true" signature="10467:10584" placeholder="select from ..t_emc_org_node..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/NodeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="427" max-vertical-offset="2988">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="551">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/NodeServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/java/com/huak/org/OrgController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.3287673" vertical-offset="1270" max-vertical-offset="4284">
-          <caret line="235" column="29" selection-start-line="235" selection-start-column="11" selection-end-line="235" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="590" max-vertical-offset="1159">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent-api/src/main/java/com/huak/org/NodeService.java">
+    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/resources/applicationContext.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="52" max-vertical-offset="612">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="462" max-vertical-offset="1540">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/WEB-INF/views/org/node/edit.jsp">
+    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/resources/META-INF/spring/applicationContext-dubbo.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.769231" vertical-offset="3798" max-vertical-offset="6768">
-          <caret line="228" column="0" selection-start-line="228" selection-start-column="0" selection-end-line="237" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="352" max-vertical-offset="2156">
+          <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emc-platform/src/main/webapp/script/org/huak.org.node.list.js">
+    <entry file="file://$PROJECT_DIR$/emc-service-sysmagent/src/main/java/com/huak/org/OrgServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.116667" vertical-offset="4001" max-vertical-offset="4572">
-          <caret line="246" column="36" selection-start-line="246" selection-start-column="36" selection-end-line="246" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.6308244" vertical-offset="0" max-vertical-offset="3564">
+          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -3293,11 +2904,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Spring|emc-service-sysmagent</last-edited>
+          <last-edited>emc</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.51599145" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
