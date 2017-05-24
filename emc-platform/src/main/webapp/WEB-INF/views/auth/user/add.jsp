@@ -4,55 +4,73 @@
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="userAddForm" role="form">
             	<input type="hidden" name="orgId" id="orgId">
-                <div class="form-group">
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>中文名称：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="userName" class="form-control" type="text" maxlength="16" placeholder="请输入用户中文名称">
-                    </div>
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>联系电话：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="mobile" class="form-control" type="text" maxlength="16" placeholder="请输入用户联系电话">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>登录账号：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="login" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录账号">
-                    </div>
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>电子邮箱：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input name="mail" class="form-control" type="text" maxlength="16" placeholder="请输入用户电子邮箱">
-                    </div>
-                </div>
-                <div class="form-group">
-                   <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>登录密码：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <input id="password" name="password" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录密码">
-                    </div>
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>使用状态：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <select id="useStatus" name="useStatus" class="form-control">
-                        	<option value="0">启用</option>
-                        	<option value="1">禁用</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>组织机构：</label>
-	                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-	                    	<ul id="org" class="user-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
+                <div class="row">
+	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>中文名称：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <input name="userName" class="form-control" type="text" maxlength="16" placeholder="请输入用户中文名称">
 	                    </div>
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>所属员工：</label>
-                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-                        <select id="empId" name="empId" class="form-control" multiple="" style="height: 200px;overflow-y:scroll;">
-                        </select>
-                    </div>
+	                </div>
+	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>联系电话：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <input name="mobile" class="form-control" type="text" maxlength="16" placeholder="请输入用户联系电话">
+	                    </div>
+	                 </div>
+                 </div>
+                 <div class="row">
+	                 <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>登录账号：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <input name="login" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录账号">
+	                    </div>
+	                 </div>
+	                 <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label">电子邮箱：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <input name="mail" class="form-control" type="text" maxlength="16" placeholder="请输入用户电子邮箱">
+	                    </div>
+	                </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>备注说明：</label>
-                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8"> 
-                        <textarea class="form-control" rows="4" maxlength="125" name="memo" placeholder="请输入备注"></textarea>
-                    </div>
+                <div class="row">
+	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>登录密码：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <input id="password" name="password" class="form-control" type="text" maxlength="16" placeholder="请输入用户登录密码">
+	                    </div>
+	                </div>
+                    <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>使用状态：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <select id="useStatus" name="useStatus" class="form-control">
+	                        	<option value="0">启用</option>
+	                        	<option value="1">禁用</option>
+	                        </select>
+                    	</div>
+                	</div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label">组织机构：</label>
+		                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+		                    	<ul id="org" class="user-add-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
+		                    </div>
+		            </div>
+		            <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label">所属员工：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <select id="empId" name="empId" class="form-control" multiple="" style="height: 200px;overflow-y:scroll;">
+	                        </select>
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="margin-right: 0px;">
+	                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label">备注说明：</label>
+	                    <div style="width: 74%;float: left;margin-left: 13px;"> 
+	                        <textarea class="form-control" rows="4" maxlength="125" name="memo" placeholder="请输入备注"></textarea>
+	                    </div>
+	                </div>
                 </div>
             </form>
         </div>
@@ -78,40 +96,12 @@ $.validator.setDefaults({
     errorClass: "help-block m-b-none m-t-xs",
     validClass: "help-block m-b-none m-t-none"
 });
-    
-//初始化组织机构树
-function initOrgTree(){
-	var $this = top.$('#org').html("<div id='temp_org_tree' class='ztree'></div>");
-	var $temptree = top.$('#temp_org_tree');
-	if($this.length>0){
-        $.post(_platform + '/common/org/tree',function(data){
-            var setting = {
-                view: {selectedMulti: false,fontCss:{color:"blue"}},
-                check: { enable: false },
-                data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system:"Name", rootPId: "" } },
-                async : { enable : true },
-                edit: {enable: false },
-                callback: { onClick:orgTreeNodeClick }
-            };
-            var nodes='';
-            var zNodes ='[';
-            for (var i=0;i<data.length;i++){
-                var orgName='"' + data[i].orgName + '"';
-                var id='"' + data[i].id + '"';
-                var pid='"' + data[i].pOrgId + '"';
-                zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
-            };
-            var newnodes=zNodes.substring(0,zNodes.length-1);
-            nodes= newnodes+"]";
-            top.addUserOrgTree = $.fn.zTree.init($temptree, setting, eval("(" + nodes + ")"));
-        });
-    }
-}
+
 
 //点击组织机构树
-function orgTreeNodeClick(){
-	var _tree = top.addUserOrgTree;
-	var nodes = _tree.getSelectedNodes();
+function treeNodeClick(){
+    var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+    var nodes = treeObj.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);
 	//根据机构id，查询所属此机构的员工
@@ -133,7 +123,12 @@ function orgTreeNodeClick(){
 
 $(function () {
 	//初始化组织机构树
-	initOrgTree();
+	userAddOrg = new Org({
+        class:"user-add-org-tree"
+    });
+	userAddOrg.initTree();
+
+	
 	//获取表单元素
  	var $form = $(top.document).find("#userAddForm");
     var icon = "<i class='fa fa-times-circle'></i> ";
@@ -281,6 +276,6 @@ $(function () {
         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
         return deferred.state() == "resolved" ? true : false;
     }, icon + "登录账号已存在");
-
+	
 });
 </script>
