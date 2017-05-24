@@ -43,6 +43,7 @@ $(function () {
         var newcode = $(top.document).find("#orgCode").val();
         if(oldcode == newcode){
             deferred.resolve();
+
         }else{
             $.ajax({
                 url:_platform+'/common/check',

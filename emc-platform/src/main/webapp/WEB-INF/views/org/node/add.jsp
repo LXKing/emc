@@ -361,6 +361,7 @@ $(function () {
                                 <input name="seq"  class="form-control" type="text" maxlength="64" placeholder="请输入排序">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-2  control-label">备注：</label>
                             <div class="col-sm-5">

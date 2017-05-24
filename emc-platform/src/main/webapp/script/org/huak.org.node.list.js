@@ -6,6 +6,7 @@
  * Date: 2016/8/30<BR>
  */
 var bTable;
+
 $(function () {
     bTable = $('#station-table-list').bootstrapTable({
         height: "100%",//高度
