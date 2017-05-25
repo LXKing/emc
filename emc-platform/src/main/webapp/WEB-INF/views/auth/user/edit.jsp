@@ -6,7 +6,7 @@
 	            <div class="row">
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
 	                	<input type="hidden" id="id" name="id" value="${user.id }">
-	                	<input type="hidden" id="orgId" name="orgId">
+	                	<input type="hidden" id="orgId" name="orgId" value="${user.orgId }">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>中文名称：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                        <input name="userName" class="form-control" type="text" maxlength="16" placeholder="请输入用户中文名称" value="${user.userName }">
@@ -102,9 +102,7 @@ $.validator.setDefaults({
 function treeNodeClick(){
     var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
     var nodes = treeObj.getSelectedNodes();
-    console.log(nodes);
 	var selectedNode = nodes[0];
-	console.log(selectedNode);
 	top.$('#orgId').val(selectedNode.id);
 	//根据机构id，查询所属此机构的员工
 	$.post(_platform + '/user/org/emp',{
@@ -122,7 +120,6 @@ function treeNodeClick(){
 		}
 	},'json');
 }
-
 $(function () {
 	top.$('#memo').text('${user.memo}');
 	//初始化组织机构树
