@@ -96,4 +96,6 @@ public class Constants {
     
     /* 操作类型--查询*/
     public final static String OPT_TYPE_SELECT = "3";
+
+    public static final String NAVIGATIONS = "navigations";
 }

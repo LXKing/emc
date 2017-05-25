@@ -16,24 +16,6 @@
     <script src="${web}/script/huak.web.index.js"></script>
     <!-- inline scripts related to this page -->
     <script>
-        $(function(){
-
-            //$("#header").load("header.html",function(){});
-            //$("#footer").load("footer.html",function(){});
-
-            $(".select-boxbtnAlarm .btnAlarm").click(function(){
-                $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-
-                var thisText = $(this).text();
-                if (thisText == "自定义" ) {
-                    $(".select-boxWdate input").attr("disabled",false).removeClass("time-input-disable");
-                }else{
-                    $(".select-boxWdate input").attr("disabled",true).addClass("time-input-disable");
-                }
-            });
-
-        });
-
         /*website*/
         var websiteheight;
         websiteheight = $("#website").height() - 12;

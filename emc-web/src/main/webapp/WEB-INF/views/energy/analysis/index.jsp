@@ -12,28 +12,6 @@
     <meta name="renderer" content="webkit">
     <meta name="decorator" content="main"/>
     <title>华热能管系统-能耗分析</title>
-
-    <!-- inline scripts related to this page -->
-    <script>
-        $(function(){
-
-            //$("#header").load("header.html",function(){});
-            //$("#footer").load("footer.html",function(){});
-
-            $(".select-boxbtnAlarm .btnAlarm").click(function(){
-                $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-
-                var thisText = $(this).text();
-                if (thisText == "自定义" ) {
-                    $(".select-boxWdate input").attr("disabled",false).removeClass("time-input-disable");
-                }else{
-                    $(".select-boxWdate input").attr("disabled",true).addClass("time-input-disable");
-                }
-            });
-
-        })
-
-    </script>
     <script src="${web}/script/huak.web.energy.index.js"></script>
 </head>
 <body>

@@ -1,6 +1,8 @@
 package com.huak.web.init;
 
+import com.alibaba.fastjson.JSON;
 import com.huak.common.Constants;
+import com.huak.tools.NavigationConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -49,6 +51,10 @@ public class ClassPathAware implements InitializingBean, ServletContextAware {
         servletContext.setAttribute(Constants.PLATFORM, platPath);
         servletContext.setAttribute(Constants.WEB, webPath);
         logger.info("----加载绝对路径成功----");
+
+        logger.info("----开始面包屑导航----");
+        servletContext.setAttribute(Constants.NAVIGATIONS, JSON.toJSON(NavigationConstant.NAVIGATIONS));
+        logger.info("----加载面包屑导航-成功----");
     }
 
     /**
