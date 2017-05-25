@@ -13,10 +13,6 @@
     <meta name="decorator" content="main"/>
     <title>华热能管系统-首页</title>
 
-
-    <script>
-        startTime("#date_today");
-    </script>
     <script src="${web}/script/huak.web.index.js"></script>
     <!-- inline scripts related to this page -->
     <script>

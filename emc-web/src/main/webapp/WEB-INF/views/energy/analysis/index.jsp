@@ -13,9 +13,6 @@
     <meta name="decorator" content="main"/>
     <title>华热能管系统-能耗分析</title>
 
-    <script>
-        startTime("#date_today");
-    </script>
     <!-- inline scripts related to this page -->
     <script>
         $(function(){

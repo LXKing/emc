@@ -114,3 +114,6 @@
         </div>
     </div>
 </div>
+<script>
+    startTime("#date_today");
+</script>
