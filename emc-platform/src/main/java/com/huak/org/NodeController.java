@@ -157,10 +157,14 @@ public class NodeController {
         logger.info("导出热力站列表EXCEL");
         String workBookName = "热力站列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-        cellName.put("ID", "主键");
-        cellName.put("ROLE_NAME", "热力站名称");
-        cellName.put("ROLE_DES", "热力站说明");
-        cellName.put("memo", "备注");
+
+        cellName.put("ORG_NAME", "热力站名称");
+        cellName.put("P_ORG_ID", "上级单位");
+        cellName.put("ADDR", "地址");
+        cellName.put("LNG", "经度");
+        cellName.put("LAT", "纬度");
+        cellName.put("PUBLIC_AREA", "公建面积");
+        cellName.put("DWELL_AREA", "居民面积");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
         try {
