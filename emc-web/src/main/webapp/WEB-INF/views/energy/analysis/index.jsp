@@ -581,7 +581,7 @@
 </div>
 </div>
 
-<div id="footer"><!--footerload加载--></div>
+
 
 <script src="js/jquery/jquery.min.js"></script>
 <script src="js/echarts/echarts3/echarts.min.js"></script>
@@ -600,7 +600,7 @@
     $(function(){
 
         //$("#header").load("header.html",function(){});
-        $("#footer").load("footer.html",function(){});
+        //$("#footer").load("footer.html",function(){});
 
         $(".select-boxbtnAlarm .btnAlarm").click(function(){
             $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");

@@ -17,7 +17,7 @@
     <script>
         startTime("#date_today");
     </script>
-
+    <script src="${web}/script/huak.web.index.js"></script>
     <!-- inline scripts related to this page -->
     <script>
         $(function(){

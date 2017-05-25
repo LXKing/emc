@@ -46,6 +46,5 @@
 <script>
     var _web = '${web}';
 </script>
-<script src="${web}/static/js/index.js"></script>
 
 <script src="${web}/static/js/navscript.js"></script>
