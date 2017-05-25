@@ -17,6 +17,12 @@
 		chart05Fun();
 		
 		chart06Fun();
+
+        chart07Fun();
+
+        chart08Fun();
+
+        chart09Fun();
 	}
 });
 
@@ -608,246 +614,257 @@ function chart06Fun(){
 }
 
 /*能耗明细*/
-var myChartEnergy = echarts.init($(document).find('#EnergyChart'));
-var option1 = {
-	tooltip : {
-		formatter: "{a} <br/>{c} {b}%"
-	},
-   	
-	series : [
-		{
-			name: '能耗',
-			type: 'gauge',
-			z: 3,
-			min: 0,
-			max: 100,
-			startAngle: 180,
-			endAngle: 0,
-			splitNumber: -1,
-			radius: '150%',
-		   	axisLine:{
-				show:true,
-				lineStyle:{
-				  color:[[0.2, '#000'], [0.8, '#3a97dd'], [1, '#de6049']],  
-				  width:0
-				}
-			},
-			itemStyle:{
-				normal:{
-					color:'#d44243'
-				}
-			},
-			
-			detail:{
-				show:false
-			},
-			data:[{value: "34.6"}]
-		}
-		
-	]
-};
+function chart07Fun(){
+    $("#EnergyChart").empty();
+    myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
+    var option1 = {
+        tooltip : {
+            formatter: "{a} <br/>{c} {b}%"
+        },
 
-myChartEnergy.setOption(option1);
+        series : [
+            {
+                name: '能耗',
+                type: 'gauge',
+                z: 3,
+                min: 0,
+                max: 100,
+                startAngle: 180,
+                endAngle: 0,
+                splitNumber: -1,
+                radius: '150%',
+                axisLine:{
+                    show:true,
+                    lineStyle:{
+                      color:[[0.2, '#000'], [0.8, '#3a97dd'], [1, '#de6049']],
+                      width:0
+                    }
+                },
+                itemStyle:{
+                    normal:{
+                        color:'#d44243'
+                    }
+                },
 
+                detail:{
+                    show:false
+                },
+                data:[{value: "34.6"}]
+            }
+
+        ]
+    };
+
+    myChartEnergy.setOption(option1);
+}
 
 
 /*居民 合格率趋势*/
-var myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
-var data = [
-    ['15-01', 4.374394],
-    ['15-01', 3.374394],
-    ['15-01', 4.774394],
-    ['15-03', 3.213817],
-    ['16-03', 3.952681],
-    ['16-13', 3.129283]
-];
+function chart08Fun(){
+    $('#QualifiedChart').empty();
+    myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
+    var data = [
+        ['15-01', 4.374394],
+        ['15-01', 3.374394],
+        ['15-01', 4.774394],
+        ['15-03', 3.213817],
+        ['16-03', 3.952681],
+        ['16-13', 3.129283]
+    ];
 
-// See https://github.com/ecomfe/echarts-stat
-var myRegression = ecStat.regression('linear', data);
+    // See https://github.com/ecomfe/echarts-stat
+    var myRegression = ecStat.regression('linear', data);
 
-myRegression.points.sort(function(a, b) {
-    return a[0] - b[0];
-});
+    myRegression.points.sort(function(a, b) {
+        return a[0] - b[0];
+    });
 
-optionQualified = {
-    
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross'
-        }
-    },
-    grid: {
-        left: '15',
-        top: '30',
-        right: '40',
-        bottom: '10',
-        containLabel: true
-    },
-    xAxis: {
-        type: 'category',
-        axisTick:{show:false},
-        splitLine: {
-			show: false
-		},
-		axisLine: {
-			show: true,
-			lineStyle: {
-				color: '#9a9a9b'
-			}
-		},
-		axisLabel : {
-            show:true,
-            textStyle: {
-                color: '#666',
-            	fontFamily: 'arial'
+    optionQualified = {
+
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
             }
         },
-        data: ['15-01', '15-03', '16-03', '16-06', '16-13']
-        
-    },
-    yAxis: {
-        type: 'value',
-        axisTick:{show:false},
-        axisLine: {
-			show: true,
-			lineStyle: {
-				color: '#9a9a9b'
-			}
-		},
-		splitLine: {
-			show: false,
-			lineStyle: {
-				color: '#e8e8e8',
-				type: 'dashed'
-			}
-		},
-		axisLabel: {
-            show:true,
-            textStyle: {
-                color: '#666',
-            	fontFamily: 'arial'
+        grid: {
+            left: '15',
+            top: '30',
+            right: '40',
+            bottom: '10',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            axisTick:{show:false},
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel : {
+                show:true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
+            },
+            data: ['15-01', '15-03', '16-03', '16-06', '16-13']
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick:{show:false},
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show:true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
             }
-        }
-    },
-    series: [{
-        name: '室温',
-        type: 'scatter',
-        markLine: {
-                data: [
-                    {type: 'average', name: '平均值'}
-                ]
-          	},
-        itemStyle : {
-				normal : {
-            		color:'#7fb7e1'
-				}
-		},
-        data: data
-    }]
-};
-myChartQualified.setOption(optionQualified);
+        },
+        series: [{
+            name: '室温',
+            type: 'scatter',
+            markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                },
+            itemStyle : {
+                    normal : {
+                        color:'#7fb7e1'
+                    }
+            },
+            data: data
+        }]
+    };
+    myChartQualified.setOption(optionQualified);
+}
 
 /*居民室温合格率--chartCarbon*/
-var myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
-optionCarbon = {
-	title: {
-		text: "67.2",
-		subtext: '室温合格率（%）\n（1.6%↓）',  //↑↓
-		x: 'center',
-		y: 'center',
-		itemGap: -5,
-		textStyle : {
-			color : '#348bce',
-			fontFamily : '微软雅黑',
-			fontSize : 44,
-			fontWeight : 'normal'
-		},
-		subtextStyle : {
-			color : '#d4513b',
-			fontFamily : '微软雅黑',
-			fontSize : 12,
-			fontWeight : 'normal'
-		}
-	},
-    tooltip: {
-        trigger: 'item',
-        formatter: "{b} : {c} ({d}%)"
-    },
-    series: [
-		{
-			type:'pie',
-			radius : ['0', '82%'],
-			silent:true,
-			itemStyle : {
-				normal : {
-            		color:'#ffffff',
-					label : {
-   						show : false
-					},
-					labelLine : {
-						show : false
-					}
-				}
-			},
-			data:[
-				{value:1, name:'背景', selected:false,hoverAnimation:false}
-			]
-		},
-		{
-			name:'合格率',
-			type:'pie',
-			radius : ['60%', '80%'],
-			itemStyle : {
-				normal : {
-					color:'#dce0e5',
-					label : {show:false}
-				}
-			},
-			data:[
-				{value:1, name:'圈', selected:false,hoverAnimation:false}
-			]
-		},
-		{
-			name:'合格率',
-			type:'pie',
-			radius : ['60%', '80%'],
-			funnelAlign: 'left',
-			itemStyle : {
-				normal : {
-					label : {show:false}
-				}
-			},
-			data: [{
-					value: 206.4,
-					name: '合格率',
-					itemStyle: {
-						normal: {
-							color: '#3b96db'
-						}
-					}
-				}, {
-					value: 800,
-					name: '占位',
-					hoverAnimation:false,
-					tooltip: {
-						show: false
-					},
-					itemStyle: {
-						normal : {
-							color: 'rgba(0,0,0,0)',
-							label: {show:false},
-							labelLine: {show:false}
-						},
-						emphasis : {
-							color: 'rgba(0,0,0,0)'
-						}
-					}
-				}]
-		}
-	]
-};
-myChartCarbon.setOption(optionCarbon);
+function chart09Fun() {
+    $('#chartCarbon').empty();
+    myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
+    optionCarbon = {
+        title: {
+            text: "67.2",
+            subtext: '室温合格率（%）\n（1.6%↓）',  //↑↓
+            x: 'center',
+            y: 'center',
+            itemGap: -5,
+            textStyle: {
+                color: '#348bce',
+                fontFamily: '微软雅黑',
+                fontSize: 44,
+                fontWeight: 'normal'
+            },
+            subtextStyle: {
+                color: '#d4513b',
+                fontFamily: '微软雅黑',
+                fontSize: 12,
+                fontWeight: 'normal'
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b} : {c} ({d}%)"
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: ['0', '82%'],
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        color: '#ffffff',
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                },
+                data: [
+                    {value: 1, name: '背景', selected: false, hoverAnimation: false}
+                ]
+            },
+            {
+                name: '合格率',
+                type: 'pie',
+                radius: ['60%', '80%'],
+                itemStyle: {
+                    normal: {
+                        color: '#dce0e5',
+                        label: {show: false}
+                    }
+                },
+                data: [
+                    {value: 1, name: '圈', selected: false, hoverAnimation: false}
+                ]
+            },
+            {
+                name: '合格率',
+                type: 'pie',
+                radius: ['60%', '80%'],
+                funnelAlign: 'left',
+                itemStyle: {
+                    normal: {
+                        label: {show: false}
+                    }
+                },
+                data: [
+                    {
+                        value: 206.4,
+                        name: '合格率',
+                        itemStyle: {
+                            normal: {
+                                color: '#3b96db'
+                            }
+                        }
+                    },
+                    {
+                        value: 800,
+                        name: '占位',
+                        hoverAnimation: false,
+                        tooltip: {
+                            show: false
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(0,0,0,0)',
+                                label: {show: false},
+                                labelLine: {show: false}
+                            },
+                            emphasis: {
+                                color: 'rgba(0,0,0,0)'
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    };
+    myChartCarbon.setOption(optionCarbon);
+}
 
 function cutNh(){
 	if($("#bg-left").hasClass("button-group-act")) return;
