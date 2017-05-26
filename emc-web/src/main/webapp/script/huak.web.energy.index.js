@@ -1,16 +1,16 @@
 
 
 $.ajax({
-	url : _web + "/static/json/h-3.json",
+	url : _web + "/energy/analysis/groupEnergy",
 	type : "GET",
 	dataType: "json",
 	error : function(request) {
 		alert("Connection error");
 	},
 	success : function(data) {
-		groupEnergyChartFun(data.data.groupEnergy.data, data.data.groupEnergy.yearDate);
-		waterEnergyChartFun(data.data.waterEnergy.data, data.data.waterEnergy.yearDate);
-		electricEnergyChartFun(data.data.electricEnergy.data, data.data.electricEnergy.yearDate);
+		groupEnergyChartFun(data.data.total.data, data.data.total.yearDate);
+		waterEnergyChartFun(data.data.water.data, data.data.water.yearDate);
+		electricEnergyChartFun(data.data.elec.data, data.data.elec.yearDate);
 		gasEnergyChartFun(data.data.gas.data, data.data.gas.yearDate);
 		hotEnergyChartFun(data.data.hot.data, data.data.hot.yearDate);
 		coalEnergyChartFun(data.data.coal.data, data.data.coal.yearDate);

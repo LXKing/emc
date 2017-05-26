@@ -67,9 +67,9 @@
                     <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                 </div>
                 <div class="groupEnergy-info col-lg-4">
-                    <h3>760.4</h3>
+                    <h3>${result.total.total }</h3>
                     <div class="small">集团总能耗 (GJ/m3)</div>
-                    <h4>3.4<span class="arrow">↑</span></h4>
+                    <h4>${result.total.scale }<span class="arrow"> ${result.total.up=='0'?'↓':'↑' }</span></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
             </div>
@@ -79,9 +79,11 @@
                     <div class="energy-head energy-snh-remind">
                         <span class="energy-list-name">水能耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num energy-remind">192.5</span>
+                            <span class="energy-list-num energy-remind">${result.water.total }</span>
                             <span class="energy-list-measure energy-remind">GJ</span>
-                            <span class="energy-list-proportion energy-remind">(2.6%↑)</span>
+                            <span class="energy-list-proportion energy-remind">
+                            	(${result.water.scale }%${result.water.up=='0'?'↓':'↑' })
+                            </span>
                         </div>
                     </div>
 
@@ -94,9 +96,11 @@
                     <div class="energy-head energy-dnh">
                         <span class="energy-list-name">电能耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">172.6</span>
+                            <span class="energy-list-num">${result.elec.total }</span>
                             <span class="energy-list-measure">GJ</span>
-                            <span class="energy-list-proportion">(6.9%↓)</span>
+                            <span class="energy-list-proportion">
+                            	(${result.elec.scale }%${result.elec.up=='0'?'↓':'↑' })
+                            </span>
                         </div>
                     </div>
                     <div class="energy-chart">
@@ -108,9 +112,11 @@
                     <div class="energy-head energy-qnh-remind">
                         <span class="energy-list-name">气能耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num energy-remind">428.0</span>
+                            <span class="energy-list-num energy-remind">${result.gas.total }</span>
                             <span class="energy-list-measure energy-remind">GJ</span>
-                            <span class="energy-list-proportion energy-remind">(3.4%↓)</span>
+                            <span class="energy-list-proportion energy-remind">
+                            	(${result.gas.scale }%${result.gas.up=='0'?'↓':'↑' })
+                            </span>
                         </div>
                     </div>
 
@@ -123,9 +129,11 @@
                     <div class="energy-head energy-rnh">
                         <span class="energy-list-name">热能耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">560.2</span>
+                            <span class="energy-list-num">${result.hot.total }</span>
                             <span class="energy-list-measure">GJ</span>
-                            <span class="energy-list-proportion energy-remind">(2.9%↑)</span>
+                            <span class="energy-list-proportion energy-remind">
+                            	(${result.hot.scale }%${result.hot.up=='0'?'↓':'↑' })
+                            </span>
                         </div>
                     </div>
 
@@ -138,9 +146,11 @@
                     <div class="energy-head energy-mnh">
                         <span class="energy-list-name">煤能耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">269.4</span>
+                            <span class="energy-list-num">${result.coal.total }</span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion">(3.4%↓)</span>
+                            <span class="energy-list-proportion">
+                            	(${result.coal.scale }%${result.coal.up=='0'?'↓':'↑' })
+                            </span>
                         </div>
                     </div>
 
