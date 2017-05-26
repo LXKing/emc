@@ -14,13 +14,13 @@ import javax.annotation.Resource;
 import com.huak.energy.EnergyAnalysisService;
 import org.springframework.stereotype.Service;
 
-import com.huak.home.dao.EnergyAnalysisDao;
+import com.huak.home.dao.EnergyMonitorDao;
 
 @Service
 public class EnergyAnalysisServiceImpl implements EnergyAnalysisService {
 
 	@Resource
-	private EnergyAnalysisDao eaDao;
+	private EnergyMonitorDao eaDao;
 
 	@Override
 	public Map<String, Object> groupEnergy2Day(Map<String, String> params) {

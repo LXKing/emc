@@ -2,7 +2,7 @@ package com.huak.home.model;
 
 import java.math.BigDecimal;
 
-public class EnergyAnalysis {
+public class EnergyMonitor {
     /**
      *主键
      * @preserve 声明此方法不被JOC混淆
