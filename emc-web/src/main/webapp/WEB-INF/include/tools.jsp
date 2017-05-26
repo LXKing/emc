@@ -3,7 +3,7 @@
 
     <!--面包屑导航-->
     <div class="bread-crumb pull-left">
-        当前位置：<a href="javascript:;">[<var class="xmhpg"  style="color: #666;">首页 - 能源流概况</var>]</a>
+        当前位置：<a href="javascript:;">[<var class="xmhpg mbxdh"  style="color: #666;">首页 - 能源流概况</var>]</a>
     </div>
 
     <div class="mianTop pull-right">
@@ -46,3 +46,30 @@
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        console.info(document.location.href);
+
+        console.info("重置面包屑");
+        var mbhtml = "";
+        var mbxdh =  ${navigations};
+        $.each( mbxdh ,function(idx, item){
+            console.info(item);
+            console.info(document.location.href==_web + item.url)
+            if(document.location.href==_web + item.url){
+                mbhtml = getMbHtml(item,mbhtml);
+            }
+        });
+        $('.mbxdh').html(mbhtml);
+
+    })
+    function getMbHtml(navigation,html){
+        if(navigation.navigation=="undefined"||navigation.navigation==null||navigation.navigation==""){
+            html = '<a href="'+_web+navigation.url+'">'+navigation.title+'</a>' + html;
+            return html;
+        }else{
+            html = getMbHtml(navigation.navigation,html)+ '-<a href="'+_web+navigation.url+'">'+navigation.title+'</a>';
+            return html;
+        }
+    }
+</script>

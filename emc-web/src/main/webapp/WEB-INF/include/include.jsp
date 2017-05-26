@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%--图标--%>
 <link rel="shortcut icon" href="${web}/static/favicon.ico">
 
@@ -45,6 +46,7 @@
 
 <script>
     var _web = '${web}';
+
 </script>
 
 <script src="${web}/static/js/navscript.js"></script>
