@@ -1,4 +1,4 @@
-package com.huak.energy.model;
+package com.huak.home.model;
 
 import java.math.BigDecimal;
 

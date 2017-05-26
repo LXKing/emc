@@ -1,4 +1,4 @@
-package com.huak.energy.dao;
+package com.huak.home.dao;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.huak.energy.dao.EnergyAnalysisDao" >
-  <resultMap id="BaseResultMap" type="com.huak.energy.model.EnergyAnalysis" >
+<mapper namespace="com.huak.home.dao.EnergyAnalysisDao" >
+  <resultMap id="BaseResultMap" type="com.huak.home.model.EnergyAnalysis" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="COMID" property="comid" jdbcType="VARCHAR" />
     <result column="UNITID" property="unitid" jdbcType="VARCHAR" />
@@ -57,7 +57,7 @@
     delete from t_emc_final_data_hour
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insertByPrimaryKeySelective" parameterType="com.huak.energy.model.EnergyAnalysis" >
+  <insert id="insertByPrimaryKeySelective" parameterType="com.huak.home.model.EnergyAnalysis" >
     insert into t_emc_final_data_hour (ID, COMID, UNITID, 
       NODEID, TYPEID, DOSAGE_TIME, 
       DOSAGE, AREA, PRICE, 
@@ -69,7 +69,7 @@
       #{wtemp,jdbcType=DOUBLE}, #{cwtemp,jdbcType=DOUBLE}, #{coalCoef,jdbcType=DOUBLE}, 
       #{cCoef,jdbcType=DOUBLE}, #{itemp,jdbcType=DOUBLE}, #{citemp,jdbcType=DOUBLE})
   </insert>
-  <insert id="insert" parameterType="com.huak.energy.model.EnergyAnalysis" >
+  <insert id="insert" parameterType="com.huak.home.model.EnergyAnalysis" >
     insert into t_emc_final_data_hour
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <update id="update" parameterType="com.huak.energy.model.EnergyAnalysis" >
+  <update id="update" parameterType="com.huak.home.model.EnergyAnalysis" >
     update t_emc_final_data_hour
     <set >
       <if test="comid != null" >
@@ -214,7 +214,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.energy.model.EnergyAnalysis" >
+  <update id="updateByPrimaryKey" parameterType="com.huak.home.model.EnergyAnalysis" >
     update t_emc_final_data_hour
     set COMID = #{comid,jdbcType=VARCHAR},
       UNITID = #{unitid,jdbcType=VARCHAR},
