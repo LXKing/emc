@@ -1,7 +1,7 @@
 package com.huak.web.module;
 
 import com.alibaba.fastjson.JSONObject;
-import com.huak.energy.EnergyAnalysisService;
+import com.huak.energy.EnergyMonitorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class EnergyAnalysisController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @Autowired
-    private EnergyAnalysisService eaService;
+    private EnergyMonitorService eaService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String indexPage(Model model){

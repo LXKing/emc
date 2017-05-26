@@ -11,13 +11,13 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import com.huak.energy.EnergyAnalysisService;
+import com.huak.energy.EnergyMonitorService;
 import org.springframework.stereotype.Service;
 
 import com.huak.home.dao.EnergyMonitorDao;
 
 @Service
-public class EnergyAnalysisServiceImpl implements EnergyAnalysisService {
+public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 
 	@Resource
 	private EnergyMonitorDao eaDao;
