@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.huak.energyAnasis.dao.EnergyAnalysisDao;
+import com.huak.energy.dao.EnergyAnalysisDao;
 
 @Service
 public class EnergyAnalysisServiceImpl implements EnergyAnalysisService{
