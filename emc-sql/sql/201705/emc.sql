@@ -401,3 +401,8 @@ alter table t_emc_company comment '公司信息表';
  */
  alter table t_emc_org modify column TYPE_ID VARCHAR(32);
  alter table t_emc_org modify column CREATOR VARCHAR(32);
+
+/**
+2017年5月26日14:49:36
+ */
+ ALTER TABLE t_emc_energy_type ADD TYPE TINYINT NOT NULL COMMENT '类型 1水、2电、3气、4煤、5热、6太阳能';
