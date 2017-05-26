@@ -215,6 +215,8 @@ function search(){
     $('#station-table-list').bootstrapTable('refresh');
 }
 
+
+
 function deletestation(id) {
     top.layer.confirm('您是否确定删除该热力站？', {
         btn: ['确定', '取消'] //按钮

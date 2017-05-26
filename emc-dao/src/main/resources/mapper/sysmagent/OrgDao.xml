@@ -196,7 +196,9 @@
         </if>
         <!--插件局部刷新传过来的是id,需要刷新以id为父节点的所有子节点-->
         <if test="id != null and id !=''">
-          AND  P_ORG_ID = #{id,jdbcType=VARCHAR}
+
+          AND  FIND_IN_SET(ID, emc_func_org_getchilds(#{id,jdbcType=VARCHAR}))
+          AND ID != #{id,jdbcType=VARCHAR}
         </if>
         order by seq
     </select>

@@ -79,9 +79,14 @@ public class NodeServiceImpl implements NodeService{
         node.setTownId(record.getTownId());
         node.setVillageId(record.getVillageId());
         node.setStatus((byte)0);
-        if(orgDao.insert(org)>0){
-            return  nodeDao.insert(node);
+        try {
+            if(orgDao.insert(org)>0){
+                return  nodeDao.insert(node);
+            }
+        }catch (Exception e){
+            return 0;
         }
+
         return 0;
     }
 

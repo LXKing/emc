@@ -35,7 +35,7 @@
                 $this.html("<div id='temp_org_tree' light='"+ top.lightId+"' class='ztree'></div>");
                 var setting = {
                     async: { enable: true, url: _platform + '/common/org/tree', autoParam: ["id"]},
-                    view: {selectedMulti: true, fontCss: {color: "black"}},
+                    view: {selectedMulti: false, fontCss: {color: "black"}},
                     check: { enable: false },
                     data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system: "Name", rootPId: "" } },
                     edit: {enable: false },

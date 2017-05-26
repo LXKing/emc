@@ -226,16 +226,7 @@ $(function () {
         }
     });
 });
-function refreshNodes() {
-    var treeNode = top.comm_tree.getSelectedNodes();
-    var treeObj =  top.comm_ztree;
-    type = "refresh";
-    silent = false;
-    /*根据 zTree 的唯一标识 tId 快速获取节点 JSON 数据对象*/
-    /*选中指定节点*/
-    treeObj.selectNode(treeNode[0]);
-    treeObj.reAsyncChildNodes(treeNode[0], "refresh");
-}
+
 </script>
 </head>
 

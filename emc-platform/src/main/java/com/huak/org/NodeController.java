@@ -88,14 +88,22 @@ public class NodeController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(Constants.SESSION_KEY);
-            node.setId(UUIDGenerator.getUUID());
+            String id =UUIDGenerator.getUUID();
+            node.setId(id);
             node.setCreator(user.getId());
-            nodeService.insertSelective(node);
-            jo.put(Constants.FLAG, true);
-            jo.put(Constants.MSG, "添加热力站成功");
+           boolean flag = nodeService.insertSelective(node)>0;
+            if(flag){
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.MSG, "添加热力站成功");
+            }else{
+                jo.put(Constants.FLAG, false);
+                jo.put(Constants.MSG, "添加热力站失败");
+            }
+
         } catch (Exception e) {
             logger.error("添加热力站异常" + e.getMessage());
             jo.put(Constants.MSG, "添加热力站失败");
+            jo.put("station",null);
         }
         return jo.toJSONString();
     }
