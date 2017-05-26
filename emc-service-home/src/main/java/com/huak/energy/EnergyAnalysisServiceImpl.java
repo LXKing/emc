@@ -1,4 +1,4 @@
-package com.huak.energyAnalysis;
+package com.huak.energy;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
