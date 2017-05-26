@@ -11,7 +11,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import com.huak.energy.EnergyMonitorService;
 import org.springframework.stereotype.Service;
 
 import com.huak.home.dao.EnergyMonitorDao;

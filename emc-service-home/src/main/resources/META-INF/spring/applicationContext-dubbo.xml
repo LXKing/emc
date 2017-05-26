@@ -22,7 +22,7 @@
     <!-- 声明需要暴露的服务接口 -->
     <!--能耗分析-->
     <bean id="energyAnalysisService" class="com.huak.home.EnergyMonitorServiceImpl"></bean>
-    <dubbo:service interface="com.huak.energy.EnergyMonitorService" ref="energyAnalysisService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.home.EnergyMonitorService" ref="energyAnalysisService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 

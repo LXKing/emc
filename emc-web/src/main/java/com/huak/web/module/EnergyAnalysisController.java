@@ -1,7 +1,7 @@
 package com.huak.web.module;
 
 import com.alibaba.fastjson.JSONObject;
-import com.huak.energy.EnergyMonitorService;
+import com.huak.home.EnergyMonitorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
