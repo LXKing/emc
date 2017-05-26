@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huak.energyAnasis.dao.EnergyAnalysisDao" >
+  <resultMap id="BaseResultMap" type="com.huak.energyAnasis.model.EnergyAnalysis" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="COMID" property="comid" jdbcType="VARCHAR" />
+    <result column="UNITID" property="unitid" jdbcType="VARCHAR" />
+    <result column="NODEID" property="nodeid" jdbcType="VARCHAR" />
+    <result column="TYPEID" property="typeid" jdbcType="VARCHAR" />
+    <result column="DOSAGE_TIME" property="dosageTime" jdbcType="VARCHAR" />
+    <result column="DOSAGE" property="dosage" jdbcType="DOUBLE" />
+    <result column="AREA" property="area" jdbcType="DOUBLE" />
+    <result column="PRICE" property="price" jdbcType="DECIMAL" />
+    <result column="WTEMP" property="wtemp" jdbcType="DOUBLE" />
+    <result column="CWTEMP" property="cwtemp" jdbcType="DOUBLE" />
+    <result column="COAL_COEF" property="coalCoef" jdbcType="DOUBLE" />
+    <result column="C_COEF" property="cCoef" jdbcType="DOUBLE" />
+    <result column="ITEMP" property="itemp" jdbcType="DOUBLE" />
+    <result column="CITEMP" property="citemp" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, COMID, UNITID, NODEID, TYPEID, DOSAGE_TIME, DOSAGE, AREA, PRICE, WTEMP, CWTEMP, 
+    COAL_COEF, C_COEF, ITEMP, CITEMP
+  </sql>
+  <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_emc_final_data_hour
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询今年的集团能耗 -->
+  <select id="groupEnergy2curyear" resultType="java.util.Map" parameterType="java.util.Map">
+  	SELECT SUM(A.total) AS total, SUM(CASE A.TYPEID WHEN '1' THEN A.total ELSE 0 END) AS water,
+  	SUM(CASE A.TYPEID WHEN '2' THEN A.total ELSE 0 END) AS elec, SUM(CASE A.TYPEID WHEN '3' THEN A.total ELSE 0 END) AS gas, 
+  	SUM(CASE A.TYPEID WHEN '4' THEN A.total ELSE 0 END) AS hot , SUM(CASE A.TYPEID WHEN '5' THEN A.total ELSE 0 END) AS coal, 
+  	A.yearDate FROM (SELECT SUM(fdh.DOSAGE) AS total, DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') AS yearDate,fdh.TYPEID FROM 
+  	t_emc_final_data_hour fdh WHERE DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY) 
+  	AND DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE() GROUP BY fdh.DOSAGE_TIME, fdh.TYPEID ) A WHERE 1=1
+  	<if test="yearDate!=null and yearDate!=''"> and A.yearDate = #{yearDate,jdbcType=VARCHAR}</if>
+  	GROUP BY A.yearDate ORDER BY A.yearDate asc
+  </select>
+  <!-- 查询去年的集团能耗 -->
+  <select id="groupEnergy2lastyear" resultType="java.util.Map" parameterType="java.util.Map">
+  	SELECT SUM(A.total) AS total, SUM(CASE A.TYPEID WHEN '1' THEN A.total ELSE 0 END) AS water, 
+  	SUM(CASE A.TYPEID WHEN '2' THEN A.total ELSE 0 END) AS elec, SUM(CASE A.TYPEID WHEN '3' THEN A.total ELSE 0 END) AS gas, 
+  	SUM(CASE A.TYPEID WHEN '4' THEN A.total ELSE 0 END) AS hot , SUM(CASE A.TYPEID WHEN '5' THEN A.total ELSE 0 END) AS coal, 
+  	A.yearDate FROM (SELECT SUM(fdh.DOSAGE) AS total, DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') AS yearDate, 
+  	fdh.TYPEID FROM t_emc_final_data_hour fdh WHERE DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') >= 
+  	SUBDATE(SUBDATE(CURDATE(), INTERVAL 1 YEAR), INTERVAL 5 DAY) AND DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') 
+  	&lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR) GROUP BY fdh.DOSAGE_TIME, fdh.TYPEID ) A WHERE 1=1
+  	<if test="yearDate!=null and yearDate!=''"> and A.yearDate = #{yearDate,jdbcType=VARCHAR}</if>
+  	GROUP BY A.yearDate ORDER BY A.yearDate asc
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_emc_final_data_hour
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertByPrimaryKeySelective" parameterType="com.huak.energyAnasis.model.EnergyAnalysis" >
+    insert into t_emc_final_data_hour (ID, COMID, UNITID, 
+      NODEID, TYPEID, DOSAGE_TIME, 
+      DOSAGE, AREA, PRICE, 
+      WTEMP, CWTEMP, COAL_COEF, 
+      C_COEF, ITEMP, CITEMP)
+    values (#{id,jdbcType=VARCHAR}, #{comid,jdbcType=VARCHAR}, #{unitid,jdbcType=VARCHAR}, 
+      #{nodeid,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR}, #{dosageTime,jdbcType=VARCHAR}, 
+      #{dosage,jdbcType=DOUBLE}, #{area,jdbcType=DOUBLE}, #{price,jdbcType=DECIMAL}, 
+      #{wtemp,jdbcType=DOUBLE}, #{cwtemp,jdbcType=DOUBLE}, #{coalCoef,jdbcType=DOUBLE}, 
+      #{cCoef,jdbcType=DOUBLE}, #{itemp,jdbcType=DOUBLE}, #{citemp,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insert" parameterType="com.huak.energyAnasis.model.EnergyAnalysis" >
+    insert into t_emc_final_data_hour
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="comid != null" >
+        COMID,
+      </if>
+      <if test="unitid != null" >
+        UNITID,
+      </if>
+      <if test="nodeid != null" >
+        NODEID,
+      </if>
+      <if test="typeid != null" >
+        TYPEID,
+      </if>
+      <if test="dosageTime != null" >
+        DOSAGE_TIME,
+      </if>
+      <if test="dosage != null" >
+        DOSAGE,
+      </if>
+      <if test="area != null" >
+        AREA,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="wtemp != null" >
+        WTEMP,
+      </if>
+      <if test="cwtemp != null" >
+        CWTEMP,
+      </if>
+      <if test="coalCoef != null" >
+        COAL_COEF,
+      </if>
+      <if test="cCoef != null" >
+        C_COEF,
+      </if>
+      <if test="itemp != null" >
+        ITEMP,
+      </if>
+      <if test="citemp != null" >
+        CITEMP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="comid != null" >
+        #{comid,jdbcType=VARCHAR},
+      </if>
+      <if test="unitid != null" >
+        #{unitid,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeid != null" >
+        #{nodeid,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageTime != null" >
+        #{dosageTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dosage != null" >
+        #{dosage,jdbcType=DOUBLE},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="wtemp != null" >
+        #{wtemp,jdbcType=DOUBLE},
+      </if>
+      <if test="cwtemp != null" >
+        #{cwtemp,jdbcType=DOUBLE},
+      </if>
+      <if test="coalCoef != null" >
+        #{coalCoef,jdbcType=DOUBLE},
+      </if>
+      <if test="cCoef != null" >
+        #{cCoef,jdbcType=DOUBLE},
+      </if>
+      <if test="itemp != null" >
+        #{itemp,jdbcType=DOUBLE},
+      </if>
+      <if test="citemp != null" >
+        #{citemp,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.huak.energyAnasis.model.EnergyAnalysis" >
+    update t_emc_final_data_hour
+    <set >
+      <if test="comid != null" >
+        COMID = #{comid,jdbcType=VARCHAR},
+      </if>
+      <if test="unitid != null" >
+        UNITID = #{unitid,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeid != null" >
+        NODEID = #{nodeid,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        TYPEID = #{typeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageTime != null" >
+        DOSAGE_TIME = #{dosageTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dosage != null" >
+        DOSAGE = #{dosage,jdbcType=DOUBLE},
+      </if>
+      <if test="area != null" >
+        AREA = #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="wtemp != null" >
+        WTEMP = #{wtemp,jdbcType=DOUBLE},
+      </if>
+      <if test="cwtemp != null" >
+        CWTEMP = #{cwtemp,jdbcType=DOUBLE},
+      </if>
+      <if test="coalCoef != null" >
+        COAL_COEF = #{coalCoef,jdbcType=DOUBLE},
+      </if>
+      <if test="cCoef != null" >
+        C_COEF = #{cCoef,jdbcType=DOUBLE},
+      </if>
+      <if test="itemp != null" >
+        ITEMP = #{itemp,jdbcType=DOUBLE},
+      </if>
+      <if test="citemp != null" >
+        CITEMP = #{citemp,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huak.energyAnasis.model.EnergyAnalysis" >
+    update t_emc_final_data_hour
+    set COMID = #{comid,jdbcType=VARCHAR},
+      UNITID = #{unitid,jdbcType=VARCHAR},
+      NODEID = #{nodeid,jdbcType=VARCHAR},
+      TYPEID = #{typeid,jdbcType=VARCHAR},
+      DOSAGE_TIME = #{dosageTime,jdbcType=VARCHAR},
+      DOSAGE = #{dosage,jdbcType=DOUBLE},
+      AREA = #{area,jdbcType=DOUBLE},
+      PRICE = #{price,jdbcType=DECIMAL},
+      WTEMP = #{wtemp,jdbcType=DOUBLE},
+      CWTEMP = #{cwtemp,jdbcType=DOUBLE},
+      COAL_COEF = #{coalCoef,jdbcType=DOUBLE},
+      C_COEF = #{cCoef,jdbcType=DOUBLE},
+      ITEMP = #{itemp,jdbcType=DOUBLE},
+      CITEMP = #{citemp,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
