@@ -406,3 +406,41 @@ alter table t_emc_company comment '公司信息表';
 2017年5月26日14:49:36
  */
  ALTER TABLE t_emc_energy_type ADD TYPE TINYINT NOT NULL COMMENT '类型 1水、2电、3气、4煤、5热、6太阳能';
+
+/**
+2017年5月27日11:02:53
+ */
+
+ DROP FUNCTION IF EXISTS emc_func_org_getparents;
+
+CREATE FUNCTION emc_func_org_getparents(orgid varchar(32))
+ RETURNS varchar(4000) CHARSET utf8
+BEGIN
+      DECLARE sTemp VARCHAR(10000);
+
+      DECLARE sTempChd VARCHAR(10000);
+				SET sTemp = '$';
+       SET sTempChd =cast(orgid as CHAR);
+
+      WHILE sTempChd is not null DO
+         SET sTemp = concat(sTemp,',',sTempChd);
+         SELECT group_concat(P_ORG_ID) INTO sTempChd FROM t_emc_org where FIND_IN_SET(ID,sTempChd)>0;
+      END WHILE;
+       RETURN REPLACE(sTemp,'$,','');
+END;
+
+
+ CREATE VIEW v_emc_org(comid,id,gsid,fgsid,zxid,fwzid,ryid,ycwid,rlzid,ecxid,xqid,ldid) AS
+SELECT
+t.COM_ID comid,t.ID,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 1) gsid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 2) fgsid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 3) zxid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 4) fwzid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 5) ryid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 6) ycwid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 7) rlzid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 8) ecxid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 9) xqid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 10) ldid
+ FROM t_emc_org t;
