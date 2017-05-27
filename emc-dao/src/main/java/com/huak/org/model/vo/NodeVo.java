@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class NodeVo implements Serializable{
 
-    private String id;
+    private Long id;
 
     private String comId;
 
@@ -56,7 +56,7 @@ public class NodeVo implements Serializable{
 
     private Byte status;
 
-    public NodeVo(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area
+    public NodeVo(Long id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area
                   , String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea
                ,Byte status) {
         this.id = id;
@@ -89,12 +89,12 @@ public class NodeVo implements Serializable{
         super();
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id ;
     }
 
     public String getComId() {

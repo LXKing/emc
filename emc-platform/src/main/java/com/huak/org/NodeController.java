@@ -9,6 +9,7 @@ import com.huak.common.page.Page;
 import com.huak.org.model.Node;
 import com.huak.org.model.Org;
 import com.huak.org.model.vo.NodeVo;
+import com.huak.org.type.OrgType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,8 @@ public class NodeController {
             NodeVo obj = new NodeVo();
             obj.setpOrgId(pOrgId);
             obj.setComId(comId);
-            obj.setStatus((byte)0);
+            obj.setStatus((byte) 0);
+            obj.setTypeId(String.valueOf(OrgType.RLZ.getKey()));
             modelMap.put(Constants.OBJECT,obj);
         } catch (Exception e) {
             logger.error("跳转到热力站编辑页出错！");
@@ -88,8 +90,6 @@ public class NodeController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(Constants.SESSION_KEY);
-            String id =UUIDGenerator.getUUID();
-            node.setId(id);
             node.setCreator(user.getId());
            boolean flag = nodeService.insertSelective(node)>0;
             if(flag){

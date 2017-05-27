@@ -3,7 +3,7 @@
 <mapper namespace="com.huak.org.dao.NodeDao">
   <resultMap id="BaseResultMap" type="com.huak.org.model.Node">
     <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="MANAGE_TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -23,13 +23,13 @@
     LAT, PUBLIC_AREA, DWELL_AREA,STATUS
   </sql>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_emc_org_node
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_emc_org_node
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
@@ -186,7 +186,7 @@
       PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
       DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
        STATUS = #{status,jdbcType=TINYINT}
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 
   <select id="selectPageByMap" resultMap="queryForListMap" parameterType="java.util.Map">
@@ -209,7 +209,7 @@
       </if>
   </select>
 
-    <select id="selectVoById"  resultMap="queryForListMap"  parameterType="java.lang.String">
+    <select id="selectVoById"  resultMap="queryForListMap"  parameterType="java.lang.Long">
         SELECT
         B.ID, B.COM_ID, B.ORG_CODE, B.ORG_NAME, B.SHORT_NAME,
         B.P_ORG_ID,
@@ -217,12 +217,12 @@
         B.MEMO, B.SEQ, B.AREA, A.MANAGE_TYPE_ID, A.PROVINCE_ID, A.CITY_ID, A.COUNTY_ID, A.TOWN_ID, A.VILLAGE_ID, A.ADDR, A.LNG,
         A.LAT, A.PUBLIC_AREA, A.DWELL_AREA,A.STATUS
         FROM t_emc_org_node A,t_emc_org B WHERE A.ID = B.ID AND A.STATUS = '0'
-        AND B.ID = #{id,jdbcType=VARCHAR}
+        AND B.ID = #{id,jdbcType=BIGINT}
     </select>
 
   <resultMap id="queryForListMap" type="com.huak.org.model.vo.NodeVo">
       <constructor>
-          <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
           <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
           <arg column="ORG_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
           <arg column="ORG_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />

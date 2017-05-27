@@ -1,9 +1,10 @@
 package com.huak.org.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class Node implements Serializable{
-    private String id;
+    private Long id;
 
     private String manageTypeId;
 
@@ -30,7 +31,7 @@ public class Node implements Serializable{
 
 
 
-    public Node(String id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea,Byte status) {
+    public Node(Long id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea,Byte status) {
         this.id = id;
         this.manageTypeId = manageTypeId;
         this.provinceId = provinceId;
@@ -51,12 +52,12 @@ public class Node implements Serializable{
         super();
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id ;
     }
 
     public String getManageTypeId() {

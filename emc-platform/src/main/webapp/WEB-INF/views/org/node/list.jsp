@@ -5,6 +5,13 @@
 <html>
 <head>
     <jsp:include page="../../head.jsp"></jsp:include>
+    <style type="text/css">
+
+       .org-tree{
+           overflow-X:scroll;
+
+       }
+    </style>
     <script type="application/javascript">
         function search(){
             $table.bootstrapTable('refresh');
@@ -16,10 +23,10 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-            <div class="ibox float-e-margins">
-                    <div class="ibox-content ">组织机构
-                    <div class="org-tree"></div>
-                </div>
+            <div class="ibox float-e-margins" >
+                    <div class="ibox-content " >组织机构
+                        <div class="org-tree" ></div>
+                    </div>
             </div>
         </div>
 

@@ -256,7 +256,7 @@ $(function () {
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                     <form class="form-horizontal" id="stationAddForm" role="form">
-                        <input type="hidden" name="typeId" value="19a76720ee044ed5953f2b3cb5cb7a21"/>
+                        <input type="hidden" name="typeId" value="${object.typeId}"/>
                         <input type="hidden" name="pOrgId" value="${object.pOrgId}"/>
                         <input type="hidden" name="comId" value="${object.comId}"/>
                         <input type="hidden" name="status" value="${object.status}"/>
