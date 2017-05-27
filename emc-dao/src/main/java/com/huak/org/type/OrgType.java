@@ -12,18 +12,17 @@ package com.huak.org.type;
  * Function List:  <BR>
  */
 public enum OrgType {
-    GS(1,"公司"),
-    FGS(2,"分公司"),
-    ZX(3,"中心"),
-    FWZ(4,"服务站"),
-    RY(5,"热源"),
+    GS(1,"公司"),//2
+    FGS(2,"分公司"),//345
+    ZX(3,"中心"),//45
+    FWZ(4,"服务站"),//5
+    RY(5,"热源"),//69
     YCW(6,"一次网"),
     RLZ(7,"热力站"),
     ECX(8,"二次线"),
     XQ(9,"小区"),
     LD(10,"楼栋"),
-    DY(11,"单元"),
-    FJ(12,"房间");
+    FJ(11,"房间");
 
     private int key;
     private String value;
