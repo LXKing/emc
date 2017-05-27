@@ -113,18 +113,18 @@ alter table t_emc_auth_menu_func_rel comment '菜单功能关系表';
 drop table if exists t_emc_org;
 
 /*==============================================================*/
-/* Table: t_emc_org                                             */
+/* Table: T_ECC_ORG                                             */
 /*==============================================================*/
 create table t_emc_org
 (
-   ID                   varchar(32) not null comment '机构主键',
-   COM_ID               varchar(32) comment '公司',
+   ID               		bigint not null auto_increment comment '机构主键',
+	 COM_ID								varchar(32) comment '公司id',
    ORG_CODE             varchar(16) not null comment '机构代码',
    ORG_NAME             varchar(64) not null comment '机构名称',
    SHORT_NAME           varchar(32) comment '简称',
-   P_ORG_ID             varchar(32) not null comment '上级组织机构主键',
-   TYPE_ID              bigint not null comment '类型',
-   CREATOR              bigint not null comment '创建者',
+   P_ORG_ID             bigint not null comment '上级组织机构主键',
+   TYPE_ID              varchar(32) not null comment '类型',
+   CREATOR              varchar(32) not null comment '创建者',
    CREATE_TIME          datetime not null comment '创建时间',
    MEMO                 varchar(255) comment '备注',
    SEQ                  int not null comment '排序',
@@ -132,7 +132,7 @@ create table t_emc_org
    primary key (ID)
 );
 
-alter table t_emc_org comment '公司组织机构父表';
+alter table t_emc_org comment '组织机构父表';
 
 
 drop table if exists t_emc_org_feed;
@@ -189,7 +189,6 @@ create table t_emc_org_node
 alter table t_emc_org_node comment '热力站基本信息表';
 ALTER TABLE t_emc_org_node DROP PRIMARY KEY ;
 alter table t_emc_org_node add STATUS TYPEINT not Null;
-ALTER TABLE t_emc_org_node  MODIFY COLUMN id BIGINT;
 
 drop table if exists t_emc_org_room;
 
@@ -407,3 +406,41 @@ alter table t_emc_company comment '公司信息表';
 2017年5月26日14:49:36
  */
  ALTER TABLE t_emc_energy_type ADD TYPE TINYINT NOT NULL COMMENT '类型 1水、2电、3气、4煤、5热、6太阳能';
+
+/**
+2017年5月27日11:02:53
+ */
+
+ DROP FUNCTION IF EXISTS emc_func_org_getparents;
+
+CREATE FUNCTION emc_func_org_getparents(orgid varchar(32))
+ RETURNS varchar(4000) CHARSET utf8
+BEGIN
+      DECLARE sTemp VARCHAR(10000);
+
+      DECLARE sTempChd VARCHAR(10000);
+				SET sTemp = '$';
+       SET sTempChd =cast(orgid as CHAR);
+
+      WHILE sTempChd is not null DO
+         SET sTemp = concat(sTemp,',',sTempChd);
+         SELECT group_concat(P_ORG_ID) INTO sTempChd FROM t_emc_org where FIND_IN_SET(ID,sTempChd)>0;
+      END WHILE;
+       RETURN REPLACE(sTemp,'$,','');
+END;
+
+
+ CREATE VIEW v_emc_org(comid,id,gsid,fgsid,zxid,fwzid,ryid,ycwid,rlzid,ecxid,xqid,ldid) AS
+SELECT
+t.COM_ID comid,t.ID,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 1) gsid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 2) fgsid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 3) zxid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 4) fwzid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 5) ryid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 6) ycwid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 7) rlzid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 8) ecxid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 9) xqid,
+(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 10) ldid
+ FROM t_emc_org t;
