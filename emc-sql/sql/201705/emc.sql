@@ -113,18 +113,18 @@ alter table t_emc_auth_menu_func_rel comment '菜单功能关系表';
 drop table if exists t_emc_org;
 
 /*==============================================================*/
-/* Table: t_emc_org                                             */
+/* Table: T_ECC_ORG                                             */
 /*==============================================================*/
 create table t_emc_org
 (
-   ID                   varchar(32) not null comment '机构主键',
-   COM_ID               varchar(32) comment '公司',
+   ID               		bigint not null auto_increment comment '机构主键',
+	 COM_ID								varchar(32) comment '公司id',
    ORG_CODE             varchar(16) not null comment '机构代码',
    ORG_NAME             varchar(64) not null comment '机构名称',
    SHORT_NAME           varchar(32) comment '简称',
-   P_ORG_ID             varchar(32) not null comment '上级组织机构主键',
-   TYPE_ID              bigint not null comment '类型',
-   CREATOR              bigint not null comment '创建者',
+   P_ORG_ID             bigint not null comment '上级组织机构主键',
+   TYPE_ID              varchar(32) not null comment '类型',
+   CREATOR              varchar(32) not null comment '创建者',
    CREATE_TIME          datetime not null comment '创建时间',
    MEMO                 varchar(255) comment '备注',
    SEQ                  int not null comment '排序',
@@ -132,7 +132,7 @@ create table t_emc_org
    primary key (ID)
 );
 
-alter table t_emc_org comment '公司组织机构父表';
+alter table t_emc_org comment '组织机构父表';
 
 
 drop table if exists t_emc_org_feed;
