@@ -8,12 +8,10 @@ import com.huak.common.page.PageResult;
 import com.huak.org.dao.NodeDao;
 import com.huak.org.dao.OrgDao;
 import com.huak.org.model.Node;
-import com.huak.org.model.Org;
 import com.huak.org.model.vo.NodeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,9 +36,9 @@ public class NodeServiceImpl implements NodeService{
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
-        if(orgDao.deleteByPrimaryKey(id)>0){
-           return  nodeDao.deleteByPrimaryKey(id);
-        }
+//        if(orgDao.deleteByPrimaryKey(id)>0){
+//           return  nodeDao.deleteByPrimaryKey(id);
+//        }
         return 0;
     }
 
@@ -53,39 +51,39 @@ public class NodeServiceImpl implements NodeService{
     @Override
     @Transactional(readOnly = false)
     public int insertSelective(NodeVo record) {
-        Org org = new Org();
-        org.setComId(record.getComId());
-        org.setpOrgId(record.getpOrgId());
-        org.setArea(record.getArea());
-        org.setCreateTime(dateDao.getTime());
-       // org.setCreator(record.getCreator());
-        org.setId(record.getId());
-        org.setOrgCode(record.getOrgCode());
-        org.setMemo(record.getMemo());
-        org.setOrgName(record.getOrgName());
-        org.setSeq(record.getSeq());
-        org.setTypeId(record.getTypeId());
-        Node node = new Node();
-        node.setAddr(record.getAddr());
-        node.setCityId(record.getCityId());
-        node.setCountyId(record.getCountyId());
-        node.setDwellArea(record.getDwellArea());
-        node.setId(record.getId());
-        node.setLat(record.getLat());
-        node.setLng(record.getLng());
-        node.setManageTypeId(record.getManageTypeId());
-        node.setProvinceId(record.getProvinceId());
-        node.setPublicArea(record.getPublicArea());
-        node.setTownId(record.getTownId());
-        node.setVillageId(record.getVillageId());
-        node.setStatus((byte)0);
-        try {
-            if(orgDao.insert(org)>0){
-                return  nodeDao.insert(node);
-            }
-        }catch (Exception e){
-            return 0;
-        }
+//        Org org = new Org();
+//        org.setComId(record.getComId());
+//        //org.setpOrgId(record.getpOrgId());
+//        org.setArea(record.getArea());
+//        org.setCreateTime(dateDao.getTime());
+//       // org.setCreator(record.getCreator());
+//        //org.setId(record.getId());
+//        org.setOrgCode(record.getOrgCode());
+//        org.setMemo(record.getMemo());
+//        org.setOrgName(record.getOrgName());
+//        org.setSeq(record.getSeq());
+//        org.setTypeId(record.getTypeId());
+//        Node node = new Node();
+//        node.setAddr(record.getAddr());
+//        node.setCityId(record.getCityId());
+//        node.setCountyId(record.getCountyId());
+//        node.setDwellArea(record.getDwellArea());
+//        node.setId(record.getId());
+//        node.setLat(record.getLat());
+//        node.setLng(record.getLng());
+//        node.setManageTypeId(record.getManageTypeId());
+//        node.setProvinceId(record.getProvinceId());
+//        node.setPublicArea(record.getPublicArea());
+//        node.setTownId(record.getTownId());
+//        node.setVillageId(record.getVillageId());
+//        node.setStatus((byte)0);
+//        try {
+//            if(orgDao.insert(org)>0){
+//                return  nodeDao.insert(node);
+//            }
+//        }catch (Exception e){
+//            return 0;
+//        }
 
         return 0;
     }
@@ -195,38 +193,38 @@ public class NodeServiceImpl implements NodeService{
     @Override
     @Transactional(readOnly = false)
     public int update(NodeVo record) {
-        Org org = new Org();
-        org.setId(record.getId());
-        org.setComId(record.getComId());
-        org.setpOrgId(record.getpOrgId());
-        org.setArea(record.getArea());
-        org.setCreateTime(dateDao.getTime());
-        org.setCreator(record.getCreator());
-        org.setId(record.getId());
-        org.setOrgCode(record.getOrgCode());
-        org.setMemo(record.getMemo());
-        org.setOrgName(record.getOrgName());
-        org.setSeq(record.getSeq());
-        org.setTypeId(record.getTypeId());
-        org.setShortName(record.getShortName());
-        Node node = new Node();
-        node.setId(record.getId());
-        node.setAddr(record.getAddr());
-        node.setCityId(record.getCityId());
-        node.setCountyId(record.getCountyId());
-        node.setDwellArea(record.getDwellArea());
-        node.setId(record.getId());
-        node.setLat(record.getLat());
-        node.setLng(record.getLng());
-        node.setManageTypeId(record.getManageTypeId());
-        node.setProvinceId(record.getProvinceId());
-        node.setPublicArea(record.getPublicArea());
-        node.setTownId(record.getTownId());
-        node.setVillageId(record.getVillageId());
-        node.setStatus(record.getStatus());
-        if(orgDao.updateByPrimaryKey(org)>0){
-            return  nodeDao.updateByPrimaryKey(node);
-        }
+//        Org org = new Org();
+//        //org.setId(record.getId());
+//        org.setComId(record.getComId());
+//        //org.setpOrgId(record.getpOrgId());
+//        org.setArea(record.getArea());
+//        org.setCreateTime(dateDao.getTime());
+//        org.setCreator(record.getCreator());
+//        //org.setId(record.getId());
+//        org.setOrgCode(record.getOrgCode());
+//        org.setMemo(record.getMemo());
+//        org.setOrgName(record.getOrgName());
+//        org.setSeq(record.getSeq());
+//        org.setTypeId(record.getTypeId());
+//        org.setShortName(record.getShortName());
+//        Node node = new Node();
+//        node.setId(record.getId());
+//        node.setAddr(record.getAddr());
+//        node.setCityId(record.getCityId());
+//        node.setCountyId(record.getCountyId());
+//        node.setDwellArea(record.getDwellArea());
+//        node.setId(record.getId());
+//        node.setLat(record.getLat());
+//        node.setLng(record.getLng());
+//        node.setManageTypeId(record.getManageTypeId());
+//        node.setProvinceId(record.getProvinceId());
+//        node.setPublicArea(record.getPublicArea());
+//        node.setTownId(record.getTownId());
+//        node.setVillageId(record.getVillageId());
+//        node.setStatus(record.getStatus());
+//        if(orgDao.updateByPrimaryKey(org)>0){
+//            return  nodeDao.updateByPrimaryKey(node);
+//        }
         return 0;
     }
 

@@ -5,7 +5,6 @@ import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.dao.OncenetDao;
 import com.huak.org.dao.SecondnetDao;
 import com.huak.org.model.vo.Secondnet;
 import org.springframework.stereotype.Service;
@@ -32,14 +31,13 @@ public class SecondnetServiceImpl implements SecondnetService {
 
     @Resource
     private SecondnetDao secondnetDao;
-
     @Resource
     private DateDao dateDao;
 
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
-        return secondnetDao.deleteByPrimaryKey(id);
+        return secondnetDao.deleteByPrimaryKey(Long.valueOf(id));
     }
 
     @Override
@@ -57,7 +55,7 @@ public class SecondnetServiceImpl implements SecondnetService {
     @Override
     @Transactional(readOnly = true)
     public Secondnet selectByPrimaryKey(String id) {
-        return secondnetDao.selectByPrimaryKey(id);
+        return secondnetDao.selectByPrimaryKey(Long.valueOf(id));
     }
 
     @Override
