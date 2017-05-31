@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class Feed implements Serializable {
     private String id;
 
+    private String feedName;
+
+    private String feedCode;
+
     private Byte feedType;
 
     private Byte heatType;
@@ -33,12 +37,21 @@ public class Feed implements Serializable {
 
     private Double lat;
 
-    private Double publicArea;
+    private Double heatArea;
 
-    private Double dwellArea;
+    private Long orgId;
 
-    public Feed(String id, Byte feedType, Byte heatType, Double installCapacity, Double heatCapacity, Integer boilerNum, Integer steamturbineNum, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea) {
+    private String netId;
+
+    private String lineId;
+
+    private String comId;
+
+    public Feed(String id,String feedName, String feedCode, Byte feedType, Byte heatType, Double installCapacity, Double heatCapacity, Integer boilerNum, Integer steamturbineNum, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double heatArea,
+                Long orgId,String netId,String lineId,String comId) {
         this.id = id;
+        this.feedName = feedName;
+        this.feedCode = feedCode;
         this.feedType = feedType;
         this.heatType = heatType;
         this.installCapacity = installCapacity;
@@ -53,8 +66,12 @@ public class Feed implements Serializable {
         this.addr = addr;
         this.lng = lng;
         this.lat = lat;
-        this.publicArea = publicArea;
-        this.dwellArea = dwellArea;
+        this.orgId = orgId;
+        this.netId = netId;
+        this.lineId = lineId;
+        this.heatArea = heatArea;
+        this.comId = comId;
+
     }
 
     public Feed() {
@@ -66,7 +83,7 @@ public class Feed implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id== null ? null : id.trim();
     }
 
     public Byte getFeedType() {
@@ -181,19 +198,59 @@ public class Feed implements Serializable {
         this.lat = lat;
     }
 
-    public Double getPublicArea() {
-        return publicArea;
+    public String getFeedName() {
+        return feedName;
     }
 
-    public void setPublicArea(Double publicArea) {
-        this.publicArea = publicArea;
+    public void setFeedName(String feedName) {
+        this.feedName = feedName == null ? null : feedName.trim();
     }
 
-    public Double getDwellArea() {
-        return dwellArea;
+    public String getFeedCode() {
+        return feedCode;
     }
 
-    public void setDwellArea(Double dwellArea) {
-        this.dwellArea = dwellArea;
+    public void setFeedCode(String feedCode) {
+        this.feedCode = feedCode == null ? null : feedCode.trim();
+    }
+
+    public Double getHeatArea() {
+        return heatArea;
+    }
+
+    public void setHeatArea(Double heatArea) {
+        this.heatArea = heatArea;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getNetId() {
+        return netId;
+    }
+
+    public void setNetId(String netId) {
+        this.netId = netId== null ? null : netId.trim();
+    }
+
+    public String getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(String lineId) {
+        this.lineId = lineId== null ? null : lineId.trim();
+    }
+
+    public String getComId() {
+        return comId;
+    }
+
+    public void setComId(String comId) {
+        this.comId = comId== null ? null : comId.trim();
     }
 }

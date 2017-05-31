@@ -4,59 +4,72 @@
   <resultMap id="BaseResultMap" type="com.huak.org.model.Feed">
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FEED_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FEED_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="FEED_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="HEAT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+
       <arg column="INSTALL_CAPACITY" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="HEAT_CAPACITY" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="BOILER_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="STEAMTURBINE_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+
       <arg column="PROVINCE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CITY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COUNTY_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="TOWN_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="VILLAGE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+
       <arg column="ADDR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="LNG" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="LAT" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="PUBLIC_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="DWELL_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+
+      <arg column="HEAT_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="NET_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM, 
-    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, PUBLIC_AREA, 
-    DWELL_AREA
+    ID,FEED_NANME,FEED_CODE, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM,
+    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_emc_org_feed
+    from t_emc_unit_feed
     where ID = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org_feed
+    delete from t_emc_unit_feed
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.huak.org.model.Feed">
-    insert into t_emc_org_feed (ID, FEED_TYPE, HEAT_TYPE, 
-      INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, 
-      STEAMTURBINE_NUM, PROVINCE_ID, CITY_ID, 
-      COUNTY_ID, TOWN_ID, VILLAGE_ID, 
-      ADDR, LNG, LAT, PUBLIC_AREA, 
-      DWELL_AREA)
-    values (#{id,jdbcType=VARCHAR}, #{feedType,jdbcType=TINYINT}, #{heatType,jdbcType=TINYINT}, 
+    insert into t_emc_unit_feed (ID,FEED_NANME,FEED_CODE, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM,
+    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID)
+    values (#{id,jdbcType=VARCHAR},#{feedName,jdbcType=VARCHAR},#{feedCode,jdbcType=VARCHAR}, #{feedType,jdbcType=TINYINT}, #{heatType,jdbcType=TINYINT},
       #{installCapacity,jdbcType=DOUBLE}, #{heatCapacity,jdbcType=DOUBLE}, #{boilerNum,jdbcType=INTEGER}, 
       #{steamturbineNum,jdbcType=INTEGER}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
       #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
-      #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{publicArea,jdbcType=DOUBLE}, 
-      #{dwellArea,jdbcType=DOUBLE})
+      #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{heatArea,jdbcType=DOUBLE},
+      #{orgId,jdbcType=BIGINT},#{netId,jdbcType=VARCHAR},#{lineId,jdbcType=VARCHAR},#{comId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Feed">
-    insert into t_emc_org_feed
+    insert into t_emc_unit_feed
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
       </if>
+
+      <if test="feedName != null">
+        FEED_NAME,
+      </if>
+
+      <if test="feedCode != null">
+            FEED_CODE,
+      </if>
+
       <if test="feedType != null">
         FEED_TYPE,
       </if>
@@ -99,17 +112,32 @@
       <if test="lat != null">
         LAT,
       </if>
-      <if test="publicArea != null">
-        PUBLIC_AREA,
+      <if test="heatArea != null">
+        HEAT_AREA,
       </if>
-      <if test="dwellArea != null">
-        DWELL_AREA,
+      <if test="orgId != null">
+        ORG_ID,
       </if>
+        <if test="netId != null">
+            NET_ID,
+        </if>
+        <if test="lineId != null">
+            LINE_ID,
+        </if>
+        <if test="comId != null">
+            COM_ID,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
+        <if test="feedName != null">
+            #{feedName,jdbcType=VARCHAR},
+        </if>
+        <if test="feedCode != null">
+            #{feedCode,jdbcType=VARCHAR},
+        </if>
       <if test="feedType != null">
         #{feedType,jdbcType=TINYINT},
       </if>
@@ -152,17 +180,32 @@
       <if test="lat != null">
         #{lat,jdbcType=DOUBLE},
       </if>
-      <if test="publicArea != null">
-        #{publicArea,jdbcType=DOUBLE},
+      <if test="heatArea != null">
+        #{heatArea,jdbcType=DOUBLE},
       </if>
-      <if test="dwellArea != null">
-        #{dwellArea,jdbcType=DOUBLE},
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
       </if>
+        <if test="netId != null">
+            #{netId,jdbcType=VARCHAR},
+        </if>
+        <if test="lineId != null">
+            #{lineId,jdbcType=VARCHAR},
+        </if>
+        <if test="comId != null">
+            #{comId,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Feed">
-    update t_emc_org_feed
+    update t_emc_unit_feed
     <set>
+      <if test="feedName != null">
+        FEED_NAME = #{feedName,jdbcType=VARCHAR},
+      </if>
+      <if test="feedCode != null">
+        FEED_CODE = #{feedCode,jdbcType=VARCHAR},
+      </if>
       <if test="feedType != null">
         FEED_TYPE = #{feedType,jdbcType=TINYINT},
       </if>
@@ -205,18 +248,30 @@
       <if test="lat != null">
         LAT = #{lat,jdbcType=DOUBLE},
       </if>
-      <if test="publicArea != null">
-        PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
+      <if test="heatArea != null">
+        HEAT_AREA = #{heatArea,jdbcType=DOUBLE},
       </if>
-      <if test="dwellArea != null">
-        DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
+      <if test="orgId != null">
+        ORG_ID = #{orgId,jdbcType=BIGINT},
       </if>
+        <if test="netId != null">
+            NET_ID = #{netId,jdbcType=BIGINT},
+        </if>
+        <if test="lineId != null">
+            LINE_ID = #{lineId,jdbcType=BIGINT},
+        </if>
+        <if test="comId != null">
+            COM_ID = #{comId,jdbcType=BIGINT},
+        </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Feed">
-    update t_emc_org_feed
-    set FEED_TYPE = #{feedType,jdbcType=TINYINT},
+    update t_emc_unit_feed
+    set
+      FEED_NAME = #{feedName,jdbcType=VARCHAR},
+      FEED_CODE = #{feedCode,jdbcType=VARCHAR},
+      FEED_TYPE = #{feedType,jdbcType=TINYINT},
       HEAT_TYPE = #{heatType,jdbcType=TINYINT},
       INSTALL_CAPACITY = #{installCapacity,jdbcType=DOUBLE},
       HEAT_CAPACITY = #{heatCapacity,jdbcType=DOUBLE},
@@ -230,15 +285,18 @@
       ADDR = #{addr,jdbcType=VARCHAR},
       LNG = #{lng,jdbcType=DOUBLE},
       LAT = #{lat,jdbcType=DOUBLE},
-      PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
-      DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
+      HEAT_AREA = #{hetaArea,jdbcType=DOUBLE},
+      ORG_ID = #{orgId,jdbcType=BIGINT},
+      NET_ID = #{netId,jdbcType=VARCHAR},
+      LINE_ID = #{lineId,jdbcType=VARCHAR},
+      COM_ID = #{comId,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from t_emc_org_feed
+        from t_emc_unit_feed
         where 1=1
         <if test="feedType != null and feedType !=''">
             and  FEED_TYPE =  #{feedType,jdbcType=TINYINT}
