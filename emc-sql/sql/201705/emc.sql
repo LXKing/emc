@@ -142,7 +142,7 @@ drop table if exists t_emc_org_feed;
 /*==============================================================*/
 create table t_emc_org_feed
 (
-   ID                   varchar(32) not null comment '机构主键',
+   ID                   bigint not null auto_increment comment '机构主键',
    FEED_TYPE            tinyint not null comment '热源性质 来源字典表 1:热电 2:区域锅炉房 3:核电 4:工业余热 ',
    HEAT_TYPE            tinyint not null comment '供热类型 来源字典表 区域供热 集中供热 尖峰供热',
    INSTALL_CAPACITY     double not null comment '装机容量(MW)',
@@ -197,7 +197,7 @@ drop table if exists t_emc_org_room;
 /*==============================================================*/
 create table t_emc_org_room
 (
-   ORG_ID               varchar(32) not null comment '机构主键',
+   ORG_ID               bigint not null auto_increment comment '机构主键',
    DWELL_AREA           double not null comment '居民面积',
    primary key (ORG_ID)
 );
@@ -212,7 +212,7 @@ drop table if exists t_emc_org_ban;
 /*==============================================================*/
 create table t_emc_org_ban
 (
-   ORG_ID               varchar(32) not null comment '机构主键',
+   ORG_ID               bigint not null auto_increment comment '机构主键',
    PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
    CITY_ID              varchar(12) not null comment '市主键',
    COUNTY_ID            varchar(12) not null comment '县主键',
@@ -258,9 +258,9 @@ drop table if exists t_emc_org_secondne;
 /*==============================================================*/
 /* Table: t_emc_org_secondne                                    */
 /*==============================================================*/
-create table t_emc_org_secondne
+create table t_emc_org_secondnet
 (
-   ID                   varchar(32) not null comment '机构主键',
+   ID                   bigint not null auto_increment comment '机构主键',
    NET_TYPE_ID          varchar(32) not null comment '管线类型 来源字典表 干线、支线、连通线、户线',
    LENGTH               double not null default 0 comment '管线长度(管段长度生成)',
    CELL_NUM             int not null default 0 comment '小室数量',
@@ -269,7 +269,7 @@ create table t_emc_org_secondne
    primary key (ID)
 );
 
-alter table t_emc_org_secondne comment '二次管线基本信息表';
+alter table t_emc_org_secondnet comment '二次管线基本信息表';
 
 
 drop table if exists t_emc_org_oncenet;
@@ -279,7 +279,7 @@ drop table if exists t_emc_org_oncenet;
 /*==============================================================*/
 create table t_emc_org_oncenet
 (
-   ID                   varchar(32) not null comment '机构主键',
+   ID                   bigint not null auto_increment comment '机构主键',
    NET_TYPE_ID          varchar(32) not null comment '管线类型 来源字典表  干线、支线、连通线、户线',
    LENGTH               double not null default 0 comment '管线长度(管段长度生成)',
    CELL_NUM             int not null default 0 comment '小室数量',
@@ -429,18 +429,9 @@ BEGIN
        RETURN REPLACE(sTemp,'$,','');
 END;
 
+/**
+2017年5月31日10:57:47
+ */
+alter table t_emc_org modify column TYPE_ID TINYINT(4);
 
- CREATE VIEW v_emc_org(comid,id,gsid,fgsid,zxid,fwzid,ryid,ycwid,rlzid,ecxid,xqid,ldid) AS
-SELECT
-t.COM_ID comid,t.ID,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 1) gsid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 2) fgsid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 3) zxid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 4) fwzid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 5) ryid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 6) ycwid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 7) rlzid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 8) ecxid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 9) xqid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 10) ldid
- FROM t_emc_org t;
+alter table t_emc_org modify column CREATOR VARCHAR(32);
