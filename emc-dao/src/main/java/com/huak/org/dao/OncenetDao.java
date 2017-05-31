@@ -1,19 +1,18 @@
 package com.huak.org.dao;
 
-import com.huak.org.model.Feed;
 import com.huak.org.model.Oncenet;
 
 import java.util.List;
 import java.util.Map;
 
 public interface OncenetDao {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Oncenet record);
 
     int insertSelective(Oncenet record);
 
-    Oncenet selectByPrimaryKey(String id);
+    Oncenet selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Oncenet record);
 

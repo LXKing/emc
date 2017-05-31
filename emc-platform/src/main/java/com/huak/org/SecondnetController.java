@@ -2,9 +2,7 @@ package com.huak.org;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
-import com.huak.org.model.Oncenet;
 import com.huak.org.model.vo.Secondnet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +70,6 @@ public class SecondnetController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
 
-            secondnet.setId(UUIDGenerator.getUUID());
             secondnetService.insertSelective(secondnet);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加管线成功");

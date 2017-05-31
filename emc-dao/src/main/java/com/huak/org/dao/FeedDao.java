@@ -1,6 +1,5 @@
 package com.huak.org.dao;
 
-import com.huak.auth.model.Role;
 import com.huak.org.model.Feed;
 import org.springframework.stereotype.Repository;
 
@@ -9,13 +8,13 @@ import java.util.Map;
 
 @Repository
 public interface FeedDao {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Feed record);
 
     int insertSelective(Feed record);
 
-    Feed selectByPrimaryKey(String id);
+    Feed selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Feed record);
 

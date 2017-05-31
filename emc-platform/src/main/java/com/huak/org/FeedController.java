@@ -1,10 +1,7 @@
 package com.huak.org;
 
 import com.alibaba.fastjson.JSONObject;
-import com.huak.auth.model.Role;
-import com.huak.base.dao.DateDao;
 import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Feed;
 import org.slf4j.Logger;
@@ -86,7 +83,6 @@ public class FeedController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
 
-            feed.setId(UUIDGenerator.getUUID());
             feedService.insertSelective(feed);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加热源成功");

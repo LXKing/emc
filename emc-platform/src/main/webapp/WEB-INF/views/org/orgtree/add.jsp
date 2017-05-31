@@ -32,6 +32,10 @@
 
     //以下为官方示例
     $(function () {
+
+        var comId = $(top.document).find(".chosen-select").find("option:selected").val();//选中的文本
+        alert(comId);
+        $(".comId").val(comId);
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//
             var orgName = $('.orgNameID').val();
@@ -160,18 +164,19 @@
                         <input name="shortName" class="form-control" type="text" maxlength="16" placeholder="请输入机构简称">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3  control-label"><span class="red">*</span>公司：</label>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-3  control-label"><span class="red">*</span>公司：</label>--%>
 
-                    <div class="col-sm-8">
-                        <select id="comId" name="comId" class="chosen-select form-control">
-                            <option value="">请选择公司</option>
-                        <c:forEach items="${company}" var="item" varStatus="status" >
-                                <option value="${item.id}">${item.cname}</option>
-                        </c:forEach>
-                        </select>
-                    </div>
-                </div>
+                    <%--<div class="col-sm-8">--%>
+                        <%--<select id="comId" name="comId" class="chosen-select form-control">--%>
+                            <%--<option value="">请选择公司</option>--%>
+                        <%--<c:forEach items="${company}" var="item" varStatus="status" >--%>
+                                <%--<option value="${item.id}">${item.cname}</option>--%>
+                        <%--</c:forEach>--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <input name="comId" class="form-control comId" value="" type="hidden" maxlength="16" placeholder="请输入机构简称">
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>类型：</label>
 

@@ -1,24 +1,22 @@
 package com.huak.org;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
 import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import javax.annotation.Resource;
-import com.alibaba.fastjson.JSONObject;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -129,8 +127,6 @@ public class OrgController {
             HttpSession session = request.getSession();
            User user =  (User)session.getAttribute(Constants.SESSION_KEY);
             org.setCreator(user.getId());
-
-            org.setId(UUIDGenerator.getUUID());
             boolean flag = orgService.insertOrg(org);
             jo.put(Constants.FLAG, flag);
             jo.put(Constants.MSG, "添加机构成功");
