@@ -435,3 +435,31 @@ END;
 alter table t_emc_org modify column TYPE_ID TINYINT(4);
 
 alter table t_emc_org modify column CREATOR VARCHAR(32);
+
+
+CREATE VIEW v_emc_unit   AS
+select f.COM_ID comid,f.ID ryid,n.ID ycwid,s.ID rlzid,l.ID ecxid,r.ID hid
+from t_emc_unit_feed f
+LEFT JOIN t_emc_unit_net n ON f.NET_ID = n.ID
+LEFT JOIN t_emc_unit_station s ON s.NET_ID = n.ID
+LEFT JOIN t_emc_unit_line l ON s.LINE_ID = l.ID
+LEFT JOIN t_emc_unit_room r ON r.LINE_ID = l.ID
+UNION
+select f.COM_ID comid,f.ID ryid,null ycwid,s.ID rlzid,l.ID ecxid,r.ID hid
+from t_emc_unit_feed f
+LEFT JOIN t_emc_unit_station s ON s.FEED_ID = f.ID
+LEFT JOIN t_emc_unit_line l ON s.LINE_ID = l.ID
+LEFT JOIN t_emc_unit_room r ON r.LINE_ID = l.ID
+UNION
+select f.COM_ID comid,f.ID ryid,null ycwid,null rlzid,l.ID ecxid,r.ID hid
+from t_emc_unit_feed f
+LEFT JOIN t_emc_unit_line l ON f.LINE_ID = l.ID
+LEFT JOIN t_emc_unit_room r ON r.LINE_ID = l.ID;
+
+
+CREATE VIEW v_emc_room   AS
+select r.COM_ID comid,r.ID roomid,c.ID ycwid,b.ID rlzid,v.ID ecxid
+from t_emc_unit_room r
+LEFT JOIN t_emc_unit_cell c ON r.CELL_ID = c.ID
+LEFT JOIN t_emc_unit_ban b ON r.BAN_ID = b.ID
+LEFT JOIN t_emc_unit_community v ON r.COMMUNITY_ID = v.ID;
