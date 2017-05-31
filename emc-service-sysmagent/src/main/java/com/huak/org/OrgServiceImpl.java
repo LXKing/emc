@@ -52,11 +52,11 @@ public class OrgServiceImpl implements OrgService {
         try {
             if(ids.length>1){
                 for (int i = 0; i <ids.length ; i++) {
-                    orgDao.deleteByPrimaryKey(new Long(ids[i]));
+                    //orgDao.deleteByPrimaryKey(new Long(ids[i]));
                 }
                 flag=true;
             }else{
-                orgDao.deleteByPrimaryKey(new Long(ids[0]));
+                //orgDao.deleteByPrimaryKey(new Long(ids[0]));
                 flag=true;
             }
 

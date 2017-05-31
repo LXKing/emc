@@ -37,7 +37,7 @@ public class SecondnetServiceImpl implements SecondnetService {
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
-        return secondnetDao.deleteByPrimaryKey(Long.valueOf(id));
+        return secondnetDao.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class SecondnetServiceImpl implements SecondnetService {
     @Override
     @Transactional(readOnly = true)
     public Secondnet selectByPrimaryKey(String id) {
-        return secondnetDao.selectByPrimaryKey(Long.valueOf(id));
+        return secondnetDao.selectByPrimaryKey(id);
     }
 
     @Override

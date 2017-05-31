@@ -38,7 +38,7 @@ public class OncenetServiceImpl implements OncenetService {
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
-        return oncenetDao.deleteByPrimaryKey(Long.valueOf(id));
+        return oncenetDao.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class OncenetServiceImpl implements OncenetService {
     @Override
     @Transactional(readOnly = true)
     public Oncenet selectByPrimaryKey(String id) {
-        return oncenetDao.selectByPrimaryKey(Long.valueOf(id));
+        return oncenetDao.selectByPrimaryKey(id);
     }
 
     @Override
