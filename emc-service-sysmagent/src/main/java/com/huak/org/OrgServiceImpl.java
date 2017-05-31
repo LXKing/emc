@@ -1,22 +1,23 @@
 package com.huak.org;
 
 import com.huak.base.dao.DateDao;
-import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.dao.AdministrativeDao;
 import com.huak.org.dao.CompanyDao;
+import com.huak.org.dao.OrgDao;
 import com.huak.org.model.Administrative;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.sys.dao.SysDicDao;
 import com.huak.sys.model.SysDic;
 import org.springframework.stereotype.Service;
-import com.huak.org.dao.AdministrativeDao;
-import com.huak.org.dao.OrgDao;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/5/9.
@@ -51,11 +52,11 @@ public class OrgServiceImpl implements OrgService {
         try {
             if(ids.length>1){
                 for (int i = 0; i <ids.length ; i++) {
-                    orgDao.deleteByPrimaryKey(ids[i]);
+                    orgDao.deleteByPrimaryKey(new Long(ids[i]));
                 }
                 flag=true;
             }else{
-                orgDao.deleteByPrimaryKey(ids[0]);
+                orgDao.deleteByPrimaryKey(new Long(ids[0]));
                 flag=true;
             }
 
@@ -88,7 +89,7 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public boolean insertOrg(Org org) {
         boolean flag=false;
-        org.setCreateTime(dateDao.getTime());
+        org.setCreateTime(null);
         int i =orgDao.insert(org);
         if(i>0){
             flag=true;

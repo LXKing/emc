@@ -5,9 +5,7 @@ import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.dao.FeedDao;
 import com.huak.org.dao.OncenetDao;
-import com.huak.org.model.Feed;
 import com.huak.org.model.Oncenet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +38,7 @@ public class OncenetServiceImpl implements OncenetService {
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
-        return oncenetDao.deleteByPrimaryKey(id);
+        return oncenetDao.deleteByPrimaryKey(Long.valueOf(id));
     }
 
     @Override
@@ -58,7 +56,7 @@ public class OncenetServiceImpl implements OncenetService {
     @Override
     @Transactional(readOnly = true)
     public Oncenet selectByPrimaryKey(String id) {
-        return oncenetDao.selectByPrimaryKey(id);
+        return oncenetDao.selectByPrimaryKey(Long.valueOf(id));
     }
 
     @Override

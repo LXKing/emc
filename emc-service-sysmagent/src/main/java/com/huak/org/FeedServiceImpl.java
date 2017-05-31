@@ -1,11 +1,11 @@
 package com.huak.org;
 
 import com.github.pagehelper.PageHelper;
-import com.huak.org.dao.FeedDao;
 import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.dao.FeedDao;
 import com.huak.org.model.Feed;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,8 +50,8 @@ public class FeedServiceImpl implements FeedService{
     @Override
     @Transactional(readOnly = true)
     public Feed selectByPrimaryKey(String id) {
-        Feed feed = feedDao.selectByPrimaryKey(id);
-        System.out.print("------"+feed.getFeedType());
+        Feed feed = feedDao.selectByPrimaryKey(Long.valueOf(id));
+
         return feed;
     }
 
@@ -70,6 +70,6 @@ public class FeedServiceImpl implements FeedService{
 
     @Override
     public int deleteByPrimaryKey(String id) {
-        return feedDao.deleteByPrimaryKey(id);
+        return feedDao.deleteByPrimaryKey(new Long(id));
     }
 }
