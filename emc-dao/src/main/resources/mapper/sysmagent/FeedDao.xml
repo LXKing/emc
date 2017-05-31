@@ -3,7 +3,7 @@
 <mapper namespace="com.huak.org.dao.FeedDao">
   <resultMap id="BaseResultMap" type="com.huak.org.model.Feed">
     <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="FEED_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="HEAT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="INSTALL_CAPACITY" javaType="java.lang.Double" jdbcType="DOUBLE" />
@@ -27,24 +27,24 @@
     PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, PUBLIC_AREA, 
     DWELL_AREA
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_emc_org_feed
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_emc_org_feed
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.huak.org.model.Feed">
-    insert into t_emc_org_feed (ID, FEED_TYPE, HEAT_TYPE, 
+    insert into t_emc_org_feed (FEED_TYPE, HEAT_TYPE,
       INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, 
       STEAMTURBINE_NUM, PROVINCE_ID, CITY_ID, 
       COUNTY_ID, TOWN_ID, VILLAGE_ID, 
       ADDR, LNG, LAT, PUBLIC_AREA, 
       DWELL_AREA)
-    values (#{id,jdbcType=VARCHAR}, #{feedType,jdbcType=TINYINT}, #{heatType,jdbcType=TINYINT}, 
+    values (#{feedType,jdbcType=TINYINT}, #{heatType,jdbcType=TINYINT},
       #{installCapacity,jdbcType=DOUBLE}, #{heatCapacity,jdbcType=DOUBLE}, #{boilerNum,jdbcType=INTEGER}, 
       #{steamturbineNum,jdbcType=INTEGER}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
       #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
@@ -54,9 +54,6 @@
   <insert id="insertSelective" parameterType="com.huak.org.model.Feed">
     insert into t_emc_org_feed
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
       <if test="feedType != null">
         FEED_TYPE,
       </if>
@@ -107,9 +104,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
       <if test="feedType != null">
         #{feedType,jdbcType=TINYINT},
       </if>
@@ -212,7 +206,7 @@
         DWELL_AREA = #{dwellArea,jdbcType=DOUBLE},
       </if>
     </set>
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Feed">
     update t_emc_org_feed
@@ -232,7 +226,7 @@
       LAT = #{lat,jdbcType=DOUBLE},
       PUBLIC_AREA = #{publicArea,jdbcType=DOUBLE},
       DWELL_AREA = #{dwellArea,jdbcType=DOUBLE}
-    where ID = #{id,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
