@@ -1,6 +1,5 @@
 package com.huak.org.dao;
 
-import com.huak.org.model.Oncenet;
 import com.huak.org.model.vo.Secondnet;
 
 import java.util.List;
@@ -8,13 +7,13 @@ import java.util.Map;
 
 public interface SecondnetDao {
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Secondnet record);
 
     int insertSelective(Secondnet record);
 
-    Secondnet selectByPrimaryKey(String id);
+    Secondnet selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Secondnet record);
 

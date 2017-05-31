@@ -3,7 +3,7 @@ package com.huak.org.model;
 import java.io.Serializable;
 
 public class Oncenet implements Serializable{
-    private String id;
+    private Long id;
 
     private String netTypeId;
 
@@ -15,7 +15,11 @@ public class Oncenet implements Serializable{
 
     private String medium;
 
-    public Oncenet(String id, String netTypeId, Double length, Integer cellNum, Integer partNum, String medium) {
+    public Oncenet() {
+        super();
+    }
+
+    public Oncenet(Long id, String netTypeId, Double length, Integer cellNum, Integer partNum, String medium) {
         this.id = id;
         this.netTypeId = netTypeId;
         this.length = length;
@@ -24,16 +28,12 @@ public class Oncenet implements Serializable{
         this.medium = medium;
     }
 
-    public Oncenet() {
-        super();
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNetTypeId() {
@@ -41,7 +41,7 @@ public class Oncenet implements Serializable{
     }
 
     public void setNetTypeId(String netTypeId) {
-        this.netTypeId = netTypeId == null ? null : netTypeId.trim();
+        this.netTypeId = netTypeId;
     }
 
     public Double getLength() {
@@ -73,6 +73,6 @@ public class Oncenet implements Serializable{
     }
 
     public void setMedium(String medium) {
-        this.medium = medium == null ? null : medium.trim();
+        this.medium = medium;
     }
 }

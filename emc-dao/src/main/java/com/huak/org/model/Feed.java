@@ -3,7 +3,7 @@ package com.huak.org.model;
 import java.io.Serializable;
 
 public class Feed implements Serializable {
-    private String id;
+    private Long id;
 
     private Byte feedType;
 
@@ -37,7 +37,11 @@ public class Feed implements Serializable {
 
     private Double dwellArea;
 
-    public Feed(String id, Byte feedType, Byte heatType, Double installCapacity, Double heatCapacity, Integer boilerNum, Integer steamturbineNum, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea) {
+    public Feed() {
+        super();
+    }
+
+    public Feed(Long id, Byte feedType, Byte heatType, Double installCapacity, Double heatCapacity, Integer boilerNum, Integer steamturbineNum, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea) {
         this.id = id;
         this.feedType = feedType;
         this.heatType = heatType;
@@ -57,16 +61,12 @@ public class Feed implements Serializable {
         this.dwellArea = dwellArea;
     }
 
-    public Feed() {
-        super();
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Byte getFeedType() {
@@ -122,7 +122,7 @@ public class Feed implements Serializable {
     }
 
     public void setProvinceId(String provinceId) {
-        this.provinceId = provinceId == null ? null : provinceId.trim();
+        this.provinceId = provinceId;
     }
 
     public String getCityId() {
@@ -130,7 +130,7 @@ public class Feed implements Serializable {
     }
 
     public void setCityId(String cityId) {
-        this.cityId = cityId == null ? null : cityId.trim();
+        this.cityId = cityId;
     }
 
     public String getCountyId() {
@@ -138,7 +138,7 @@ public class Feed implements Serializable {
     }
 
     public void setCountyId(String countyId) {
-        this.countyId = countyId == null ? null : countyId.trim();
+        this.countyId = countyId;
     }
 
     public String getTownId() {
@@ -146,7 +146,7 @@ public class Feed implements Serializable {
     }
 
     public void setTownId(String townId) {
-        this.townId = townId == null ? null : townId.trim();
+        this.townId = townId;
     }
 
     public String getVillageId() {
@@ -154,7 +154,7 @@ public class Feed implements Serializable {
     }
 
     public void setVillageId(String villageId) {
-        this.villageId = villageId == null ? null : villageId.trim();
+        this.villageId = villageId;
     }
 
     public String getAddr() {
@@ -162,7 +162,7 @@ public class Feed implements Serializable {
     }
 
     public void setAddr(String addr) {
-        this.addr = addr == null ? null : addr.trim();
+        this.addr = addr;
     }
 
     public Double getLng() {
