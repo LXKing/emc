@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public boolean insertOrg(Org org) {
         boolean flag=false;
-        org.setCreateTime(new Date(dateDao.getTime()));
+        org.setCreateTime(null);
         int i =orgDao.insert(org);
         if(i>0){
             flag=true;
