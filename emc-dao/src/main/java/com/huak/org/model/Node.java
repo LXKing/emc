@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 public class Node implements Serializable{
-    private Long id;
+    private String id;
 
     private String manageTypeId;
 
@@ -31,7 +31,7 @@ public class Node implements Serializable{
 
 
 
-    public Node(Long id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea,Byte status) {
+    public Node(String id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea,Byte status) {
         this.id = id;
         this.manageTypeId = manageTypeId;
         this.provinceId = provinceId;
@@ -52,11 +52,11 @@ public class Node implements Serializable{
         super();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id ;
     }
 

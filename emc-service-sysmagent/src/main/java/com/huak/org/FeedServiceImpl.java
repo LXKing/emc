@@ -50,7 +50,7 @@ public class FeedServiceImpl implements FeedService{
     @Override
     @Transactional(readOnly = true)
     public Feed selectByPrimaryKey(String id) {
-        Feed feed = feedDao.selectByPrimaryKey(Long.valueOf(id));
+        Feed feed = feedDao.selectByPrimaryKey(id);
 
         return feed;
     }
@@ -70,6 +70,6 @@ public class FeedServiceImpl implements FeedService{
 
     @Override
     public int deleteByPrimaryKey(String id) {
-        return feedDao.deleteByPrimaryKey(new Long(id));
+        return feedDao.deleteByPrimaryKey(id);
     }
 }

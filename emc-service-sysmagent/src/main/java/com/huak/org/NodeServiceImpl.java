@@ -58,7 +58,7 @@ public class NodeServiceImpl implements NodeService{
         org.setpOrgId(record.getpOrgId());
         org.setArea(record.getArea());
         org.setCreateTime(dateDao.getTime());
-       // org.setCreator(record.getCreator());
+        org.setCreator(record.getCreator());
         org.setId(record.getId());
         org.setOrgCode(record.getOrgCode());
         org.setMemo(record.getMemo());
