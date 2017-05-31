@@ -270,3 +270,266 @@ CREATE TABLE t_emc_user_model (
   PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户模块表';
 drop table if exists t_emc_role;
+
+
+/**
+删除组织机构历史表
+ */
+ drop table if exists t_emc_org;
+drop table if exists t_emc_org_feed;
+drop table if exists t_emc_org_node;
+drop table if exists t_emc_org_ban;
+drop table if exists t_emc_org_employee;
+drop table if exists t_emc_org_oncenet;
+drop table if exists t_emc_org_room;
+drop table if exists t_emc_org_secondnet;
+drop table if exists t_emc_org_unit;
+
+
+
+
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2017/5/31 10:11:04                           */
+/*==============================================================*/
+
+
+drop table if exists t_emc_org;
+
+
+drop table if exists t_emc_unit_ban;
+
+
+drop table if exists t_emc_unit_cell;
+
+
+drop table if exists t_emc_unit_community;
+
+
+drop table if exists t_emc_unit_feed;
+
+
+drop table if exists t_emc_unit_line;
+
+
+drop table if exists t_emc_unit_net;
+
+
+drop table if exists t_emc_unit_room;
+
+
+drop table if exists t_emc_unit_station;
+
+drop table if exists t_emc_unit_type_rel;
+
+/*==============================================================*/
+/* Table: t_emc_org                                             */
+/*==============================================================*/
+create table t_emc_org
+(
+   ID                   bigint not null auto_increment comment '机构主键',
+   ORG_CODE             varchar(16) not null comment '机构代码',
+   ORG_NAME             varchar(64) not null comment '机构名称',
+   SHORT_NAME           varchar(32) comment '简称',
+   P_ORG_ID             bigint not null comment '上级组织机构主键',
+   TYPE_ID              bigint not null comment '类型',
+   CREATOR              bigint not null comment '创建者',
+   CREATE_TIME          datetime not null comment '创建时间',
+   MEMO                 varchar(255) comment '备注',
+   SEQ                  int not null comment '排序',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_org comment '组织机构表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_ban                                        */
+/*==============================================================*/
+create table t_emc_unit_ban
+(
+   ID                   varchar(32) not null comment 'ID',
+   BAN_NAME             varchar(64) not null comment '名称',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(128) not null comment '详细地址',
+   COMMUNITY_ID         varchar(32) comment '小区',
+   ORG_ID               bigint not null comment '所属机构',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_ban comment '楼栋基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_cell                                       */
+/*==============================================================*/
+create table t_emc_unit_cell
+(
+   ID                   varchar(32) not null comment 'ID',
+   NAME                 varchar(64) not null comment '名称',
+   BAN_ID               varchar(32) not null comment '楼栋',
+   ORG_ID               bigint not null comment '所属机构',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_cell comment '单元基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_community                                  */
+/*==============================================================*/
+create table t_emc_unit_community
+(
+   ID                   varchar(32) not null comment 'ID',
+   COMMUNITY_NAME       varchar(64) not null comment '名称',
+   ORG_ID               bigint not null comment '所属机构',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_community comment '小区基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_feed                                       */
+/*==============================================================*/
+create table t_emc_unit_feed
+(
+   ID                   varchar(32) not null comment '主键',
+   FEED_NAME            varchar(64) not null comment '热源名称',
+   FEED_CODE            varchar(32) comment '热源编码',
+   FEED_TYPE            tinyint not null comment '热源性质 来源字典表 1:热电 2:区域锅炉房 3:核电 4:工业余热 ',
+   HEAT_TYPE            tinyint not null comment '供热类型 来源字典表  区域供热 集中供热  尖峰供热',
+   INSTALL_CAPACITY     double comment '装机容量(MW)',
+   HEAT_CAPACITY        double default 0 comment '供热能力(㎡)',
+   BOILER_NUM           int default 0 comment '锅炉数量',
+   STEAMTURBINE_NUM     int default 0 comment '汽机数量',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(128) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   HEAT_AREA            double not null default 0 comment '供热面积',
+   ORG_ID               bigint not null comment '所属机构',
+   NET_ID               varchar(32) comment '所属管网',
+   LINE_ID              varchar(32) comment '所属管线',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_feed comment '用能单位-热源基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_line                                       */
+/*==============================================================*/
+create table t_emc_unit_line
+(
+   ID                   varchar(32) not null comment '主键',
+   LINE_NAME            varchar(64) not null comment '名称',
+   LINE_CODE            varchar(32) not null comment '代码',
+   NET_TYPE_ID          tinyint not null comment '管线类型 来源字典表 干线、支线、连通线、户线',
+   LENGTH               double not null default 0 comment '管线长度',
+   CELL_NUM             int default 0 comment '小室数量',
+   PART_NUM             int default 0 comment '管段数量',
+   MEDIUM               varchar(32) comment '输送介质',
+   ORG_ID               bigint not null comment '所属机构',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_line comment '用能单位-二次线基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_net                                        */
+/*==============================================================*/
+create table t_emc_unit_net
+(
+   ID                   varchar(32) not null comment '主键',
+   NET_NAME             varchar(64) not null comment '名称',
+   NET_CODE             varchar(32) not null comment '代码',
+   NET_TYPE_ID          tinyint not null comment '管线类型 来源字典表 干线、支线、连通线、户线',
+   LENGTH               double not null default 0 comment '管线长度',
+   CELL_NUM             int default 0 comment '小室数量',
+   PART_NUM             int default 0 comment '管段数量',
+   MEDIUM               varchar(32) comment '输送介质',
+   ORG_ID               bigint not null comment '所属机构',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_net comment '用能单位-一次网基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_room                                       */
+/*==============================================================*/
+create table t_emc_unit_room
+(
+   ID                   varchar(32) not null comment 'ID',
+   ROOM_NAME            varchar(64) not null comment '名称',
+   ROOM_CODE            varchar(32) not null comment '代码',
+   HEAT_AREA            double not null default 0 comment '供热面积',
+   ORG_ID               bigint not null comment '所属机构',
+   LINE_ID              varchar(32) not null comment '所属管线',
+   COMMUNITY_ID         varchar(32) comment '小区',
+   BAN_ID               varchar(32) comment '楼栋',
+   CELL_ID              varchar(32) comment '单元',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_room comment '用能单位-户基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_station                                    */
+/*==============================================================*/
+create table t_emc_unit_station
+(
+   ID                   varchar(32) not null comment '主键',
+   MANAGE_TYPE_ID       tinyint not null comment '管理类型 来源于字典表 0-统管 1-自管  2-代管',
+   PROVINCE_ID          varchar(12) not null comment '省主键 关联行政区划表T_ECC_SYS_ADMINISTRATIVE',
+   CITY_ID              varchar(12) not null comment '市主键',
+   COUNTY_ID            varchar(12) not null comment '县主键',
+   TOWN_ID              varchar(12) comment '乡主键',
+   VILLAGE_ID           varchar(12) comment '村主键',
+   ADDR                 varchar(128) not null comment '详细地址',
+   LNG                  double(10,6) comment '经度',
+   LAT                  double(10,6) comment '纬度',
+   STATION_NAME         varchar(64) not null comment '名称',
+   STATION_CODE         varchar(32) not null comment '代码',
+   HEAT_AREA            double not null default 0 comment '供热面积',
+   ORG_ID               bigint not null comment '所属机构',
+   NET_ID               varchar(32) comment '所属管网',
+   FEED_ID              varchar(32) comment '所属热源',
+   LINE_ID              varchar(32) not null comment '所属管线',
+   COM_ID               varchar(32) not null comment '公司',
+primary key (id)
+);
+
+alter table t_emc_unit_station comment '用能单位-热力站基本信息表';
+
+
+/*==============================================================*/
+/* Table: t_emc_unit_type_rel                                   */
+/*==============================================================*/
+create table t_emc_unit_type_rel
+(
+   TYPE_ID              varchar(32) not null comment '类型',
+   COM_ID               varchar(32) not null comment '公司'
+);
+
+alter table t_emc_unit_type_rel comment '公司类型关系表';
+

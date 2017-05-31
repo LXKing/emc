@@ -429,18 +429,9 @@ BEGIN
        RETURN REPLACE(sTemp,'$,','');
 END;
 
+/**
+2017年5月31日10:57:47
+ */
+alter table t_emc_org modify column TYPE_ID TINYINT(4);
 
- CREATE VIEW v_emc_org(comid,id,gsid,fgsid,zxid,fwzid,ryid,ycwid,rlzid,ecxid,xqid,ldid) AS
-SELECT
-t.COM_ID comid,t.ID,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 1) gsid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 2) fgsid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 3) zxid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 4) fwzid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 5) ryid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 6) ycwid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 7) rlzid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 8) ecxid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 9) xqid,
-(SELECT ID FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getparents(t.ID))  AND TYPE_ID = 10) ldid
- FROM t_emc_org t;
+alter table t_emc_org modify column CREATOR VARCHAR(32);
