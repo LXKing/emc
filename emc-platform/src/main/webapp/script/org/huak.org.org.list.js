@@ -207,8 +207,8 @@ function ztreeValue(){
             var zNodes ='[';
             for (var i=0;i<data.length;i++){
                 var orgName='"' + data[i].orgName + '"';
-                var id='"' + data[i].id + '"';
-                var pid='"' + data[i].pOrgId + '"';
+                var id= data[i].id ;
+                var pid=data[i].pOrgId;
                 zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
             };
             var newnodes=zNodes.substring(0,zNodes.length-1);
