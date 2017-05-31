@@ -1,189 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huak.org.dao.OrgDao">
-  <resultMap id="BaseResultMap" type="com.huak.org.model.Org">
-    <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ORG_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ORG_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="SHORT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="P_ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="SEQ" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    ID, COM_ID, ORG_CODE, ORG_NAME, SHORT_NAME, P_ORG_ID, TYPE_ID, CREATOR, CREATE_TIME, 
-    MEMO, SEQ, AREA
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_emc_org
-    where ID = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org
-    where ID = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org (ID, COM_ID, ORG_CODE, 
-      ORG_NAME, SHORT_NAME, P_ORG_ID, 
-      TYPE_ID, CREATOR, CREATE_TIME, 
-      MEMO, SEQ, AREA)
-    values (#{id,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
-      #{orgName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{pOrgId,jdbcType=VARCHAR},
-      #{typeId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
-      #{memo,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{area,jdbcType=DOUBLE})
-  </insert>
-  <insert id="insertSelective" parameterType="com.huak.org.model.Org">
-    insert into t_emc_org
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="comId != null">
-        COM_ID,
-      </if>
-      <if test="orgCode != null">
-        ORG_CODE,
-      </if>
-      <if test="orgName != null">
-        ORG_NAME,
-      </if>
-      <if test="shortName != null">
-        SHORT_NAME,
-      </if>
-      <if test="pOrgId != null">
-        P_ORG_ID,
-      </if>
-      <if test="typeId != null">
-        TYPE_ID,
-      </if>
-      <if test="creator != null">
-        CREATOR,
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME,
-      </if>
-      <if test="memo != null">
-        MEMO,
-      </if>
-      <if test="seq != null">
-        SEQ,
-      </if>
-      <if test="area != null">
-        AREA,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="comId != null">
-        #{comId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgCode != null">
-        #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgName != null">
-        #{orgName,jdbcType=VARCHAR},
-      </if>
-      <if test="shortName != null">
-        #{shortName,jdbcType=VARCHAR},
-      </if>
-      <if test="pOrgId != null">
-        #{pOrgId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=VARCHAR},
-      </if>
-      <if test="memo != null">
-        #{memo,jdbcType=VARCHAR},
-      </if>
-      <if test="seq != null">
-        #{seq,jdbcType=INTEGER},
-      </if>
-      <if test="area != null">
-        #{area,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Org">
-    update t_emc_org
-    <set>
-      <if test="comId != null">
-        COM_ID = #{comId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgCode != null">
+    <resultMap id="BaseResultMap" type="com.huak.org.model.Org">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="ORG_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ORG_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="SHORT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="P_ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="TYPE_ID" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="SEQ" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, ORG_CODE, ORG_NAME, SHORT_NAME, P_ORG_ID, TYPE_ID, CREATOR, CREATE_TIME,
+        MEMO, SEQ ,COM_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_emc_org
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.huak.org.model.Org">
+        insert into t_emc_org (ORG_CODE,
+        ORG_NAME, SHORT_NAME, P_ORG_ID,
+        TYPE_ID, CREATOR, CREATE_TIME,
+        MEMO, SEQ,COM_ID)
+        values ( #{orgCode,jdbcType=VARCHAR},
+        #{orgName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{pOrgId,jdbcType=BIGINT},
+        #{typeId,jdbcType=TINYINT}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{memo,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER},#{comId,jdbcType=VARCHAR}})
+    </insert>
+    <insert id="insertSelective" parameterType="com.huak.org.model.Org">
+        insert into t_emc_org
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="orgCode != null">
+                ORG_CODE,
+            </if>
+            <if test="orgName != null">
+                ORG_NAME,
+            </if>
+            <if test="shortName != null">
+                SHORT_NAME,
+            </if>
+            <if test="pOrgId != null">
+                P_ORG_ID,
+            </if>
+            <if test="typeId != null">
+                TYPE_ID,
+            </if>
+            <if test="creator != null">
+                CREATOR,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="memo != null">
+                MEMO,
+            </if>
+            <if test="seq != null">
+                SEQ,
+            </if>
+            <if test="comId != null">
+                COM_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+
+            <if test="orgCode != null">
+                #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orgName != null">
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                #{shortName,jdbcType=VARCHAR},
+            </if>
+            <if test="pOrgId != null">
+                #{pOrgId,jdbcType=BIGINT},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="seq != null">
+                #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="comId != null">
+                #{comId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Org">
+        update t_emc_org
+        <set>
+
+            <if test="orgCode != null">
+                ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orgName != null">
+                ORG_NAME = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+            </if>
+            <if test="pOrgId != null">
+                P_ORG_ID = #{pOrgId,jdbcType=BIGINT},
+            </if>
+            <if test="typeId != null">
+                TYPE_ID = #{typeId,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null">
+                CREATOR = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memo != null">
+                MEMO = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="seq != null">
+                SEQ = #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="comId != null">
+                COM_ID = #{comId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Org">
+        update t_emc_org
+        set
         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orgName != null">
         ORG_NAME = #{orgName,jdbcType=VARCHAR},
-      </if>
-      <if test="shortName != null">
         SHORT_NAME = #{shortName,jdbcType=VARCHAR},
-      </if>
-      <if test="pOrgId != null">
-        P_ORG_ID = #{pOrgId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeId != null">
-        TYPE_ID = #{typeId,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
+        P_ORG_ID = #{pOrgId,jdbcType=BIGINT},
+        TYPE_ID = #{typeId,jdbcType=TINYINT},
         CREATOR = #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
-      </if>
-      <if test="memo != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
         MEMO = #{memo,jdbcType=VARCHAR},
-      </if>
-      <if test="seq != null">
         SEQ = #{seq,jdbcType=INTEGER},
-      </if>
-      <if test="area != null">
-        AREA = #{area,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Org">
-    update t_emc_org
-    set COM_ID = #{comId,jdbcType=VARCHAR},
-      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
-      ORG_NAME = #{orgName,jdbcType=VARCHAR},
-      SHORT_NAME = #{shortName,jdbcType=VARCHAR},
-      P_ORG_ID = #{pOrgId,jdbcType=VARCHAR},
-      TYPE_ID = #{typeId,jdbcType=VARCHAR},
-      CREATOR = #{creator,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
-      MEMO = #{memo,jdbcType=VARCHAR},
-      SEQ = #{seq,jdbcType=INTEGER},
-      AREA = #{area,jdbcType=DOUBLE}
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
+        COM_ID = #{comId,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
 
     <select id="selectOrgAll" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+       ID, ORG_CODE, ORG_NAME, SHORT_NAME, P_ORG_ID, TYPE_ID, CREATOR, CREATE_TIME,
+        MEMO, SEQ ,COM_ID
         from t_emc_org
 
         order by ID
     </select>
 
-<!--该方法仅供公共树插件使用-->
+    <!--该方法仅供公共树插件使用-->
 
     <select id="selectOrgTree"  resultType="java.util.Map" parameterType="java.util.Map">
         select
@@ -192,13 +185,13 @@
         from t_emc_org
         where 1=1
         <if test="comId != null and comId !=''">
-          AND  COM_ID = #{comId,jdbcType=VARCHAR},
+            AND  COM_ID = #{comId,jdbcType=VARCHAR},
         </if>
         <!--插件局部刷新传过来的是id,需要刷新以id为父节点的所有子节点-->
         <if test="id != null and id !=''">
 
-          AND  FIND_IN_SET(ID, emc_func_org_getchilds(#{id,jdbcType=VARCHAR}))
-          AND ID != #{id,jdbcType=VARCHAR}
+            AND  FIND_IN_SET(ID, emc_func_org_getchilds(#{id,jdbcType=BIGINT}))
+            AND ID != #{id,jdbcType=BIGINT}
         </if>
         order by seq
     </select>
@@ -232,25 +225,22 @@
             and SHORT_NAME = #{shortName,jdbcType=VARCHAR}
         </if>
         <if test="pOrgId != null and pOrgId !=''">
-            and P_ORG_ID = #{pOrgId,jdbcType=VARCHAR}
+            and P_ORG_ID = #{pOrgId,jdbcType=BIGINT}
         </if>
         <if test="typeId != null and typeId !=''">
-            and TYPE_ID = #{typeId,jdbcType=VARCHAR}
+            and TYPE_ID = #{typeId,jdbcType=TINYINT}
         </if>
         <if test="creator != null and creator !=''">
             and CREATOR = #{creator,jdbcType=VARCHAR}
         </if>
         <if test="createTime != null and createTime !=''">
-            and CREATE_TIME = #{createTime,jdbcType=VARCHAR}
+            and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
         </if>
         <if test="memo != null and memo !=''">
             and MEMO = #{memo,jdbcType=VARCHAR}
         </if>
         <if test="seq != null and seq !=''">
             and SEQ = #{seq,jdbcType=INTEGER}
-        </if>
-        <if test="area != null and area !=''">
-            and AREA = #{area,jdbcType=DOUBLE}
         </if>
         order by SEQ ASC
     </select>
