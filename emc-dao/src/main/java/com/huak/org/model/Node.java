@@ -6,7 +6,7 @@ import java.math.BigInteger;
 public class Node implements Serializable{
     private String id;
 
-    private String manageTypeId;
+    private Byte manageTypeId;
 
     private String provinceId;
 
@@ -24,14 +24,23 @@ public class Node implements Serializable{
 
     private Double lat;
 
-    private Double publicArea;
+    private String stationName;
 
-    private Double dwellArea;
-    private Byte status;
+    private String stationCode;
 
+    private Double heatArea;
 
+    private Long orgId;
 
-    public Node(String id, String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea,Byte status) {
+    private String netId;
+
+    private String feedId;
+
+    private String lineId;
+
+    private String comId;
+
+    public Node(String id, Byte manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, String stationName, String stationCode, Double heatArea, Long orgId, String netId, String feedId, String lineId, String comId) {
         this.id = id;
         this.manageTypeId = manageTypeId;
         this.provinceId = provinceId;
@@ -42,10 +51,14 @@ public class Node implements Serializable{
         this.addr = addr;
         this.lng = lng;
         this.lat = lat;
-        this.publicArea = publicArea;
-        this.dwellArea = dwellArea;
-        this.status = status;
-
+        this.stationName = stationName;
+        this.stationCode = stationCode;
+        this.heatArea = heatArea;
+        this.orgId = orgId;
+        this.netId = netId;
+        this.feedId = feedId;
+        this.lineId = lineId;
+        this.comId = comId;
     }
 
     public Node() {
@@ -57,15 +70,15 @@ public class Node implements Serializable{
     }
 
     public void setId(String id) {
-        this.id = id ;
+        this.id = id == null ? null : id.trim();
     }
 
-    public String getManageTypeId() {
+    public Byte getManageTypeId() {
         return manageTypeId;
     }
 
-    public void setManageTypeId(String manageTypeId) {
-        this.manageTypeId = manageTypeId == null ? null : manageTypeId.trim();
+    public void setManageTypeId(Byte manageTypeId) {
+        this.manageTypeId = manageTypeId;
     }
 
     public String getProvinceId() {
@@ -132,27 +145,67 @@ public class Node implements Serializable{
         this.lat = lat;
     }
 
-    public Double getPublicArea() {
-        return publicArea;
+    public String getStationName() {
+        return stationName;
     }
 
-    public void setPublicArea(Double publicArea) {
-        this.publicArea = publicArea;
+    public void setStationName(String stationName) {
+        this.stationName = stationName == null ? null : stationName.trim();
     }
 
-    public Double getDwellArea() {
-        return dwellArea;
+    public String getStationCode() {
+        return stationCode;
     }
 
-    public void setDwellArea(Double dwellArea) {
-        this.dwellArea = dwellArea;
+    public void setStationCode(String stationCode) {
+        this.stationCode = stationCode == null ? null : stationCode.trim();
     }
 
-    public Byte getStatus() {
-        return status;
+    public Double getHeatArea() {
+        return heatArea;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setHeatArea(Double heatArea) {
+        this.heatArea = heatArea;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getNetId() {
+        return netId;
+    }
+
+    public void setNetId(String netId) {
+        this.netId = netId == null ? null : netId.trim();
+    }
+
+    public String getFeedId() {
+        return feedId;
+    }
+
+    public void setFeedId(String feedId) {
+        this.feedId = feedId == null ? null : feedId.trim();
+    }
+
+    public String getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(String lineId) {
+        this.lineId = lineId == null ? null : lineId.trim();
+    }
+
+    public String getComId() {
+        return comId;
+    }
+
+    public void setComId(String comId) {
+        this.comId = comId == null ? null : comId.trim();
     }
 }

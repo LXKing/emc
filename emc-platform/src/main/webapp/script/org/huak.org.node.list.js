@@ -31,7 +31,7 @@ $(function () {
         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
         //设置为limit可以获取limit, offset, search, sort, order
         queryParamsType: "undefined",
-        queryParams: queryParams,
+        queryParams: params,
         formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
         },
@@ -58,15 +58,19 @@ $(function () {
             },
             {
                 title: '热力站名称',
-                field: 'orgName',
+                field: 'stationName',
                 align: 'center'
             },
             {
-                title: '上级单位',
-                field: 'pOrgId',
+                title: '热力站编号',
+                field: 'stationCode',
                 align: 'center'
             },
-
+            {
+                title: '管理类型',
+                field: 'manageTypeId',
+                align: 'center'
+            },
             {
                 title: '地址',
                 field: 'addr',
@@ -89,13 +93,8 @@ $(function () {
                 align: 'center'
             },
             {
-                title: '公建面积',
-                field: 'publicArea',
-                align: 'center'
-            },
-            {
-                title: '居民面积',
-                field: 'dwellArea',
+                title: '供热面积',
+                field: 'heatArea',
                 align: 'center'
             },
             {
@@ -103,8 +102,14 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' ;
+                    var html = "";
+                    if($("#nodeUpdateAuth").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                    }
+                    if($("#nodeDeleteAuth").val()){
+                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' ;
+                    }
+                    return html;
                 }
             }
 
@@ -148,44 +153,17 @@ $(function () {
             });
         });
     }
-
-
-//    //日期范围限制
-//    var start = {
-//        elem: '#start',
-//        format: 'YYYY/MM/DD hh:mm:ss',
-//        //min: laydate.now(), //设定最小日期为当前日期
-//        max: '2099-06-16 23:59:59', //最大日期
-//        istime: true,
-//        istoday: false,
-//        choose: function (datas) {
-//            end.min = datas; //开始日选好后，重置结束日的最小日期
-//            end.start = datas //将结束日的初始值设定为开始日
-//        }
-//    };
-//    var end = {
-//        elem: '#end',
-//        format: 'YYYY/MM/DD hh:mm:ss',
-//        max: '2099-06-16 23:59:59',
-//        istime: true,
-//        istoday: false,
-//        choose: function (datas) {
-//            start.max = datas; //结束日选好后，重置开始日的最大日期
-//        }
-//    };
-//    laydate(start);
-//    laydate(end);
-
     //下拉框js
     $(".chosen-select").chosen();
 
 });
 
-function queryParams(params) {
+function params(params) {
     return {
-        pOrgId:top.orgId,
-        orgName:$('input[name="orgName"]').val(),
-        creator:$("#creator").val(),
+
+        stationName:$("#stationName").val(),
+        stationCode:$("#stationCode").val(),
+        orgId:top.orgId,
         manageTypeId:$("#manageTypeId").val(),
         pageNumber: params.pageNumber,
         pageSize: params.pageSize
@@ -243,13 +221,3 @@ function deletestation(id) {
     });
 }
 
-function refreshNodes() {
-    var treeNode = top.comm_tree.getSelectedNodes();
-    var treeObj =  top.comm_ztree;
-    type = "refresh";
-    silent = false;
-    /*根据 zTree 的唯一标识 tId 快速获取节点 JSON 数据对象*/
-    /*选中指定节点*/
-    treeObj.selectNode(treeNode[0]);
-    treeObj.reAsyncChildNodes(treeNode[0], "refresh");
-}

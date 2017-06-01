@@ -16,19 +16,17 @@ public interface NodeService {
 
     int insert(Node record);
 
-    public int insertSelective(NodeVo record);
+    public int insertSelective(Node record);
 
     Node selectById(String id);
 
-    int update(NodeVo record);
+    int update(Node record);
 
     int updateByPrimaryKey(Node record);
 
-    public PageResult<NodeVo> queryByPage(Map<String, Object> paramsMap, Page page);
+    public PageResult<Node> queryByPage(Map<String, Object> paramsMap, Page page);
 
     List<Map<String,Object>> exportExcel(Map<String, Object> paramsMap);
 
-    NodeVo selectVoById(String id);
-
-
+    List<Map<String,Object>> selectStationByMap(Map<String, Object> paramsMap);
 }

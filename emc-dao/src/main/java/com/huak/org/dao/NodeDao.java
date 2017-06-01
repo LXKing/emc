@@ -22,9 +22,11 @@ public interface NodeDao {
 
     int updateByPrimaryKey(Node record);
 
-    List<NodeVo> selectPageByMap(Map<String, Object> paramsMap);
+    List<Node> selectPageByMap(Map<String, Object> paramsMap);
 
     List<Map<String,Object>> export(Map<String, Object> paramsMap);
 
-    NodeVo selectVoById(String id);
+    Node selectVoById(String id);
+
+    List<Map<String,Object>> selectStationByMap(Map<String, Object> paramsMap);
 }
