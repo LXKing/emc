@@ -142,9 +142,13 @@ public class EnergyTypeController {
         String workBookName = "能源类型列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
         cellName.put("ID", "主键");
-        cellName.put("ROLE_NAME", "能源类型名称");
-        cellName.put("ROLE_DES", "能源类型说明");
-        cellName.put("memo", "备注");
+        cellName.put("NAME_ZH", "类型名称(中文)");
+        cellName.put("NAME_EN", "类型名称(英文)");
+        cellName.put("DOSAGE_UNIT", "用量单位");
+        cellName.put("PRICE", "每用量单位默认单价(元)");
+        cellName.put("COEF", "每用量单位默认标煤系数");
+        cellName.put("ECO_TYPE", "经济类型");
+        cellName.put("TYPE", "类型");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
         try {

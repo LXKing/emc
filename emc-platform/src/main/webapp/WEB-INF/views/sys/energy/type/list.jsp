@@ -17,36 +17,51 @@
                 <div class="ibox-content">
                     <form id="energyTypes-form" role="form" class="form-horizontal m-t">
                         <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" id="pageNo" name="pageNo" value="1">
 
                         <div class="row">
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">字典名称</label>
-                                <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                    <input type="text" class="form-control" name="des" placeholder="请输入字典名称">
-                                </div>
-                            </div>
-                        </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">类型英文</label>
-                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="typeUs" placeholder="请输入字典类型英文">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">类型中文</label>
+                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" class="form-control" name="typeZh" placeholder="请输入能源类型中文">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">类型中文</label>
-                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="typeZh" placeholder="请输入字典类型中文">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">类型英文</label>
+                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" class="form-control" name="typeUs" placeholder="请输入能源类型英文">
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">能源类型</label>
+                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                                        <select name="type" class="chosen-select form-control">
+                                            <option value="">请选择类型</option>
+                                            <c:forEach items="${sysDic['energyType']}" var="type">
+                                                <option value="${type.seq}">${type.des}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">经济类型</label>
+                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                                        <select name="ecoType" class="chosen-select form-control">
+                                            <option value="">请选择经济类型</option>
+                                            <c:forEach items="${sysDic['energyEcoType']}" var="type">
+                                                <option value="${type.seq}">${type.des}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">

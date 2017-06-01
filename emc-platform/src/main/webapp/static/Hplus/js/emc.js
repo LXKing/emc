@@ -5,7 +5,7 @@ function getHeight() {
 
 //导出EXCEL按钮绑定事件
 $(document).on('click', '.excel-export-btn', function () {
-    var $from = $(this).parents('from');
+    var $from = $(this).parents('form');
     var url = $(this).attr('export-url') + '?' + $from.serialize();
     window.open(url);
 });

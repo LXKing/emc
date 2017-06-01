@@ -29,8 +29,8 @@ $(function () {
             var param = {
                 nameZh:$('input[name="nameZh"]').val(),
                 nameEn:$('input[name="nameEn"]').val(),
-                type:$('input[name="type"]').val(),
-                ecoType:$('input[name="ecoType"]').val(),
+                type:$('select[name="type"]').val(),
+                ecoType:$('select[name="ecoType"]').val(),
                 _method: "PATCH",
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
@@ -147,6 +147,7 @@ $(function () {
 
     });
 
+    $(".chosen-select:not([name='searchComp'])").chosen();
     //页面说明
     console.info("页面说明：\n1.系统默认2个字典为超级管理员和企业管理员；\n" +
         "2.管理员用户才能进行管理且只能看到自己创建的字典；\n" +
