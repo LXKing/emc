@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
-import com.huak.org.model.Feed;
 import com.huak.org.model.Oncenet;
+import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +39,9 @@ public class OncenetController {
     @Resource
     private OncenetService  oncenetService;
 
+    @Resource
+    private OrgService orgService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
         logger.info("转至系统管网列表页");
@@ -57,7 +61,10 @@ public class OncenetController {
         return jo.toJSONString();
     }
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(Model model) {
+        String code = "pipeType";
+        List<SysDic> dic = orgService.selectSysDicAll(code);
+        model.addAttribute("sysdic",dic);
         return "/org/onenet/add";
     }
 
@@ -73,7 +80,9 @@ public class OncenetController {
             HttpSession session = request.getSession();
 
             oncenet.setId(UUIDGenerator.getUUID());
-            oncenetService.insertSelective(oncenet);
+            oncenet.setComId("234");
+            oncenet.setOrgId(new Long(12));
+            oncenetService.insert(oncenet);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加管网成功");
         } catch (Exception e) {

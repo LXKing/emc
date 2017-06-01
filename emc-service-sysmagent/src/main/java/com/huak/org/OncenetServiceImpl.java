@@ -48,6 +48,11 @@ public class OncenetServiceImpl implements OncenetService {
     }
 
     @Override
+    public int insert(Oncenet record) {
+        return oncenetDao.insert(record);
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public int updateByPrimaryKeySelective(Oncenet record) {
         return oncenetDao.updateByPrimaryKeySelective(record);

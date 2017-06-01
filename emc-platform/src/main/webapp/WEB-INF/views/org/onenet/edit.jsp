@@ -11,6 +11,23 @@
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="oncenetEditForm" role="form">
                 <input type="hidden" name="id" value="${oncenet.id}">
+
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>管网名称：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="netName" class="form-control" type="text" value="${oncenet.netName}" maxlength="16" placeholder="请输入管网名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>管网代码：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="netCode" class="form-control" type="text" value="${oncenet.netCode}" maxlength="16" placeholder="请输入管网代码">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>管线类型：</label>

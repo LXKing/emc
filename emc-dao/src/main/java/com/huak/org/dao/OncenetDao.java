@@ -1,6 +1,5 @@
 package com.huak.org.dao;
 
-import com.huak.org.model.Feed;
 import com.huak.org.model.Oncenet;
 
 import java.util.List;

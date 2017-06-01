@@ -5,7 +5,11 @@ import java.io.Serializable;
 public class Oncenet implements Serializable{
     private String id;
 
-    private String netTypeId;
+    private String netName;
+
+    private String netCode;
+
+    private Byte netTypeId;
 
     private Double length;
 
@@ -15,17 +19,25 @@ public class Oncenet implements Serializable{
 
     private String medium;
 
-    public Oncenet(String id, String netTypeId, Double length, Integer cellNum, Integer partNum, String medium) {
+    private Long orgId;
+
+    private String comId;
+
+    public Oncenet() {
+        super();
+    }
+
+    public Oncenet(String id, String netName, String netCode, Byte netTypeId, Double length, Integer cellNum, Integer partNum, String medium, Long orgId, String comId) {
         this.id = id;
+        this.netName = netName;
+        this.netCode = netCode;
         this.netTypeId = netTypeId;
         this.length = length;
         this.cellNum = cellNum;
         this.partNum = partNum;
         this.medium = medium;
-    }
-
-    public Oncenet() {
-        super();
+        this.orgId = orgId;
+        this.comId = comId;
     }
 
     public String getId() {
@@ -33,15 +45,31 @@ public class Oncenet implements Serializable{
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
-    public String getNetTypeId() {
+    public String getNetName() {
+        return netName;
+    }
+
+    public void setNetName(String netName) {
+        this.netName = netName;
+    }
+
+    public String getNetCode() {
+        return netCode;
+    }
+
+    public void setNetCode(String netCode) {
+        this.netCode = netCode;
+    }
+
+    public Byte getNetTypeId() {
         return netTypeId;
     }
 
-    public void setNetTypeId(String netTypeId) {
-        this.netTypeId = netTypeId == null ? null : netTypeId.trim();
+    public void setNetTypeId(Byte netTypeId) {
+        this.netTypeId = netTypeId;
     }
 
     public Double getLength() {
@@ -73,6 +101,22 @@ public class Oncenet implements Serializable{
     }
 
     public void setMedium(String medium) {
-        this.medium = medium == null ? null : medium.trim();
+        this.medium = medium;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getComId() {
+        return comId;
+    }
+
+    public void setComId(String comId) {
+        this.comId = comId;
     }
 }

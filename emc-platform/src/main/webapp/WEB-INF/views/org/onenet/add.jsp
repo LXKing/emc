@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lichao
@@ -13,22 +14,38 @@
 
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>管线类型：</label>
+                            class="red">*</span>管网名称：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="netName" class="form-control" type="text" maxlength="16" placeholder="请输入管网名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>管网代码：</label>
 
-                        <select id="feedType" name="netTypeId" class="form-control" type="text" maxlength="8" data-placeholder="请输入热源性质">
-                            <option value =1>1</option>
-                            <option value =2>2</option>
-                            <option value=3>3</option>
-                            <option value=4>4</option>
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="netCode" class="form-control" type="text" maxlength="16" placeholder="请输入管网代码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>管网类型：</label>
+
+                    <div class="col-sm-8">
+                        <select id="typeId" name="typeId" class="chosen-select form-control">
+                            <option value="">请选择类型</option>
+                            <c:forEach items="${sysdic}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+                                <option value="${item.seq}">${item.des}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>管线长度：</label>
+                            class="red">*</span>管网长度：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="length" class="form-control" type="text" maxlength="16" placeholder="请输入管线长度">

@@ -131,6 +131,16 @@ $(function () {
                 }
             },
             {
+                title: '管网名称',
+                field: 'netName',
+                align: 'center'
+            },
+            {
+                title: '管',
+                field: 'netTypeId',
+                align: 'center'
+            },
+            {
                 title: '管线类型',
                 field: 'netTypeId',
                 align: 'center'
