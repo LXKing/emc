@@ -4,40 +4,52 @@
   <resultMap id="BaseResultMap" type="com.huak.org.model.Oncenet">
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="NET_TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NET_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NET_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NET_TYPE_ID" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="LENGTH" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="CELL_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="PART_NUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="MEDIUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, NET_TYPE_ID, LENGTH, CELL_NUM, PART_NUM, MEDIUM
+    ID,NET_NAME,NET_CODE , NET_TYPE_ID, LENGTH, CELL_NUM, PART_NUM, MEDIUM,ORG_ID,COM_ID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_emc_org_oncenet
+    from t_emc_unit_net
     where ID = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org_oncenet
+    delete from t_emc_unit_net
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
+    <!--NET_NAME,NET_CODE ,ORG_ID,COM_ID-->
+
   <insert id="insert" parameterType="com.huak.org.model.Oncenet">
-    insert into t_emc_org_oncenet (ID, NET_TYPE_ID, LENGTH, 
-      CELL_NUM, PART_NUM, MEDIUM
+    insert into t_emc_unit_net (ID,NET_NAME,NET_CODE, NET_TYPE_ID, LENGTH,
+      CELL_NUM, PART_NUM, MEDIUM,ORG_ID,COM_ID
       )
-    values (#{id,jdbcType=VARCHAR}, #{netTypeId,jdbcType=VARCHAR}, #{length,jdbcType=DOUBLE}, 
-      #{cellNum,jdbcType=INTEGER}, #{partNum,jdbcType=INTEGER}, #{medium,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR},#{netName,jdbcType=VARCHAR},#{netCode,jdbcType=VARCHAR}, #{netTypeId,jdbcType=TINYINT}, #{length,jdbcType=DOUBLE},
+      #{cellNum,jdbcType=INTEGER}, #{partNum,jdbcType=INTEGER}, #{medium,jdbcType=VARCHAR} ,#{orgId,jdbcType=BIGINT} ,#{comId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Oncenet">
-    insert into t_emc_org_oncenet
+    insert into t_emc_unit_net
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
       </if>
+        <if test="netName != null">
+            NET_NAME,
+        </if>
+        <if test="netCode != null">
+            NET_CODE,
+        </if>
       <if test="netTypeId != null">
         NET_TYPE_ID,
       </if>
@@ -53,13 +65,25 @@
       <if test="medium != null">
         MEDIUM,
       </if>
+        <if test="orgId != null">
+            ORG_ID,
+        </if>
+        <if test="comId != null">
+            COM_ID,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
+        <if test="netName != null">
+            #{NET_NAME,jdbcType=VARCHAR},
+        </if>
+        <if test="netCode != null">
+            #{NET_CODE,jdbcType=VARCHAR},
+        </if>
       <if test="netTypeId != null">
-        #{netTypeId,jdbcType=VARCHAR},
+        #{netTypeId,jdbcType=TINYINT},
       </if>
       <if test="length != null">
         #{length,jdbcType=DOUBLE},
@@ -73,13 +97,25 @@
       <if test="medium != null">
         #{medium,jdbcType=VARCHAR},
       </if>
+        <if test="orgId != null">
+            #{ORG_ID,jdbcType=BIGINT},
+        </if>
+        <if test="comId != null">
+            #{COM_ID,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Oncenet">
-    update t_emc_org_oncenet
+    update t_emc_unit_net
     <set>
+      <if test="netName != null">
+            NET_NAME = #{netName,jdbcType=VARCHAR},
+      </if>
+        <if test="netCode != null">
+            NET_CODE = #{netCode,jdbcType=VARCHAR},
+        </if>
       <if test="netTypeId != null">
-        NET_TYPE_ID = #{netTypeId,jdbcType=VARCHAR},
+        NET_TYPE_ID = #{netTypeId,jdbcType=TINYINT},
       </if>
       <if test="length != null">
         LENGTH = #{length,jdbcType=DOUBLE},
@@ -93,23 +129,34 @@
       <if test="medium != null">
         MEDIUM = #{medium,jdbcType=VARCHAR},
       </if>
+        <if test="orgId != null">
+            ORG_ID = #{orgId,jdbcType=BIGINT},
+        </if>
+        <if test="comId != null">
+            COM_ID = #{comId,jdbcType=VARCHAR},
+        </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Oncenet">
-    update t_emc_org_oncenet
-    set NET_TYPE_ID = #{netTypeId,jdbcType=VARCHAR},
+    update t_emc_unit_net
+    set
+       NET_NAME=#{netName,jdbcType=VARCHAR},
+       NET_CODE=#{netCode,jdbcType=VARCHAR},
+       NET_TYPE_ID = #{netTypeId,jdbcType=TINYINT},
       LENGTH = #{length,jdbcType=DOUBLE},
       CELL_NUM = #{cellNum,jdbcType=INTEGER},
       PART_NUM = #{partNum,jdbcType=INTEGER},
-      MEDIUM = #{medium,jdbcType=VARCHAR}
+      MEDIUM = #{medium,jdbcType=VARCHAR},
+      ORG_ID = #{orgId,jdbcType=BIGINT},
+      COM_ID = #{comId,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from t_emc_org_oncenet
+        from t_emc_unit_net
         where 1=1
         <if test="netTypeId != null and netTypeId !=''">
             and  NET_TYPE_ID =  #{cellNum,jdbcType=TINYINT}
