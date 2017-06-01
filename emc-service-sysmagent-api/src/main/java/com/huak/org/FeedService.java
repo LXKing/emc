@@ -22,16 +22,53 @@ import java.util.Map;
 
 @Service
 public interface FeedService {
-
+    /**
+     * 根据id删除数据
+     * @param id
+     * @return
+     */
     public int deleteByPrimaryKey(String id);
 
+    /**
+     * 根据实体类新增数据
+     * @param record
+     * @return
+     */
     public int insertSelective(Feed record);
 
+    /**
+     * 根据id查询数据
+     * @param id
+     * @return
+     */
     public Feed selectByPrimaryKey(String id);
 
+    /**
+     * 修改数据
+     * @param record
+     * @return
+     */
     public int updateByPrimaryKeySelective(Feed record);
 
+    /**
+     * 分页查询
+     * @param paramsMap
+     * @param page
+     * @return
+     */
     public PageResult<Feed> queryByPage(Map<String,Object> paramsMap, Page page);
 
+    /**
+     * 导出数据
+     * @param paramsMap
+     * @return
+     */
     public List<Map<String,Object>> exportFeeds(Map<String, Object> paramsMap);
+
+    /**
+     * 多条件查询数据
+     * @param paramsMap
+     * @return
+     */
+    List<Map<String,Object>> selectFeedByMap(Map<String, Object> paramsMap);
 }

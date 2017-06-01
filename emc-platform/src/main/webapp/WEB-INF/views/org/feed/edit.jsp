@@ -1,201 +1,74 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lichao
-  Date: 2016/8/25
-  Time: 12:51
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="feedEditForm" role="form">
-                <input type="hidden" name="id" value="${feed.installCapacity}">
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>热源性质：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-
-                        <select id="feedType" name="feedType" class="form-control" type="text" maxlength="8" data-placeholder="请输入热源性质">
-                            <option value =1>1</option>
-                            <option value =2>2</option>
-                            <option value=3>3</option>
-                            <option value=4>4</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>供热类型：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-
-                        <select id="heatType" name="heatType" class="form-control" type="text" maxlength="8" data-placeholder="请输入供热类型">
-                            <option value =1>1</option>
-                            <option value =2>2</option>
-                            <option value=3>3</option>
-                            <option value=4>4</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>装机容量：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="installCapacity" class="form-control" value="${feed.installCapacity}" type="text" maxlength="16" placeholder="请输入装机容量">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>供热能力：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="heatCapacity" class="form-control" value="${feed.heatCapacity}" type="text" maxlength="16" placeholder="请输入供热能力">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>锅炉数量：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="boilerNum" class="form-control" value="${feed.boilerNum}" type="text" maxlength="16" placeholder="请输入锅炉数量">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>汽车数量：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="steamturbineNum" class="form-control" value="${feed.steamturbineNum}" type="text" maxlength="16" placeholder="请输入汽车数量">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>省主键：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="provinceId" class="form-control" value="${feed.provinceId}" type="text" maxlength="16" placeholder="请输入省主键">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>市主键：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="cityId" class="form-control" value="${feed.cityId}" type="text" maxlength="16" placeholder="请输入市主键">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>县主键：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="countyId" class="form-control" value="${feed.countyId}" type="text" maxlength="16" placeholder="请输入县主键">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>乡主键：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="townId" class="form-control" value="${feed.townId}" type="text" maxlength="16" placeholder="请输入乡主键">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>村主键：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="villageId" class="form-control" value="${feed.villageId}" type="text" maxlength="16" placeholder="请输入村主键">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>详细地址：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="addr" class="form-control" value="${feed.addr}" type="text" maxlength="16" placeholder="请输入详细地址">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>经度：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="lng" class="form-control" value="${feed.lng}" type="text" maxlength="16" placeholder="请输入经度">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>纬度：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="lat" class="form-control" value="${feed.lat}" type="text" maxlength="16" placeholder="请输入纬度">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>公建面积：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="publicArea" class="form-control" value="${feed.publicArea}" type="text" maxlength="16" placeholder="请输入公建面积">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>居民面积：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="dwellArea" class="form-control" value="${feed.dwellArea}" type="text" maxlength="16" placeholder="请输入居民面积">
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>热源管理</title>
 <script>
-    //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
-    $.validator.setDefaults({
-        highlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.closest('.form-group').removeClass('has-error').addClass('has-success');
-        },
-        errorElement: "span",
-        errorPlacement: function (error, element) {
-            if (element.is(":radio") || element.is(":checkbox")) {
-                error.appendTo(element.parent().parent().parent());
-            } else {
-                error.appendTo(element.parent());
-            }
-        },
-        errorClass: "help-block m-b-none m-t-xs",
-        validClass: "help-block m-b-none m-t-none"
+//以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
+$.validator.setDefaults({
+    ignore: ":hidden:not(select)",//校验chosen
+    highlight: function (element) {
+        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    success: function (element) {
+        $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+    },
+    errorElement: "span",
+    errorPlacement: function (error, element) {
+        if (element.is(":radio") || element.is(":checkbox")) {
+            error.insertAfter(element.parent().parent().parent());
+        } else if(element.is("select")){
+            error.insertAfter(element.parent());
+        }else{
+            error.insertAfter(element.parent());
+        }
+    },
+    errorClass: "help-block m-b-none m-t-xs",
+    validClass: "help-block m-b-none m-t-none"
+});
 
 
-    });
 
-    //以下为官方示例
-    $(function () {
-        // validate signup form on keyup and submit
-        var icon = "<i class='fa fa-times-circle'></i> ";
-        var $form = $(top.document).find("#feedEditForm");
-        $.validator.addMethod("checkUnique", function (value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
+
+
+//以下为官方示例
+$(function () {
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    var $form = $(top.document).find("#feed_edit_Form");
+    new PCAS('province','${province}','${object.provinceId}','city','${city}','${object.cityId}','county','${county}','${object.countyId}','town','${town}','${object.townId}');
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': {
+            allow_single_deselect: true
+        },
+        '.chosen-select-no-single': {
+            disable_search_threshold: 10
+        },
+        '.chosen-select-no-results': {
+            no_results_text: 'Oops, nothing found!'
+        },
+        '.chosen-select-width': {
+            width: "10%"
+        }
+    }
+    $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
+    $.validator.addMethod("feedCodeUnique", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        var newcode = $(top.document).find("#feedCode").val();
+        var oldcode = $(top.document).find("#oldCode").val();
+        if(oldcode == newcode){
+            deferred.resolve();
+        }else{
             $.ajax({
-                url: _platform + '/feed/check',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {roleName: $('#roleName').val()},
+                url:_platform+'/feed/check',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {feedCode:newcode},
                 dataType: 'json',
-                success: function (result) {
+                success:function(result) {
                     if (!result.flag) {
                         deferred.reject();
                     } else {
@@ -203,77 +76,320 @@
                     }
                 }
             });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, "角色名称已存在");
 
-        //提示信息绑定
-        $('input:not(:submit):not(:button)').mousedown(function () {
-            $(this).closest('.form-group').removeClass('has-error');
-            $(this).siblings('.help-block').remove();
-        });
-        //下拉框信息绑定
-        $('select').change(function () {
-            if ($(this).find('option:first').val() != $(this).val()) {
-                $(this).siblings('.help-block').remove();
-            }
-            return false;
-        });
+        }
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "热源编码已存在");
 
-        $form.validate({
-            onsubmit: true,// 是否在提交是验证
-            //移开光标:如果有内容,则进行验证
-            onfocusout: function (element) {
-                if ($(element).val() == null || $(element).val() == "") {
-                    $(element).closest('.form-group').removeClass('has-error');
-                    $(element).siblings('.help-block').remove();
-                } else {
-                    $(element).valid();
-                }
-            },
-            onkeyup: false,// 是否在敲击键盘时验证
-            rules: {
-                roleName: {
-                    required: true,
-                    minlength: 2
-                    //checkUnique: true
-                },
-                roleDes: {
-                    required: true
-                }
-            },
-            messages: {
-                roleName: {
-                    required: icon + "请输入角色名称",
-                    minlength: icon + "角色名称必须2个字符以上"
-                },
-                roleDes: {
-                    required: icon + "请输入角色描述"
-                }
-            },
-            submitHandler: function () {
-                var index = top.layer.load(1, {
-                    shade: [0.1, '#fff'] //0.1透明度的白色背景
-                });
-                alert($form.serialize());
-                $.ajax({
-                    url: _platform + '/feed/editvalue',
-                    data: $form.serialize(),
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function (result) {
-                        if (result.flag) {
-                            top.layer.closeAll();
-                            top.layer.msg(result.msg);
-                            $('#feed-table-list').bootstrapTable("refresh");
-                        } else {
-                            top.layer.close(index);
-                            top.layer.msg(result.msg);
-                        }
+    $.validator.addMethod("feedNameUnique", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        var oldName = $(top.document).find("#oldName").val();
+        var feedName = $(top.document).find("#feedName").val();
+        if(oldName == feedName){
+            deferred.resolve();
+        }else{
+            $.ajax({
+                url:_platform+'/feed/check',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {feedName:feedName},
+                dataType: 'json',
+                success:function(result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
                     }
-                });
-            }
-        });
+                }
+            });
 
+        }
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "热源名称已存在");
+
+    $form.validate({
+        onsubmit: true,// 是否在提交是验证
+        //移开光标:如果有内容,则进行验证
+        onfocusout: function (element) {
+            if ($(element).is(":radio")){
+                return;
+            }
+            if ($(element).val() == null || $(element).val() == "") {
+                $(element).closest('.form-group').removeClass('has-error');
+
+                if($(element).parent(".chosen-search").length==1){
+                    $(element).parents(".chosen-container").parent().siblings('.help-block').remove();
+                }else{
+                    $(element).parent().siblings('.help-block').remove();
+                }
+            } else {
+                $(element).valid();
+            }
+        },
+        onkeyup: false,// 是否在敲击键盘时验证
+        onclick:false,
+        rules: {
+            orgId: {
+                required: true
+            },
+            feedCode: {
+                required: true,
+                feedCodeUnique: true
+            },
+            feedName: {
+                required: true,
+                feedNameUnique:true
+            },
+            shortName: {
+                required: true
+            },
+            heatType: {
+                required: true
+            },
+            feedType: {
+                required: true
+            },
+            installCapacity: {
+                required: true
+            },
+            heatCapacity: {
+                required: true
+            },
+            addr: {
+                required: true
+            },
+            provinceId:{
+                required: true
+            },
+            cityId:{
+                required: true
+            },
+            countyId:{
+                required: true
+            },
+            townId:{
+                required: true
+            }
+
+        },
+        messages: {
+            admCode: {
+                required: icon + "请输入区划编码",
+                minlength: icon + "区划编码必须在11-12个字符",
+                maxlength: icon + "区划编码长度不能超过12个字符"
+            },
+            orgId: {
+                required: icon + "请选择组织机构"
+            },
+            feedCode: {
+                required: icon + "请填写热源编码"
+            },
+            feedName: {
+                required: icon + "请填写热源名称"
+            },
+            shortName: {
+                required: icon + "请填写简称"
+            },
+            heatType: {
+                required: icon + "请选择供热类型"
+            },
+            feedType: {
+                required: icon + "请选择热源性质"
+            },
+            installCapacity: {
+                required: icon + "请填写装机容量"
+            },
+            heatCapacity: {
+                required:  icon + "请填写供热能力"
+            },
+            addr: {
+                required: icon + "请填写详细地址"
+            },
+            provinceId:{
+                required: icon + "请选择省份"
+            },
+            cityId:{
+                required: icon + "请选择城市"
+            },
+            countyId:{
+                required: icon + "请选择县城"
+            },
+            townId:{
+                required: icon + "请选择乡镇"
+            }
+        },
+        submitHandler: function () {
+            var index = top.layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+            $.ajax({
+                url:_platform + '/feed/edit',
+                data:$form.serialize(),
+                type:'POST',
+                dataType:'json',
+                success: function (result) {
+                    if (result.flag) {
+                        top.layer.closeAll();
+                        top.layer.msg(result.msg);
+                        $('#feed-table-list').bootstrapTable("refresh");
+                    } else {
+                        top.layer.msg(result.msg);
+                    }
+                },
+                error:function(){
+                    top.layer.msg("请求服务器失败！");
+                }
+            });
+        }
     });
+
+});
 </script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                    <form class="form-horizontal" id="feed_edit_Form" role="form">
+                        <input type="hidden" name="id" value="${object.id}"/>
+                        <input type="hidden" name="orgId" value="${object.orgId}"/>
+                        <input type="hidden" name="comId" value="${object.comId}"/>
+                        <input id="oldCode"  value="${object.feedCode}" class="form-control" type="hidden" >
+                        <input id="oldName"  value="${object.feedName}" class="form-control" type="hidden" >
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>热源编码：</label>
+                            <div class="col-sm-4">
+                                <input name="feedCode" id="feedCode" value="${object.feedCode}" class="form-control" type="text" maxlength="20" placeholder="请输入热源代码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>热源名称：</label>
+                            <div class="col-sm-4">
+                                <input name="feedName" id="feedName" class="form-control" value="${object.feedName}" type="text" maxlength="64" placeholder="请输入热源名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-md-2  control-label"><span class="red">*</span>供热类型：</label>
+                                <div class="col-sm-4">
+                                    <select id="heatType" name="heatType" class="chosen-select form-control" onchange="addMessage()" >
+                                        <option value="">请选择供热类型</option>
+                                        <c:forEach items="${sysDic['supportheattype']}" var="type">
+                                            <option <c:if test="${object.heatType eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-md-2  control-label"><span class="red">*</span>热源性质：</label>
+                                <div class="col-sm-4">
+                                    <select id="feedType" name="feedType" class="chosen-select form-control" onchange="addMessage()">
+                                        <option value="">请选择热源性质</option>
+                                        <c:forEach items="${sysDic['natureheat']}" var="types">
+                                            <option <c:if test="${object.feedType eq types.seq}">selected="selected" </c:if> value="${types.seq}">${types.des}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>装机容量：</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input name="installCapacity" class="form-control" value="${object.installCapacity}" type="text" maxlength="16"
+                                           placeholder="请输入装机容量">
+                                    <span class="input-group-addon">MW</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>锅炉数量：</label>
+                            <div class="col-sm-4">
+                                <input name="boilerNum" class="form-control" value="${object.boilerNum}" type="text" maxlength="64" placeholder="请输入锅炉数量">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>汽机数量：</label>
+                            <div class="col-sm-4">
+                                <input name="steamturbineNum" class="form-control" value="${object.steamturbineNum}" type="text" maxlength="64" placeholder="请输入汽机数量">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>供热能力：</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input name="heatCapacity" class="form-control" type="text" maxlength="16" value="${object.heatCapacity}"
+                                           placeholder="请输入供热能力">
+                                    <span class="input-group-addon">㎡</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-sm-2  control-label">区划区划：</label>
+                                <div class="col-sm-3">
+                                    <select id="province" name="provinceId" class="chosen-select form-control" >
+                                        <option value="">请选择省份</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <select id="city" name="cityId" class="chosen-select form-control" >
+                                        <option value="">请选择市</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-sm-2  control-label"></label>
+                                <div class="col-sm-3">
+                                    <select id="county" name="countyId" class="chosen-select form-control" >
+                                        <option value="">请选择县</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select id="town" name="townId" class="chosen-select form-control" >
+                                        <option value="">请选择镇(乡)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label"><span class="red">*</span>详细地址：</label>
+                            <div class="col-sm-4">
+                                <input name="addr" class="form-control" type="text" maxlength="64" value="${object.addr}" placeholder="请输入区划代码">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">经度：</label>
+                            <div class="col-sm-4">
+                                <input name="lng"  class="form-control" value="${object.lng}" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">纬度：</label>
+                            <div class="col-sm-4">
+                                <input name="lat" class="form-control" value="${object.lat}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">供热面积：</label>
+                            <div class="col-sm-4">
+                                <input name="heatArea" class="form-control" value="${object.heatArea}">
+                            </div>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
