@@ -8,13 +8,13 @@ import java.util.Map;
 
 @Repository
 public interface OrgDao {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Org record);
 
     int insertSelective(Org record);
 
-    Org selectByPrimaryKey(String id);
+    Org selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Org record);
 

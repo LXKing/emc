@@ -1,12 +1,9 @@
 package com.huak.org.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Org implements Serializable{
-    private String id;
-
-    private String comId;
+    private Long id;
 
     private String orgCode;
 
@@ -14,23 +11,27 @@ public class Org implements Serializable{
 
     private String shortName;
 
-    private String pOrgId;
+    private Long pOrgId;
 
-    private String typeId;
+    private Byte typeId;
 
     private String creator;
 
-    private String createTime;
+    private String  createTime;
 
     private String memo;
 
     private Integer seq;
 
-    private Double area;
+    private String comId;
 
-    public Org(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area) {
+
+    public Org() {
+        super();
+    }
+
+    public Org(Long id, String orgCode, String orgName, String shortName, Long pOrgId, Byte typeId, String creator, String createTime, String memo, Integer seq, String comId) {
         this.id = id;
-        this.comId = comId;
         this.orgCode = orgCode;
         this.orgName = orgName;
         this.shortName = shortName;
@@ -40,27 +41,14 @@ public class Org implements Serializable{
         this.createTime = createTime;
         this.memo = memo;
         this.seq = seq;
-        this.area = area;
+        this.comId = comId;
     }
-
-    public Org() {
-        super();
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
-
-    public String getComId() {
-        return comId;
-    }
-
-    public void setComId(String comId) {
-        this.comId = comId == null ? null : comId.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getOrgCode() {
@@ -68,7 +56,7 @@ public class Org implements Serializable{
     }
 
     public void setOrgCode(String orgCode) {
-        this.orgCode = orgCode == null ? null : orgCode.trim();
+        this.orgCode = orgCode;
     }
 
     public String getOrgName() {
@@ -76,7 +64,7 @@ public class Org implements Serializable{
     }
 
     public void setOrgName(String orgName) {
-        this.orgName = orgName == null ? null : orgName.trim();
+        this.orgName = orgName;
     }
 
     public String getShortName() {
@@ -84,22 +72,22 @@ public class Org implements Serializable{
     }
 
     public void setShortName(String shortName) {
-        this.shortName = shortName == null ? null : shortName.trim();
+        this.shortName = shortName;
     }
 
-    public String getpOrgId() {
+    public Long getpOrgId() {
         return pOrgId;
     }
 
-    public void setpOrgId(String pOrgId) {
+    public void setpOrgId(Long pOrgId) {
         this.pOrgId = pOrgId;
     }
 
-    public String getTypeId() {
+    public Byte getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(String typeId) {
+    public void setTypeId(Byte typeId) {
         this.typeId = typeId;
     }
 
@@ -124,7 +112,7 @@ public class Org implements Serializable{
     }
 
     public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
+        this.memo = memo;
     }
 
     public Integer getSeq() {
@@ -135,11 +123,11 @@ public class Org implements Serializable{
         this.seq = seq;
     }
 
-    public Double getArea() {
-        return area;
+    public String getComId() {
+        return comId;
     }
 
-    public void setArea(Double area) {
-        this.area = area;
+    public void setComId(String comId) {
+        this.comId = comId;
     }
 }

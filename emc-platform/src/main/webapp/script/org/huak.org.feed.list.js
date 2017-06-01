@@ -58,7 +58,7 @@ function bootstraplist(){
     bTable = $('#feed-table-list').bootstrapTable({
         height: getHeight() + 30,//高度
         cache: false,//禁用 AJAX 数据缓存
-        url: _platform + '/feed/listpage',//获取数据的Servlet地址
+        url: _platform + '/feed/list',//获取数据的Servlet地址
         method: 'post',//使用POST请求到服务器获取数据
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
@@ -74,15 +74,8 @@ function bootstraplist(){
         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
         //设置为limit可以获取limit, offset, search, sort, order
         queryParamsType: "undefined",
-        queryParams: function queryParams(params) {
-            var param = {
-                roleName:$('input[name="feedType"]').val(),
-                _method: "PATCH",
-                pageNumber: params.pageNumber,
-                pageSize: params.pageSize
-            };
-            return param;
-        }, formatLoadingMessage: function () {
+        queryParams: queryParams,
+        formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
         },
         responseHandler: function (res) {
@@ -107,14 +100,52 @@ function bootstraplist(){
                 }
             },
             {
+                title: '热源名称',
+                field: 'feedName',
+                align: 'center'
+            },
+            {
+                title: '热源编号',
+                field: 'feedCode',
+                align: 'center'
+            },
+            {
                 title: '热源性质',
                 field: 'feedType',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '1'){
+                        return '热电';
+                    }
+                    if(value == '2'){
+                        return '区域锅炉房';
+                    }
+                    if(value == '3'){
+                        return '核电';
+                    }
+                    if(value == '4'){
+                        return '工业余热';
+                    }
+
+                    return '';
+                }
             },
             {
                 title: '供热类型',
                 field: 'feedType',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '1'){
+                        return '区域供热';
+                    }
+                    if(value == '2'){
+                        return '集中供热';
+                    }
+                    if(value == '3'){
+                        return '尖峰供热';
+                    }
+                    return '';
+                }
             },
             {
                 title: '装机容量',
@@ -132,65 +163,15 @@ function bootstraplist(){
                 align: 'center'
             },
             {
-                title: '省',
-                field: 'provinceId',
-                align: 'center'
-            },
-            {
-                title: '市',
-                field: 'cityId',
-                align: 'center'
-            },
-            {
-                title: '县',
-                field: 'countyId',
-                align: 'center'
-            },
-            {
-                title: '乡',
-                field: 'townId',
-                align: 'center'
-            },
-            {
-                title: '村',
-                field: 'villageId',
-                align: 'center'
-            },
-            {
                 title: '详细地址',
                 field: 'addr',
                 align: 'center'
             },
-            {
-                title: '经度',
-                field: 'lng',
-                align: 'center'
-            },
-            {
-                title: '维度',
-                field: 'lat',
-                align: 'center'
-            },
-            {
-                title: '公建面积',
-                field: 'publicArea',
-                align: 'center'
-            },
-            {
-                title: '居民面积',
-                field: 'dwellArea',
-                align: 'center'
-            },
+
             {
                 title: '锅炉数量',
                 field: 'boilerNum',
-                align: 'center',
-                formatter:function(value,row,index){
-                    if(value.length>20){
-                        return '<span title="'+value+'">'+value.substr(0,20)+'</span>';
-                    }
-                    return value;
-                }
+                align: 'center'
             },
             {
                 title: '操作',
@@ -198,15 +179,11 @@ function bootstraplist(){
                 align: 'center' ,
                 formatter:function(value,row,index){
                     var html = "";
-
-                    if($("#roleUpdate").val()){
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="feedEditForm" layer-title="编辑热源" layer-url="'+_platform+'/feed/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                    if($("#feedUpdateAuth").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="feed_edit_Form" layer-title="编辑热源" layer-url="'+_platform+'/feed/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
                     }
-                    if($("#roleDelete").val()){
+                    if($("#feedDeleteAuth").val()){
                         html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteFeed(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
-                    }
-                    if($("#roleGrant").val()){
-                        html += '<a title="授权功能" class="btn btn-xs btn-warning  top-layer-max" layer-form-id="roleAuthFrom" layer-title="授权功能" layer-url="'+_platform+'/role/grant/'+row.id+'"><i class="fa fa-wrench"></i></a>';
                     }
                     return html;
                 }
@@ -246,7 +223,29 @@ function deleteFeed(id) {
         });
     });
 }
+
+function queryParams(params) {
+    return $("#feed-searchform").serialize();
+
+}
+
 function treeNodeClick(e,treeId,treeNode){
-    //alert(123);
+    top.orgId = treeNode.id;
+    $("#orgId").val(treeNode.id);
     search();
 }
+
+function addFeed(){
+    var treeNode = top.comm_tree.getSelectedNodes();
+    var ts = $(top.document).find("[name='searchComp']").val();
+    if(treeNode.length<1){
+        layer.msg("请先选择一个组织机构！");
+        return;
+    }
+    if(treeNode.length>1){
+        layer.warn("只能选择一个上级组织！");
+        return;
+    }
+    openLayer(_platform+"/feed/add/"+treeNode[0].id+"/"+ts,"添加热力站","feed_add_Form",null,null);
+}
+
