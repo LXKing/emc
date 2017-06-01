@@ -56,7 +56,7 @@ public class MenuAware implements InitializingBean, ServletContextAware {
         Map<String, Object> paramsMap = new HashMap<>();
         //查询前台菜单
         paramsMap.put("menuType",0);
-        paramsMap.put("menuNume","前台");
+        paramsMap.put("menuName","前台");
         Map<String,Object> beforeMenu = menuService.selectAuthByMap(paramsMap).get(0);
 
         paramsMap.clear();
@@ -98,7 +98,7 @@ public class MenuAware implements InitializingBean, ServletContextAware {
         //查询后台菜单
         paramsMap.clear();
         paramsMap.put("menuType",1);
-        paramsMap.put("menuNume","后台");
+        paramsMap.put("menuName","后台");
         Map<String,Object> afterMenu = menuService.selectAuthByMap(paramsMap).get(0);
 
         paramsMap.clear();

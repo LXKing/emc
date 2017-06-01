@@ -7,7 +7,7 @@
 
 <head>
     <jsp:include page="../../../head.jsp"></jsp:include>
-    <script src="${platform}/script/sys/huak.sys.energy.type.list.js"></script>
+    <script src="${platform}/script/sys/huak.energy.type.list.js"></script>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
+import com.huak.init.SysDicAware;
 import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,8 @@ public class SysDicController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private SysDicService sysDicService;
+    @Resource
+    private SysDicAware sysDicAware;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
@@ -71,6 +74,7 @@ public class SysDicController {
             sysDicService.insertSelective(sysDic);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加字典成功");
+            sysDicAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("添加字典异常" + e.getMessage());
             jo.put(Constants.MSG, "添加字典失败");
@@ -100,6 +104,7 @@ public class SysDicController {
             sysDicService.updateByPrimaryKeySelective(sysDic);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "修改字典成功");
+            sysDicAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("修改字典异常" + e.getMessage());
             jo.put(Constants.MSG, "修改字典失败");
@@ -122,6 +127,7 @@ public class SysDicController {
             sysDicService.deleteByPrimaryKey(id);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "删除字典成功");
+            sysDicAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("删除字典异常" + e.getMessage());
             jo.put(Constants.MSG, "删除字典失败");

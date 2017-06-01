@@ -92,4 +92,8 @@
     <dubbo:service interface="com.huak.org.SecondnetService" ref="secondnetService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="energyTypeService" class="com.huak.sys.EnergyTypeServiceImpl"></bean>
+    <dubbo:service interface="com.huak.sys.EnergyTypeService" ref="energyTypeService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>
