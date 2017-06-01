@@ -94,6 +94,12 @@
             return deferred.state() == "resolved" ? true : false;
         }, "角色名称已存在");
 
+        //中文校验
+        $.validator.addMethod("isRoleName", function(value, element){
+            var tel = /^[^\u0000-\u00FF]+$/;
+            return this.optional(element) || (tel.test(value));
+        }, icon + "角色名称只能输入中文");
+
         //提示信息绑定
         $('input:not(:submit):not(:button)').mousedown(function () {
             $(this).closest('.form-group').removeClass('has-error');
@@ -123,7 +129,8 @@
                 roleName: {
                     required: true,
                     minlength: 2,
-                    checkName: true
+                    checkName: true,
+                    isRoleName:true
                 },
                 roleDes: {
                     required: true
