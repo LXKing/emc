@@ -34,11 +34,10 @@
                     <form id="roles-form" role="form" class="form-horizontal m-t">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" id="pageNo" name="pageNo" value="1">
-
                         <div class="row">
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">管线类型</label>
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">管线类型</label>
                                     <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                         <input type="text" class="form-control" name="netTypeId" placeholder="请输入管线类型">
                                     </div>
