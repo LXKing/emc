@@ -1,8 +1,8 @@
 package com.huak.org.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Org {
+public class Org implements Serializable{
     private Long id;
 
     private String orgCode;
@@ -17,7 +17,7 @@ public class Org {
 
     private String creator;
 
-    private Date createTime;
+    private String  createTime;
 
     private String memo;
 
@@ -30,7 +30,7 @@ public class Org {
         super();
     }
 
-    public Org(Long id, String orgCode, String orgName, String shortName, Long pOrgId, Byte typeId, String creator, Date createTime, String memo, Integer seq, String comId) {
+    public Org(Long id, String orgCode, String orgName, String shortName, Long pOrgId, Byte typeId, String creator, String createTime, String memo, Integer seq, String comId) {
         this.id = id;
         this.orgCode = orgCode;
         this.orgName = orgName;
@@ -99,11 +99,11 @@ public class Org {
         this.creator = creator;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
