@@ -52,11 +52,11 @@ public class OrgServiceImpl implements OrgService {
         try {
             if(ids.length>1){
                 for (int i = 0; i <ids.length ; i++) {
-                    //orgDao.deleteByPrimaryKey(new Long(ids[i]));
+                    orgDao.deleteByPrimaryKey(Long.valueOf(ids[i]));
                 }
                 flag=true;
             }else{
-                //orgDao.deleteByPrimaryKey(new Long(ids[0]));
+                orgDao.deleteByPrimaryKey(Long.valueOf(ids[0]));
                 flag=true;
             }
 
@@ -89,8 +89,8 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public boolean insertOrg(Org org) {
         boolean flag=false;
-        org.setCreateTime(null);
-        int i =orgDao.insert(org);
+        org.setCreateTime(dateDao.getTime());
+        int i =orgDao.insertSelective(org);
         if(i>0){
             flag=true;
         }
@@ -109,7 +109,7 @@ public class OrgServiceImpl implements OrgService {
 
     @Override
     public Org selectByPrimaryKey(String id) {
-        Org org = orgDao.selectByPrimaryKey(id);
+        Org org = orgDao.selectByPrimaryKey(Long.valueOf(id));
         return org;
     }
 
