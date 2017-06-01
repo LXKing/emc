@@ -34,6 +34,12 @@ public class FeedServiceImpl implements FeedService{
     @Resource
     private DateDao dateDao;
 
+    /**
+     * 分页查询
+     * @param paramsMap
+     * @param page
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public PageResult<Feed> queryByPage(Map<String, Object> paramsMap, Page page) {
@@ -42,11 +48,31 @@ public class FeedServiceImpl implements FeedService{
         return Convert.convert(feedDao.selectPageByMap(paramsMap));
     }
 
+    /**
+     * 导出数据
+     * @param paramsMap
+     * @return
+     */
     @Override
     public List<Map<String, Object>> exportFeeds(Map<String, Object> paramsMap) {
-        return null;
+        return feedDao.selectFeedByMap(paramsMap);
     }
 
+    /**
+     * 多条件查询数据
+     * @param paramsMap
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> selectFeedByMap(Map<String, Object> paramsMap) {
+        return feedDao.selectFeedByMap(paramsMap);
+    }
+
+    /**
+     * 根据id查询数据
+     * @param id
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public Feed selectByPrimaryKey(String id) {
@@ -55,6 +81,11 @@ public class FeedServiceImpl implements FeedService{
         return feed;
     }
 
+    /**
+     * 根据实体类新增数据
+     * @param record
+     * @return
+     */
     @Override
     @Transactional(readOnly = false)
     public int insertSelective(Feed record) {
@@ -62,12 +93,22 @@ public class FeedServiceImpl implements FeedService{
         return feedDao.insertSelective(record);
     }
 
+    /**
+     * 修改数据
+     * @param record
+     * @return
+     */
     @Override
     public int updateByPrimaryKeySelective(Feed record) {
 
         return feedDao.updateByPrimaryKeySelective(record);
     }
 
+    /**
+     * 根据id删除数据
+     * @param id
+     * @return
+     */
     @Override
     public int deleteByPrimaryKey(String id) {
         return feedDao.deleteByPrimaryKey(id);

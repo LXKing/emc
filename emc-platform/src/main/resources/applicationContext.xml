@@ -35,6 +35,7 @@
     <dubbo:reference id="reversibleEncryption"    interface="com.huak.base.ReversibleEncryption" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="companyService"    interface="com.huak.org.CompanyService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="secondnetService"    interface="com.huak.org.SecondnetService" timeout="12000"  check="true" version="${service.version}" />
+    <dubbo:reference id="energyTypeService"    interface="com.huak.sys.EnergyTypeService" timeout="12000"  check="true" version="${service.version}" />
 
     <!-- 日志 -->
 	<dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="12000"  check="true" version="${service.version}"/>

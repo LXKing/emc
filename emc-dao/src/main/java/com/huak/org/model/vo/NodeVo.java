@@ -18,7 +18,7 @@ public class NodeVo implements Serializable{
 
     private String shortName;
 
-    private String pOrgId;
+    private Long pOrgId;
 
     private String typeId;
 
@@ -56,7 +56,7 @@ public class NodeVo implements Serializable{
 
     private Byte status;
 
-    public NodeVo(String id, String comId, String orgCode, String orgName, String shortName, String pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area
+    public NodeVo(String id, String comId, String orgCode, String orgName, String shortName, Long pOrgId, String typeId, String creator, String createTime, String memo, Integer seq, Double area
                   , String manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double publicArea, Double dwellArea
                ,Byte status) {
         this.id = id;
@@ -129,11 +129,11 @@ public class NodeVo implements Serializable{
         this.shortName = shortName == null ? null : shortName.trim();
     }
 
-    public String getpOrgId() {
+    public Long getpOrgId() {
         return pOrgId;
     }
 
-    public void setpOrgId(String pOrgId) {
+    public void setpOrgId(Long pOrgId) {
         this.pOrgId = pOrgId;
     }
 

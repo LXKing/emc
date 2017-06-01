@@ -4,12 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Node;
-import com.huak.org.model.Org;
-import com.huak.org.model.vo.NodeVo;
-import com.huak.org.type.OrgType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,13 +60,11 @@ public class NodeController {
     }
 
     @RequestMapping(value = "/add/{pOrgId}/{comId}", method = RequestMethod.GET)
-    public String addPage(@PathVariable("pOrgId") String pOrgId,@PathVariable("comId") String comId,ModelMap modelMap) {
+    public String addPage(@PathVariable("pOrgId") Long pOrgId,@PathVariable("comId") String comId,ModelMap modelMap) {
         try {
-            NodeVo obj = new NodeVo();
-            obj.setpOrgId(pOrgId);
+            Node obj = new Node();
+            obj.setOrgId(pOrgId);
             obj.setComId(comId);
-            obj.setStatus((byte) 0);
-            obj.setTypeId(String.valueOf(OrgType.RLZ.getKey()));
             modelMap.put(Constants.OBJECT,obj);
         } catch (Exception e) {
             logger.error("跳转到热力站编辑页出错！");
@@ -81,7 +75,7 @@ public class NodeController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(NodeVo node, HttpServletRequest request) {
+    public String add(Node node, HttpServletRequest request) {
         logger.info("添加热力站");
 
         JSONObject jo = new JSONObject();
@@ -90,7 +84,6 @@ public class NodeController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(Constants.SESSION_KEY);
-            node.setCreator(user.getId());
            boolean flag = nodeService.insertSelective(node)>0;
             if(flag){
                 jo.put(Constants.FLAG, true);
@@ -112,7 +105,7 @@ public class NodeController {
     public String editPage(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改热力站页");
         try {
-            model.addAttribute("node", nodeService.selectVoById(id));
+            model.addAttribute("node", nodeService.selectById(id));
         } catch (Exception e) {
             logger.error("跳转修改热力站页异常" + e.getMessage());
         }
@@ -121,7 +114,7 @@ public class NodeController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String edit(NodeVo node) {
+    public String edit(Node node) {
         logger.info("修改热力站");
 
         JSONObject jo = new JSONObject();
@@ -193,5 +186,28 @@ public class NodeController {
         }
     }
 
+    /**
+     *唯一性校验
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkUnique(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("热力站唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            List<Map<String,Object>> data= nodeService.selectStationByMap(paramsMap);
+            if (data.size() == 0) {
+                jo.put(Constants.FLAG, true);
+            }else
+                jo.put(Constants.FLAG,false);
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("热源唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
 
 }

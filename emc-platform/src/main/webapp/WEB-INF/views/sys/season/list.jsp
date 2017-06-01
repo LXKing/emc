@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../../include.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -16,7 +18,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
 
-        <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <form id="roles-form" role="form" class="form-horizontal m-t">

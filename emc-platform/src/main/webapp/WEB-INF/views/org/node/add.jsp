@@ -32,38 +32,6 @@ $.validator.setDefaults({
 
 //以下为官方示例
 $(function () {
-
-//    /*菜单树*/
-//    var setting = {
-//        async: {
-//            enable: true,
-//            type: "POST",
-//            url:_platform+"/menu/list/tree",
-//            autoParam: ["id", "name"]
-//        },
-//        view: {
-//            selectedMulti: false
-//        },
-//        data: {
-//            key : {
-//                name : "name"
-//            },
-//            simpleData : {
-//                enable : true,
-//                idKey : "id",
-//                pIdKey : "pId",
-//                rootPId : null
-//            }
-//        },
-//        callback:{
-//            onClick:function(event, treeId, treeNode){
-//                $('input[name="menuId"]').val(treeNode.id);
-//                $('#func-table-list').bootstrapTable('refresh');
-//            }
-//        }
-//    };
-//     $(top.document).find('#orgCode').treeBox({setting:setting});
-
     var icon = "<i class='fa fa-times-circle'></i> ";
     new PCAS('province','${province}','','city','${city}','','county','${county}','','town','${town}','');
     $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
@@ -71,12 +39,12 @@ $(function () {
     var $form = $(top.document).find("#stationAddForm");
     $.validator.addMethod("nodeCodeUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        var newcode = $(top.document).find("#orgCode").val();
+        var newcode = $(top.document).find("#stationCode").val();
         $.ajax({
-            url:_platform+'/common/check',
+            url:_platform+'/station/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {orgCode:newcode},
+            data: {stationCode:newcode},
             dataType: 'json',
             success:function(result) {
                 if (!result.flag) {
@@ -92,12 +60,12 @@ $(function () {
 
     $.validator.addMethod("nodeNameUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        var orgName =  $(top.document).find("#orgName").val();
+        var stationName =  $(top.document).find("#stationName").val();
         $.ajax({
-            url:_platform+'/common/check',
+            url:_platform+'/station/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {orgName:orgName},
+            data: {stationName:stationName},
             dataType: 'json',
             success:function(result) {
                 if (!result.flag) {
@@ -149,11 +117,11 @@ $(function () {
             orgId: {
                 required: true
             },
-            orgCode: {
+            stationCode: {
                 required: true,
                 nodeCodeUnique: true
             },
-            orgName: {
+            stationName: {
                 required: true,
                 nodeNameUnique: true
             },
@@ -180,17 +148,15 @@ $(function () {
             townId:{
                 required: true
             }
-
-
         },
         messages: {
             orgId: {
                 required: icon + "请选择组织机构"
             },
-            orgCode: {
+            stationCode: {
                 required: icon + "请填写热力站编码"
             },
-            orgName: {
+            stationName: {
                 required: icon + "请填写热力站名称"
             },
             shortName: {
@@ -224,23 +190,18 @@ $(function () {
             $.ajax({
                 url:_platform + '/station/add',
                 data:$form.serialize(),
-                type: 'POST',
-                cache:false,
-                async:true,
-                dataType: 'json',
+                type:'POST',
+                dataType:'json',
                 success: function (result) {
+                    alert(1);
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
-                        refreshNodes();
                         $('#station-table-list').bootstrapTable("refresh");
                     } else {
                         debugger;
                         top.layer.msg(result.msg);
                     }
-                },
-                error:function(){
-                    top.layer.msg("请求服务器失败！");
                 }
             });
         }
@@ -256,29 +217,20 @@ $(function () {
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                     <form class="form-horizontal" id="stationAddForm" role="form">
-                        <input type="hidden" name="typeId" value="${object.typeId}"/>
-                        <input type="hidden" name="pOrgId" value="${object.pOrgId}"/>
+                        <input type="hidden" name="orgId" value="${object.orgId}"/>
                         <input type="hidden" name="comId" value="${object.comId}"/>
-                        <input type="hidden" name="status" value="${object.status}"/>
                         <div class="form-group">
                             <label class="col-sm-2  control-label"><span class="red">*</span>热力站编码：</label>
                             <div class="col-sm-5">
-                                <input id="orgCode" name="orgCode" class="form-control"  type="text" maxlength="20" placeholder="请输入热力站编码">
+                                <input id="stationCode" name="stationCode" class="form-control"  type="text" maxlength="20" placeholder="请输入热力站编码">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2  control-label"><span class="red">*</span>热力站名称：</label>
                             <div class="col-sm-5">
-                                <input name="orgName" id="orgName" class="form-control"  type="text" maxlength="64" placeholder="请输入热力站名称">
+                                <input name="stationName" id="stationName" class="form-control"  type="text" maxlength="64" placeholder="请输入热力站名称">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2  control-label"><span class="red">*</span>热力站简称：</label>
-                            <div class="col-sm-5">
-                                <input name="shortName" class="form-control"  type="text" maxlength="64" placeholder="请输热力站简称">
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="td">
                                 <label class="col-md-2  control-label"><span class="red">*</span>管理类型：</label>
@@ -293,22 +245,15 @@ $(function () {
                             </div>
                         </div>
                         <div class="form-group">
-                            <%--<label class="col-sm-2  control-label"><span class="red">*</span>公建面积：</label>--%>
-                            <label class="col-sm-2  control-label">公建面积：</label>
-                            <div class="col-sm-5">
-                                <input name="publicArea"  class="form-control" type="text" maxlength="64" placeholder="请输入公建面积">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <%--<label class="col-sm-2  control-label"><span class="red">*</span>居民面积：</label>--%>
-                            <label class="col-sm-2  control-label">居民面积：</label>
+                            <label class="col-sm-2  control-label">供热面积：</label>
                             <div class="col-sm-5">
-                                <input name="dwellArea" class="form-control" type="text" maxlength="64" placeholder="请输入居民面积">
+                                <input name="heatArea" class="form-control" type="text" maxlength="64" placeholder="请输入居民面积">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-sm-2  control-label">区划区划：</label>
+                                <label class="col-sm-2  control-label">行政区划：</label>
                                 <div class="col-sm-3">
                                     <select id="province" name="provinceId" class="chosen-select form-control" >
                                         <option value="">请选择省份</option>
@@ -342,19 +287,6 @@ $(function () {
                             <label class="col-sm-2  control-label"><span class="red">*</span>详细地址：</label>
                             <div class="col-sm-5">
                                 <input name="addr"  class="form-control" type="text" maxlength="64" placeholder="请输入区划代码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2  control-label"><span class="red">*</span>排序：</label>
-                            <div class="col-sm-5">
-                                <input name="seq"  class="form-control" type="text" maxlength="64" placeholder="请输入排序">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2  control-label">备注：</label>
-                            <div class="col-sm-5">
-                                <input name="memo"   class="form-control" type="text" maxlength="255">
                             </div>
                         </div>
 
