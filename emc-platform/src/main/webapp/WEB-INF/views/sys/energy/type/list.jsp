@@ -6,8 +6,8 @@
 <html>
 
 <head>
-    <jsp:include page="../../head.jsp"></jsp:include>
-    <script src="${platform}/script/sys/huak.sys.dic.list.js"></script>
+    <jsp:include page="../../../head.jsp"></jsp:include>
+    <script src="${platform}/script/sys/huak.sys.energy.type.list.js"></script>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -15,7 +15,7 @@
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form id="dics-form" role="form" class="form-horizontal m-t">
+                    <form id="energyTypes-form" role="form" class="form-horizontal m-t">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" id="pageNo" name="pageNo" value="1">
 
@@ -50,29 +50,29 @@
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-                                <c:if test="${sessionScope._auth['sysDicAdd']}">
-                                    <button type="button" class="btn btn-sm btn-info " onclick="addDic()">
+                                <c:if test="${sessionScope._auth['energyTypeAdd']}">
+                                    <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="energyTypeAddForm" layer-title="添加能源类型" layer-url="${platform}/energy/type/add">
                                         <i class="fa fa-plus"></i>添加
                                     </button>
                                 </c:if>
-                                <input type="hidden" id="sysDicUpdate" value="${sessionScope._auth['sysDicUpdate']}">
-                                <input type="hidden" id="sysDicDelete" value="${sessionScope._auth['sysDicDelete']}">
+                                <input type="hidden" id="energyTypeUpdate" value="${sessionScope._auth['energyTypeUpdate']}">
+                                <input type="hidden" id="energyTypeDelete" value="${sessionScope._auth['energyTypeDelete']}">
 
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
 
-                                <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="dic-table-list"> 搜索
+                                <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="energyType-table-list"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
-                                <c:if test="${sessionScope._auth['sysDicExport']}">
-                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
+                                <c:if test="${sessionScope._auth['energyTypeExport']}">
+                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/energy/type/export"> 导出Excel
                                 </button>
                                 </c:if>
                             </div>
                         </div>
                     </form>
                     <div class="example">
-                        <table id="dic-table-list">
+                        <table id="energyType-table-list">
                         </table>
                     </div>
                 </div>
