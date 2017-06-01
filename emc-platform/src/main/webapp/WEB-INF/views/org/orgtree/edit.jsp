@@ -176,9 +176,9 @@
 
                     <div class="col-sm-8">
                         <select id="typeId" name="typeId" class="chosen-select form-control">
-                            <c:forEach items="${sysdic}" var="item" varStatus="status" >
-                                <option <c:if test="${org.typeId eq item.id}">selected="selected" </c:if> value="${item.id}">${item.des}</option>
-                            </c:forEach>
+                            <%--<c:forEach items="${sysdic}" var="item" varStatus="status" >--%>
+                                <%--<option <c:if test="${org.typeId eq item.id}">selected="selected" </c:if> value="${item.id}">${item.des}</option>--%>
+                            <%--</c:forEach>--%>
                         </select>
                     </div>
                 </div>
