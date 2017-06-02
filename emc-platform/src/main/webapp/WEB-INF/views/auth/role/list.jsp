@@ -17,7 +17,6 @@
                 <div class="ibox-content">
                     <form id="roles-form" role="form" class="form-horizontal m-t">
                         <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" id="pageNo" name="pageNo" value="1">
 
                         <div class="row">
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
@@ -32,45 +31,14 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-2 col-xs-2 col-md-2 col-lg-2">创建时间</label>
                                     <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                        <input id="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
+                                        <input id="start" name="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
                                     </div>
                                     <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                        <input id="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
+                                        <input id="end" name="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">创建机构</label>
-                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="roleName" placeholder="请输入创建机构">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">创建者</label>
-                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="roleName" placeholder="请输入创建者">
-                                    </div>
-                                </div>
-                            </div>
-
-                           <!-- <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">下拉框</label>
-                                    <div class="input-group col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <select name="useStatus" class="chosen-select form-control">
-                                            <option value="">全部</option>
-                                            <option value="0">启用</option>
-                                            <option value="1">禁用</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>-->
                         </div>
 
                         <div class="row">

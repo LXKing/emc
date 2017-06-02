@@ -3,6 +3,7 @@ package com.huak.auth;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Role;
 import com.huak.auth.model.RoleFuncRel;
+import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
@@ -80,10 +81,10 @@ public class RoleController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            // TODO 添加session，创建者
+            // 添加session，创建者
             HttpSession session = request.getSession();
-            role.setCreator("1");
-
+            User user = (User)session.getAttribute(Constants.SESSION_KEY);
+            role.setCreator(user.getId());
 
             role.setId(UUIDGenerator.getUUID());
             roleService.insertSelective(role);
