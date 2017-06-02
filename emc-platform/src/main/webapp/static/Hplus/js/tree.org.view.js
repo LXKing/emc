@@ -30,11 +30,11 @@
                 $this = $(this.class)
             }
             if($this.length>0) {
-
+                var ts = $(top.document).find("[name='searchComp']").val();
                 top.lightId = $this.attr("light");
                 $this.html("<div id='temp_org_tree' light='"+ top.lightId+"' class='ztree'></div>");
                 var setting = {
-                    async: { enable: true, url: _platform + '/common/org/tree', autoParam: ["id"]},
+                    async: { enable: true, url: _platform + '/common/org/tree/'+ts, autoParam: ["id"]},
                     view: {selectedMulti: false, fontCss: {color: "black"}},
                     check: { enable: false },
                     data: { simpleData: { enable: true, idKey: "id", pIdKey: "pId", system: "Name", rootPId: "" } },

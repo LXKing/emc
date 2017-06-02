@@ -4,8 +4,10 @@ package com.huak.org;
 import com.huak.base.BaseTest;
 import com.huak.base.dao.DateDao;
 
+import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.model.Node;
 import com.huak.org.model.vo.NodeVo;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
@@ -31,6 +33,9 @@ public class TestOrgService extends BaseTest {
     @Resource
     private DateDao dateDao;
 
+    @Resource
+    private OrgService orgService;
+
     //@Test
     @Rollback
     public void testDeleteByPrimaryKey() {
@@ -45,26 +50,27 @@ public class TestOrgService extends BaseTest {
 
     @Test
     @Rollback
+    public void testSelectOrgByMap(){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("comId",1);
+        List<Map<String,Object>> dat = orgService.selectOrgTree(map);
+        for(Map da : dat){
+           System.out.println(da.get("orgName"));
+        }
+    }
+
+    @Test
+    @Rollback
     public void testSelectByPrimaryKey() {
-       NodeVo vo = nodeService.selectVoById("192d30fa0924427398ca433adbe9a44b");
-        System.out.println(vo.getOrgName());
+
+       Node vo = nodeService.selectById("192d30fa0924427398ca433adbe9a44b");
+        System.out.println(vo.getStationName());
     }
 
     @Test
     @Rollback
     public void testUpdateByPrimaryKeySelective() {
-        NodeVo vo = new NodeVo();
-        vo.setId("083a5016044f498cb1089b5bf3f06d47");
-        vo.setOrgCode("98888");
-        vo.setOrgName("测试");
-        vo.setManageTypeId("b634bf7a2a38401290c59fd5486ed370");
-        vo.setProvinceId("110000000000");
-        vo.setCityId("110100000000");
-        vo.setCountyId("110102000000");
-        vo.setTownId("110102001000");
-        vo.setAddr("22222");
-        vo.setDwellArea(11.0);
-        vo.setPublicArea(12.0);
+        Node vo = new Node();
         nodeService.update(vo);
     }
 
@@ -75,9 +81,9 @@ public class TestOrgService extends BaseTest {
         paramsMap.put("pOrgId","pOrgId=c758f969c0a4471eb95ce90617013e92");
         paramsMap.put("pageSize","10");
 
-        PageResult<NodeVo> nodes= nodeService.queryByPage(paramsMap,new Page());
-        for (NodeVo vo : nodes.getList()) {
-            System.err.println(vo.getOrgName());
+        PageResult<Node> nodes= nodeService.queryByPage(paramsMap,new Page());
+        for (Node vo : nodes.getList()) {
+            System.err.println(vo.getStationName());
         }
     }
 
@@ -88,4 +94,26 @@ public class TestOrgService extends BaseTest {
 
     }
 
+    @Test
+    @Rollback
+    public void testInsert(){
+        Node node = new Node();
+        node.setId(UUIDGenerator.getUUID());
+        node.setManageTypeId((byte)2);
+        node.setProvinceId("440000000000");
+        node.setTownId("445203002000");
+        node.setCityId("445200000000");
+        node.setCountyId("445203000000");
+        node.setVillageId(null);
+        node.setAddr("123");
+        node.setLng(123.0);
+        node.setLat(123.0);
+        node.setStationCode("123");
+        node.setStationName("123");
+        node.setHeatArea(123.0);
+        node.setOrgId(Long.parseLong("2"));
+        node.setComId("40a6bfd44863406e8356bbcfe879fd70");
+        nodeService.insert(node);
+
+    }
 }
