@@ -17,4 +17,10 @@ public interface FuncDao {
     int updateByPrimaryKeySelective(Func record);
 
     List<Func> selectAllByMap(Map<String,Object> paramsMap);
+
+    Long checkUName(Map<String, String> paramsMap);
+
+    Long checkName(Map<String, String> paramsMap);
+
+    Long checkSearch(Map<String, String> paramsMap);
 }

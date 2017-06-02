@@ -99,4 +99,13 @@
         order by ISSEARCH ASC ,SEQ ASC
     </select>
 
+    <select id="checkUName" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id)  from t_emc_auth_func  where UNAME = #{uName}
+    </select>
+    <select id="checkName" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id)  from t_emc_auth_func  where FUNC_NAME = #{funcName} and MENU_ID = #{menuId}
+    </select>
+    <select id="checkSearch" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id)  from t_emc_auth_func  where ISSEARCH = 0 and  MENU_ID = #{menuId}
+    </select>
 </mapper>

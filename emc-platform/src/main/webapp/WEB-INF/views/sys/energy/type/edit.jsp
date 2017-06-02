@@ -85,35 +85,34 @@
     </div>
 </div>
 <script>
-    //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
-    $.validator.setDefaults({
-        highlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.closest('.form-group').removeClass('has-error').addClass('has-success');
-        },
-        errorElement: "span",
-        errorPlacement: function (error, element) {
-            if (element.is(":radio") || element.is(":checkbox")) {
-                error.appendTo(element.parent().parent().parent());
-            } else {
-                error.appendTo(element.parent());
-            }
-        },
-        errorClass: "help-block m-b-none m-t-xs",
-        validClass: "help-block m-b-none m-t-none"
-
-
-    });
+//以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
+$.validator.setDefaults({
+    ignore: ":hidden:not(select)",//校验chosen
+    highlight: function (element) {
+        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    success: function (element) {
+        $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+    },
+    errorElement: "span",
+    errorPlacement: function (error, element) {
+        if (element.is(":radio") || element.is(":checkbox")) {
+            error.insertAfter(element.parent().parent());
+        } else if(element.is("select")){
+            error.insertAfter(element.next());
+        }else{
+            error.insertAfter(element);
+        }
+    },
+    errorClass: "help-block m-b-none m-t-xs",
+    validClass: "help-block m-b-none m-t-none"
+});
 
     //以下为官方示例
     $(function () {
         var $form = $(top.document).find("#energyTypeEditForm");
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
-
-        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
 
         $.validator.addMethod("checkNameZh", function (value, element) {
             if(value =='${energyType.nameZh}'){
@@ -184,12 +183,13 @@
 
 
         //提示信息绑定
-        $('input:not(:submit):not(:button)').mousedown(function () {
+        $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
             $(this).siblings('.help-block').remove();
         });
         //下拉框信息绑定
-        $('select').change(function () {
+        //下拉框js
+        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen().on('change',function () {
             if ($(this).find('option:first').val() != $(this).val()) {
                 $(this).siblings('.help-block').remove();
             }
