@@ -20,7 +20,7 @@ $.validator.setDefaults({
         if (element.is(":radio") || element.is(":checkbox")) {
             error.insertAfter(element.parent().parent().parent());
         } else if(element.is("select")){
-            error.insertAfter(element.parent().parent());
+            error.insertAfter(element.parent());
         }else{
             error.insertAfter(element.parent());
         }
