@@ -16,7 +16,7 @@ public interface NodeService {
 
     int insert(Node record);
 
-    public int insertSelective(Node record);
+    public boolean insertSelective(Node record);
 
     Node selectById(String id);
 

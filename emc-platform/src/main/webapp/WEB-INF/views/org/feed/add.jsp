@@ -209,7 +209,7 @@ $(function () {
 
         },
         submitHandler: function () {
-            var index = layer.load(1, {
+            var index = top.layer.load(1, {
                 shade: [0.1,'#fff'] //0.1透明度的白色背景
             });
             $.ajax({
@@ -261,7 +261,7 @@ $(function () {
                             <div class="td">
                                 <label class="col-md-2  control-label"><span class="red">*</span>供热类型：</label>
                                 <div class="col-sm-4">
-                                    <select id="heatType" name="heatType" class="chosen-select form-control" onchange="addMessage()" >
+                                    <select id="heatType" name="heatType" class="chosen-select form-control"  >
                                         <option value="">请选择供热类型</option>
                                         <c:forEach items="${sysDic['supportheattype']}" var="type">
                                             <option <c:if test="${object.heatType eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
@@ -274,7 +274,7 @@ $(function () {
                             <div class="td">
                                 <label class="col-md-2  control-label"><span class="red">*</span>热源性质：</label>
                                 <div class="col-sm-4">
-                                    <select id="feedType" name="feedType" class="chosen-select form-control" onchange="addMessage()">
+                                    <select id="feedType" name="feedType" class="chosen-select form-control" >
                                         <option value="">请选择热源性质</option>
                                         <c:forEach items="${sysDic['natureheat']}" var="types">
                                             <option <c:if test="${object.feedType eq types.seq}">selected="selected" </c:if> value="${types.seq}">${types.des}</option>

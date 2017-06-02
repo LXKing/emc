@@ -48,13 +48,17 @@ public class NodeServiceImpl implements NodeService{
 
     @Override
     @Transactional(readOnly = false)
-    public int insertSelective(Node record) {
+    public boolean insertSelective(Node record) {
         try {
-                return  nodeDao.insert(record);
+             int flag = nodeDao.insertSelective(record);
+            System.out.println(flag);
+                return  flag>0;
         }catch (Exception e){
+            e.printStackTrace();
             logger.error("新增热力站失败！");
+            return false;
+
         }
-        return 0;
     }
 
 
@@ -62,7 +66,7 @@ public class NodeServiceImpl implements NodeService{
     @Override
     @Transactional(readOnly = true)
     public Node selectById(String id) {
-        return null;
+        return nodeDao.selectByPrimaryKey(id);
     }
 
     @Override
