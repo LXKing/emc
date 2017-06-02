@@ -160,7 +160,7 @@ $(function () {
 
 function params(params) {
     return {
-
+        status:0,
         stationName:$("#stationName").val(),
         stationCode:$("#stationCode").val(),
         orgId:top.orgId,
@@ -211,7 +211,6 @@ function deletestation(id) {
                     top.layer.closeAll();
                     top.layer.msg(result.msg);
                     $('#station-table-list').bootstrapTable("refresh");
-                    refreshNodes();
                 } else {
                     top.layer.close(index);
                     top.layer.msg(result.msg);

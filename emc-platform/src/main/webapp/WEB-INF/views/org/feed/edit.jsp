@@ -256,6 +256,7 @@ $(function () {
             <div class="ibox float-e-margins">
                     <form class="form-horizontal" id="feed_edit_Form" role="form">
                         <input type="hidden" name="id" value="${object.id}"/>
+                        <input type="hidden" name="" value="${object.status水獭图书}"/>
                         <input type="hidden" name="orgId" value="${object.orgId}"/>
                         <input type="hidden" name="comId" value="${object.comId}"/>
                         <input id="oldCode"  value="${object.feedCode}" class="form-control" type="hidden" >

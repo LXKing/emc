@@ -240,6 +240,7 @@ $(function () {
                     <input type="hidden" name="comId" value="${node.comId}"/>
                     <input type="hidden" id="oldName" value="${node.stationName}"/>
                     <input type="hidden" id="oldCode" value="${node.stationCode}"/>
+                    <input type="hidden" name="status" value="${node.status}"/>
                     <div class="form-group">
                         <label class="col-sm-2  control-label"><span class="red">*</span>热力站编码：</label>
                         <div class="col-sm-5">

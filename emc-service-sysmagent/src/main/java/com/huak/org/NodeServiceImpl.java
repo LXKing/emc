@@ -37,7 +37,7 @@ public class NodeServiceImpl implements NodeService{
     @Override
     @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
-           return  nodeDao.deleteByPrimaryKey(id);
+           return  nodeDao.deleteByStatus(id);
     }
 
     @Override

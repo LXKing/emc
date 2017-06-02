@@ -31,6 +31,7 @@
                 <div class="ibox-content">
                     <form id="feed-searchform" role="form" class="form-horizontal m-t">
                         <input type="hidden" id="orgId" name="orgId" value="">
+                        <input type="hidden"  name="status" value="0">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" id="pageNo" name="pageNo" value="1">
                         <div class="row">

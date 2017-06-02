@@ -54,4 +54,11 @@ public interface FeedDao {
      * @return
      */
     List<Map<String,Object>> selectFeedByMap(Map<String, Object> paramsMap);
+
+    /**
+     * 根据id软删除
+     * @param id
+     * @return
+     */
+    int deleteByStatus(String id);
 }

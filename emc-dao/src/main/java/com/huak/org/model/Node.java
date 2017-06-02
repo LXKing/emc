@@ -40,7 +40,9 @@ public class Node implements Serializable{
 
     private String comId;
 
-    public Node(String id, Byte manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, String stationName, String stationCode, Double heatArea, Long orgId, String netId, String feedId, String lineId, String comId) {
+    private Byte status;
+
+    public Node(String id, Byte manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, String stationName, String stationCode, Double heatArea, Long orgId, String netId, String feedId, String lineId, String comId, Byte status) {
         this.id = id;
         this.manageTypeId = manageTypeId;
         this.provinceId = provinceId;
@@ -59,6 +61,7 @@ public class Node implements Serializable{
         this.feedId = feedId;
         this.lineId = lineId;
         this.comId = comId;
+        this.status = status;
     }
 
     public Node() {
@@ -207,5 +210,13 @@ public class Node implements Serializable{
 
     public void setComId(String comId) {
         this.comId = comId == null ? null : comId.trim();
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

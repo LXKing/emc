@@ -29,4 +29,6 @@ public interface NodeDao {
     Node selectVoById(String id);
 
     List<Map<String,Object>> selectStationByMap(Map<String, Object> paramsMap);
+
+    int deleteByStatus(String id);
 }

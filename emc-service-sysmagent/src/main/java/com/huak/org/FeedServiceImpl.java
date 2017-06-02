@@ -111,6 +111,6 @@ public class FeedServiceImpl implements FeedService{
      */
     @Override
     public int deleteByPrimaryKey(String id) {
-        return feedDao.deleteByPrimaryKey(id);
+        return feedDao.deleteByStatus(id);
     }
 }
