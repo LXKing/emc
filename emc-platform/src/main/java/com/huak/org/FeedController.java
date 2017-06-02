@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,11 @@ public class FeedController {
     @Resource
     private FeedService feedService;
 
+    @Resource
+    private OncenetService oncenetService;
+
+    @Resource
+    private SecondnetService secondnetService;
     /**
      * 转至系统热源列表页
      * @return
@@ -90,6 +96,11 @@ public class FeedController {
             Feed obj = new Feed();
             obj.setOrgId(Long.parseLong(pOrgId));
             obj.setComId(comId);
+            Map<String,Object> params = new HashMap<>();
+            params.put("comId",comId);
+            params.put("orgId",pOrgId);
+            modelMap.put("oncenet",oncenetService.selectNetAll(params));
+            modelMap.put("secondnet",secondnetService.selectLineAll(params));
             modelMap.put(Constants.OBJECT,obj);
         } catch (Exception e) {
             logger.error("跳转到热源编辑页出错！");
@@ -108,6 +119,10 @@ public class FeedController {
         logger.info("跳转修改热源页");
         try {
             Feed feed = feedService.selectByPrimaryKey(id);
+            Map<String,Object> params = new HashMap<>();
+
+            model.addAttribute("oncenet",oncenetService.selectNetAll(params));
+            model.addAttribute("secondnet",secondnetService.selectLineAll(params));
             model.addAttribute(Constants.OBJECT, feed);
         } catch (Exception e) {
             logger.error("跳转修改热源页异常" + e.getMessage());

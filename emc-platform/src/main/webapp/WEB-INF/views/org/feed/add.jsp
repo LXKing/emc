@@ -318,6 +318,32 @@ $(function () {
                         </div>
                         <div class="form-group">
                             <div class="td">
+                                <label class="col-md-2  control-label">所属管网：</label>
+                                <div class="col-sm-5">
+                                    <select id="netId" name="netId" class="chosen-select form-control"  >
+                                        <option value="">请选择管网</option>
+                                        <c:forEach items="${oncenet}" var="net">
+                                            <option <c:if test="${object.netId eq net.id}">selected="selected" </c:if> value="${net.id}">${net.netName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
+                                <div class="col-sm-5">
+                                    <select id="lineId" name="lineId" class="chosen-select form-control"  >
+                                        <option value="">请选择管线</option>
+                                        <c:forEach items="${secondnet}" var="line">
+                                            <option <c:if test="${object.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
                                 <label class="col-sm-2  control-label">区划区划：</label>
                                 <div class="col-sm-3">
                                     <select id="province" name="provinceId" class="chosen-select form-control" >
