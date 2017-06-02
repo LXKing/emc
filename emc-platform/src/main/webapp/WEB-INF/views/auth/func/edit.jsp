@@ -88,13 +88,39 @@
         var $form = $(top.document).find("#funcEditForm");
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
-        $.validator.addMethod("checkUnique", function(value, element) {
+        $.validator.addMethod("checkFuncName", function(value, element) {
+            if(value =='${func.funcName}'){
+                return true;
+            }
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
-                url:ctx+'/func/check/uname',
+                url:_platform + '/func/check/name',
                 type:'POST',
                 async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {uName:$('#uName').val()},
+                data: {funcName:value,menuId:'${menu.id}'},
+                dataType: 'json',
+                success:function(result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, '菜单[${menu.menuName}]下功能名称已存在');
+
+        $.validator.addMethod("checkUnique", function(value, element) {
+            if(value =='${func.uName}'){
+                return true;
+            }
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url:_platform+'/func/check/uname',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {uName:value},
                 dataType: 'json',
                 success:function(result) {
                     if (!result.flag) {
@@ -108,11 +134,63 @@
             return deferred.state() == "resolved" ? true : false;
         }, "唯一标识已存在");
 
+        $.validator.addMethod("checkFuncSearch", function(value, element) {
+            if(value =='${func.issearch}'){
+                return true;
+            }
+            if(1==$(element).val()){
+                return true;
+            }
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url:_platform+'/func/check/search',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {menuId:'${menu.id}'},
+                dataType: 'json',
+                success:function(result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, '每个菜单下有且只有一个是查询');
+
+        //中文校验
+        $.validator.addMethod("isChinaName", function(value, element){
+            var tel = /^[^\u0000-\u00FF]+$/;
+            return this.optional(element) || (tel.test(value));
+        }, icon + "请输入中文");
+
         // 英文名称验证
         $.validator.addMethod("isEnglishName", function(value, element) {
-            var tel = /^\w+$/;
+            var tel = /^[A-Za-z]+$/;
             return this.optional(element) || (tel.test(value));
         }, "请输入英文名称");
+
+        // 排序校验
+        $.validator.addMethod("isSeq", function(value, element) {
+            if(value =='${func.seq}'){
+                return true;
+            }
+            if(1==$(top.document).find('select[name="issearch"]').val()){
+                if(value>1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                if(value==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }, "查询的排序必须为1,非查询大于1,且为正整数");
 
         //提示信息绑定
         $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){

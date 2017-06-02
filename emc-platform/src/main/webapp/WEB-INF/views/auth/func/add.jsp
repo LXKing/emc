@@ -166,17 +166,19 @@
 
         // 排序校验
         $.validator.addMethod("isSeq", function(value, element) {
-            if(1==$(element).val()){
+            if(1==$(top.document).find('select[name="issearch"]').val()){
                 if(value>1){
                     return true;
+                }else{
+                    return false;
                 }
             }else{
                 if(value==1){
                     return true;
+                }else{
+                    return false;
                 }
             }
-            var tel = /^\d+$/;
-            return this.optional(element) || (tel.test(value));
         }, "查询的排序必须为1,非查询大于1,且为正整数");
 
         //提示信息绑定
