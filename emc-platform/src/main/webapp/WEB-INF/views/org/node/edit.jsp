@@ -20,7 +20,7 @@ $.validator.setDefaults({
         if (element.is(":radio") || element.is(":checkbox")) {
             error.insertAfter(element.parent().parent().parent());
         } else if(element.is("select")){
-            error.insertAfter(element.parent().parent());
+            error.insertAfter(element.parent());
         }else{
             error.insertAfter(element.parent());
         }
@@ -312,29 +312,41 @@ $(function () {
                     </div>
                     <div class="form-group">
                         <div class="td">
-                            <label class="col-sm-2  control-label">行政区划：</label>
-                            <div class="col-sm-3">
+                            <label class="col-md-2  control-label"><span class="red">*</span>所属省：</label>
+                            <div class="col-sm-4">
                                 <select id="province" name="provinceId" class="chosen-select form-control" >
                                     <option value="">请选择省份</option>
                                 </select>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="td">
+                            <label class="col-sm-2  control-label">所属市：</label>
+                            <div class="col-sm-4">
                                 <select id="city" name="cityId" class="chosen-select form-control" >
                                     <option value="">请选择市</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <div class="td">
-                            <label class="col-sm-2  control-label"></label>
-                            <div class="col-sm-3">
+                            <label class="col-md-2  control-label"><span class="red">*</span>所属县：</label>
+                            <div class="col-sm-4">
                                 <select id="county" name="countyId" class="chosen-select form-control" >
                                     <option value="">请选择县</option>
                                 </select>
                             </div>
-                            <div class="col-sm-3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="td">
+                            <label class="col-sm-2  control-label">所属镇(乡)：</label>
+                            <div class="col-sm-4">
                                 <select id="town" name="townId" class="chosen-select form-control" >
                                     <option value="">请选择镇(乡)</option>
                                 </select>
