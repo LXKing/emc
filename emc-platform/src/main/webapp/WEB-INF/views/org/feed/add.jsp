@@ -18,9 +18,9 @@ $.validator.setDefaults({
     errorElement: "span",
     errorPlacement: function (error, element) {
         if (element.is(":radio") || element.is(":checkbox")) {
-            error.insertAfter(element.parent().parent().parent());
-        } else if(element.is("select")){
             error.insertAfter(element.parent().parent());
+        } else if(element.is("select")){
+            error.insertAfter(element.parent());
         }else{
             error.insertAfter(element.parent());
         }
@@ -242,7 +242,7 @@ $(function () {
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                    <form class="form-horizontal" id="feed_add_Form" role="form">
+                    <form class="form-horizontal" id="feed_add_Form" role="form" >
                         <input type="hidden" name="orgId" value="${object.orgId}"/>
                         <input type="hidden" name="comId" value="${object.comId}"/>
                         <div class="form-group">
@@ -319,7 +319,7 @@ $(function () {
                         <div class="form-group">
                             <div class="td">
                                 <label class="col-md-2  control-label">所属管网：</label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <select id="netId" name="netId" class="chosen-select form-control"  >
                                         <option value="">请选择管网</option>
                                         <c:forEach items="${oncenet}" var="net">
@@ -332,7 +332,7 @@ $(function () {
                         <div class="form-group">
                             <div class="td">
                                 <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <select id="lineId" name="lineId" class="chosen-select form-control"  >
                                         <option value="">请选择管线</option>
                                         <c:forEach items="${secondnet}" var="line">
@@ -344,29 +344,41 @@ $(function () {
                         </div>
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-sm-2  control-label">区划区划：</label>
-                                <div class="col-sm-3">
+                                <label class="col-md-2  control-label"><span class="red">*</span>所属省：</label>
+                                <div class="col-sm-4">
                                     <select id="province" name="provinceId" class="chosen-select form-control" >
                                         <option value="">请选择省份</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-sm-2  control-label">所属市：</label>
+                                <div class="col-sm-4">
                                     <select id="city" name="cityId" class="chosen-select form-control" >
                                         <option value="">请选择市</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-sm-2  control-label"></label>
-                                <div class="col-sm-3">
+                                <label class="col-md-2  control-label"><span class="red">*</span>所属县：</label>
+                                <div class="col-sm-4">
                                     <select id="county" name="countyId" class="chosen-select form-control" >
                                         <option value="">请选择县</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-3">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-sm-2  control-label">所属镇(乡)：</label>
+                                <div class="col-sm-4">
                                     <select id="town" name="townId" class="chosen-select form-control" >
                                         <option value="">请选择镇(乡)</option>
                                     </select>
