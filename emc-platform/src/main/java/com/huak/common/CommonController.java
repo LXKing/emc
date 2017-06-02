@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -30,12 +27,13 @@ public class CommonController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/org/tree", method = RequestMethod.POST)
-    public List<Map<String,Object>> orgtree(@RequestParam Map<String, String> paramsMap,HttpServletResponse response){
+    @RequestMapping(value = "/org/tree/{comId}", method = RequestMethod.POST)
+    public List<Map<String,Object>> orgtree(@PathVariable("comId") String comId, @RequestParam Map<String, Object> paramsMap,HttpServletResponse response){
         logger.info("查询组织机构树");
         JSONObject jo = new JSONObject();
         int i=0;
         System.out.println("--------------"+i++);
+        paramsMap.put("comId",comId);
         List<Map<String,Object>> as = orgService.selectOrgTree(paramsMap);
         return as;
     }
