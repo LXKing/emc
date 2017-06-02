@@ -34,7 +34,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     ID,FEED_NAME,FEED_CODE, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM,
-    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID,
+    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID,STATUS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
