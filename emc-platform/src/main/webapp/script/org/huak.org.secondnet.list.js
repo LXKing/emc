@@ -130,6 +130,16 @@ $(function () {
                 }
             },
             {
+                title: '管网名称',
+                field: 'lineName',
+                align: 'center'
+            },
+            {
+                title: '管网代码',
+                field: 'lineCode',
+                align: 'center'
+            },
+            {
                 title: '管线类型',
                 field: 'netTypeId',
                 align: 'center'

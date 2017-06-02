@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:include page="../../include.jsp"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -46,7 +44,7 @@
                             <div class="row1">
                                 <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">管线长度</label>
+                                        <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">管线长度</label>
                                         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                             <input type="text" class="form-control" name="length" placeholder="请输入管线长度">
                                         </div>
@@ -57,7 +55,7 @@
                             <div class="row2">
                                 <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">管段数量</label>
+                                        <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">管段数量</label>
                                         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                             <input type="text" class="form-control" name="cellNum" placeholder="请输入管段数量">
                                         </div>
@@ -67,7 +65,7 @@
                             </div>
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">小室数量</label>
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">小室数量</label>
                                     <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                         <input type="text" class="form-control" name="partNum" placeholder="请输入创建者">
                                     </div>

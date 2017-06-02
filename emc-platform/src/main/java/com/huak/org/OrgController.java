@@ -6,6 +6,7 @@ import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
+import com.huak.org.type.OrgType;
 import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,9 +75,10 @@ public class OrgController {
         String code = "orgType";
         List<Company> company = orgService.selectCompanyAll();
         List<SysDic> dic = orgService.selectSysDicAll(code);
+        List<OrgType> list =  OrgType.toList(OrgType.class);
         model.addAttribute("id",id);
         model.addAttribute("company",company);
-        model.addAttribute("sysdic",dic);
+        model.addAttribute("sysdic",list);
         return "org/orgtree/add";
     }
     @RequestMapping(value = "/editnode/{id}", method = RequestMethod.GET)
@@ -86,10 +88,11 @@ public class OrgController {
             String code = "orgType";
             List<Company> company = orgService.selectCompanyAll();
             List<SysDic> dic = orgService.selectSysDicAll(code);
+            List<OrgType> list =  OrgType.toList(OrgType.class);
             Org org =  orgService.selectByPrimaryKey(id);
             model.addAttribute("company",company);
-            model.addAttribute("sysdic",dic);
-            model.addAttribute("org",org);
+            model.addAttribute("sysdic",list);
+            model.addAttribute("org", org);
         } catch (Exception e) {
             logger.error("跳转修改机构页异常" + e.getMessage());
         }

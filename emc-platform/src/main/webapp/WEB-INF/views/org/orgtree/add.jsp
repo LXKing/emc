@@ -181,7 +181,7 @@
                             <c:forEach items="${sysdic}" var="item" varStatus="status" >
                                 <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
                                 <%--　　var id = "${status.id}";//加引号--%>
-                                <option value="${item.id}">${item.des}</option>
+                                <option value="${item.key}">${item.value}</option>
                             </c:forEach>
                         </select>
                     </div>

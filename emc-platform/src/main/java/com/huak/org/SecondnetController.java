@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
-import com.huak.org.model.Oncenet;
 import com.huak.org.model.vo.Secondnet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +72,9 @@ public class SecondnetController {
             HttpSession session = request.getSession();
 
             secondnet.setId(UUIDGenerator.getUUID());
-            secondnetService.insertSelective(secondnet);
+            secondnet.setOrgId(new Long(123));
+            secondnet.setComId("213");
+            secondnetService.insert(secondnet);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加管线成功");
         } catch (Exception e) {
@@ -87,7 +88,7 @@ public class SecondnetController {
         logger.info("跳转修改热源页");
         try {
             Secondnet secondnet = secondnetService.selectByPrimaryKey(id);
-            model.addAttribute("oncenet", secondnet);
+            model.addAttribute("secondnet", secondnet);
         } catch (Exception e) {
             logger.error("跳转修改管线页异常" + e.getMessage());
         }
