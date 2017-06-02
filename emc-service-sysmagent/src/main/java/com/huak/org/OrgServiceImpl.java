@@ -122,7 +122,6 @@ public class OrgServiceImpl implements OrgService {
           }
         return flag;
     }
-
     @Override
     public List<Administrative> selectAll() {
         return null;
@@ -144,13 +143,12 @@ public class OrgServiceImpl implements OrgService {
     @Transactional(readOnly = true)
     public List<SysDic> selectSysDicAll(String code) {
         Map<String,Object> map = new  HashMap<String,Object>();
-        //Map<K,V> map = new HashMap<K,V>();
         map.put("typeUs",code);
         return sysDicDao.selectAllByMap(map);
     }
 
     @Override
-    public List<Map<String, Object>> selectOrgTree(Map<String, String> paramsMap) {
+    public List<Map<String, Object>> selectOrgTree(Map<String, Object> paramsMap) {
         List<Map<String, Object>> data = orgDao.selectOrgTree(paramsMap);
         return data;
     }

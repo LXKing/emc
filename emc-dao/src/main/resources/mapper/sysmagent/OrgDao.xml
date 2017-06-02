@@ -185,7 +185,7 @@
         from t_emc_org
         where 1=1
         <if test="comId != null and comId !=''">
-            AND  COM_ID = #{comId,jdbcType=VARCHAR},
+            AND  COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         <!--插件局部刷新传过来的是id,需要刷新以id为父节点的所有子节点-->
         <if test="id != null and id !=''">

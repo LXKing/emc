@@ -8,6 +8,7 @@ import java.util.Map;
 
 @Repository
 public interface OrgDao {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(Org record);
@@ -26,5 +27,5 @@ public interface OrgDao {
 
     List<Map<String,Object>> selectOrgByMap(Map<String,Object> params);
 
-    List<Map<String,Object>> selectOrgTree(Map<String, String> paramsMap);
+    List<Map<String,Object>> selectOrgTree(Map<String, Object> paramsMap);
 }

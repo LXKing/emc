@@ -44,6 +44,6 @@ public interface OrgService {
 
     List<SysDic>  selectSysDicAll(String code);
 
-    List<Map<String, Object>> selectOrgTree(Map<String, String> paramsMap);
+    List<Map<String, Object>> selectOrgTree(Map<String, Object> paramsMap);
 
 }
