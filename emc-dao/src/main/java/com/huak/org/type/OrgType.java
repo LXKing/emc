@@ -1,5 +1,8 @@
 package com.huak.org.type;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -16,13 +19,8 @@ public enum OrgType {
     FGS(2,"分公司"),//345
     ZX(3,"中心"),//45
     FWZ(4,"服务站"),//5
-    RY(5,"热源"),//69
-    YCW(6,"一次网"),
-    RLZ(7,"热力站"),
-    ECX(8,"二次线"),
-    XQ(9,"小区"),
-    LD(10,"楼栋"),
-    FJ(11,"房间");
+    RY(5,"部门");
+
 
     private int key;
     private String value;
@@ -46,5 +44,22 @@ public enum OrgType {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+
+
+    public static void main(String[] args){
+        //System.out.print(OrgType.GS.getKey()+"--------"+OrgType.GS.getValue());
+        //遍历所有的枚举
+        for( OrgType color : OrgType.values()){
+            System.out.println( color + "  name: " + color.getKey() + "  index: " + color.getValue() );
+        }
+       List<OrgType> list =  OrgType.toList(OrgType.class);
+        for (int i = 0; i < list.size() ; i++) {
+            System.out.println(list.get(i).getKey()+"---"+list.get(i).getValue());
+        }
+    }
+    public static <T extends Enum> List<T> toList(Class<T> clazz) {
+        return Arrays.asList(clazz.getEnumConstants());
     }
 }

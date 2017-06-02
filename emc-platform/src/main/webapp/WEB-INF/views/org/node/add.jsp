@@ -36,7 +36,7 @@ $(function () {
     new PCAS('province','${province}','','city','${city}','','county','${county}','','town','${town}','');
     $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
 
-    var $form = $(top.document).find("#stationAddForm");
+    var $stationForm = $(top.document).find("#stationAddForm");
     $.validator.addMethod("nodeCodeUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
         var newcode = $(top.document).find("#stationCode").val();
@@ -92,7 +92,7 @@ $(function () {
         return false;
     });
 
-    $form.validate({
+    $stationForm.validate({
         onsubmit: true,// 是否在提交是验证
         //移开光标:如果有内容,则进行验证
         onfocusout: function (element) {
@@ -133,8 +133,6 @@ $(function () {
             },
             addr: {
                 required: true
-            },seq:{
-                required: true
             },
             provinceId:{
                 required: true
@@ -146,6 +144,12 @@ $(function () {
                 required: true
             },
             townId:{
+                required: true
+            },
+            heatArea:{
+                required: true
+            },
+            lineId:{
                 required: true
             }
         },
@@ -167,8 +171,6 @@ $(function () {
             },
             addr: {
                 required: icon + "请填写详细地址"
-            },seq:{
-                required: icon + "请填写排序"
             },
             provinceId:{
                 required: icon + "请选择省份"
@@ -181,6 +183,12 @@ $(function () {
             },
             townId:{
                 required: icon + "请选择乡镇"
+            },
+            heatArea:{
+                required: icon + "请填写供热面积"
+            },
+            lineId:{
+                required: icon + "请选择所属管线"
             }
         },
         submitHandler: function () {
@@ -189,18 +197,17 @@ $(function () {
             });
             $.ajax({
                 url:_platform + '/station/add',
-                data:$form.serialize(),
-                type:'POST',
+                data:$stationForm.serialize(),
+                type:'post',
                 dataType:'json',
                 success: function (result) {
-                    alert(1);
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
                         $('#station-table-list').bootstrapTable("refresh");
                     } else {
-                        debugger;
                         top.layer.msg(result.msg);
+                        top.layer.close(index);
                     }
                 }
             });
@@ -238,14 +245,52 @@ $(function () {
                                     <select id="manageTypeId" name="manageTypeId" class="chosen-select form-control"  >
                                         <option value="">请选择管理类型</option>
                                         <c:forEach items="${sysDic['managetype']}" var="type">
-                                            <option <c:if test="${object.manageTypeId eq type.id}">selected="selected" </c:if> value="${type.id}">${type.des}</option>
+                                            <option <c:if test="${object.manageTypeId eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <%--<label class="col-sm-2  control-label"><span class="red">*</span>居民面积：</label>--%>
+                            <div class="td">
+                                <label class="col-md-2  control-label">所属管网：</label>
+                                <div class="col-sm-5">
+                                    <select id="netId" name="netId" class="chosen-select form-control"  >
+                                        <option value="">请选择管网</option>
+                                        <c:forEach items="${oncenet}" var="net">
+                                            <option <c:if test="${object.netId eq net.id}">selected="selected" </c:if> value="${net.id}">${net.netName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-md-2  control-label">所属热源：</label>
+                                <div class="col-sm-5">
+                                    <select id="feedId" name="feedId" class="chosen-select form-control"  >
+                                        <option value="">请选择热源</option>
+                                        <c:forEach items="${feed}" var="feed">
+                                            <option <c:if test="${object.feedId eq feed.ID}">selected="selected" </c:if> value="${feed.ID}">${feed.FEED_NAME}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
+                                <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
+                                <div class="col-sm-5">
+                                    <select id="lineId" name="lineId" class="chosen-select form-control"  >
+                                        <option value="">请选择管线</option>
+                                        <c:forEach items="${secondnet}" var="line">
+                                            <option <c:if test="${object.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2  control-label">供热面积：</label>
                             <div class="col-sm-5">
                                 <input name="heatArea" class="form-control" type="text" maxlength="64" placeholder="请输入居民面积">

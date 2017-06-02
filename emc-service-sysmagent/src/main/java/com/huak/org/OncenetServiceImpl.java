@@ -75,4 +75,11 @@ public class OncenetServiceImpl implements OncenetService {
     public List<Map<String, Object>> exportFeeds(Map<String, Object> paramsMap) {
         return null;
     }
+
+    @Override
+    public List<Oncenet> selectNetAll(Map<String, Object> paramsMap) {
+        return oncenetDao.selectPageByMap(paramsMap);
+    }
+
+
 }

@@ -158,11 +158,35 @@
         <include refid="Base_Column_List" />
         from t_emc_unit_net
         where 1=1
-        <if test="netTypeId != null and netTypeId !=''">
-            and  NET_TYPE_ID =  #{cellNum,jdbcType=TINYINT}
+
+        <if test="netName != null and netName !=''">
+            and  NET_NAME =  #{netName,jdbcType=VARCHAR}
         </if>
-        <if test="cellNum != null and cellNum !=''">
-            and CELL_NUM = #{cellNum,jdbcType=TINYINT}
+        <if test="netCode != null and netCode !=''">
+            and  NET_CODE =  #{netCode,jdbcType=VARCHAR}
+        </if>
+
+        <if test="netTypeId != null and netTypeId !=''">
+            and  NET_TYPE_ID =  #{netTypeId,jdbcType=TINYINT}
+        </if>
+
+        <if test="length != null and length!=''">
+            and  LENGTH = #{length,jdbcType=DOUBLE}
+        </if>
+        <if test="cellNum != null and cellNum!=''">
+            and CELL_NUM = #{cellNum,jdbcType=INTEGER}
+        </if>
+        <if test="partNum != null and partNum!=''">
+            and  PART_NUM = #{partNum,jdbcType=INTEGER}
+        </if>
+        <if test="medium != null and medium!=''">
+            and  MEDIUM = #{medium,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null and orgId!=''">
+            and  ORG_ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="comId != null and comId!=''">
+            and  COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         order by id
     </select>

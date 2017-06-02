@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Node;
+import com.huak.org.model.vo.NodeVo;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +39,14 @@ public class NodeController {
     @Resource
     private NodeService nodeService;
 
+    @Resource
+    private OncenetService oncenetService;
+
+    @Resource
+    private SecondnetService secondnetService;
+
+    @Resource
+    private FeedService feedService;
     @Resource
     private OrgService orgService;
 
@@ -65,7 +76,13 @@ public class NodeController {
             Node obj = new Node();
             obj.setOrgId(pOrgId);
             obj.setComId(comId);
+            Map<String,Object> params = new HashMap<>();
+            params.put("comId",comId);
+            params.put("orgId",pOrgId);
             modelMap.put(Constants.OBJECT,obj);
+            modelMap.put("oncenet",oncenetService.selectNetAll(params));
+            modelMap.put("secondnet",secondnetService.selectLineAll(params));
+            modelMap.put("feed",feedService.selectFeedByMap(params));
         } catch (Exception e) {
             logger.error("跳转到热力站编辑页出错！");
             e.printStackTrace();
@@ -84,7 +101,8 @@ public class NodeController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(Constants.SESSION_KEY);
-           boolean flag = nodeService.insertSelective(node)>0;
+            node.setId(UUIDGenerator.getUUID());
+           boolean flag = nodeService.insertSelective(node);
             if(flag){
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.MSG, "添加热力站成功");
@@ -94,6 +112,7 @@ public class NodeController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("添加热力站异常" + e.getMessage());
             jo.put(Constants.MSG, "添加热力站失败");
             jo.put("station",null);
@@ -102,10 +121,14 @@ public class NodeController {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editPage(Model model, @PathVariable("id") String id) {
+    public String editPage(Model model,  @PathVariable("id") String id) {
         logger.info("跳转修改热力站页");
         try {
             model.addAttribute("node", nodeService.selectById(id));
+            Map<String,Object> params = new HashMap<>();
+            model.addAttribute("oncenet",oncenetService.selectNetAll(params));
+            model.addAttribute("secondnet",secondnetService.selectLineAll(params));
+            model.addAttribute("feed",feedService.selectFeedByMap(params));
         } catch (Exception e) {
             logger.error("跳转修改热力站页异常" + e.getMessage());
         }

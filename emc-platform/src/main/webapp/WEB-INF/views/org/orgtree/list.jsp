@@ -10,7 +10,7 @@
     <jsp:include page="../../head.jsp"></jsp:include>
 
     <SCRIPT type="text/javascript">
-        <!--
+        <!-- -->
 
         $(document).ready(function(){
             //页面说明

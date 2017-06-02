@@ -2,7 +2,6 @@ package com.huak.org;
 
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.model.Oncenet;
 import com.huak.org.model.vo.Secondnet;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,8 @@ public interface SecondnetService {
 
     public int insertSelective(Secondnet record);
 
+    public int insert(Secondnet record);
+
     public Secondnet selectByPrimaryKey(String id);
 
     public int updateByPrimaryKeySelective(Secondnet record);
@@ -35,4 +36,6 @@ public interface SecondnetService {
     public PageResult<Secondnet> queryByPage(Map<String, Object> paramsMap, Page page);
 
     public List<Map<String,Object>> exportFeeds(Map<String, Object> paramsMap);
+
+    public List<Secondnet> selectLineAll(Map<String, Object> paramsMap);
 }

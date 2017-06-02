@@ -10,7 +10,24 @@
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="secondnetEditForm" role="form">
-                <input type="hidden" name="id" value="${oncenet.id}">
+                <input type="hidden" name="id" value="${secondnet.id}">
+
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>管线名称：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="lineName" class="form-control" type="text" value="${secondnet.lineName}" maxlength="16" placeholder="请输入管线名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>管线代码：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="lineCode" class="form-control" type="text" value="${secondnet.lineCode}" maxlength="16" placeholder="请输入管线代码">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>管线类型：</label>
@@ -31,7 +48,7 @@
                             class="red">*</span>管线长度：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="length" class="form-control" value="${oncenet.length}"  type="text" maxlength="16" placeholder="请输入管线长度">
+                        <input name="length" class="form-control" value="${secondnet.length}"  type="text" maxlength="16" placeholder="请输入管线长度">
                     </div>
                 </div>
                 <div class="form-group">
@@ -39,7 +56,7 @@
                             class="red">*</span>小室数量：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="cellNum" class="form-control" value="${oncenet.cellNum}" type="text" maxlength="16" placeholder="请输入小室数量">
+                        <input name="cellNum" class="form-control" value="${secondnet.cellNum}" type="text" maxlength="16" placeholder="请输入小室数量">
                     </div>
                 </div>
                 <div class="form-group">
@@ -47,7 +64,7 @@
                             class="red">*</span>管段数量：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="partNum" class="form-control" value="${oncenet.partNum}" type="text" maxlength="16" placeholder="请输入管段数量">
+                        <input name="partNum" class="form-control" value="${secondnet.partNum}" type="text" maxlength="16" placeholder="请输入管段数量">
                     </div>
                 </div>
                 <div class="form-group">
@@ -55,7 +72,7 @@
                             class="red">*</span>输送介质：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="medium" class="form-control" value="${oncenet.medium}"  type="text" maxlength="16" placeholder="请输入输送介质">
+                        <input name="medium" class="form-control" value="${secondnet.medium}"  type="text" maxlength="16" placeholder="请输入输送介质">
                     </div>
                 </div>
 

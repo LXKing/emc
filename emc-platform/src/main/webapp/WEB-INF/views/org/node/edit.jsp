@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>热力站编辑</title>
+<title>热力站添加</title>
 <script>
 //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
 $.validator.setDefaults({
@@ -35,21 +35,20 @@ $(function () {
     var icon = "<i class='fa fa-times-circle'></i> ";
     new PCAS('province','${province}','${node.provinceId}','city','${city}','${node.cityId}','county','${county}','${node.countyId}','town','${town}','${node.townId}');
     $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
-
-    var $editForm = $(top.document).find("#stationEditForm");
+    var $stationForm = $(top.document).find("#stationEditForm");
     $.validator.addMethod("nodeCodeUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
+
+        var newcode = $(top.document).find("#stationCode").val();
         var oldcode = $(top.document).find("#oldCode").val();
-        var newcode = $(top.document).find("#orgCode").val();
         if(oldcode == newcode){
             deferred.resolve();
-
         }else{
             $.ajax({
-                url:_platform+'/common/check',
+                url:_platform+'/station/check',
                 type:'POST',
                 async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {orgCode:newcode},
+                data: {stationCode:newcode},
                 dataType: 'json',
                 success:function(result) {
                     if (!result.flag) {
@@ -67,16 +66,16 @@ $(function () {
 
     $.validator.addMethod("nodeNameUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        var oldName = $(top.document).find("#oldName").val();
-        var orgName = $(top.document).find("#orgName").val();
+        var orgName = $(top.document).find("#stationName").val();
+        var oldName =  $(top.document).find("#oldName").val();
         if(oldName == orgName){
             deferred.resolve();
         }else{
             $.ajax({
-                url:_platform+'/common/check',
+                url:_platform+'/station/check',
                 type:'POST',
                 async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {orgName:orgName},
+                data: {stationName:orgName},
                 dataType: 'json',
                 success:function(result) {
                     if (!result.flag) {
@@ -91,7 +90,6 @@ $(function () {
         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
         return deferred.state() == "resolved" ? true : false;
     }, icon + "热力站名称已存在");
-
     //提示信息绑定
     $('input:not(:submit):not(:button)').mousedown(function () {
         $(this).closest('.form-group').removeClass('has-error');
@@ -105,7 +103,7 @@ $(function () {
         return false;
     });
 
-    $editForm.validate({
+    $stationForm.validate({
         onsubmit: true,// 是否在提交是验证
         //移开光标:如果有内容,则进行验证
         onfocusout: function (element) {
@@ -130,11 +128,11 @@ $(function () {
             orgId: {
                 required: true
             },
-            orgCode: {
+            stationCode: {
                 required: true,
                 nodeCodeUnique: true
             },
-            orgName: {
+            stationName: {
                 required: true,
                 nodeNameUnique: true
             },
@@ -145,8 +143,6 @@ $(function () {
                 required: true
             },
             addr: {
-                required: true
-            },seq:{
                 required: true
             },
             provinceId:{
@@ -160,16 +156,22 @@ $(function () {
             },
             townId:{
                 required: true
+            },
+            heatArea:{
+                required: true
+            },
+            lineId:{
+                required: true
             }
         },
         messages: {
             orgId: {
                 required: icon + "请选择组织机构"
             },
-            orgCode: {
+            stationCode: {
                 required: icon + "请填写热力站编码"
             },
-            orgName: {
+            stationName: {
                 required: icon + "请填写热力站名称"
             },
             shortName: {
@@ -180,8 +182,6 @@ $(function () {
             },
             addr: {
                 required: icon + "请填写详细地址"
-            },seq:{
-                required: icon + "请填写排序"
             },
             provinceId:{
                 required: icon + "请选择省份"
@@ -194,6 +194,12 @@ $(function () {
             },
             townId:{
                 required: icon + "请选择乡镇"
+            },
+            heatArea:{
+                required: icon + "请填写供热面积"
+            },
+            lineId:{
+                required: icon + "请选择所属管线"
             }
         },
         submitHandler: function () {
@@ -202,31 +208,24 @@ $(function () {
             });
             $.ajax({
                 url:_platform + '/station/edit',
-                data:$editForm.serialize(),
-                type: 'POST',
-                dataType: 'json',
+                data:$stationForm.serialize(),
+                type:'post',
+                dataType:'json',
                 success: function (result) {
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
                         $('#station-table-list').bootstrapTable("refresh");
-                        refreshNodes()
-                        return true;
                     } else {
                         top.layer.msg(result.msg);
-                        return false;
+                        top.layer.close(index);
                     }
-                },
-                error:function(){
-                    top.layer.msg("请求服务器失败！");
-                    return false;
                 }
             });
-            return false;
         }
     });
-});
 
+});
 </script>
 </head>
 
@@ -236,32 +235,23 @@ $(function () {
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <form class="form-horizontal" id="stationEditForm" role="form">
-                    <input type="hidden" name="id"  value="${node.id}"/>
-                    <input type="hidden" name="status" value="${node.status}"/>
-                    <input type="hidden" name="typeId"  value="${node.typeId}"/>
-                    <input type="hidden" name="pOrgId" value="${node.pOrgId}"/>
+                    <input type="hidden" name="id" value="${node.id}"/>
+                    <input type="hidden" name="orgId" value="${node.orgId}"/>
                     <input type="hidden" name="comId" value="${node.comId}"/>
-                    <input type="hidden" id="oldName" value="${node.orgName}">
-                    <input type="hidden" id="oldCode" value="${node.orgCode}">
+                    <input type="hidden" id="oldName" value="${node.stationName}"/>
+                    <input type="hidden" id="oldCode" value="${node.stationCode}"/>
                     <div class="form-group">
                         <label class="col-sm-2  control-label"><span class="red">*</span>热力站编码：</label>
                         <div class="col-sm-5">
-                            <input id="orgCode" value="${node.orgCode}" name="orgCode" class="form-control"  type="text" maxlength="20" placeholder="请输入热力站编码">
+                            <input id="stationCode" name="stationCode" VALUE="${node.stationCode}" class="form-control"  type="text" maxlength="20" placeholder="请输入热力站编码">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2  control-label"><span class="red">*</span>热力站名称：</label>
                         <div class="col-sm-5">
-                            <input name="orgName" value="${node.orgName}" id="orgName" class="form-control"  type="text" maxlength="64" placeholder="请输入热力站名称">
+                            <input name="stationName" id="stationName" value="${node.stationName}" class="form-control"  type="text" maxlength="64" placeholder="请输入热力站名称">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2  control-label"><span class="red">*</span>热力站简称：</label>
-                        <div class="col-sm-5">
-                            <input name="shortName" value="${node.shortName}" class="form-control"  type="text" maxlength="64" placeholder="请输热力站简称">
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <div class="td">
                             <label class="col-md-2  control-label"><span class="red">*</span>管理类型：</label>
@@ -269,29 +259,60 @@ $(function () {
                                 <select id="manageTypeId" name="manageTypeId" class="chosen-select form-control"  >
                                     <option value="">请选择管理类型</option>
                                     <c:forEach items="${sysDic['managetype']}" var="type">
-                                        <option <c:if test="${node.manageTypeId eq type.id}">selected="selected" </c:if> value="${type.id}">${type.des}</option>
+                                        <option <c:if test="${node.manageTypeId eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <%--<label class="col-sm-2  control-label"><span class="red">*</span>公建面积：</label>--%>
-                        <label class="col-sm-2  control-label">公建面积：</label>
-                        <div class="col-sm-5">
-                            <input name="publicArea"  value="${node.publicArea}" class="form-control" type="text" maxlength="64" placeholder="请输入公建面积">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <%--<label class="col-sm-2  control-label"><span class="red">*</span>居民面积：</label>--%>
-                        <label class="col-sm-2  control-label">居民面积：</label>
-                        <div class="col-sm-5">
-                            <input name="dwellArea" value="${node.dwellArea}" class="form-control" type="text" maxlength="64" placeholder="请输入居民面积">
+                        <div class="td">
+                            <label class="col-md-2  control-label">所属管网：</label>
+                            <div class="col-sm-5">
+                                <select id="netId" name="netId" class="chosen-select form-control"  >
+                                    <option value="">请选择管网</option>
+                                    <c:forEach items="${oncenet}" var="net">
+                                        <option <c:if test="${node.netId eq net.id}">selected="selected" </c:if> value="${net.id}">${net.netName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="td">
-                            <label class="col-sm-2  control-label">区划区划：</label>
+                            <label class="col-md-2  control-label">所属热源：</label>
+                            <div class="col-sm-5">
+                                <select id="feedId" name="feedId" class="chosen-select form-control"  >
+                                    <option value="">请选择热源</option>
+                                    <c:forEach items="${feed}" var="feed">
+                                        <option <c:if test="${node.feedId eq feed.ID}">selected="selected" </c:if> value="${feed.ID}">${feed.FEED_NAME}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="td">
+                            <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
+                            <div class="col-sm-5">
+                                <select id="lineId" name="lineId" class="chosen-select form-control"  >
+                                    <option value="">请选择管线</option>
+                                    <c:forEach items="${secondnet}" var="line">
+                                        <option <c:if test="${node.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2  control-label">供热面积：</label>
+                        <div class="col-sm-5">
+                            <input name="heatArea" class="form-control" value="${node.heatArea}" type="text" maxlength="64" placeholder="请输入居民面积">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="td">
+                            <label class="col-sm-2  control-label">行政区划：</label>
                             <div class="col-sm-3">
                                 <select id="province" name="provinceId" class="chosen-select form-control" >
                                     <option value="">请选择省份</option>
@@ -327,29 +348,17 @@ $(function () {
                             <input name="addr" value="${node.addr}"  class="form-control" type="text" maxlength="64" placeholder="请输入区划代码">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2  control-label"><span class="red">*</span>排序：</label>
-                        <div class="col-sm-5">
-                            <input name="seq" value="${node.seq}" class="form-control" type="text" maxlength="64" placeholder="请输入排序">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2  control-label">备注：</label>
-                        <div class="col-sm-5">
-                            <input name="memo" value="${node.memo}"   class="form-control" type="text" maxlength="255">
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-2  control-label">经度：</label>
                         <div class="col-sm-5">
-                            <input name="lng" value="${node.lng}" class="form-control"  >
+                            <input name="lng"  class="form-control" value="${node.lng}"  >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2  control-label">纬度：</label>
                         <div class="col-sm-5">
-                            <input name="lat" value="${node.lat}"  class="form-control">
+                            <input name="lat"  class="form-control" value="${node.lat}">
                         </div>
                     </div>
                 </form>
