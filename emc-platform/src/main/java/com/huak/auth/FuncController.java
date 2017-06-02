@@ -158,17 +158,51 @@ public class FuncController {
 
     @RequestMapping(value = "/check/uname",method = RequestMethod.POST)
     @ResponseBody
-    public String checkUnique(@RequestParam Map<String,String> paramsMap){
-        logger.info("菜单唯一标识唯一性校验");
+    public String checkUName(@RequestParam Map<String,String> paramsMap){
+        logger.info("功能唯一标识唯一性校验");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG ,false);
         try {
-            //Long num = functionService.checkUName(paramsMap);
-            //if(num==0){
+            Long num = funcService.checkUName(paramsMap);
+            if(num==0){
                 jo.put(Constants.FLAG ,true);
-            //}
+            }
         }catch (Exception e){
-            logger.error("菜单唯一标识唯一性校验异常"+e.getMessage());
+            logger.error("功能唯一标识唯一性校验异常"+e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/check/name",method = RequestMethod.POST)
+    @ResponseBody
+    public String checkName(@RequestParam Map<String,String> paramsMap){
+        logger.info("功能名称唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG ,false);
+        try {
+            Long num = funcService.checkName(paramsMap);
+            if(num==0){
+                jo.put(Constants.FLAG ,true);
+            }
+        }catch (Exception e){
+            logger.error("功能名称唯一性校验异常"+e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/check/search",method = RequestMethod.POST)
+    @ResponseBody
+    public String checkSearch(@RequestParam Map<String,String> paramsMap){
+        logger.info("功能查询唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG ,false);
+        try {
+            Long num = funcService.checkSearch(paramsMap);
+            if(num==0){
+                jo.put(Constants.FLAG ,true);
+            }
+        }catch (Exception e){
+            logger.error("功能查询唯一性校验异常"+e.getMessage());
         }
         return jo.toJSONString();
     }

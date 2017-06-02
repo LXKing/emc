@@ -84,8 +84,6 @@
 
     //以下为官方示例
     $(function () {
-        //下拉框js
-        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
 
         var $form = $(top.document).find("#funcEditForm");
         // validate signup form on keyup and submit
@@ -117,15 +115,17 @@
         }, "请输入英文名称");
 
         //提示信息绑定
-        $('input:not(:submit):not(:button)').mousedown(function () {
+        $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
             $(this).siblings('.help-block').remove();
         });
         //下拉框信息绑定
-        $('select').change(function () {
-            if ($(this).find('option:first').val() != $(this).val()) {
-                $(this).siblings('.help-block').remove();
-            }
+        //下拉框js
+        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen().on('change',function () {
+            $(this).siblings('.help-block').remove();
+            /*if ($(this).find('option:first').val() != $(this).val()) {
+             $(this).siblings('.help-block').remove();
+             }*/
             return false;
         });
 

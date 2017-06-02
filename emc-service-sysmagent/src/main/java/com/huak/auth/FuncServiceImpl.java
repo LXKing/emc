@@ -54,4 +54,22 @@ public class FuncServiceImpl implements FuncService {
         return funcDao.selectAllByMap(paramsMap);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkUName(Map<String, String> paramsMap) {
+        return funcDao.checkUName(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkName(Map<String, String> paramsMap) {
+        return funcDao.checkName(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkSearch(Map<String, String> paramsMap) {
+        return funcDao.checkSearch(paramsMap);
+    }
+
 }
