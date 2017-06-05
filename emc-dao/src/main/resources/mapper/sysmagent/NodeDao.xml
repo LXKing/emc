@@ -395,4 +395,67 @@
         order by STATION_NAME ASC
     </select>
 
+    <select id="export" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        ID ,MANAGE_TYPE_ID,
+        (CASE MANAGE_TYPE_ID WHEN 1 THEN '统管' WHEN 2 THEN '自管' WHEN 3 THEN '代管' ELSE '' END)  MANAGE_TYPE,
+        PROVINCE_ID , CITY_ID , COUNTY_ID , TOWN_ID, VILLAGE_ID , ADDR , LNG ,
+        LAT, STATION_NAME , STATION_CODE , HEAT_AREA , ORG_ID , NET_ID , FEED_ID , LINE_ID , COM_ID
+        FROM t_emc_unit_station WHERE 1=1
+        <if test="manageTypeId != null and manageTypeId != ''">
+            and  MANAGE_TYPE_ID = #{manageTypeId,jdbcType=TINYINT}
+        </if>
+        <if test="provinceId != null and provinceId != ''">
+            and  PROVINCE_ID = #{provinceId,jdbcType=VARCHAR}
+        </if>
+        <if test="cityId != null and cityId != ''">
+            and CITY_ID = #{cityId,jdbcType=VARCHAR}
+        </if>
+        <if test="countyId != null and countyId != ''">
+            and  COUNTY_ID = #{countyId,jdbcType=VARCHAR}
+        </if>
+        <if test="townId != null and townId != ''">
+            and  TOWN_ID = #{townId,jdbcType=VARCHAR}
+        </if>
+        <if test="villageId != null and villageId != ''">
+            and VILLAGE_ID = #{villageId,jdbcType=VARCHAR}
+        </if>
+        <if test="addr != null and addr != ''">
+            and ADDR = #{addr,jdbcType=VARCHAR}
+        </if>
+        <if test="lng != null and lng != ''">
+            and LNG = #{lng,jdbcType=DOUBLE}
+        </if>
+        <if test="lat != null and lat != ''">
+            and LAT = #{lat,jdbcType=DOUBLE}
+        </if>
+        <if test="stationName != null and stationName != ''">
+            and STATION_NAME = #{stationName,jdbcType=VARCHAR}
+        </if>
+        <if test="stationCode != null and stationCode != ''">
+            and  STATION_CODE = #{stationCode,jdbcType=VARCHAR}
+        </if>
+        <if test="heatArea != null and heatArea != ''">
+            and HEAT_AREA = #{heatArea,jdbcType=DOUBLE}
+        </if>
+        <if test="orgId != null and orgId != ''">
+            and ORG_ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="netId != null and netId != ''">
+            and NET_ID = #{netId,jdbcType=VARCHAR}
+        </if>
+        <if test="feedId != null and feedId != ''">
+            and FEED_ID = #{feedId,jdbcType=VARCHAR}
+        </if>
+        <if test="lineId != null and lineId != ''">
+            and  LINE_ID = #{lineId,jdbcType=VARCHAR}
+        </if>
+        <if test="comId != null and comId != ''">
+            and  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null and status != ''">
+            and  STATUS = #{status,jdbcType=TINYINT}
+        </if>
+    </select>
+
 </mapper>

@@ -8,115 +8,120 @@
 var bTable;
 
 $(function () {
-    var org = new Org({
-        class:"org-tree"
-    });
-    org.initTree();
-    bTable = $('#station-table-list').bootstrapTable({
-        height: "100%",//高度
-        cache: false,//禁用 AJAX 数据缓存
-        url: _platform + '/station/list',//获取数据的Servlet地址
-        method: 'post',//使用POST请求到服务器获取数据
-        contentType: "application/x-www-form-urlencoded",
-        dataType: "json",
-        idField: "ID",
-        pagination: true,//是否分页
-        pageSize: 10,//每页显示的记录数
-        pageNumber: 1,//当前第几页
-        pageList: [10, 30, 50],//记录数可选列表
-        search: false,  //是否启用查询
-        striped: true,//表格显示条纹
-        //showColumns: false,//不显示隐藏列
-        sidePagination: "server", //服务端请求
-        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
-        //设置为limit可以获取limit, offset, search, sort, order
-        queryParamsType: "undefined",
-        queryParams: params,
-        formatLoadingMessage: function () {
-            return "请稍等，正在加载中...";
-        },
-        responseHandler: function (res) {
-            return {
-                "rows": res.list.list,
-                "total": res.list.page.total
-            };
-        },
-        columns: [
-            {
-                field: 'id', title: 'ID', visible: false
-            },
-            /*{
-             checkbox: true
-             },*/
-            {
-                title: '序号',
-                field: 'seq',
-                align: 'center',
-                formatter:function(value,row,index){
-                    return index+1;
-                }
-            },
-            {
-                title: '热力站名称',
-                field: 'stationName',
-                align: 'center'
-            },
-            {
-                title: '热力站编号',
-                field: 'stationCode',
-                align: 'center'
-            },
-            {
-                title: '管理类型',
-                field: 'manageTypeId',
-                align: 'center'
-            },
-            {
-                title: '地址',
-                field: 'addr',
-                align: 'center',
-                formatter:function(value,row,index){
-                    if(value.length>20){
-                        return '<span title="'+value+'">'+value.substr(0,20)+'</span>';
-                    }
-                    return value;
-                }
-            },
-            {
-                title: '经度',
-                field: 'lng',
-                align: 'center'
-            },
-            {
-                title: '纬度',
-                field: 'lat',
-                align: 'center'
-            },
-            {
-                title: '供热面积',
-                field: 'heatArea',
-                align: 'center'
-            },
-            {
-                title: '操作',
-                field: 'opt',
-                align: 'center' ,
-                formatter:function(value,row,index){
-                    var html = "";
-                    if($("#nodeUpdateAuth").val()){
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
-                    }
-                    if($("#nodeDeleteAuth").val()){
-                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' ;
-                    }
-                    return html;
-                }
-            }
+    init();
+    initable();
+});
+ function initable(){
+     bTable = $('#station-table-list').bootstrapTable({
+         height: "100%",//高度
+         cache: false,//禁用 AJAX 数据缓存
+         url: _platform + '/station/list',//获取数据的Servlet地址
+         method: 'post',//使用POST请求到服务器获取数据
+         contentType: "application/x-www-form-urlencoded",
+         dataType: "json",
+         idField: "ID",
+         pagination: true,//是否分页
+         pageSize: 10,//每页显示的记录数
+         pageNumber: 1,//当前第几页
+         pageList: [10, 30, 50],//记录数可选列表
+         search: false,  //是否启用查询
+         striped: true,//表格显示条纹
+         //showColumns: false,//不显示隐藏列
+         sidePagination: "server", //服务端请求
+         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+         //设置为limit可以获取limit, offset, search, sort, order
+         queryParamsType: "undefined",
+         queryParams: params,
+         formatLoadingMessage: function () {
+             return "请稍等，正在加载中...";
+         },
+         responseHandler: function (res) {
+             return {
+                 "rows": res.list.list,
+                 "total": res.list.page.total
+             };
+         },
+         columns: [
+             {
+                 field: 'id', title: 'ID', visible: false
+             },
+             {
+                 title: '序号',
+                 field: 'seq',
+                 align: 'center',
+                 formatter:function(value,row,index){
+                     return index+1;
+                 }
+             },
+             {
+                 title: '热力站名称',
+                 field: 'stationName',
+                 align: 'center'
+             },
+             {
+                 title: '热力站编号',
+                 field: 'stationCode',
+                 align: 'center'
+             },
+             {
+                 title: '管理类型',
+                 field: 'manageTypeId',
+                 align: 'center'
+             },
+             {
+                 title: '地址',
+                 field: 'addr',
+                 align: 'center',
+                 formatter:function(value,row,index){
+                     if(value.length>20){
+                         return '<span title="'+value+'">'+value.substr(0,20)+'</span>';
+                     }
+                     return value;
+                 }
+             },
+             {
+                 title: '经度',
+                 field: 'lng',
+                 align: 'center'
+             },
+             {
+                 title: '纬度',
+                 field: 'lat',
+                 align: 'center'
+             },
+             {
+                 title: '供热面积',
+                 field: 'heatArea',
+                 align: 'center'
+             },
+             {
+                 title: '操作',
+                 field: 'opt',
+                 align: 'center' ,
+                 formatter:function(value,row,index){
+                     var html = "";
+                     if($("#nodeUpdateAuth").val()){
+                         html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                     }
+                     if($("#nodeDeleteAuth").val()){
+                         html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' ;
+                     }
+                     return html;
+                 }
+             }
 
-        ]
+         ]
+     });
+ }
 
-
-    });
+    function init(){
+        var org = new Org({
+            class:"org-tree"
+        });
+        org.initTree();
+        var ts = $(top.document).find("[name='searchComp']").val();
+        $("#comId").val(ts);
+    }
 
     var deletestation = function (id){
         var ids;
@@ -156,20 +161,21 @@ $(function () {
     //下拉框js
     $(".chosen-select").chosen();
 
-});
+
 
 function params(params) {
-    var ts = $(top.document).find("[name='searchComp']").val();
-    return {
-        status:0,
-        comId:ts,
-        stationName:$("#stationName").val(),
-        stationCode:$("#stationCode").val(),
-        orgId:top.orgId,
-        manageTypeId:$("#manageTypeId").val(),
-        pageNumber: params.pageNumber,
-        pageSize: params.pageSize
-    };
+
+//    return {
+//        status:0,
+//        comId:ts,
+//        stationName:$("#stationName").val(),
+//        stationCode:$("#stationCode").val(),
+//        orgId:top.orgId,
+//        manageTypeId:$("#manageTypeId").val(),
+//        pageNumber: params.pageNumber,
+//        pageSize: params.pageSize
+//    };
+    return $("#station-search-form").serialize();
 }
 
 function addStation(){
@@ -188,6 +194,7 @@ function addStation(){
 
 function treeNodeClick(e,treeId,treeNode){
     top.orgId = treeNode.id;
+    $("#orgId").val(treeNode.id);
     search();
 }
 

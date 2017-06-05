@@ -214,7 +214,6 @@ $(function(){
                 layer.msg(data.msg);
             }
         });
-
         return true;
     }
 
@@ -222,7 +221,10 @@ $(function(){
         $.get(_platform + '/menu/add',{pId:treeNode.id}, function (result) {
             $('#menu-layer-div').html(result);
         });
-        layer.open({
+
+        openLayer(_platform+"/station/add/"+treeNode[0].id+"/"+ts,"添加热力站","stationAddForm",null,null);
+
+        top.layer.open({
             area: ['600px', '480px'],
             type: 1,
             title: '添加菜单',

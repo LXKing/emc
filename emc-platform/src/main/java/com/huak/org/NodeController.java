@@ -56,7 +56,7 @@ public class NodeController {
         return "/org/node/list";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap, Page page) {
         logger.info("热力站列表页分页查询");
@@ -182,13 +182,13 @@ public class NodeController {
         String workBookName = "热力站列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 
-        cellName.put("ORG_NAME", "热力站名称");
-        cellName.put("P_ORG_ID", "上级单位");
-        cellName.put("ADDR", "地址");
+        cellName.put("STATION_NAME", "热力站名称");
+        cellName.put("STATION_CODE", "热力站编号");
+        cellName.put("MANAGE_TYPE", "管理类型");
+        cellName.put("ADDR", "详细地址");
         cellName.put("LNG", "经度");
         cellName.put("LAT", "纬度");
-        cellName.put("PUBLIC_AREA", "公建面积");
-        cellName.put("DWELL_AREA", "居民面积");
+        cellName.put("HEAT_AREA", "供热面积");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
         try {
