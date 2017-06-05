@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lichao
@@ -11,13 +12,14 @@
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="oncenetEditForm" role="form">
                 <input type="hidden" name="id" value="${oncenet.id}">
-
+                <input type="hidden" name="comId" id="comId" value="${oncenet.comId}">
+                <input type="hidden" name="netNameOld" id="netNameOld" value="${oncenet.netName}">
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>管网名称：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="netName" class="form-control" type="text" value="${oncenet.netName}" maxlength="16" placeholder="请输入管网名称">
+                        <input name="netName" id="netName" class="form-control" type="text" value="${oncenet.netName}" maxlength="16" placeholder="请输入管网名称">
                     </div>
                 </div>
                 <div class="form-group">
@@ -34,11 +36,10 @@
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
 
-                        <select id="feedType" name="netTypeId" class="form-control" type="text" maxlength="8" data-placeholder="请输入热源性质">
-                            <option value =1>1</option>
-                            <option value =2>2</option>
-                            <option value=3>3</option>
-                            <option value=4>4</option>
+                        <select id="netTypeId" name="netTypeId" class="chosen-select form-control">
+                            <c:forEach items="${sysdic}" var="item" varStatus="status" >
+                                <option  ${oncenet.netTypeId eq item.seq?'selected':''}  value="${item.seq}">${item.des}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -53,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>小室数量：</label>
+                            class="red"></span>小室数量：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="cellNum" class="form-control" value="${oncenet.cellNum}" type="text" maxlength="16" placeholder="请输入小室数量">
@@ -61,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>管段数量：</label>
+                            class="red"></span>管段数量：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="partNum" class="form-control" value="${oncenet.partNum}" type="text" maxlength="16" placeholder="请输入管段数量">
@@ -69,7 +70,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>输送介质：</label>
+                            class="red"></span>输送介质：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="medium" class="form-control" value="${oncenet.medium}"  type="text" maxlength="16" placeholder="请输入输送介质">
@@ -83,40 +84,52 @@
 <script>
     //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
     $.validator.setDefaults({
+        ignore: ":hidden:not(select)",//校验chosen
         highlight: function (element) {
             $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
         success: function (element) {
-            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
         },
         errorElement: "span",
         errorPlacement: function (error, element) {
             if (element.is(":radio") || element.is(":checkbox")) {
-                error.appendTo(element.parent().parent().parent());
-            } else {
-                error.appendTo(element.parent());
+                error.insertAfter(element.parent().parent());
+            } else if(element.is("select")){
+                error.insertAfter(element.next());
+            }else{
+                error.insertAfter(element);
             }
         },
         errorClass: "help-block m-b-none m-t-xs",
         validClass: "help-block m-b-none m-t-none"
-
-
     });
 
     //以下为官方示例
     $(function () {
         // validate signup form on keyup and submit
-        var icon = "<i class='fa fa-times-circle'></i> ";
         var $form = $(top.document).find("#oncenetEditForm");
+        var icon = "<i class='fa fa-times-circle'></i> ";
+        var comId = $(top.document).find(".chosen-select").find("option:selected").val();//选中的文本
+        $(top.document).find("#comId").val(comId);
+
         $.validator.addMethod("checkUnique", function (value, element) {
+            var netName = $(top.document).find('#netName').val();
+            var comId = $(top.document).find("#comId").val();
+            var nameOld = $(top.document).find("#netNameOld").val();
+            var netName = $(top.document).find("#netName").val();
+            if(nameOld==netName){
+                return true;
+            }
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
-                url: _platform + '/feed/check',
+                url: _platform + '/oncenet/check',
                 type: 'POST',
                 async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {type: $('#type').val()},
+                data: {netName:netName,comId:comId},
                 dataType: 'json',
                 success: function (result) {
+                    //alert(result.flag);
                     if (!result.flag) {
                         deferred.reject();
                     } else {
@@ -126,15 +139,15 @@
             });
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
-        }, "角色名称已存在");
+        }, "管网名称已存在");
 
-        //提示信息绑定
-        $('input:not(:submit):not(:button)').mousedown(function () {
+        $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
             $(this).siblings('.help-block').remove();
         });
         //下拉框信息绑定
-        $('select').change(function () {
+        //下拉框js
+        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen().on('change',function () {
             if ($(this).find('option:first').val() != $(this).val()) {
                 $(this).siblings('.help-block').remove();
             }
@@ -154,22 +167,34 @@
             },
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
-                roleName: {
+                netName: {
                     required: true,
-                    minlength: 2
-                    //checkUnique: true
+                    minlength: 2,
+                    checkUnique: true
                 },
-                roleDes: {
+                netCode: {
+                    required: true
+                },
+                length: {
+                    required: true
+                },
+                netTypeId: {
                     required: true
                 }
             },
             messages: {
-                roleName: {
-                    required: icon + "请输入角色名称",
-                    minlength: icon + "角色名称必须2个字符以上"
+                netName: {
+                    required: icon + "请输入管网名称",
+                    minlength: icon + "管网名称必须2个字符以上"
                 },
-                roleDes: {
-                    required: icon + "请输入角色描述"
+                netCode: {
+                    required: icon + "请输入管网代码"
+                },
+                length: {
+                    required: icon + "请输入管网长度"
+                },
+                netTypeId: {
+                    required: icon + "请输入管网类型"
                 }
             },
             submitHandler: function () {

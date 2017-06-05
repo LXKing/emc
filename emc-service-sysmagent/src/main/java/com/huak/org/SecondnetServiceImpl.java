@@ -79,4 +79,15 @@ public class SecondnetServiceImpl implements SecondnetService {
     public List<Secondnet> selectLineAll(Map<String, Object> paramsMap) {
         return secondnetDao.selectPageByMap(paramsMap);
     }
+    @Override
+    public boolean checkNetName(Map<String, Object> paramsMap) {
+        boolean flag=false;
+        List<Secondnet> list =  secondnetDao.selectPageByMap(paramsMap);
+        if(list.size()>0){
+            flag=true;
+        }else {
+            flag=false;
+        }
+        return flag;
+    }
 }

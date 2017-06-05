@@ -5,6 +5,7 @@ import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.vo.Secondnet;
+import com.huak.sys.model.SysDic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,10 +39,15 @@ public class SecondnetController {
 
     @Resource
     private SecondnetService  secondnetService;
+    @Resource
+    private OrgService orgService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listPage() {
+    public String listPage(Model model) {
         logger.info("转至系统管网列表页");
+        String code = "pipeType";
+        List<SysDic> dic = orgService.selectSysDicAll(code);
+        model.addAttribute("sysdic",dic);
         return "/org/second/list";
     }
     @RequestMapping(value = "/listpage", method = RequestMethod.PATCH)
@@ -55,8 +63,12 @@ public class SecondnetController {
         }
         return jo.toJSONString();
     }
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    @RequestMapping(value = "/add/{orgId}", method = RequestMethod.GET)
+    public String addPage(Model model,@PathVariable("orgId") String orgId) {
+        String code = "pipeType";
+        List<SysDic> dic = orgService.selectSysDicAll(code);
+        model.addAttribute("sysdic",dic);
+        model.addAttribute("orgId",orgId);
         return "/org/second/add";
     }
 
@@ -72,8 +84,6 @@ public class SecondnetController {
             HttpSession session = request.getSession();
 
             secondnet.setId(UUIDGenerator.getUUID());
-            secondnet.setOrgId(new Long(123));
-            secondnet.setComId("213");
             secondnetService.insert(secondnet);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加管线成功");
@@ -87,6 +97,9 @@ public class SecondnetController {
     public String edit(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改热源页");
         try {
+            String code = "pipeType";
+            List<SysDic> dic = orgService.selectSysDicAll(code);
+            model.addAttribute("sysdic",dic);
             Secondnet secondnet = secondnetService.selectByPrimaryKey(id);
             model.addAttribute("secondnet", secondnet);
         } catch (Exception e) {
@@ -127,6 +140,24 @@ public class SecondnetController {
         } catch (Exception e) {
             logger.error("删除管线异常" + e.getMessage());
             jo.put(Constants.MSG, "删除管线失败");
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    public String checkNode(@RequestParam  String lineName,
+                            @RequestParam  String comId ){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("lineName",lineName);
+        map.put("comId",comId);
+        JSONObject jo = new JSONObject();
+        boolean  flag =   secondnetService.checkNetName(map);
+
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
         }
         return jo.toJSONString();
     }

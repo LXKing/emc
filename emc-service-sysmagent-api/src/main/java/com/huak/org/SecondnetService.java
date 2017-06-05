@@ -38,4 +38,6 @@ public interface SecondnetService {
     public List<Map<String,Object>> exportFeeds(Map<String, Object> paramsMap);
 
     public List<Secondnet> selectLineAll(Map<String, Object> paramsMap);
+
+    public boolean checkNetName(Map<String,Object> paramsMap);
 }

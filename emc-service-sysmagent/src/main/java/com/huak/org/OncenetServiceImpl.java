@@ -82,4 +82,15 @@ public class OncenetServiceImpl implements OncenetService {
     }
 
 
+    @Override
+    public boolean checkNetName(Map<String, Object> paramsMap) {
+        boolean flag=false;
+        List<Oncenet> list =  oncenetDao.selectPageByMap(paramsMap);
+        if(list.size()>0){
+            flag=true;
+        }else {
+            flag=false;
+        }
+        return flag;
+    }
 }
