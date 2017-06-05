@@ -140,4 +140,25 @@
         GROUP by TYPE_US,TYPE_ZH
         order by TYPE_US DESC
     </select>
+
+    <select id="checkName" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id)  from t_emc_sys_dic  where DES = #{des} and TYPE_US=#{typeUs}
+    </select>
+    <select id="checkSeq" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id)  from t_emc_sys_dic  where SEQ = #{seq} and TYPE_US=#{typeUs}
+    </select>
+
+    <select id="selectCheckTypeUs" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />  from t_emc_sys_dic where 1=1
+        <if test="typeUs != null and typeUs !=''">
+            and  TYPE_US = #{typeUs}
+        </if>
+    </select>
+
+    <select id="selectCheckTypeZh" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />  from t_emc_sys_dic where 1=1
+        <if test="typeZh != null and typeZh !=''">
+            and  TYPE_ZH = #{typeZh}
+        </if>
+    </select>
 </mapper>

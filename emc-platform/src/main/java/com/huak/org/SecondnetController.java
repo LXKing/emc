@@ -1,11 +1,13 @@
 package com.huak.org;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.vo.Secondnet;
 import com.huak.sys.model.SysDic;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -160,5 +166,37 @@ public class SecondnetController {
             jo.put(Constants.FLAG, true);
         }
         return jo.toJSONString();
+    }
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(@RequestParam Map<String, Object> paramsMap, HttpServletResponse response) {
+        logger.info("导出管线列表EXCEL");
+        String workBookName = "管线列表";//文件名
+        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+
+        cellName.put("LINE_NAME", "管线名称");
+        cellName.put("LINE_CODE", "管线编号");
+        cellName.put("NET_TYPE_NAME", "管线类型");
+        cellName.put("LENGTH", "长度");
+        cellName.put("CELL_NUM", "小室数量");
+        cellName.put("PART_NUM", "管段数量");
+        cellName.put("MEDIUM", "输送介质");
+        List<Map<String, Object>> cellValues = null;//列值
+        OutputStream out = null;
+        try {
+            cellValues = secondnetService.exportLines(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            logger.error("导出管线列表EXCEL异常" + e.getMessage());
+        }
     }
 }

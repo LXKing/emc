@@ -155,7 +155,62 @@
 
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        ID,
+        NET_NAME,
+        NET_CODE,
+        NET_TYPE_ID,
+        LENGTH,
+        CELL_NUM,
+        PART_NUM,
+        MEDIUM,
+        ORG_ID,
+        COM_ID
+        from t_emc_unit_net
+        where 1=1
+
+        <if test="netName != null and netName !=''">
+            and  NET_NAME =  #{netName,jdbcType=VARCHAR}
+        </if>
+        <if test="netCode != null and netCode !=''">
+            and  NET_CODE =  #{netCode,jdbcType=VARCHAR}
+        </if>
+
+        <if test="netTypeId != null and netTypeId !=''">
+            and  NET_TYPE_ID =  #{netTypeId,jdbcType=TINYINT}
+        </if>
+
+        <if test="length != null and length!=''">
+            and  LENGTH = #{length,jdbcType=DOUBLE}
+        </if>
+        <if test="cellNum != null and cellNum!=''">
+            and CELL_NUM = #{cellNum,jdbcType=INTEGER}
+        </if>
+        <if test="partNum != null and partNum!=''">
+            and  PART_NUM = #{partNum,jdbcType=INTEGER}
+        </if>
+        <if test="medium != null and medium!=''">
+            and  MEDIUM = #{medium,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null and orgId!=''">
+            and  ORG_ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="comId != null and comId!=''">
+            and  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        order by id
+    </select>
+    <select id="selectNetByMap" parameterType="java.util.HashMap" resultType="java.util.Map">
+        select
+        ID,
+        NET_NAME,
+        NET_CODE,
+        (CASE NET_TYPE_ID WHEN 1 THEN '干线' WHEN 2 THEN '支线' WHEN 3 THEN '联通线' WHEN 4 THEN '户线' ELSE '' END) NET_TYPE_NAME,
+        LENGTH,
+        CELL_NUM,
+        PART_NUM,
+        MEDIUM,
+        ORG_ID,
+        COM_ID
         from t_emc_unit_net
         where 1=1
 
