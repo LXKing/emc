@@ -38,4 +38,6 @@ public interface OncenetService {
     public List<Map<String,Object>> exportFeeds(Map<String, Object> paramsMap);
 
     public List<Oncenet> selectNetAll(Map<String, Object> paramsMap);
+
+    public boolean checkNetName(Map<String,Object> paramsMap);
 }
