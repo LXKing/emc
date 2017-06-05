@@ -159,8 +159,10 @@ $(function () {
 });
 
 function params(params) {
+    var ts = $(top.document).find("[name='searchComp']").val();
     return {
         status:0,
+        comId:ts,
         stationName:$("#stationName").val(),
         stationCode:$("#stationCode").val(),
         orgId:top.orgId,
