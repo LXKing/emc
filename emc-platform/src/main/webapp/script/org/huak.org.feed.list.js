@@ -163,12 +163,6 @@ function bootstraplist(){
                 align: 'center'
             },
             {
-                title: '详细地址',
-                field: 'addr',
-                align: 'center'
-            },
-
-            {
                 title: '锅炉数量',
                 field: 'boilerNum',
                 align: 'center'
@@ -225,8 +219,9 @@ function deleteFeed(id) {
 }
 
 function queryParams(params) {
+    var ts = $(top.document).find("[name='searchComp']").val();
+    $("#comId").val(ts);
     return $("#feed-searchform").serialize();
-
 }
 
 function treeNodeClick(e,treeId,treeNode){

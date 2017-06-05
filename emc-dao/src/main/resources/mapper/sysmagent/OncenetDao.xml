@@ -155,7 +155,16 @@
 
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        ID,
+        NET_NAME,
+        NET_CODE,
+       NET_TYPE_ID,
+        LENGTH,
+        CELL_NUM,
+        PART_NUM,
+        MEDIUM,
+        ORG_ID,
+        COM_ID
         from t_emc_unit_net
         where 1=1
 

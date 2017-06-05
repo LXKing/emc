@@ -19,4 +19,5 @@ public interface OncenetDao {
     int updateByPrimaryKey(Oncenet record);
 
     List<Oncenet> selectPageByMap(Map<String,Object> paramsMap);
+
 }

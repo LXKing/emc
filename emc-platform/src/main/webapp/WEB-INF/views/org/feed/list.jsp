@@ -32,6 +32,7 @@
                     <form id="feed-searchform" role="form" class="form-horizontal m-t">
                         <input type="hidden" id="orgId" name="orgId" value="">
                         <input type="hidden"  name="status" value="0">
+                        <input type="hidden" id="comId"  name="comId" value="">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" id="pageNo" name="pageNo" value="1">
                         <div class="row">
@@ -44,7 +45,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">

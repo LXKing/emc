@@ -38,43 +38,40 @@
                         <div class="row">
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">管线类型</label>
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">管线名称</label>
                                     <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="netTypeId" placeholder="请输入管线类型">
+                                        <input type="text" class="form-control" id="lineName" name="lineName" placeholder="请输入管网名称">
                                     </div>
                                 </div>
                             </div>
                             <div class="row1">
                                 <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">管线长度</label>
+                                        <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">管线代码</label>
                                         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                            <input type="text" class="form-control" name="length" placeholder="请输入管线长度">
+                                            <input type="text" class="form-control" id="lineCode" name="lineCode" placeholder="请输入管网代码">
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row2">
                                 <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">管段数量</label>
+                                        <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">管线类型</label>
                                         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                            <input type="text" class="form-control" name="cellNum" placeholder="请输入管段数量">
+                                            <select id="netTypeId" name="netTypeId" class="chosen-select form-control">
+                                                <option value="">请选择类型</option>
+                                                <c:forEach items="${sysdic}" var="item" varStatus="status" >
+                                                    <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                                    <%--　　var id = "${status.id}";//加引号--%>
+                                                    <option value="${item.seq}">${item.des}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">小室数量</label>
-                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="partNum" placeholder="请输入创建者">
-                                    </div>
-                                </div>
-                            </div>
 
+                                </div>
                             <!-- <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                  <div class="form-group">
                                      <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">下拉框</label>
@@ -92,7 +89,7 @@
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
 
-                                <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="secondnetAddForm" layer-title="添加管线" layer-url="${platform}/secondnet/add">
+                                <button type="button" onclick="addLine()" class="btn btn-sm btn-info ">
                                     <i class="fa fa-plus"></i>添加
                                 </button>
 

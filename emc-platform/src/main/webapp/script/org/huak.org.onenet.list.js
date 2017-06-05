@@ -98,15 +98,8 @@ $(function () {
         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
         //设置为limit可以获取limit, offset, search, sort, order
         queryParamsType: "undefined",
-        queryParams: function queryParams(params) {
-            var param = {
-                roleName:$('input[name="netTypeId"]').val(),
-                _method: "PATCH",
-                pageNumber: params.pageNumber,
-                pageSize: params.pageSize
-            };
-            return param;
-        }, formatLoadingMessage: function () {
+        queryParams: params,
+        formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
         },
         responseHandler: function (res) {
@@ -136,14 +129,30 @@ $(function () {
                 align: 'center'
             },
             {
-                title: '管',
-                field: 'netTypeId',
+                title: '管网代码',
+                field: 'netCode',
                 align: 'center'
             },
             {
                 title: '管线类型',
                 field: 'netTypeId',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '1'){
+                        return '干线';
+                    }
+                    if(value == '2'){
+                        return '支线';
+                    }
+                    if(value == '3'){
+                        return '联通线';
+                    }
+                    if(value == '4'){
+                        return '户线';
+                    }
+
+                    return '';
+                }
             },
             {
                 title: '管线长度',
@@ -255,6 +264,34 @@ function deleteOncenet(id) {
 
 
 function treeNodeClick(e,treeId,treeNode){
-    //alert(123);
+    top.orgId = treeNode.id;
+    //alert(top.orgId);
     search();
+}
+function addNet(){
+    //alert(123);
+    var treeNode = top.comm_tree.getSelectedNodes();
+
+    //alert(treeNode[0].id);
+    if(treeNode.length<1){
+        layer.msg("请先选择一个组织机构！");
+        return;
+    }
+    if(treeNode.length>1){
+        layer.warn("只能选择一个上级组织！");
+        return;
+    }
+    openLayer(_platform+"/oncenet/add/"+treeNode[0].id,"添加管网","oncenetAddForm",null,null);
+}
+function params(params) {
+    var netTypeId = $('#netTypeId option:selected') .val();
+    return {
+        netName:$('input[name="netName"]').val(),
+        netCode:$('input[name="netCode"]').val(),
+        netTypeId:netTypeId,
+        _method: "PATCH",
+        orgId:top.orgId,
+        pageNumber: params.pageNumber,
+        pageSize: params.pageSize
+    };
 }

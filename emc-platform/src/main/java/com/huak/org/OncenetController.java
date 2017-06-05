@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +44,11 @@ public class OncenetController {
     private OrgService orgService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listPage() {
+    public String listPage(Model model) {
         logger.info("转至系统管网列表页");
+        String code = "pipeType";
+        List<SysDic> dic = orgService.selectSysDicAll(code);
+        model.addAttribute("sysdic",dic);
         return "/org/onenet/list";
     }
     @RequestMapping(value = "/listpage", method = RequestMethod.PATCH)
@@ -60,11 +64,12 @@ public class OncenetController {
         }
         return jo.toJSONString();
     }
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage(Model model) {
+    @RequestMapping(value = "/add/{orgId}", method = RequestMethod.GET)
+    public String addPage(Model model,@PathVariable("orgId") String orgId) {
         String code = "pipeType";
         List<SysDic> dic = orgService.selectSysDicAll(code);
         model.addAttribute("sysdic",dic);
+        model.addAttribute("orgId",orgId);
         return "/org/onenet/add";
     }
 
@@ -78,10 +83,7 @@ public class OncenetController {
         try {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
-
             oncenet.setId(UUIDGenerator.getUUID());
-            oncenet.setComId("234");
-            oncenet.setOrgId(new Long(12));
             oncenetService.insert(oncenet);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加管网成功");
@@ -95,6 +97,9 @@ public class OncenetController {
     public String edit(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改热源页");
         try {
+            String code = "pipeType";
+            List<SysDic> dic = orgService.selectSysDicAll(code);
+            model.addAttribute("sysdic",dic);
             Oncenet oncenet = oncenetService.selectByPrimaryKey(id);
             model.addAttribute("oncenet", oncenet);
         } catch (Exception e) {
@@ -135,6 +140,24 @@ public class OncenetController {
         } catch (Exception e) {
             logger.error("删除管网异常" + e.getMessage());
             jo.put(Constants.MSG, "删除管网失败");
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    public String checkNode(@RequestParam  String netName,
+                            @RequestParam  String comId ){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("netName",netName);
+        map.put("comId",comId);
+        JSONObject jo = new JSONObject();
+        boolean  flag =   oncenetService.checkNetName(map);
+
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
         }
         return jo.toJSONString();
     }
