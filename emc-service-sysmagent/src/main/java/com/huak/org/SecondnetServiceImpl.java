@@ -66,8 +66,8 @@ public class SecondnetServiceImpl implements SecondnetService {
     }
 
     @Override
-    public List<Map<String, Object>> exportFeeds(Map<String, Object> paramsMap) {
-        return null;
+    public List<Map<String, Object>> exportLines(Map<String, Object> paramsMap) {
+        return secondnetDao.selectLineByMap(paramsMap);
     }
 
     @Override

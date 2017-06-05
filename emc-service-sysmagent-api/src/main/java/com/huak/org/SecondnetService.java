@@ -35,7 +35,7 @@ public interface SecondnetService {
 
     public PageResult<Secondnet> queryByPage(Map<String, Object> paramsMap, Page page);
 
-    public List<Map<String,Object>> exportFeeds(Map<String, Object> paramsMap);
+    public List<Map<String,Object>> exportLines(Map<String, Object> paramsMap);
 
     public List<Secondnet> selectLineAll(Map<String, Object> paramsMap);
 

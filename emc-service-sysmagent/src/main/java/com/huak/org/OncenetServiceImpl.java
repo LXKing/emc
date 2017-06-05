@@ -72,8 +72,9 @@ public class OncenetServiceImpl implements OncenetService {
     }
 
     @Override
-    public List<Map<String, Object>> exportFeeds(Map<String, Object> paramsMap) {
-        return null;
+    public List<Map<String, Object>> exporNets(Map<String, Object> paramsMap) {
+
+        return oncenetDao.selectNetByMap(paramsMap);
     }
 
     @Override
