@@ -29,9 +29,17 @@ public interface SysDicService {
 
     public PageResult<SysDic> queryByPage(Map<String,Object> paramsMap, Page page);
 
-    public List<Map<String,Object>> exportRoles(Map<String, Object> paramsMap);
+    public List<Map<String,Object>> exportSysDics(Map<String, Object> paramsMap);
 
     public List<SysDic> queryAll(Map<String,Object> paramsMap);
 
     public List<Map<String, Object>> queryGroup(Map<String, Object> paramsMap);
+
+    Long checkName(Map<String, Object> paramsMap);
+
+    Long checkSeq(Map<String, Object> paramsMap);
+
+    Long checkTypeUs(Map<String, Object> paramsMap);
+
+    Long checkTypeZh(Map<String, Object> paramsMap);
 }

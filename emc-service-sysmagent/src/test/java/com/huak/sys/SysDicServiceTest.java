@@ -6,7 +6,6 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,9 +26,11 @@ public class SysDicServiceTest  extends BaseTest {
     @Test
     @Rollback
     public void testSelectDemo(){
-        List<Map<String, Object>> list = sysDicService.queryGroup(new HashMap<String, Object>());
-        for (Map<String , Object> map: list){
-            String typeUs = map.get("typeUs").toString();
-        }
+       Map<String, Object> map = new HashMap();
+        map.put("typeZh","能源经济类型");
+        map.put("typeUs","energyEcoType");
+        Long num = sysDicService.checkTypeUs(map);
+        sysDicService.checkTypeZh(map);
+
     }
 }
