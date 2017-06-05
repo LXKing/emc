@@ -222,7 +222,6 @@ function queryParams(params) {
     var ts = $(top.document).find("[name='searchComp']").val();
     $("#comId").val(ts);
     return $("#feed-searchform").serialize();
-
 }
 
 function treeNodeClick(e,treeId,treeNode){
