@@ -21,5 +21,5 @@ public interface SecondnetDao {
 
     List<Secondnet> selectPageByMap(Map<String, Object> paramsMap);
 
-
+    List<Map<String,Object>> selectLineByMap(Map<String, Object> paramsMap);
 }

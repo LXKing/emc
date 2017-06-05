@@ -20,4 +20,6 @@ public interface OncenetDao {
 
     List<Oncenet> selectPageByMap(Map<String,Object> paramsMap);
 
+    List<Map<String,Object>> selectNetByMap(Map<String, Object> paramsMap);
+
 }
