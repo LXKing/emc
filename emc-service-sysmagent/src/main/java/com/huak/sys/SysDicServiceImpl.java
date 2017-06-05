@@ -61,7 +61,7 @@ public class SysDicServiceImpl implements SysDicService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Map<String, Object>> exportRoles(Map<String, Object> paramsMap) {
+    public List<Map<String, Object>> exportSysDics(Map<String, Object> paramsMap) {
         return sysDicDao.exportSysDics(paramsMap);
     }
 
@@ -75,5 +75,47 @@ public class SysDicServiceImpl implements SysDicService {
     @Transactional(readOnly = true)
     public List<Map<String, Object>> queryGroup(Map<String, Object> paramsMap) {
         return sysDicDao.selectGroup(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkName(Map<String, Object> paramsMap) {
+        return sysDicDao.checkName(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkSeq(Map<String, Object> paramsMap) {
+        return sysDicDao.checkSeq(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkTypeUs(Map<String, Object> paramsMap) {
+        List<SysDic> dics =  sysDicDao.selectCheckTypeUs(paramsMap);
+        if(dics.size()==0){
+            return 0l;
+        }
+        String typeZh = dics.get(0).getTypeZh();
+        if(typeZh.equals(paramsMap.get("typeZh"))){
+            return 0l;
+        }else{
+            return 1l;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkTypeZh(Map<String, Object> paramsMap) {
+        List<SysDic> dics =  sysDicDao.selectCheckTypeZh(paramsMap);
+        if(dics.size()==0){
+            return 0l;
+        }
+        String typeZh = dics.get(0).getTypeUs();
+        if(typeZh.equals(paramsMap.get("typeUs"))){
+            return 0l;
+        }else{
+            return 1l;
+        }
     }
 }

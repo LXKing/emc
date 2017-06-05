@@ -129,7 +129,6 @@
         }, "唯一标识已存在");
 
         $.validator.addMethod("checkFuncSearch", function(value, element) {
-            console.info($(element).val());
             if(1==$(element).val()){
                 return true;
             }

@@ -23,4 +23,12 @@ public interface SysDicDao {
     List<SysDic> selectAllByMap(Map<String,Object> paramsMap);
 
     List<Map<String,Object>> selectGroup(Map<String, Object> paramsMap);
+
+    Long checkName(Map<String, Object> paramsMap);
+
+    Long checkSeq(Map<String, Object> paramsMap);
+
+    List<SysDic> selectCheckTypeUs(Map<String, Object> paramsMap);
+
+    List<SysDic> selectCheckTypeZh(Map<String, Object> paramsMap);
 }
