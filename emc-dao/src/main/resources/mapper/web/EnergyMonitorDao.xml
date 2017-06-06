@@ -30,27 +30,24 @@
   </select>
   
   <!-- 查询今年的集团能耗 -->
-  <select id="groupEnergy2curyear" resultType="java.util.Map" parameterType="java.util.Map">
-  	SELECT SUM(A.total) AS total, SUM(CASE A.TYPEID WHEN '1' THEN A.total ELSE 0 END) AS water,
-  	SUM(CASE A.TYPEID WHEN '2' THEN A.total ELSE 0 END) AS elec, SUM(CASE A.TYPEID WHEN '3' THEN A.total ELSE 0 END) AS gas, 
-  	SUM(CASE A.TYPEID WHEN '4' THEN A.total ELSE 0 END) AS hot , SUM(CASE A.TYPEID WHEN '5' THEN A.total ELSE 0 END) AS coal, 
-  	A.yearDate FROM (SELECT SUM(fdh.DOSAGE) AS total, DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') AS yearDate,fdh.TYPEID FROM 
-  	t_emc_final_data_hour fdh WHERE DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY) 
-  	AND DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE() GROUP BY fdh.DOSAGE_TIME, fdh.TYPEID ) A WHERE 1=1
-  	<if test="yearDate!=null and yearDate!=''"> and A.yearDate = #{yearDate,jdbcType=VARCHAR}</if>
-  	GROUP BY A.yearDate ORDER BY A.yearDate asc
-  </select>
-  <!-- 查询去年的集团能耗 -->
-  <select id="groupEnergy2lastyear" resultType="java.util.Map" parameterType="java.util.Map">
-  	SELECT SUM(A.total) AS total, SUM(CASE A.TYPEID WHEN '1' THEN A.total ELSE 0 END) AS water, 
-  	SUM(CASE A.TYPEID WHEN '2' THEN A.total ELSE 0 END) AS elec, SUM(CASE A.TYPEID WHEN '3' THEN A.total ELSE 0 END) AS gas, 
-  	SUM(CASE A.TYPEID WHEN '4' THEN A.total ELSE 0 END) AS hot , SUM(CASE A.TYPEID WHEN '5' THEN A.total ELSE 0 END) AS coal, 
-  	A.yearDate FROM (SELECT SUM(fdh.DOSAGE) AS total, DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') AS yearDate, 
-  	fdh.TYPEID FROM t_emc_final_data_hour fdh WHERE DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') >= 
-  	SUBDATE(SUBDATE(CURDATE(), INTERVAL 1 YEAR), INTERVAL 5 DAY) AND DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d') 
-  	&lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR) GROUP BY fdh.DOSAGE_TIME, fdh.TYPEID ) A WHERE 1=1
-  	<if test="yearDate!=null and yearDate!=''"> and A.yearDate = #{yearDate,jdbcType=VARCHAR}</if>
-  	GROUP BY A.yearDate ORDER BY A.yearDate asc
+  <select id="groupEnergy" resultType="java.util.Map" parameterType="java.util.Map">
+  	SELECT SUM(C.total) AS total, SUM(CASE C.energyType WHEN 'water' THEN C.total ELSE 0 END) AS water, 
+  	SUM(CASE C.energyType WHEN 'electric' THEN C.total ELSE 0 END) AS elec, 
+  	SUM(CASE C.energyType WHEN 'gas' THEN C.total ELSE 0 END) AS gas, 
+  	SUM(CASE C.energyType WHEN 'heat' THEN C.total ELSE 0 END) AS hot , 
+  	SUM(CASE C.energyType WHEN 'coal' THEN C.total ELSE 0 END) AS coal,C.yeardate FROM 
+  	(SELECT SUM(B.dosage) AS total, B.yeardate AS yeardate, B.energyType AS energyType FROM (SELECT A.*,IF(A.orgtype = '热源', 
+  	( SELECT d.DES FROM t_emc_org_feed f LEFT JOIN t_emc_sys_dic d ON f.HEAT_TYPE = d.ID WHERE f.id = A.nodeid ), '') AS heat_type 
+  	FROM (SELECT h.COMID AS comid, h.UNITID AS unitid, h.NODEID AS nodeid, ( SELECT NAME_EN FROM t_emc_energy_type WHERE 
+  	ID = h.TYPEID ) AS energyType, h.DOSAGE AS dosage , DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate, 
+  	( SELECT DES FROM t_emc_sys_dic WHERE ID = o.TYPE_ID ) AS orgtype FROM t_emc_final_data_hour h LEFT JOIN 
+  	t_emc_org o ON h.COMID = o.COM_ID ) A ) B WHERE 1 = 1 
+  	<if test="cyearDate!=null and cyearDate!=''"> AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') >= #{cyearDate,jdbcType=VARCHAR} </if>
+  	<if test="eyearDate!=null and eyearDate!=''"> AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') &lt;= #{eyearDate,jdbcType=VARCHAR}</if>
+  	<if test="heatType!=null and heatType!=''"> AND B.heat_type = #{heatType,jdbcType=VARCHAR} </if>
+  	<if test="comId!=null and comId!=''"> AND B.comid = #{comId,jdbcType=VARCHAR}</if>
+  	<if test="yearDate!=null and yearDate!=''"> AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') = #{yearDate,jdbcType=VARCHAR}</if>
+  	GROUP BY B.yeardate, B.energyType ) C GROUP BY C.yeardate ORDER BY C.yearDate ASC
   </select>
   
   <delete id="delete" parameterType="java.lang.String" >
