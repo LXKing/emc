@@ -17,9 +17,10 @@ public class Company implements Serializable{
         this.nextDes = nextDes;
     }
 
-    public Company(String id, String cname) {
+    public Company(String id, String cname,String nextDes) {
         this.id = id;
         this.cname = cname;
+        this.nextDes = nextDes;
     }
     public Company() {
         super();
