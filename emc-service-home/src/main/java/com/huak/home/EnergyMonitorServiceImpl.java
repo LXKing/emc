@@ -14,11 +14,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.huak.base.dao.DateDao;
 import com.huak.home.dao.EnergyMonitorDao;
 
 @Service
 public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 
+	@Resource
+	private DateDao dateDao;
 	@Resource
 	private EnergyMonitorDao eaDao;
 
@@ -168,10 +171,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
-			if(curDate==null){
-				curDate = sdf.format(new Date());
-			}
-			date = sdf.parse(curDate);
+			date = sdf.parse(dateDao.getDate());
 			Calendar calendar = Calendar.getInstance();    
 			calendar.setTime(date);    
 			calendar.add(type, num);
