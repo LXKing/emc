@@ -189,11 +189,10 @@
         </if>
         <!--插件局部刷新传过来的是id,需要刷新以id为父节点的所有子节点-->
         <if test="id != null and id !=''">
-
             AND  FIND_IN_SET(ID, emc_func_org_getchilds(#{id,jdbcType=BIGINT}))
             AND ID != #{id,jdbcType=BIGINT}
         </if>
-        order by seq
+        order by ORG_NAME
     </select>
 
 
