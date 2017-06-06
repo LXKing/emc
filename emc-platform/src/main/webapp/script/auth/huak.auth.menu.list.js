@@ -6,9 +6,9 @@ $(function(){
         var setting = {
             async: {
                 enable: true,
-                type: "POST",
+                type: "post",
                 url:_platform+"/menu/list/tree",
-                autoParam: ["id", "name"]
+                autoParam: ["id"]
             },
             view: {
                 addHoverDom: addHoverDom,
@@ -147,40 +147,14 @@ $(function(){
      * @param treeNode
      */
     function beforeEdt(treeId,treeNode){
-        $.get(_platform + '/menu/edit',{id:treeNode.id}, function (result) {
-            $('#menu-layer-div').html(result);
-        });
-        layer.open({
-            area: ['600px', '480px'],
-            type: 1,
-            title: '修改菜单',
-            btn: ['保存', '取消'],
-            yes: function () {
-                $("#menuEditForm").submit();
-            },
-            skin: 'layer-ext-moon', //样式类名
-            closeBtn: 1, //不显示关闭按钮
-            shift: 2,
-            shadeClose: true, //开启遮罩关闭
-            content: $('#menu-layer-div'),
-            end:function(){
-                refreshParentNode(treeId,treeNode);
-            }
-        });
-
+        top.treeNode = treeNode;
+        var zTree = $.fn.zTree.getZTreeObj("menuTree");
+        zTree.selectNode(treeNode);
+        openLayer(_platform+"/menu/edit/"+treeNode.id,"修改菜单","menuEditForm",null,null);
     }
 
 
-    function refreshParentNode(treeId,treeNode) {
-        var treeObj = $.fn.zTree.getZTreeObj("menuTree");
-            type = "refresh";
-            silent = false;
-        /*根据 zTree 的唯一标识 tId 快速获取节点 JSON 数据对象*/
-        var parentNode = treeObj.getNodeByTId(treeId);
-        /*选中指定节点*/
-        treeObj.selectNode(parentNode);
-        treeObj.reAsyncChildNodes(parentNode, type, silent);
-    }
+
 
 
     /**
@@ -214,31 +188,13 @@ $(function(){
                 layer.msg(data.msg);
             }
         });
-
         return true;
     }
 
     function addData(treeId,treeNode){
-        $.get(_platform + '/menu/add',{pId:treeNode.id}, function (result) {
-            $('#menu-layer-div').html(result);
-        });
-        layer.open({
-            area: ['600px', '480px'],
-            type: 1,
-            title: '添加菜单',
-            btn: ['保存', '取消'],
-            yes: function () {
-                $("#menuAddForm").submit();
-            },
-            skin: 'layer-ext-moon', //样式类名
-            closeBtn: 1, //不显示关闭按钮
-            shift: 2,
-            shadeClose: true, //开启遮罩关闭
-            content: $('#menu-layer-div'),
-            end:function(e){
-                refreshParentNode(treeId,treeNode);
-            }
-        });
+
+        top.treeNode = treeNode;
+        openLayer(_platform+"/menu/add/"+treeNode.id,"添加菜单","menuAddForm",null,null);
     };
 
     function clickNode(e,treeId,treeNode){

@@ -54,7 +54,7 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
-    public List<Map<String, Object>> selectTree(Map<String, String> params) {
+    public List<Map<String, Object>> selectTree(Map<String, Object> params) {
         List<Map<String,Object>> resultMap =  menuDao.selectMenuTree(params);
         return resultMap;
     }

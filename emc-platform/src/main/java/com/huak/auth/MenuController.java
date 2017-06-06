@@ -56,7 +56,7 @@ public class MenuController {
 
     @RequestMapping(value = "/list/tree", method = RequestMethod.POST)
     @ResponseBody
-    public  List<Map<String,Object>> list(@RequestParam Map<String, String> paramsMap) {
+    public  List<Map<String,Object>> list(@RequestParam Map<String, Object> paramsMap) {
         logger.info("菜单列表页查询");
         Page page = new Page();
         JSONObject jo = new JSONObject();
@@ -75,9 +75,9 @@ public class MenuController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String add(@RequestParam Map<String, Object> paramsMap, Model model) {
-        Menu menu = menuService.selectByPrimaryKey(paramsMap.get("pId").toString());
+    @RequestMapping(value = "/add/{pId}", method = RequestMethod.GET)
+    public String add(@PathVariable("pId") String pId, Model model) {
+        Menu menu = menuService.selectByPrimaryKey(pId);
         model.addAttribute("pId",menu.getId());
         model.addAttribute("menuType",menu.getMenuType());
         logger.info("转至系统菜单添加页");
@@ -90,9 +90,9 @@ public class MenuController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String eidt(@RequestParam Map<String, Object> paramsMap, Model model) {
-        Menu menu = menuService.selectByPrimaryKey(paramsMap.get("id").toString());
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String eidt(@PathVariable("id") String id, Model model) {
+        Menu menu = menuService.selectByPrimaryKey(id);
         model.addAttribute("menu",menu);
         logger.info("转至系统菜单修改页");
         return "auth/menu/edit";
@@ -138,9 +138,14 @@ public class MenuController {
             User user = (User) session.getAttribute(Constants.SESSION_KEY);
             menu.setCreator(user.getId());
             menu.setId(UUIDGenerator.getUUID());
-            menuService.insert(menu);
-            jo.put(Constants.FLAG, true);
-            jo.put(Constants.MSG, "添加菜单成功");
+            int flag =menuService.insert(menu);
+            if(flag>0){
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.MSG, "添加菜单成功");
+            }else{
+                jo.put(Constants.MSG, "添加菜单失败");
+            }
+
         } catch (Exception e) {
             logger.error("添加菜单异常" + e.getMessage());
             jo.put(Constants.MSG, "添加菜单失败");

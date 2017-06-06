@@ -186,6 +186,10 @@
         <if test="menuName != null and menuName !=''">
             and  MENU_NAME like CONCAT('%',#{menuName},'%')
         </if>
+        <if test="id != null and id !=''">
+            and  FIND_IN_SET(id,emc_func_menu_getChilds(#{id}))
+            and id != #{id}
+        </if>
         order by seq
     </select>
 

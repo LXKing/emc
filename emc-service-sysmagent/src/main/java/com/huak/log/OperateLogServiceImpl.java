@@ -1,5 +1,6 @@
 package com.huak.log;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -19,12 +21,16 @@ public class OperateLogServiceImpl implements OperateLogService {
 
 	@Resource
 	private OperateLogDao logDao;
+	
+	@Resource
+	private DateDao dateDao;
 
 	/**
 	 * 存储日志
 	 */
 	@Override
 	public void saveOperateLog(OperateLog log) {
+		log.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateDao.getTime()));
 		logDao.insertOperateLog(log);
 	}
 

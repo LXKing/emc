@@ -26,7 +26,7 @@ public class OperateLogger {
 	
 	@Autowired
 	private OperateLogService logService;
-
+	
 	/**
 	 * 监听com.huak包和子包下的以Controller结尾的类中的所有方法
 	 * @param jp
@@ -83,7 +83,6 @@ public class OperateLogger {
 		log.setOptType(optType);
 		log.setClassName(className);
 		log.setMethodName(methodName);
-		log.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		//从session信息中获取当前操作者
 		log.setCreator(request.getSession().getAttribute(Constants.SESSION_KEY)==null
 				?"":request.getSession().getAttribute(Constants.SESSION_KEY).toString());

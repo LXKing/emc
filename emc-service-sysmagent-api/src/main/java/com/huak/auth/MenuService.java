@@ -20,7 +20,7 @@ public interface MenuService {
 
    public int updateByPrimaryKey(Menu record);
    public PageResult<Menu> queryByPage( Map<String, String> parmas,Page page);
-   public List<Map<String,Object>> selectTree(Map<String,String> params);
+   public List<Map<String,Object>> selectTree(Map<String,Object> params);
 
     int checkMenuName(Map<String, String> paramsMap);
 
