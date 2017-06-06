@@ -8,8 +8,11 @@ import java.util.Map;
 @Repository
 public interface EnergyMonitorDao {
 
-	List<Map<String, Object>> groupEnergy2curyear(Map<String, String> params);
-
-	List<Map<String, Object>> groupEnergy2lastyear(Map<String, String> params);
+	/**
+	 * 根据查询条件，查询相应数据，返回List<Map>格式
+	 * @param params
+	 * @return
+	 */
+	List<Map<String, Object>> groupEnergy(Map<String, String> params);
 
 }

@@ -1,7 +1,7 @@
 
 
 $.ajax({
-	url : _web + "/energy/analysis/groupEnergy",
+	url : _web + "/energy/monitor/groupEnergy",
 	type : "GET",
 	dataType: "json",
 	error : function(request) {
