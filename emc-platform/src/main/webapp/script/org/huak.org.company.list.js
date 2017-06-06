@@ -63,6 +63,11 @@ $(function () {
                 align: 'center'
             },
             {
+                title: '公司下级翻译',
+                field: 'nextDes',
+                align: 'center'
+            },
+            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,
