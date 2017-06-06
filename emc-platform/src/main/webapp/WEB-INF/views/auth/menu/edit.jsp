@@ -1,10 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script>
-    $(function(){
-        $(".chosen-select").chosen();
-    });
-</script>
+
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
@@ -83,9 +79,11 @@
 
     //以下为官方示例
     $(function () {
+        var $form =  $(top.document).find("#menuEditForm");
+        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
-            if("${menu.menuName}" == $("#menuName").val()){
+            if("${menu.menuName}" == $(top.document).find("#menuName").val()){
                 //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
                 deferred.resolve();
             }else{
@@ -93,7 +91,7 @@
                     url:_platform+'/menu/check',
                     type:'POST',
                     async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                    data: {menuName:$('#menuName').val()},
+                    data: {menuName:$(top.document).find('#menuName').val()},
                     dataType: 'json',
                     success:function(result) {
                         if (!result.flag) {
@@ -120,7 +118,7 @@
             return false;
         });
         var icon = "<i class='fa fa-times-circle'></i> ";
-        $("#menuEditForm").validate({
+        $form.validate({
             onsubmit:true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
             onfocusout: function (element) {
@@ -164,21 +162,22 @@
                 }
             },
             submitHandler:function(){
-                var index = layer.load(1, {
+                var index = top.layer.load(1, {
                     shade: [0.1,'#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
                     url:_platform + '/menu/edit',
-                    data:$('#menuEditForm').serialize(),
+                    data:$form.serialize(),
                     type:'POST',
                     dataType:'json',
                     success:function(result) {
                         if(result.flag){
-                            layer.closeAll();
-                            layer.msg(result.msg);
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            refreshParentNode();
                         }else{
-                            layer.close(index);
-                            layer.msg(result.msg);
+                            top.layer.close(index);
+                            top.layer.msg(result.msg);
                         }
                     }
                 });
@@ -186,4 +185,16 @@
         });
 
     });
+    function refreshParentNode() {
+       var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+       var type = "refresh";
+       var silent = false;
+       var nodes = treeObj.getSelectedNodes();
+        /*根据 zTree 的唯一标识 tId 快速获取节点 JSON 数据对象*/
+        var parentNode = treeObj.getNodeByTId(nodes[0].parentTId);
+        /*选中指定节点*/
+        treeObj.selectNode(parentNode);
+        treeObj.reAsyncChildNodes(parentNode, type, silent);
+
+    }
 </script>

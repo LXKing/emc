@@ -23,7 +23,7 @@ public interface MenuDao {
 
     List<Menu> selectPageByName(Map<String,String> params);
 
-    List<Map<String,Object>> selectMenuTree(Map<String, String> params);
+    List<Map<String,Object>> selectMenuTree(Map<String, Object> params);
 
     int selectCheck(Map<String, String> paramsMap);
 
