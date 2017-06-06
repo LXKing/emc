@@ -7,6 +7,16 @@ public class Company implements Serializable{
 
     private String cname;
 
+    private String nextDes;
+
+    public String getNextDes() {
+        return nextDes;
+    }
+
+    public void setNextDes(String nextDes) {
+        this.nextDes = nextDes;
+    }
+
     public Company(String id, String cname) {
         this.id = id;
         this.cname = cname;

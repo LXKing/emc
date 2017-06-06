@@ -5,10 +5,11 @@
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="cname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NEXT_DES" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, cname
+    id, cname,NEXT_DES
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -30,6 +31,9 @@
       <if test="cname != null">
         cname,
       </if>
+        <if test="nextDes != null">
+            NEXT_DES,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -38,6 +42,9 @@
       <if test="cname != null">
         #{cname,jdbcType=VARCHAR},
       </if>
+        <if test="nextDes != null">
+            #{nextDes,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Company">
@@ -46,6 +53,9 @@
       <if test="cname != null">
         cname = #{cname,jdbcType=VARCHAR},
       </if>
+        <if test="nextDes != null">
+            NEXT_DES = #{nextDes,jdbcType=VARCHAR},
+        </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
