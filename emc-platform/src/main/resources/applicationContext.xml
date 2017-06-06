@@ -32,6 +32,7 @@
     <dubbo:reference id="sysDicService"    interface="com.huak.sys.SysDicService" timeout="12000"  check="true" version="${service.version}"/>
     <dubbo:reference id="administrativeService"    interface="com.huak.org.AdministrativeService" timeout="12000"  check="true" version="${service.version}"/>
     <dubbo:reference id="userService"    interface="com.huak.auth.UserService" timeout="12000"  check="true" version="${service.version}" />
+    <dubbo:reference id="employeeService"    interface="com.huak.auth.EmployeeService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="reversibleEncryption"    interface="com.huak.base.ReversibleEncryption" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="companyService"    interface="com.huak.org.CompanyService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="secondnetService"    interface="com.huak.org.SecondnetService" timeout="12000"  check="true" version="${service.version}" />

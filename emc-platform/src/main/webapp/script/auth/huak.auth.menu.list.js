@@ -1,8 +1,4 @@
 $(function(){
-    /**
-     * ztree 初始化配置
-     * @type {{async: {enable: boolean, type: string, url: string, autoParam: string[]}, view: {addHoverDom: addHoverDom, removeHoverDom: removeHoverDom, selectedMulti: boolean, fontCss: {color: string}}, check: {enable: boolean}, data: {key: {name: string}, simpleData: {enable: boolean, idKey: string, pIdKey: string, rootPId: null}}, edit: {enable: boolean}, callback: {beforeEditName: beforeEdt, beforeRemove: beforeRemove, onClick: clickNode}}}
-     */
         var setting = {
             async: {
                 enable: true,
@@ -16,14 +12,9 @@ $(function(){
                 selectedMulti: false,
                 fontCss:{color:"blue"}
             },
-
-            check: {
-                enable: true
-            },
+            check: {enable: true },
             data: {
-                key : {
-                    name : "name"
-                },
+                key : { name : "name" },
                 simpleData : {
                     enable : true,
                     idKey : "id",
@@ -32,10 +23,7 @@ $(function(){
                 }
             },
             edit: {
-                drag:{
-                    isCopy:false,
-                    isMove:false
-                },
+                drag:{ isCopy:false,isMove:false},
                 enable: true,
                 showRemoveBtn: showRemoveBtn,
                 showRenameBtn:showRenameBtn
@@ -47,6 +35,7 @@ $(function(){
             }
         };
 
+    $.fn.zTree.init($("#menuTree"), setting);
 
     //是否显示编辑按钮
     function  showRenameBtn(treeId, treeNode){
@@ -76,14 +65,7 @@ $(function(){
         }
     }
 
-        //页面说明
-        console.info("页面说明：\n左侧菜单树:是系统菜单的树形结构。\n" +
-                "右侧：菜单的详细信息。\n" +
-                "功能：\n" +
-                "【添加】【删除】【修改】【检索】\n" +
-                "字段：\n菜单名称、菜单上级\n" +
-                "创建人、创建人组织、创建时间、修改人、修改人组织、修改时间、是否删除" );
-        $.fn.zTree.init($("#menuTree"), setting);
+
     var newCount = 1;
 
     /**

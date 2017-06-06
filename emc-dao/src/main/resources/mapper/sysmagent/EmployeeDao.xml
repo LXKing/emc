@@ -1,179 +1,252 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huak.org.dao.EmployeeDao">
-    <resultMap id="BaseResultMap" type="com.huak.org.model.Employee">
+<mapper namespace="com.huak.auth.dao.EmployeeDao">
+    <resultMap id="BaseResultMap" type="com.huak.auth.model.Employee">
         <constructor>
-            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
             <arg column="EMP_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="EMP_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="EMP_TEL" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="ADDR" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="EMP_AGE" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="EMP_GENDER" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="EMP_BIRTHDAY" javaType="java.util.Date" jdbcType="DATE" />
+            <arg column="SEX" javaType="java.lang.Boolean" jdbcType="BIT" />
+            <arg column="AGE" javaType="java.lang.Boolean" jdbcType="BIT" />
+            <arg column="BIRTHDAY" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="JOB_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="TEL" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="PHONE" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="EMAIL" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="EMP_MOBILEPHONE" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="STATUS" javaType="java.lang.Boolean" jdbcType="BIT" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    ID, EMP_NAME, EMP_CODE, EMP_TEL, ADDR, ORG_ID, EMP_AGE, EMP_GENDER, EMP_BIRTHDAY, 
-    EMAIL, EMP_MOBILEPHONE, user_id
-  </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        ID, ORG_ID, EMP_NAME, SEX, AGE, BIRTHDAY, JOB_NUM, TEL, PHONE, EMAIL, MEMO, CREATOR,
+        CREATE_TIME,STATUS
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from t_emc_org_employee
-        where ID = #{id,jdbcType=VARCHAR}
+        from t_emc_auth_employee
+        where ID = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org_employee
-    where ID = #{id,jdbcType=VARCHAR}
-  </delete>
-    <insert id="insert" parameterType="com.huak.org.model.Employee">
-    insert into t_emc_org_employee (ID, EMP_NAME, EMP_CODE, 
-      EMP_TEL, ADDR, ORG_ID, 
-      EMP_AGE, EMP_GENDER, EMP_BIRTHDAY, 
-      EMAIL, EMP_MOBILEPHONE, user_id
-      )
-    values (#{id,jdbcType=VARCHAR}, #{empName,jdbcType=VARCHAR}, #{empCode,jdbcType=VARCHAR}, 
-      #{empTel,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, 
-      #{empAge,jdbcType=INTEGER}, #{empGender,jdbcType=INTEGER}, #{empBirthday,jdbcType=DATE}, 
-      #{email,jdbcType=VARCHAR}, #{empMobilephone,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
-      )
-  </insert>
-    <insert id="insertSelective" parameterType="com.huak.org.model.Employee">
-        insert into t_emc_org_employee
+
+    <select id="queryByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_employee
+        where 1=1 AND STATUS ='0'
+        <if test="orgId != null and orgId !=''">
+           and ORG_ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="empName != null and empName !=''">
+            and  EMP_NAME = #{empName,jdbcType=VARCHAR}
+        </if>
+        <if test="sex != null and sex !=''">
+            and  SEX = #{sex,jdbcType=BIT}
+        </if>
+        <if test="age != null and age !=''">
+            and  AGE = #{age,jdbcType=BIT}
+        </if>
+        <if test="birthday != null and birthday !=''">
+            and BIRTHDAY = #{birthday,jdbcType=VARCHAR}
+        </if>
+        <if test="jobNum != null and jobNum !=''">
+            and JOB_NUM = #{jobNum,jdbcType=VARCHAR}
+        </if>
+        <if test="tel != null and tel !=''">
+            and  TEL = #{tel,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null and phone !=''">
+            and  PHONE = #{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="email != null and email !=''">
+            and  EMAIL = #{email,jdbcType=VARCHAR}
+        </if>
+        <if test="memo != null and memo !=''">
+            and  MEMO = #{memo,jdbcType=VARCHAR}
+        </if>
+        <if test="creator != null and creator !=''">
+            and  CREATOR = #{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null and createTime !=''">
+            and  CREATE_TIME = #{createTime,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_emc_auth_employee
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.huak.auth.model.Employee">
+        insert into t_emc_auth_employee (ID, ORG_ID, EMP_NAME,
+        SEX, AGE, BIRTHDAY, JOB_NUM,
+        TEL, PHONE, EMAIL,
+        MEMO, CREATOR, CREATE_TIME,STATUS
+        )
+        values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{empName,jdbcType=VARCHAR},
+        #{sex,jdbcType=BIT}, #{age,jdbcType=BIT}, #{birthday,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR},
+        #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.huak.auth.model.Employee">
+        insert into t_emc_auth_employee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 ID,
             </if>
-            <if test="empName != null">
-                EMP_NAME,
-            </if>
-            <if test="empCode != null">
-                EMP_CODE,
-            </if>
-            <if test="empTel != null">
-                EMP_TEL,
-            </if>
-            <if test="addr != null">
-                ADDR,
-            </if>
             <if test="orgId != null">
                 ORG_ID,
             </if>
-            <if test="empAge != null">
-                EMP_AGE,
+            <if test="empName != null">
+                EMP_NAME,
             </if>
-            <if test="empGender != null">
-                EMP_GENDER,
+            <if test="sex != null">
+                SEX,
             </if>
-            <if test="empBirthday != null">
-                EMP_BIRTHDAY,
+            <if test="age != null">
+                AGE,
+            </if>
+            <if test="birthday != null">
+                BIRTHDAY,
+            </if>
+            <if test="jobNum != null">
+                JOB_NUM,
+            </if>
+            <if test="tel != null">
+                TEL,
+            </if>
+            <if test="phone != null">
+                PHONE,
             </if>
             <if test="email != null">
                 EMAIL,
             </if>
-            <if test="empMobilephone != null">
-                EMP_MOBILEPHONE,
+            <if test="memo != null">
+                MEMO,
             </if>
-            <if test="userId != null">
-                user_id,
+            <if test="creator != null">
+                CREATOR,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="status != null">
+                STATUS,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=VARCHAR},
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
             </if>
             <if test="empName != null">
                 #{empName,jdbcType=VARCHAR},
             </if>
-            <if test="empCode != null">
-                #{empCode,jdbcType=VARCHAR},
+            <if test="sex != null">
+                #{sex,jdbcType=BIT},
             </if>
-            <if test="empTel != null">
-                #{empTel,jdbcType=VARCHAR},
+            <if test="age != null">
+                #{age,jdbcType=BIT},
             </if>
-            <if test="addr != null">
-                #{addr,jdbcType=VARCHAR},
+            <if test="birthday != null">
+                #{birthday,jdbcType=VARCHAR},
             </if>
-            <if test="orgId != null">
-                #{orgId,jdbcType=VARCHAR},
+            <if test="jobNum != null">
+                #{jobNum,jdbcType=VARCHAR},
             </if>
-            <if test="empAge != null">
-                #{empAge,jdbcType=INTEGER},
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
             </if>
-            <if test="empGender != null">
-                #{empGender,jdbcType=INTEGER},
-            </if>
-            <if test="empBirthday != null">
-                #{empBirthday,jdbcType=DATE},
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
             </if>
-            <if test="empMobilephone != null">
-                #{empMobilephone,jdbcType=VARCHAR},
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
             </if>
-            <if test="userId != null">
-                #{userId,jdbcType=VARCHAR},
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Employee">
-        update t_emc_org_employee
+    <update id="updateByPrimaryKeySelective" parameterType="com.huak.auth.model.Employee">
+        update t_emc_auth_employee
         <set>
+            <if test="orgId != null">
+                ORG_ID = #{orgId,jdbcType=BIGINT},
+            </if>
             <if test="empName != null">
                 EMP_NAME = #{empName,jdbcType=VARCHAR},
             </if>
-            <if test="empCode != null">
-                EMP_CODE = #{empCode,jdbcType=VARCHAR},
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=BIT},
             </if>
-            <if test="empTel != null">
-                EMP_TEL = #{empTel,jdbcType=VARCHAR},
+            <if test="age != null">
+                AGE = #{age,jdbcType=BIT},
             </if>
-            <if test="addr != null">
-                ADDR = #{addr,jdbcType=VARCHAR},
+            <if test="birthday != null">
+                BIRTHDAY = #{birthday,jdbcType=VARCHAR},
             </if>
-            <if test="orgId != null">
-                ORG_ID = #{orgId,jdbcType=VARCHAR},
+            <if test="jobNum != null">
+                JOB_NUM = #{jobNum,jdbcType=VARCHAR},
             </if>
-            <if test="empAge != null">
-                EMP_AGE = #{empAge,jdbcType=INTEGER},
+            <if test="tel != null">
+                TEL = #{tel,jdbcType=VARCHAR},
             </if>
-            <if test="empGender != null">
-                EMP_GENDER = #{empGender,jdbcType=INTEGER},
-            </if>
-            <if test="empBirthday != null">
-                EMP_BIRTHDAY = #{empBirthday,jdbcType=DATE},
+            <if test="phone != null">
+                PHONE = #{phone,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 EMAIL = #{email,jdbcType=VARCHAR},
             </if>
-            <if test="empMobilephone != null">
-                EMP_MOBILEPHONE = #{empMobilephone,jdbcType=VARCHAR},
+            <if test="memo != null">
+                MEMO = #{memo,jdbcType=VARCHAR},
             </if>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=VARCHAR},
+            <if test="creator != null">
+                CREATOR = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                AGE = #{status,jdbcType=BIT},
             </if>
         </set>
-        where ID = #{id,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Employee">
-    update t_emc_org_employee
-    set EMP_NAME = #{empName,jdbcType=VARCHAR},
-      EMP_CODE = #{empCode,jdbcType=VARCHAR},
-      EMP_TEL = #{empTel,jdbcType=VARCHAR},
-      ADDR = #{addr,jdbcType=VARCHAR},
-      ORG_ID = #{orgId,jdbcType=VARCHAR},
-      EMP_AGE = #{empAge,jdbcType=INTEGER},
-      EMP_GENDER = #{empGender,jdbcType=INTEGER},
-      EMP_BIRTHDAY = #{empBirthday,jdbcType=DATE},
+    <update id="updateByPrimaryKey" parameterType="com.huak.auth.model.Employee">
+    update t_emc_auth_employee
+    set ORG_ID = #{orgId,jdbcType=BIGINT},
+      EMP_NAME = #{empName,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=BIT},
+      AGE = #{age,jdbcType=BIT},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      JOB_NUM = #{jobNum,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
-      EMP_MOBILEPHONE = #{empMobilephone,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=VARCHAR}
+      MEMO = #{memo,jdbcType=VARCHAR},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
+
+
+    <delete id="delete"  parameterType="java.lang.String">
+        delete from t_emc_auth_employee
+        where ID in
+        <foreach  index="index" item="id" collection="array" open="(" separator="," close=")"> #{id} </foreach>
+    </delete>
 </mapper>

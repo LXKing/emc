@@ -68,6 +68,13 @@
     <dubbo:service interface="com.huak.auth.UserService" ref="userService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <!-- 员工 -->
+    <bean id="employeeService" class="com.huak.auth.EmployeeServiceImpl"></bean>
+    <dubbo:service interface="com.huak.auth.EmployeeService" ref="employeeService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
+
     <!-- 日志 -->
     <bean id="loggerService" class="com.huak.log.OperateLogServiceImpl"></bean>
     <dubbo:service interface="com.huak.log.OperateLogService" ref="loggerService" timeout="300" loadbalance="random"
