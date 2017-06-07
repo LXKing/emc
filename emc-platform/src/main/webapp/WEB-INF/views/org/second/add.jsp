@@ -152,6 +152,37 @@
             return false;
         });
 
+        // 管线长度数值校验
+        $.validator.addMethod("isNumber", function(value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            var reg = new RegExp("^[0-9]+(.[0-9]{2})?$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请确认输入的数值为整数或小数");
+        // 小室数量和管段数量校验
+        $.validator.addMethod("isCellNum", function(value, element) {
+            var reg = new RegExp("^[0-9]*$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请确认输入的数值为正整数");
+        // 管线名称验证
+        $.validator.addMethod("isLineCode", function(value, element) {
+            var reg = new RegExp("^[A-Za-z0-9]+$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请输入正确的管线名称");
         $form.validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
@@ -171,13 +202,23 @@
                     checkUnique: true
                 },
                 lineCode: {
-                    required: true
+                    required: true,
+                    isLineCode:true
                 },
                 length: {
-                    required: true
+                    required: true,
+                    isNumber:true
                 },
                 netTypeId: {
                     required: true
+                },
+                partNum: {
+                    required: true,
+                    isCellNum:true
+                },
+                cellNum: {
+                    required: true,
+                    isCellNum:true
                 }
             },
             messages: {
