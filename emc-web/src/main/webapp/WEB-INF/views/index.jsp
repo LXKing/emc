@@ -14,42 +14,6 @@
     <title>华热能管系统-首页</title>
 
     <script src="${web}/script/huak.web.index.js"></script>
-    <!-- inline scripts related to this page -->
-    <script>
-        /*website*/
-        var websiteheight;
-        websiteheight = $("#website").height() - 12;
-        $(".index_menuBox").height(websiteheight);
-
-        window.onresize = function(){
-            chart01.resize();
-            chart02.resize();
-            chart03.resize();
-            chart04.resize();
-            myChartEnergy.resize();
-            chart05.resize();
-            myChartQualified.resize();
-            myChartCarbon.resize();
-
-            websiteheight = $("#website").height() - 12;
-            $(".index_menuBox").height(websiteheight);
-        };
-
-        function typefun(these,code){
-            $(these).addClass("on").siblings().removeClass("on");
-            $("#website").attr("src","${web}/static/img/index/websitet_cs0"+code+".png");
-
-            if(code == 6){
-                $(".PeopleTabdiv").show();
-                $(".otherTabdiv").hide();
-                myChartQualified.resize();
-                myChartCarbon.resize();
-            }else{
-                $(".PeopleTabdiv").hide();
-                $(".otherTabdiv").show();
-            }
-        };
-    </script>
 
 </head>
 <body>

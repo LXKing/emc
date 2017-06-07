@@ -305,8 +305,8 @@ input[type="text"].time-input{
 .button-group a.button-group-act{color:#ffffff;background-color: #7b8695;}
 .button-group .bg-left{border-left-width:1px;border-radius: 2px 0 0 2px;}
 .button-group .bg-right{border-left:1px #ffffff;border-right-width:1px;border-radius: 0 2px 2px 0;}
-.cost-chart{width:60%;background: url(../img/icons/icon003.png) no-repeat right center;float: left;}
-.cost-list{width:40%;height:313px;background-color: #FFFFFF;float: left;}
+.cost-chart{width:60%;float: left;background: url(../img/icons/icon003.png) no-repeat right center;}
+.cost-list{width:40%;float: left;height:313px;background-color: #FFFFFF;}
 .cost-list-box{margin-left:19px;padding:10px 0 9px 43px;color:#666;border-bottom: 1px solid #eee;background-position:left center;background-repeat:no-repeat;}
 .cost-list-name{font-size:12px;}
 .cost-list-num{font-size:14px;}
@@ -343,8 +343,8 @@ input[type="text"].time-input{
 .groupEnergy-box{border-bottom: 1px solid #d0d4d9;/*margin:0 25px;*/}
 .groupEnergy-box .chart-box{padding:20px 0;}
 .groupEnergyTit{background-image: url(../img/icon/icon04.png);}
-.groupEnergy-chart{width:75%;float:left;}
-.groupEnergy-info{width:25%;padding: 40px 0 0 60px;float:left;}
+.groupEnergy-chart{/*width:75%;float:left;*/}
+.groupEnergy-info{padding: 40px 0 0 60px;/*width:25%;float:left;*/}
 .groupEnergy-info .small{color:#666;font-size: 12px;}
 .groupEnergy-info h3{margin:0;font-size: 60px;color: #d4513b;font-weight: normal;}
 .groupEnergy-info h4{margin:40px 0 0;font-size: 44px;color: #d4513b;font-weight: normal;}

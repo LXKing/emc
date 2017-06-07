@@ -1,5 +1,12 @@
 @charset "UTF-8";
 body{ color: #666;font-size: 12px}
+#header,#footer,.main-container,.footer-content,.main-container:before{min-width:1330px !important;}
+body {
+      overflow-x: auto !important; 
+}
+
+.prev,.prev:hover{background: url(../img/left_btn.png) no-repeat center center;}
+.next,.next:hover{background: url(../img/right_btn.png) no-repeat center center;}
 input{padding: 0 !important; padding-left: 3px !important;}
 .mianTop.pull-right{ min-width: 755px;}
 .WdateDiv *{text-align: center;}
@@ -69,8 +76,9 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .index_header .selectbg{border: none; padding: 9px 0;}
 .index_header .bread-crumb{padding: 11px 15px;}
 .index_contentBox{ background: #f0f1f2;  box-shadow: 0 0 3px #b9bbbf; min-height: 345px;}
-.index_menubg{margin-bottom: 8px; width: 100%;position: relative;background: url(../img/index/topbg_01.png) repeat top left;}
-.index_menu {min-width: 1348px;width: 100%; margin: 0 auto; position: absolute; top: 0; z-index: 1;}
+.index_contentBox a:hover{color:#337ab7}
+.index_menubg{    overflow: hidden;margin-bottom: 8px; width: 100%; padding-top: 4px;  position: relative;background: url(../img/index/topbg_01.png) repeat-x top left; }
+.index_menu {min-width: 1348px;width: 100%; margin: 0 auto; position: absolute; top: 4px; z-index: 1;}
 /*#website{position: absolute; top: 0;}*/
 .index_menuBox{ cursor: pointer;position: relative;min-height: 263px;}
 .index_menuBoxAll { width: 17.29%;}
@@ -187,7 +195,7 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .carbonTit{background-image: url(../img/index/tit04.png); }
 .EnergyChartBg{background: url(../img/index/yibiaopian_01.png) no-repeat center top;  height: 178px; margin-top: 26px; }
 .EnergyChart{  width: 100%;height: 100%;  top: 50px;}
-.EnergyChartText { text-align: right; margin-top: 40px;}
+.EnergyChartText { text-align: center; margin-top: 40px;}
 .cb_color{ color: #df5f4a; display: inline-block;}
 .zc_color{ color: #32bbb6; display: inline-block;}
 .EnergyChartTextitem{font-size: 12px; color: #666;}
@@ -196,7 +204,7 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .EnergyChartTextnumbolb_cb{color: #32bbb6;}
 .EnergyChartTextnumb_cb{ color: #32bbb6;}
 .energyBoxLegend{background: #fff; height: 100px;position: relative; border-top: #eee 1px solid; margin: 0 auto; width: 90%;}
-.energyBoxLegend_bg{ width: 60px; height: 22px;position: absolute; background: url(../img/index/Energy_bot_bg.png) no-repeat center;z-index: 2; top: -8px; left: 100px;}
+.energyBoxLegend_bg{ width: 60px; height: 10px;position: absolute; background: url(../img/index/Energy_bot_bg.png) no-repeat center top;z-index: 2; top: -8px; left: 100px;}
 .energyBoxLegendBtnLeft,.energyBoxLegendBtnRight{ /*width: 28px;*/ width: 10%; height: 108px; cursor: pointer;}
 .energyBoxLegendBtnLeft{background: url(../img/index/Energy_bot_btnLeft.png) no-repeat center;}
 .energyBoxLegendBtnLeft_on{background: url(../img/index/Energy_bot_btnLefton.png) no-repeat center;}
@@ -220,8 +228,8 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .energyBoxLegendListIcon03_cb{ background-image: url(../img/index/nenicon03_cb.png);}
 .energyBoxLegendListIcon04_cb{ background-image: url(../img/index/nenicon04_cb.png);}
 .energyBoxLegendListIcon05_cb{ background-image: url(../img/index/nenicon05_cb.png);}
-.cost-list,.emission-list{margin: 10px;width: 36%;height: 293px; margin-left: 0;}
-.cost-list-box{padding: 8px 0 8px 43px; margin-left: 12px;}
+.cost-list,.emission-list{margin: 1%;width: 36%;height: 293px; margin-left: 0;}
+.cost-list-box{padding: 8px 0 8px 43px; margin-left: 10%;}
 .emission-list-box{padding: 12px 0; margin-left: 12px;}
 .temperatureTit{background-image: url(../img/index/tit03_j.png); }
 .chart-box .QualifiedLend{ width: 8px; height: 8px; overflow: hidden; border-radius: 50%;background: #3b96db;}
@@ -233,6 +241,7 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .mr15{margin-right: 15px;}
 .rconttable table td{ text-align: center;}
 .need_a{ color: #348bce; text-decoration: underline;}
+.need_a:link,.need_a:visited,.need_a:hover,.need_a:active{color: #348bce; text-decoration: underline;}
 .piechartTit{font-size: 14px; color: #666;  text-align: center; margin-top: 10px}
 .analyBoxList{min-height: 318px;}
 .analyBoxline{position: relative;}
@@ -247,7 +256,7 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .analyBoxlineLegen .lineLegen06>span{background: #df614c;}
 
 .analy_tit_as{background-image: url(../img/picture/anal_tit03.png) ;}
-
-
-
-
+.energy_gray{ color: #666 !important;}
+.energy_gray2{ color: #999 !important;}
+.energy_black{position: fixed; bottom: 0; right: 0; width: 380px; height: 125px;}
+.energy_black>a{margin-left: 20px;}

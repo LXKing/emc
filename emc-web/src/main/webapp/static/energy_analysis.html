@@ -166,7 +166,7 @@
 		
 			<!--面包屑导航-->
 			<div class="bread-crumb pull-left">
-				当前位置：<a href="javascript:;">[<var class="xmhpg"  style="color: #666;">首页 - 能源流概况</var>]</a>
+				当前位置：<a href="index.html">[<var class="xmhpg">首页</var>]</a> &gt; [<var class="xmhpg"  style="color: #666;"> 能源流概况</var>]
 			</div>
 			
 			<div class="mianTop pull-right">
@@ -219,7 +219,7 @@
 								<div class="pull-left groupEnergyTit energyTit"><i></i>集团总能耗<small class="font-sm">Energy Monitoring</small></div>
 							</div>  
 							<div class="groupEnergy-box col-lg-12  clearfix">
-								<div class="chart-box groupEnergy-chart col-lg-8 ">
+								<div class="chart-box groupEnergy-chart col-lg-10 ">
 									<div class="cb-header">
 										<span class="cb-title">集团总能耗 (单位: GJ)</span>
 										<div class="cb-title-right" style="margin-right: 36px;">
@@ -235,22 +235,22 @@
 									</div>
 									<div id="groupEnergyChart" style="width: 100%;height:365px;"></div>			
 								</div>
-								<div class="groupEnergy-info col-lg-4">
-									<h3>760.4</h3>
+								<div class="groupEnergy-info col-lg-2 ">
+									<h3  id="groupTotal"><!--760.4--></h3>
 									<div class="small">集团总能耗 (GJ/m3)</div>
-									<h4>3.4<span class="arrow">↑</span></h4>
+									<h4  id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
 									<div class="small">同比去年 (%)</div>
 								</div>
 							</div>
 							
 							<div class="clearfix energy-list col-lg-12 ">
 								<div class="energy-list-box energy-list-box-first">
-									<div class="energy-head energy-snh-remind">
+									<div class="energy-head ">
 										<span class="energy-list-name">水能耗</span>
 										<div class="energy-list-info">
-											<span class="energy-list-num energy-remind">192.5</span>
-											<span class="energy-list-measure energy-remind">GJ</span>
-											<span class="energy-list-proportion energy-remind">(2.6%↑)</span>
+											<span class="energy-list-num " id="waterTotal"></span>
+											<span class="energy-list-measure ">GJ</span>
+											<span class="energy-list-proportion " id="waterchangeRate"></span>
 										</div>
 									</div>
 									
@@ -260,12 +260,12 @@
 								</div>
 								
 								<div class="energy-list-box">
-									<div class="energy-head energy-dnh">
+									<div class="energy-head ">
 										<span class="energy-list-name">电能耗</span>
 										<div class="energy-list-info">
-											<span class="energy-list-num">172.6</span>
-											<span class="energy-list-measure">GJ</span>
-											<span class="energy-list-proportion">(6.9%↓)</span>
+											<span class="energy-list-num" id="electricTotal"></span>
+											<span class="energy-list-measure ">GJ</span>
+											<span class="energy-list-proportion" id="elechangeRate"></span>
 										</div>
 									</div>
 									<div class="energy-chart">
@@ -274,12 +274,12 @@
 								</div>
 								
 								<div class="energy-list-box">
-									<div class="energy-head energy-qnh-remind">
+									<div class="energy-head ">
 										<span class="energy-list-name">气能耗</span>
 										<div class="energy-list-info">
-											<span class="energy-list-num energy-remind">428.0</span>
-											<span class="energy-list-measure energy-remind">GJ</span>
-											<span class="energy-list-proportion energy-remind">(3.4%↓)</span>
+											<span class="energy-list-num " id="gasTotal"></span>
+											<span class="energy-list-measure ">GJ</span>
+											<span class="energy-list-proportion " id="gaschangeRate"></span>
 										</div>
 									</div>
 									
@@ -289,12 +289,12 @@
 								</div>
 								
 								<div class="energy-list-box">
-									<div class="energy-head energy-rnh">
+									<div class="energy-head ">
 										<span class="energy-list-name">热能耗</span>
 										<div class="energy-list-info">
-											<span class="energy-list-num">560.2</span>
+											<span class="energy-list-num" id="hotTotal"></span>
 											<span class="energy-list-measure">GJ</span>
-											<span class="energy-list-proportion energy-remind">(2.9%↑)</span>
+											<span class="energy-list-proportion" id="hotchangeRate"></span>
 										</div>
 									</div>
 									
@@ -304,12 +304,12 @@
 								</div>
 								
 								<div class="energy-list-box energy-list-box-last">
-									<div class="energy-head energy-mnh">
+									<div class="energy-head ">
 										<span class="energy-list-name">煤能耗</span>
 										<div class="energy-list-info">
-											<span class="energy-list-num">269.4</span>
+											<span class="energy-list-num" id="coalTotal"></span>
 											<span class="energy-list-measure ">GJ</span>
-											<span class="energy-list-proportion">(3.4%↓)</span>
+											<span class="energy-list-proportion" id="coalchangeRate"></span>
 										</div>
 									</div>
 									
@@ -464,7 +464,7 @@
 								<table class="table table-striped table-bordered table-hover col-lg-12 no-padding">
 									<thead>
 				                		<tr class="first_tr">
-					                    	<td>分公司</td>
+					                    	<td>能源站</td>
 					                        <td>能源总量（万GJ）</td>
 					                        <td>水能总量（T）</td>
 					                        <td>电耗总量(Kw/h)</td>
@@ -564,8 +564,12 @@
 											能源流能耗同比
 										</div>
 									</div>
-									<div class="col-lg-6 no-padding analyBoxList">
-										
+									<div class="col-lg-6 no-padding analyBoxList" style="position: relative;">
+										<div class="energy_black clearfix">
+											<a href="javascript:history.back(-1);" class="block pull-left"><img src="img/images/btn01.png" alt="上级" /></a>
+											<a href="index.html" class="block pull-left"><img src="img/images/btn02.png" alt="首页" /></a>
+											<a href="javascript:;" id="returnTop" class="block pull-left"><img src="img/images/btn03.png" alt="顶部" /></a>
+										</div>
 									</div>
 								</div>
 								
@@ -589,7 +593,7 @@
 
 	<script src="js/public.js"></script>
 	
-	<script src="../script/energy_chart.js"></script>
+	<script src="js/energy_chart.js"></script>
 	<script src="js/navscript.js"></script>
 	<script>
 		startTime("#date_today");
@@ -607,10 +611,17 @@
 				var thisText = $(this).text();
 				if (thisText == "自定义" ) {
 					$(".select-boxWdate input").attr("disabled",false).removeClass("time-input-disable");
+					$("#begin").focus();
 				}else{
 					$(".select-boxWdate input").attr("disabled",true).addClass("time-input-disable");
 				}
 			});
+			
+			//返回顶部
+			 $("#returnTop").click(function(){
+		        $('body,html').animate({scrollTop:0},1000);
+		        return false;
+		    })
 			
 		})
 		

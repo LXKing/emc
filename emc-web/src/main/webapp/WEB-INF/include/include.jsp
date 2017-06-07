@@ -50,3 +50,11 @@
 </script>
 
 <script src="${web}/static/js/navscript.js"></script>
+
+<link rel="stylesheet" type="text/css" media="all" href="${web}/static/js/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="${web}/static/js/daterangepicker/moment.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="${web}/static/js/datetimepicker/css/bootstrap-datetimepicker.css" />
+<script type="text/javascript" src="${web}/static/js/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="${web}/static/js/datetimepicker/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="${web}/static/js/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="${web}/static/js/layer/layer.js"></script>
