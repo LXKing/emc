@@ -170,6 +170,23 @@ $(function () {
                 align: 'center'
             },
             {
+                title: '供热类型',
+                field: 'heatType',
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '1'){
+                        return '区域供热';
+                    }
+                    if(value == '2'){
+                        return '集中供热';
+                    }
+                    if(value == '3'){
+                        return '尖峰供热';
+                    }
+                    return '';
+                }
+            },
+            {
                 title: '输送介质',
                 field: 'medium',
                 align: 'center',

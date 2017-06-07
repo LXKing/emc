@@ -47,7 +47,20 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>供热类型：</label>
 
+                    <div class="col-sm-8">
+                        <select id="heatType" name="heatType" class="chosen-select form-control">
+                            <option value="">请选择类型</option>
+                            <c:forEach items="${dicheat}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+                                <option value="${item.seq}">${item.des}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red"></span>管网长度：</label>
@@ -121,8 +134,6 @@
         $.validator.addMethod("checkUnique", function (value, element) {
             var netName = $(top.document).find('#netName').val();
             var comId = $(top.document).find("#comId").val();
-            alert(netName);
-            alert(comId)
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
                 url: _platform + '/oncenet/check',
@@ -181,6 +192,9 @@
                 },
                 netTypeId: {
                     required: true
+                },
+                heatType: {
+                    required: true
                 }
             },
             messages: {
@@ -196,13 +210,16 @@
                 },
                 netTypeId: {
                     required: icon + "请输入管网类型"
+                },
+                heatType: {
+                    required: icon + "请输入供热类型"
                 }
             },
             submitHandler: function () {
                 var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
-                alert($form.serialize());
+                //alert($form.serialize());
                 $.ajax({
                     url: _platform + '/oncenet/addvalue',
                     data: $form.serialize(),

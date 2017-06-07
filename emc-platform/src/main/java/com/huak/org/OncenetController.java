@@ -73,8 +73,11 @@ public class OncenetController {
     @RequestMapping(value = "/add/{orgId}", method = RequestMethod.GET)
     public String addPage(Model model,@PathVariable("orgId") String orgId) {
         String code = "pipeType";
+        String typeHeat="supportheattype";
         List<SysDic> dic = orgService.selectSysDicAll(code);
+        List<SysDic> dicheat = orgService.selectSysDicAll(typeHeat);
         model.addAttribute("sysdic",dic);
+        model.addAttribute("dicheat",dicheat);
         model.addAttribute("orgId",orgId);
         return "/org/onenet/add";
     }
@@ -107,6 +110,9 @@ public class OncenetController {
             List<SysDic> dic = orgService.selectSysDicAll(code);
             model.addAttribute("sysdic",dic);
             Oncenet oncenet = oncenetService.selectByPrimaryKey(id);
+            String typeHeat="supportheattype";
+            List<SysDic> dicheat = orgService.selectSysDicAll(typeHeat);
+            model.addAttribute("dicheat",dicheat);
             model.addAttribute("oncenet", oncenet);
         } catch (Exception e) {
             logger.error("跳转修改热源页异常" + e.getMessage());

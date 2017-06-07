@@ -2,7 +2,6 @@ package com.huak.org;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -57,12 +56,17 @@ public class OrgController {
     }
     @ResponseBody
     @RequestMapping(value = "/checknode", method = RequestMethod.POST)
-    public String checkNode(@RequestParam  String orgName ){
+    public String checkNode(@RequestParam  String orgName,
+                            @RequestParam  String comId
+                                    ){
 
         JSONObject jo = new JSONObject();
-        boolean  flag =   orgService.checkOrgName(orgName);
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("orgName",orgName);
+        params.put("comId",comId);
+        List<Map<String,Object>>  flag = orgService.selectOrgByMap(params);
 
-          if(flag){
+          if(flag.size()>0){
               jo.put(Constants.FLAG,false);
           }else{
               jo.put(Constants.FLAG, true);
@@ -75,10 +79,10 @@ public class OrgController {
         String code = "orgType";
         List<Company> company = orgService.selectCompanyAll();
         List<SysDic> dic = orgService.selectSysDicAll(code);
-        List<OrgType> list =  OrgType.toList(OrgType.class);
+        List<OrgType> list =  OrgType.toList( OrgType.class);
         model.addAttribute("id",id);
-        model.addAttribute("company",company);
-        model.addAttribute("sysdic",list);
+//        model.addAttribute("company",company);
+//        model.addAttribute("sysdic",list);
         return "org/orgtree/add";
     }
     @RequestMapping(value = "/editnode/{id}", method = RequestMethod.GET)
@@ -90,8 +94,8 @@ public class OrgController {
             List<SysDic> dic = orgService.selectSysDicAll(code);
             List<OrgType> list =  OrgType.toList(OrgType.class);
             Org org =  orgService.selectByPrimaryKey(id);
-            model.addAttribute("company",company);
-            model.addAttribute("sysdic",list);
+//            model.addAttribute("company",company);
+//            model.addAttribute("sysdic",list);
             model.addAttribute("org", org);
         } catch (Exception e) {
             logger.error("跳转修改机构页异常" + e.getMessage());
@@ -128,11 +132,8 @@ public class OrgController {
         jo.put(Constants.FLAG, false);
             try {
             // TODO 添加session，创建者
-            HttpSession session = request.getSession();
-           User user =  (User)session.getAttribute(Constants.SESSION_KEY);
-            org.setCreator(user.getId());
-
-            //org.setId(UUIDGenerator.getUUID());
+//            HttpSession session = request.getSession();
+//           User user =  (User)session.getAttribute(Constants.SESSION_KEY);
             boolean flag = orgService.insertOrg(org);
             jo.put(Constants.FLAG, flag);
             jo.put(Constants.MSG, "添加机构成功");
@@ -144,7 +145,7 @@ public class OrgController {
     }
     @ResponseBody
     @RequestMapping(value = "/ztreeValue", method = RequestMethod.GET)
-    public Object ztree(Model model,HttpServletResponse response){
+    public Object ztree(@RequestParam Map<String, Object> paramsMap){
         System.out.print("-------------------controller----------------------------");
         List<Org> as = orgService.selectOrgAll();
         return JSON.toJSON(as);
@@ -183,5 +184,21 @@ public class OrgController {
         return jo.toJSONString();
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    public String detail(@RequestParam  String id) {
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Org org = orgService.selectByPrimaryKey(id);
+            jo.put("orgDetail", org);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("根据ID查询机构失败" + e.getMessage());
+            jo.put(Constants.MSG, "根据ID查询机构失败");
+        }
+        return jo.toJSONString();
+    }
 
 }

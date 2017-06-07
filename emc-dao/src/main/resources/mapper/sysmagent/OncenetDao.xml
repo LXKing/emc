@@ -13,10 +13,11 @@
       <arg column="MEDIUM" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="HEAT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID,NET_NAME,NET_CODE , NET_TYPE_ID, LENGTH, CELL_NUM, PART_NUM, MEDIUM,ORG_ID,COM_ID
+    ID,NET_NAME,NET_CODE , NET_TYPE_ID, LENGTH, CELL_NUM, PART_NUM, MEDIUM,ORG_ID,COM_ID,HEAT_TYPE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -32,10 +33,10 @@
 
   <insert id="insert" parameterType="com.huak.org.model.Oncenet">
     insert into t_emc_unit_net (ID,NET_NAME,NET_CODE, NET_TYPE_ID, LENGTH,
-      CELL_NUM, PART_NUM, MEDIUM,ORG_ID,COM_ID
+      CELL_NUM, PART_NUM, MEDIUM,ORG_ID,COM_ID,HEAT_TYPE
       )
     values (#{id,jdbcType=VARCHAR},#{netName,jdbcType=VARCHAR},#{netCode,jdbcType=VARCHAR}, #{netTypeId,jdbcType=TINYINT}, #{length,jdbcType=DOUBLE},
-      #{cellNum,jdbcType=INTEGER}, #{partNum,jdbcType=INTEGER}, #{medium,jdbcType=VARCHAR} ,#{orgId,jdbcType=BIGINT} ,#{comId,jdbcType=VARCHAR}
+      #{cellNum,jdbcType=INTEGER}, #{partNum,jdbcType=INTEGER}, #{medium,jdbcType=VARCHAR} ,#{orgId,jdbcType=BIGINT} ,#{comId,jdbcType=VARCHAR},#{heatType,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Oncenet">
@@ -71,6 +72,9 @@
         <if test="comId != null">
             COM_ID,
         </if>
+        <if test="heatType != null">
+            HEAT_TYPE,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -102,6 +106,9 @@
         </if>
         <if test="comId != null">
             #{COM_ID,jdbcType=VARCHAR},
+        </if>
+        <if test="heatType != null">
+            #{HEAT_TYPE,jdbcType=TINYINT},
         </if>
     </trim>
   </insert>
@@ -135,6 +142,9 @@
         <if test="comId != null">
             COM_ID = #{comId,jdbcType=VARCHAR},
         </if>
+        <if test="heatType != null">
+            HEAT_TYPE = #{heatType,jdbcType=TINYINT},
+        </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -149,7 +159,8 @@
       PART_NUM = #{partNum,jdbcType=INTEGER},
       MEDIUM = #{medium,jdbcType=VARCHAR},
       ORG_ID = #{orgId,jdbcType=BIGINT},
-      COM_ID = #{comId,jdbcType=VARCHAR}
+      COM_ID = #{comId,jdbcType=VARCHAR},
+      HEAT_TYPE = #{HEAT_TYPE,jdbcType=TINYINT}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -164,7 +175,8 @@
         PART_NUM,
         MEDIUM,
         ORG_ID,
-        COM_ID
+        COM_ID,
+        HEAT_TYPE
         from t_emc_unit_net
         where 1=1
 
@@ -196,6 +208,9 @@
         </if>
         <if test="comId != null and comId!=''">
             and  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="heatType != null and heatType!=''">
+            and  HEAT_TYPE = #{heatType,jdbcType=TINYINT}
         </if>
         order by id
     </select>
@@ -242,6 +257,9 @@
         </if>
         <if test="comId != null and comId!=''">
             and  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="heatType != null and heatType!=''">
+            and  HEAT_TYPE = #{heatType,jdbcType=TINYINT}
         </if>
         order by id
     </select>

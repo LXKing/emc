@@ -103,4 +103,8 @@
     <dubbo:service interface="com.huak.sys.EnergyTypeService" ref="energyTypeService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="costTypeService" class="com.huak.sys.CostTypeServiceImpl"></bean>
+    <dubbo:service interface="com.huak.sys.CostTypeService" ref="costTypeService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>

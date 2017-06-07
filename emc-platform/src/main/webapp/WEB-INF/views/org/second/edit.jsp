@@ -118,25 +118,30 @@
             var comId = $(top.document).find("#comId").val();
             var nameOld = $(top.document).find("#lineNameOld").val();
             var lineName = $(top.document).find("#lineName").val();
+            var deferred = $.Deferred();//创建一个延迟对象
             if(nameOld==lineName){
                 return true;
             }
-            var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url: _platform + '/secondnet/check',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {lineName:lineName,comId:comId},
-                dataType: 'json',
-                success: function (result) {
-                    //alert(result.flag);
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
+            if("${secondnet.lineName}" == $(top.document).find("#lineName").val()){
+                //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+                deferred.resolve();
+            }else{
+                $.ajax({
+                    url: _platform + '/secondnet/check',
+                    type: 'POST',
+                    async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {lineName:lineName,comId:comId},
+                    dataType: 'json',
+                    success: function (result) {
+                        //alert(result.flag);
+                        if (!result.flag) {
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
                     }
-                }
-            });
+                });
+            }
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "管网名称已存在");
