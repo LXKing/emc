@@ -4,6 +4,8 @@ package com.huak.auth;
 import com.huak.auth.model.Employee;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+
+import java.util.List;
 import java.util.Map;
 
 public interface EmployeeService {
@@ -46,7 +48,20 @@ public interface EmployeeService {
 	 * @return
 	 * @throws Exception
 	 */
-	int removeEmployee(String[] ids) throws Exception;
+	int removeEmployee(String ids) throws Exception;
 
 
+    /**
+     * 根据参数查询员工
+     * @param paramsMap
+     * @return
+     */
+    List<Employee> selectByMap(Map<String, Object> paramsMap);
+
+    /**
+     * 导出
+     * @param paramsMap
+     * @return
+     */
+    List<Map<String,Object>> export(Map<String, Object> paramsMap);
 }

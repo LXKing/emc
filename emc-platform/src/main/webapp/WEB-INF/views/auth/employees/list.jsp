@@ -11,18 +11,20 @@
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
+    <input id="employeeUpdateAuth" VALUE="${sessionScope._auth['employeeUpdate']}"  type="hidden"/>
+    <input id="employeeDeleteAuth" VALUE="${sessionScope._auth['employeeDelete']}"  type="hidden"/>
     <div class="row">
         <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">组织机构
-                    <div id="treeDemo" class="org-tree">  </div>
+            <div class="ibox float-e-margins" >
+                <div class="ibox-content " >组织机构
+                    <div class="org-tree" ></div>
                 </div>
             </div>
         </div>
         <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form id="feed-searchform" role="form" class="form-horizontal m-t">
+                    <form id="employee-searchform" role="form" class="form-horizontal m-t">
                         <input type="hidden" id="orgId" name="orgId" value="">
                         <input type="hidden"  name="status" value="0">
                         <input type="hidden" id="comId"  name="comId" value="">
@@ -32,66 +34,32 @@
                             <div class="row2">
                                 <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">热源名称</label>
+                                        <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">员工名称</label>
                                         <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                            <input type="text" id="feedName" class="form-control" name="feedName" placeholder="请输入热源名称">
+                                            <input type="text" id="employeeName" class="form-control" name="empName" placeholder="请输入员工名称">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">热源编号</label>
+                                    <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">员工工号</label>
                                     <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" name="feedCode" placeholder="请输入热源编号">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">热源性质</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <select id="feedType" name="feedType" class="chosen-select form-control" onchange="addMessage()">
-                                            <option value="">请选择</option>
-                                            <c:forEach items="${sysDic['natureheat']}" var="types">
-                                                <option  value="${types.seq}">${types.des}</option>
-                                            </c:forEach>
-                                        </select>
+                                        <input type="text" class="form-control" name="jobNum" placeholder="请输入员工工号">
                                     </div>
                                 </div>
                             </div>
                             <div class="row1">
                                 <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">供热类型</label>
+                                        <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">性别</label>
                                         <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                            <select id="heatType" name="heatType" class="chosen-select form-control" onchange="addMessage()" >
+                                            <select id="sex" name="sex" class="chosen-select form-control"  >
                                                 <option value="">请选择</option>
-                                                <c:forEach items="${sysDic['supportheattype']}" var="type">
-                                                    <option value="${type.seq}">${type.des}</option>
-                                                </c:forEach>
+                                                <option value="0">男</option>
+                                                <option value="1">女</option>
                                             </select>
                                         </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row2">
-                                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">装机容量</label>
-                                        <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                            <input type="text" class="form-control" name="installCapacity" placeholder="请输入热源性质">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">供热能力</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" name="heatCapacity" placeholder="请输入创建者">
                                     </div>
                                 </div>
                             </div>
@@ -99,8 +67,8 @@
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-                                <c:if test="${sessionScope._auth['feedAdd']}">
-                                    <button type="button" class="btn btn-sm btn-info "  onclick="addFeed()">
+                                <c:if test="${sessionScope._auth['employeeAdd']}">
+                                    <button type="button" class="btn btn-sm btn-info "  onclick="addEmployee()">
                                         <i class="fa fa-plus"></i>添加
                                     </button>
                                 </c:if>
@@ -110,14 +78,14 @@
                                 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success"> 重置</button>
-                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/feed/export"> 导出Excel
+                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/employee/export"> 导出Excel
                                 </button>
 
                             </div>
                         </div>
                     </form>
                     <div class="example">
-                        <table id="feed-table-list">
+                        <table id="employee-table-list">
                         </table>
                     </div>
                 </div>

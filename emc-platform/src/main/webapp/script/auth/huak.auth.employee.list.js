@@ -11,7 +11,7 @@ $(function () {
         class:"org-tree"
     });
     org.initTree();
-    /*查询热源列表页*/
+    /*查询员工列表页*/
     bootstraplist();
     //日期范围限制
     var start = {
@@ -47,10 +47,10 @@ $(function () {
 
 function bootstraplist(){
 
-    bTable = $('#feed-table-list').bootstrapTable({
+    bTable = $('#employee-table-list').bootstrapTable({
         height: getHeight() + 30,//高度
         cache: false,//禁用 AJAX 数据缓存
-        url: _platform + '/feed/list',//获取数据的Servlet地址
+        url: _platform + '/employee/list',//获取数据的Servlet地址
         method: 'post',//使用POST请求到服务器获取数据
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
@@ -92,71 +92,52 @@ function bootstraplist(){
                 }
             },
             {
-                title: '热源名称',
-                field: 'feedName',
+                title: '员工名称',
+                field: 'empName',
                 align: 'center'
             },
             {
-                title: '热源编号',
-                field: 'feedCode',
+                title: '工号',
+                field: 'jobNum',
                 align: 'center'
             },
             {
-                title: '热源性质',
-                field: 'feedType',
+                title: '性别',
+                field: 'sex',
                 align: 'center',
                 formatter:function(value,row,index){
                     if(value == '1'){
-                        return '热电';
+                        return '女';
                     }
-                    if(value == '2'){
-                        return '区域锅炉房';
-                    }
-                    if(value == '3'){
-                        return '核电';
-                    }
-                    if(value == '4'){
-                        return '工业余热';
-                    }
-
-                    return '';
-                }
-            },
-            {
-                title: '供热类型',
-                field: 'feedType',
-                align: 'center',
-                formatter:function(value,row,index){
-                    if(value == '1'){
-                        return '区域供热';
-                    }
-                    if(value == '2'){
-                        return '集中供热';
-                    }
-                    if(value == '3'){
-                        return '尖峰供热';
+                    if(value == '0'){
+                        return '男';
                     }
                     return '';
                 }
             },
             {
-                title: '装机容量',
-                field: 'installCapacity',
+                title: '手机号',
+                field: 'phone',
                 align: 'center'
             },
             {
-                title: '供热能力',
-                field: 'heatCapacity',
+                title: '邮箱',
+                field: 'email',
                 align: 'center'
             },
             {
-                title: '汽机数量',
-                field: 'steamturbineNum',
+                title: '年龄',
+                field: 'age',
                 align: 'center'
             },
             {
-                title: '锅炉数量',
-                field: 'boilerNum',
+                title: '生日',
+                field: 'birthday',
+                align: 'center'
+            },
+            {
+                title: '联系电话',
+                field: 'tel',
                 align: 'center'
             },
             {
@@ -165,11 +146,11 @@ function bootstraplist(){
                 align: 'center' ,
                 formatter:function(value,row,index){
                     var html = "";
-                    if($("#feedUpdateAuth").val()){
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="feed_edit_Form" layer-title="编辑热源" layer-url="'+_platform+'/feed/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                    if($("#employeeUpdateAuth").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="employee_edit_Form" layer-title="编辑员工" layer-url="'+_platform+'/employee/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
                     }
-                    if($("#feedDeleteAuth").val()){
-                        html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteFeed(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                    if($("#employeeDeleteAuth").val()){
+                        html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteemployee(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
                     }
                     return html;
                 }
@@ -182,25 +163,25 @@ function bootstraplist(){
 
 }
 function search(){
-    $('#feed-table-list').bootstrapTable('refresh');
+    $('#employee-table-list').bootstrapTable('refresh');
 }
 //layer
-function deleteFeed(id) {
-    top.layer.confirm('您是否确定删除热源？', {
+function deleteemployee(id) {
+    top.layer.confirm('您是否确定删除员工？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = top.layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: _platform + '/feed/delete/' + id,
+            url: _platform + '/employee/delete/' + id,
             type: 'DELETE',
             dataType: 'json',
             success: function (result) {
                 if (result.flag) {
                     top.layer.closeAll();
                     top.layer.msg(result.msg);
-                    $('#feed-table-list').bootstrapTable("refresh");
+                    $('#employee-table-list').bootstrapTable("refresh");
                 } else {
                     top.layer.close(index);
                     top.layer.msg(result.msg);
@@ -213,7 +194,7 @@ function deleteFeed(id) {
 function queryParams(params) {
     var ts = $(top.document).find("[name='searchComp']").val();
     $("#comId").val(ts);
-    return $("#feed-searchform").serialize();
+    return $("#employee-searchform").serialize();
 }
 
 function treeNodeClick(e,treeId,treeNode){
@@ -222,7 +203,7 @@ function treeNodeClick(e,treeId,treeNode){
     search();
 }
 
-function addFeed(){
+function addEmployee(){
     var treeNode = top.comm_tree.getSelectedNodes();
     var ts = $(top.document).find("[name='searchComp']").val();
     if(treeNode.length<1){
@@ -233,6 +214,6 @@ function addFeed(){
         layer.warn("只能选择一个上级组织！");
         return;
     }
-    openLayer(_platform+"/feed/add/"+treeNode[0].id+"/"+ts,"添加热力站","feed_add_Form",null,null);
+    openLayer(_platform+"/employee/add/"+treeNode[0].id,"添加员工","employee_add_Form",null,null);
 }
 

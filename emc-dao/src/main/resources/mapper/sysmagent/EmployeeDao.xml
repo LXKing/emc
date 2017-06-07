@@ -6,8 +6,8 @@
             <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
             <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
             <arg column="EMP_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="SEX" javaType="java.lang.Boolean" jdbcType="BIT" />
-            <arg column="AGE" javaType="java.lang.Boolean" jdbcType="BIT" />
+            <arg column="SEX" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="AGE" javaType="java.lang.Integer" jdbcType="INTEGER" />
             <arg column="BIRTHDAY" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="JOB_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="TEL" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
             <arg column="MEMO" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="STATUS" javaType="java.lang.Boolean" jdbcType="BIT" />
+            <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
@@ -30,46 +30,103 @@
         where ID = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="queryByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from t_emc_auth_employee
-        where 1=1 AND STATUS ='0'
+    <select id="selectPageByMap" parameterType="java.util.Map"  resultMap="BaseResultMap">
+        SELECT
+          e.*
+        FROM t_emc_org o,t_emc_company c,t_emc_auth_employee e
+        WHERE o.COM_ID = c.ID
+        AND e.ORG_ID = o.ID
+        <if test="comId != null and comId !=''">
+            and c.ID = #{comId,jdbcType=BIGINT}
+        </if>
         <if test="orgId != null and orgId !=''">
-           and ORG_ID = #{orgId,jdbcType=BIGINT}
+           and o.ID = #{orgId,jdbcType=BIGINT}
         </if>
         <if test="empName != null and empName !=''">
-            and  EMP_NAME = #{empName,jdbcType=VARCHAR}
+            and  e.EMP_NAME like CONCAT('%',#{empName},'%')
         </if>
         <if test="sex != null and sex !=''">
-            and  SEX = #{sex,jdbcType=BIT}
+            and  e.SEX = #{sex,jdbcType=TINYINT}
         </if>
         <if test="age != null and age !=''">
-            and  AGE = #{age,jdbcType=BIT}
+            and  e.AGE = #{age,jdbcType=INTEGER}
         </if>
         <if test="birthday != null and birthday !=''">
-            and BIRTHDAY = #{birthday,jdbcType=VARCHAR}
+            and e.BIRTHDAY = #{birthday,jdbcType=VARCHAR}
         </if>
         <if test="jobNum != null and jobNum !=''">
-            and JOB_NUM = #{jobNum,jdbcType=VARCHAR}
+            and e.JOB_NUM = #{jobNum,jdbcType=VARCHAR}
         </if>
         <if test="tel != null and tel !=''">
-            and  TEL = #{tel,jdbcType=VARCHAR}
+            and  e.TEL = #{tel,jdbcType=VARCHAR}
         </if>
         <if test="phone != null and phone !=''">
-            and  PHONE = #{phone,jdbcType=VARCHAR}
+            and  e.PHONE = #{phone,jdbcType=VARCHAR}
         </if>
         <if test="email != null and email !=''">
-            and  EMAIL = #{email,jdbcType=VARCHAR}
+            and  e.EMAIL = #{email,jdbcType=VARCHAR}
         </if>
         <if test="memo != null and memo !=''">
-            and  MEMO = #{memo,jdbcType=VARCHAR}
+            and  e.MEMO = #{memo,jdbcType=VARCHAR}
         </if>
         <if test="creator != null and creator !=''">
-            and  CREATOR = #{creator,jdbcType=VARCHAR}
+            and  e.CREATOR = #{creator,jdbcType=VARCHAR}
         </if>
         <if test="createTime != null and createTime !=''">
-            and  CREATE_TIME = #{createTime,jdbcType=VARCHAR}
+            and  e.CREATE_TIME = #{createTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null and status !=''">
+            and  e.STATUS = #{status,jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <select id="export" parameterType="java.util.Map"  resultType="java.util.Map">
+        SELECT
+        e.*
+        FROM t_emc_org o,t_emc_company c,t_emc_auth_employee e
+        WHERE o.COM_ID = c.ID
+        AND e.ORG_ID = o.ID
+        <if test="comId != null and comId !=''">
+            and c.ID = #{comId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null and orgId !=''">
+            and o.ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="empName != null and empName !=''">
+            and  e.EMP_NAME like CONCAT('%',#{empName},'%')
+        </if>
+        <if test="sex != null and sex !=''">
+            and  e.SEX = #{sex,jdbcType=TINYINT}
+        </if>
+        <if test="age != null and age !=''">
+            and  e.AGE = #{age,jdbcType=INTEGER}
+        </if>
+        <if test="birthday != null and birthday !=''">
+            and e.BIRTHDAY = #{birthday,jdbcType=VARCHAR}
+        </if>
+        <if test="jobNum != null and jobNum !=''">
+            and e.JOB_NUM = #{jobNum,jdbcType=VARCHAR}
+        </if>
+        <if test="tel != null and tel !=''">
+            and  e.TEL = #{tel,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null and phone !=''">
+            and  e.PHONE = #{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="email != null and email !=''">
+            and  e.EMAIL = #{email,jdbcType=VARCHAR}
+        </if>
+        <if test="memo != null and memo !=''">
+            and  e.MEMO = #{memo,jdbcType=VARCHAR}
+        </if>
+        <if test="creator != null and creator !=''">
+            and  e.CREATOR = #{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null and createTime !=''">
+            and  e.CREATE_TIME = #{createTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null and status !=''">
+            and  e.STATUS = #{status,jdbcType=TINYINT}
         </if>
     </select>
 
@@ -77,6 +134,13 @@
         delete from t_emc_auth_employee
         where ID = #{id,jdbcType=BIGINT}
     </delete>
+    <update id="deleteByStatus" parameterType="java.lang.String">
+        update t_emc_auth_employee
+        <set>
+            STATUS = '1'
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
     <insert id="insert" parameterType="com.huak.auth.model.Employee">
         insert into t_emc_auth_employee (ID, ORG_ID, EMP_NAME,
         SEX, AGE, BIRTHDAY, JOB_NUM,
@@ -84,9 +148,9 @@
         MEMO, CREATOR, CREATE_TIME,STATUS
         )
         values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{empName,jdbcType=VARCHAR},
-        #{sex,jdbcType=BIT}, #{age,jdbcType=BIT}, #{birthday,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR},
         #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-        #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=BIT}
+        #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.huak.auth.model.Employee">
@@ -146,10 +210,10 @@
                 #{empName,jdbcType=VARCHAR},
             </if>
             <if test="sex != null">
-                #{sex,jdbcType=BIT},
+                #{sex,jdbcType=TINYINT},
             </if>
             <if test="age != null">
-                #{age,jdbcType=BIT},
+                #{age,jdbcType=INTEGER},
             </if>
             <if test="birthday != null">
                 #{birthday,jdbcType=VARCHAR},
@@ -176,7 +240,7 @@
                 #{createTime,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                #{status,jdbcType=BIT},
+                #{status,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -190,10 +254,10 @@
                 EMP_NAME = #{empName,jdbcType=VARCHAR},
             </if>
             <if test="sex != null">
-                SEX = #{sex,jdbcType=BIT},
+                SEX = #{sex,jdbcType=TINYINT},
             </if>
             <if test="age != null">
-                AGE = #{age,jdbcType=BIT},
+                AGE = #{age,jdbcType=INTEGER},
             </if>
             <if test="birthday != null">
                 BIRTHDAY = #{birthday,jdbcType=VARCHAR},
@@ -220,7 +284,7 @@
                 CREATE_TIME = #{createTime,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                AGE = #{status,jdbcType=BIT},
+                AGE = #{status,jdbcType=TINYINT},
             </if>
         </set>
         where ID = #{id,jdbcType=BIGINT}
@@ -229,8 +293,8 @@
     update t_emc_auth_employee
     set ORG_ID = #{orgId,jdbcType=BIGINT},
       EMP_NAME = #{empName,jdbcType=VARCHAR},
-      SEX = #{sex,jdbcType=BIT},
-      AGE = #{age,jdbcType=BIT},
+      SEX = #{sex,jdbcType=TINYINT},
+      AGE = #{age,jdbcType=INTEGER},
       BIRTHDAY = #{birthday,jdbcType=VARCHAR},
       JOB_NUM = #{jobNum,jdbcType=VARCHAR},
       TEL = #{tel,jdbcType=VARCHAR},
@@ -239,7 +303,7 @@
       MEMO = #{memo,jdbcType=VARCHAR},
       CREATOR = #{creator,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=BIT}
+      STATUS = #{status,jdbcType=TINYINT}
     where ID = #{id,jdbcType=BIGINT}
   </update>
 
