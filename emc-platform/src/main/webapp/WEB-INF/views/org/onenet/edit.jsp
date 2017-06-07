@@ -43,7 +43,20 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>供热类型：</label>
 
+                    <div class="col-sm-8">
+                        <select id="heatType" name="heatType" class="chosen-select form-control">
+                            <c:forEach items="${dicheat}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+
+                                <option  ${oncenet.heatType eq item.seq?'selected':''}  value="${item.seq}">${item.des}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>管线长度：</label>
@@ -118,25 +131,28 @@
             var comId = $(top.document).find("#comId").val();
             var nameOld = $(top.document).find("#netNameOld").val();
             var netName = $(top.document).find("#netName").val();
-            if(nameOld==netName){
-                return true;
-            }
             var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url: _platform + '/oncenet/check',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {netName:netName,comId:comId},
-                dataType: 'json',
-                success: function (result) {
-                    //alert(result.flag);
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
+
+            if("${oncenet.netName}" == $(top.document).find("#netName").val()){
+                //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+                deferred.resolve();
+            }else{
+                $.ajax({
+                    url: _platform + '/oncenet/check',
+                    type: 'POST',
+                    async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {netName:netName,comId:comId},
+                    dataType: 'json',
+                    success: function (result) {
+                        //alert(result.flag);
+                        if (!result.flag) {
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
                     }
-                }
-            });
+                });
+            }
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "管网名称已存在");
@@ -180,6 +196,9 @@
                 },
                 netTypeId: {
                     required: true
+                },
+                heatType: {
+                    required: true
                 }
             },
             messages: {
@@ -195,6 +214,9 @@
                 },
                 netTypeId: {
                     required: icon + "请输入管网类型"
+                },
+                heatType: {
+                    required: icon + "请输入供热类型"
                 }
             },
             submitHandler: function () {

@@ -34,8 +34,7 @@ var setting = {
     },
     callback: {
         beforeRemove:beforeRemove,//点击删除时触发，用来提示用户是否确定删除
-        beforeEditName: beforeEditName,//点击编辑时触发，用来判断该节点是否能编辑
-        beforeRename:beforeRename,//编辑结束时触发，用来验证输入的数据是否符合要求
+//        beforeEditName: beforeEditName,//点击编辑时触发，用来判断该节点是否能编辑
         onRemove:onRemove,//删除节点后触发，用户后台操作
         onRename:onRename,//编辑后触发，用于操作后台
         beforeDrag:beforeDrag, //用户禁止拖动节点
@@ -64,36 +63,9 @@ function addHoverDom(treeId, treeNode) {
     var btn = $("#addBtn_"+treeNode.tId);
     if (btn) btn.bind("click", function(){
         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        top.treeNode = treeNode;
         var id =treeNode.id;
-        $.get(_platform + '/org/addnode/' + id, function (result) {
-            $('#orgtree-layer-div').html(result);
-        });
-        layer.open({
-            area: ['800px', '580px'],
-            type: 1,
-            title: '添加节点',
-            btn: ['保存', '取消'],
-            yes: function () {
-                $("#orgTreeAddForm").submit();
-            },
-            skin: 'layer-ext-moon', //样式类名
-            closeBtn: 1, //不显示关闭按钮
-            shift: 2,
-            shadeClose: true, //开启遮罩关闭
-            content: $('#orgtree-layer-div'),
-            end:function(){
-                /*根据 treeId 获取 zTree 对象*/
-//                var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-//                    type = "refresh",
-//                    silent = false,
-//                /*获取 zTree 当前被选中的节点数据集合*/
-//                    nodes = zTree.getSelectedNodes();
-//                /*强行异步加载父节点的子节点。[setting.async.enable = true 时有效]*/
-//                zTree.reAsyncChildNodes(nodes[id1], type, silent);
-                ztreeValue();
-            }
-        });
-        return false;
+        openLayer(_platform+"/org/addnode/"+id,"添加机构节点","orgTreeAddForm",null,null);
     });
 };
 
@@ -111,13 +83,6 @@ function beforeRemove(treeId,treeNode){
         return true;
     });
     return false;
-}
-function beforeEditName(treeId,treeNode){
-    if(treeNode.isParent){
-        layer.msg('不准编辑非叶子节点！');
-        return false;
-    }
-    return true;
 }
 
 function onRemove(treeId,treeNode){
@@ -155,45 +120,49 @@ function onRemove(treeId,treeNode){
 
     return false;
 }
-function beforeRename(treeId,treeNode,newName,isCancel){
 
-    if(newName.length < 3){
-        alert("名称不能少于3个字符！");
-        return false;
-    }
-    return true;
-}
 function onRename(e, treeId, treeNode, isCancel) {
     //需要对名字做判定的，可以来这里写~~
     //alert(treeNode.id+"---"+treeNode.name);
-       var id = treeNode.id;
-    $.get(_platform + '/org/editnode/' + id, function (result) {
-        $('#orgtree-layer-div').html(result);
-    });
-    layer.open({
-        area: ['800px', '580px'],
-        type: 1,
-        title: '编辑节点',
-        btn: ['保存', '取消'],
-        yes: function () {
-            $("#orgTreeAddForm").submit();
-        },
-        skin: 'layer-ext-moon', //样式类名
-        closeBtn: 1, //不显示关闭按钮
-        shift: 2,
-        shadeClose: true, //开启遮罩关闭
-        content: $('#orgtree-layer-div'),
-        end:function(){
-            ztreeValue();
-        }
-    });
-    return false;
+    var id = treeNode.id;
+    openLayer(_platform+"/org/editnode/"+id,"编辑机构节点","orgTreeEditForm",null,null);
 }
 function beforeDrag(treeId,treeNodes){
     return false;
 }
-function clickNode(treeId,treeNodes){
-    return false;
+
+function clickNode(e,treeId,treeNode) {
+    //alert(treeNode.id+"---"+treeNode.name);
+    $.ajax({
+        type: "post",
+        url: _platform + "/org/detail",
+        data: {id: treeNode.id},
+        dataType: "json",
+        success: function (data) {
+            $("#orgName").val(data.orgDetail.orgName);
+            $("#orgCode").val(data.orgDetail.orgCode);
+            $("#shortName").val(data.orgDetail.shortName);
+            $("#memo").val(data.orgDetail.memo);
+            $("#seq").val(data.orgDetail.seq);
+            var type = data.orgDetail.typeId;
+
+            if (type == "1") {
+                $("#typeId").val("公司");
+            } else if (type == "2") {
+                $("#typeId").val("分公司");
+            } else if (type == "3") {
+                $("#typeId").val("中心");
+            } else if (type == "4") {
+                $("#typeId").val("服务站");
+            } else if (type == "5") {
+                $("#typeId").val("部门");
+            }
+        },
+        error: function (data) {
+
+        }
+    });
+
 }
 function ztreeValue(){
     $.ajax({

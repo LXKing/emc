@@ -89,8 +89,7 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public boolean insertOrg(Org org) {
         boolean flag=false;
-        org.setCreateTime(dateDao.getTime());
-        int i =orgDao.insertSelective(org);
+        int i =orgDao.insert(org);
         if(i>0){
             flag=true;
         }
@@ -99,8 +98,9 @@ public class OrgServiceImpl implements OrgService {
 
     @Override
     public boolean checkOrgName(String orgName) {
+
         boolean flag=false;
-        List<Org>  list = orgDao.CheckOrgName(orgName);
+        List<Org> list = orgDao.CheckOrgName(orgName);
             if(list.size()>0){
                 flag=true;
             }

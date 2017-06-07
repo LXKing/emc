@@ -32,26 +32,35 @@
 
     //以下为官方示例
     $(function () {
+        var icon = "<i class='fa fa-times-circle'></i> ";
+        $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
+        var comId = $(top.document).find(".chosen-select").find("option:selected").val();//选中的文本
+        $(top.document).find("#comId").val(comId);
         $.validator.addMethod("checkUnique", function(value, element) {
-            var deferred = $.Deferred();//
-            var orgName = $('.orgNameID').val();
-            //alert(orgName);
-            $.ajax({
-                url:_platform+'/org/checknode',
-                type:'POST',
-                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {orgName:orgName},
-                dataType: 'json',
-                success:function(result) {
-                    //alert(result.flag);
-                    //return false;
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
+            var orgName = $(top.document).find('#orgName').val();
+            var comId = $(top.document).find('#comId').val();
+            var deferred = $.Deferred();
+            if("${org.orgName}" == $(top.document).find("#orgName").val()){
+                //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+                deferred.resolve();
+            }else{
+                $.ajax({
+                    url:_platform+'/org/checknode',
+                    type:'POST',
+                    async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {orgName:orgName,comId:comId},
+                    dataType: 'json',
+                    success:function(result) {
+                        //alert(result.flag);
+                        //return false;
+                        if (!result.flag) {
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
                     }
-                }
-            });
+                });
+            }
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "机构名称已存在");
@@ -69,8 +78,8 @@
             return false;
         });
         // validate signup form on keyup and submit
-        var icon = "<i class='fa fa-times-circle'></i> ";
-        $("#orgTreeAddForm").validate({
+
+        $(top.document).find("#orgTreeEditForm").validate({
             onsubmit:true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
         onfocusout: function (element) {
@@ -87,47 +96,36 @@
                 required: true,
                         minlength: 2,
                         checkUnique: true
-            },
-            orgCode: {
-                required: true
-            },
-            shortName: {
-                required: true
             }
         },
         messages: {
             orgName: {
                 required: icon + "请输入机构名称",
-                        minlength: icon + "角色名称必须2个字符以上"
-            },
-            orgCode: {
-                required: icon + "请输入机构代码"
-            },
-            shortName:{
-                required: icon + "请输入简称"
+                        minlength: icon + "机构名称必须2个字符以上"
             }
         },
         submitHandler:function(){
 
-            var index = layer.load(1, {
+            var index = top.layer.load(1, {
                 shade: [0.1,'#fff'] //0.1透明度的白色背景
             });
-            var data = $('#orgTreeAddForm').serialize();
+            var data = $(top.document).find('#orgTreeEditForm').serialize();
             //alert(data);
             $.ajax({
                     url:_platform + '/org/tree/edit',
-                    data:$('#orgTreeAddForm').serialize(),
+                    data:$(top.document).find('#orgTreeEditForm').serialize(),
                     type:'post',
                     dataType:'json',
                     success:function(result) {
 
                         //alert(result.flag);
                         if(result.flag){
-                            layer.closeAll();
-                            layer.msg(result.msg);
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            ztreeValue();
                         }else{
-                            layer.close(index);
-                            layer.msg(result.msg);
+                            top.layer.close(index);
+                            top.layer.msg(result.msg);
                         }
             }
         });
@@ -138,64 +136,19 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
-            <form class="form-horizontal" id="orgTreeAddForm" role="form">
+            <form class="form-horizontal" id="orgTreeEditForm" role="form">
                 <input type="hidden" name="id" value="${id}">
+                <input id="comId" name="comId" type="hidden" class="class-comid" value="">
+                <input type="hidden" name="orgNameOld" id="orgNameOld" value="${org.orgName}">
+
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>机构名称：</label>
                     <div class="col-sm-8">
-                        <input id="roleName" name="orgName" value="${org.orgName}" class="form-control orgNameID" type="text" maxlength="8" placeholder="请输入机构名称">
+                        <input id="orgName" name="orgName" value="${org.orgName}" class="form-control orgNameID" type="text" maxlength="8" placeholder="请输入机构名称">
+                        <input id="pOrgId" name="pOrgId" type="hidden" class="class-comid" value="${org.pOrgId}">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label"><span class="red">*</span>机构代码：</label>
 
-                    <div class="col-sm-8">
-                        <input name="orgCode" class="form-control" value="${org.orgCode}" type="text" maxlength="16" placeholder="请输入机构代码">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label"><span class="red">*</span>机构简称：</label>
-
-                    <div class="col-sm-8">
-                        <input name="shortName" class="form-control" value="${org.shortName}" type="text" maxlength="16" placeholder="请输入机构简称">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  control-label"><span class="red">*</span>公司：</label>
-
-                    <div class="col-sm-8">
-                        <select id="comId" name="comId" class="chosen-select form-control">
-                            <c:forEach items="${company}" var="item" varStatus="status" >
-                                <option <c:if test="${org.comId eq item.id}">selected="selected" </c:if> value="${item.id}">${item.cname}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  control-label"><span class="red">*</span>类型：</label>
-
-                    <div class="col-sm-8">
-                        <select id="typeId" name="typeId" class="chosen-select form-control">
-                              <c:forEach items="${sysdic}" var="item" varStatus="status" >
-                                <option  ${org.typeId eq item.key?'selected':''}  value="${item.key}">${item.value}</option>
-                              </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label"><span class="red">*</span>排序值：</label>
-
-                    <div class="col-sm-8">
-                        <input name="seq" class="form-control"  value="${org.seq}" type="text" maxlength="16" placeholder="请输入排序值">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">备注：</label>
-
-                    <div class="col-sm-8">
-                        <input name="memo"  value="${org.memo}"  class="form-control" type="text" maxlength="255">
-                    </div>
-                </div>
             </form>
         </div>
     </div>

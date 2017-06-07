@@ -23,11 +23,13 @@ public class Oncenet implements Serializable{
 
     private String comId;
 
+    private Byte heatType;
+
     public Oncenet() {
         super();
     }
 
-    public Oncenet(String id, String netName, String netCode, Byte netTypeId, Double length, Integer cellNum, Integer partNum, String medium, Long orgId, String comId) {
+    public Oncenet(String id, String netName, String netCode, Byte netTypeId, Double length, Integer cellNum, Integer partNum, String medium, Long orgId, String comId, Byte heatType) {
         this.id = id;
         this.netName = netName;
         this.netCode = netCode;
@@ -38,6 +40,7 @@ public class Oncenet implements Serializable{
         this.medium = medium;
         this.orgId = orgId;
         this.comId = comId;
+        this.heatType = heatType;
     }
 
     public String getId() {
@@ -118,5 +121,13 @@ public class Oncenet implements Serializable{
 
     public void setComId(String comId) {
         this.comId = comId;
+    }
+
+    public Byte getHeatType() {
+        return heatType;
+    }
+
+    public void setHeatType(Byte heatType) {
+        this.heatType = heatType;
     }
 }
