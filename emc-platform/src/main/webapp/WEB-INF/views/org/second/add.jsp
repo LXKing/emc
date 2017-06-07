@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>小室数量：</label>
+                            class="red"></span>小室数量：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="cellNum" class="form-control" type="text" maxlength="16" placeholder="请输入小室数量">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>管段数量1：</label>
+                            class="red"></span>管段数量：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="partNum" class="form-control" type="text" maxlength="16" placeholder="请输入管段数量">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>输送介质：</label>
+                            class="red"></span>输送介质：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="medium" class="form-control" type="text" maxlength="16" placeholder="请输入输送介质">
@@ -115,12 +115,10 @@
         var comId = $(top.document).find(".chosen-select").find("option:selected").val();//选中的文本
         $(top.document).find("#comId").val(comId);
         var $form = $(top.document).find("#secondnetAddForm");
-        alert(123);
         $.validator.addMethod("checkUnique", function (value, element) {
             var lineName = $(top.document).find('#lineName').val();
             var comId = $(top.document).find("#comId").val();
-            alert(lineName);
-            alert(comId)
+
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
                 url: _platform + '/secondnet/check',
@@ -172,7 +170,7 @@
                     minlength: 2,
                     checkUnique: true
                 },
-                netCode: {
+                lineCode: {
                     required: true
                 },
                 length: {

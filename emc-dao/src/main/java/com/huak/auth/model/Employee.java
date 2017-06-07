@@ -1,15 +1,17 @@
 package com.huak.auth.model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
     private Long id;
 
     private Long orgId;
 
     private String empName;
 
-    private Boolean sex;
+    private Byte sex;
 
-    private Boolean age;
+    private Integer age;
 
     private String birthday;
 
@@ -23,13 +25,13 @@ public class Employee {
 
     private String memo;
 
-    private Long creator;
+    private String creator;
 
     private String createTime;
 
-    private Boolean status;
+    private Byte status;
 
-    public Employee(Long id, Long orgId, String empName, Boolean sex, Boolean age, String birthday, String jobNum, String tel, String phone, String email, String memo, Long creator, String createTime,Boolean status) {
+    public Employee(Long id, Long orgId, String empName, Byte sex, Integer age, String birthday, String jobNum, String tel, String phone, String email, String memo, String creator, String createTime,Byte status) {
         this.id = id;
         this.orgId = orgId;
         this.empName = empName;
@@ -74,19 +76,19 @@ public class Employee {
         this.empName = empName == null ? null : empName.trim();
     }
 
-    public Boolean getSex() {
+    public Byte getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(Byte sex) {
         this.sex = sex;
     }
 
-    public Boolean getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Boolean age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -138,11 +140,11 @@ public class Employee {
         this.memo = memo == null ? null : memo.trim();
     }
 
-    public Long getCreator() {
+    public String getCreator() {
         return creator;
     }
 
-    public void setCreator(Long creator) {
+    public void setCreator(String creator) {
         this.creator = creator;
     }
 
@@ -154,11 +156,11 @@ public class Employee {
         this.createTime = createTime;
     }
 
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 }
