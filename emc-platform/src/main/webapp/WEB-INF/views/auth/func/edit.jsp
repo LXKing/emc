@@ -112,7 +112,7 @@
         }, '菜单[${menu.menuName}]下功能名称已存在');
 
         $.validator.addMethod("checkUnique", function(value, element) {
-            if(value =='${func.uName}'){
+            if(value =='${func.uname}'){
                 return true;
             }
             var deferred = $.Deferred();//创建一个延迟对象
@@ -120,7 +120,7 @@
                 url:_platform+'/func/check/uname',
                 type:'POST',
                 async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {uName:value},
+                data: {uname:value},
                 dataType: 'json',
                 success:function(result) {
                     if (!result.flag) {
@@ -224,7 +224,7 @@
                     required: true,
                     minlength: 2
                 },
-                uName: {
+                uname: {
                     required: true,
                     checkUnique:true,
                     minlength: 4,
@@ -239,7 +239,7 @@
                     required: icon + "请输入菜单名称",
                     minlength: icon + "功能名称必须2个字符以上"
                 },
-                uName: {
+                uname: {
                     required: icon + "请输入唯一标识",
                     minlength: icon + "唯一标识必须4个字符以上"
                 },

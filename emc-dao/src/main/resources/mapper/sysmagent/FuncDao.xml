@@ -100,7 +100,7 @@
     </select>
 
     <select id="checkUName" parameterType="java.util.HashMap" resultType="java.lang.Long">
-        select count(id)  from t_emc_auth_func  where UNAME = #{uName}
+        select count(id)  from t_emc_auth_func  where UNAME = #{uname}
     </select>
     <select id="checkName" parameterType="java.util.HashMap" resultType="java.lang.Long">
         select count(id)  from t_emc_auth_func  where FUNC_NAME = #{funcName} and MENU_ID = #{menuId}
