@@ -98,67 +98,72 @@
 
 </div>
 <div class="index_content row no-margin">
-<div class="col-lg-12 no-padding">
-<div class="col-lg-4 mb14">
-    <div class="index_contentBox">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left energyTit"><i></i>能耗明细<small class="font-sm">Energy Consumption</small></div>
-        </div>
-        <div class="energyBox">
-            <div class="col-lg-12 no-padding">
-                <div class="EnergyChartBg col-lg-8 no-padding">
-                    <div class="EnergyChart" id="EnergyChart"></div>
+<div class="col-xs-12 no-padding">
+<div class="col-xs-4 mb14">
+    <div class="index_contentBox energy_consumption">
+        <a href="energy_analysis.html">
+            <div class="titbox clearfix no-padding no-margin">
+                <div class="pull-left energyTit"><i></i>能耗明细<small class="font-sm">Energy Consumption</small></div>
+            </div>
+            <div class="energyBox">
+                <div class="col-xs-12 no-padding">
+                    <div class="EnergyChartBg col-xs-8 no-padding">
+                        <div class="EnergyChart" id="EnergyChart" style="width: 150%;height:150%;top: 10px;left: -25%;"></div>
+                    </div>
+                    <div class="col-xs-4 EnergyChartText no-padding-left">
+                        <div class="EnergyChartTextnumb ">276.9</div>
+                        <!--EnergyChartTextnumb_cb-->
+                        <div class="EnergyChartTextitem">能耗总量 (GJ)<br><span class="cb_color ">(1.6%↑)</span></div>
+                        <!--zc_color-->
+                        <div class="EnergyChartTextnumbolb ">+34.6</div>
+                        <!--EnergyChartTextnumbolb_cb-->
+                        <div class="EnergyChartTextitem">偏差度(%)</div>
+                    </div>
                 </div>
-                <div class="col-lg-4 EnergyChartText no-padding-left">
-                    <div class="EnergyChartTextnumb ">276.9</div> <!--EnergyChartTextnumb_cb-->
-                    <div class="EnergyChartTextitem">能耗总量 (GJ)<br><span class="cb_color ">(1.6%↑)</span></div>  <!--zc_color-->
-                    <div class="EnergyChartTextnumbolb ">+34.6</div> <!--EnergyChartTextnumbolb_cb-->
-                    <div class="EnergyChartTextitem">偏差度(%)</div>
+                <div class="col-xs-12 no-padding">
+                    <div class="energyBoxLegend_bg"></div>
+                    <div class="energyBoxLegend clearfix">
+                        <!--<div class="energyBoxLegendBtnLeft pull-left"></div>-->
+                        <ul class="energyBoxLegendList clearfix pull-left">
+                            <li>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 energyBoxLegendListIcon01_cb"></div>
+                                <div class="energyBoxLegendListText energyBoxLegendListText_cb">260T</div>
+                                <div class="energyBoxLegendListPara">(4.0%↓)</div>
+                            </li>
+                            <li>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon02"></div>
+                                <div class="energyBoxLegendListText">127Kw/h</div>
+                                <div class="energyBoxLegendListPara">(2.6%↓)</div>
+                            </li>
+                            <li>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon03"></div>
+                                <div class="energyBoxLegendListText">209M3</div>
+                                <div class="energyBoxLegendListPara">(0%→)</div>
+                            </li>
+                            <li>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon04 energyBoxLegendListIcon04_cb"></div>
+                                <div class="energyBoxLegendListText">196GJ</div>
+                                <div class="energyBoxLegendListPara energyBoxLegendListPara_cb">(3.9%↑)</div>
+                            </li>
+                            <li>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon05"></div>
+                                <div class="energyBoxLegendListText">84T</div>
+                                <div class="energyBoxLegendListPara">(2.7%↑)</div>
+                            </li>
+                        </ul>
+                        <!--<div class="energyBoxLegendBtnRight energyBoxLegendBtnRight_on pull-left"></div>-->
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-12 no-padding">
-                <div class="energyBoxLegend_bg"></div>
-                <div class="energyBoxLegend clearfix">
-                    <!--<div class="energyBoxLegendBtnLeft pull-left"></div>-->
-                    <ul class="energyBoxLegendList clearfix pull-left">
-                        <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 energyBoxLegendListIcon01_cb"></div>
-                            <div class="energyBoxLegendListText energyBoxLegendListText_cb">260T</div>
-                            <div class="energyBoxLegendListPara">(4.0%↓)</div>
-                        </li>
-                        <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon02"></div>
-                            <div class="energyBoxLegendListText">127Kw/h</div>
-                            <div class="energyBoxLegendListPara">(2.6%↓)</div>
-                        </li>
-                        <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon03"></div>
-                            <div class="energyBoxLegendListText">209M3</div>
-                            <div class="energyBoxLegendListPara">(0%→)</div>
-                        </li>
-                        <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon04 energyBoxLegendListIcon04_cb"></div>
-                            <div class="energyBoxLegendListText">196GJ</div>
-                            <div class="energyBoxLegendListPara energyBoxLegendListPara_cb">(3.9%↑)</div>
-                        </li>
-                        <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon05"></div>
-                            <div class="energyBoxLegendListText">84T</div>
-                            <div class="energyBoxLegendListPara">(2.7%↑)</div>
-                        </li>
-                    </ul>
-                    <!--<div class="energyBoxLegendBtnRight energyBoxLegendBtnRight_on pull-left"></div>-->
-                </div>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
-<div class=" col-lg-4 mb14">
+<div class=" col-xs-4 mb14">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left totalTit energyTit"><i></i>成本明细<small class="font-sm">Total cost</small></div>
         </div>
-        <div class="col-lg-12 no-padding energyBox TotalBox clearfix">
+        <div class="col-xs-12 no-padding energyBox TotalBox clearfix">
             <div class="cost-chart">
                 <div id="chart05" style="width: 100%;height:310px;"></div>
             </div>
@@ -203,12 +208,12 @@
 
     </div>
 </div>
-<div class=" col-lg-4 mb14">
+<div class=" col-xs-4 mb14">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left CarbonTit energyTit"><i></i>碳排放总量<small class="font-sm">Carbon emissions</small></div>
         </div>
-        <div class="col-lg-12 no-padding energyBox CarbonBox clearfix">
+        <div class="col-xs-12 no-padding energyBox CarbonBox clearfix">
             <div class="emission-chart ">
                 <div id="chart06" class="wave">
                     <div class="wave-main wave-hot">
@@ -264,7 +269,7 @@
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left CarbonTit energyTit temperatureTit"><i></i>室温合格率<small class="font-sm">temperature qualified rate</small></div>
         </div>
-        <div class="col-lg-12 no-padding energyBox CarbonBox">
+        <div class="col-xs-12 no-padding energyBox CarbonBox">
             <div class="emission-chart ">
                 <div id="chartCarbon" style="width: 100%;height:310px;"></div>
             </div>
@@ -310,7 +315,7 @@
     </div>
 
 </div>
-<div class=" col-lg-4">
+<div class=" col-xs-4">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>单耗趋势<small class="font-sm">Comparison of Energy</small></div>
@@ -336,7 +341,7 @@
 
     </div>
 </div>
-<div class=" col-lg-4">
+<div class=" col-xs-4">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>成本对比<small class="font-sm">Cost comparison</small></div>
@@ -344,16 +349,16 @@
         <div class="energyBox comparisonBox">
             <div class="chart-box">
                 <div class="cb-header">
-                    <span class="cb-title" id="nh-title" >分公司成本 (单位: 万元)</span>
+                    <span class="cb-title" id="nh-title">分公司成本 (单位: 万元)</span>
                     <span class="cb-title" id="qs-title" style="display: none;">成本 (单位: 万元)</span>
                     <div class="cb-title-right clearfix">
-											<span class="cb-cut-date">
+												<span class="cb-cut-date">
 												<a href="javascript:selectYear(-1);"><img src="${web}/static/img/icons/icon001.png" /></a>
 												<label id="branchcost-year">2016年</label>
 												<a href="javascript:selectYear(1);"><img src="${web}/static/img/icons/icon002.png" /></a>
 											</span>
 
-											<span class="button-group">
+												<span class="button-group">
 												<a href="javascript:cutNh();" id="bg-left" class="bg-left button-group-act">能耗</a><a href="javascript:cutQs();" id="bg-right" class="bg-right">趋势</a>
 											</span>
                     </div>
@@ -365,7 +370,7 @@
 
     </div>
 </div>
-<div class=" col-lg-4">
+<div class=" col-xs-4">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>碳排放趋势<small class="font-sm">Comparison of carbon</small></div>
@@ -413,7 +418,8 @@
     </div>
 
 </div>
-</div> <!-- <div class="index_contentList">-->
+</div>
+<!-- <div class="index_contentList">-->
 </div>
 
 </div>
