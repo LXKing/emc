@@ -39,6 +39,11 @@
     <!-- 日志 -->
     <dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="12000"  check="true" version="${service.version}"/>
 
+
+
+    <!--home-->
+    <dubbo:reference id="energyMonitorService"    interface="com.huak.home.EnergyMonitorService" timeout="12000"  check="true" version="${service.version}" />
+
     <!-- 验证码 -->
     <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">
