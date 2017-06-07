@@ -1,17 +1,17 @@
 package com.huak.web.home;
 
-import java.util.Map;
-
+import com.alibaba.fastjson.JSONObject;
+import com.huak.home.EnergyMonitorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.huak.home.EnergyMonitorService;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -32,6 +32,17 @@ public class EnergyMonitorController {
     
     @Autowired
     private EnergyMonitorService eaService;
+
+    /**
+     * 跳转二级能耗页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/tsec", method = RequestMethod.GET)
+    public String secondEconPage(Model model){
+        logger.info("跳转二级能耗页面");
+        return "second/econ";
+    }
     
     /**
      * 查询集团能耗数据
