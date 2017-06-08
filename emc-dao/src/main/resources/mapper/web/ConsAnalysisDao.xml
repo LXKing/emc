@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huak.home.dao.ConsAnalysisDao" >
+    <select id="findFilialeDetail">
+    SELECT id,orgname,(electricbm+waterbm+gasbm+coalbm+solarbm)*29.7 total,electric,water,heat,gas,coal,solar FROM (SELECT t.id,t.orgname,
+    max(case when t.TYPE ='1' then t.BM else 0 end) electricbm,
+    max(case when t.TYPE ='2' then t.BM else 0 end) waterbm,
+    max(case when t.TYPE ='3' then t.BM else 0 end) heatbm,
+    max(case when t.TYPE ='4' then t.BM else 0 end) gasbm,
+    max(case when t.TYPE ='5' then t.BM else 0 end) coalbm,
+    max(case when t.TYPE ='6' then t.BM else 0 end) solarbm,
+    max(case when t.TYPE ='1' then t.num else 0 end) electric,
+    max(case when t.TYPE ='2' then t.num else 0 end) water,
+    max(case when t.TYPE ='3' then t.num else 0 end) heat,
+    max(case when t.TYPE ='4' then t.num else 0 end) gas,
+    max(case when t.TYPE ='5' then t.num else 0 end) coal,
+    max(case when t.TYPE ='6' then t.num else 0 end) solar
+    FROM (
+    SELECT a.ID,a.ORG_NAME orgname,b.TYPE,SUM(b.DOSAGE) num,SUM(BM) BM FROM (
+    SELECT ID,ORG_NAME FROM t_emc_org WHERE FIND_IN_SET(ID,emc_func_org_getchilds(1)) AND TYPE_ID = 2
+    ) a
+    LEFT JOIN
+    (
+    SELECT vo.fgsid,d.DOSAGE,et.TYPE,d.DOSAGE*d.COAL_COEF BM FROM v_emc_org vo,t_emc_final_data_hour d,t_emc_energy_type et
+    WHERE vo.ID = d.UNITID AND et.ID = d.TYPEID) b
+    ON a.ID = b.fgsid
+    GROUP BY a.ID,a.ORG_NAME,b.TYPE
+    ) t
+    GROUP BY t.ID,t.orgname) o
+    </select>
+    <select id="findFolwDetail">
+
+    </select>
+</mapper>

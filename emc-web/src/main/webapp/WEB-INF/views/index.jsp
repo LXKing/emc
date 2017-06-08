@@ -317,6 +317,7 @@
 </div>
 <div class=" col-xs-4">
     <div class="index_contentBox">
+        <a href="${web}/cons/analysis/tsec">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>单耗趋势<small class="font-sm">Comparison of Energy</small></div>
         </div>
@@ -338,7 +339,7 @@
                 <div id="chart01" class="chart"></div>
             </div>
         </div>
-
+        </a>
     </div>
 </div>
 <div class=" col-xs-4">
