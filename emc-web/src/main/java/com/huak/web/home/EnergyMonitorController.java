@@ -21,7 +21,7 @@ import java.util.Map;
  * Project:emc    <BR>
  * Version: v 1.0      <BR>
  * Date: 2017/5/26<BR>
- * Description:  首页-二级页面- 集团总能耗  <BR>
+ * Description:  首页-二级页面- 能耗分析  <BR>
  * Function List:  <BR>
  */
 @Controller
