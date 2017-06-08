@@ -43,6 +43,8 @@
 
     <!--home-->
     <dubbo:reference id="energyMonitorService"    interface="com.huak.home.EnergyMonitorService" timeout="12000"  check="true" version="${service.version}" />
+    <dubbo:reference id="searchService"    interface="com.huak.home.SearchService" timeout="12000"  check="true" version="${service.version}" />
+    <dubbo:reference id="consAnalysisService"    interface="com.huak.home.ConsAnalysisService" timeout="12000"  check="true" version="${service.version}" />
 
     <!-- 验证码 -->
     <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">

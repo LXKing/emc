@@ -41,12 +41,8 @@
 <script src="${web}/static/assets/js/bootstrap.min.js"></script>
 <script src="${web}/static/js/My97DatePicker/WdatePicker.js"></script>
 
-<script src="${web}/static/js/public.js"></script>
-
-
 <script>
     var _web = '${web}';
-
 </script>
 
 <script src="${web}/static/js/navscript.js"></script>
@@ -58,3 +54,6 @@
 <script type="text/javascript" src="${web}/static/js/datetimepicker/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="${web}/static/js/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="${web}/static/js/layer/layer.js"></script>
+
+<script src="${web}/static/js/huak.cookie.js"></script>
+<script src="${web}/static/js/public.js"></script>

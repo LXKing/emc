@@ -98,4 +98,9 @@ public class Constants {
     public final static String OPT_TYPE_SELECT = "3";
 
     public static final String NAVIGATIONS = "navigations";
+
+    //所属组织
+    public final static String SESSION_ORG_KEY = "org_key";
+    //所属公司
+    public final static String SESSION_COM_KEY = "com_key";
 }

@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="clearfix row no-margin index_header">
-
+    <form id="searchTools">
+        <input type="hidden" id="toolOrgId" name="toolOrgId" value="">
+        <input type="hidden" id="toolFeedType" name="toolFeedType" value="">
+        <input type="hidden" id="toolStartDate" name="toolStartDate" value="">
+        <input type="hidden" id="toolEndDate" name="toolEndDate" value="">
+    </form>
     <!--面包屑导航-->
     <div class="bread-crumb pull-left">
        <%-- 当前位置：
@@ -65,19 +70,38 @@
 </div>
 <script>
     $(function(){
-        console.info(document.location.href);
 
-        console.info("重置面包屑");
+        //console.info("重置面包屑");
         var mbhtml = "";
         var mbxdh =  ${navigations};
         $.each( mbxdh ,function(idx, item){
-            console.info(item);
-            console.info(document.location.href==_web + item.url)
+            /*console.info(item);
+            console.info(document.location.href==_web + item.url)*/
             if(document.location.href==_web + item.url){
                 mbhtml = getMbHtml(item,mbhtml);
             }
         });
         $('.bread-crumb.pull-left').html("当前位置："+mbhtml);
+
+
+        //条件下拉框
+        $.ajax({
+            url : _web+"/tools/search/org",
+            type : "POST",
+            dataType: "json",
+            success:function(data){
+                var html = '';
+                $.each(data,function(idx,item){
+                    if(idx == 0){
+                        $('.x-sfleft1.x-sfw1').html('<input type="text" value="'+item.ORG_NAME+'" readonly="readonly">');
+                        $('#toolOrgId').val(item.ID);
+                    }
+                    html += '<p value="'+item.ID+'">'+item.ORG_NAME+'</p>'
+                });
+                $(".x-sfoption.x-sfoption1").html(html);
+
+            }
+        });
 
     })
     function getMbHtml(navigation,html){

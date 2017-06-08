@@ -2,7 +2,7 @@
 body{ color: #666;font-size: 12px}
 #header,#footer,.main-container,.footer-content,.main-container:before{min-width:1330px !important;}
 body {
-      overflow-x: auto !important; 
+    overflow-x: auto !important;
 }
 
 .prev,.prev:hover{background: url(../img/left_btn.png) no-repeat center center;}
@@ -97,10 +97,10 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .index_menuBoxCon>span.tipsindex{color: #fff;background: #df5f4a;  border-radius: 20px; padding: 0px 5px; margin-left: 3px; height: 16px; line-height: 16px;}
 .index_menuBoxre .index_menuBoxCon{padding-top: 77%;}
 .index_menuBoxList{margin-left: 0; text-align: center;margin: 0 auto;margin-top: 12px; padding-left: 6%;}
-.index_menuBoxList li{background-repeat: no-repeat; float: left;list-style: none; min-width: 33%; height: 24px; line-height: 24px; padding-left: 18px; text-align: left;}
+.index_menuBoxList li{background-repeat: no-repeat; display:inline-block; list-style: none;   height: 24px; line-height: 24px; padding-left: 18px; text-align: left;}
 .index_menuBoxAll .index_menuBoxList{min-width: 226px;}
 .index_menuBoxAll .index_menuBoxList li{background-position:0px ;}
-.index_menuBoxre .index_menuBoxList{ width: 210px ;}
+.index_menuBoxre .index_menuBoxList{ ___width: 210px ;}
 .index_menuBoxre .index_menuBoxList li{background-position:0px;/*min-width: 64px;*/}
 .index_menuBoxre .tabicon10{position: absolute; top: 30px; right: 12px;padding-left:20px;background-repeat: no-repeat;background-position:3px ;}
 .index_menuBox .tabicon01{background-image: url(../img/index/tabicon01.png) }
