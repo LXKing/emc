@@ -25,8 +25,9 @@
     <dubbo:service interface="com.huak.home.EnergyMonitorService" ref="energyAnalysisService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
-    <bean id="searchService" class="com.huak.home.SearchServiceImpl"></bean>
-    <dubbo:service interface="com.huak.home.SearchService" ref="searchService" timeout="300" loadbalance="random"
+
+    <bean id="componentService" class="com.huak.home.component.ComponentServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.component.ComponentService" ref="componentService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="consAnalysisService" class="com.huak.home.ConsAnalysisServiceImpl"></bean>
