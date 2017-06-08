@@ -19,9 +19,10 @@ public class NavigationConstant {
 
     /*首页*/
     public final static Navigation HOME = new Navigation(null,"首页","/index");
+    public final static Navigation SECOND_ENERGY = new Navigation(HOME,"能耗分析","/energy/monitor/tsec");
 
     /*能耗分析*/
-    public final static Navigation ENERGY = new Navigation(HOME,"能耗分析","/energy/analysis/index");
+
 
     /*成本管控*/
 
@@ -38,7 +39,7 @@ public class NavigationConstant {
 
     static{
         NAVIGATIONS.add(HOME);
-        NAVIGATIONS.add(ENERGY);
+        NAVIGATIONS.add(SECOND_ENERGY);
     }
 
 }
