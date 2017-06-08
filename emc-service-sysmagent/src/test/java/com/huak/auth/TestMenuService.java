@@ -2,8 +2,6 @@ package com.huak.auth;
 
 import com.huak.auth.model.Menu;
 import com.huak.base.BaseTest;
-import com.huak.common.page.Page;
-import com.huak.common.page.PageResult;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 
@@ -54,7 +52,7 @@ public class TestMenuService extends BaseTest {
     @Test
     @Rollback
     public void testQueryByPage(){
-        HashMap<String,String> params = new HashMap<>();
+        HashMap<String,Object> params = new HashMap<>();
         params.put("menuName","前台");
         List<Map<String, Object>> seasons = menuService.selectTree(params);
         for (Map season : seasons){
