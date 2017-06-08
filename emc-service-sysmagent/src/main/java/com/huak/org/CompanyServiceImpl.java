@@ -5,7 +5,9 @@ import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.org.dao.CompanyDao;
+import com.huak.org.dao.OrgDao;
 import com.huak.org.model.Company;
+import com.huak.org.model.Org;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,8 @@ import java.util.Map;
 public class CompanyServiceImpl implements CompanyService {
     @Resource
     private CompanyDao companyDao;
+    @Resource
+    private OrgDao orgDao;
 
     @Override
     @Transactional(readOnly = false)
@@ -38,6 +42,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional(readOnly = false)
     public int insertSelective(Company record) {
+        Org org = new Org();
+        org.setComId(record.getId());
+        org.setOrgName(record.getCname());
+        org.setpOrgId(0l);
+        orgDao.insertSelective(org);
         return companyDao.insertSelective(record);
     }
 
