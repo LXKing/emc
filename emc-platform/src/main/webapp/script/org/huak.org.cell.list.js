@@ -88,12 +88,12 @@ $(function () {
                 align: 'center' ,
                 formatter:function(value,row,index){
                 	var html = "";
-//                	if($('#userUpdate').val()){
+                	if($('#cellUpdate').val()){
                 		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="cellEditForm" layer-title="编辑楼座" layer-url="'+_platform+'/cell/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
-//                	}
-//                	if($('#userDelete').val()){
+                	}
+                	if($('#cellDelete').val()){
                 		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deletecell(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
-//                	}
+                	}
                 	return html;
                 }
             }

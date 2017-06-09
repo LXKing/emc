@@ -166,22 +166,8 @@ function treeNodeClick(){
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);//选择组织机构节点的时候保存所选节点的组织Id
 	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
+	top.$('#orgId').closest('.form-group').removeClass('has-error').addClass('has-success');
 	top.getSelectHtml();//选择节点后更新此节点相关联的小区信息
-	//根据机构id，查询所属此机构的员工
-	$.post(_platform + '/user/org/emp',{
-		orgId:selectedNode.id
-	},function(result){
-		top.$('#empId').html('');
-		var selectHtmlStr = "";
-		if(result!=null&&result!=""){
-			for(var i=0;i<result.length;i++){
-				var empId = result[i].empId;
-				var empName = result[i].empName;
-				selectHtmlStr += "<option value='"+empId+"'>"+empName+"</option>";
-			}
-			top.$('#empId').html(selectHtmlStr);
-		}
-	},'json');
 }
 
 $(function () {

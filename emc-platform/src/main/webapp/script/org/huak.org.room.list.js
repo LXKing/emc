@@ -108,12 +108,12 @@ $(function () {
                 align: 'center' ,
                 formatter:function(value,row,index){
                 	var html = "";
-//                	if($('#userUpdate').val()){
+                	if($('#roomUpdate').val()){
                 		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="roomEditForm" layer-title="编辑户" layer-url="'+_platform+'/room/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
-//                	}
-//                	if($('#userDelete').val()){
+                	}
+                	if($('#roomDelete').val()){
                 		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteroom(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
-//                	}
+                	}
                 	return html;
                 }
             }

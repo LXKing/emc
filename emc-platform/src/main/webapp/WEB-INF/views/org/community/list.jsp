@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../include.jsp"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,16 +54,18 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-<%--                             	<c:if test="${sessionScope._auth['userInsert'] }"> --%>
+                            	<c:if test="${sessionScope._auth['communityInsert'] }">
                                 	<button type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/community/add" layer-title="新增小区" layer-form-id="communityAddForm" ><i class="fa fa-plus"></i>添加</button>
-<!--                                 </c:if> -->
+                                </c:if>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="community-table-list"> 搜索</button>
                                 <button type="reset" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
-<%--                                 <c:if test="${sessionScope._auth['communityExport'] }"> --%>
+                                <c:if test="${sessionScope._auth['communityExport'] }">
                                 	<button type="button" class="btn btn-sm btn-primary" onclick="exportCommunity()"> 导出Excel</button>
-<!--                                 </c:if> -->
+                                </c:if>
+                                <input id="communityUpdate" type="hidden" value="${ sessionScope._auth['communityUpdate']}">
+								<input id="communityDelete" type="hidden" value="${ sessionScope._auth['communityDelete']}">
                             </div>
                         </div>
                     </form>

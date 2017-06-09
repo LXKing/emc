@@ -105,6 +105,7 @@ function treeNodeClick(){
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);
 	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
+	top.$('#orgId').closest('.form-group').removeClass('has-error').addClass('has-success');
 	//根据机构id，查询所属此机构的员工
 	$.post(_platform + '/user/org/emp',{
 		orgId:selectedNode.id
@@ -121,10 +122,10 @@ function treeNodeClick(){
 		}
 	},'json');
 }
+
 $(function () {
-	top.$('#memo').text('${user.memo}');
-	
-	top.$('#useStatus').val('${user.useStatus}');
+	top.$('#memo').text('${user.memo}');//初始化备注
+	top.$('#useStatus').val('${user.useStatus}');//初始化使用状态下拉框
 	//初始化组织机构树
 	userEditOrg = new Org({
         class:"user-edit-org-tree"

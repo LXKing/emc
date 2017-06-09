@@ -78,12 +78,12 @@ $(function () {
                 align: 'center' ,
                 formatter:function(value,row,index){
                 	var html = "";
-//                	if($('#userUpdate').val()){
+                	if($('#communityUpdate').val()){
                 		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="communityEditForm" layer-title="编辑小区" layer-url="'+_platform+'/community/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
-//                	}
-//                	if($('#userDelete').val()){
+                	}
+                	if($('#communityDelete').val()){
                 		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteCommunity(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
-//                	}
+                	}
                 	return html;
                 }
             }

@@ -108,12 +108,12 @@ $(function () {
                 align: 'center' ,
                 formatter:function(value,row,index){
                 	var html = "";
-//                	if($('#userUpdate').val()){
+                	if($('#banUpdate').val()){
                 		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="banEditForm" layer-title="编辑楼座" layer-url="'+_platform+'/ban/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
-//                	}
-//                	if($('#userDelete').val()){
+                	}
+                	if($('#banDelete').val()){
                 		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteban(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
-//                	}
+                	}
                 	return html;
                 }
             }
