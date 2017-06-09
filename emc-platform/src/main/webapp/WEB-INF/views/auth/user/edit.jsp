@@ -6,7 +6,6 @@
 	            <div class="row">
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
 	                	<input type="hidden" id="id" name="id" value="${user.id }">
-	                	<input type="hidden" id="orgId" name="orgId" value="${user.orgId }">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>中文名称：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                        <input name="userName" class="form-control" type="text" maxlength="16" placeholder="请输入用户中文名称" value="${user.userName }">
@@ -27,7 +26,7 @@
 	                    </div>
 	                </div>
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>电子邮箱：</label>
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label">电子邮箱：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                        <input name="mail" class="form-control" type="text" maxlength="16" placeholder="请输入用户电子邮箱" value="${user.mail }">
 	                    </div>
@@ -55,10 +54,11 @@
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>组织机构：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                    	<ul id="org" class="user-edit-org-tree" light="${user.orgId }" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;" value="${user.orgId }"></ul>
+	                    	<input type="text" value="${user.orgId }" class="form-control" name="orgId" id="orgId" style="visibility: hidden;height: 0px;">
 	                    </div>
 		            </div>
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属员工：</label>
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label">所属员工：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                        <select id="empId" name="empId" class="form-control" multiple="" style="height: 200px;overflow-y:scroll;">
 	                        </select>
@@ -67,7 +67,7 @@
 	            </div>
 	            <div class="row">
 	                <div class="form-group" style="margin-right: 0px;">
-	                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label"><span class="red">*</span>备注说明：</label>
+	                    <label class="col-sm-2 col-xs-2 col-md-2 col-lg-2 control-label">备注说明：</label>
 	                    <div style="width: 74%;float: left;margin-left: 13px;"> 
 	                        <textarea class="form-control" rows="4" maxlength="125" id="memo" name="memo" placeholder="请输入备注"></textarea>
 	                    </div>
@@ -104,6 +104,7 @@ function treeNodeClick(){
     var nodes = treeObj.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);
+	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
 	//根据机构id，查询所属此机构的员工
 	$.post(_platform + '/user/org/emp',{
 		orgId:selectedNode.id
@@ -122,6 +123,8 @@ function treeNodeClick(){
 }
 $(function () {
 	top.$('#memo').text('${user.memo}');
+	
+	top.$('#useStatus').val('${user.useStatus}');
 	//初始化组织机构树
 	userEditOrg = new Org({
         class:"user-edit-org-tree"
@@ -167,7 +170,8 @@ $(function () {
             },
             login: {
                 required: true,
-                isLogin: true
+                isLogin: true,
+                loginUnique:true
             },
             password: {
                 required: true,
@@ -179,6 +183,9 @@ $(function () {
             },
             mail:{
                 isEmail:true
+            },
+            orgId:{
+            	required: true
             }
         },
         messages: {
@@ -198,6 +205,9 @@ $(function () {
             },
             useStatus: {
                 required: icon + "请选择使用状态"
+            },
+            orgId:{
+            	required: icon + "请选择组织机构"
             }
         },
         submitHandler: function () {
@@ -225,21 +235,21 @@ $(function () {
 	
 	//名称校验
 	$.validator.addMethod("isName", function(value, element){
-	    var tel = /^[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*$/;
+	    var tel = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
 	    return this.optional(element) || (tel.test(value));
-	},icon +  "请输入正确的名称");
+	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
 	
 	//手机号码校验
 	$.validator.addMethod("isPhone", function(value, element){
-	    var tel = /^(1\d{10})$/;
+	    var tel = /^(0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8})|(400|800)([0-9\\-]{7,10})|(([0-9]{4}|[0-9]{3})(-| )?)?([0-9]{7,8})((-| |转)*([0-9]{1,4}))?$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的手机号码");
+	}, icon + "请输入正确的手机号码或座机号");
 	
 	//登录账号校验
 	$.validator.addMethod("isLogin", function(value, element){
 	    var tel = /^[\w\-\@\.]+$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的登录账号");
+	}, icon + "请输入正确的登录账号,只能是英文字母");
 	
 	//密码校验,支持所有数字、英文大小写、英文键盘所有特殊符号
 	$.validator.addMethod("isPassword", function(value, element){
@@ -253,25 +263,26 @@ $(function () {
 	    return this.optional(element) || (tel.test(value));
 	}, icon + "邮箱格式不正确，请重新输入");
 	
-//     $.validator.addMethod("loginUnique", function(value, element) {
-//         var deferred = $.Deferred();//创建一个延迟对象
-//         $.ajax({
-//             url:ctx+'/user/check/login',
-//             type:'POST',
-//             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-//             data: {login:$('#login').val()},
-//             dataType: 'json',
-//             success:function(result) {
-//                 if (!result.flag) {
-//                     deferred.reject();
-//                 } else {
-//                     deferred.resolve();
-//                 }
-//             }
-//         });
-//         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-//         return deferred.state() == "resolved" ? true : false;
-//     }, icon + "登录账号已存在");
+	 $.validator.addMethod("loginUnique", function(value, element) {
+		 	if(value=='${user.login}') return true;
+	        var deferred = $.Deferred();//创建一个延迟对象
+	        $.ajax({
+	            url:_platform+'/user/check/login',
+	            type:'POST',
+	            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+	            data: {login:top.$('input[name="login"]').val()},
+	            dataType: 'json',
+	            success:function(result) {
+	                if (!result.flag) {
+	                    deferred.reject();
+	                } else {
+	                    deferred.resolve();
+	                }
+	            }
+	        });
+	        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+	        return deferred.state() == "resolved" ? true : false;
+	    }, icon + "登录账号已存在");
 
 });
 </script>

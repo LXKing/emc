@@ -1,15 +1,15 @@
 $(function () {
-	banSearOrg = new Org({
+	communitySearOrg = new Org({
         class:"org-tree"
     });
-	banSearOrg.initTree();
+	communitySearOrg.initTree();
 	
 	initTreeBox();
-	//楼座列表
-	var banTable = $('#ban-table-list').bootstrapTable({
+	//小区列表
+	var communityTable = $('#community-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
         cache: false,//禁用 AJAX 数据缓存
-        url: _platform + '/ban/list',//获取数据的Servlet地址
+        url: _platform + '/community/list',//获取数据的Servlet地址
         method: 'post',//使用POST请求到服务器获取数据
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
@@ -31,7 +31,7 @@ $(function () {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
             };
-            formsParam(param,'ban-form',false);
+            formsParam(param,'community-form',false);
             return param;
         }, formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
@@ -58,11 +58,6 @@ $(function () {
                 }
             },
             {
-                title: '楼座名称',
-                field: 'banName',
-                align: 'center'
-            },
-            {
                 title: '小区名称',
                 field: 'communityName',
                 align: 'center'
@@ -78,41 +73,16 @@ $(function () {
                 align: 'center'
             },
             {
-                title: '所属省',
-                field: 'provinceName',
-                align: 'center'
-            },
-            {
-                title: '所属市',
-                field: 'cityName',
-                align: 'center'
-            },
-            {
-                title: '所属县',
-                field: 'countyName',
-                align: 'center'
-            },
-            {
-                title: '所属乡',
-                field: 'townName',
-                align: 'center'
-            },
-            {
-                title: '所属村',
-                field: 'villageName',
-                align: 'center'
-            },
-            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
                 	var html = "";
 //                	if($('#userUpdate').val()){
-                		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="banEditForm" layer-title="编辑楼座" layer-url="'+_platform+'/ban/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="communityEditForm" layer-title="编辑小区" layer-url="'+_platform+'/community/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
 //                	}
 //                	if($('#userDelete').val()){
-                		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteban(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteCommunity(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
 //                	}
                 	return html;
                 }
@@ -169,24 +139,24 @@ function formsParam(param,formId,isVisible){
 }
 
 /**
- * 删除楼座
+ * 删除小区
  * @param id
  */
-function deleteban(id) {
-    layer.confirm('您是否确定删除楼座？', {
+function deleteCommunity(id) {
+    layer.confirm('您是否确定删除小区？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: _platform + '/ban/delete/' + id,
+            url: _platform + '/community/delete/' + id,
             type: 'POST',
             dataType: 'json',
             success: function (result) {
                 if (result.flag) {
                     layer.closeAll();
-                    $('#ban-table-list').bootstrapTable("refresh");
+                    $('#community-table-list').bootstrapTable("refresh");
                     layer.msg(result.msg);
                 } else {
                     layer.close(index);
@@ -198,10 +168,10 @@ function deleteban(id) {
 }
 
 /**
- * 导出楼座信息到excel
+ * 导出小区信息到excel
  */
-function exportBan(){
-	var paramStr = formsParam({},"ban-form",true);
-	var url = _platform + '/ban/export?'+paramStr;
+function exportCommunity(){
+	var paramStr = formsParam({},"community-form",true);
+	var url = _platform + '/community/export?'+paramStr;
 	window.location.href = url;
 }

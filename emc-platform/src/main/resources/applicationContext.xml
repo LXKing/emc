@@ -41,6 +41,10 @@
 
     <!-- 日志 -->
 	<dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="12000"  check="true" version="${service.version}"/>
+	<dubbo:reference id="communityService"    interface="com.huak.org.CommunityService" timeout="12000"  check="true" version="${service.version}"/>
+	<dubbo:reference id="banService"    interface="com.huak.org.BanService" timeout="12000"  check="true" version="${service.version}"/>
+	<dubbo:reference id="cellService"    interface="com.huak.org.CellService" timeout="12000"  check="true" version="${service.version}"/>
+	<dubbo:reference id="roomService"    interface="com.huak.org.RoomService" timeout="12000"  check="true" version="${service.version}"/>
 
     <!-- 验证码 -->
     <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
