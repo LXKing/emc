@@ -339,7 +339,7 @@ public class UserController {
         	JSONObject jo = new JSONObject();
 	        jo.put(Constants.FLAG, false);
 	        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-	        cellName.put("id", "用户主键");
+//	        cellName.put("id", "用户主键");
 	        cellName.put("org_id", "部门主键");
 	        cellName.put("login", "登录账号");
 	        cellName.put("password", "密码");

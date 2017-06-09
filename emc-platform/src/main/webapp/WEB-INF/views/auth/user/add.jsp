@@ -3,7 +3,6 @@
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="userAddForm" role="form">
-            	<input type="hidden" name="orgId" id="orgId">
                 <div class="row">
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>中文名称：</label>
@@ -51,9 +50,10 @@
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label">组织机构：</label>
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>组织机构：</label>
 		                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 		                    	<ul id="org" class="user-add-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
+		                    	<input type="text" class="form-control" name="orgId" id="orgId" style="visibility: hidden;height: 0px;">
 		                    </div>
 		            </div>
 		            <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
@@ -104,6 +104,7 @@ function treeNodeClick(){
     var nodes = treeObj.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);
+	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
 	//根据机构id，查询所属此机构的员工
 	$.post(_platform + '/user/org/emp',{
 		orgId:selectedNode.id
@@ -182,6 +183,9 @@ $(function () {
             },
             mail:{
                 isEmail:true
+            },
+            orgId:{
+            	required: true
             }
         },
         messages: {
@@ -201,6 +205,9 @@ $(function () {
             },
             useStatus: {
                 required: icon + "请选择使用状态"
+            },
+            orgId:{
+            	required: icon + "请选择组织机构"
             }
         },
         submitHandler: function () {
@@ -229,21 +236,21 @@ $(function () {
 	
 	//名称校验
 	$.validator.addMethod("isName", function(value, element){
-	    var tel = /^[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*$/;
+	    var tel = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
 	    return this.optional(element) || (tel.test(value));
-	},icon +  "请输入正确的名称");
+	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
 	
 	//手机号码校验
 	$.validator.addMethod("isPhone", function(value, element){
-	    var tel = /^(1\d{10})$/;
+	    var tel = /^(0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8})|(400|800)([0-9\\-]{7,10})|(([0-9]{4}|[0-9]{3})(-| )?)?([0-9]{7,8})((-| |转)*([0-9]{1,4}))?$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的手机号码");
+	}, icon + "请输入正确的手机号码或座机号");
 	
 	//登录账号校验
 	$.validator.addMethod("isLogin", function(value, element){
 	    var tel = /^[\w\-\@\.]+$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的登录账号");
+	}, icon + "请输入正确的登录账号,只能是英文字母");
 	
 	//密码校验,支持所有数字、英文大小写、英文键盘所有特殊符号
 	$.validator.addMethod("isPassword", function(value, element){

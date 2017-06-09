@@ -5,6 +5,7 @@ package com.huak.org;
 
 import com.huak.org.dao.AdministrativeDao;
 import com.huak.org.model.Administrative;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,4 +55,9 @@ public class AdministrativeImpl implements AdministrativeService {
     public List<Map<String, Object>> findAllByLevel(Map<String, String> paramsMap) {
         return administrativeDao.findAllByLevel(paramsMap);
     }
+
+	@Override
+	public List<Map<String, String>> queryPCCTVHtmlStr(Map<String, String> param) {
+		return administrativeDao.selectByMap(param);
+	}
 }
