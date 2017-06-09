@@ -34,5 +34,9 @@
     <dubbo:service interface="com.huak.home.ConsAnalysisService" ref="consAnalysisService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="searchService" class="com.huak.home.SearchServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.SearchService" ref="searchService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
 </beans>
