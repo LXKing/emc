@@ -21,4 +21,27 @@
         order by o.P_ORG_ID ASC
     </select>
 
+    <select id="getSeasonOne" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        t_emc_heat_season t
+        WHERE
+        t.COMID = #{comId}
+        AND t.SDATE <![CDATA[ <= ]]> #{sdate}
+        AND t.EDATE <![CDATA[ >= ]]> #{edate}
+    </select>
+
+
+    <select id="getSeasonAll" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        t_emc_heat_season t
+        WHERE
+        t.COMID = #{comId}
+        AND t.EDATE <![CDATA[ <= ]]> #{edate}
+        ORDER BY t.EDATE DESC
+    </select>
+
 </mapper>

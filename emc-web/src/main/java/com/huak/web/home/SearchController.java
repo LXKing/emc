@@ -1,6 +1,5 @@
 package com.huak.web.home;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.home.SearchService;
@@ -61,11 +60,12 @@ public class SearchController {
 
     @RequestMapping(value = "/season",method = RequestMethod.POST)
     @ResponseBody
-    public String getSeasonDate(){
+    public String getSeasonDate(HttpServletRequest request){
         logger.info("获取查询组件本采暖季时间段");
-        JSONArray ja = new JSONArray();
-
-        return ja.toJSONString();
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        JSONObject jo = searchService.getSeason(company.getId());
+        return jo.toJSONString();
     }
 
 

@@ -19,4 +19,8 @@ import java.util.Map;
 @Repository
 public interface SearchDao {
     public List<Map<String,Object>> getOrgList(String comId);
+
+    public Map<String,Object> getSeasonOne(Map<String, Object> paramsMap);
+
+    public List<Map<String,Object>> getSeasonAll(Map<String, Object> paramsMap);
 }

@@ -34,6 +34,9 @@ $(function() {
 
         $('#toolOrgId').val(selectid);
         $(this).parent().prev().find("input").val(selectval);
+
+        setCookie('toolOrgId',selectid,3);
+        setCookie('toolOrgName',selectval,3);
         //var hidval = $(this).parent().next().val(selectid);
         $(this).parent().slideUp(200, function() {});
         document.location.reload();
@@ -52,7 +55,23 @@ $(function() {
             $("#begin").focus();
         } else if(thisText == "本采暖季"){
             $("#selectdate").hide();
-
+            $.ajax({
+                url : _web+"/tools/search/season",
+                type : "POST",
+                dataType: "json",
+                success:function(data){
+                    console.info(data)
+                    alert(data)
+                    $('#toolStartDate').val(data.startDate);
+                    $('#toolEndDate').val(data.endDate);
+                    $('#begin').val(data.startDate);
+                    $('#end').val(data.endDate);
+                    setCookie('toolStartDate',data.startDate,3);
+                    setCookie('toolEndDate',data.endDate,3);
+                    setCookie('dateType',2,3);
+                    document.location.reload();
+                }
+            });
         }else if(thisText == "本年度"){
             $("#selectdate").hide();
             $.ajax({
@@ -64,16 +83,26 @@ $(function() {
                     $('#toolEndDate').val(data.endDate);
                     $('#begin').val(data.startDate);
                     $('#end').val(data.endDate);
+                    setCookie('toolStartDate',data.startDate,3);
+                    setCookie('toolEndDate',data.endDate,3);
+                    setCookie('dateType',1,3);
+                    document.location.reload();
                 }
+
             });
+
         }else if(thisText == "区域供暖"){
             $('#toolFeedType').val(1);
+            setCookie('toolFeedType',1,3);
+            document.location.reload();
         }else if(thisText == "集中供暖"){
             $('#toolFeedType').val(2);
+            setCookie('toolFeedType',2,3);
+            document.location.reload();
         }else {
             $(".select-boxWdate input").attr("disabled", true).addClass("time-input-disable");
         }
-        document.location.reload();
+
     });
 
     //				$(".energy_consumption").click(function() {
@@ -182,6 +211,9 @@ $(function() {
         $("#begin").val(formatoneweekdate);
         $("#end").val(formatnowdate);
         $("#selectdate").hide();
+        setCookie('toolStartDate',formatoneweekdate,3);
+        setCookie('toolEndDate',formatnowdate,3);
+        setCookie('dateType',3,3);
     });
 
     $("#nearlyamonth").click(function() {
@@ -189,6 +221,9 @@ $(function() {
         $("#begin").val(formatonemonth);
         $("#end").val(formatnowdate);
         $("#selectdate").hide();
+        setCookie('toolStartDate',formatonemonth,3);
+        setCookie('toolEndDate',formatnowdate,3);
+        setCookie('dateType',3,3);
     });
 
     $("#nearlytwomonth").click(function() {
@@ -196,6 +231,9 @@ $(function() {
         $("#begin").val(formattwomonth);
         $("#end").val(formatnowdate);
         $("#selectdate").hide();
+        setCookie('toolStartDate',formattwomonth,3);
+        setCookie('toolEndDate',formatnowdate,3);
+        setCookie('dateType',3,3);
     });
 
     $(".applyBtn").click(function() {
@@ -205,6 +243,11 @@ $(function() {
             $("#end").val("");
         }
         $("#selectdate").hide();
+        setCookie('toolStartDate',startDate.Format("yyyy-MM-dd"),3);
+        if(endDate>=startDate){
+            setCookie('toolEndDate',endDate.Format("yyyy-MM-dd"),3);
+        }
+        setCookie('dateType',3,3);
         document.location.reload();
     });
 

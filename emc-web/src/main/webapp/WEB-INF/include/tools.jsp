@@ -2,7 +2,7 @@
 <div class="clearfix row no-margin index_header">
     <form id="searchTools">
         <input type="hidden" id="toolOrgId" name="toolOrgId" value="">
-        <input type="hidden" id="toolFeedType" name="toolFeedType" value="">
+        <input type="hidden" id="toolFeedType" name="toolFeedType" value="2">
         <input type="hidden" id="toolStartDate" name="toolStartDate" value="">
         <input type="hidden" id="toolEndDate" name="toolEndDate" value="">
     </form>
@@ -20,14 +20,14 @@
                     <div class="x-selectfree fl">
                         <div class="x-sfbgbox">
                             <div class="x-sfleft1 x-sfw1">
-                                <input type="text" value="集团总览" readonly="readonly">
+                                <input type="text" value="" readonly="readonly">
                             </div>
                             <div class="x-sfright1"></div>
                         </div>
                         <div class="x-sfoption x-sfoption1">
-                            <p value="1111">北京公司</p>
-                            <p value="2222">上海公司</p>
-                            <p value="3333">南京集团</p>
+                            <p value=" "> </p>
+                            <%--<p value="2222">上海公司</p>
+                            <p value="3333">南京集团</p>--%>
                         </div>
                         <input type="hidden" value="1111" />
                     </div>
@@ -93,8 +93,14 @@
                 var html = '';
                 $.each(data,function(idx,item){
                     if(idx == 0){
-                        $('.x-sfleft1.x-sfw1').html('<input type="text" value="'+item.ORG_NAME+'" readonly="readonly">');
-                        $('#toolOrgId').val(item.ID);
+                        if(getCookie("toolOrgId")==null || getCookie("toolOrgId")==""){
+                            $('.x-sfleft1.x-sfw1').html('<input type="text" value="'+item.ORG_NAME+'" readonly="readonly">');
+                            $('#toolOrgId').val(item.ID);
+                        }else{
+                            $('.x-sfleft1.x-sfw1').html('<input type="text" value="'+getCookie("toolOrgName")+'" readonly="readonly">');
+                            $('#toolOrgId').val(getCookie("toolOrgId"));
+                        }
+
                     }
                     html += '<p value="'+item.ID+'">'+item.ORG_NAME+'</p>'
                 });
@@ -102,6 +108,53 @@
 
             }
         });
+        //默认类型
+        if(getCookie("toolFeedType")==null || getCookie("toolFeedType")==""){
+            $('#toolFeedType').val(2);
+        }else{
+            var  toolFeedType = getCookie("toolFeedType");
+            $('#toolFeedType').val(toolFeedType);
+            if(toolFeedType == 1){
+                $('.btnAlarm').each(function(){
+                    if("集中供暖"==$(this).text()){
+                        $(this).removeClass("btnAlarm-on");
+                    }else if("区域供暖"==$(this).text()){
+                        $(this).addClass("btnAlarm-on");
+                    }
+                });
+            }
+        }
+
+        //默认时间段
+        if(getCookie("dateType")==null || getCookie("dateType")==""){
+            $.ajax({
+                url : _web+"/tools/search/season",
+                type : "POST",
+                dataType: "json",
+                success:function(data){
+                    $('#toolStartDate').val(data.startDate);
+                    $('#toolEndDate').val(data.endDate);
+                    $('#begin').val(data.startDate);
+                    $('#end').val(data.endDate);
+                }
+            });
+        }else{
+            var dataType = getCookie("dateType");
+            $('.btnAlarm').each(function(){
+                if("本年度"==$(this).text() && dataType == 1){
+                    $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+                }else if("本采暖季"==$(this).text() && dataType == 2){
+                    $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+                }else if("自定义"==$(this).text() && dataType == 3){
+                    $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+                }
+            });
+            $('#toolStartDate').val(getCookie("toolStartDate"));
+            $('#toolEndDate').val(getCookie("toolEndDate"));
+            $('#begin').val(getCookie("toolStartDate"));
+            $('#end').val(getCookie("toolEndDate"));
+        }
+
 
     })
     function getMbHtml(navigation,html){

@@ -17,4 +17,6 @@ public interface SearchService {
     java.util.List<java.util.Map<String, Object>> getOrgList(String id);
 
     JSONObject getYearDate();
+
+    public JSONObject getSeason(String id);
 }

@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,41 @@ public class SearchServiceImpl implements SearchService {
         Date last = DateUtils.getYearLast(year);
         jsonObject.put("startDate",dateFormat.format(first));
         jsonObject.put("endDate",dateFormat.format(last));
+        return jsonObject;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public JSONObject getSeason(String id) {
+        JSONObject jsonObject = new JSONObject();
+        String nowDate = dateDao.getDate();
+
+        Map<String,Object> paramsMap = new HashMap<>();
+        paramsMap.put("comId",id);
+        paramsMap.put("sdate",nowDate);
+        paramsMap.put("edate",nowDate);
+        Map<String,Object> season = searchDao.getSeasonOne(paramsMap);
+        //当前时间不在采暖季之间，取去年的采暖季
+        if(season == null){
+            List<Map<String, Object>> seasons = searchDao.getSeasonAll(paramsMap);
+            if(seasons.size()==0){
+                return jsonObject;
+            }else {
+                season = seasons.get(0);
+                Integer day = null;
+                try {
+                    day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(day>365){
+                    return jsonObject;
+                }
+            }
+
+        }
+        jsonObject.put("startDate",season.get("SDATE").toString());
+        jsonObject.put("endDate",season.get("EDATE").toString());
         return jsonObject;
     }
 }

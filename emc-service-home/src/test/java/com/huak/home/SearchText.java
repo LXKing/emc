@@ -21,10 +21,16 @@ import java.util.Map;
 public class SearchText extends BaseTest{
     @Resource
     private SearchService searchService;
-    @Test
+    //@Test
     public void findOrgs(){
         String comId = "40a6bfd44863406e8356bbcfe879fd70";
         List<Map<String, Object>> orgs = searchService.getOrgList(comId);
         System.out.print("");
+    }
+
+    @Test
+    public void findSeason(){
+        String comId = "40a6bfd44863406e8356bbcfe879fd70";
+        searchService.getSeason(comId);
     }
 }
