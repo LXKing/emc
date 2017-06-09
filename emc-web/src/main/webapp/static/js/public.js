@@ -60,8 +60,6 @@ $(function() {
                 type : "POST",
                 dataType: "json",
                 success:function(data){
-                    console.info(data)
-                    alert(data)
                     $('#toolStartDate').val(data.startDate);
                     $('#toolEndDate').val(data.endDate);
                     $('#begin').val(data.startDate);
