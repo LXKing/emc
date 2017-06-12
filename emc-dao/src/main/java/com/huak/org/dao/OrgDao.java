@@ -21,7 +21,7 @@ public interface OrgDao {
 
     int updateByPrimaryKey(Org record);
 
-    List<Org> selectOrgAll();
+    List<Org> selectOrgAll(Map<String,Object> params);
 
     List<Org> CheckOrgName(String orgName);
 

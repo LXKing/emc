@@ -89,11 +89,21 @@
         where ID = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="selectOrgAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectOrgAll" parameterType="java.util.Map" resultMap="BaseResultMap">
         select
        ID, ORG_NAME, P_ORG_ID, COM_ID
         from t_emc_org
+        where 1=1
+        <if test="comId != null and comId !=''">
+            and   COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
 
+        <if test="orgName != null and orgName !=''">
+            and ORG_NAME = #{orgName,jdbcType=VARCHAR}
+        </if>
+        <if test="pOrgId != null and pOrgId !=''">
+            and P_ORG_ID = #{pOrgId,jdbcType=BIGINT}
+        </if>
         order by ID
     </select>
 

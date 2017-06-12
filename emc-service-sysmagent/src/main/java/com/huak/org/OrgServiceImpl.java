@@ -80,9 +80,9 @@ public class OrgServiceImpl implements OrgService {
 
 
     @Override
-    public List<Org> selectOrgAll() {
+    public List<Org> selectOrgAll(Map<String,Object> params) {
         System.out.print("----------------------service-------------------------");
-        List<Org> lad = orgDao.selectOrgAll();
+        List<Org> lad = orgDao.selectOrgAll(params);
         return lad;
     }
 

@@ -21,9 +21,9 @@
         <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <div>
-                        <ul id="treeDemo" class="org-tree"></ul>
-                    </div>
+                    组织机构
+                    <div class="org-tree"></div>
+
                 </div>
             </div>
         </div>

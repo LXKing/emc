@@ -147,7 +147,7 @@ public class OrgController {
     @RequestMapping(value = "/ztreeValue", method = RequestMethod.GET)
     public Object ztree(@RequestParam Map<String, Object> paramsMap){
         System.out.print("-------------------controller----------------------------");
-        List<Org> as = orgService.selectOrgAll();
+        List<Org> as = orgService.selectOrgAll(paramsMap);
         return JSON.toJSON(as);
     }
 

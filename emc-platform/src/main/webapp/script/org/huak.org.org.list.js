@@ -165,10 +165,13 @@ function clickNode(e,treeId,treeNode) {
 
 }
 function ztreeValue(){
+
+    var comId = $(top.document).find("[name='searchComp']").val();;
+
     $.ajax({
         type: "get",
         url: _platform+"/org/ztreeValue",
-        data: {},
+        data: {comId:comId},
         dataType: "json",
         success: function (data) {
             //console.log(data);

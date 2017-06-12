@@ -17,7 +17,7 @@
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
     <div class="row animated fadeInRight">
-        <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+        <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>组织机构信息</h5>

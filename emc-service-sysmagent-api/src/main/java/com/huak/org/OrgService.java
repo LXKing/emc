@@ -29,7 +29,7 @@ public interface OrgService {
 
     List<Administrative> selectAll();
 
-    List<Org> selectOrgAll();
+    List<Org> selectOrgAll(Map<String,Object> params);
 
     public boolean insertOrg(Org org);
 
