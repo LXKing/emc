@@ -28,6 +28,8 @@ $(function () {
         queryParams: function queryParams(params) {
             var param = {
                 roleName:$('input[name="roleName"]').val(),
+                start:$('input[name="start"]').val(),
+                end:$('input[name="end"]').val(),
                 _method: "PATCH",
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
@@ -115,7 +117,7 @@ $(function () {
     //日期范围限制
     var start = {
         elem: '#start',
-        format: 'YYYY/MM/DD hh:mm:ss',
+        format: 'YYYY-MM-DD hh:mm:ss',
         //min: laydate.now(), //设定最小日期为当前日期
         max: '2099-06-16 23:59:59', //最大日期
         istime: true,
@@ -127,7 +129,7 @@ $(function () {
     };
     var end = {
         elem: '#end',
-        format: 'YYYY/MM/DD hh:mm:ss',
+        format: 'YYYY-MM-DD hh:mm:ss',
         max: '2099-06-16 23:59:59',
         istime: true,
         istoday: false,

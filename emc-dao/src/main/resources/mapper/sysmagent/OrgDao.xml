@@ -35,32 +35,11 @@
             <if test="id != null">
                 ID,
             </if>
-            <if test="orgCode != null">
-                ORG_CODE,
-            </if>
             <if test="orgName != null">
                 ORG_NAME,
             </if>
-            <if test="shortName != null">
-                SHORT_NAME,
-            </if>
             <if test="pOrgId != null">
                 P_ORG_ID,
-            </if>
-            <if test="typeId != null">
-                TYPE_ID,
-            </if>
-            <if test="creator != null">
-                CREATOR,
-            </if>
-            <if test="createTime != null">
-                CREATE_TIME,
-            </if>
-            <if test="memo != null">
-                MEMO,
-            </if>
-            <if test="seq != null">
-                SEQ,
             </if>
             <if test="comId != null">
                 COM_ID,
@@ -71,32 +50,11 @@
                 #{id,jdbcType=BIGINT},
             </if>
 
-            <if test="orgCode != null">
-                #{orgCode,jdbcType=VARCHAR},
-            </if>
             <if test="orgName != null">
                 #{orgName,jdbcType=VARCHAR},
             </if>
-            <if test="shortName != null">
-                #{shortName,jdbcType=VARCHAR},
-            </if>
             <if test="pOrgId != null">
                 #{pOrgId,jdbcType=BIGINT},
-            </if>
-            <if test="typeId != null">
-                #{typeId,jdbcType=TINYINT},
-            </if>
-            <if test="creator != null">
-                #{creator,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=VARCHAR},
-            </if>
-            <if test="memo != null">
-                #{memo,jdbcType=VARCHAR},
-            </if>
-            <if test="seq != null">
-                #{seq,jdbcType=INTEGER},
             </if>
             <if test="comId != null">
                 #{comId,jdbcType=VARCHAR},

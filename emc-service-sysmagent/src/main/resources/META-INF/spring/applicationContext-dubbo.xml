@@ -80,6 +80,22 @@
     <dubbo:service interface="com.huak.log.OperateLogService" ref="loggerService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="communityService" class="com.huak.org.CommunityServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.CommunityService" ref="communityService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="banService" class="com.huak.org.BanServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.BanService" ref="banService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="cellService" class="com.huak.org.CellServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.CellService" ref="cellService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="roomService" class="com.huak.org.RoomServiceImpl"></bean>
+    <dubbo:service interface="com.huak.org.RoomService" ref="roomService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <bean id="administrativeService" class="com.huak.org.AdministrativeImpl"></bean>
     <dubbo:service interface="com.huak.org.AdministrativeService" ref="administrativeService" timeout="300" loadbalance="random"

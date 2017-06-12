@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red"></span>管网长度：</label>
+                            class="red">*</span>管网长度：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <input name="length" class="form-control" type="text" maxlength="16" placeholder="请输入管线长度">
@@ -227,14 +227,6 @@
                 },
                 heatType: {
                     required: true
-                },
-                partNum: {
-                    required: true,
-                    isCellNum:true
-                },
-                cellNum: {
-                    required: true,
-                    isCellNum:true
                 }
             },
             messages: {

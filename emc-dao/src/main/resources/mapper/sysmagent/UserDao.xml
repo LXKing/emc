@@ -46,7 +46,7 @@
   
   <!-- selectOrgEmpById 查询组织机构下的员工信息 -->
   <select id="selectOrgEmpById" parameterType="java.lang.String" resultMap="OrgEmpResultMap">
-  	select ID EMPID,EMP_NAME EMPNAME,ORG_ID ORGID from t_emc_org_employee where ORG_ID=#{orgId,jdbcType=VARCHAR}
+  	select ID EMPID,EMP_NAME EMPNAME,ORG_ID ORGID from t_emc_auth_employee where ORG_ID=#{orgId,jdbcType=VARCHAR}
   </select>
   
   <!-- 查询用户列表信息 -->

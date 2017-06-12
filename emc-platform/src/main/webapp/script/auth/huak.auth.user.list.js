@@ -124,8 +124,10 @@ $(function () {
 
         ]
 	});
-	//初始化日期控件
-	initDateBox(['cStartTime','cEndTime','lStartTime','lEndTime']);
+	//初始化"创建时间"日期控件
+	initDateBoxGroup('cStartTime','cEndTime');
+	//初始化"登录时间"日期控件
+	initDateBoxGroup('lStartTime','lEndTime');
 });
 //组织机构树点击节点事件
 var treeNodeClick = function(e,treeId,treeNode){ 
@@ -147,25 +149,31 @@ function initTreeBox(){
  * 初始化日期框
  * @param ids
  */
-function initDateBox(ids){
-	if(ids!=null&&ids.length>0){
-		for(var index in ids){
-			if(!isNaN(index)){
-				var id = ids[index];
-				var datebox = {
-			        elem: '#'+id,
-			        format: 'YYYY-MM-DD hh:mm:ss',
-			        max: '2099-06-16 23:59:59',
-			        istime: true,
-			        istoday: false,
-			        choose: function (datas) {
-//			            start.max = datas; //结束日选好后，重置开始日的最大日期
-			        }
-			    };
-			    laydate(datebox);
-			}
-		}
-	}
+function initDateBoxGroup(startId,endId){
+	var start = {
+	    elem: '#'+startId,
+	    format: 'YYYY-MM-DD hh:mm:ss',
+	    max: '2099-06-16 23:59:59', //最大日期
+	    istime: true,
+	    istoday: false,
+	    choose: function(datas){
+	       end.min = datas; //开始日选好后，重置结束日的最小日期
+	       end.start = datas //将结束日的初始值设定为开始日
+	    }
+	};
+	var end = {
+	    elem: '#'+endId,
+	    format: 'YYYY-MM-DD hh:mm:ss',
+	    min: laydate.now(),
+	    max: '2099-06-16 23:59:59',
+	    istime: true,
+	    istoday: false,
+	    choose: function(datas){
+	        start.max = datas; //结束日选好后，重置开始日的最大日期
+	    }
+	};
+	laydate(start);
+	laydate(end);
 }
 
 /**
@@ -176,22 +184,24 @@ function initDateBox(ids){
  */
 function formsParam(param,formId,isVisible){
 	var paramStr="";
-	var forms=null;
+	var forms=[];
+	var selects = [];
 	if(isVisible){
 		forms = $('#'+formId+' input:visible');
-		forms.push($('#'+formId+' select:visible'));
+		selects = $('#'+formId+' select:visible');
 	}else{
 		forms = $('#'+formId+' input');
-		forms.push($('#'+formId+' select'));
+		selects = $('#'+formId+' select');
 	}
-    for(var i in forms){
-    	if(!isNaN(i)){
-    		var k = $(forms[i]).attr("name");
-    		var v = $(forms[i]).val();
-    		param[k] = v;
-    		paramStr+=k+"="+v+"&";
-    	}
-    }
+	for(var j=0;j<selects.length;j++){
+		forms.push(selects[j]);
+	}
+	for(var i=0;i<forms.length;i++){
+		var k = $(forms[i]).attr("name");
+		var v = $(forms[i]).val();
+		param[k] = v;
+		paramStr+=k+"="+v+"&";
+	}
     return paramStr.substring(0,paramStr.length-1);
 }
 

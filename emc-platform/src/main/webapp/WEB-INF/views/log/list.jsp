@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>用户管理</title>
+    <title>日志管理</title>
     <jsp:include page="../head.jsp"></jsp:include>
     <script src="${platform}/script/log/huak.sys.log.list.js"></script>
 </head>
