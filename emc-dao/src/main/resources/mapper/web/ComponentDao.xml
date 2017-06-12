@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huak.home.dao.component.ComponentDao" >
 
-  <select id="energymonitorDetail" resultType="java.util.Map" parameterType="java.util.Map" >
+  <select id="energyDetail" resultType="java.util.Map" parameterType="java.util.Map" >
       SELECT
       max(case when mm.type ='qn' then mm.bm_electric else 0 end)as qn_bm_electric,
       max(case when mm.type ='qn' then mm.bm_whater else 0 end) as qn_bm_whater,
@@ -84,10 +84,10 @@
       <if test="feedtype != null and feedtype !=''">
           and  oo.feedtype = #{feedtype}
       </if>
-      <if test="startTime != null and startTime !=''">
+      <if test="startTime != null ">
           and  da.DOSAGE_TIME &gt;= #{startTime}
       </if>
-      <if test="endTime != null and endTime !=''">
+      <if test="endTime != null ">
           and  da.DOSAGE_TIME  &lt;= #{endTime}
       </if>
       GROUP BY
@@ -120,11 +120,11 @@
       <if test="feedtype != null and feedtype !=''">
           and  oo.feedtype = #{feedtype}
       </if>
-      <if test="startTime != null and startTime !=''">
-          and  da.DOSAGE_TIME &gt;= #{startTime}
+      <if test="pstartTime != null ">
+          and  da.DOSAGE_TIME &gt;= #{pstartTime}
       </if>
-      <if test="endTime != null and endTime !=''">
-          and  da.DOSAGE_TIME  &lt;= #{endTime}
+      <if test="pendTime != null ">
+          and  da.DOSAGE_TIME  &lt;= #{pendTime}
       </if>
       GROUP BY
       da.typeid,da.DOSAGE_TIME)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
@@ -148,8 +148,35 @@
         <if test="orgId != null and orgId !=''">
             and  p.ORG_ID  = #{orgId}
         </if>
+        <if test="comId != null and comId !=''">
+            and  s.COMID  = #{comId}
+        </if>
         ORDER BY
             s.EDATE DESC
         LIMIT 0, 1
     </select>
+
+    <select id="getCurrentSeason" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        t_emc_heat_season t
+        WHERE
+        t.COMID = #{comId}
+        AND t.SDATE <![CDATA[ <= ]]> #{sdate}
+        AND t.EDATE <![CDATA[ >= ]]> #{edate}
+    </select>
+
+
+    <select id="getPreSeason" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        t_emc_heat_season t
+        WHERE
+        t.COMID = #{comId}
+        AND t.EDATE <![CDATA[ < ]]> #{edate}
+        ORDER BY t.EDATE DESC
+    </select>
+
 </mapper>
