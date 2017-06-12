@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,8 +46,13 @@ public class ComponentController {
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-          paramsMap.put("comId",company.getId());
-          Map<String,Object> map =  componentService.energyDetail(paramsMap);
+            HashMap<String,Object> params = new HashMap<>();
+            params.put("orgId",paramsMap.get("toolOrgId"));
+            params.put("feedType",paramsMap.get("toolFeedType"));
+            params.put("startTime",paramsMap.get("toolStartDate"));
+            params.put("endTime",paramsMap.get("toolEndDate"));
+            params.put("comId",company.getId());
+          Map<String,Object> map =  componentService.energyDetail(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
