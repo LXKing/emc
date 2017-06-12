@@ -3,8 +3,8 @@
     //$("#header").load("header.html",function(){});
     //$("#footer").load("footer.html", function() {});
 
-
-
+    var myChartEnergy;
+    var myChartQualified;
     $.ajax({
         url : _web+"/static/json/h-1.json",
         type : "GET",
@@ -593,7 +593,6 @@ function chart06Fun(){
         var canvasWidth;
         var canvasHeight;
         var needAnimate = false;
-
         function init (callback) {
             var wave = document.getElementById('chart06');
             var canvas = document.createElement('canvas');
@@ -660,19 +659,139 @@ function chart06Fun(){
 
 /*能耗明细*/
 function chart07Fun(){
-    var myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
+    $.ajax({
+        url:_web +'/component/energyDetail',
+        type:'post',
+        async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:{},
+        dataType:"json",
+        success:function(result) {
+            if (result.flag) {
+                /*仪表盘*/
+                var kedu1 =0; //蓝色的刻度
+                var pcd = 0; //偏差度
+                var pcdz = 0; //偏差值
+                var currentPlan = 0;
+                var bm_total = 0;
+                if(result.object.isInCurrentSeason == true){
+                    var currentDays = result.object.currentDays;
+                    var planDays = result.object.planDays;
+                    currentPlan =result.object.currentPlan;
+                    bm_total =result.object.bm_total;
+                    kedu1 =(currentDays/planDays)*0.75;
+                    pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
+                    pcd =  toDecimal(pcd);
+                    pcdz = bm_total - (currentDays/planDays)*currentPlan;
+                    pcdz =  toDecimal(pcdz);
+                }else{
+                    kedu1 = 0.75;
+                }
+                initChart(kedu1,currentPlan,bm_total);
+
+                $("#pc_plan_percent").html("偏差度("+pcd+"%)");
+                $("#pc_plan").html(pcdz);
+                /*总标煤展示*/
+                $("#bm_total").html(result.object.bm_total);
+                var tb_flag = result.object.total_flag;
+                var total_tb = result.object.total_tb;
+                if(tb_flag == true){
+                    $("#total_tb").html("("+total_tb+"↑)");
+                }
+                if(tb_flag == false){
+                    $("#total_tb").html("("+total_tb+"↓)");
+                }
+                if(tb_flag == null){
+                    $("#total_tb").html("("+total_tb+"→)");
+                }
+                /*水*/
+                $("#whater").html(result.object.whater+"T");
+                var tb_flag = result.object.whater_flag;
+                var total_tb = result.object.whater_tb;
+                if(tb_flag == true){
+                    $("#whater_tb").html("("+total_tb+"↑)");
+                }
+                if(tb_flag == false){
+                    $("#whater_tb").html("("+total_tb+"↓)");
+                }
+                if(tb_flag == null){
+                    $("#whater_tb").html("("+total_tb+"→)");
+                }
+                /*电*/
+                $("#electric").html(result.object.electric+"Kw/h");
+                var tb_flag = result.object.electric_flag;
+                var total_tb = result.object.electric_tb;
+                if(tb_flag == true){
+                    $("#electric_tb").html("("+total_tb+"↑)");
+                }
+                if(tb_flag == false){
+                    $("#electric_tb").html("("+total_tb+"↓)");
+                }
+                if(tb_flag == null){
+                    $("#electric_tb").html("("+total_tb+"→)");
+                }
+                /*气*/
+                $("#gas").html(result.object.gas+"M3");
+                var tb_flag = result.object.gas_flag;
+                var total_tb = result.object.gas_tb;
+                if(tb_flag == true){
+                    $("#gas_tb").html("("+total_tb+"↑)");
+                }
+                if(tb_flag == false){
+                    $("#gas_tb").html("("+total_tb+"↓)");
+                }
+                if(tb_flag == null){
+                    $("#gas_tb").html("("+total_tb+"→)");
+                }
+                /*热*/
+                $("#heat").html(result.object.heat+"GJ");
+                var tb_flag = result.object.heat_flag;
+                var total_tb = result.object.heat_tb;
+                if(tb_flag == true){
+                    $("#heat_tb").html("("+total_tb+"↑)");
+                }
+                if(tb_flag == false){
+                    $("#heat_tb").html("("+total_tb+"↓)");
+                }
+                if(tb_flag == null){
+                    $("#heat_tb").html("("+total_tb+"→)");
+                }
+                /*煤*/
+                $("#coal").html(result.object.coal+"T");
+                var tb_flag = result.object.coal_flag;
+                var total_tb = result.object.coal_tb;
+                if(tb_flag == true){
+                    $("#coal_tb").html("("+total_tb+"↑)");
+                }
+                if(tb_flag == false){
+                    $("#coal_tb").html("("+total_tb+"↓)");
+                }
+                if(tb_flag == null){
+                    $("#coal_tb").html("("+total_tb+"→)");
+                }
+            } else {
+                alert("系统错误！");
+            }
+        },
+        error:function(e){
+            alert("访问失败");
+        }
+    });
+
+}
+
+function initChart(kedu1,mx,bm_total){
+    myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
     var option1 = {
         tooltip : {
-            formatter: "{a} <br/>{c} {b}%"
+            formatter: "{a} <br/>{c} {b}"
         },
-
         series : [
             {
                 name: '能耗',
                 type: 'gauge',
                 z: 3,
                 min: 0,
-                max: 100,
+                max: mx,
                 startAngle: 180,
                 endAngle: 0,
                 splitNumber: -1,
@@ -693,29 +812,31 @@ function chart07Fun(){
                 detail:{
                     show:false
                 },
-                data:[{value: "100"}]
+                data:[{value: "50"}]
             }
 
         ]
-    };
-
-//需要处理进行算法处理~~~？！！！
-    var colorvalue ;
-    var calcvalue = 50;
-    var kedu1 = 0.3; //蓝色的刻度
-    colorvalue = [[kedu1, '#3b96db'],[0.75, '#32bbb6'],[1, '#df5f4a']];
+    }
+   var  colorvalue = [[kedu1, '#3b96db'],[0.75, '#32bbb6'],[1, '#df5f4a']];
     option1.series[0].axisLine.lineStyle.color=colorvalue;
-    option1.series[0].data[0].value=calcvalue;
-
+    option1.series[0].data[0].value= bm_total;
     myChartEnergy.setOption(option1);
 }
 
+function toDecimal(x) {
+    var f = parseFloat(x);
+    if (isNaN(f)) {
+        return;
+    }
+    f = Math.round(x*100)/100;
+    return f;
+}
 
 
 
 /*居民 合格率趋势*/
 function chart08Fun(){
-    var myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
+    myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
     var data = [
         ['15-01', 4.374394],
         ['15-01', 3.374394],

@@ -111,13 +111,13 @@
                         <div class="EnergyChart" id="EnergyChart" style="width: 150%;height:150%;top: 10px;left: -25%;"></div>
                     </div>
                     <div class="col-xs-4 EnergyChartText no-padding-left">
-                        <div class="EnergyChartTextnumb ">276.9</div>
+                        <div class="EnergyChartTextnumb " id="bm_total"></div>
                         <!--EnergyChartTextnumb_cb-->
-                        <div class="EnergyChartTextitem">能耗总量 (GJ)<br><span class="cb_color ">(1.6%↑)</span></div>
+                        <div class="EnergyChartTextitem">能耗总量 (Tce)<br><span class="cb_color " id="total_tb"></span></div>
                         <!--zc_color-->
-                        <div class="EnergyChartTextnumbolb ">+34.6</div>
+                        <div class="EnergyChartTextnumbolb " id="pc_plan"></div>
                         <!--EnergyChartTextnumbolb_cb-->
-                        <div class="EnergyChartTextitem">偏差度(%)</div>
+                        <div class="EnergyChartTextitem" id="pc_plan_percent"></div>
                     </div>
                 </div>
                 <div class="col-xs-12 no-padding">
@@ -127,28 +127,28 @@
                         <ul class="energyBoxLegendList clearfix pull-left">
                             <li>
                                 <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 energyBoxLegendListIcon01_cb"></div>
-                                <div class="energyBoxLegendListText energyBoxLegendListText_cb">260T</div>
-                                <div class="energyBoxLegendListPara">(4.0%↓)</div>
+                                <div class="energyBoxLegendListText energyBoxLegendListText_cb" id="whater"></div>
+                                <div class="energyBoxLegendListPara" id="whater_tb"></div>
                             </li>
                             <li>
                                 <div class="energyBoxLegendListIcon energyBoxLegendListIcon02"></div>
-                                <div class="energyBoxLegendListText">127Kw/h</div>
-                                <div class="energyBoxLegendListPara">(2.6%↓)</div>
+                                <div class="energyBoxLegendListText" id="electric"></div>
+                                <div class="energyBoxLegendListPara" id="electric_tb"></div>
                             </li>
                             <li>
                                 <div class="energyBoxLegendListIcon energyBoxLegendListIcon03"></div>
-                                <div class="energyBoxLegendListText">209M3</div>
-                                <div class="energyBoxLegendListPara">(0%→)</div>
+                                <div class="energyBoxLegendListText" id="gas"></div>
+                                <div class="energyBoxLegendListPara" id="gas_tb"></div>
                             </li>
                             <li>
                                 <div class="energyBoxLegendListIcon energyBoxLegendListIcon04 energyBoxLegendListIcon04_cb"></div>
-                                <div class="energyBoxLegendListText">196GJ</div>
-                                <div class="energyBoxLegendListPara energyBoxLegendListPara_cb">(3.9%↑)</div>
+                                <div class="energyBoxLegendListText" id="heat"></div>
+                                <div class="energyBoxLegendListPara energyBoxLegendListPara_cb" id="heat_tb"></div>
                             </li>
                             <li>
                                 <div class="energyBoxLegendListIcon energyBoxLegendListIcon05"></div>
-                                <div class="energyBoxLegendListText">84T</div>
-                                <div class="energyBoxLegendListPara">(2.7%↑)</div>
+                                <div class="energyBoxLegendListText" id="coal"></div>
+                                <div class="energyBoxLegendListPara" id="coal_tb"></div>
                             </li>
                         </ul>
                         <!--<div class="energyBoxLegendBtnRight energyBoxLegendBtnRight_on pull-left"></div>-->

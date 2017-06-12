@@ -3,8 +3,10 @@ package com.huak.web.home.component;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.home.component.ComponentService;
+import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -34,13 +38,14 @@ public class ComponentController {
      */
     @RequestMapping(value = "/energyDetail", method = RequestMethod.POST)
     @ResponseBody
-    public String energyDetail(@RequestParam Map<String, Object> paramsMap) {
+    public String energyDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("能耗明细查询");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        paramsMap.put("startTime","2016-11-15");
-        paramsMap.put("endTime","2017-03-15");
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
+          paramsMap.put("comId",company.getId());
           Map<String,Object> map =  componentService.energyDetail(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);

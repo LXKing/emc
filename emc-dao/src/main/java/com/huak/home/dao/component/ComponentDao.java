@@ -13,7 +13,7 @@ public interface ComponentDao {
 	 * @param params
 	 * @return
 	 */
-	Map<String, Object> energymonitorDetail(Map<String, Object> params);
+	Map<String, Object> energyDetail(Map<String, Object> params);
 
     /**
      * 根据参数查询能耗计划用量
@@ -21,4 +21,18 @@ public interface ComponentDao {
      * @return
      */
     Map<String,Object> getplan(Map<String, Object> params);
+
+    /**
+     * 获取本采暖季的时间
+     * @param paramsMap
+     * @return
+     */
+    Map<String,Object> getCurrentSeason(Map<String, Object> paramsMap);
+
+    /**
+     * 获取上个采暖季的时间
+     * @param paramsMap
+     * @return
+     */
+    List<Map<String,Object>> getPreSeason(Map<String, Object> paramsMap);
 }
