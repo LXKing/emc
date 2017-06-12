@@ -486,6 +486,10 @@ function chart04Fun(datalist,datelist, other){
 
 /*成本明细-饼图*/
 function chart05Fun(datalist, datelist, other){
+    initChart05();
+}
+
+function initChart05(){
     $("#chart05").empty();
     chart05 = echarts.init(document.getElementById('chart05'));
     var option = {
@@ -663,7 +667,7 @@ function chart07Fun(){
         url:_web +'/component/energyDetail',
         type:'post',
         async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data:{},
+        data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
             if (result.flag) {
