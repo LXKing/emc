@@ -227,14 +227,6 @@
                 },
                 heatType: {
                     required: true
-                },
-                partNum: {
-                    required: true,
-                    isCellNum:true
-                },
-                cellNum: {
-                    required: true,
-                    isCellNum:true
                 }
             },
             messages: {
