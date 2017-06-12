@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huak.home.dao.component.ComponentDao" >
+
+  <select id="energymonitorDetail" resultType="java.util.Map" parameterType="java.util.Map" >
+      SELECT
+      max(case when mm.type ='qn' then mm.bm_electric else 0 end)as qn_bm_electric,
+      max(case when mm.type ='qn' then mm.bm_whater else 0 end) as qn_bm_whater,
+      max(case when mm.type ='qn' then mm.bm_heat else 0 end) as qn_bm_heat,
+      max(case when mm.type ='qn' then mm.bm_gas else 0 end) as qn_bm_gas,
+      max(case when mm.type ='qn' then  mm.bm_coal else 0 end) as qn_bm_coal,
+      max(case when mm.type ='qn' then mm.bm_solar  else 0 end) as qn_bm_solar,
+      max(case when mm.type ='qn' then mm.electric else 0 end)as qn_electric,
+      max(case when mm.type ='qn' then mm.whater else 0 end) as qn_whater,
+      max(case when mm.type ='qn' then mm.heat else 0 end) as qn_heat,
+      max(case when mm.type ='qn' then mm.gas else 0 end) as qn_gas,
+      max(case when mm.type ='qn' then  mm.coal else 0 end) as qn_coal,
+      max(case when mm.type ='qn' then mm.solar  else 0 end) as qn_solar,
+
+      (max(case when mm.type ='qn' then mm.bm_electric else 0 end)+
+      max(case when mm.type ='qn' then mm.bm_whater else 0 end) +
+      max(case when mm.type ='qn' then mm.bm_heat else 0 end) +
+      max(case when mm.type ='qn' then mm.bm_gas else 0 end) +
+      max(case when mm.type ='qn' then  mm.bm_coal else 0 end) +
+      max(case when mm.type ='qn' then mm.bm_solar  else 0 end))qn_bm_total,
+
+      (max(case when mm.type ='qn' then mm.electric else 0 end)+
+      max(case when mm.type ='qn' then mm.whater else 0 end) +
+      max(case when mm.type ='qn' then mm.heat else 0 end) +
+      max(case when mm.type ='qn' then mm.gas else 0 end) +
+      max(case when mm.type ='qn' then  mm.coal else 0 end) +
+      max(case when mm.type ='qn' then mm.solar  else 0 end) )qn_total,
+
+      max(case when mm.type ='jn' then mm.bm_electric else 0 end)as bm_electric,
+      max(case when mm.type ='jn' then mm.bm_whater else 0 end) as bm_whater,
+      max(case when mm.type ='jn' then mm.bm_heat else 0 end) as bm_heat,
+      max(case when mm.type ='jn' then mm.bm_gas else 0 end) as bm_gas,
+      max(case when mm.type ='jn' then  mm.bm_coal else 0 end) as bm_coal,
+      max(case when mm.type ='jn' then mm.bm_solar  else 0 end) as bm_solar,
+      max(case when mm.type ='jn' then mm.electric else 0 end)as electric,
+      max(case when mm.type ='jn' then mm.whater else 0 end) as whater,
+      max(case when mm.type ='jn' then mm.heat else 0 end) as heat,
+      max(case when mm.type ='jn' then mm.gas else 0 end) as gas,
+      max(case when mm.type ='jn' then  mm.coal else 0 end) as coal,
+      max(case when mm.type ='jn' then mm.solar  else 0 end) as solar,
+
+      (max(case when mm.type ='jn' then mm.bm_electric else 0 end)+
+      max(case when mm.type ='jn' then mm.bm_whater else 0 end) +
+      max(case when mm.type ='jn' then mm.bm_heat else 0 end) +
+      max(case when mm.type ='jn' then mm.bm_gas else 0 end) +
+      max(case when mm.type ='jn' then  mm.bm_coal else 0 end) +
+      max(case when mm.type ='jn' then mm.bm_solar  else 0 end) )bm_total,
+      (max(case when mm.type ='jn' then mm.electric else 0 end)+
+      max(case when mm.type ='jn' then mm.whater else 0 end) +
+      max(case when mm.type ='jn' then mm.heat else 0 end) +
+      max(case when mm.type ='jn' then mm.gas else 0 end) +
+      max(case when mm.type ='jn' then  mm.coal else 0 end) +
+      max(case when mm.type ='jn' then mm.solar  else 0 end) )total
+
+      from
+      (select 'jn' as type, max(case when b.tt ='1' then b.dnum else 0 end)as bm_electric,
+      max(case when b.tt ='2' then b.dnum else 0 end) as bm_whater,
+      max(case when b.tt ='3' then b.dnum else 0 end) as bm_heat,
+      max(case when b.tt ='4' then b.dnum else 0 end) as bm_gas,
+      max(case when b.tt ='5' then b.dnum else 0 end) as bm_coal,
+      max(case when b.tt ='6' then b.dnum else 0 end) as bm_solar,
+      max(case when b.tt ='1' then b.num else 0 end)as electric,
+      max(case when b.tt ='2' then b.num else 0 end) as whater,
+      max(case when b.tt ='3' then b.num else 0 end) as heat,
+      max(case when b.tt ='4' then b.num else 0 end) as gas,
+      max(case when b.tt ='5' then b.num else 0 end) as coal,
+      max(case when b.tt ='6' then b.num else 0 end) as solar
+      from (SELECT ww.TYPE as tt, SUM(QQ.num) as dnum,sum(QQ.nums) as num
+      from (SELECT
+      da.typeid AS type,
+      da.DOSAGE_TIME as time,
+      sum(da.DOSAGE*da.COAL_COEF) AS num,
+      sum(da.DOSAGE) as nums
+      FROM
+      t_emc_final_data_hour da,v_emc_unit_feed oo where da.unitid = oo.unitid and da.COMID = oo.com_id
+      <if test="orgId != null and orgId !=''">
+          and  oo.orgId in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
+      </if>
+      <if test="feedtype != null and feedtype !=''">
+          and  oo.feedtype = #{feedtype}
+      </if>
+      <if test="startTime != null and startTime !=''">
+          and  da.DOSAGE_TIME &gt;= #{startTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+          and  da.DOSAGE_TIME  &lt;= #{endTime}
+      </if>
+      GROUP BY
+      da.typeid,da.DOSAGE_TIME)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
+      union ALL
+      (
+      select 'qn' as type, max(case when b.tt ='1' then b.dnum else 0 end)as qn_bm_electric,
+      max(case when b.tt ='2' then b.dnum else 0 end) as qn_bm_whater,
+      max(case when b.tt ='3' then b.dnum else 0 end) as qn_bm_heat,
+      max(case when b.tt ='4' then b.dnum else 0 end) as qn_bm_gas,
+      max(case when b.tt ='5' then b.dnum else 0 end) as qn_bm_coal,
+      max(case when b.tt ='6' then b.dnum else 0 end) as qn_bm_solar,
+      max(case when b.tt ='1' then b.num else 0 end)as qn_electric,
+      max(case when b.tt ='2' then b.num else 0 end) as qn_whater,
+      max(case when b.tt ='3' then b.num else 0 end) as qn_heat,
+      max(case when b.tt ='4' then b.num else 0 end) as qn_gas,
+      max(case when b.tt ='5' then b.num else 0 end) as qn_coal,
+      max(case when b.tt ='6' then b.num else 0 end) as qn_solar
+      from (SELECT ww.TYPE as tt, SUM(QQ.num) as dnum,sum(QQ.nums) as num
+      from (SELECT
+      da.typeid AS type,
+      da.DOSAGE_TIME as time,
+      sum(da.DOSAGE*da.COAL_COEF) AS num,
+      sum(da.DOSAGE) as nums
+      FROM
+      t_emc_final_data_hour da,v_emc_unit_feed oo where da.unitid = oo.unitid and da.COMID = oo.com_id
+      <if test="orgId != null and orgId !=''">
+          and  oo.orgId in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
+      </if>
+      <if test="feedtype != null and feedtype !=''">
+          and  oo.feedtype = #{feedtype}
+      </if>
+      <if test="startTime != null and startTime !=''">
+          and  da.DOSAGE_TIME &gt;= #{startTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+          and  da.DOSAGE_TIME  &lt;= #{endTime}
+      </if>
+      GROUP BY
+      da.typeid,da.DOSAGE_TIME)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
+      ))mm
+  </select>
+
+    <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+           p.num as plan
+        FROM
+            t_emc_energy_project p,
+            t_emc_heat_season s
+        WHERE
+            p.SEASON_ID = s.id
+        <if test="startTime != null and startTime !=''">
+            and  s.SDATE &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and  s.EDATE  &lt;= #{endTime}
+        </if>
+        <if test="orgId != null and orgId !=''">
+            and  p.ORG_ID  = #{orgId}
+        </if>
+        ORDER BY
+            s.EDATE DESC
+        LIMIT 0, 1
+    </select>
+</mapper>

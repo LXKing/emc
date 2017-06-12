@@ -1,114 +1,173 @@
-/**
- * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
- * Author:  bin  <BR>
- * Project:eccp    <BR>
- * Version: v 1.0      <BR>
- * Date: 2016/8/25<BR>
- */
 $(function () {
-    init();
-    getCellList();
-});
-function init() {
-    var config = {
-        '.chosen-select': {},
-        '.chosen-select-deselect': {
-            allow_single_deselect: true
+	cellSearOrg = new Org({
+        class:"org-tree"
+    });
+	cellSearOrg.initTree();
+	
+	initTreeBox();
+	//楼座列表
+	var cellTable = $('#cell-table-list').bootstrapTable({
+		height: getHeight() + 30,//高度
+        cache: false,//禁用 AJAX 数据缓存
+        url: _platform + '/cell/list',//获取数据的Servlet地址
+        method: 'post',//使用POST请求到服务器获取数据
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        idField: "ID",
+        pagination: true,//是否分页
+        pageSize: 10,//每页显示的记录数
+        pageNumber: 1,//当前第几页
+        pageList: [10, 30, 50],//记录数可选列表
+        search: false,  //是否启用查询
+        striped: true,//表格显示条纹
+        //showColumns: false,//不显示隐藏列
+        sidePagination: "server", //服务端请求
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType: "undefined",
+        queryParams: function queryParams(params) {
+            var param = {
+                _method: "PATCH",
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize
+            };
+            formsParam(param,'cell-form',false);
+            return param;
+        }, formatLoadingMessage: function () {
+            return "请稍等，正在加载中...";
         },
-        '.chosen-select-no-single': {
-            disable_search_threshold: 10
+        responseHandler: function (res) {
+            return {
+                "rows": res.list.list,
+                "total": res.list.page.total
+            };
         },
-        '.chosen-select-no-results': {
-            no_results_text: 'Oops, nothing found!'
-        },
-        '.chosen-select-width': {
-            width: "10%"
-        }
-    }
-    for (var selector in config) {
-        $(selector).chosen(config[selector]);
-    }
-}
-
-    /* 查询字典列表 */
-    function getCellList() {
-        var index = layer.load(1, {
-            shade: [0.1, '#fff'] //0.1透明度的白色背景
-        });
-        $.ajax({
-            url: ctx + '/cell/list',
-            timeout: 30000,
-            type: 'POST',//注意在传参数时，加：_method:'PATCH'　将对应后台的PATCH请求方法
-            dataType: 'json',
-            data: $("#cell-search-form").serialize(),
-            success: function (result) {
-                $(".pagination").pagination({
-                    pageNo: result.list.page.curPage,
-                    rowTotal: result.list.page.totalRow,
-                    _callBack: getCellList
-                });
-                // 附上模板
-                $("#cell-tbody").setTemplateElement("cell-list");
-                // 给模板加载数据
-                $("#cell-tbody").processTemplate(result.list);
-                $('.i-checks').iCheck({
-                    checkboxClass: 'icheckbox_square-green',
-                    radioClass: 'iradio_square-green'
-                });
-                layer.close(index);
+        columns: [
+            {
+                field: 'id', title: 'ID', visible: false
             },
-            error: function () {
-                layer.close(index);
-                layer.msg("加载失败");
+            {
+                checkbox: true
             },
-            complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
-                layer.close(index);
-                if (status == 'timeout') {//超时,status还有success,error等值的情况
-                    layer.msg("加载超时");
+            {
+                title: '序号',
+                field: 'sn',
+                align: 'center',
+                formatter:function(value,row,index){
+                    return index+1;
+                }
+            },
+            {
+                title: '单元名称',
+                field: 'cellName',
+                align: 'center'
+            },
+            {
+                title: '楼座名称',
+                field: 'banName',
+                align: 'center'
+            },
+            {
+                title: '小区名称',
+                field: 'communityName',
+                align: 'center'
+            },
+            {
+                title: '所属机构',
+                field: 'orgName',
+                align: 'center'
+            },
+            {
+                title: '所属公司',
+                field: 'comName',
+                align: 'center'
+            },
+            {
+                title: '操作',
+                field: 'opt',
+                align: 'center' ,
+                formatter:function(value,row,index){
+                	var html = "";
+                	if($('#cellUpdate').val()){
+                		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="cellEditForm" layer-title="编辑楼座" layer-url="'+_platform+'/cell/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                	}
+                	if($('#cellDelete').val()){
+                		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deletecell(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                	}
+                	return html;
                 }
             }
-        });
-    }
 
+        ]
+	});
+});
+//组织机构树点击节点事件
+var treeNodeClick = function(e,treeId,treeNode){ 
+	var orgId = treeNode.id;
+	var orgName = treeNode.name;
+	$("#orgId").val(orgId);
+	$("input[name='orgName']").val(orgName);
+};
 
-    /*查询*/
-    var searchcell = function () {
-        $("input[id ='pageNo']").val(1);
-        getCellList();
-    }
-
-/*重置查询条件*/
-var resetcellSearch = function(){
-    $("#cell-search-form").find("div").find("input").val("");
+//初始化treebox
+function initTreeBox(){
+	if($.fn.zTree.getZTreeObj("temp_org_tree")==null){
+		setTimeout('initTreeBox()',50)
+	}else{
+		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+		var box = $('input[name="orgName"]').treeBox({setting:treeObj.setting,zNodes:treeObj.getNodes()});
+	}
 }
 
-var delcell = function (id){
-    var ids;
-    if(id == undefined){
-        ids= getCheckValues("cellListTable");
-        if (ids.length == 0) {
-            layer.msg("至少选择一条记录进行删除！");
-            return false;
-        }
-    }else{
-        ids = id;
-    }
-    layer.confirm('是否删除数据？', {
-        btn: ['删除', '取消'] //按钮
+/**
+ * 获取页面表单中的input和select元素的name和value，并放入param对象中
+ * @param param form请求参数对象
+ * @param formId form表单id
+ * @param isVisible 是否只获取可见元素
+ */
+function formsParam(param,formId,isVisible){
+	var paramStr="";
+	var forms=[];
+	var selects = [];
+	if(isVisible){
+		forms = $('#'+formId+' input:visible');
+		selects = $('#'+formId+' select:visible');
+	}else{
+		forms = $('#'+formId+' input');
+		selects = $('#'+formId+' select');
+	}
+	for(var j=0;j<selects.length;j++){
+		forms.push(selects[j]);
+	}
+	for(var i=0;i<forms.length;i++){
+		var k = $(forms[i]).attr("name");
+		var v = $(forms[i]).val();
+		param[k] = v;
+		paramStr+=k+"="+v+"&";
+	}
+    return paramStr.substring(0,paramStr.length-1);
+}
+
+/**
+ * 删除楼座
+ * @param id
+ */
+function deletecell(id) {
+    layer.confirm('您是否确定删除楼座？', {
+        btn: ['确定', '取消'] //按钮
     }, function () {
         var index = layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: ctx + '/cell/delete',
+            url: _platform + '/cell/delete/' + id,
             type: 'POST',
             dataType: 'json',
-            data: {orgId: ids},
             success: function (result) {
                 if (result.flag) {
                     layer.closeAll();
+                    $('#cell-table-list').bootstrapTable("refresh");
                     layer.msg(result.msg);
-                    getCellList();
                 } else {
                     layer.close(index);
                     layer.msg(result.msg);
@@ -118,9 +177,11 @@ var delcell = function (id){
     });
 }
 
-
-
-
-
-
-
+/**
+ * 导出楼座信息到excel
+ */
+function exportCell(){
+	var paramStr = formsParam({},"cell-form",true);
+	var url = _platform + '/cell/export?'+paramStr;
+	window.location.href = url;
+}

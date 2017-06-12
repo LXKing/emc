@@ -10,7 +10,7 @@
 	<META HTTP-EQUIV="Expires" CONTENT="0"> 
     <title>小区管理</title>
     <jsp:include page="../../head.jsp"></jsp:include>
-    <script src="${platform}/script/org/huak.org.ban.list.js"></script>
+    <script src="${platform}/script/org/huak.org.community.list.js"></script>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -19,29 +19,19 @@
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form id="ban-form" role="form" class="form-horizontal m-t">
+                    <form id="community-form" role="form" class="form-horizontal m-t">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" id="pageNo" name="pageNo" value="1">
 
                         <div class="row">
-                        	<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">楼座名称</label>
-                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" name="banName" placeholder="请输入楼座名称">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属小区</label>
-                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select id="communityId" name="communityId" class="form-control m-b" ></select>
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">小区名称</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <input type="text" class="form-control" name="communityName" placeholder="请输入小区名称">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属机构</label>
@@ -55,30 +45,32 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属公司</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select id="comId" name="comId" class="form-control m-b" ></select>
+<!--                                         <input type="hidden" class="form-control" id="comId" name="comId"> -->
+                                        <select id="comId" name="comId" class="form-control m-b" >
+                            			</select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-                            	<c:if test="${sessionScope._auth['banInsert'] }">
-                                	<button type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/ban/add" layer-title="新增小区" layer-form-id="banAddForm" ><i class="fa fa-plus"></i>添加</button>
+                            	<c:if test="${sessionScope._auth['communityInsert'] }">
+                                	<button type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/community/add" layer-title="新增小区" layer-form-id="communityAddForm" ><i class="fa fa-plus"></i>添加</button>
                                 </c:if>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="ban-table-list"> 搜索</button>
+                                <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="community-table-list"> 搜索</button>
                                 <button type="reset" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
-                                <c:if test="${sessionScope._auth['banExport'] }">
-                                	<button type="button" class="btn btn-sm btn-primary" onclick="exportBan()"> 导出Excel</button>
+                                <c:if test="${sessionScope._auth['communityExport'] }">
+                                	<button type="button" class="btn btn-sm btn-primary" onclick="exportCommunity()"> 导出Excel</button>
                                 </c:if>
-								<input id="banUpdate" type="hidden" value="${ sessionScope._auth['banUpdate']}">
-								<input id="banDelete" type="hidden" value="${ sessionScope._auth['banDelete']}">
+                                <input id="communityUpdate" type="hidden" value="${ sessionScope._auth['communityUpdate']}">
+								<input id="communityDelete" type="hidden" value="${ sessionScope._auth['communityDelete']}">
                             </div>
                         </div>
                     </form>
                     <div class="example">
-                    	<table id="ban-table-list"></table>
+                    	<table id="community-table-list"></table>
                     </div>
                 </div>
             </div>
@@ -87,10 +79,9 @@
 </div>
 <script type="text/javascript">
 	$('#comId').html('${com}');
-	$('#communityId').html('${community}');
+	
 	function resetSearch(){
-		$('#banName').val('');
-		$('#communityId').val('');
+		$('#communityName').val('');
 		$('#orgId').val('');
 		$('#comId').val('');
 	}
