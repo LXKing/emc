@@ -10,11 +10,16 @@ import java.util.*;
  * Project:emc    <BR>
  * Version: v 1.0      <BR>
  * Date: 2017/6/13<BR>
- * Description:     <BR>
+ * Description:   集合工具类  <BR>
  * Function List:  <BR>
  */
 public class CollectionUtil {
-    // 删除ArrayList中重复元素，保持顺序
+
+    /**
+     * 删除ArrayList中重复元素，保持顺序
+     * @param list
+     * @return
+     */
     public static List removeDuplicateWithOrder(List list) {
         Set set = new HashSet();
         List newList = new ArrayList();
@@ -27,4 +32,5 @@ public class CollectionUtil {
         list.addAll(newList);
         return list;
     }
+
 }

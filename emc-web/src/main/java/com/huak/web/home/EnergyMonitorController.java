@@ -178,6 +178,44 @@ public class EnergyMonitorController {
 
     }
 
+    @RequestMapping(value = "/fgs/energy/ranking", method = RequestMethod.POST)
+    @ResponseBody
+    public String fgsEnergyRanking(ToolVO toolVO){
+        logger.info("分公司能耗排名");
+
+        JSONObject jo = new JSONObject();
+        try {
+            /*封装条件*/
+            Map params = new HashMap<String, Object>();
+            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+            if(org.getpOrgId()==0){
+                params.put("pOrgId",org.getId());
+            }else{
+                params.put("orgId",org.getId());
+            }
+            params.put("comId",org.getComId());
+            params.put("feedType",toolVO.getToolFeedType());
+            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
+            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+
+            List<Map<String,Object>> energySecondList = eaService.fgsEnergyRanking(params);
+            List<String> xAxis = new ArrayList<>();
+            List<String> datas = new ArrayList<>();
+            for(Map<String,Object> map:energySecondList){
+                xAxis.add(map.get("NAME").toString());
+                datas.add(map.get("VALUE").toString());
+            }
+            jo.put(Constants.XAXIS, xAxis);
+            jo.put(Constants.LIST, datas);
+        } catch (Exception e) {
+            logger.error("分公司能耗排名异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+
+    }
+
     /**
      * 查询集团能耗数据
      * @param params

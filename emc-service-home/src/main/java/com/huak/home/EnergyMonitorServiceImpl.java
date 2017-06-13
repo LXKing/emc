@@ -114,6 +114,18 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     }
 
     /**
+     * 分公司能耗排名
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params) {
+        return energySecondDao.fgsEnergyRanking(params);
+    }
+
+    /**
 	 * 获取折线数据
 	 */
 	@Override
