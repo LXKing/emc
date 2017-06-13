@@ -97,8 +97,20 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<EnergySecond> fgsEnergyRatio(Map<String, Object> params) {
+    public List<Map<String, Object>> fgsEnergyRatio(Map<String, Object> params) {
         return energySecondDao.fgsEnergyRatio(params);
+    }
+
+    /**
+     * 分公司能耗趋势对比图
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> fgsEnergyTrend(Map<String, Object> params) {
+        return energySecondDao.fgsEnergyTrend(params);
     }
 
     /**

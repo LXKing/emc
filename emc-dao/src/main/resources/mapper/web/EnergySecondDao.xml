@@ -21,21 +21,21 @@
     </resultMap>
 
     <select id="findAssessmentIndicators" parameterType="java.util.Map" resultMap="BaseResultMap">
-        SELECT v.fgsid id,v.ORG_NAME orgname,
+        SELECT v.fgsid ID,v.ORG_NAME ORGNAME,
         ROUND(IFNULL(SUM(v.BQBM),0),2) BQBM,
         ROUND(IFNULL(SUM(v.TQBM),0),2) TQBM,
-        ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.BQ ELSE 0 END),2) bqwater,
-        ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.TQ ELSE 0 END),2) tqwater,
-        ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.BQ ELSE 0 END),2) bqelectric,
-        ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.TQ ELSE 0 END),2) tqelectric,
-        ROUND(MAX(CASE v.TYPE WHEN '3' THEN v.BQ ELSE 0 END),2) bqgas,
-        ROUND(MAX(CASE v.TYPE WHEN '3' THEN v.TQ ELSE 0 END),2) tqgas,
-        ROUND(MAX(CASE v.TYPE WHEN '4' THEN v.BQ ELSE 0 END),2) bqheat,
-        ROUND(MAX(CASE v.TYPE WHEN '4' THEN v.TQ ELSE 0 END),2) tqheat,
-        ROUND(MAX(CASE v.TYPE WHEN '5' THEN v.BQ ELSE 0 END),2) bqcoal,
-        ROUND(MAX(CASE v.TYPE WHEN '5' THEN v.TQ ELSE 0 END),2) tqcoal,
-        ROUND(MAX(CASE v.TYPE WHEN '6' THEN v.BQ ELSE 0 END),2) bqoil,
-        ROUND(MAX(CASE v.TYPE WHEN '6' THEN v.TQ ELSE 0 END),2) tqoil
+        ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.BQ ELSE 0 END),2) BQWATER,
+        ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.TQ ELSE 0 END),2) TQWATER,
+        ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.BQ ELSE 0 END),2) BQELECTRIC,
+        ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.TQ ELSE 0 END),2) TQELECTRIC,
+        ROUND(MAX(CASE v.TYPE WHEN '3' THEN v.BQ ELSE 0 END),2) BQGAS,
+        ROUND(MAX(CASE v.TYPE WHEN '3' THEN v.TQ ELSE 0 END),2) TQGAS,
+        ROUND(MAX(CASE v.TYPE WHEN '4' THEN v.BQ ELSE 0 END),2) BQHEAT,
+        ROUND(MAX(CASE v.TYPE WHEN '4' THEN v.TQ ELSE 0 END),2) TQHEAT,
+        ROUND(MAX(CASE v.TYPE WHEN '5' THEN v.BQ ELSE 0 END),2) BQCOAL,
+        ROUND(MAX(CASE v.TYPE WHEN '5' THEN v.TQ ELSE 0 END),2) TQCOAL,
+        ROUND(MAX(CASE v.TYPE WHEN '6' THEN v.BQ ELSE 0 END),2) BQOIL,
+        ROUND(MAX(CASE v.TYPE WHEN '6' THEN v.TQ ELSE 0 END),2) TQOIL
         FROM
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ,f.TQ,f.BQBM,f.TQBM
@@ -73,9 +73,9 @@
 
     </select>
 
-    <select id="fgsEnergyRatio" parameterType="java.util.Map" resultMap="BaseResultMap">
-        SELECT v.fgsid id,v.ORG_NAME orgname,
-        ROUND(IFNULL(SUM(v.BQBM),0),2) BQBM
+    <select id="fgsEnergyRatio" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT v.fgsid id,v.ORG_NAME name,
+        ROUND(IFNULL(SUM(v.BQBM),0),2) value
         FROM
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ,f.BQBM
@@ -109,4 +109,24 @@
         GROUP BY v.fgsid,v.ORG_NAME
     </select>
 
+    <select  id="fgsEnergyTrend" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT a.FGSID,a.ORG_NAME NAME,ROUND(IFNULL(SUM(hd.BQBM),0),2) BQBM,dt.DOSAGE_TIME DATE FROM (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        SELECT
+        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
+        o.*
+        FROM
+        t_emc_org o
+        WHERE o.COM_ID = '74ee3b6752254435b724b6672f9fde8d') t,
+        (SELECT * FROM t_emc_org WHERE 1=1 AND P_ORG_ID = '38') tmo
+        WHERE tmo.ID = t.fgsid) a
+        RIGHT JOIN (SELECT DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM t_emc_final_data_hour  WHERE DOSAGE_TIME<![CDATA[ >= ]]>'2017-06-01 00:00:00' AND DOSAGE_TIME<![CDATA[ <= ]]>'2017-07-01 00:00:00' GROUP BY DATE_FORMAT(DOSAGE_TIME,'%y-%m-%d') ORDER BY DOSAGE_TIME) dt ON 1=1
+        LEFT JOIN v_emc_unit_feed vuf ON vuf.ORG_ID = a.orgid AND vuf.feedtype='2'
+        LEFT JOIN  (
+        SELECT d1.UNITID,SUM(d1.BM) BQBM,d1.DOSAGE_TIME FROM
+        (SELECT fdh.UNITID,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM t_emc_final_data_hour fdh WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]>'2017-06-01 00:00:00' AND fdh.DOSAGE_TIME<![CDATA[ <= ]]>'2017-07-01 00:00:00'
+        GROUP BY fdh.UNITID,fdh.DOSAGE_TIME) d1 GROUP BY d1.UNITID,d1.DOSAGE_TIME ORDER BY DOSAGE_TIME
+        ) hd ON hd.UNITID = vuf.unitid AND hd.DOSAGE_TIME = dt.DOSAGE_TIME
+        GROUP BY a.fgsid,a.ORG_NAME,dt.DOSAGE_TIME
+        ORDER BY a.fgsid,dt.DOSAGE_TIME
+    </select>
 </mapper>
