@@ -9,11 +9,13 @@ var setting = {
         removeHoverDom: removeHoverDom,
         selectedMulti: false,
         fontCss:{color:"blue"}
+
     },
     check: {
         enable: true
     },
     data: {
+        key : { name : "name" },
         simpleData: {
             enable: true,
             idKey: "id",
@@ -30,11 +32,17 @@ var setting = {
     },
 
     edit: {
-        enable: true
+        drag:{ isCopy:false,isMove:false},
+        enable: true,
+        editNameSelectAll:true,
+        addTitle:'添加',
+        removeTitle:'删除',
+        renameTitle:'编辑'
+
     },
     callback: {
         beforeRemove:beforeRemove,//点击删除时触发，用来提示用户是否确定删除
-//        beforeEditName: beforeEditName,//点击编辑时触发，用来判断该节点是否能编辑
+        beforeEditName: beforeEditName,//点击编辑时触发，用来判断该节点是否能编辑
         onRemove:onRemove,//删除节点后触发，用户后台操作
         onRename:onRename,//编辑后触发，用于操作后台
         beforeDrag:beforeDrag, //用户禁止拖动节点
@@ -42,7 +50,14 @@ var setting = {
 
     }
 };
+function beforeEditName(treeId,treeNode){
 
+    //需要对名字做判定的，可以来这里写~~
+    //alert(treeNode.id+"---"+treeNode.name);
+    var id = treeNode.id;
+    openLayer(_platform+"/org/editnode/"+id,"编辑机构节点","orgTreeEditForm",null,null);
+    return true;
+}
 $(document).ready(function(){
     //页面说明
     var  url ="${platform}/org/ztreeValue";
@@ -58,7 +73,7 @@ function addHoverDom(treeId, treeNode) {
     var sObj = $("#" + treeNode.tId + "_span");
     if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
     var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-        + "' title='add node' onfocus='this.blur();'></span>";
+        + "' title='添加' onfocus='this.blur();'></span>";
     sObj.after(addStr);
     var btn = $("#addBtn_"+treeNode.tId);
     if (btn) btn.bind("click", function(){
@@ -124,8 +139,9 @@ function onRemove(treeId,treeNode){
 function onRename(e, treeId, treeNode, isCancel) {
     //需要对名字做判定的，可以来这里写~~
     //alert(treeNode.id+"---"+treeNode.name);
-    var id = treeNode.id;
-    openLayer(_platform+"/org/editnode/"+id,"编辑机构节点","orgTreeEditForm",null,null);
+//    var id = treeNode.id;
+//    openLayer(_platform+"/org/editnode/"+id,"编辑机构节点","orgTreeEditForm",null,null);
+    return true;
 }
 function beforeDrag(treeId,treeNodes){
     return false;
