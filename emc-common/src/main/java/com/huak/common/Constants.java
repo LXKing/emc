@@ -103,4 +103,6 @@ public class Constants {
     public final static String SESSION_ORG_KEY = "org_key";
     //所属公司
     public final static String SESSION_COM_KEY = "com_key";
+    public static final String XAXIS = "xaxis";
+    public static final String LEGENDS = "legends";
 }

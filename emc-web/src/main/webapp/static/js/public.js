@@ -1,5 +1,6 @@
 ﻿/*下拉框*/
-
+//公共颜色
+var color = ['#c675c3', '#8d82cc', '#3b96db', '#a1b1c5', '#32bbb6', '#df614c','#99ff33','#FFFF00'];
 Date.prototype.Format = function (fmt) { //author: meizz
     var o = {
         "M+": this.getMonth() + 1,
@@ -86,6 +87,7 @@ $(function () {
         $.ajax({
             url: _web + "/tools/search/season",
             type: "POST",
+            async:false,
             dataType: "json",
             success: function (data) {
                 $('#toolStartDate').val(data.startDate);
@@ -160,6 +162,7 @@ $(function () {
             $.ajax({
                 url: _web + "/tools/search/season",
                 type: "POST",
+                async:false,
                 dataType: "json",
                 success: function (data) {
                     $('#toolStartDate').val(data.startDate);
@@ -177,6 +180,7 @@ $(function () {
             $.ajax({
                 url: _web + "/tools/search/year",
                 type: "POST",
+                async:false,
                 dataType: "json",
                 success: function (data) {
                     $('#toolStartDate').val(data.startDate);
