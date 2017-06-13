@@ -1,6 +1,6 @@
 ﻿/*下拉框*/
 
-Date.prototype.Format = function(fmt) { //author: meizz
+Date.prototype.Format = function (fmt) { //author: meizz
     var o = {
         "M+": this.getMonth() + 1,
         "d+": this.getDate(),
@@ -10,94 +10,197 @@ Date.prototype.Format = function(fmt) { //author: meizz
         "q+": Math.floor((this.getMonth() + 3) / 3),
         "S": this.getMilliseconds()
     };
-    if(/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for(var k in o)
-        if(new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
-$(function() {
-	/*返回顶部*/
-	$("#returnTop").click(function() {
-		$('body,html').animate({
-			scrollTop: 0
-		}, 1000);
-		return false;
-	});
+function toolReplace() {
+    var url = document.location.href;
+    var reurl = url;
+    if (url.indexOf("?") > 0) {
+        reurl = url.substr(0, url.indexOf("?"));
+    }
+    document.location.replace(reurl + "?" + $("#searchTools").serialize());
+}
 
-    $("body").on("click", ".x-sfbgbox", function() {
-        $(this).next().stop(true, false).slideToggle(200, function() {});
+function getMbHtml(navigation, html) {
+    if (navigation.navigation == "undefined" || navigation.navigation == null || navigation.navigation == "") {
+        html += '<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+        return html;
+    } else {
+        html = getMbHtml(navigation.navigation, html) + '&gt;<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+        return html;
+    }
+}
+$(function () {
+
+
+
+
+
+    //条件下拉框
+    $.ajax({
+        url: _web + "/tools/search/org",
+        type: "POST",
+        async:false,
+        dataType: "json",
+        success: function (data) {
+            var html = '';
+            $.each(data, function (idx, item) {
+                if (idx == 0) {
+                    if (getCookie("toolOrgId") == null || getCookie("toolOrgId") == "") {
+                        $('.x-sfleft1.x-sfw1').html('<input type="text" value="' + item.ORG_NAME + '" readonly="readonly">');
+                        $('#toolOrgId').val(item.ID);
+                    } else {
+                        $('.x-sfleft1.x-sfw1').html('<input type="text" value="' + getCookie("toolOrgName") + '" readonly="readonly">');
+                        $('#toolOrgId').val(getCookie("toolOrgId"));
+                    }
+
+                }
+                html += '<p value="' + item.ID + '">' + item.ORG_NAME + '</p>'
+            });
+            $(".x-sfoption.x-sfoption1").html(html);
+
+        }
+    });
+    //默认类型
+    if (getCookie("toolFeedType") == null || getCookie("toolFeedType") == "") {
+        $('#toolFeedType').val(2);
+    } else {
+        var toolFeedType = getCookie("toolFeedType");
+        $('#toolFeedType').val(toolFeedType);
+        if (toolFeedType == 1) {
+            $('.btnAlarm').each(function () {
+                if ("集中供暖" == $(this).text()) {
+                    $(this).removeClass("btnAlarm-on");
+                } else if ("区域供暖" == $(this).text()) {
+                    $(this).addClass("btnAlarm-on");
+                }
+            });
+        }
+    }
+
+    //默认时间段
+    if (getCookie("dateType") == null || getCookie("dateType") == "") {
+        $.ajax({
+            url: _web + "/tools/search/season",
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                $('#toolStartDate').val(data.startDate);
+                $('#toolEndDate').val(data.endDate);
+                $('#begin').val(data.startDate);
+                $('#end').val(data.endDate);
+            }
+        });
+    } else {
+        var dataType = getCookie("dateType");
+        $('.btnAlarm').each(function () {
+            if ("本年度" == $(this).text() && dataType == 1) {
+                $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+            } else if ("本采暖季" == $(this).text() && dataType == 2) {
+                $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+            } else if ("自定义" == $(this).text() && dataType == 3) {
+                $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+            }
+        });
+        $('#toolStartDate').val(getCookie("toolStartDate"));
+        $('#toolEndDate').val(getCookie("toolEndDate"));
+        $('#begin').val(getCookie("toolStartDate"));
+        $('#end').val(getCookie("toolEndDate"));
+    }
+
+
+
+
+    /*返回顶部*/
+    $("#returnTop").click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 1000);
+        return false;
+    });
+
+    $("body").on("click", ".x-sfbgbox", function () {
+        $(this).next().stop(true, false).slideToggle(200, function () {
+        });
     });
     //下拉切换事件
-    $("body").on("click", ".x-sfoption p", function() {
+    $("body").on("click", ".x-sfoption p", function () {
         var selectval = $(this).html();
         var selectid = $(this).attr("value");
 
         $('#toolOrgId').val(selectid);
         $(this).parent().prev().find("input").val(selectval);
 
-        setCookie('toolOrgId',selectid,3);
-        setCookie('toolOrgName',selectval,3);
+        setCookie('toolOrgId', selectid, 3);
+        setCookie('toolOrgName', selectval, 3);
         //var hidval = $(this).parent().next().val(selectid);
-        $(this).parent().slideUp(200, function() {});
-        document.location.reload();
+        $(this).parent().slideUp(200, function () {
+        });
+        toolReplace();
+
     });
-    $("body").on("mouseleave", ".x-selectfree", function() {
-        $(this).find(".x-sfoption").slideUp(200, function() {});
+    $("body").on("mouseleave", ".x-selectfree", function () {
+        $(this).find(".x-sfoption").slideUp(200, function () {
+        });
     });
 
     //单击按钮事件
-    $(".select-boxbtnAlarm .btnAlarm").click(function() {
+    $(".select-boxbtnAlarm .btnAlarm").click(function () {
         $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
 
         var thisText = $(this).text();
-        if(thisText == "自定义") {
+        if (thisText == "自定义") {
             $(".select-boxWdate input").attr("disabled", false).removeClass("time-input-disable");
             $("#begin").focus();
-        } else if(thisText == "本采暖季"){
+        } else if (thisText == "本采暖季") {
             $("#selectdate").hide();
             $.ajax({
-                url : _web+"/tools/search/season",
-                type : "POST",
+                url: _web + "/tools/search/season",
+                type: "POST",
                 dataType: "json",
-                success:function(data){
+                success: function (data) {
                     $('#toolStartDate').val(data.startDate);
                     $('#toolEndDate').val(data.endDate);
                     $('#begin').val(data.startDate);
                     $('#end').val(data.endDate);
-                    setCookie('toolStartDate',data.startDate,3);
-                    setCookie('toolEndDate',data.endDate,3);
-                    setCookie('dateType',2,3);
-                    document.location.reload();
+                    setCookie('toolStartDate', data.startDate, 3);
+                    setCookie('toolEndDate', data.endDate, 3);
+                    setCookie('dateType', 2, 3);
+                    toolReplace();
                 }
             });
-        }else if(thisText == "本年度"){
+        } else if (thisText == "本年度") {
             $("#selectdate").hide();
             $.ajax({
-                url : _web+"/tools/search/year",
-                type : "POST",
+                url: _web + "/tools/search/year",
+                type: "POST",
                 dataType: "json",
-                success:function(data){
+                success: function (data) {
                     $('#toolStartDate').val(data.startDate);
                     $('#toolEndDate').val(data.endDate);
                     $('#begin').val(data.startDate);
                     $('#end').val(data.endDate);
-                    setCookie('toolStartDate',data.startDate,3);
-                    setCookie('toolEndDate',data.endDate,3);
-                    setCookie('dateType',1,3);
-                    document.location.reload();
+                    setCookie('toolStartDate', data.startDate, 3);
+                    setCookie('toolEndDate', data.endDate, 3);
+                    setCookie('dateType', 1, 3);
+                    toolReplace();
                 }
 
             });
 
-        }else if(thisText == "区域供暖"){
+        } else if (thisText == "区域供暖") {
             $('#toolFeedType').val(1);
-            setCookie('toolFeedType',1,3);
-            document.location.reload();
-        }else if(thisText == "集中供暖"){
+            setCookie('toolFeedType', 1, 3);
+
+            toolReplace();
+        } else if (thisText == "集中供暖") {
             $('#toolFeedType').val(2);
-            setCookie('toolFeedType',2,3);
-            document.location.reload();
-        }else {
+            setCookie('toolFeedType', 2, 3);
+            toolReplace();
+        } else {
             $(".select-boxWdate input").attr("disabled", true).addClass("time-input-disable");
         }
 
@@ -141,7 +244,7 @@ $(function() {
         //
         //					});
         //
-        $('#datepicker-config').click(function() {
+        $('#datepicker-config').click(function () {
             $("#selectdate").show();
             $('.calendar.left').datetimepicker({
                 language: 'zh-CN',
@@ -153,7 +256,7 @@ $(function() {
                 minView: 2,
                 forceParse: 0,
                 format: 'yyyy-mm-dd'
-            }).on('changeDate', function(ev) {
+            }).on('changeDate', function (ev) {
                 startDate = ev.date;
 
             });
@@ -166,7 +269,7 @@ $(function() {
                 startView: 2,
                 minView: 2,
                 forceParse: 0
-            }).on('changeDate', function(ev) {
+            }).on('changeDate', function (ev) {
                 endDate = ev.date;
 
             });
@@ -204,52 +307,52 @@ $(function() {
     var d = nowdate.getDate();
     var formattwomonth = y + '-' + m + '-' + d;
 
-    $("#nearlyaweek").click(function() {
+    $("#nearlyaweek").click(function () {
         $(".btn-confirm").click();
         $("#begin").val(formatoneweekdate);
         $("#end").val(formatnowdate);
         $("#selectdate").hide();
-        setCookie('toolStartDate',formatoneweekdate,3);
-        setCookie('toolEndDate',formatnowdate,3);
-        setCookie('dateType',3,3);
+        setCookie('toolStartDate', formatoneweekdate, 3);
+        setCookie('toolEndDate', formatnowdate, 3);
+        setCookie('dateType', 3, 3);
     });
 
-    $("#nearlyamonth").click(function() {
+    $("#nearlyamonth").click(function () {
         $(".btn-confirm").click();
         $("#begin").val(formatonemonth);
         $("#end").val(formatnowdate);
         $("#selectdate").hide();
-        setCookie('toolStartDate',formatonemonth,3);
-        setCookie('toolEndDate',formatnowdate,3);
-        setCookie('dateType',3,3);
+        setCookie('toolStartDate', formatonemonth, 3);
+        setCookie('toolEndDate', formatnowdate, 3);
+        setCookie('dateType', 3, 3);
     });
 
-    $("#nearlytwomonth").click(function() {
+    $("#nearlytwomonth").click(function () {
         $(".btn-confirm").click();
         $("#begin").val(formattwomonth);
         $("#end").val(formatnowdate);
         $("#selectdate").hide();
-        setCookie('toolStartDate',formattwomonth,3);
-        setCookie('toolEndDate',formatnowdate,3);
-        setCookie('dateType',3,3);
+        setCookie('toolStartDate', formattwomonth, 3);
+        setCookie('toolEndDate', formatnowdate, 3);
+        setCookie('dateType', 3, 3);
     });
 
-    $(".applyBtn").click(function() {
+    $(".applyBtn").click(function () {
         $("#begin").val(startDate.Format("yyyy-MM-dd"));
         $("#end").val(endDate.Format("yyyy-MM-dd"));
-        if(endDate<startDate){
+        if (endDate < startDate) {
             $("#end").val("");
         }
         $("#selectdate").hide();
-        setCookie('toolStartDate',startDate.Format("yyyy-MM-dd"),3);
-        if(endDate>=startDate){
-            setCookie('toolEndDate',endDate.Format("yyyy-MM-dd"),3);
+        setCookie('toolStartDate', startDate.Format("yyyy-MM-dd"), 3);
+        if (endDate >= startDate) {
+            setCookie('toolEndDate', endDate.Format("yyyy-MM-dd"), 3);
         }
-        setCookie('dateType',3,3);
-        document.location.reload();
+        setCookie('dateType', 3, 3);
+        toolReplace();
     });
 
-    $(".cancelBtn").click(function() {
+    $(".cancelBtn").click(function () {
         $("#selectdate").hide();
     });
 });

@@ -5,80 +5,70 @@ import java.io.Serializable;
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
- * File name:  com.huak.energy.model<BR>
+ * File name:  com.huak.home.model<BR>
  * Author:  lichao  <BR>
  * Project:emc    <BR>
  * Version: v 1.0      <BR>
- * Date: 2017/5/26<BR>
- * Description:   能耗分析-分公司能耗明细和能源流明细公用  <BR>
+ * Date: 2017/6/9<BR>
+ * Description: 单耗分析    <BR>
  * Function List:  <BR>
  */
-public class AssessmentIndicator implements Serializable {
+public class ConsSecond implements Serializable{
     /* 主键 */
-    private String id;
+    private String typeId;
     /* 主键 */
-    private String orgId;
-    /* 主键 */
-    private String orgName;
-    /* 能源总量（万GJ） */
+    private String typeName;
+    /* 总单耗（tce/㎡） */
     private Double totalNum;
-    /* 能源总量（万GJ）同比 */
+    /* 总单耗（tce/㎡）同比 */
     private Double totalAn;
-    /* 能源总量（万GJ）环比 */
+    /* 总单耗（tce/㎡）环比 */
     private Double totalMom;
-    /* 水能总量（T） */
+    /* 水单耗（T） */
     private Double waterNum;
-    /* 水能总量（T）同比 */
+    /* 水单耗（T）同比 */
     private Double waterAn;
-    /* 水能总量（T）环比 */
+    /* 水单耗（T）环比 */
     private Double waterMom;
-    /* 电耗总量(Kw/h) */
+    /* 电单耗(Kw/h) */
     private Double electricNum;
-    /* 电耗总量(Kw/h)同比 */
+    /* 电单耗(Kw/h)同比 */
     private Double electricAn;
-    /* 电耗总量(Kw/h)环比 */
+    /* 电单耗(Kw/h)环比 */
     private Double electricMom;
-    /* 气能耗总量（M²） */
+    /* 气单耗（M²） */
     private Double gasNum;
-    /* 气能耗总量（M²）同比 */
+    /* 气单耗（M²）同比 */
     private Double gasAn;
-    /* 气能耗总量（M²）环比 */
+    /* 气单耗（M²）环比 */
     private Double gasMom;
-    /* 热能耗总量（GJ） */
+    /* 热单耗（GJ） */
     private Double heatNum;
-    /* 热能耗总量（GJ）同比 */
+    /* 热单耗（GJ）同比 */
     private Double heatAn;
-    /* 热能耗总量（GJ）环比 */
+    /* 热单耗（GJ）环比 */
     private Double heatMom;
-    /* 煤能耗总量（GJ） */
+    /* 煤单耗（GJ） */
     private Double coalNum;
-    /* 煤能耗总量（GJ）同比 */
+    /* 煤单耗（GJ）同比 */
     private Double coalAn;
-    /* 煤能耗总量（GJ）环比 */
+    /* 煤单耗（GJ）环比 */
     private Double coalMom;
 
-    public String getId() {
-        return id;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
-    public String getOrgId() {
-        return orgId;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public Double getTotalNum() {

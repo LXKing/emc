@@ -1,6 +1,6 @@
 package com.huak.home.dao;
 
-import com.huak.home.model.AssessmentIndicator;
+import com.huak.home.model.EnergySecond;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,14 +24,14 @@ public interface ConsAnalysisDao {
      * @param params
      * @return
      */
-    public List<AssessmentIndicator> findFilialeDetail(Map<String, Object> params);
+    public List<EnergySecond> findFilialeDetail(Map<String, Object> params);
 
     /**
      * 查询能源流明细
      * @param params
      * @return
      */
-    public List<AssessmentIndicator> findFolwDetail(Map<String, Object> params);
+    public List<EnergySecond> findFolwDetail(Map<String, Object> params);
 
     /**
      * 分公司能耗占比分布图

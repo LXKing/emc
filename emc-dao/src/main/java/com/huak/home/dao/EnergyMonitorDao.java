@@ -1,5 +1,6 @@
 package com.huak.home.dao;
 
+import com.huak.home.model.EnergyMonitor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface EnergyMonitorDao {
 	 * @return
 	 */
 	List<Map<String, Object>> groupEnergy(Map<String, String> params);
+
+    void insertByPrimaryKeySelective(EnergyMonitor energyMonitor);
 
 }

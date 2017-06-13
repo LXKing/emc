@@ -5,6 +5,7 @@
         <input type="hidden" id="toolFeedType" name="toolFeedType" value="2">
         <input type="hidden" id="toolStartDate" name="toolStartDate" value="">
         <input type="hidden" id="toolEndDate" name="toolEndDate" value="">
+        <input type="hidden" id="toolOrgType" name="toolOrgType" value="">
     </form>
     <!--面包屑导航-->
     <div class="bread-crumb pull-left">
@@ -69,101 +70,19 @@
     </div>
 </div>
 <script>
-    $(function(){
-
+    $(function () {
         //console.info("重置面包屑");
         var mbhtml = "";
         var mbxdh =  ${navigations};
-        $.each( mbxdh ,function(idx, item){
+        $.each(mbxdh, function (idx, item) {
             /*console.info(item);
-            console.info(document.location.href==_web + item.url)*/
-            if(document.location.href==_web + item.url){
-                mbhtml = getMbHtml(item,mbhtml);
+             console.info(document.location.href==_web + item.url)*/
+            var ymurl = document.location.href;
+            var hturl = _web + item.url;
+            if (ymurl.substr(0, ymurl.indexOf('?')) == hturl) {
+                mbhtml = getMbHtml(item, mbhtml);
             }
         });
-        $('.bread-crumb.pull-left').html("当前位置："+mbhtml);
-
-
-        //条件下拉框
-        $.ajax({
-            url : _web+"/tools/search/org",
-            type : "POST",
-            dataType: "json",
-            success:function(data){
-                var html = '';
-                $.each(data,function(idx,item){
-                    if(idx == 0){
-                        if(getCookie("toolOrgId")==null || getCookie("toolOrgId")==""){
-                            $('.x-sfleft1.x-sfw1').html('<input type="text" value="'+item.ORG_NAME+'" readonly="readonly">');
-                            $('#toolOrgId').val(item.ID);
-                        }else{
-                            $('.x-sfleft1.x-sfw1').html('<input type="text" value="'+getCookie("toolOrgName")+'" readonly="readonly">');
-                            $('#toolOrgId').val(getCookie("toolOrgId"));
-                        }
-
-                    }
-                    html += '<p value="'+item.ID+'">'+item.ORG_NAME+'</p>'
-                });
-                $(".x-sfoption.x-sfoption1").html(html);
-
-            }
-        });
-        //默认类型
-        if(getCookie("toolFeedType")==null || getCookie("toolFeedType")==""){
-            $('#toolFeedType').val(2);
-        }else{
-            var  toolFeedType = getCookie("toolFeedType");
-            $('#toolFeedType').val(toolFeedType);
-            if(toolFeedType == 1){
-                $('.btnAlarm').each(function(){
-                    if("集中供暖"==$(this).text()){
-                        $(this).removeClass("btnAlarm-on");
-                    }else if("区域供暖"==$(this).text()){
-                        $(this).addClass("btnAlarm-on");
-                    }
-                });
-            }
-        }
-
-        //默认时间段
-        if(getCookie("dateType")==null || getCookie("dateType")==""){
-            $.ajax({
-                url : _web+"/tools/search/season",
-                type : "POST",
-                dataType: "json",
-                success:function(data){
-                    $('#toolStartDate').val(data.startDate);
-                    $('#toolEndDate').val(data.endDate);
-                    $('#begin').val(data.startDate);
-                    $('#end').val(data.endDate);
-                }
-            });
-        }else{
-            var dataType = getCookie("dateType");
-            $('.btnAlarm').each(function(){
-                if("本年度"==$(this).text() && dataType == 1){
-                    $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-                }else if("本采暖季"==$(this).text() && dataType == 2){
-                    $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-                }else if("自定义"==$(this).text() && dataType == 3){
-                    $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-                }
-            });
-            $('#toolStartDate').val(getCookie("toolStartDate"));
-            $('#toolEndDate').val(getCookie("toolEndDate"));
-            $('#begin').val(getCookie("toolStartDate"));
-            $('#end').val(getCookie("toolEndDate"));
-        }
-
-
-    })
-    function getMbHtml(navigation,html){
-        if(navigation.navigation=="undefined"||navigation.navigation==null||navigation.navigation==""){
-            html +='<a href="'+_web+navigation.url+'">[<var class="xmhpg">'+navigation.title+'</var>]</a>';
-            return html;
-        }else{
-            html = getMbHtml(navigation.navigation,html)+ '&gt;<a href="'+_web+navigation.url+'">[<var class="xmhpg">'+navigation.title+'</var>]</a>';
-            return html;
-        }
-    }
+        $('.bread-crumb.pull-left').html("当前位置：" + mbhtml);
+    });
 </script>

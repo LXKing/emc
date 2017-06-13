@@ -65,6 +65,9 @@ public class SearchController {
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         JSONObject jo = searchService.getSeason(company.getId());
+        if(jo == null){
+            return "";
+        }
         return jo.toJSONString();
     }
 

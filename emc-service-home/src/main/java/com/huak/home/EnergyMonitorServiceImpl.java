@@ -1,21 +1,17 @@
 package com.huak.home;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.huak.base.dao.DateDao;
 import com.huak.home.dao.EnergyMonitorDao;
+import com.huak.home.dao.EnergySecondDao;
+import com.huak.home.model.EnergyMonitor;
+import com.huak.home.model.EnergySecond;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class EnergyMonitorServiceImpl implements EnergyMonitorService {
@@ -24,6 +20,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	private DateDao dateDao;
 	@Resource
 	private EnergyMonitorDao eaDao;
+    @Resource
+    private EnergySecondDao energySecondDao;
 
 	/**
 	 * 跳转到此页面前，查询↑和↓那块的数据
@@ -72,8 +70,38 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		}
 		return result;
 	}
-	
-	/**
+
+    @Override
+    @Transactional(readOnly = false)
+    public void insertByPrimaryKeySelective(EnergyMonitor energyMonitor) {
+        eaDao.insertByPrimaryKeySelective(energyMonitor);
+    }
+
+    /**
+     * 查询分公司列表
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<EnergySecond> findAssessmentIndicators(Map<String, Object> params) {
+        return energySecondDao.findAssessmentIndicators(params);
+    }
+
+    /**
+     * 分公司能耗占比分布图
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<EnergySecond> fgsEnergyRatio(Map<String, Object> params) {
+        return energySecondDao.fgsEnergyRatio(params);
+    }
+
+    /**
 	 * 获取折线数据
 	 */
 	@Override
