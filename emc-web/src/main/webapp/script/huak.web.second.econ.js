@@ -1,6 +1,20 @@
 
 
 $(function(){
+    //加载分公司能耗
+    $.ajax({
+        url : _web+"/energy/monitor/fgs/energy/ratio",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            console.info(data)
+            chart01Fun(data.list);
+        }
+    });
     $.ajax({
         url : _web+"/static/json/6-1.json",
         type : "GET",
@@ -109,7 +123,7 @@ $(function(){
         }
     });
 
-    chart01Fun();
+
     chart02Fun();
     chart03Fun();
     chart04Fun();

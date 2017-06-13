@@ -135,24 +135,39 @@
     <div class="col-lg-12 mb14">
         <div class="index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class="pull-left energyTit analy_tit"><i></i>分公司能耗明细<small class="font-sm">Assessment indicators</small></div>
+                <div class="pull-left energyTit analy_tit"><i></i>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}能耗明细<small class="font-sm">Assessment indicators</small></div>
                 <a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
             </div>
             <div class="AssessmentBox rconttable col-lg-12 no-padding">
                 <table class="table table-striped table-bordered table-hover col-lg-12 no-padding">
                     <thead>
                     <tr class="first_tr">
-                        <td>分公司</td>
-                        <td>能源总量（万GJ）</td>
+                        <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
+                        <td>能源总量（tce）</td>
                         <td>水能总量（T）</td>
                         <td>电耗总量(Kw/h)</td>
                         <td>气能耗总量（M²）</td>
                         <td>热能耗总量（GJ）</td>
                         <td>煤能耗总量（GJ）</td>
+                        <td>油能耗总量（GJ）</td>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr class="">
+                    <tbody id="fgsEnergyTbody">
+                    <c:forEach var="fgs" items="${fgsList}" varStatus="state">
+                        <tr class="${state.index%2 eq 0?'':'bgc'}">
+                            <td>
+                                <a href="javascript:;" class="need_a">${fgs.orgName}</a>
+                            </td>
+                            <td class="need_title">${fgs.totalBq}（同<span class="${fgs.totalAn eq 0?'':(fgs.totalAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.totalAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.totalAn eq 0?'':(fgs.totalAn gt 0?'↑':'↓')}</span>）</td>
+                            <td class="need_title">${fgs.waterBq}（同<span class="${fgs.waterAn eq 0?'':(fgs.waterAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.waterAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.waterAn eq 0?'':(fgs.waterAn gt 0?'↑':'↓')}</span>）</td>
+                            <td class="need_title">${fgs.electricBq}（同<span class="${fgs.electricAn eq 0?'':(fgs.electricAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.electricAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.electricAn eq 0?'':(fgs.electricAn gt 0?'↑':'↓')}</span>）</td>
+                            <td class="need_title">${fgs.gasBq}（同<span class="${fgs.gasAn eq 0?'':(fgs.gasAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.gasAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.gasAn eq 0?'':(fgs.gasAn gt 0?'↑':'↓')}</span>）</td>
+                            <td class="need_title">${fgs.heatBq}（同<span class="${fgs.heatAn eq 0?'':(fgs.heatAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.heatAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.heatAn eq 0?'':(fgs.totalAn gt 0?'↑':'↓')}</span>）</td>
+                            <td class="need_title">${fgs.coalBq}（同<span class="${fgs.coalAn eq 0?'':(fgs.coalAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.coalAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.coalAn eq 0?'':(fgs.coalAn gt 0?'↑':'↓')}</span>）</td>
+                            <td class="need_title">${fgs.oilBq}（同<span class="${fgs.oilAn eq 0?'':(fgs.oilAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.oilAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.oilAn eq 0?'':(fgs.oilAn gt 0?'↑':'↓')}</span>）</td>
+                        </tr>
+                    </c:forEach>
+                    <%--<tr class="">
                         <td>
                             <a href="javascript:;" class="need_a">集团</a>
                         </td>
@@ -162,73 +177,7 @@
                         <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
                         <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
                         <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr class="bgc">
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr class="bgc">
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr class="bgc">
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
+                    </tr>--%>
 
                     </tbody>
                 </table>

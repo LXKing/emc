@@ -5,7 +5,8 @@
     <select id="getOrgList" parameterType="java.lang.String" resultType="java.util.Map">
                 SELECT
             o.ID,
-            o.ORG_NAME
+            o.ORG_NAME,
+            o.P_ORG_ID
         FROM
             (
                 SELECT

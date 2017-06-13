@@ -68,7 +68,7 @@ public class SearchServiceImpl implements SearchService {
         if(season == null){
             List<Map<String, Object>> seasons = searchDao.getSeasonAll(paramsMap);
             if(seasons.size()==0){
-                return jsonObject;
+                return null;
             }else {
                 season = seasons.get(0);
                 Integer day = null;
@@ -78,7 +78,7 @@ public class SearchServiceImpl implements SearchService {
                     e.printStackTrace();
                 }
                 if(day>365){
-                    return jsonObject;
+                    return null;
                 }
             }
 
