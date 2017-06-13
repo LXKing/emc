@@ -23,7 +23,6 @@ $(function(){
             alert("Connection error");
         },
         success : function(data) {
-            console.info(data)
             chart02Fun(data);
         }
     });
@@ -150,7 +149,6 @@ $(function(){
 
 
     chart03Fun();
-    chart04Fun();
     chart05Fun();
     chart06Fun();
     chart07Fun();
@@ -960,7 +958,7 @@ function chart03Fun() {
 
 
 /*分公司能耗排名---barchart02*/
-function chart04Fun(){
+function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
@@ -1021,7 +1019,7 @@ function chart04Fun(){
                     fontFamily: 'arial'
                 }
             },
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.xaxis
 
         },
         yAxis: {
@@ -1062,7 +1060,7 @@ function chart04Fun(){
                         {type: 'average', name: '平均值'}
                     ]
                 },
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.list
             }
         ]
     }
