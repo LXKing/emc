@@ -23,6 +23,7 @@ $(function(){
             alert("Connection error");
         },
         success : function(data) {
+            console.info(data)
             chart02Fun(data);
         }
     });
@@ -40,7 +41,7 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/static/json/6-1.json",
+        url : _web+"/energy/monitor/groupEnergy",
         type : "GET",
         dataType: "json",
         error : function(request) {
@@ -149,7 +150,7 @@ $(function(){
 
 
     chart03Fun();
-
+    chart04Fun();
     chart05Fun();
     chart06Fun();
     chart07Fun();
@@ -959,7 +960,7 @@ function chart03Fun() {
 
 
 /*分公司能耗排名---barchart02*/
-function chart04Fun(data){
+function chart04Fun(){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
@@ -1020,7 +1021,7 @@ function chart04Fun(data){
                     fontFamily: 'arial'
                 }
             },
-            data:data.xaxis
+            data:['朝一','朝二','丰台','东城','西城','海淀']
 
         },
         yAxis: {
@@ -1061,7 +1062,7 @@ function chart04Fun(data){
                         {type: 'average', name: '平均值'}
                     ]
                 },
-                data:data.list
+                data:[10, 52, 200, 334, 390, 330]
             }
         ]
     }
