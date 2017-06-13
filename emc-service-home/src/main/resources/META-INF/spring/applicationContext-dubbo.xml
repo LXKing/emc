@@ -38,5 +38,8 @@
     <dubbo:service interface="com.huak.home.SearchService" ref="searchService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
-
+    <bean id="frameService" class="com.huak.home.FrameServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.FrameService" ref="frameService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>
