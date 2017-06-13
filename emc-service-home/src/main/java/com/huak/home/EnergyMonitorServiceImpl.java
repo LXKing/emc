@@ -50,22 +50,26 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		if(energyType.size()>0){//查询出数据
 			for(String type:energyType){
 				//每一项结果Map
-				Map<String,String> html = new HashMap<String,String>();
+				Map<String,Object> html = new HashMap<String,Object>();
+				Map<String,String> energy = new HashMap<String,String>();
 				//今天的数据
 				String cur = curMap.get(type)==null||curMap.get(type).size()==0?"0":curMap.get(type).get(0).toString();
 				//去年今天的数据
 				String last = lastMap.get(type)==null||lastMap.get(type).size()==0?"0":lastMap.get(type).get(0).toString();
-				html.put("total", cur);//能耗数
-				Double scale = 0.00;
-				if(Double.valueOf(cur)>=Double.valueOf(last)){
-					html.put("up", "1");//为1，↑
-					scale = Double.valueOf(last)==0?Double.valueOf(cur):Double.valueOf(cur)/Double.valueOf(last);
-				}else{
-					html.put("up", "0");//为0，↓
-					scale = Double.valueOf(cur)==0?Double.valueOf(last):Double.valueOf(last)/Double.valueOf(cur);
+				energy.put("value", cur);
+				energy.put("type", "0");
+				Map<String,String> changeRate = new HashMap<String,String>();
+				if(Double.valueOf(cur)>=Double.valueOf(last)){//同比增长
+					changeRate.put("type", "0");
+				}else{//同比减少
+					changeRate.put("type", "1");
 				}
-				html.put("scale", String.format("%.2f", scale));//同比 %
-				result.put(type, html);
+				Double scale = Double.valueOf(last)==0?0.0:
+					(double)Math.round((Double.valueOf(cur)-Double.valueOf(last))/Double.valueOf(last)*100)/100;
+				changeRate.put("rate", String.format("%.2f", scale));//同比 %
+				html.put("energy", energy);
+				html.put("changeRate", changeRate);
+				result.put(type.replace("Energy", "Total"), html);
 			}
 		}
 		return result;
@@ -135,6 +139,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		List<Map<String,Object>> lastList = eaDao.groupEnergy(params);
 		//组装数据
 		result = getChartsData(curList,lastList);
+		Map<String,Object> rateMap = groupEnergy2Day();
+		result.putAll(rateMap);
 		return result;
 	}
 
@@ -211,7 +217,11 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
-			date = sdf.parse(dateDao.getDate());
+			if(null!=curDate&&!"".equals(curDate)){
+				date = sdf.parse(curDate);
+			}else{
+				date = sdf.parse(dateDao.getDate());
+			}
 			Calendar calendar = Calendar.getInstance();    
 			calendar.setTime(date);    
 			calendar.add(type, num);

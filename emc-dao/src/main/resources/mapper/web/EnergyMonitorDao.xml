@@ -31,17 +31,16 @@
   
   <!-- 查询今年的集团能耗 -->
   <select id="groupEnergy" resultType="java.util.Map" parameterType="java.util.Map">
-  	SELECT SUM(C.total) AS total, SUM(CASE C.energyType WHEN 'water' THEN C.total ELSE 0 END) AS water, 
-  	SUM(CASE C.energyType WHEN 'electric' THEN C.total ELSE 0 END) AS elec, 
-  	SUM(CASE C.energyType WHEN 'gas' THEN C.total ELSE 0 END) AS gas, 
-  	SUM(CASE C.energyType WHEN 'heat' THEN C.total ELSE 0 END) AS hot , 
-  	SUM(CASE C.energyType WHEN 'coal' THEN C.total ELSE 0 END) AS coal,C.yeardate FROM 
-  	(SELECT SUM(B.dosage) AS total, B.yeardate AS yeardate, B.energyType AS energyType FROM (SELECT A.*,IF(A.orgtype = '热源', 
-  	( SELECT d.DES FROM t_emc_org_feed f LEFT JOIN t_emc_sys_dic d ON f.HEAT_TYPE = d.ID WHERE f.id = A.nodeid ), '') AS heat_type 
-  	FROM (SELECT h.COMID AS comid, h.UNITID AS unitid, h.NODEID AS nodeid, ( SELECT NAME_EN FROM t_emc_energy_type WHERE 
-  	ID = h.TYPEID ) AS energyType, h.DOSAGE AS dosage , DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate, 
-  	( SELECT DES FROM t_emc_sys_dic WHERE ID = o.TYPE_ID ) AS orgtype FROM t_emc_final_data_hour h LEFT JOIN 
-  	t_emc_org o ON h.COMID = o.COM_ID ) A ) B WHERE 1 = 1 
+  	SELECT SUM(C.total) AS groupEnergy,SUM( CASE WHEN C.energyType in('produceHeat','forHeat') THEN C.total ELSE 0 END) AS hotEnergy,
+  	SUM( CASE WHEN C.energyType in ('powerElectric','lightElectric') THEN C.total ELSE 0 END ) AS electricEnergy,
+  	SUM( CASE C.energyType WHEN 'repairWater' THEN C.total ELSE 0 END ) AS waterEnergy,
+  	SUM( CASE C.energyType WHEN 'gas' THEN C.total ELSE 0 END ) AS gasEnergy,
+  	SUM( CASE C.energyType WHEN 'coal' THEN C.total ELSE 0 END ) AS coalEnergy, C.yeardate 
+  	FROM ( SELECT SUM(B.dosage) AS total, B.yeardate AS yeardate, B.energyType AS energyType 
+  	FROM ( SELECT A.*, IF ( A.orgtype = '1', ( SELECT f.HEAT_TYPE FROM t_emc_unit_feed f where f.id = A.unitid ), '' ) AS heat_type 
+  	FROM ( SELECT h.COMID AS comid, h.UNITID AS unitid, h.NODEID AS nodeid, ( SELECT NAME_EN FROM t_emc_energy_type 
+  	WHERE ID = h.TYPEID ) AS energyType, h.DOSAGE AS dosage, DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate, v.type AS orgtype 
+  	FROM t_emc_final_data_hour h LEFT JOIN v_emc_unit_feed v ON h.COMID = v.COM_ID ) A ) B WHERE 1 = 1
   	<if test="cyearDate!=null and cyearDate!=''"> AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') >= #{cyearDate,jdbcType=VARCHAR} </if>
   	<if test="eyearDate!=null and eyearDate!=''"> AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') &lt;= #{eyearDate,jdbcType=VARCHAR}</if>
   	<if test="heatType!=null and heatType!=''"> AND B.heat_type = #{heatType,jdbcType=VARCHAR} </if>

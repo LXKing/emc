@@ -28,7 +28,7 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/static/json/6-1.json",
+        url : _web+"/energy/monitor/groupEnergy",
         type : "GET",
         dataType: "json",
         error : function(request) {
