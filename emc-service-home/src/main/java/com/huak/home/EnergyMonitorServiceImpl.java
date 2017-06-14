@@ -118,6 +118,18 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     }
 
     /**
+     * 分公司能耗同比
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> fgsEnergyAn(Map<String, Object> params) {
+        return energySecondDao.fgsEnergyAn(params);
+    }
+
+    /**
      * 分公司能耗排名
      *
      * @param params

@@ -50,6 +50,13 @@ public interface EnergyMonitorService {
     public List<Map<String, Object>> fgsEnergyTrend(Map<String, Object> params);
 
     /**
+     * 分公司能耗同比
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyAn(Map<String, Object> params);
+
+    /**
      * 分公司能耗排名
      * @param params
      * @return

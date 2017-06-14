@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.CollectionUtil;
 import com.huak.common.Constants;
 import com.huak.home.EnergyMonitorService;
-import com.huak.home.model.EnergySecond;
 import com.huak.home.type.ToolVO;
 import com.huak.org.CompanyService;
 import com.huak.org.OrgService;
+import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -52,8 +52,24 @@ public class EnergyMonitorController {
      * @return
      */
     @RequestMapping(value = "/tsec", method = RequestMethod.GET)
-    public String secondEconPage(Model model,ToolVO toolVO){
+    public String secondEconPage(Model model,HttpServletRequest request){
         logger.info("跳转二级能耗页面");
+        try {
+            Company company = (Company)request.getSession().getAttribute(Constants.SESSION_COM_KEY);
+
+            model.addAttribute("company",company);
+        } catch (Exception e) {
+            logger.error("跳转二级能耗页面异常："+e.getMessage());
+        }
+        return "second/econ";
+    }
+
+    @RequestMapping(value = "/fgs/energy/list", method = RequestMethod.POST)
+    @ResponseBody
+    public String fgsEnergyList(ToolVO toolVO){
+        logger.info("分公司能耗详细");
+
+        JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
             Map params = new HashMap<String, Object>();
@@ -70,14 +86,12 @@ public class EnergyMonitorController {
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
 
-            List<EnergySecond> energySecondList = eaService.findAssessmentIndicators(params);
-            model.addAttribute("fgsList",energySecondList);
-
-            model.addAttribute("company",companyService.selectByPrimaryKey(org.getComId()));
-        } catch (ParseException e) {
-            logger.error("跳转二级能耗页面异常："+e.getMessage());
+            jo.put(Constants.LIST, eaService.findAssessmentIndicators(params));
+        } catch (Exception e) {
+            logger.error("分公司能耗详细异常" + e.getMessage());
         }
-        return "second/econ";
+        return jo.toJSONString();
+
     }
 
     @RequestMapping(value = "/fgs/energy/ratio", method = RequestMethod.POST)
@@ -211,6 +225,47 @@ public class EnergyMonitorController {
             jo.put(Constants.LIST, datas);
         } catch (Exception e) {
             logger.error("分公司能耗排名异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+
+    }
+
+    @RequestMapping(value = "/fgs/energy/an", method = RequestMethod.POST)
+    @ResponseBody
+    public String fgsEnergyAn(ToolVO toolVO){
+        logger.info("分公司能耗同比");
+
+        JSONObject jo = new JSONObject();
+        try {
+            /*封装条件*/
+            Map params = new HashMap<String, Object>();
+            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+            if(org.getpOrgId()==0){
+                params.put("pOrgId",org.getId());
+            }else{
+                params.put("orgId",org.getId());
+            }
+            params.put("comId",org.getComId());
+            params.put("feedType",toolVO.getToolFeedType());
+            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
+            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+
+            List<Map<String,Object>> energySecondList = eaService.fgsEnergyAn(params);
+            List<String> xAxis = new ArrayList<>();
+            List<String> bqs = new ArrayList<>();
+            List<String> tqs = new ArrayList<>();
+            for(Map<String,Object> map:energySecondList){
+                bqs.add(map.get("BQBM").toString());
+                xAxis.add(map.get("ORGNAME").toString());
+                tqs.add(map.get("TQBM").toString());
+            }
+            jo.put(Constants.XAXIS, xAxis);
+            jo.put("tq", tqs);
+            jo.put("bq", bqs);
+        } catch (Exception e) {
+            logger.error("分公司能耗同比异常" + e.getMessage());
         }
         return jo.toJSONString();
 

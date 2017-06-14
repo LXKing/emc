@@ -24,16 +24,20 @@ function toolReplace() {
     }
     document.location.replace(reurl + "?" + $("#searchTools").serialize());
 }
-
-function getMbHtml(navigation, html) {
-    if (navigation.navigation == "undefined" || navigation.navigation == null || navigation.navigation == "") {
-        html += '<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
-        return html;
-    } else {
-        html = getMbHtml(navigation.navigation, html) + '&gt;<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
-        return html;
+/**
+ * 保留2位小数
+ * @param x
+ * @returns {Number}
+ */
+function toDecimal(x) {
+    var f = parseFloat(x);
+    if (isNaN(f)) {
+        return;
     }
+    f = Math.round(x*100)/100;
+    return f;
 }
+
 $(function () {
 
 

@@ -3,6 +3,18 @@
 $(function(){
     //加载分公司能耗
     $.ajax({
+        url : _web+"/energy/monitor/fgs/energy/list",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            fgsEnergyList(data);
+        }
+    });
+    $.ajax({
         url : _web+"/energy/monitor/fgs/energy/ratio",
         type : "POST",
         data:$("#searchTools").serialize(),
@@ -24,6 +36,18 @@ $(function(){
         },
         success : function(data) {
             chart02Fun(data);
+        }
+    });
+    $.ajax({
+        url : _web+"/energy/monitor/fgs/energy/an",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            chart03Fun(data);
         }
     });
     $.ajax({
@@ -148,13 +172,33 @@ $(function(){
     });
 
 
-    chart03Fun();
+
     chart05Fun();
     chart06Fun();
     chart07Fun();
 })
 
+function fgsEnergyList(data){
 
+    var html = "";
+    $.each(data.list,function(idx,item){
+        html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
+        html +='<td><a href="javascript:;" class="need_a">'+item.orgName+'</a></td>';
+        html +=getHtmlTd(item.totalBq,item.totalAn);
+        html +=getHtmlTd(item.waterBq,item.waterAn);
+        html +=getHtmlTd(item.electricBq,item.electricAn);
+        html +=getHtmlTd(item.gasBq,item.gasAn);
+        html +=getHtmlTd(item.heatBq,item.heatAn);
+        html +=getHtmlTd(item.coalBq,item.coalAn);
+        html +=getHtmlTd(item.oilBq,item.oilAn);
+        html +='</tr>';
+    });
+    $("#fgsEnergyTbody").html(html);
+}
+
+function getHtmlTd(bq,an){
+    return '<td class="need_title">'+bq+'（同<span class="'+(an == 0?"":(an > 0?"redcolor":"bluecolor"))+'">'+toDecimal(an)+'%'+(an == 0?"→":(an > 0?"↑":"↓"))+'</span>）</td>';
+}
 
 /*集团总能耗-折线图*/
 function groupEnergyChartFun(datalist, datelist){
@@ -845,11 +889,11 @@ function chart02Fun(data){
 
 
 /*分公司能耗同比*/
-function chart03Fun() {
+function chart03Fun(data) {
     var barchart01 = echarts.init(document.getElementById('barchart01'));
     var option = {
         title:{
-            subtext:'分公司能耗 (单位: GJ/㎡)',
+            subtext:'分公司能耗 (单位: tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -867,7 +911,7 @@ function chart03Fun() {
             }
         },
         legend: {
-            data:['今年','去年'],
+            data:['本期','同期'],
             itemWidth:8,
             itemHeight:4,
             right: '40',
@@ -906,7 +950,7 @@ function chart03Fun() {
                     fontFamily: 'arial'
                 }
             },
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.xaxis
 
         },
         yAxis: {
@@ -939,16 +983,16 @@ function chart03Fun() {
         color:['#3B96DD','#a1b1c5'],
         series: [
             {
-                name:"今年",
+                name:"本期",
                 type:'bar',
                 barWidth: '20',
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.bq
             },
             {
-                name:"去年",
+                name:"同期",
                 type:'bar',
                 barWidth: '20',
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.tq
             }
         ]
     }
@@ -962,7 +1006,7 @@ function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
-            subtext:'分公司能耗 (单位: GJ/㎡)',
+            subtext:'分公司能耗 (单位: tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
