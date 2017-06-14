@@ -66,6 +66,7 @@ $(function(){
     $.ajax({
         url : _web+"/energy/monitor/groupEnergy",
         type : "GET",
+        data:$("#searchTools").serialize(),
         dataType: "json",
         error : function(request) {
             alert("Connection error");
