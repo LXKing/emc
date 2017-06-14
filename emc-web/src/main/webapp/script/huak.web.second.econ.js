@@ -11,12 +11,36 @@ $(function(){
             alert("Connection error");
         },
         success : function(data) {
-            console.info(data)
             chart01Fun(data.list);
         }
     });
     $.ajax({
-        url : _web+"/static/json/6-1.json",
+        url : _web+"/energy/monitor/fgs/energy/trend",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            chart02Fun(data);
+        }
+    });
+    $.ajax({
+        url : _web+"/energy/monitor/fgs/energy/ranking",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            console.info(data)
+            chart04Fun(data);
+        }
+    });
+    $.ajax({
+        url : _web+"/energy/monitor/groupEnergy",
         type : "GET",
         dataType: "json",
         error : function(request) {
@@ -124,9 +148,7 @@ $(function(){
     });
 
 
-    chart02Fun();
     chart03Fun();
-    chart04Fun();
     chart05Fun();
     chart06Fun();
     chart07Fun();
@@ -667,7 +689,7 @@ function coalEnergyChartFun(datalist, datelist){
 
 
 /*分公司能耗占比分布图*/
-function chart01Fun(){
+function chart01Fun(data){
     var piechart = echarts.init(document.getElementById('piechart'));
     var option = {
 
@@ -728,15 +750,8 @@ function chart01Fun(){
                         label : {show:true}
                     }
                 },
-                color:['#c675c3', '#8d82cc', '#3b96db', '#a1b1c5', '#32bbb6', '#df614c'],
-                data:[
-                    {value:335, name:'朝一'},
-                    {value:310, name:'朝二'},
-                    {value:251, name:'丰台'},
-                    {value:234, name:'东城'},
-                    {value:135, name:'西城'},
-                    {value:1048, name:'海淀'}
-                ]
+                color:color,
+                data:data
 
             }
         ]
@@ -746,7 +761,7 @@ function chart01Fun(){
 
 
 /*分公司能耗趋势对比图*/
-function chart02Fun(){
+function chart02Fun(data){
     var linechart = echarts.init(document.getElementById('linechart'));
     var option = {
 
@@ -768,9 +783,9 @@ function chart02Fun(){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.legends
         },
-        color:['#c675c3', '#8d82cc', '#3b96db', '#a1b1c5', '#32bbb6', '#df614c'],
+        color:color,
         xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -794,7 +809,7 @@ function chart02Fun(){
             splitArea: {
                 show: true
             },
-            data: ['2015-11','2015-12','2016-01','2016-02','2016-03']
+            data: data.xaxis
 
         },
         yAxis: {
@@ -822,50 +837,7 @@ function chart02Fun(){
             }
         },
 
-        series: [
-            {
-                name:'朝一',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[120, 132, 101, 134, 90]
-            },
-            {
-                name:'朝二',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[140, 112, 51, 34, 69]
-            },
-            {
-                name:'丰台',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[220, 182, 191, 234, 290]
-            },
-            {
-                name:'东城',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[150, 232, 201, 154, 190]
-            },
-            {
-                name:'西城',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[320, 332, 301, 334, 390]
-            },
-            {
-                name:'海淀',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[820, 932, 901, 934, 629]
-            }
-        ]
+        series: data.list
     };
 
     linechart.setOption(option);
@@ -986,7 +958,7 @@ function chart03Fun() {
 
 
 /*分公司能耗排名---barchart02*/
-function chart04Fun(){
+function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
@@ -1047,7 +1019,7 @@ function chart04Fun(){
                     fontFamily: 'arial'
                 }
             },
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.xaxis
 
         },
         yAxis: {
@@ -1088,7 +1060,7 @@ function chart04Fun(){
                         {type: 'average', name: '平均值'}
                     ]
                 },
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.list
             }
         ]
     }

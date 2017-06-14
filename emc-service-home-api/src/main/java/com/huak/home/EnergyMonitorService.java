@@ -40,6 +40,20 @@ public interface EnergyMonitorService {
      * @param params
      * @return
      */
-    public List<EnergySecond> fgsEnergyRatio(Map<String, Object> params);
+    public List<Map<String, Object>> fgsEnergyRatio(Map<String, Object> params);
+
+    /**
+     * 分公司能耗趋势对比图
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyTrend(Map<String, Object> params);
+
+    /**
+     * 分公司能耗排名
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params);
 
 }

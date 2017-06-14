@@ -186,14 +186,14 @@
                     <div class="col-lg-6 no-padding analyBoxList" style="border-right: 1px solid #d0d4d9;">
                         <div id="piechart" style="width: 100%;height:268px;"></div>
                         <div class="piechartTit">
-                            分公司能耗占比分布图
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}能耗占比分布图
                         </div>
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                         <div id="linechart" style="width: 100%;height:268px;"></div>
 
                         <div class="piechartTit">
-                            分公司能耗趋势对比图
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}能耗趋势对比图
                         </div>
                     </div>
 
@@ -202,13 +202,13 @@
                     <div class="col-lg-6 no-padding analyBoxList" style="border-right: 1px solid #d0d4d9;">
                         <div id="barchart01" style="width: 100%;height:268px;"></div>
                         <div class="piechartTit">
-                            分公司能耗同比
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}能耗同比
                         </div>
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList">
                         <div id="barchart02" style="width: 100%;height:268px;"></div>
                         <div class="piechartTit">
-                            分公司能耗排名
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}能耗排名
                         </div>
                     </div>
                 </div>

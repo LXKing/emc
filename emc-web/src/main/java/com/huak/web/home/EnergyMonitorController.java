@@ -1,6 +1,7 @@
 package com.huak.web.home;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CollectionUtil;
 import com.huak.common.Constants;
 import com.huak.home.EnergyMonitorService;
 import com.huak.home.model.EnergySecond;
@@ -19,9 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -103,7 +102,7 @@ public class EnergyMonitorController {
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
 
-            List<EnergySecond> energySecondList = eaService.findAssessmentIndicators(params);
+            List<Map<String,Object>> energySecondList = eaService.fgsEnergyRatio(params);
             jo.put(Constants.LIST, energySecondList);
         } catch (Exception e) {
             logger.error("分公司能耗占比分布图异常" + e.getMessage());
@@ -111,7 +110,112 @@ public class EnergyMonitorController {
         return jo.toJSONString();
 
     }
-    
+
+    @RequestMapping(value = "/fgs/energy/trend", method = RequestMethod.POST)
+    @ResponseBody
+    public String fgsEnergyTrend(ToolVO toolVO){
+        logger.info("分公司能耗趋势对比图");
+
+        JSONObject jo = new JSONObject();
+        try {
+            /*封装条件*/
+            Map params = new HashMap<String, Object>();
+            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+            if(org.getpOrgId()==0){
+                params.put("pOrgId",org.getId());
+            }else{
+                params.put("orgId",org.getId());
+            }
+            params.put("comId",org.getComId());
+            params.put("feedType",toolVO.getToolFeedType());
+            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
+            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+
+            List<Map<String,Object>> trendList = eaService.fgsEnergyTrend(params);
+
+            List<String> xAxis = new ArrayList<>();
+            List<Map<String,Object>> series = new LinkedList<>();
+            List<String> legends = new ArrayList<>();
+            //先确定几条线和横坐标
+            for(Map<String,Object> map : trendList){
+                String fgsId = map.get("FGSID").toString();
+                String name = map.get("NAME").toString();
+                String date = map.get("DATE").toString();
+                legends.add(name);
+                xAxis.add(date);
+                map.get("BQBM").toString();
+            }
+            //去重复
+            xAxis = CollectionUtil.removeDuplicateWithOrder(xAxis);
+            legends = CollectionUtil.removeDuplicateWithOrder(legends);
+            //组装数据
+            for(String gsName:legends){
+                Map<String,Object> dataMap = new HashMap<>();
+                List<Double> dataList = new ArrayList<>();
+                for(Map<String,Object> map : trendList){
+                    String name = map.get("NAME").toString();
+                    if(name.equals(gsName)){
+                        dataList.add(Double.valueOf(map.get("BQBM").toString()));
+                    }
+                }
+                dataMap.put("name",gsName);
+                dataMap.put("type","line");
+                dataMap.put("symbol","circle");
+                dataMap.put("smooth",false);
+                dataMap.put("data",dataList);
+                series.add(dataMap);
+            }
+
+            jo.put(Constants.XAXIS,xAxis);
+            jo.put(Constants.LEGENDS,legends);
+            jo.put(Constants.LIST, series);
+        } catch (Exception e) {
+            logger.error("分公司能耗趋势对比图异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+
+    }
+
+    @RequestMapping(value = "/fgs/energy/ranking", method = RequestMethod.POST)
+    @ResponseBody
+    public String fgsEnergyRanking(ToolVO toolVO){
+        logger.info("分公司能耗排名");
+
+        JSONObject jo = new JSONObject();
+        try {
+            /*封装条件*/
+            Map params = new HashMap<String, Object>();
+            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+            if(org.getpOrgId()==0){
+                params.put("pOrgId",org.getId());
+            }else{
+                params.put("orgId",org.getId());
+            }
+            params.put("comId",org.getComId());
+            params.put("feedType",toolVO.getToolFeedType());
+            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
+            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+
+            List<Map<String,Object>> energySecondList = eaService.fgsEnergyRanking(params);
+            List<String> xAxis = new ArrayList<>();
+            List<String> datas = new ArrayList<>();
+            for(Map<String,Object> map:energySecondList){
+                xAxis.add(map.get("NAME").toString());
+                datas.add(map.get("VALUE").toString());
+            }
+            jo.put(Constants.XAXIS, xAxis);
+            jo.put(Constants.LIST, datas);
+        } catch (Exception e) {
+            logger.error("分公司能耗排名异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+
+    }
+
     /**
      * 查询集团能耗数据
      * @param params
