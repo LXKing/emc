@@ -101,7 +101,7 @@
 <div class="col-xs-12 no-padding">
 <div class="col-xs-4 mb14">
     <div class="index_contentBox energy_consumption">
-        <a href="javascript:document.location.href = '${web}/energy/monitor/tsec?'+$('#searchTools').serialize();">
+        <a href="${web}/energy/monitor/tsec">
             <div class="titbox clearfix no-padding no-margin">
                 <div class="pull-left energyTit"><i></i>能耗明细<small class="font-sm">Energy Consumption</small></div>
             </div>
