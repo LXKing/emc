@@ -9,6 +9,7 @@ import com.huak.home.type.ToolVO;
 import com.huak.org.CompanyService;
 import com.huak.org.OrgService;
 import com.huak.org.model.Org;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+
 import java.text.ParseException;
 import java.util.*;
 
@@ -185,14 +188,18 @@ public class EnergyMonitorController {
      */
 	@RequestMapping(value = "/groupEnergy", method = RequestMethod.GET)
     @ResponseBody
-    public String groupEnergy(Map<String,String> params){
+    public String groupEnergy(@RequestParam Map<String,String> params){
         logger.info("查询集团能耗数据");
         JSONObject jo = new JSONObject();
-        jo.put("success", true);
-        jo.put("message", "查询集团能耗数据成功！");
-        //查询折线数据
-        Map<String,Object> retMap = eaService.groupEnergyLine(params);
-        jo.put("data", retMap);
+        try{
+        	jo.put("success", true);
+            jo.put("message", "查询集团能耗数据成功！");
+            //查询折线数据
+            Map<String,Object> retMap = eaService.groupEnergyLine(params);
+            jo.put("data", retMap);
+        }catch(Exception e){
+        	logger.error("查询集团能耗数据异常" + e.getMessage());
+        }
         return jo.toJSONString();
     }
 }
