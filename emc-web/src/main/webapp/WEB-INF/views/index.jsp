@@ -171,36 +171,36 @@
                 <div class="cost-list-box cost-list-nyf">
                     <span class="cost-list-name">能源费</span>
                     <div class="">
-                        <span class="cost-list-num cost-list-remind">206.4</span>
-                        <span class="cost-list-proportion cost-list-remind">(4.0%↑)</span>
+                        <span class="cost-list-num cost-list-remind" id="energy_cost"></span>
+                        <span class="cost-list-proportion cost-list-remind" id="energy_tb"></span>
                     </div>
                 </div>
                 <div class="cost-list-box cost-list-sbf">
                     <span class="cost-list-name">设备费</span>
                     <div class="">
-                        <span class="cost-list-num cost-list-remind">192.5</span>
-                        <span class="cost-list-proportion">(2.6%↓)</span>
+                        <span class="cost-list-num cost-list-remind" id="device_cost"></span>
+                        <span class="cost-list-proportion" id="device_tb"></span>
                     </div>
                 </div>
                 <div class="cost-list-box cost-list-rgf">
                     <span class="cost-list-name">人工费</span>
                     <div class="">
-                        <span class="cost-list-num ">258.7</span>
-                        <span class="cost-list-proportion cost-list-remind">(2.7%↑)</span>
+                        <span class="cost-list-num " id="labor_cost"></span>
+                        <span class="cost-list-proportion cost-list-remind" id="labor_tb"></span>
                     </div>
                 </div>
                 <div class="cost-list-box cost-list-glf">
                     <span class="cost-list-name">管理费</span>
                     <div class="">
-                        <span class="cost-list-num">207.2</span>
-                        <span class="cost-list-proportion">(0%→)</span>
+                        <span class="cost-list-num" id="manage_cost"></span>
+                        <span class="cost-list-proportion" id="manage_tb"></span>
                     </div>
                 </div>
                 <div class="cost-list-box cost-list-qtf">
                     <span class="cost-list-name">其他费</span>
                     <div class="">
-                        <span class="cost-list-num">106.2</span>
-                        <span class="cost-list-proportion">(0%→)</span>
+                        <span class="cost-list-num" id="other_cost"></span>
+                        <span class="cost-list-proportion" id="other_tb"></span>
                     </div>
                 </div>
             </div>
