@@ -485,17 +485,111 @@ function chart04Fun(datalist,datelist, other){
 
 
 /*成本明细-饼图*/
-function chart05Fun(datalist, datelist, other){
-    initChart05();
+function chart05Fun(){
+    $.ajax({
+        url:_web +'/component/costDetail',
+        type:'post',
+        async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:$("#searchTools").serialize(),
+        dataType:"json",
+        success:function(result) {
+            debugger;
+            var energy = result.object.ccs;
+            var device = result.object.device;
+            var labor  = result.object.labor;
+            var manage = result.object.manage ;
+            var other = result.object.other ;
+            var total = result.object.total_sum;
+            var tb_flag = result.object.flag_total;
+            var total_tb = result.object.tb_total;
+            var tbl ="";
+            if(tb_flag == 'true'){
+                tbl ="("+total_tb+"↑)";
+            }
+            if(tb_flag == 'false'){
+                tbl= "("+total_tb+"↓)";
+            }
+            if(tb_flag == 'null'){
+                tbl = "("+total_tb+"→)";
+            }
+            /*能源费*/
+            $("#energy_cost").html(energy);
+            var tb_flag = result.object.flag_ccs;
+            var total_tb = result.object.tb_css;
+            if(tb_flag == 'true'){
+                $("#energy_tb").html("("+total_tb+"↑)");
+            }
+            if(tb_flag == 'false'){
+                $("#energy_tb").html("("+total_tb+"↓)");
+            }
+            if(tb_flag == 'null'){
+                $("#energy_tb").html("("+total_tb+"→)");
+            }
+            /*设备费*/
+            $("#device_cost").html(device);
+            var tb_flag = result.object.flag_device;
+            var total_tb = result.object.tb_device;
+            if(tb_flag == 'true'){
+                $("#device_tb").html("("+total_tb+"↑)");
+            }
+            if(tb_flag == 'false'){
+                $("#device_tb").html("("+total_tb+"↓)");
+            }
+            if(tb_flag == 'null'){
+                $("#device_tb").html("("+total_tb+"→)");
+            }
+            /*人工费*/
+            $("#labor_cost").html(labor);
+            var tb_flag = result.object.flag_labor;
+            var total_tb = result.object.tb_labor;
+            if(tb_flag == 'true'){
+                $("#labor_tb").html("("+total_tb+"↑)");
+            }
+            if(tb_flag == 'false'){
+                $("#labor_tb").html("("+total_tb+"↓)");
+            }
+            if(tb_flag == 'null'){
+                $("#labor_tb").html("("+total_tb+"→)");
+            }
+            /*管理费*/
+            $("#manage_cost").html(manage);
+            var tb_flag = result.object.flag_manage;
+            var total_tb = result.object.tb_manage;
+            if(tb_flag == 'true'){
+                $("#manage_tb").html("("+total_tb+"↑)");
+            }
+            if(tb_flag == 'false'){
+                $("#manage_tb").html("("+total_tb+"↓)");
+            }
+            if(tb_flag == 'null'){
+                $("#manage_tb").html("("+total_tb+"→)");
+            }
+            /*其他费*/
+            $("#other_cost").html(other);
+            var tb_flag = result.object.flag_other;
+            var total_tb = result.object.tb_other;
+            if(tb_flag == 'true'){
+                $("#other_tb").html("("+total_tb+"↑)");
+            }
+            if(tb_flag == 'false'){
+                $("#other_tb").html("("+total_tb+"↓)");
+            }
+            if(tb_flag == 'null'){
+                $("#other_tb").html("("+total_tb+"→)");
+            }
+            initChart05(energy,device,manage,labor,other,total,tbl);
+        }
+    });
+
 }
 
-function initChart05(){
+function initChart05(energy,device,manage,labor,other,total,tbl){
     $("#chart05").empty();
     chart05 = echarts.init(document.getElementById('chart05'));
     var option = {
         title: {
-            text: "897.2",
-            subtext: '成本总量（万元）\n（1.6%↓）',  //↑↓
+            text: total,
+            subtext: '成本总量（万元）\n'+tbl,  //↑↓
             x: 'center',
             y: 'center',
             itemGap: -5,
@@ -575,11 +669,11 @@ function initChart05(){
                 },
 
                 data:[
-                    {value:206.4, name:'人工费'},
-                    {value:192.5, name:'管理费'},
-                    {value:258.7, name:'其他费'},
-                    {value:207.2, name:'能源费'},
-                    {value:106.2, name:'设备费'}
+                    {value:labor, name:'人工费'},
+                    {value:manage, name:'管理费'},
+                    {value:other, name:'其他费'},
+                    {value:energy, name:'能源费'},
+                    {value:device, name:'设备费'}
                 ]
             }
         ]

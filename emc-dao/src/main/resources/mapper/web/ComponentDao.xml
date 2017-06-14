@@ -79,16 +79,16 @@
       FROM
       t_emc_final_data_hour da,v_emc_unit_feed oo where da.unitid = oo.unitid and da.COMID = oo.com_id
       <if test="orgId != null and orgId !=''">
-          and  oo.orgId in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
+          and  oo.org_id in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
       </if>
-      <if test="feedtype != null and feedtype !=''">
-          and  oo.feedtype = #{feedtype}
+      <if test="feedType != null and feedType !=''">
+          and  oo.feedtype = #{feedType}
       </if>
       <if test="startTime != null ">
-          and  da.DOSAGE_TIME &gt;= #{startTime}
+          and  da.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime}
       </if>
       <if test="endTime != null ">
-          and  da.DOSAGE_TIME  &lt;= #{endTime}
+          and  da.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTime}
       </if>
       GROUP BY
       da.typeid,da.DOSAGE_TIME)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
@@ -115,21 +115,190 @@
       FROM
       t_emc_final_data_hour da,v_emc_unit_feed oo where da.unitid = oo.unitid and da.COMID = oo.com_id
       <if test="orgId != null and orgId !=''">
-          and  oo.orgId in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
+          and  oo.org_id in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
       </if>
-      <if test="feedtype != null and feedtype !=''">
-          and  oo.feedtype = #{feedtype}
+      <if test="feedType != null and feedType !=''">
+          and  oo.feedtype = #{feedType}
       </if>
       <if test="pstartTime != null ">
-          and  da.DOSAGE_TIME &gt;= #{pstartTime}
+          and  da.DOSAGE_TIME <![CDATA[ >= ]]> #{pstartTime}
       </if>
       <if test="pendTime != null ">
-          and  da.DOSAGE_TIME  &lt;= #{pendTime}
+          and  da.DOSAGE_TIME  <![CDATA[ <= ]]> #{pendTime}
       </if>
       GROUP BY
       da.typeid,da.DOSAGE_TIME)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
       ))mm
   </select>
+
+
+  <select id="costDetail" resultType="java.util.Map" parameterType="java.util.Map">
+      SELECT
+      mm.ccs,
+      (CASE WHEN mm.ccs>mm.qn_ccs THEN 'true' WHEN mm.ccs = mm.qn_ccs THEN 'null' else 'false' end) flag_ccs,
+      mm.device,
+      (CASE WHEN mm.device>mm.qn_device THEN 'true' WHEN mm.device = mm.qn_device THEN 'null' else 'false' end) flag_device,
+      mm.labor,
+      (CASE WHEN mm.labor>mm.qn_labor THEN 'true' WHEN mm.labor = mm.qn_labor THEN 'null' else 'false' end) flag_labor,
+      mm.manage,
+      (CASE WHEN mm.manage>mm.qn_manage THEN 'true' WHEN mm.manage = mm.qn_manage THEN 'null' else 'false' end) flag_manage,
+      mm.other,
+      (CASE WHEN mm.other>mm.qn_other THEN 'true' WHEN mm.other = mm.qn_other THEN 'null' else 'false' end) flag_other,
+
+      (CASE WHEN (mm.ccs+
+      mm.device+
+      mm.labor+
+      mm.manage+
+      mm.other)>(mm.qn_ccs+
+      mm.qn_device+
+      mm.qn_labor+
+      mm.qn_manage+
+      mm.qn_other) THEN 'true' WHEN (mm.ccs+
+      mm.device+
+      mm.labor+
+      mm.manage+
+      mm.other)=(mm.qn_ccs+
+      mm.qn_device+
+      mm.qn_labor+
+      mm.qn_manage+
+      mm.qn_other) THEN 'null' else 'false' end) flag_total,
+      mm.qn_ccs,
+      mm.qn_device,
+      mm.qn_labor,
+      mm.qn_manage,
+      mm.qn_other,
+      (mm.ccs+
+      mm.device+
+      mm.labor+
+      mm.manage+
+      mm.other)total_sum,
+      (mm.qn_ccs+
+      mm.qn_device+
+      mm.qn_labor+
+      mm.qn_manage+
+      mm.qn_other)qn_total_sum,
+      (CASE WHEN mm.qn_ccs = 0 THEN '#%' ELSE concat(FORMAT((mm.ccs-mm.qn_ccs)/mm.qn_ccs*100,2),'%') end) tb_css,
+      (CASE WHEN mm.qn_device = 0 THEN '#%' ELSE concat(FORMAT((mm.device-mm.qn_device)/mm.qn_device*100,2),'%') end) tb_device,
+      (CASE WHEN mm.qn_labor = 0 THEN '#%' ELSE concat(FORMAT((mm.labor-mm.qn_labor)/mm.qn_labor*100,2),'%') end) tb_labor,
+      (CASE WHEN mm.qn_manage = 0 THEN '#%' ELSE concat(FORMAT((mm.manage-mm.qn_manage)/mm.qn_manage*100,2),'%') end) tb_manage,
+      (CASE WHEN mm.qn_other = 0 THEN '#%' ELSE concat(FORMAT((mm.other-mm.qn_other)/mm.qn_other*100,2),'%') end) tb_other,
+      (CASE WHEN (mm.qn_ccs+
+      mm.qn_device+
+      mm.qn_labor+
+      mm.qn_manage+
+      mm.qn_other) = 0 THEN '#%' ELSE concat(FORMAT(((mm.ccs+
+      mm.device+
+      mm.labor+
+      mm.manage+
+      mm.other)- (mm.qn_ccs+
+      mm.qn_device+
+      mm.qn_labor+
+      mm.qn_manage+
+      mm.qn_other))/ (mm.qn_ccs+
+      mm.qn_device+
+      mm.qn_labor+
+      mm.qn_manage+
+      mm.qn_other)*100,2),'%') end) tb_total
+      FROM
+      (
+      SELECT
+      max(case when type = 'jn' then manage else 0 end)manage,
+      max(case when type = 'jn' then other else 0 end) other,
+      max(case when type = 'jn' then device else 0 end) device,
+      max(case when type = 'jn' then labor else 0 end) labor,
+      max(case when type = 'jn' then ccs else 0 end)ccs,
+      max(case when type = 'qn' then manage else 0 end)qn_manage,
+      max(case when type = 'qn' then other else 0 end) qn_other,
+      max(case when type = 'qn' then device else 0 end) qn_device,
+      max(case when type = 'qn' then labor else 0 end) qn_labor,
+      max(case when type = 'qn' then ccs else 0 end) qn_ccs
+      from
+      (select 'jn' type,
+      max(case when cc.TYPEID = '1' then cc.cost else 0 end) manage,
+      max(case when cc.TYPEID = '2' then cc.cost else 0 end) other,
+      max(case when cc.TYPEID = '3' then cc.cost else 0 end) device,
+      max(case when cc.TYPEID = '4' then cc.cost else 0 end) labor,
+      (select sum(bb.ne) from (SELECT a.typeid,sum(a.DOSAGE*a.PRICE) ne
+      FROM t_emc_final_data_hour a,
+      (select * from v_emc_unit_feed  where 1=1
+      <if test="orgId != null and orgId != ''">
+          and  ORG_ID in (select id from t_emc_org where
+          FIND_IN_SET(id,emc_func_org_getchilds(#{orgId}))  )
+      </if>
+     ) c
+      WHERE a.COMID = c.COM_ID AND a.UNITID = c.unitid
+      <if test="startTime != null and startTime !=''">
+          and   a.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+          and   a.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="feedType != null and feedType != ''">
+           and c.feedtype = #{feedType}
+      </if>
+      GROUP BY TYPEID)bb)ccs
+      from (SELECT b.TYPEID,sum(b.COST) cost FROM t_emc_final_cost_day b,
+      (select * from v_emc_unit_feed  where 1=1
+      <if test="orgId != null and orgId != ''">
+          and  ORG_ID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+      </if>
+       )c
+      where b.COMID = c.com_id and b.UNITID = c.unitid
+      <if test="startTime != null and startTime !=''">
+          and   b.cost_date <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+          and    b.cost_date <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="feedType != null and feedType != ''">
+          and c.feedtype = #{feedType}
+      </if>
+      GROUP BY b.TYPEID) cc
+      union
+      select 'qn' type,
+      max(case when cc.TYPEID = '1' then cc.cost else 0 end) manage,
+      max(case when cc.TYPEID = '2' then cc.cost else 0 end) other,
+      max(case when cc.TYPEID = '3' then cc.cost else 0 end) device,
+      max(case when cc.TYPEID = '4' then cc.cost else 0 end) labor,
+      (select sum(bb.ne) from (SELECT a.typeid,sum(a.DOSAGE*a.PRICE) ne
+      FROM t_emc_final_data_hour a,
+      (select * from v_emc_unit_feed  where 1=1
+      <if test="orgId != null and orgId !=''">
+          and   ORG_ID in (select id from t_emc_org where
+          FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+      </if>
+      ) c
+      WHERE a.COMID = c.COM_ID AND a.UNITID = c.unitid
+      <if test="pstartTime != null and pstartTime !=''">
+          and   a.DOSAGE_TIME<![CDATA[ >= ]]> #{pstartTime}
+      </if>
+      <if test="pendTime != null and pendTime != ''">
+          and   a.DOSAGE_TIME<![CDATA[ <= ]]> #{pendTime}
+      </if>
+      <if test="feedType != null and feedType != ''">
+          and c.feedtype = #{feedType}
+      </if>
+      GROUP BY TYPEID)bb)ccs
+      from (SELECT b.TYPEID,sum(b.COST) cost FROM t_emc_final_cost_day b,
+      (select * from v_emc_unit_feed  where 1=1
+       <if test="orgId!=null and orgId!=''">
+          and  ORG_ID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+       </if>
+      )c
+      where b.COMID = c.com_id and b.UNITID = c.unitid
+      <if test="pstartTime != null and pstartTime !=''">
+          and    b.cost_date<![CDATA[ >= ]]> #{pstartTime}
+      </if>
+      <if test="pendTime != null and pendTime != ''">
+          and    b.cost_date<![CDATA[ <= ]]> #{pendTime}
+      </if>
+      <if test="feedType != null and feedType != ''">
+          and c.feedtype = #{feedType}
+      </if>
+      GROUP BY b.TYPEID) cc)qq)mm;
+  </select>
+
+
 
     <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT

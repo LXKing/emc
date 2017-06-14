@@ -8,6 +8,7 @@ import com.huak.home.dao.component.ComponentDao;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -70,18 +71,55 @@ public class ComponentServiceImpl implements ComponentService{
             params.put("endTime",pedate);
             previousplan = componentDao.getplan(params);
         }
+
         params.put("startTime",sdate);
         params.put("endTime",edate);
         params.put("pstartTime",psdate);
         params.put("pendTime",pedate);
         Map<String,Object> data =  componentDao.energyDetail(params);
-        data.put("currentPlan",currentplan.get("plan")==null?0:currentplan.get("plan"));
-        data.put("previousPlan",previousplan.get("plan")==null?0:previousplan.get("plan"));
+        if(currentplan != null){
+            data.put("currentPlan",currentplan.get("plan")==null?0:currentplan.get("plan"));
+        }else{
+            data.put("currentPlan",0);
+        }
+        if(previousplan != null){
+            data.put("previousPlan",previousplan.get("plan")==null?0:previousplan.get("plan"));
+        }else{
+            data.put("previousPlan",0);
+        }
         data.put("planDays",planDays);
         data.put("currentDays",currentDays);
         data.put("isInCurrentSeason",season.get("isInCurrentSeason"));
         return this.digitData(data);
 
+    }
+
+    /**
+     * 成本明细
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> costDetail(Map<String, Object> params) {
+        String starttime =  params.get("startTime").toString();
+        String endTime =  params.get("startTime").toString();
+        String pstartTime = "";
+        String pendTime = "";
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(starttime));
+            calendar.add(Calendar.YEAR, -1);
+            pstartTime = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
+            calendar.add(Calendar.YEAR, -1);
+            pendTime = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        params.put("pstartTime",pstartTime);
+        params.put("pendTime",pendTime);
+        return componentDao.costDetail(params);
     }
 
     /**
