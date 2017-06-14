@@ -52,15 +52,46 @@ public class ComponentController {
             params.put("startTime",paramsMap.get("toolStartDate"));
             params.put("endTime",paramsMap.get("toolEndDate"));
             params.put("comId",company.getId());
-          Map<String,Object> map =  componentService.energyDetail(params);
+            Map<String,Object> map =  componentService.energyDetail(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("能耗明细查询异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
+
+    /**
+     *组件 成本明细
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/costDetail", method = RequestMethod.POST)
+    @ResponseBody
+    public String costDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+        logger.info("成本明细查询");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Map<String,Object> params = new HashMap<>();
+            params.put("orgId",paramsMap.get("toolOrgId"));
+            params.put("feedType",paramsMap.get("toolFeedType"));
+            params.put("startTime",paramsMap.get("toolStartDate"));
+            params.put("endTime",paramsMap.get("toolEndDate"));
+            Map<String,Object> map =  componentService.costDetail(params);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else
+                jo.put(Constants.FLAG,false);
+        } catch (Exception e) {
+            logger.error("成本明细查询查询异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
 }

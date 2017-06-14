@@ -9,7 +9,7 @@ import java.util.Map;
 public interface ComponentDao {
 
 	/**
-	 * 根据查询条件，查询相应数据，返回List<Map>格式
+	 * 根据查询条件，查询能耗明细
 	 * @param params
 	 * @return
 	 */
@@ -35,4 +35,11 @@ public interface ComponentDao {
      * @return
      */
     List<Map<String,Object>> getPreSeason(Map<String, Object> paramsMap);
+
+    /**
+     * 获取成本明细
+     * @param params
+     * @return
+     */
+    Map<String,Object> costDetail(Map<String, Object> params);
 }

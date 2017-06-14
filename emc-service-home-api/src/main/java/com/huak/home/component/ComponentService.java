@@ -11,4 +11,11 @@ public interface ComponentService {
      * 能耗明细查询
      */
     Map<String,Object> energyDetail(Map<String,Object> params);
+
+    /**
+     * 成本明细
+     * @param params
+     * @return
+     */
+    Map<String,Object> costDetail(Map<String, Object> params);
 }
