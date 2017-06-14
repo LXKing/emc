@@ -42,7 +42,7 @@
 			C.yeardate,
 			(CASE WHEN DATE_FORMAT(C.yeardate, '%Y') = DATE_FORMAT(now(), '%Y') THEN '1' ELSE '0' END ) curyear
 		FROM
-			(SELECT SUM(B.dosage) AS total, B.yeardate AS yeardate, B.energyType AS energyType
+			(SELECT MAX(B.dosage) AS total, B.yeardate AS yeardate, B.energyType AS energyType
 			  FROM(SELECT A.*,
 									IF(A.orgtype = '1',(SELECT f.HEAT_TYPE FROM t_emc_unit_feed f WHERE f.id = A.unitid),'') AS heat_type
 					  FROM(SELECT h.COMID AS comid, h.UNITID AS unitid, etype.NAME_EN AS energyType,
