@@ -88,6 +88,7 @@ public class EnergyMonitorController {
             params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+            params.put("orgType",toolVO.getToolOrgType());
 
             jo.put(Constants.LIST, eaService.findAssessmentIndicators(params));
         } catch (Exception e) {
@@ -118,6 +119,7 @@ public class EnergyMonitorController {
             params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+            params.put("orgType",toolVO.getToolOrgType());
 
             List<Map<String,Object>> energySecondList = eaService.fgsEnergyRatio(params);
             jo.put(Constants.LIST, energySecondList);
@@ -149,6 +151,7 @@ public class EnergyMonitorController {
             params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+            params.put("orgType",toolVO.getToolOrgType());
 
             List<Map<String,Object>> trendList = eaService.fgsEnergyTrend(params);
 
@@ -216,6 +219,7 @@ public class EnergyMonitorController {
             params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+            params.put("orgType",toolVO.getToolOrgType());
 
             List<Map<String,Object>> energySecondList = eaService.fgsEnergyRanking(params);
             List<String> xAxis = new ArrayList<>();
@@ -254,6 +258,7 @@ public class EnergyMonitorController {
             params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
             params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
             params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+            params.put("orgType",toolVO.getToolOrgType());
 
             List<Map<String,Object>> energySecondList = eaService.fgsEnergyAn(params);
             List<String> xAxis = new ArrayList<>();
