@@ -108,13 +108,24 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		String eDate = params.get("toolEndDate");//查询条件的结束时间
 		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate;//如果查询条件的开始时间为空，设置默认的开始时间
 		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate;//如果查询条件的结束时间为空，设置默认的结束时间
+		String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
+		String leDate = getYearDate(eDate,Calendar.YEAR, -1);
 		//查询时间list
+		List<String> clyearList = new ArrayList<String>();
+		List<String> lyearList = new ArrayList<String>();
 		List<String> yearList = new ArrayList<String>();
 		while(!sDate.equals(eDate)){
 			yearList.add(sDate);
 			sDate = getYearDate(sDate,Calendar.DATE,1);
 		}
 		yearList.add(eDate);
+		while(!lsDate.equals(leDate)){
+			lyearList.add(lsDate);
+			lsDate = getYearDate(lsDate,Calendar.DATE,1);
+		}
+		lyearList.add(leDate);
+		clyearList.addAll(lyearList);
+		clyearList.addAll(yearList);
 		//根据查询条件，查询相应的数据
 		List<Map<String,Object>> listMap = eaDao.groupEnergy(params);
 		//组装chartJson格式开始
@@ -123,23 +134,29 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 			List<String> curList = new ArrayList<String>();//每个能源类型今年某一时间段（查询条件中的时间段）的值，存储为list形式
 			List<String> lastList = new ArrayList<String>();//每个能源类型去年某一时间段（查询条件中的时间段）的值，存储为list形式
 			Double today = 0.0,lastYearToday = 0.0;//今天和去年今天的能耗数据
-			String cdate = getYearDate(null,Calendar.DATE, 0);//今天日期
-			String ldate = getYearDate(cdate,Calendar.YEAR, -1);//去年今天日期
 			if(lmEmpty){//如果查询结果存在，需要设置上面所定义的变量，方便下面封装chartJson
-				for(Map<String,Object> map : listMap){
-					String curyear = map.get("curyear").toString();
-					String yeardate = map.get("yeardate").toString();
-					String value = String.valueOf(map.get(type));
-					if("0".equals(curyear)){
-						lastList.add(value);//添加
-					}else if("1".equals(curyear)){
-						curList.add(value);//添加
+				for(String yd:clyearList){
+					boolean isHas = false;
+					for(Map<String,Object> map : listMap){
+						String curyear = map.get("curyear").toString();
+						String yeardate = map.get("yeardate").toString();
+						if(!yeardate.equals(yd))continue;
+						isHas = true;
+						String value = String.valueOf(map.get(type));
+						if("0".equals(curyear)){
+							lastList.add(value);//添加
+							lastYearToday += Double.parseDouble(value);//拿到去年今天的能耗
+						}else if("1".equals(curyear)){
+							curList.add(value);//添加
+							today += Double.parseDouble(value);//拿到今天的能耗
+						}
 					}
-					if(cdate.equals(yeardate)){
-						today = Double.parseDouble(value);//拿到今天的能耗
-					}
-					if(ldate.equals(yeardate)){
-						lastYearToday = Double.parseDouble(value);//拿到去年今天的能耗
+					if(!isHas){
+						if(lyearList.contains(yd)){
+							lastList.add("0");
+						}else{
+							curList.add("0");
+						}
 					}
 				}
 			}
@@ -168,6 +185,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 			Map<String,Object> rateMap = new HashMap<String,Object>();
 			//封装今天能耗数据的map
 			Map<String,Object> energy = new HashMap<String,Object>();
+			today = (double)Math.round(today*100)/100;
 			energy.put("value", lmEmpty?today:"0");
 			energy.put("type", "0");
 			rateMap.put("energy", energy);
