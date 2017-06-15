@@ -1,17 +1,23 @@
 package com.huak.home;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.huak.base.dao.DateDao;
 import com.huak.home.dao.EnergyMonitorDao;
 import com.huak.home.dao.EnergySecondDao;
 import com.huak.home.model.EnergyMonitor;
 import com.huak.home.model.EnergySecond;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @Service
 public class EnergyMonitorServiceImpl implements EnergyMonitorService {
@@ -22,58 +28,6 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	private EnergyMonitorDao eaDao;
     @Resource
     private EnergySecondDao energySecondDao;
-
-	/**
-	 * 跳转到此页面前，查询↑和↓那块的数据
-	 */
-	@Override
-	public Map<String, Object> groupEnergy2Day() {
-		Map<String,Object> result = new HashMap<String,Object>();
-		//设置查询参数
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("yearDate", getYearDate(null, Calendar.DATE, 0));
-		//查询今天的数据
-		List<Map<String,Object>> curList = eaDao.groupEnergy(params);
-		params.put("yearDate", getYearDate(null, Calendar.YEAR, -1));
-		//查询去年今天的数据
-		List<Map<String,Object>> lastList = eaDao.groupEnergy(params);
-		//转换格式
-		Map<String,List<String>> curMap = getItem(curList);
-		Map<String,List<String>> lastMap = getItem(lastList);
-		//组装返回格式
-		List<String> energyType = new ArrayList<String>();
-		if(!curMap.isEmpty()&&null!=curMap.get("energyType")){
-			energyType = curMap.get("energyType");
-		}else if(!lastMap.isEmpty()&&null!=lastMap.get("energyType")){
-			energyType = lastMap.get("energyType");
-		}
-		if(energyType.size()>0){//查询出数据
-			for(String type:energyType){
-				//每一项结果Map
-				Map<String,Object> html = new HashMap<String,Object>();
-				Map<String,String> energy = new HashMap<String,String>();
-				//今天的数据
-				String cur = curMap.get(type)==null||curMap.get(type).size()==0?"0":curMap.get(type).get(0).toString();
-				//去年今天的数据
-				String last = lastMap.get(type)==null||lastMap.get(type).size()==0?"0":lastMap.get(type).get(0).toString();
-				energy.put("value", cur);
-				energy.put("type", "0");
-				Map<String,String> changeRate = new HashMap<String,String>();
-				if(Double.valueOf(cur)>=Double.valueOf(last)){//同比增长
-					changeRate.put("type", "0");
-				}else{//同比减少
-					changeRate.put("type", "1");
-				}
-				Double scale = Double.valueOf(last)==0?0.0:
-					(double)Math.round((Double.valueOf(cur)-Double.valueOf(last))/Double.valueOf(last)*100)/100;
-				changeRate.put("rate", String.format("%.2f", scale));//同比 %
-				html.put("energy", energy);
-				html.put("changeRate", changeRate);
-				result.put(type.replace("Energy", "Total"), html);
-			}
-		}
-		return result;
-	}
 
     @Override
     @Transactional(readOnly = false)
@@ -145,114 +99,110 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	 * 获取折线数据
 	 */
 	@Override
-	public Map<String, Object> groupEnergyLine(Map<String, String> params) {
+	@Transactional
+	public Map<String, Object> groupEnergyLine(Map<String, String> params) throws Exception{
 		Map<String, Object> result = new HashMap<String,Object>();
-		//如果查询条件开始时间和结束时间没有，设置默认的开始和结束时间。开始时间：当前日期前五天，结束时间：当前日期
-		if(params.get("cyearDate")==null){
-			params.put("cyearDate", getYearDate(null,Calendar.DATE, -5));
+		//所有的能源类型
+		String[] energyTypes = {"groupEnergy","waterEnergy","electricEnergy","gasEnergy","hotEnergy","coalEnergy"};
+		String sDate = params.get("toolStartDate");//查询条件的开始时间
+		String eDate = params.get("toolEndDate");//查询条件的结束时间
+		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate;//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate;//如果查询条件的结束时间为空，设置默认的结束时间
+		//查询时间list
+		List<String> yearList = new ArrayList<String>();
+		while(!sDate.equals(eDate)){
+			yearList.add(sDate);
+			sDate = getYearDate(sDate,Calendar.DATE,1);
 		}
-		if(params.get("eyearDate")==null){
-			params.put("eyearDate", getYearDate(null,Calendar.DATE, 0));
-		}
-		//查询今年的数据
-		List<Map<String,Object>> curList = eaDao.groupEnergy(params);
-		//将查询条件中的开始和结束时间，设置为去年（同比）
-		params.put("cyearDate", getYearDate(params.get("cyearDate").toString(),Calendar.YEAR, -1));
-		params.put("eyearDate", getYearDate(params.get("eyearDate").toString(),Calendar.YEAR, -1));
-		//查询去年的数据
-		List<Map<String,Object>> lastList = eaDao.groupEnergy(params);
-		//组装数据
-		result = getChartsData(curList,lastList);
-		Map<String,Object> rateMap = groupEnergy2Day();
-		result.putAll(rateMap);
-		return result;
-	}
-
-	/**
-	 * 组装集团总能耗的折线数据
-	 * @param curList 今年的数据
-	 * @param lastList 去年（同比）的数据
-	 * @return 前段js显示所需的格式
-	 *  {"data":{"item1":{"yearDate":[],"data":[{今年的数据},{去年的数据}]},"item2":...}}
-	 */
-	private Map<String,Object> getChartsData(List<Map<String, Object>> curList,
-			List<Map<String, Object>> lastList) {
-		//格式转换
-		Map<String,List<String>> curMap = getItem(curList);
-		Map<String,List<String>> lastMap = getItem(lastList);
-		//每一项中都需要的yearDate【】
-		List<String> yearList = curMap.get("yeardate");
-		//有多少项，每项名称
-		List<String> energyType = curMap.get("energyType");
-		Map<String,Object> result = new HashMap<String,Object>();
-		//按照项遍历，组装想要的格式
-		for(String type:energyType){
-			//组装格式，参考方法注释中的格式
-			Map<String,Object> itemMap = new HashMap<String,Object>();
-			List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
-			Map<String,Object> map1 = new HashMap<String,Object>();
-			Map<String,Object> map2 = new HashMap<String,Object>();
-			map1.put("typeName", "今年");
-			map2.put("typeName", "去年");
-			map1.put("dataList",curMap.get(type));
-			map2.put("dataList",lastMap.get(type));
-			data.add(map1);
-			data.add(map2);
-			itemMap.put("yearDate", yearList);
-			itemMap.put("data", data);
-			result.put(type, itemMap);
-		}
-		return result;
-	}
-
-	/**
-	 * [{total:,gas:,},{...},...] --> {total:[1,2,3,...],gas:[1,2,3]...}
-	 * 就是遍历查询出的list<map>，将map中的key作为返回结果map的key，相应的value为list
-	 * @param list 要转换的list
-	 * @return map<String,list>
-	 */
-	private Map<String,List<String>> getItem(List<Map<String, Object>> list) {
-		Map<String,List<String>> result = new HashMap<String,List<String>>();
-		List<String> energyType = new ArrayList<String>();//能耗类型，total：总；gas：气；water：水；elec：电；hot：热；coal：煤
-		if(null!=list&&list.size()>0){
-			Set<String> sets = list.get(0).keySet();
-			for(String set:sets){
-				if(!"yeardate".equals(set)) energyType.add(set);//返回结果中有每一个list的日期，过滤掉
-				List<String> kvList = new ArrayList<String>();
-				//查询出list中每一个项的值组成新的list
-				for(Map<String,Object> map : list){
-					kvList.add(map.get(set).toString());
+		yearList.add(eDate);
+		//根据查询条件，查询相应的数据
+		List<Map<String,Object>> listMap = eaDao.groupEnergy(params);
+		//组装chartJson格式开始
+		boolean lmEmpty = null!=listMap && listMap.size()>0;
+		for(String type:energyTypes){
+			List<String> curList = new ArrayList<String>();//每个能源类型今年某一时间段（查询条件中的时间段）的值，存储为list形式
+			List<String> lastList = new ArrayList<String>();//每个能源类型去年某一时间段（查询条件中的时间段）的值，存储为list形式
+			Double today = 0.0,lastYearToday = 0.0;//今天和去年今天的能耗数据
+			String cdate = getYearDate(null,Calendar.DATE, 0);//今天日期
+			String ldate = getYearDate(cdate,Calendar.YEAR, -1);//去年今天日期
+			if(lmEmpty){//如果查询结果存在，需要设置上面所定义的变量，方便下面封装chartJson
+				for(Map<String,Object> map : listMap){
+					String curyear = map.get("curyear").toString();
+					String yeardate = map.get("yeardate").toString();
+					String value = String.valueOf(map.get(type));
+					if("0".equals(curyear)){
+						lastList.add(value);//添加
+					}else if("1".equals(curyear)){
+						curList.add(value);//添加
+					}
+					if(cdate.equals(yeardate)){
+						today = Double.parseDouble(value);//拿到今天的能耗
+					}
+					if(ldate.equals(yeardate)){
+						lastYearToday = Double.parseDouble(value);//拿到去年今天的能耗
+					}
 				}
-				result.put(set, kvList);//结果，string：value；每一项：list【】
 			}
-			result.put("energyType", energyType);
+			//json中的能源数据
+			Map<String,Object> energyMap = new HashMap<String,Object>();
+			energyMap.put("yearDate", yearList);
+			List<Object> data = new ArrayList<Object>();
+			//此list作用：当查询数据不存在时，需按照查询条件中时间段来设置那天的数据为0，方便chart的显示
+			List<String> dataList = new ArrayList<String>();
+			for(String d : yearList){
+				dataList.add("0.0");//不存在数据时，默认赋值为0
+			}
+			//封装今年数据的map
+			Map<String,Object> curYearData = new HashMap<String,Object>();
+			curYearData.put("typeName", "今年");
+			curYearData.put("dataList", lmEmpty&&curList.size()>0?curList:dataList);
+			data.add(curYearData);
+			//封装去年数据的map
+			Map<String,Object> lastYearData = new HashMap<String,Object>();
+			lastYearData.put("typeName", "去年");
+			lastYearData.put("dataList", lmEmpty&&lastList.size()>0?lastList:dataList);
+			data.add(lastYearData);
+			energyMap.put("data", data);
+			result.put(type, energyMap);
+			//json中的统计数据
+			Map<String,Object> rateMap = new HashMap<String,Object>();
+			//封装今天能耗数据的map
+			Map<String,Object> energy = new HashMap<String,Object>();
+			energy.put("value", lmEmpty?today:"0");
+			energy.put("type", "0");
+			rateMap.put("energy", energy);
+			//封装同比数据的map
+			Map<String,Object> rate = new HashMap<String,Object>();
+			Double scale = Double.valueOf(lastYearToday)==0.0?0.0:
+				(double)Math.round((Double.valueOf(today)-Double.valueOf(lastYearToday))/Double.valueOf(lastYearToday)*10000)/100;//计算同比值
+			String rateType = "0";
+			if(lastYearToday>today)  rateType = "1";//设置同比数据后面的上下箭头
+			rate.put("rate", lmEmpty?scale:"0");
+			rate.put("type", lmEmpty?rateType:"0");
+			rateMap.put("changeRate", rate);
+			result.put(type.replace("Energy", "Total"), rateMap);
 		}
+		//组装chartJson格式结束
 		return result;
 	}
-	
+
 	/**
 	 * 返回想要的日期
+	 * 例如：getYearDate（2017-01-01，Calendar.YEAR，-1），返回值为 2016-01-01
+	 *     getYearDate（2017-01-11，Calendar.DATE，-1），返回值为 2017-01-10
 	 * @param curDate 元数据，在curDate的基础上获取想要的具体日期str
 	 * @param type 类型，Calendar.YEAR,Calendar.MONTH...
 	 * @param num 操作数
 	 * @return
 	 */
-	private String getYearDate(String curDate,int type,int num) {
+	private String getYearDate(String curDate,int type,int num) throws Exception{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			if(null!=curDate&&!"".equals(curDate)){
-				date = sdf.parse(curDate);
-			}else{
-				date = sdf.parse(dateDao.getDate());
-			}
-			Calendar calendar = Calendar.getInstance();    
-			calendar.setTime(date);    
-			calendar.add(type, num);
-			date = calendar.getTime();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		curDate = (curDate==null||"".equals(curDate))?dateDao.getDate():curDate;
+		Date date = sdf.parse(curDate);
+		Calendar calendar = Calendar.getInstance();    
+		calendar.setTime(date);    
+		calendar.add(type, num);
+		date = calendar.getTime();
 		return sdf.format(date);
 	}
 
