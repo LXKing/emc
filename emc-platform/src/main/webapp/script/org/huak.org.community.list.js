@@ -3,8 +3,13 @@ $(function () {
         class:"org-tree"
     });
 	communitySearOrg.initTree();
-	
 	initTreeBox();
+	
+	parent.$("[name='searchComp']").change(function(){
+		communitySearOrg.initTree();
+		initTreeBox();
+		window.location.reload(); 
+	});
 	//小区列表
 	var communityTable = $('#community-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度

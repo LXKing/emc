@@ -13,20 +13,21 @@
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <select disabled="disabled" onchange="getCommunitySelectHtml()" id="com" name="com" class="form-control m-b" ></select>
+	                    	<input type="hidden" id="comId" name="comId" />
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>组织机构：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                    	<ul id="org" class="cell-add-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
 	                    	<input type="text" class="form-control" name="orgId" id="orgId" style="visibility: hidden;height: 0px;">
 	                    </div>
 		            </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="getCommunitySelectHtml()" id="comId" name="comId" class="form-control m-b" ></select>
-	                    </div>
-	                </div>
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
@@ -134,7 +135,9 @@ function treeNodeClick(){
 
 $(function () {
 	//初始化公司下拉框
-	top.$('#comId').html('${com}');
+	top.$('#com').html('${com}');
+	console.log(top.$('#com :selected').val());
+	top.$('#comId').val(top.$('#com :selected').val());
 	
 	//初始化组织机构树
 	banAddOrg = new Org({
@@ -176,9 +179,6 @@ $(function () {
                 isName: true,
                 minlength: 2
             },
-            comId: {
-                required: true
-            },
             orgId: {
                 required: true
             },
@@ -193,9 +193,6 @@ $(function () {
         	cellName: {
                 required: icon + "请输入单元名称",
                 minlength: icon + "单元名称必须2个字符以上"
-            },
-            comId: {
-                required: icon + "请选择所属公司"
             },
             orgId: {
                 required: icon + "请选择所属组织结构"

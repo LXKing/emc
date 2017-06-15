@@ -60,10 +60,10 @@ public class CommunityController {
 		return result.toJSONString();
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String addPage(Model model){
+	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
+	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加小区页面");
-		model.addAttribute("com", communityService.getCompanySelectHtmlStr(null));
+		model.addAttribute("com", communityService.getCompanySelectHtmlStr(companyId));
 		return "/org/community/add";
 	}
 	

@@ -62,10 +62,10 @@ public class BanController {
 		return result.toJSONString();
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String addPage(Model model){
+	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
+	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加楼座页面");
-		model.addAttribute("com", banService.getCompanySelectHtmlStr(null));
+		model.addAttribute("com", banService.getCompanySelectHtmlStr(companyId));
 		Map<String,String> param = new HashMap<String,String>();
 		param.put("level", "1");
 		model.addAttribute("province", banService.getPCCTVSelectHtmlStr(param,null));

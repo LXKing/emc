@@ -3,8 +3,12 @@ $(function () {
         class:"org-tree"
     });
 	roomSearOrg.initTree();
-	
 	initTreeBox();
+	parent.$("[name='searchComp']").change(function(){
+		roomSearOrg.initTree();
+		initTreeBox();
+		window.location.reload(); 
+	});
 	//户列表
 	var roomTable = $('#room-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
