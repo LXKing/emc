@@ -1,5 +1,10 @@
 package com.huak.home;
 
+import com.huak.home.model.ConsSecond;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -12,4 +17,38 @@ package com.huak.home;
  * Function List:  <BR>
  */
 public interface ConsAnalysisService {
+    /**
+     * 查询分公司列表
+     * @param params
+     * @return
+     */
+    public List<ConsSecond> findAssessmentIndicators(Map<String, Object> params);
+
+    /**
+     * 分公司单耗占比分布图
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyRatio(Map<String, Object> params);
+
+    /**
+     * 分公司单耗趋势对比图
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyTrend(Map<String, Object> params);
+
+    /**
+     * 分公司单耗同比
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyAn(Map<String, Object> params);
+
+    /**
+     * 分公司单耗排名
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params);
 }

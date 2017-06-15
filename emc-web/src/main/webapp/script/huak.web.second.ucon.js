@@ -1,6 +1,68 @@
 
 
 $(function(){
+    //加载分公司单耗
+    $.ajax({
+        url : _web+"/cons/analysis/fgs/list",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            fgsEnergyList(data);
+        }
+    });
+    $.ajax({
+        url : _web+"/cons/analysis/fgs/ratio",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            chart01Fun(data.list);
+        }
+    });
+    $.ajax({
+        url : _web+"/cons/analysis/fgs/trend",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            chart02Fun(data);
+        }
+    });
+    $.ajax({
+        url : _web+"/cons/analysis/fgs/an",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            chart03Fun(data);
+        }
+    });
+    $.ajax({
+        url : _web+"/cons/analysis/fgs/ranking",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+            console.info(data)
+            chart04Fun(data);
+        }
+    });
     $.ajax({
         url : _web+"/static/json/6-1.json",
         type : "GET",
@@ -19,7 +81,7 @@ $(function(){
             }else{
                 $("#groupchangeRate").html(data.data.groupTotal.changeRate.rate + "<span class='arrow'>↑</span>");
             };
-            //水能耗
+            //水单耗
             $("#waterTotal").html(data.data.waterTotal.energy.value);
             if(data.data.waterTotal.energy.type == 1){
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh");
@@ -34,7 +96,7 @@ $(function(){
                 $("#waterchangeRate").addClass("energy-remind");
                 $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "↑)");
             };
-            //电能耗
+            //电单耗
             $("#electricTotal").html(data.data.electricTotal.energy.value);
             if(data.data.electricTotal.energy.type == 1){
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh");
@@ -49,7 +111,7 @@ $(function(){
                 $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "↑)");
                 $("#elechangeRate").addClass("energy-remind");
             };
-            //气能耗
+            //气单耗
             $("#gasTotal").html(data.data.gasTotal.energy.value);
             if(data.data.gasTotal.energy.type == 1){
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh");
@@ -65,7 +127,7 @@ $(function(){
                 $("#gaschangeRate").addClass("energy-remind");
             };
 
-            //热能耗
+            //热单耗
             $("#hotTotal").html(data.data.hotTotal.energy.value);
             if(data.data.hotTotal.energy.type == 1){
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh");
@@ -81,7 +143,7 @@ $(function(){
                 $("#hotchangeRate").addClass("energy-remind");
             };
 
-            //煤能耗
+            //煤单耗
             $("#coalTotal").html(data.data.coalTotal.energy.value);
             if(data.data.coalTotal.energy.type == 1){
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh");
@@ -109,18 +171,34 @@ $(function(){
         }
     });
 
-    chart01Fun();
-    chart02Fun();
-    chart03Fun();
-    chart04Fun();
     chart05Fun();
     chart06Fun();
     chart07Fun();
 })
+function fgsEnergyList(data){
+
+    var html = "";
+    $.each(data.list,function(idx,item){
+        html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
+        html +='<td><a href="javascript:;" class="need_a">'+item.orgName+'</a></td>';
+        html +=getHtmlTd(item.totalBq,item.totalAn);
+        html +=getHtmlTd(item.waterBq,item.waterAn);
+        html +=getHtmlTd(item.electricBq,item.electricAn);
+        html +=getHtmlTd(item.gasBq,item.gasAn);
+        html +=getHtmlTd(item.heatBq,item.heatAn);
+        html +=getHtmlTd(item.coalBq,item.coalAn);
+        html +=getHtmlTd(item.oilBq,item.oilAn);
+        html +='</tr>';
+    });
+    $("#fgsEnergyTbody").html(html);
+}
+
+function getHtmlTd(bq,an){
+    return '<td class="need_title">'+bq+'（同<span class="'+(an == 0?"":(an > 0?"redcolor":"bluecolor"))+'">'+toDecimal(an)+'%'+(an == 0?"→":(an > 0?"↑":"↓"))+'</span>）</td>';
+}
 
 
-
-/*集团总能耗-折线图*/
+/*集团总单耗-折线图*/
 function groupEnergyChartFun(datalist, datelist){
     $("#groupEnergyChart").empty();
     groupEnergyChart = echarts.init(document.getElementById('groupEnergyChart'));
@@ -384,7 +462,7 @@ function electricEnergyChartFun(datalist, datelist){
     electricEnergyChart.setOption(option);
 }
 
-/*气能耗-折线图*/
+/*气单耗-折线图*/
 function gasEnergyChartFun(datalist, datelist){
     $("#gasEnergyChart").empty();
     gasEnergyChart = echarts.init(document.getElementById('gasEnergyChart'));
@@ -471,7 +549,7 @@ function gasEnergyChartFun(datalist, datelist){
     gasEnergyChart.setOption(option);
 }
 
-/*热能耗-折线图*/
+/*热单耗-折线图*/
 function hotEnergyChartFun(datalist, datelist){
     $("#hotEnergyChart").empty();
     hotEnergyChart = echarts.init(document.getElementById('hotEnergyChart'));
@@ -558,7 +636,7 @@ function hotEnergyChartFun(datalist, datelist){
     hotEnergyChart.setOption(option);
 }
 
-/*煤能耗-折线图*/
+/*煤单耗-折线图*/
 function coalEnergyChartFun(datalist, datelist){
     $("#coalEnergyChart").empty();
     coalEnergyChart = echarts.init(document.getElementById('coalEnergyChart'));
@@ -652,8 +730,8 @@ function coalEnergyChartFun(datalist, datelist){
 
 
 
-/*分公司能耗占比分布图*/
-function chart01Fun(){
+/*分公司单耗占比分布图*/
+function chart01Fun(data){
     var piechart = echarts.init(document.getElementById('piechart'));
     var option = {
 
@@ -699,7 +777,7 @@ function chart01Fun(){
                 ]
             },
             {
-                name:'分公司能耗占比',
+                name:'分公司单耗占比',
                 type:'pie',
                 radius : ['60%', '80%'],
 
@@ -714,15 +792,8 @@ function chart01Fun(){
                         label : {show:true}
                     }
                 },
-                color:['#c675c3', '#8d82cc', '#3b96db', '#a1b1c5', '#32bbb6', '#df614c'],
-                data:[
-                    {value:335, name:'朝一'},
-                    {value:310, name:'朝二'},
-                    {value:251, name:'丰台'},
-                    {value:234, name:'东城'},
-                    {value:135, name:'西城'},
-                    {value:1048, name:'海淀'}
-                ]
+                color:color,
+                data:data
 
             }
         ]
@@ -731,8 +802,8 @@ function chart01Fun(){
 }
 
 
-/*分公司能耗趋势对比图*/
-function chart02Fun(){
+/*分公司单耗趋势对比图*/
+function chart02Fun(data){
     var linechart = echarts.init(document.getElementById('linechart'));
     var option = {
 
@@ -754,9 +825,9 @@ function chart02Fun(){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.legends
         },
-        color:['#c675c3', '#8d82cc', '#3b96db', '#a1b1c5', '#32bbb6', '#df614c'],
+        color:color,
         xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -780,7 +851,7 @@ function chart02Fun(){
             splitArea: {
                 show: true
             },
-            data: ['2015-11','2015-12','2016-01','2016-02','2016-03']
+            data: data.xaxis
 
         },
         yAxis: {
@@ -808,62 +879,19 @@ function chart02Fun(){
             }
         },
 
-        series: [
-            {
-                name:'朝一',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[120, 132, 101, 134, 90]
-            },
-            {
-                name:'朝二',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[140, 112, 51, 34, 69]
-            },
-            {
-                name:'丰台',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[220, 182, 191, 234, 290]
-            },
-            {
-                name:'东城',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[150, 232, 201, 154, 190]
-            },
-            {
-                name:'西城',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[320, 332, 301, 334, 390]
-            },
-            {
-                name:'海淀',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:[820, 932, 901, 934, 629]
-            }
-        ]
+        series: data.list
     };
 
     linechart.setOption(option);
 }
 
 
-/*分公司能耗同比*/
-function chart03Fun() {
+/*分公司单耗同比*/
+function chart03Fun(data) {
     var barchart01 = echarts.init(document.getElementById('barchart01'));
     var option = {
         title:{
-            subtext:'分公司能耗 (单位: GJ/㎡)',
+            subtext:'单耗 (单位: tce/㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -881,7 +909,7 @@ function chart03Fun() {
             }
         },
         legend: {
-            data:['今年','去年'],
+            data:['本期','同期'],
             itemWidth:8,
             itemHeight:4,
             right: '40',
@@ -920,7 +948,7 @@ function chart03Fun() {
                     fontFamily: 'arial'
                 }
             },
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.xaxis
 
         },
         yAxis: {
@@ -953,16 +981,16 @@ function chart03Fun() {
         color:['#3B96DD','#a1b1c5'],
         series: [
             {
-                name:"今年",
+                name:"本期",
                 type:'bar',
                 barWidth: '20',
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.bq
             },
             {
-                name:"去年",
+                name:"同期",
                 type:'bar',
                 barWidth: '20',
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.tq
             }
         ]
     }
@@ -971,12 +999,12 @@ function chart03Fun() {
 }
 
 
-/*分公司能耗排名---barchart02*/
-function chart04Fun(){
+/*分公司单耗排名---barchart02*/
+function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
-            subtext:'分公司能耗 (单位: GJ/㎡)',
+            subtext:'单耗 (单位: tce/㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1033,7 +1061,7 @@ function chart04Fun(){
                     fontFamily: 'arial'
                 }
             },
-            data:['朝一','朝二','丰台','东城','西城','海淀']
+            data:data.xaxis
 
         },
         yAxis: {
@@ -1066,7 +1094,7 @@ function chart04Fun(){
         color:['#3B96DD'],
         series: [
             {
-                name:"分公司能耗",
+                name:"分公司单耗",
                 type:'bar',
                 barWidth: '20',
                 markLine: {
@@ -1074,7 +1102,7 @@ function chart04Fun(){
                         {type: 'average', name: '平均值'}
                     ]
                 },
-                data:[10, 52, 200, 334, 390, 330]
+                data:data.list
             }
         ]
     }
@@ -1083,7 +1111,8 @@ function chart04Fun(){
 }
 
 
-/*能源流能耗占比分布图*/
+
+/*能源流单耗占比分布图*/
 function chart05Fun(){
     var piechart_as = echarts.init(document.getElementById('piechart_as'));
     var option = {
@@ -1130,7 +1159,7 @@ function chart05Fun(){
                 ]
             },
             {
-                name:'能源流能耗占比',
+                name:'能源流单耗占比',
                 type:'pie',
                 radius : ['60%', '80%'],
 
@@ -1161,7 +1190,7 @@ function chart05Fun(){
 }
 
 
-/*能源流能耗趋势对比图*/
+/*能源流单耗趋势对比图*/
 function chart06Fun(){
     var linechart_as = echarts.init(document.getElementById('linechart_as'));
     var option = {
@@ -1282,12 +1311,12 @@ function chart06Fun(){
 }
 
 
-/*能源流能耗同比*/
+/*能源流单耗同比*/
 function chart07Fun(){
     var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
     var option = {
         title:{
-            subtext:'能源流能耗 (单位: GJ/㎡)',
+            subtext:'能源流单耗 (单位: GJ/㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{

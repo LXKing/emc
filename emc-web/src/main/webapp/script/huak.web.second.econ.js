@@ -3,7 +3,7 @@
 $(function(){
     //加载分公司能耗
     $.ajax({
-        url : _web+"/energy/monitor/fgs/energy/list",
+        url : _web+"/energy/monitor/fgs/list",
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
@@ -15,7 +15,7 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/energy/monitor/fgs/energy/ratio",
+        url : _web+"/energy/monitor/fgs/ratio",
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
@@ -27,7 +27,7 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/energy/monitor/fgs/energy/trend",
+        url : _web+"/energy/monitor/fgs/trend",
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
@@ -39,7 +39,7 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/energy/monitor/fgs/energy/an",
+        url : _web+"/energy/monitor/fgs/an",
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
@@ -51,7 +51,7 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/energy/monitor/fgs/energy/ranking",
+        url : _web+"/energy/monitor/fgs/ranking",
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
@@ -894,7 +894,7 @@ function chart03Fun(data) {
     var barchart01 = echarts.init(document.getElementById('barchart01'));
     var option = {
         title:{
-            subtext:'分公司能耗 (单位: tce)',
+            subtext:'能耗 (单位: tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1007,7 +1007,7 @@ function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
-            subtext:'分公司能耗 (单位: tce)',
+            subtext:'能耗 (单位: tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{

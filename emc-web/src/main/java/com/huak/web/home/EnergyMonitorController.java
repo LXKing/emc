@@ -67,7 +67,7 @@ public class EnergyMonitorController {
         return "second/econ";
     }
 
-    @RequestMapping(value = "/fgs/energy/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/fgs/list", method = RequestMethod.POST)
     @ResponseBody
     public String fgsEnergyList(ToolVO toolVO){
         logger.info("分公司能耗详细");
@@ -98,7 +98,7 @@ public class EnergyMonitorController {
 
     }
 
-    @RequestMapping(value = "/fgs/energy/ratio", method = RequestMethod.POST)
+    @RequestMapping(value = "/fgs/ratio", method = RequestMethod.POST)
     @ResponseBody
     public String fgsEnergyRatio(ToolVO toolVO){
         logger.info("分公司能耗占比分布图");
@@ -130,7 +130,7 @@ public class EnergyMonitorController {
 
     }
 
-    @RequestMapping(value = "/fgs/energy/trend", method = RequestMethod.POST)
+    @RequestMapping(value = "/fgs/trend", method = RequestMethod.POST)
     @ResponseBody
     public String fgsEnergyTrend(ToolVO toolVO){
         logger.info("分公司能耗趋势对比图");
@@ -198,7 +198,7 @@ public class EnergyMonitorController {
 
     }
 
-    @RequestMapping(value = "/fgs/energy/ranking", method = RequestMethod.POST)
+    @RequestMapping(value = "/fgs/ranking", method = RequestMethod.POST)
     @ResponseBody
     public String fgsEnergyRanking(ToolVO toolVO){
         logger.info("分公司能耗排名");
@@ -237,7 +237,7 @@ public class EnergyMonitorController {
 
     }
 
-    @RequestMapping(value = "/fgs/energy/an", method = RequestMethod.POST)
+    @RequestMapping(value = "/fgs/an", method = RequestMethod.POST)
     @ResponseBody
     public String fgsEnergyAn(ToolVO toolVO){
         logger.info("分公司能耗同比");
