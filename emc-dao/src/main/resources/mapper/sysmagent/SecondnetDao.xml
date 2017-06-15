@@ -214,10 +214,10 @@
         where 1=1
 
         <if test="lineName != null and lineName !=''">
-            and  LINE_NAME =  #{netName,jdbcType=VARCHAR}
+            and  LINE_NAME =  #{lineName,jdbcType=VARCHAR}
         </if>
         <if test="lineCode != null and lineCode !=''">
-            and  LINE_CODE =  #{netCode,jdbcType=VARCHAR}
+            and  LINE_CODE =  #{lineCode,jdbcType=VARCHAR}
         </if>
 
         <if test="netTypeId != null and netTypeId !=''">
