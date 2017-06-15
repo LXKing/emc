@@ -27,12 +27,12 @@
                 <span>能源流</span><span class="tipsindex">999</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01">4000GJ</li>
-                <li class="tabicon02">2000T</li>
-                <li class="tabicon03">8000万元</li>
-                <li class="tabicon04">20GJ/㎡</li>
-                <li class="tabicon05">20GJ/㎡</li>
-                <li class="tabicon06">8000万㎡</li>
+                <li class="tabicon01 eTotal"></li>
+                <li class="tabicon02 carbonTotal"></li>
+                <li class="tabicon03 costAll"></li>
+                <li class="tabicon04 yardage"></li>
+                <li class="tabicon05 zyardage"></li>
+                <li class="tabicon06 priceArea"></li>
             </ul>
         </div>
 
@@ -41,9 +41,9 @@
                 <span>供热源</span><span class="tipsindex">259</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 tabicon01cb">400GJ</li>
-                <li class="tabicon02">200T</li>
-                <li class="tabicon03">800万元</li>
+                <li class="tabicon01 feTotal"></li>
+                <li class="tabicon02 fCarbonTotal"></li>
+                <li class="tabicon03 fCostAll"></li>
             </ul>
             <div class="tabicon10 tabicon10cb">200GJ</div>
         </div>
@@ -53,9 +53,9 @@
                 <span>管网</span><span class="tipsindex">169</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07">400km</li>
+                <li class="tabicon07 netLen"></li>
                 <li class="tabicon09 tabicon09cb">200km</li>
-                <li class="tabicon03">800万元</li>
+                <li class="tabicon03 netCost"></li>
             </ul>
             <div class="tabicon10">200GJ</div>
         </div>
@@ -65,9 +65,9 @@
                 <span>换热站</span><span class="tipsindex">1069</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01">400GJ</li>
-                <li class="tabicon02 tabicon02cb">200T</li>
-                <li class="tabicon03">800万元</li>
+                <li class="tabicon01 seTotal"></li>
+                <li class="tabicon02 sCarbonTotal tabicon02cb"></li>
+                <li class="tabicon03 sCostAll"></li>
             </ul>
             <div class="tabicon10">200GJ</div>
         </div>
@@ -77,9 +77,9 @@
                 <span>管线</span><span class="tipsindex">320</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07">400km</li>
+                <li class="tabicon07 lineLen"></li>
                 <li class="tabicon09">200km</li>
-                <li class="tabicon03">800万元</li>
+                <li class="tabicon03 lineCost"></li>
             </ul>
             <div class="tabicon10">200GJ</div>
         </div>
