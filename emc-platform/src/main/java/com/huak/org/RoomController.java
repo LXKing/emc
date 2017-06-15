@@ -64,10 +64,10 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String addPage(Model model){
+	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
+	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加楼座页面");
-		model.addAttribute("com", roomService.getCompanySelectHtmlStr(null));
+		model.addAttribute("com", roomService.getCompanySelectHtmlStr(companyId));
 		return "/org/room/add";
 	}
 	

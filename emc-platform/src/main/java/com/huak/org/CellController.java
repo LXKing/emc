@@ -63,10 +63,10 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String addPage(Model model){
+	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
+	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加单元页面");
-		model.addAttribute("com", cellService.getCompanySelectHtmlStr(null));
+		model.addAttribute("com", cellService.getCompanySelectHtmlStr(companyId));
 		return "/org/cell/add";
 	}
 	

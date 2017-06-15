@@ -3,8 +3,12 @@ $(function () {
         class:"org-tree"
     });
 	cellSearOrg.initTree();
-	
 	initTreeBox();
+	parent.$("[name='searchComp']").change(function(){
+		cellSearOrg.initTree();
+		initTreeBox();
+		window.location.reload(); 
+	});
 	//楼座列表
 	var cellTable = $('#cell-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
