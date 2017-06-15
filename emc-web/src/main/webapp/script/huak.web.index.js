@@ -2,7 +2,159 @@
 
     //$("#header").load("header.html",function(){});
     //$("#footer").load("footer.html", function() {});
+    //All 数据 从后台去取
+    var requestDate =$("#searchTools").serialize();
+    //alert(requestDate.toolOrgId);
+    $.ajax({
+        url : _web+"/energy/top/all",
+        type : "GET",
+        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-25 00:00:00'},
+        dataType: "json",
+        success : function(data) {
+            console.log(data.all);
+            if(data.all.eTotal==null||data.all.eTotal==''){
+                $(".eTotal").html(0+" TCE");
+            }else{
+                $(".eTotal").html(data.all.eTotal+" TCE");
+            }
+            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+                $(".carbonTotal").html(0+" T");
+            }else{
+                $(".carbonTotal").html(data.all.carbonTotal+" T");
+            }
 
+            if(data.all.costAll==null||data.all.costAll==''){
+                $(".costAll").html(0+" 万元");
+            }else{
+                $(".costAll").html(data.all.costAll+" 万元");
+            }
+            if(data.all.yardage==null||data.all.yardage==''){
+                $(".yardage").html(0+" GJ/㎡");
+            }else{
+                $(".yardage").html(data.all.yardage+" GJ/㎡");
+            }
+//            if(data.all.yardage==null||data.all.yardage==''){
+//                $(".zyardage").html(0+" GJ/㎡");
+//            }else{
+//                $(".zyardage").html(2358+" GJ/㎡");
+//            }
+            $(".zyardage").html(2358+" GJ/㎡");
+            if(data.all.priceArea==null||data.all.priceArea==''){
+                $(".priceArea").html(0+" 万㎡");
+            }else{
+                $(".priceArea").html(data.all.priceArea+" 万㎡");
+            }
+
+        }
+//        error : function(request) {
+//            alert("Connection error");
+//        }
+    });
+
+
+    //供热源数据去取
+    $.ajax({
+        url : _web+"/energy/top/feed",
+        type : "GET",
+        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        dataType: "json",
+        success : function(data) {
+            if(data.all.eTotal==null||data.all.eTotal==''){
+                $(".feTotal").html(0+" TCE");
+            }else{
+                $(".feTotal").html(data.all.eTotal+" TCE");
+            }
+            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+                $(".fCarbonTotal").html(0+" T");
+            }else{
+                $(".fCarbonTotal").html(data.all.carbonTotal+" T");
+            }
+            if(data.all.costAll==null||data.all.costAll==''){
+                $(".fCostAll").html(0+" 万元");
+            }else{
+                $(".fCostAll").html(data.all.costAll+" 万元");
+            }
+
+        }
+//        error : function(request) {
+//            alert("Connection error");
+//        }
+        });
+//管网数据去取
+    $.ajax({
+        url : _web+"/energy/top/net",
+        type : "GET",
+        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        dataType: "json",
+        success : function(data) {
+            if(data.all.netLen==null||data.all.netLen==''){
+                $(".netLen").html(0+" km");
+            }else{
+                $(".netLen").html(data.all.netLen+" km");
+            }
+            if(data.all.netCost==null||data.all.netCost==''){
+                $(".netCost").html(0+" 万元");
+            }else{
+                $(".netCost").html(data.all.netCost+" 万元");
+            }
+
+        }
+//        error : function(request) {
+//            alert("Connection error");
+//        }
+    });
+    //换热站数据去取
+    $.ajax({
+        url : _web+"/energy/top/station",
+        type : "GET",
+        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        dataType: "json",
+        success : function(data) {
+            if(data.all.eTotal==null||data.all.eTotal==''){
+                $(".seTotal").html(0+" TCE");
+            }else{
+                $(".seTotal").html(data.all.eTotal+" TCE");
+            }
+            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+                $(".sCarbonTotal").html(0+" T");
+            }else{
+                $(".sCarbonTotal").html(data.all.carbonTotal+" T");
+            }
+            if(data.all.costAll==null||data.all.costAll==''){
+                $(".sCostAll").html(0+" 万元");
+            }else{
+                $(".sCostAll").html(data.all.costAll+" 万元");
+            }
+
+        }
+//        error : function(request) {
+//            alert("Connection error");
+//        }
+    });
+    //管网数据去取
+    $.ajax({
+        url : _web+"/energy/top/line",
+        type : "GET",
+        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        dataType: "json",
+        success : function(data) {
+                console.log(data.all);
+            if(data.all.lineLen==null||data.all.lineLen==''){
+                $(".lineLen").html(0+" km");
+            }else{
+                $(".lineLen").html(data.all.lineLen+" km");
+            }
+            if(data.all.lineCost==null||data.all.lineCost==''){
+                $(".lineCost").html(0+" 万元");
+            }else{
+                $(".lineCost").html(data.all.lineCost+" 万元");
+            }
+
+        }
+//        error : function(request) {
+//            alert("Connection error");
+//        }
+    });
     var myChartEnergy;
     var myChartQualified;
     $.ajax({
@@ -63,6 +215,23 @@ function typefun(these, code) {
         $(".otherTabdiv").hide();
         myChartQualified.resize();
         myChartCarbon.resize();
+        setCookie('toolOrgType', 5, 3);
+        $("#toolOrgType").val(5);
+    }else if(code == 5){
+        setCookie('toolOrgType', 4, 3);
+        $("#toolOrgType").val(4);
+    }else if(code == 4){
+        setCookie('toolOrgType', 3, 3);
+        $("#toolOrgType").val(3);
+    }else if(code == 3){
+        setCookie('toolOrgType', 2, 3);
+        $("#toolOrgType").val(2);
+    }else if(code == 2){
+        setCookie('toolOrgType', 1, 3);
+        $("#toolOrgType").val(1);
+    }else if(code == 1){
+        setCookie('toolOrgType', '', 3);
+        $("#toolOrgType").val("");
     } else {
         $(".PeopleTabdiv").hide();
         $(".otherTabdiv").show();
@@ -493,7 +662,7 @@ function chart05Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            debugger;
+            //debugger;
             var energy = result.object.ccs;
             var device = result.object.device;
             var labor  = result.object.labor;

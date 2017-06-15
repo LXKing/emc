@@ -86,6 +86,14 @@ $(function () {
         }
     }
 
+    //top（tools.jsp） 顶部源、网、站、线、户 的toolOrgType 默认值设置
+    if(getCookie("toolOrgType") == null || getCookie("toolOrgType") == ""){
+        $('#toolOrgType').val("");
+    }else{
+        var toolOrgType = getCookie("toolOrgType");
+        $('#toolOrgType').val(toolOrgType);
+    }
+
     //默认时间段
     if (getCookie("dateType") == null || getCookie("dateType") == "") {
         $.ajax({

@@ -32,64 +32,164 @@
   <!-- 查询今年的集团能耗 -->
   <!-- 查询条件map内容：{toolOrgId=38, toolFeedType=2, toolStartDate=2016-11-15, toolEndDate=2017-06-15, toolOrgType=} -->
   <select id="groupEnergy" resultType="java.util.Map" parameterType="java.util.Map">
-		SELECT
-			SUM(C.total) AS groupEnergy,
-			SUM(CASE WHEN C.energyType IN ('produceHeat', 'forHeat') THEN C.total ELSE 0 END ) AS hotEnergy,
-			SUM(CASE WHEN C.energyType IN ('powerElectric','lightElectric') THEN C.total ELSE 0 END ) AS electricEnergy,
-			SUM(CASE C.energyType WHEN 'repairWater' THEN C.total ELSE 0 END ) AS waterEnergy,
-			SUM(CASE C.energyType WHEN 'gas' THEN C.total ELSE 0 END ) AS gasEnergy,
-			SUM(CASE C.energyType WHEN 'coal' THEN C.total ELSE 0 END ) AS coalEnergy,
-			C.yeardate,
-			(CASE WHEN DATE_FORMAT(C.yeardate, '%Y') = DATE_FORMAT(now(), '%Y') THEN '1' ELSE '0' END ) curyear
-		FROM
-			(SELECT MAX(B.dosage) AS total, B.yeardate AS yeardate, B.energyType AS energyType
-			  FROM(SELECT A.*,
-									IF(A.orgtype = '1',(SELECT f.HEAT_TYPE FROM t_emc_unit_feed f WHERE f.id = A.unitid),'') AS heat_type
-					  FROM(SELECT h.COMID AS comid, h.UNITID AS unitid, etype.NAME_EN AS energyType,
-									h.DOSAGE AS dosage, DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate, v.type AS orgtype
-							  FROM
-									(t_emc_final_data_hour h LEFT JOIN t_emc_energy_type etype ON h.TYPEID = etype.id)
-									LEFT JOIN v_emc_unit_feed v ON h.COMID = v.COM_ID
-								) A
-						) B
+	SELECT
+		sum(C.total) AS groupEnergy,
+		sum(
+			CASE C.energyType
+			WHEN '4' THEN
+				C.dosage
+			ELSE
+				0
+			END
+		) AS hotEnergy,
+		sum(
+			CASE C.energyType
+			WHEN '2' THEN
+				C.dosage
+			ELSE
+				0
+			END
+		) AS electricEnergy,
+		SUM(
+			CASE C.energyType
+			WHEN '1' THEN
+				C.dosage
+			ELSE
+				0
+			END
+		) AS waterEnergy,
+		SUM(
+			CASE C.energyType
+			WHEN '3' THEN
+				C.dosage
+			ELSE
+				0
+			END
+		) AS gasEnergy,
+		SUM(
+			CASE C.energyType
+			WHEN '5' THEN
+				C.dosage
+			ELSE
+				0
+			END
+		) AS coalEnergy,
+		SUM(
+			CASE C.energyType
+			WHEN '6' THEN
+				C.dosage
+			ELSE
+				0
+			END
+		) AS oilEnergy,
+		C.yeardate,
+		(
+			CASE
+			WHEN DATE_FORMAT(C.yeardate, '%Y-%m-%d') 
+			BETWEEN 
+				<choose>
+				<when test="toolStartDate!=null and toolStartDate!=''">
+					#{toolStartDate,jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					SUBDATE(CURDATE(), INTERVAL 5 DAY)
+				</otherwise>
+			</choose>
+			AND 
+			<choose>
+				<when test="toolEndDate!=null and toolEndDate!=''">
+					#{toolEndDate,jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					CURDATE()
+				</otherwise>
+			</choose>
+			THEN '1' ELSE '0' END
+		) curyear
+	FROM
+		(
+			SELECT
+				sum(B.dosage) dosage,
+				SUM(B.total) total,
+				B.energytype,
+				B.yeardate
+			FROM
+				(
+					SELECT
+						vu.UNITID
+					FROM
+						(
+							t_emc_org
+							LEFT JOIN v_emc_unit vu ON ID = vu.ORGID
+							<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+						)
+					WHERE
+						FIND_IN_SET(
+							ID,
+							emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>)
+						)
+					AND P_ORG_ID != '0'
+				) A
+			LEFT JOIN (
+				SELECT
+					h.UNITID AS unitid,
+					sum(h.DOSAGE) AS dosage,
+					sum(h.DOSAGE * h.COAL_COEF) AS total,
+					et.type AS energytype,
+					DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
+				FROM
+					(
+						t_emc_final_data_hour h
+						LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
+					)
 				WHERE
 					1 = 1
 				<choose>
 					<when test="toolStartDate!=null and toolStartDate!=''">
-						AND (DATE_FORMAT(B.yeardate, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
+						AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
 					</when>
 					<otherwise>
-						AND (DATE_FORMAT(B.yeardate, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
+						AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
 					</otherwise>
 				</choose>
 				<choose>
 					<when test="toolEndDate!=null and toolEndDate!=''">
-						AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
+						AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
 					</when>
 					<otherwise>
-						AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') &lt;= CURDATE())
+						AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE())
 					</otherwise>
 				</choose>
 				<choose>
 					<when test="toolStartDate!=null and toolStartDate!=''">
-						OR (DATE_FORMAT(B.yeardate, '%Y-%m-%d') >= SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR) 
+						OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR) 
 					</when>
 					<otherwise>
-						OR (DATE_FORMAT(B.yeardate, '%Y-%m-%d') >= SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
+						OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
 					</otherwise>
 				</choose>
 				<choose>
 					<when test="toolEndDate!=null and toolEndDate!=''">
-						AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
+						AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
 					</when>
 					<otherwise>
-						AND DATE_FORMAT(B.yeardate, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR)
+						AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR)
 					</otherwise>
 				</choose>
-		  		<if test="toolFeedType!=null and toolFeedType!=''"> AND B.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-		  		<if test="toolOrgId!=null and toolOrgId!=''"> AND B.comid = (select com_id from t_emc_org where id=#{toolOrgId,jdbcType=VARCHAR})</if>
-				GROUP BY B.yeardate, B.energyType 
-		) C GROUP BY C.yeardate ORDER BY C.yearDate ASC
+				GROUP BY
+					unitid,
+					energytype,
+					yeardate
+			) B ON A.UNITID = B.unitid
+			GROUP BY
+				B.energytype,
+				B.yeardate
+		) C
+	where C.yeardate is not NULL
+	GROUP BY
+		C.yeardate
+	ORDER BY
+		C.yearDate ASC
   </select>
   
   <delete id="delete" parameterType="java.lang.String" >

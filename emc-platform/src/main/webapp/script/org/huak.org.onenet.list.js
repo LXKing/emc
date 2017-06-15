@@ -103,6 +103,7 @@ $(function () {
             return "请稍等，正在加载中...";
         },
         responseHandler: function (res) {
+
             return {
                 "rows": res.list.list,
                 "total": res.list.page.total
@@ -283,8 +284,10 @@ function deleteOncenet(id) {
 function treeNodeClick(e,treeId,treeNode){
     top.orgId = treeNode.id;
     //alert(top.orgId);
+    $("#orgId").val(treeNode.id);
     search();
 }
+
 function addNet(){
     //alert(123);
     var treeNode = top.comm_tree.getSelectedNodes();
@@ -301,14 +304,7 @@ function addNet(){
     openLayer(_platform+"/oncenet/add/"+treeNode[0].id,"添加管网","oncenetAddForm",null,null);
 }
 function params(params) {
-    var netTypeId = $('#netTypeId option:selected') .val();
-    return {
-        netName:$('input[name="netName"]').val(),
-        netCode:$('input[name="netCode"]').val(),
-        netTypeId:netTypeId,
-        _method: "PATCH",
-        orgId:top.orgId,
-        pageNumber: params.pageNumber,
-        pageSize: params.pageSize
-    };
+    var ts = $(top.document).find("[name='searchComp']").val();
+    $("#comId").val(ts);
+    return $("#oncenet-form").serialize();
 }

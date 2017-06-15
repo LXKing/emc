@@ -264,6 +264,7 @@ function deleteOncenet(id) {
 
 function treeNodeClick(e,treeId,treeNode){
     top.orgId = treeNode.id;
+    $("#orgId").val(treeNode.id);
     search();
 }
 
@@ -281,14 +282,7 @@ function addLine(){
     openLayer(_platform+"/secondnet/add/"+treeNode[0].id,"添加管线","secondnetAddForm",null,null);
 }
 function params(params) {
-    var netTypeId = $('#netTypeId option:selected') .val();
-    return {
-        lineName:$('input[name="lineName"]').val(),
-        lineCode:$('input[name="lineCode"]').val(),
-        netTypeId:netTypeId,
-        _method: "PATCH",
-        orgId:top.orgId,
-        pageNumber: params.pageNumber,
-        pageSize: params.pageSize
-    };
+    var ts = $(top.document).find("[name='searchComp']").val();
+    $("#comId").val(ts);
+    return $("#second-form").serialize();
 }
