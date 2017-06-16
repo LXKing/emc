@@ -29,7 +29,7 @@ import com.huak.common.page.PageResult;
 import com.huak.org.model.Room;
 
 /**
- * 楼座controller
+ * 户controller
  * @author Administrator
  *
  */
@@ -44,7 +44,7 @@ public class RoomController {
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String listPage(Model model){
-		logger.info("跳转到楼座列表页面");
+		logger.info("跳转到户列表页面");
 		model.addAttribute("com", roomService.getCompanySelectHtmlStr(null));
 		model.addAttribute("community", roomService.getCommunitySelectHtmlStr(new HashMap<String,String>(), null));
 		model.addAttribute("ban", roomService.getBanSelectHtmlStr(new HashMap<String,String>(), null));
@@ -55,26 +55,27 @@ public class RoomController {
 	@RequestMapping(value="/list",method=RequestMethod.PATCH)
 	@ResponseBody
 	public String list(@RequestParam Map<String,String> params,Page page){
-		logger.info("查询楼座信息");
+		logger.info("查询户信息");
 		JSONObject result = new JSONObject();
-		//查询楼座信息
+		//查询户信息
 		PageResult<Room> list = roomService.list(params,page);
 		result.put(Constants.LIST, list);
-		logger.info("查询楼座信息："+list);
+		logger.info("查询户信息："+list);
 		return result.toJSONString();
 	}
 	
 	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
 	public String addPage(Model model,@PathVariable String companyId){
-		logger.info("跳转到添加楼座页面");
+		logger.info("跳转到添加户页面");
 		model.addAttribute("com", roomService.getCompanySelectHtmlStr(companyId));
+		model.addAttribute("heatType", roomService.getHeatTypeSelectHtmlStr(null));
 		return "/org/room/add";
 	}
 	
 	@RequestMapping(value="/cellSelectHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String getCellSelectHtmlStr(@RequestParam Map<String,String> param){
-		logger.info("查询楼座下拉框html字符串");
+		logger.info("查询户下拉框html字符串");
 		JSONObject result = new JSONObject();
 		String htmlStr = roomService.getCellSelectHtmlStr(param,null);
 		result.put("html", htmlStr);
@@ -94,27 +95,27 @@ public class RoomController {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public String add(Room room){
-		logger.info("添加楼座信息");
+		logger.info("添加户信息");
 		JSONObject result = new JSONObject();
 		try{
 			result.put(Constants.FLAG, false);
 			int save = roomService.save(room);
 			if(save<=0){
-				result.put(Constants.MSG, "添加楼座信息失败");
+				result.put(Constants.MSG, "添加户信息失败");
 	        }else{
 	        	result.put(Constants.FLAG, true);
-	        	result.put(Constants.MSG, "添加楼座信息成功");
+	        	result.put(Constants.MSG, "添加户信息成功");
 	        }
 		}catch(Exception e){
-			logger.error("添加楼座信息异常" + e.getMessage());
-			result.put(Constants.MSG, "添加楼座信息异常");
+			logger.error("添加户信息异常" + e.getMessage());
+			result.put(Constants.MSG, "添加户信息异常");
 		}
 		return result.toJSONString();
 	}
 	
 	@RequestMapping(value="/edit/{roomId}",method=RequestMethod.GET)
 	public String editPage(Model model,@PathVariable String roomId){
-		logger.info("跳转到修改楼座页面");
+		logger.info("跳转到修改户页面");
 		Room room = roomService.get(roomId);
 		if(room!=null){
 			model.addAttribute("room", room);
@@ -128,6 +129,7 @@ public class RoomController {
 			model.addAttribute("ban", roomService.getBanSelectHtmlStr(param,room.getBanId()));
 			model.addAttribute("cell", roomService.getCellSelectHtmlStr(param,room.getCellId()));
 			model.addAttribute("line", roomService.getLineSelectHtmlStr(param,room.getLineId()));
+			model.addAttribute("heatType", roomService.getHeatTypeSelectHtmlStr(room.getHeatType()));
 		}
 		return "/org/room/edit";
 	}
@@ -135,20 +137,20 @@ public class RoomController {
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	@ResponseBody
 	public String edit(Room room){
-		logger.info("修改楼座信息，楼座id:"+room.getId());
+		logger.info("修改户信息，户id:"+room.getId());
 		JSONObject result = new JSONObject();
 		try{
 			result.put(Constants.FLAG, false);
 			int edit = roomService.edit(room);
 			if(edit<=0){
-				result.put(Constants.MSG, "修改楼座信息失败");
+				result.put(Constants.MSG, "修改户信息失败");
 	        }else{
 	        	result.put(Constants.FLAG, true);
-	        	result.put(Constants.MSG, "修改楼座信息成功");
+	        	result.put(Constants.MSG, "修改户信息成功");
 	        }
 		}catch(Exception e){
-			logger.error("修改楼座信息异常" + e.getMessage());
-			result.put(Constants.MSG, "修改楼座信息异常");
+			logger.error("修改户信息异常" + e.getMessage());
+			result.put(Constants.MSG, "修改户信息异常");
 		}
 		return result.toJSONString();
 	}
@@ -156,20 +158,20 @@ public class RoomController {
 	@RequestMapping(value="/delete/{roomId}",method=RequestMethod.POST)
 	@ResponseBody
 	public String delete(@PathVariable String roomId){
-		logger.info("删除楼座信息，楼座id："+roomId);
+		logger.info("删除户信息，户id："+roomId);
 		JSONObject result = new JSONObject();
 		try{
 			result.put(Constants.FLAG, false);
 			int delete = roomService.delete(roomId);
 			if(delete<=0){
-				result.put(Constants.MSG, "删除楼座信息失败");
+				result.put(Constants.MSG, "删除户信息失败");
 	        }else{
 	        	result.put(Constants.FLAG, true);
-	        	result.put(Constants.MSG, "删除楼座信息成功");
+	        	result.put(Constants.MSG, "删除户信息成功");
 	        }
 		}catch(Exception e){
-			logger.error("删除楼座信息异常" + e.getMessage());
-			result.put(Constants.MSG, "删除楼座信息异常");
+			logger.error("删除户信息异常" + e.getMessage());
+			result.put(Constants.MSG, "删除户信息异常");
 		}
 		return result.toJSONString();
 	}
@@ -187,6 +189,7 @@ public class RoomController {
 	        cellName.put("community_name", "小区名称");
 	        cellName.put("com_name", "所属公司");
 	        cellName.put("org_name", "所属机构");
+	        cellName.put("heat_name", "供热类型");
 	        List<Map<String, Object>> cellValues = roomService.exportRoom(param);
             if(cellValues==null){
             	jo.put(Constants.MSG, "导出失败");

@@ -73,7 +73,7 @@ public class CellController {
 	@RequestMapping(value="/banSelectHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String getBanSelectHtmlStr(@RequestParam Map<String,String> param){
-		logger.info("查询楼座下拉框html字符串");
+		logger.info("查询单元下拉框html字符串");
 		JSONObject result = new JSONObject();
 		String htmlStr = cellService.getBanSelectHtmlStr(param,null);
 		result.put("html", htmlStr);

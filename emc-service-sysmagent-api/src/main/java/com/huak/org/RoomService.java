@@ -65,4 +65,6 @@ public interface RoomService {
 	String getCellSelectHtmlStr(Map<String, String> param, String selectedCellId);
 
 	String getLineSelectHtmlStr(Map<String, String> param, String selectedLineId);
+
+	String getHeatTypeSelectHtmlStr(String heatTypeSelected);
 }

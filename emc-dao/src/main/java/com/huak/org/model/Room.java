@@ -62,6 +62,8 @@ public class Room implements Serializable {
      * @preserve 声明此方法不被JOC混淆
      */
     private String comId;
+    
+    private String heatType;
 
     public String getId() {
         return id;
@@ -142,4 +144,13 @@ public class Room implements Serializable {
     public void setComId(String comId) {
         this.comId = comId == null ? null : comId.trim();
     }
+
+	public String getHeatType() {
+		return heatType;
+	}
+
+	public void setHeatType(String heatType) {
+		this.heatType = heatType;
+	}
+    
 }

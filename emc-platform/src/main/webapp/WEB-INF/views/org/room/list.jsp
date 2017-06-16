@@ -77,7 +77,7 @@
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
                             	<c:if test="${sessionScope._auth['roomInsert'] }">
-                                	<button id="addButton" type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/room/add" layer-title="新增小区" layer-form-id="roomAddForm" ><i class="fa fa-plus"></i>添加</button>
+                                	<button id="addButton" type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/room/add" layer-title="新增户" layer-form-id="roomAddForm" ><i class="fa fa-plus"></i>添加</button>
                                 </c:if>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">

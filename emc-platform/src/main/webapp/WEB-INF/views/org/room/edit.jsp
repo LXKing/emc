@@ -28,6 +28,12 @@
 	                    </div>
 	                </div>
                 </div>
+                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>供热类型：</label>
+                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                       <select onclick="getCommunityAndLineSelectHtml()" value="${room.heatType }" id="heatType" name="heatType" class="form-control m-b" ></select>
+                    </div>
+                </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
@@ -159,7 +165,8 @@ top.getCommunityAndLineSelectHtml = function(){
 	
 	$.get(_platform + '/room/lineSelectHtmlStr',{
 		orgId:orgId,
-		comId:comId
+		comId:comId,
+		heatType:top.$("#heatType").val()
 	},function(data){
 		top.$("#lineId").html(data.html);
 	},'json');
@@ -215,6 +222,7 @@ function treeNodeClick(){
 $(function () {
 	//初始化公司下拉框
 	top.$('#comId').html('${com}');
+	top.$('#heatType').html('${heatType}');
 	top.$('#communityId').html('${community}');//初始化小区下拉框
 	top.$('#banId').html('${ban}');//初始化楼座下拉框
 	top.$('#cellId').html('${cell}');//初始化单元下拉框

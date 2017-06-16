@@ -131,4 +131,9 @@ public class RoomServiceImpl implements RoomService {
 		return communityService.getLineSelectHtmlStr(param, selectedLineId);
 	}
 
+	@Override
+	public String getHeatTypeSelectHtmlStr(String heatTypeSelected) {
+		return communityService.getHeatTypeSelectHtmlStr(heatTypeSelected);
+	}
+
 }

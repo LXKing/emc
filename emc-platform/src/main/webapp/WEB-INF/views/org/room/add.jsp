@@ -29,6 +29,14 @@
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>供热类型：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                       <select onclick="getCommunityAndLineSelectHtml()" id="heatType" name="heatType" class="form-control m-b" ></select>
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                        <select disabled="disabled" onchange="getCommunityAndLineSelectHtml()" id="com" name="com" class="form-control m-b" >
@@ -163,7 +171,8 @@ top.getCommunityAndLineSelectHtml = function(){
 	
 	$.get(_platform + '/room/lineSelectHtmlStr',{
 		orgId:orgId,
-		comId:comId
+		comId:comId,
+		heatType:top.$("#heatType").val()
 	},function(data){
 		top.$("#lineId").html(data.html);
 	},'json');
@@ -219,7 +228,7 @@ function treeNodeClick(){
 $(function () {
 	//初始化公司下拉框
 	top.$('#com').html('${com}');
-	console.log(top.$('#com :selected').val());
+	top.$('#heatType').html('${heatType}');
 	top.$('#comId').val(top.$('#com :selected').val());
 	
 	//初始化组织机构树
@@ -282,6 +291,9 @@ $(function () {
                 required: true,
                 isNum:true
             },
+            heatType: {
+            	required: true
+            },
             lineId: {
                 required: true
             }
@@ -308,6 +320,9 @@ $(function () {
             },
             heatArea: {
                 required: icon + "请填写供热面积"
+            },
+            heatType: {
+                required: icon + "请选择供热类型"
             },
             lineId: {
                 required: icon + "请选择所属管线"

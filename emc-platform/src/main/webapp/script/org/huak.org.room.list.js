@@ -107,6 +107,11 @@ $(function () {
                 align: 'center'
             },
             {
+                title: '供热类型',
+                field: 'heatName',
+                align: 'center'
+            },
+            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,
