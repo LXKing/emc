@@ -128,7 +128,7 @@ public class ComponentServiceImpl implements ComponentService{
     }
 
     /**
-     * 组件 单耗统计
+     * 组件 单耗趋势
      * @param params
      * @return
      */
@@ -174,7 +174,6 @@ public class ComponentServiceImpl implements ComponentService{
                 avg.add(df.format(avgs));
             }
         }
-
         List<Map<String,Object>> results = new ArrayList<>();
         Map<String,Object> currentYear = new HashMap<>();
         currentYear.put("typeName","今年");

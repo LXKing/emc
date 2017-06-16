@@ -20,7 +20,7 @@ public interface ComponentService {
     Map<String,Object> costDetail(Map<String, Object> params);
 
     /**
-     * 单耗统计
+     * 单耗趋势
      * @param params
      * @return
      */
