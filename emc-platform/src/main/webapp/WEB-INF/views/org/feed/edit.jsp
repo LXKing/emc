@@ -152,10 +152,16 @@ $(function () {
                 required: true
             },
             installCapacity: {
-                required: true
+                number: true
             },
             heatCapacity: {
-                required: true
+                number: true
+            },
+            steamturbineNum: {
+                number: true
+            },
+            boilerNum: {
+                number:  true
             },
             addr: {
                 required: true
@@ -199,10 +205,16 @@ $(function () {
                 required: icon + "请选择热源性质"
             },
             installCapacity: {
-                required: icon + "请填写装机容量"
+                number: icon + "请输入正确的数字"
             },
             heatCapacity: {
-                required:  icon + "请填写供热能力"
+                number:  icon + "请输入正确的数字"
+            },
+            steamturbineNum: {
+                number: icon + "请输入正确的数字"
+            },
+            boilerNum: {
+                number:  icon + "请输入正确的数字"
             },
             addr: {
                 required: icon + "请填写详细地址"
@@ -300,7 +312,7 @@ $(function () {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2  control-label"><span class="red">*</span>装机容量：</label>
+                            <label class="col-sm-2  control-label">装机容量：</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <input name="installCapacity" class="form-control" value="${object.installCapacity}" type="text" maxlength="16"
@@ -311,19 +323,19 @@ $(function () {
 
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2  control-label"><span class="red">*</span>锅炉数量：</label>
+                            <label class="col-sm-2  control-label">锅炉数量：</label>
                             <div class="col-sm-4">
                                 <input name="boilerNum" class="form-control" value="${object.boilerNum}" type="text" maxlength="64" placeholder="请输入锅炉数量">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2  control-label"><span class="red">*</span>汽机数量：</label>
+                            <label class="col-sm-2  control-label">汽机数量：</label>
                             <div class="col-sm-4">
                                 <input name="steamturbineNum" class="form-control" value="${object.steamturbineNum}" type="text" maxlength="64" placeholder="请输入汽机数量">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2  control-label"><span class="red">*</span>供热能力：</label>
+                            <label class="col-sm-2  control-label">供热能力：</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <input name="heatCapacity" class="form-control" type="text" maxlength="16" value="${object.heatCapacity}"

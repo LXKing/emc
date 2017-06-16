@@ -173,8 +173,14 @@ function bootstraplist(){
                 align: 'center' ,
                 formatter:function(value,row,index){
                     var html = "";
+                    var treeNode = top.comm_tree.getSelectedNodes();
+                    var ts = $(top.document).find("[name='searchComp']").val();
+                    var orgId = null;
+                    if(treeNode.length>0){
+                        orgId = treeNode[0].id
+                    }
                     if($("#feedUpdateAuth").val()){
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="feed_edit_Form" layer-title="编辑热源" layer-url="'+_platform+'/feed/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="feed_edit_Form" layer-title="编辑热源" layer-url="'+_platform+'/feed/edit/'+row.id+'/'+orgId+'/'+ts+'"> <i class="fa fa-edit"></i></a>&nbsp;';
                     }
                     if($("#feedDeleteAuth").val()){
                         html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteFeed(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
@@ -244,3 +250,11 @@ function addFeed(){
     openLayer(_platform+"/feed/add/"+treeNode[0].id+"/"+ts,"添加热力站","feed_add_Form",null,null);
 }
 
+function resetFeedSearch(){
+    $("#feed-searchform").find('input[name="feedName"]').val();
+    $("#feed-searchform").find('input[name="feedCode"]').val();
+    $("#feed-searchform").find('input[name="installCapacity"]').val();
+    $("#feed-searchform").find('input[name="heatCapacity"]').val();
+    $("#heatType").chosen("destroy").val("").chosen();
+    $("#feedType").chosen("destroy").val("").chosen();
+}

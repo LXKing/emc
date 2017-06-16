@@ -140,10 +140,16 @@ $(function () {
                 required: true
             },
             installCapacity: {
-                required: true
+                number: true
             },
             heatCapacity: {
-                required: true
+                number: true
+            },
+            steamturbineNum: {
+                number: true
+            },
+            boilerNum: {
+                number:  true
             },
             addr: {
                 required: true
@@ -152,12 +158,6 @@ $(function () {
                 required: true
             },
             cityId:{
-                required: true
-            },
-            countyId:{
-                required: true
-            },
-            townId:{
                 required: true
             }
         },
@@ -186,10 +186,16 @@ $(function () {
                 required: icon + "请选择热源性质"
             },
             installCapacity: {
-                required: icon + "请填写装机容量"
+                number: icon + "请输入正确的数字"
             },
             heatCapacity: {
-                required:  icon + "请填写供热能力"
+                number:  icon + "请输入正确的数字"
+            },
+            steamturbineNum: {
+                number: icon + "请输入正确的数字"
+            },
+            boilerNum: {
+                number:  icon + "请输入正确的数字"
             },
             addr: {
                 required: icon + "请填写详细地址"
@@ -199,13 +205,8 @@ $(function () {
             },
             cityId:{
                 required: icon + "请选择城市"
-            },
-            countyId:{
-                required: icon + "请选择县城"
-            },
-            townId:{
-                required: icon + "请选择乡镇"
             }
+
 
         },
         submitHandler: function () {

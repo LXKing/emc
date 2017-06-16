@@ -18,4 +18,11 @@ public interface ComponentService {
      * @return
      */
     Map<String,Object> costDetail(Map<String, Object> params);
+
+    /**
+     * 单耗统计
+     * @param params
+     * @return
+     */
+    Map<String,Object> energycomparison(Map<String, Object> params);
 }

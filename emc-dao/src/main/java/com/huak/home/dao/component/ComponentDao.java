@@ -42,4 +42,18 @@ public interface ComponentDao {
      * @return
      */
     Map<String,Object> costDetail(Map<String, Object> params);
+
+    /**
+     * 单耗统计
+     * @param params
+     * @return
+     */
+    List<Map<String, Object>>  getenergycomparision(Map<String, Object> params);
+
+    /**
+     * 去年单耗详情
+     * @param params
+     * @return
+     */
+    Map<String,Object> previousComparison(Map<String, Object> params);
 }

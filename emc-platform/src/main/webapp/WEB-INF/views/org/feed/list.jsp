@@ -7,11 +7,6 @@
 
 <head>
     <jsp:include page="../../head.jsp"></jsp:include>
-    <script type="application/javascript">
-        function search(){
-            $table.bootstrapTable('refresh');
-        }
-    </script>
     <script src="${platform}/script/org/huak.org.feed.list.js"></script>
 </head>
 <body class="gray-bg">
@@ -58,7 +53,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">热源性质</label>
                                     <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <select id="feedType" name="feedType" class="chosen-select form-control" onchange="addMessage()">
+                                        <select id="feedType" name="feedType" class="chosen-select form-control" >
                                             <option value="">请选择</option>
                                             <c:forEach items="${sysDic['natureheat']}" var="types">
                                                 <option  value="${types.seq}">${types.des}</option>
@@ -72,7 +67,7 @@
                                     <div class="form-group">
                                         <label  class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">供热类型</label>
                                         <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                            <select id="heatType" name="heatType" class="chosen-select form-control" onchange="addMessage()" >
+                                            <select id="heatType" name="heatType" class="chosen-select form-control"  >
                                                 <option value="">请选择</option>
                                                 <c:forEach items="${sysDic['supportheattype']}" var="type">
                                                     <option value="${type.seq}">${type.des}</option>
@@ -116,7 +111,7 @@
 
                                 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="reset" class="btn btn-sm btn-success" onclick="resetFeedSearch()"> 重置</button>
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/feed/export"> 导出Excel
                                 </button>
 
