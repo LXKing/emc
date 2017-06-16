@@ -334,6 +334,14 @@
                             <span class="cb-legend-gray"></span>
                             去年
                         </label>
+                        <label>
+                            <span class="cb-legend-green"></span>
+                            上线
+                        </label>
+                        <label>
+                            <span class="cb-legend-red"></span>
+                            下线
+                        </label>
                     </div>
                 </div>
                 <div id="chart01" class="chart"></div>
