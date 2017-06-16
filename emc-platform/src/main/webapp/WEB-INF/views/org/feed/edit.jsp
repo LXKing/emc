@@ -391,7 +391,6 @@ $(function () {
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="td">
                                 <label class="col-md-2  control-label"><span class="red">*</span>所属县：</label>

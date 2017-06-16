@@ -72,7 +72,6 @@ public class FeedController {
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap, Page page) {
         logger.info("热源列表页分页查询");
-
         JSONObject jo = new JSONObject();
         try {
             jo.put(Constants.LIST, feedService.queryByPage(paramsMap, page));

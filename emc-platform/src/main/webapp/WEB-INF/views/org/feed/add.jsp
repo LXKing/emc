@@ -353,7 +353,6 @@ $(function () {
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="td">
                                 <label class="col-sm-2  control-label">所属市：</label>

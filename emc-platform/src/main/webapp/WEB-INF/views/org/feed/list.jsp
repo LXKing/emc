@@ -108,7 +108,6 @@
                                 </c:if>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
-
                                 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
                                 </button>
                                 <button type="reset" class="btn btn-sm btn-success" onclick="resetFeedSearch()"> 重置</button>
