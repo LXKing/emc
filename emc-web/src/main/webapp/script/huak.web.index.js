@@ -363,15 +363,15 @@ function chart01Show(datalist, datelist, other){
         }
     }
     $.each(datelist,function(index,value){
-        upperList.push(parseFloat(other.upperLimit.data))
-        lowerList.push(parseFloat(other.lowerLimit.data))
-        averageList.push(parseFloat(other.average.data))
+        upperList.push(parseFloat(other.upperLimit.data[index]))
+        lowerList.push(parseFloat(other.lowerLimit.data[index]))
+        averageList.push(parseFloat(other.average.data[index]))
     })
     option.series.push({
         name:other.upperLimit.typeName,
         type:'line',
         symbolSize:1,
-        lineStyle:{normal:{type:'dashed',color:'#e8afa6'}},
+        lineStyle:{normal:{type:'dashed',color:'greenyellow'}},
         label:labelStyle,
         data:upperList
     });
@@ -379,7 +379,7 @@ function chart01Show(datalist, datelist, other){
         name:other.lowerLimit.typeName,
         type:'line',
         symbolSize:1,
-        lineStyle:{normal:{type:'dashed',color:'#9ad9d7'}},
+        lineStyle:{normal:{type:'dashed',color:'red'}},
         label:labelStyle,
         data:lowerList
     });
