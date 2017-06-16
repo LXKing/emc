@@ -1,6 +1,8 @@
 package com.huak.org.model.vo;
 
-public class RoomVo {
+import java.io.Serializable;
+
+public class RoomVo implements Serializable {
 
 	private String id;
 	private String roomName;

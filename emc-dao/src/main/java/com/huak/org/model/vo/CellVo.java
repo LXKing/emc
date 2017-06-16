@@ -1,6 +1,8 @@
 package com.huak.org.model.vo;
 
-public class CellVo {
+import java.io.Serializable;
+
+public class CellVo implements Serializable {
 
 	private String id;
 	private String cellName;
