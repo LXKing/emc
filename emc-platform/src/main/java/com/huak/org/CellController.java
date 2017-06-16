@@ -63,17 +63,17 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String addPage(Model model){
+	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
+	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加单元页面");
-		model.addAttribute("com", cellService.getCompanySelectHtmlStr(null));
+		model.addAttribute("com", cellService.getCompanySelectHtmlStr(companyId));
 		return "/org/cell/add";
 	}
 	
 	@RequestMapping(value="/banSelectHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String getBanSelectHtmlStr(@RequestParam Map<String,String> param){
-		logger.info("查询楼座下拉框html字符串");
+		logger.info("查询单元下拉框html字符串");
 		JSONObject result = new JSONObject();
 		String htmlStr = cellService.getBanSelectHtmlStr(param,null);
 		result.put("html", htmlStr);

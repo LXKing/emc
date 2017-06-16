@@ -14,20 +14,20 @@
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <select disabled="disabled" onchange="getSelectHtml()" value="${ban.comId }" id="comId" name="comId" class="form-control m-b" ></select>
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>组织机构：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                    	<ul id="org" light="${ban.orgId }" value='${ban.orgId }' class="ban-edit-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
 	                    	<input type="text"  value="${ban.orgId }" class="form-control" name="orgId" id="orgId" style="visibility: hidden;height: 0px;">
 	                    </div>
 		            </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="getSelectHtml()" value="${ban.comId }" id="comId" name="comId" class="form-control m-b" ></select>
-	                    </div>
-	                </div>
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">

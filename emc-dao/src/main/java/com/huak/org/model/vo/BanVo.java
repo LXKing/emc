@@ -1,6 +1,8 @@
 package com.huak.org.model.vo;
 
-public class BanVo {
+import java.io.Serializable;
+
+public class BanVo implements Serializable {
 
 	private String id;
 	private String banName;

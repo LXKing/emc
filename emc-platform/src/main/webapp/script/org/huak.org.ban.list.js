@@ -3,8 +3,12 @@ $(function () {
         class:"org-tree"
     });
 	banSearOrg.initTree();
-	
 	initTreeBox();
+	parent.$("[name='searchComp']").change(function(){
+		banSearOrg.initTree();
+		initTreeBox();
+		window.location.reload(); 
+	});
 	//楼座列表
 	var banTable = $('#ban-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度

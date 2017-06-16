@@ -22,20 +22,20 @@
     <div class="col-lg-12 mb14  ">
         <div class=" index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class="pull-left groupEnergyTit energyTit"><i></i>集团总能耗<small class="font-sm">Energy Monitoring</small></div>
+                <div class="pull-left groupEnergyTit energyTit"><i></i>集团总单耗<small class="font-sm">Energy Monitoring</small></div>
             </div>
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
                     <div class="cb-header">
-                        <span class="cb-title">集团总能耗 (单位: GJ)</span>
+                        <span class="cb-title">集团总单耗 (单位: tce/㎡)</span>
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
-                                今年
+                                本期
                             </label>
                             <label>
                                 <span class="cb-legend-gray"></span>
-                                去年
+                                同期
                             </label>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
                     <h3 id="groupTotal"><!--760.4--></h3>
-                    <div class="small">集团总能耗 (GJ/m3)</div>
+                    <div class="small">集团总单耗 (tce/㎡)</div>
                     <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
@@ -52,10 +52,10 @@
             <div class="clearfix energy-list col-lg-12 ">
                 <div class="energy-list-box energy-list-box-first">
                     <div class="energy-head ">
-                        <span class="energy-list-name">水能耗</span>
+                        <span class="energy-list-name">水单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="waterTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">t/㎡</span>
                             <span class="energy-list-proportion " id="waterchangeRate"></span>
                         </div>
                     </div>
@@ -67,10 +67,10 @@
 
                 <div class="energy-list-box">
                     <div class="energy-head ">
-                        <span class="energy-list-name">电能耗</span>
+                        <span class="energy-list-name">电单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="electricTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">kW·h/㎡</span>
                             <span class="energy-list-proportion" id="elechangeRate"></span>
                         </div>
                     </div>
@@ -81,10 +81,10 @@
 
                 <div class="energy-list-box">
                     <div class="energy-head ">
-                        <span class="energy-list-name">气能耗</span>
+                        <span class="energy-list-name">气单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="gasTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">m³/㎡</span>
                             <span class="energy-list-proportion " id="gaschangeRate"></span>
                         </div>
                     </div>
@@ -96,10 +96,10 @@
 
                 <div class="energy-list-box">
                     <div class="energy-head ">
-                        <span class="energy-list-name">热能耗</span>
+                        <span class="energy-list-name">热单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="hotTotal"></span>
-                            <span class="energy-list-measure">GJ</span>
+                            <span class="energy-list-measure">GJ/㎡</span>
                             <span class="energy-list-proportion" id="hotchangeRate"></span>
                         </div>
                     </div>
@@ -111,10 +111,10 @@
 
                 <div class="energy-list-box energy-list-box-last">
                     <div class="energy-head ">
-                        <span class="energy-list-name">煤能耗</span>
+                        <span class="energy-list-name">煤单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="coalTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">t/㎡</span>
                             <span class="energy-list-proportion" id="coalchangeRate"></span>
                         </div>
                     </div>
@@ -135,24 +135,25 @@
     <div class="col-lg-12 mb14">
         <div class="index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class="pull-left energyTit analy_tit"><i></i>分公司能耗明细<small class="font-sm">Assessment indicators</small></div>
+                <div class="pull-left energyTit analy_tit"><i></i>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}单耗明细<small class="font-sm">Assessment indicators</small></div>
                 <a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
             </div>
             <div class="AssessmentBox rconttable col-lg-12 no-padding">
                 <table class="table table-striped table-bordered table-hover col-lg-12 no-padding">
                     <thead>
                     <tr class="first_tr">
-                        <td>分公司</td>
-                        <td>能源总量（万GJ）</td>
-                        <td>水能总量（T）</td>
-                        <td>电耗总量(Kw/h)</td>
-                        <td>气能耗总量（M²）</td>
-                        <td>热能耗总量（GJ）</td>
-                        <td>煤能耗总量（GJ）</td>
+                        <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
+                        <td>总单耗（tce/㎡）</td>
+                        <td>水单耗（t/㎡）</td>
+                        <td>电单耗(kW·h/㎡)</td>
+                        <td>气单耗（m³/㎡）</td>
+                        <td>热单耗（GJ/㎡）</td>
+                        <td>煤单耗（t/㎡）</td>
+                        <td>油单耗（L/㎡）</td>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr class="">
+                    <tbody id="fgsEnergyTbody">
+                    <%--<tr class="">
                         <td>
                             <a href="javascript:;" class="need_a">集团</a>
                         </td>
@@ -162,73 +163,7 @@
                         <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
                         <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
                         <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr class="bgc">
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr class="bgc">
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr class="bgc">
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="need_a">集团</a>
-                        </td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                        <td>800（同<span class="bluecolor">1.2↓</span>&nbsp;环&nbsp;<span class="redcolor">1.2↑</span>）</td>
-                    </tr>
+                    </tr>--%>
 
                     </tbody>
                 </table>
@@ -237,14 +172,14 @@
                     <div class="col-lg-6 no-padding analyBoxList" style="border-right: 1px solid #d0d4d9;">
                         <div id="piechart" style="width: 100%;height:268px;"></div>
                         <div class="piechartTit">
-                            分公司能耗占比分布图
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}单耗占比分布图
                         </div>
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                         <div id="linechart" style="width: 100%;height:268px;"></div>
 
                         <div class="piechartTit">
-                            分公司能耗趋势对比图
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}单耗趋势对比图
                         </div>
                     </div>
 
@@ -253,13 +188,13 @@
                     <div class="col-lg-6 no-padding analyBoxList" style="border-right: 1px solid #d0d4d9;">
                         <div id="barchart01" style="width: 100%;height:268px;"></div>
                         <div class="piechartTit">
-                            分公司能耗同比
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}单耗同比
                         </div>
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList">
                         <div id="barchart02" style="width: 100%;height:268px;"></div>
                         <div class="piechartTit">
-                            分公司能耗排名
+                            ${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}单耗排名
                         </div>
                     </div>
                 </div>

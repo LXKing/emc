@@ -93,4 +93,6 @@ public interface CommunityService {
 
 	String getLineSelectHtmlStr(Map<String, String> param, String selectedLineId);
 
+	String getHeatTypeSelectHtmlStr(String heatTypeSelected);
+
 }

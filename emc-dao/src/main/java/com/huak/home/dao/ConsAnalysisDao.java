@@ -1,6 +1,6 @@
 package com.huak.home.dao;
 
-import com.huak.home.model.EnergySecond;
+import com.huak.home.model.ConsSecond;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,65 +20,37 @@ import java.util.Map;
 @Repository
 public interface ConsAnalysisDao {
     /**
-     * 查询分公司能耗明细
+     * 查询分公司列表
      * @param params
      * @return
      */
-    public List<EnergySecond> findFilialeDetail(Map<String, Object> params);
+    public List<ConsSecond> findAssessmentIndicators(Map<String, Object> params);
 
     /**
-     * 查询能源流明细
+     * 分公司单耗占比分布图
      * @param params
      * @return
      */
-    public List<EnergySecond> findFolwDetail(Map<String, Object> params);
+    public List<Map<String, Object>> fgsEnergyRatio(Map<String, Object> params);
 
     /**
-     * 分公司能耗占比分布图
+     * 分公司单耗趋势对比图
      * @param params
      * @return
      */
-    public Map<String, Object> findFgsRatio(Map<String, Object> params);
+    public List<Map<String, Object>> fgsEnergyTrend(Map<String, Object> params);
 
     /**
-     * 分公司能耗趋势对比图
+     * 分公司单耗同比
      * @param params
      * @return
      */
-    public Map<String, Object> findFgsTrend(Map<String, Object> params);
+    public List<Map<String, Object>> fgsEnergyAn(Map<String, Object> params);
 
     /**
-     * 分公司能耗同比
+     * 分公司单耗排名
      * @param params
      * @return
      */
-    public Map<String, Object> findFgsAn(Map<String, Object> params);
-
-    /**
-     * 分公司能耗排名
-     * @param params
-     * @return
-     */
-    public Map<String, Object> findFgsRanking(Map<String, Object> params);
-
-    /**
-     * 能源流能耗占比分布图
-     * @param params
-     * @return
-     */
-    public Map<String, Object> findNylRatio(Map<String, Object> params);
-
-    /**
-     * 能源流能耗趋势对比图
-     * @param params
-     * @return
-     */
-    public Map<String, Object> findNylTrend(Map<String, Object> params);
-
-    /**
-     * 能源流能耗同比
-     * @param params
-     * @return
-     */
-    public Map<String, Object> findNylAn(Map<String, Object> params);
+    public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params);
 }

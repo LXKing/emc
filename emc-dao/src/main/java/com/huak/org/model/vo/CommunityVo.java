@@ -1,6 +1,8 @@
 package com.huak.org.model.vo;
 
-public class CommunityVo {
+import java.io.Serializable;
+
+public class CommunityVo implements Serializable {
 
 	private String id;
 	private String communityName;

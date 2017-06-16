@@ -90,4 +90,6 @@ public interface CommunityDao {
 
 	List<Map<String, String>> selectLineSelectHtmlStr(Map<String, String> param);
 
+	List<Map<String, String>> getHeatTypeSelectHtmlStr();
+
 }

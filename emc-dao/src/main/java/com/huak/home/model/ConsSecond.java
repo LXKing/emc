@@ -1,6 +1,7 @@
 package com.huak.home.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -15,203 +16,250 @@ import java.io.Serializable;
  */
 public class ConsSecond implements Serializable{
     /* 主键 */
-    private String typeId;
+    private String id;
     /* 主键 */
-    private String typeName;
+    private String orgName;
     /* 总单耗（tce/㎡） */
-    private Double totalNum;
-    /* 总单耗（tce/㎡）同比 */
+    private Double totalBq;
+    private Double totalTq;
     private Double totalAn;
-    /* 总单耗（tce/㎡）环比 */
-    private Double totalMom;
-    /* 水单耗（T） */
-    private Double waterNum;
-    /* 水单耗（T）同比 */
+    /* 水单耗（t/㎡） */
+    private Double waterBq;
+    private Double waterTq;
     private Double waterAn;
-    /* 水单耗（T）环比 */
-    private Double waterMom;
-    /* 电单耗(Kw/h) */
-    private Double electricNum;
-    /* 电单耗(Kw/h)同比 */
+    /* 电单耗(kW·h/㎡)*/
+    private Double electricBq;
+    private Double electricTq;
     private Double electricAn;
-    /* 电单耗(Kw/h)环比 */
-    private Double electricMom;
-    /* 气单耗（M²） */
-    private Double gasNum;
-    /* 气单耗（M²）同比 */
+    /* 气单耗（m³/㎡） */
+    private Double gasBq;
+    private Double gasTq;
     private Double gasAn;
-    /* 气单耗（M²）环比 */
-    private Double gasMom;
-    /* 热单耗（GJ） */
-    private Double heatNum;
-    /* 热单耗（GJ）同比 */
+    /* 热单耗（GJ/㎡） */
+    private Double heatBq;
+    private Double heatTq;
     private Double heatAn;
-    /* 热单耗（GJ）环比 */
-    private Double heatMom;
-    /* 煤单耗（GJ） */
-    private Double coalNum;
-    /* 煤单耗（GJ）同比 */
+    /* 煤单耗（t/㎡） */
+    private Double coalBq;
+    private Double coalTq;
     private Double coalAn;
-    /* 煤单耗（GJ）环比 */
-    private Double coalMom;
+    /* 油单耗（L/㎡） */
+    private Double oilBq;
+    private Double oilTq;
+    private Double oilAn;
 
-    public String getTypeId() {
-        return typeId;
+    DecimalFormat format = new DecimalFormat("#.0000");
+
+    public String getId() {
+        return id;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
-    public Double getTotalNum() {
-        return totalNum;
+    public Double getTotalBq() {
+        return totalBq;
     }
 
-    public void setTotalNum(Double totalNum) {
-        this.totalNum = totalNum;
+    public void setTotalBq(Double totalBq) {
+        this.totalBq = totalBq;
+    }
+
+    public Double getTotalTq() {
+        return totalTq;
+    }
+
+    public void setTotalTq(Double totalTq) {
+        this.totalTq = totalTq;
     }
 
     public Double getTotalAn() {
-        return totalAn;
+        if(this.totalTq == 0){
+            return 0d;
+        }
+        totalAn = Double.valueOf(format.format((this.totalBq-this.totalTq)/this.totalTq));
+        return totalAn*100;
     }
 
     public void setTotalAn(Double totalAn) {
         this.totalAn = totalAn;
     }
 
-    public Double getTotalMom() {
-        return totalMom;
+    public Double getWaterBq() {
+        return waterBq;
     }
 
-    public void setTotalMom(Double totalMom) {
-        this.totalMom = totalMom;
+    public void setWaterBq(Double waterBq) {
+        this.waterBq = waterBq;
     }
 
-    public Double getWaterNum() {
-        return waterNum;
+    public Double getWaterTq() {
+        return waterTq;
     }
 
-    public void setWaterNum(Double waterNum) {
-        this.waterNum = waterNum;
+    public void setWaterTq(Double waterTq) {
+        this.waterTq = waterTq;
     }
 
     public Double getWaterAn() {
-        return waterAn;
+        if(this.waterTq == 0){
+            return 0d;
+        }
+        waterAn = Double.valueOf(format.format((this.waterBq-this.waterTq)/this.waterTq));
+        return waterAn*100;
     }
 
     public void setWaterAn(Double waterAn) {
         this.waterAn = waterAn;
     }
 
-    public Double getWaterMom() {
-        return waterMom;
+    public Double getElectricBq() {
+        return electricBq;
     }
 
-    public void setWaterMom(Double waterMom) {
-        this.waterMom = waterMom;
+    public void setElectricBq(Double electricBq) {
+        this.electricBq = electricBq;
     }
 
-    public Double getElectricNum() {
-        return electricNum;
+    public Double getElectricTq() {
+        return electricTq;
     }
 
-    public void setElectricNum(Double electricNum) {
-        this.electricNum = electricNum;
+    public void setElectricTq(Double electricTq) {
+        this.electricTq = electricTq;
     }
 
     public Double getElectricAn() {
-        return electricAn;
+        if(this.electricTq == 0){
+            return 0d;
+        }
+        electricAn = Double.valueOf(format.format((this.electricBq-this.electricTq)/this.electricTq));
+        return electricAn*100;
     }
 
     public void setElectricAn(Double electricAn) {
         this.electricAn = electricAn;
     }
 
-    public Double getElectricMom() {
-        return electricMom;
+    public Double getGasBq() {
+        return gasBq;
     }
 
-    public void setElectricMom(Double electricMom) {
-        this.electricMom = electricMom;
+    public void setGasBq(Double gasBq) {
+        this.gasBq = gasBq;
     }
 
-    public Double getGasNum() {
-        return gasNum;
+    public Double getGasTq() {
+        return gasTq;
     }
 
-    public void setGasNum(Double gasNum) {
-        this.gasNum = gasNum;
+    public void setGasTq(Double gasTq) {
+        this.gasTq = gasTq;
     }
 
     public Double getGasAn() {
-        return gasAn;
+        if(this.gasTq == 0){
+            return 0d;
+        }
+        gasAn = Double.valueOf(format.format((this.gasBq-this.gasTq)/this.gasTq));
+        return gasAn*100;
     }
 
     public void setGasAn(Double gasAn) {
         this.gasAn = gasAn;
     }
 
-    public Double getGasMom() {
-        return gasMom;
+    public Double getHeatBq() {
+        return heatBq;
     }
 
-    public void setGasMom(Double gasMom) {
-        this.gasMom = gasMom;
+    public void setHeatBq(Double heatBq) {
+        this.heatBq = heatBq;
     }
 
-    public Double getHeatNum() {
-        return heatNum;
+    public Double getHeatTq() {
+        return heatTq;
     }
 
-    public void setHeatNum(Double heatNum) {
-        this.heatNum = heatNum;
+    public void setHeatTq(Double heatTq) {
+        this.heatTq = heatTq;
     }
 
     public Double getHeatAn() {
-        return heatAn;
+        if(this.heatTq == 0){
+            return 0d;
+        }
+        heatAn = Double.valueOf(format.format((this.heatBq-this.heatTq)/this.heatTq));
+        return heatAn*100;
     }
 
     public void setHeatAn(Double heatAn) {
         this.heatAn = heatAn;
     }
 
-    public Double getHeatMom() {
-        return heatMom;
+    public Double getCoalBq() {
+        return coalBq;
     }
 
-    public void setHeatMom(Double heatMom) {
-        this.heatMom = heatMom;
+    public void setCoalBq(Double coalBq) {
+        this.coalBq = coalBq;
     }
 
-    public Double getCoalNum() {
-        return coalNum;
+    public Double getCoalTq() {
+        return coalTq;
     }
 
-    public void setCoalNum(Double coalNum) {
-        this.coalNum = coalNum;
+    public void setCoalTq(Double coalTq) {
+        this.coalTq = coalTq;
     }
 
     public Double getCoalAn() {
-        return coalAn;
+        if(this.coalTq == 0){
+            return 0d;
+        }
+        coalAn = Double.valueOf(format.format((this.coalBq-this.coalTq)/this.coalTq));
+        return coalAn*100;
     }
 
     public void setCoalAn(Double coalAn) {
         this.coalAn = coalAn;
     }
 
-    public Double getCoalMom() {
-        return coalMom;
+    public Double getOilBq() {
+        return oilBq;
     }
 
-    public void setCoalMom(Double coalMom) {
-        this.coalMom = coalMom;
+    public void setOilBq(Double oilBq) {
+        this.oilBq = oilBq;
     }
+
+    public Double getOilTq() {
+        return oilTq;
+    }
+
+    public void setOilTq(Double oilTq) {
+        this.oilTq = oilTq;
+    }
+
+    public Double getOilAn() {
+        if(this.oilTq == 0){
+            return 0d;
+        }
+        oilAn = Double.valueOf(format.format((this.oilBq-this.oilTq)/this.oilTq));
+        return oilAn*100;
+    }
+
+    public void setOilAn(Double oilAn) {
+        this.oilAn = oilAn;
+    }
+
 }

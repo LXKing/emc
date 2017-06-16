@@ -15,8 +15,9 @@
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select id="comId" name="comId" class="form-control m-b" >
+	                        <select disabled="disabled" id="com" name="com" class="form-control m-b" >
                             </select>
+                            <input type="hidden" id="comId" name="comId" />
 	                    </div>
 	                </div>
                 </div>
@@ -68,8 +69,9 @@ function treeNodeClick(){
 $(function () {
 	
 	//初始化公司下拉框
-	top.$('#comId').html('${com}');
-	
+	top.$('#com').html('${com}');
+	console.log(top.$('#com :selected').val());
+	top.$('#comId').val(top.$('#com :selected').val());
 	//初始化组织机构树
 	communityAddOrg = new Org({
         class:"community-add-org-tree"
@@ -110,9 +112,6 @@ $(function () {
                 isName: true,
                 minlength: 2
             },
-            comId: {
-                required: true
-            },
             orgId: {
                 required: true
             }
@@ -121,9 +120,6 @@ $(function () {
         	communityName: {
                 required: icon + "请输入小区名称",
                 minlength: icon + "小区名称必须2个字符以上"
-            },
-            comId: {
-                required: icon + "请选择所属公司"
             },
             orgId: {
                 required: icon + "请选择所属组织结构"

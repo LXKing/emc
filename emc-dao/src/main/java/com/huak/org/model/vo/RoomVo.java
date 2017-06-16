@@ -1,6 +1,8 @@
 package com.huak.org.model.vo;
 
-public class RoomVo {
+import java.io.Serializable;
+
+public class RoomVo implements Serializable {
 
 	private String id;
 	private String roomName;
@@ -18,6 +20,8 @@ public class RoomVo {
 	private String orgName;
 	private String comId;
 	private String orgId;
+	private String heatType;
+	private String heatName;
 	public String getId() {
 		return id;
 	}
@@ -113,6 +117,18 @@ public class RoomVo {
 	}
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
+	}
+	public String getHeatType() {
+		return heatType;
+	}
+	public void setHeatType(String heatType) {
+		this.heatType = heatType;
+	}
+	public String getHeatName() {
+		return heatName;
+	}
+	public void setHeatName(String heatName) {
+		this.heatName = heatName;
 	}
 	
 }

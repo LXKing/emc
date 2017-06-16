@@ -29,21 +29,30 @@
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>供热类型：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                       <select onclick="getCommunityAndLineSelectHtml()" id="heatType" name="heatType" class="form-control m-b" ></select>
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <select disabled="disabled" onchange="getCommunityAndLineSelectHtml()" id="com" name="com" class="form-control m-b" >
+                            </select>
+                            <input type="hidden" id="comId" name="comId" />
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>组织机构：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                    	<ul id="org" class="room-add-org-tree" style="height: 200px;overflow-y:scroll;border: 1px solid #E5E6E7;"></ul>
 	                    	<input type="text" class="form-control" name="orgId" id="orgId" style="visibility: hidden;height: 0px;">
 	                    </div>
 		            </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="getCommunityAndLineSelectHtml()" id="comId" name="comId" class="form-control m-b" >
-                            </select>
-	                    </div>
-	                </div>
                 </div>
                 <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
@@ -162,7 +171,8 @@ top.getCommunityAndLineSelectHtml = function(){
 	
 	$.get(_platform + '/room/lineSelectHtmlStr',{
 		orgId:orgId,
-		comId:comId
+		comId:comId,
+		heatType:top.$("#heatType").val()
 	},function(data){
 		top.$("#lineId").html(data.html);
 	},'json');
@@ -217,7 +227,9 @@ function treeNodeClick(){
 
 $(function () {
 	//初始化公司下拉框
-	top.$('#comId').html('${com}');
+	top.$('#com').html('${com}');
+	top.$('#heatType').html('${heatType}');
+	top.$('#comId').val(top.$('#com :selected').val());
 	
 	//初始化组织机构树
 	banAddOrg = new Org({
@@ -259,9 +271,6 @@ $(function () {
                 isName: true,
                 minlength: 2
             },
-            comId: {
-                required: true
-            },
             orgId: {
                 required: true
             },
@@ -282,6 +291,9 @@ $(function () {
                 required: true,
                 isNum:true
             },
+            heatType: {
+            	required: true
+            },
             lineId: {
                 required: true
             }
@@ -290,9 +302,6 @@ $(function () {
         	roomName: {
                 required: icon + "请输入户名称",
                 minlength: icon + "户名称必须2个字符以上"
-            },
-            comId: {
-                required: icon + "请选择所属公司"
             },
             orgId: {
                 required: icon + "请选择所属组织结构"
@@ -311,6 +320,9 @@ $(function () {
             },
             heatArea: {
                 required: icon + "请填写供热面积"
+            },
+            heatType: {
+                required: icon + "请选择供热类型"
             },
             lineId: {
                 required: icon + "请选择所属管线"

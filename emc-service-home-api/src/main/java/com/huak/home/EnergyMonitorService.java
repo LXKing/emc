@@ -13,13 +13,7 @@ public interface EnergyMonitorService {
 	 * @param params
 	 * @return
 	 */
-	Map<String, Object> groupEnergyLine(Map<String, String> params);
-
-	/**
-	 * 跳转到此页面前查询相关数据
-	 * @return
-	 */
-	Map<String, Object> groupEnergy2Day();
+	Map<String, Object> groupEnergyLine(Map<String, String> params) throws Exception;
 
     /**
      * 添加测试数据
@@ -48,6 +42,13 @@ public interface EnergyMonitorService {
      * @return
      */
     public List<Map<String, Object>> fgsEnergyTrend(Map<String, Object> params);
+
+    /**
+     * 分公司能耗同比
+     * @param params
+     * @return
+     */
+    public List<Map<String, Object>> fgsEnergyAn(Map<String, Object> params);
 
     /**
      * 分公司能耗排名

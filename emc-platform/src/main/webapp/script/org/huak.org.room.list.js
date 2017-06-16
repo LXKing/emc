@@ -3,8 +3,12 @@ $(function () {
         class:"org-tree"
     });
 	roomSearOrg.initTree();
-	
 	initTreeBox();
+	parent.$("[name='searchComp']").change(function(){
+		roomSearOrg.initTree();
+		initTreeBox();
+		window.location.reload(); 
+	});
 	//户列表
 	var roomTable = $('#room-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
@@ -100,6 +104,11 @@ $(function () {
             {
                 title: '所属公司',
                 field: 'comName',
+                align: 'center'
+            },
+            {
+                title: '供热类型',
+                field: 'heatName',
                 align: 'center'
             },
             {

@@ -1,7 +1,5 @@
 package com.huak.web.module;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +33,6 @@ public class EnergyAnalysisController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String indexPage(Model model){
         logger.info("跳转能耗分析首页");
-        Map<String,Object> result = eaService.groupEnergy2Day();
-        model.addAttribute("result", result);
         return "energy/analysis/index";
     }
     

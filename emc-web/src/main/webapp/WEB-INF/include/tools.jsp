@@ -74,15 +74,32 @@
         //console.info("重置面包屑");
         var mbhtml = "";
         var mbxdh =  ${navigations};
+        var ymurl = document.location.href;
+        var prefix = "";
+        if(ymurl.indexOf('?')>0){
+            prefix = ymurl.substr(0, ymurl.indexOf('?'));
+        }else{
+            prefix = ymurl;
+        }
+
         $.each(mbxdh, function (idx, item) {
             /*console.info(item);
              console.info(document.location.href==_web + item.url)*/
-            var ymurl = document.location.href;
+
             var hturl = _web + item.url;
-            if (ymurl.substr(0, ymurl.indexOf('?')) == hturl) {
+            if (prefix == hturl) {
                 mbhtml = getMbHtml(item, mbhtml);
             }
         });
         $('.bread-crumb.pull-left').html("当前位置：" + mbhtml);
     });
+    function getMbHtml(navigation, html) {
+        if (navigation.navigation == "undefined" || navigation.navigation == null || navigation.navigation == "") {
+            html += '<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+            return html;
+        } else {
+            html = getMbHtml(navigation.navigation, html) + '&gt;<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+            return html;
+        }
+    }
 </script>

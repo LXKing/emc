@@ -150,6 +150,11 @@ public class CommunityServiceImpl implements CommunityService {
 		return getSelectHtmlStr(communityDao.selectLineSelectHtmlStr(param), selectedLineId);
 	}
 	
+	@Override
+	public String getHeatTypeSelectHtmlStr(String heatTypeSelected) {
+		return getSelectHtmlStr(communityDao.getHeatTypeSelectHtmlStr(),heatTypeSelected);
+	}
+	
 	/**
 	 * 查询结果List<Map<String,String>>转为String
 	 * @param list
@@ -160,8 +165,8 @@ public class CommunityServiceImpl implements CommunityService {
 		if(null!=list&&list.size()>0){
 			sb.append("<option value=\"\" >").append("").append("</option>");
 			for(Map<String,String> map:list){
-				String id = map.get("ID").toString();
-				String name = map.get("NAME").toString();
+				String id = String.valueOf(map.get("ID"));
+				String name = String.valueOf(map.get("NAME"));
 				sb.append("<option ");
 				if(selectedCommunityId!=null&&id.equals(selectedCommunityId)){
 					sb.append(" selected ");

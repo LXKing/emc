@@ -86,6 +86,15 @@
 	where 1=1
 	<if test="comId!=null and comId!=''"> and COM_ID = #{comId,jdbcType=VARCHAR}</if>
   	<if test="orgId!=null and orgId!=''"> and ORG_ID = #{orgId,jdbcType=VARCHAR}</if>
+  	<if test="heatType!=null and heatType!=''"> and HEAT_TYPE = #{heatType,jdbcType=VARCHAR}</if>
+  </select>
+  <select id="getHeatTypeSelectHtmlStr" resultType="java.util.Map" parameterType="java.util.Map">
+  	SELECT
+		SEQ ID,DES NAME
+	FROM
+		t_emc_sys_dic
+	WHERE
+		TYPE_US = 'supportheattype'
   </select>
   <!-- ######################################################################################### -->
  

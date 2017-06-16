@@ -4,20 +4,20 @@
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="communityEditForm" role="form">
             	<input id="id" name="id" type="hidden" value="${community.id }" />
+                <div class="row">
+	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
+	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
+	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+	                        <select disabled="disabled" id="comId" name="comId" value="${community.comId }" class="form-control m-b" >
+                            </select>
+	                    </div>
+	                </div>
+                </div>
 	            <div class="row">
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>小区名称：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
 	                        <input name="communityName" value="${community.communityName }" class="form-control" type="text" maxlength="16" placeholder="请输入小区名称">
-	                    </div>
-	                </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                   <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属公司：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select id="comId" name="comId" value="${community.comId }" class="form-control m-b" >
-                            </select>
 	                    </div>
 	                </div>
                 </div>

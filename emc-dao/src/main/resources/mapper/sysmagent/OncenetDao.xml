@@ -203,10 +203,10 @@
         <if test="medium != null and medium!=''">
             and  MEDIUM = #{medium,jdbcType=VARCHAR}
         </if>
-        <if test="orgId != null and orgId!=''">
+        <if test="orgId != null and orgId!='' and orgId !='null'">
             and  ORG_ID = #{orgId,jdbcType=BIGINT}
         </if>
-        <if test="comId != null and comId!=''">
+        <if test="comId != null and comId!='' and comId !='null'">
             and  COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         <if test="heatType != null and heatType!=''">

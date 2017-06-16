@@ -30,7 +30,7 @@ public class OperateLogServiceImpl implements OperateLogService {
 	 */
 	@Override
 	public void saveOperateLog(OperateLog log) {
-		log.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateDao.getTime()));
+		log.setCreateTime(dateDao.getTime().substring(0,19));
 		logDao.insertOperateLog(log);
 	}
 

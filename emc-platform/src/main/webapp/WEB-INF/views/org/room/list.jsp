@@ -58,6 +58,14 @@
                             </div>
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属公司</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <select disabled="disabled" id="comId" name="comId" class="form-control m-b" ></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属机构</label>
                                     <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
                                         <input type="hidden" class="form-control" id="orgId" name="orgId">
@@ -65,19 +73,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属公司</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <select id="comId" name="comId" class="form-control m-b" ></select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
                             	<c:if test="${sessionScope._auth['roomInsert'] }">
-                                	<button type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/room/add" layer-title="新增小区" layer-form-id="roomAddForm" ><i class="fa fa-plus"></i>添加</button>
+                                	<button id="addButton" type="button" class="btn btn-sm btn-info top-layer-min" layer-url="${platform}/room/add" layer-title="新增户" layer-form-id="roomAddForm" ><i class="fa fa-plus"></i>添加</button>
                                 </c:if>
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
@@ -100,7 +100,13 @@
     </div>
 </div>
 <script type="text/javascript">
+	$('#addButton').click(function(){
+		var companyId = parent.$("[name='searchComp']").val();
+		var baseUrl = "${platform}/room/add/";
+		$('#addButton').attr('layer-url',baseUrl+companyId);
+	});
 	$('#comId').html('${com}');
+	$('#comId').val(parent.$("[name='searchComp']").val());
 	$('#communityId').html('${community}');
 	$('#banId').html('${ban}');
 	$('#cellId').html('${cell}');
