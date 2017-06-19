@@ -74,3 +74,14 @@ $(document).on('click', '.emc-search', function () {
 });
 
 
+//绑定重置
+$(document).on('click', '.emc-reset', function () {
+    //清空表单
+    var $from = $(this).parents('form');
+    $from[0].reset();
+    //清空chosen
+    $from.find('.chosen-select').val("");
+    $from.find('.chosen-select').trigger("chosen:updated");
+});
+
+

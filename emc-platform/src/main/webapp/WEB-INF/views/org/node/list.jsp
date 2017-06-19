@@ -78,7 +78,7 @@
 
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索</button>
-                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <<button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>单耗
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/station/export"> 导出Excel
                                 </button>
                             </div>

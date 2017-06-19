@@ -78,7 +78,7 @@
 
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="energyType-table-list"> 搜索
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <c:if test="${sessionScope._auth['energyTypeExport']}">
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/energy/type/export"> 导出Excel
                                 </button>
