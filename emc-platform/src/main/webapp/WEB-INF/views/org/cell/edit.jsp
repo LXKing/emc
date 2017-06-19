@@ -34,7 +34,7 @@
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属小区：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onclick="editCommunity()" onchange="getSelectHtml()" value="${cell.communityId }" id="communityId" name="communityId" class="form-control m-b" ></select>
+	                        <select onclick="editCommunity()" onchange="getSelectHtml()" id="communityId" name="communityId" class="form-control m-b" ></select>
 	                    </div>
 	                </div>
                 </div>
@@ -42,7 +42,7 @@
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属楼座：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onclick="editBan()" value="${cell.banId }" id="banId" name="banId" class="form-control m-b" ></select>
+	                        <select onclick="editBan()" id="banId" name="banId" class="form-control m-b" ></select>
 	                    </div>
 	                </div>
                 </div>
@@ -131,7 +131,6 @@ function treeNodeClick(){
 	top.$('#orgId').closest('.form-group').removeClass('has-error').addClass('has-success');
 	top.getCommunitySelectHtml();//选择节点后更新此节点相关联的小区信息
 }
-
 $(function () {
 	//初始化公司下拉框
 	top.$('#comId').html('${com}');
@@ -143,6 +142,11 @@ $(function () {
         class:"cell-edit-org-tree"
     });
 	banEditOrg.initTree();
+	
+	top.$('#banId').on('change',function(){
+		top.$('input[name="cellName"]').focus();
+		top.$('input[name="cellName"]').blur();
+	});
 	
 	//获取表单元素
  	var $form = $(top.document).find("#cellEditForm");
@@ -176,6 +180,7 @@ $(function () {
         	cellName: {
                 required: true,
                 isName: true,
+                cellNameUnique:true,
                 minlength: 2
             },
             comId: {
@@ -236,6 +241,32 @@ $(function () {
 		var name = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
 	    return this.optional(element) || (name.test(value));
 	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
+    
+    $.validator.addMethod("cellNameUnique", function(value, element) {
+    	if(value=='${cell.cellName}'
+			&&top.$('#communityId').val()=='${cell.communityId}'
+				&&top.$('#banId').val()=='${cell.banId}') return true;
+        var deferred = $.Deferred();//创建一个延迟对象
+        $.ajax({
+            url:_platform+'/cell/check/cellName',
+            type:'POST',
+            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+            data: {cellName:top.$('input[name="cellName"]').val(),
+            	communityId:top.$('#communityId').val(),
+            	banId:top.$('#banId').val()
+            	},
+            dataType: 'json',
+            success:function(result) {
+                if (!result.flag) {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }
+        });
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "所属楼座已存在此单元名称");
 	
 });
 </script>

@@ -207,7 +207,6 @@ top.getSelectHtml = function(){
 		top.$("#cellId").html(data.html);
 	},'json');
 }
-
 //点击组织机构树
 function treeNodeClick(){
     var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
@@ -233,6 +232,11 @@ $(function () {
         class:"room-edit-org-tree"
     });
 	banEditOrg.initTree();
+	
+	top.$('#cellId').on('change',function(){
+		top.$('input[name="roomName"]').focus();
+		top.$('input[name="roomName"]').blur();
+	});
 	
 	//获取表单元素
  	var $form = $(top.document).find("#roomEditForm");
@@ -266,6 +270,7 @@ $(function () {
         	roomName: {
                 required: true,
                 isName: true,
+                roomNameUnique:true,
                 minlength: 2
             },
             comId: {
@@ -285,7 +290,8 @@ $(function () {
             },
             roomCode: {
                 required: true,
-                isName:true
+                isName:true,
+                roomCodeU:true
             },
             heatArea: {
                 required: true,
@@ -358,5 +364,56 @@ $(function () {
 	    return this.optional(element) || (num.test(value));
 	},icon +  "请输入正确的数字");
 	
+	$.validator.addMethod("roomNameUnique", function(value, element) {
+		if(value=='${room.roomName}'
+			&&top.$('#communityId').val()=='${room.communityId}'
+				&&top.$('#banId').val()=='${room.banId}'
+					&&top.$('#cellId').val()=='${room.cellId}') return true;
+        var deferred = $.Deferred();//创建一个延迟对象
+        $.ajax({
+            url:_platform+'/room/check/roomName',
+            type:'POST',
+            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+            data: {roomName:top.$('input[name="roomName"]').val(),
+            	communityId:top.$('#communityId').val(),
+            	banId:top.$('#banId').val(),
+            	cellId:top.$('#cellId').val()
+            	},
+            dataType: 'json',
+            success:function(result) {
+                if (!result.flag) {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }
+        });
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "所属单元已存在此户名称");
+	$.validator.addMethod("roomCodeU", function(value, element) {
+		if(value=='${room.roomCode}') return true;
+        var deferred = $.Deferred();//创建一个延迟对象
+        $.ajax({
+            url:_platform+'/room/check/roomCode',
+            type:'POST',
+            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+            data: {roomCode:top.$('input[name="roomCode"]').val(),
+            	communityId:top.$('#communityId').val(),
+            	banId:top.$('#banId').val(),
+            	cellId:top.$('#cellId').val()
+            	},
+            dataType: 'json',
+            success:function(result) {
+                if (!result.flag) {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }
+        });
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "所属单元已存在此户编码");
 });
 </script>

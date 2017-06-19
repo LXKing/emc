@@ -52,4 +52,18 @@ public interface RoomDao {
 	 */
 	List<Map<String, Object>> export(Map<String, String> param);
 
+	/**
+	 * 户名称一致
+	 * @param param
+	 * @return
+	 */
+	Long selectRoomCount(Map<String,String> param);
+
+	/**
+	 * 户编码唯一
+	 * @param param
+	 * @return
+	 */
+	Long selectRoomCodeCount(Map<String, String> param);
+
 }

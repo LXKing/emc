@@ -99,41 +99,83 @@ public class RoomServiceImpl implements RoomService {
 	 * 导出户信息
 	 */
 	@Override
+	@Transactional
 	public List<Map<String, Object>> exportRoom(Map<String, String> param) {
 		return roomDao.export(param);
 	}
 
+	/**
+	 * 获取公司下拉框html
+	 */
 	@Override
+	@Transactional
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return communityService.getCompanySelectHtmlStr(selectedComId);
 	}
 
+	/**
+	 * 获取小区下拉框html
+	 */
 	@Override
+	@Transactional
 	public String getCommunitySelectHtmlStr(Map<String, String> param,
 			String selectedCommunityId) {
 		return communityService.getCommunitySelectHtmlStr(param, selectedCommunityId);
 	}
 
+	/**
+	 * 获取楼座下拉框html
+	 */
 	@Override
+	@Transactional
 	public String getBanSelectHtmlStr(Map<String, String> param,
 			String selectedBanId) {
 		return communityService.getBanSelectHtmlStr(param, selectedBanId);
 	}
 
+	/**
+	 * 获取单元下拉框html
+	 */
 	@Override
+	@Transactional
 	public String getCellSelectHtmlStr(Map<String, String> param,
 			String selectedCellId) {
 		return communityService.getCellSelectHtmlStr(param, selectedCellId);
 	}
 
+	/**
+	 * 获取管线下拉框html
+	 */
 	@Override
+	@Transactional
 	public String getLineSelectHtmlStr(Map<String, String> param, String selectedLineId) {
 		return communityService.getLineSelectHtmlStr(param, selectedLineId);
 	}
-
+	
+	/**
+	 * 获取供热类型下拉框html
+	 */
 	@Override
+	@Transactional
 	public String getHeatTypeSelectHtmlStr(String heatTypeSelected) {
 		return communityService.getHeatTypeSelectHtmlStr(heatTypeSelected);
+	}
+
+	/**
+	 * 户名称一致
+	 */
+	@Override
+	@Transactional
+	public Long checkRoomName(Map<String,String> param) {
+		return roomDao.selectRoomCount(param);
+	}
+
+	/**
+	 * 户编码唯一
+	 */
+	@Override
+	public Long checkRoomCode(Map<String, String> param) {
+		return roomDao.selectRoomCodeCount(param);
 	}
 
 }

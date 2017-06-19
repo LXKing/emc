@@ -79,4 +79,11 @@ public interface CellService {
 	 */
 	String getBanSelectHtmlStr(Map<String, String> param, String selectBanId);
 
+	/**
+	 * 单元名称唯一
+	 * @param cellName
+	 * @return
+	 */
+	Long checkCellName(Map<String,String> param);
+
 }

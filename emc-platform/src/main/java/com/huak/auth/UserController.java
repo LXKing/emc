@@ -177,6 +177,20 @@ public class UserController {
 	    	User user = userService.getUser(id);
 	    	if(user!=null){
 	    		model.addAttribute("user", user);
+	    		List<OrgEmpVo> eList = userService.queryOrgEmpByOrgId(user.getOrgId());
+	    		StringBuilder sb = new StringBuilder();
+	    		if(null!=eList&&eList.size()>0){
+	    			for(OrgEmpVo oe:eList){
+	    				sb.append("<option ");
+	    				sb.append("value=\"").append(oe.getEmpId()).append("\"");
+	    				if(oe.getEmpId().equals(user.getEmpId())){
+	    					sb.append(" selected=\"selected\"");
+	    				}
+	    				sb.append(" >").append(oe.getEmpName());
+	    				sb.append("</option>");
+	    			}
+	    		}
+	    		model.addAttribute("emp", sb.toString());
 	    	}
 	    } catch (Exception e) {
 	        logger.error("跳转编辑页异常" + e.getMessage());

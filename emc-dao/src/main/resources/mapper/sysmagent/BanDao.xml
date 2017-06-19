@@ -83,6 +83,11 @@
     <if test="comId!=null and comId!=''"> and c.COM_ID=#{comId,jdbcType=VARCHAR}</if>
   </select>
   
+  <select id="selectBanCount" parameterType="java.util.Map" resultType="java.lang.Long">
+  	select count(1) from t_emc_unit_ban where BAN_NAME = #{banName,jdbcType=VARCHAR} 
+  	and COMMUNITY_ID = #{communityId,jdbcType=VARCHAR}
+  </select>
+  
   <!-- 删除楼座信息 -->
   <delete id="deleteBan" parameterType="java.lang.String" >
     delete from t_emc_unit_ban

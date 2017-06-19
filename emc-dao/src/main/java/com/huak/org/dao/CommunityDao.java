@@ -88,8 +88,17 @@ public interface CommunityDao {
 	 */
 	List<Map<String, String>> selectCellSelectHtmlStr(Map<String, String> params);
 
+	/**
+	 * 管线下拉框html
+	 * @param param
+	 * @return
+	 */
 	List<Map<String, String>> selectLineSelectHtmlStr(Map<String, String> param);
 
+	/**
+	 * 供热类型下拉框html
+	 * @return
+	 */
 	List<Map<String, String>> getHeatTypeSelectHtmlStr();
 
 }

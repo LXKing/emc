@@ -52,4 +52,11 @@ public interface CellDao {
 	 */
 	List<Map<String, Object>> export(Map<String, String> param);
 
+	/**
+	 * 单元名称唯一
+	 * @param param
+	 * @return
+	 */
+	Long selectCellCount(Map<String,String> param);
+
 }

@@ -84,6 +84,7 @@ public class User implements Serializable{
     
     private String orgId;
     
+    private String empId;
 
     public String getOrgId() {
 		return orgId;
@@ -196,4 +197,13 @@ public class User implements Serializable{
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
+	public String getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(String empId) {
+		this.empId = empId;
+	}
+    
 }

@@ -42,6 +42,11 @@ public class CellController {
 	@Autowired
 	private CellService cellService;
 	
+	/**
+	 * 跳转到单元列表信息页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String listPage(Model model){
 		logger.info("跳转到单元列表页面");
@@ -51,6 +56,12 @@ public class CellController {
 		return "/org/cell/list";
 	}
 	
+	/**
+	 * 查询单元分页列表信息
+	 * @param params
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.PATCH)
 	@ResponseBody
 	public String list(@RequestParam Map<String,String> params,Page page){
@@ -63,6 +74,12 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 跳转到添加单元页面
+	 * @param model
+	 * @param companyId
+	 * @return
+	 */
 	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
 	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加单元页面");
@@ -70,6 +87,11 @@ public class CellController {
 		return "/org/cell/add";
 	}
 	
+	/**
+	 * 获取楼座下拉框html
+	 * @param param
+	 * @return
+	 */
 	@RequestMapping(value="/banSelectHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String getBanSelectHtmlStr(@RequestParam Map<String,String> param){
@@ -80,6 +102,11 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 添加单元信息
+	 * @param cell
+	 * @return
+	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public String add(Cell cell){
@@ -101,6 +128,12 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 跳转到修改单元信息页面
+	 * @param model
+	 * @param cellId
+	 * @return
+	 */
 	@RequestMapping(value="/edit/{cellId}",method=RequestMethod.GET)
 	public String editPage(Model model,@PathVariable String cellId){
 		logger.info("跳转到修改单元页面");
@@ -118,6 +151,11 @@ public class CellController {
 		return "/org/cell/edit";
 	}
 	
+	/**
+	 * 修改单元信息
+	 * @param cell
+	 * @return
+	 */
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	@ResponseBody
 	public String edit(Cell cell){
@@ -139,6 +177,11 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 删除单元信息
+	 * @param cellId
+	 * @return
+	 */
 	@RequestMapping(value="/delete/{cellId}",method=RequestMethod.POST)
 	@ResponseBody
 	public String delete(@PathVariable String cellId){
@@ -160,6 +203,11 @@ public class CellController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 导出单元信息
+	 * @param param
+	 * @param response
+	 */
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, String> param, HttpServletResponse response) {
         logger.info("导出单元列表EXCEL");
@@ -193,4 +241,26 @@ public class CellController {
             logger.error("导出单元列表EXCEL异常" + e.getMessage());
         }
 	}
+	
+	/**
+	 * 单元名称唯一
+	 * @param cellName
+	 * @return
+	 */
+	@RequestMapping(value = "/check/cellName", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkCellName(@RequestParam Map<String,String> param) {
+        logger.info("单元名称唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = cellService.checkCellName(param);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("单元名称唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
 }

@@ -69,6 +69,19 @@ public interface BanService {
 	 */
 	String getCommunitySelectHtmlStr(Map<String, String> param,String selectedId);
 
+	/**
+	 * 获取省市县乡村下拉框html
+	 * @param param
+	 * @param object
+	 * @return
+	 */
 	String getPCCTVSelectHtmlStr(Map<String, String> param, String object);
+
+	/**
+	 * 楼座名称唯一
+	 * @param banName
+	 * @return
+	 */
+	Long checkBanName(Map<String,String> param);
 
 }

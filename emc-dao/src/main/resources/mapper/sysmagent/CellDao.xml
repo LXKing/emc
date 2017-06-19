@@ -63,6 +63,11 @@
     <if test="comId!=null and comId!=''"> and c.COM_ID = #{comId,jdbcType=VARCHAR}</if>
   </select>
   
+  <select id="selectCellCount" parameterType="java.util.Map" resultType="java.lang.Long">
+      select count(1) from t_emc_unit_cell where NAME = #{cellName,jdbcType=VARCHAR} 
+  	  and COMMUNITY_ID = #{communityId,jdbcType=VARCHAR} and BAN_ID = #{banId,jdbcType=VARCHAR}
+  </select>
+  
   <!-- 删除单元信息 -->
   <delete id="deleteCell" parameterType="java.lang.String" >
     delete from t_emc_unit_cell
@@ -137,7 +142,7 @@
       <if test="comId != null" >
         COM_ID = #{comId,jdbcType=VARCHAR},
       </if>
-      <if test="comId != null" >
+      <if test="communityId != null" >
         COMMUNITY_ID = #{communityId,jdbcType=VARCHAR},
       </if>
     </set>

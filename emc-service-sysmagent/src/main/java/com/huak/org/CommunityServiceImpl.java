@@ -99,6 +99,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 导出小区信息
 	 */
 	@Override
+	@Transactional
 	public List<Map<String, Object>> exportCommunity(Map<String, String> param) {
 		return communityDao.export(param);
 	}
@@ -110,6 +111,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 公司下拉框HTML文
 	 */
 	@Override
+	@Transactional
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return getSelectHtmlStr(communityDao.selectCompanySelectHtmlStr(),selectedComId);
 	}
@@ -120,6 +122,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * @return
 	 */
 	@Override
+	@Transactional
 	public String getCommunitySelectHtmlStr(Map<String,String> params,String selectedCommunityId) {
 		return getSelectHtmlStr(communityDao.selectCommunitySelectHtmlStr(params),selectedCommunityId);
 	}
@@ -128,6 +131,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 楼座下拉框HTML文
 	 */
 	@Override
+	@Transactional
 	public String getBanSelectHtmlStr(Map<String, String> params, String selectedBanId) {
 		return getSelectHtmlStr(communityDao.selectBanSelectHtmlStr(params),selectedBanId);
 	}
@@ -136,21 +140,25 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 单元下拉框HTML文
 	 */
 	@Override
+	@Transactional
 	public String getCellSelectHtmlStr(Map<String, String> params, String selectedCellId) {
 		return getSelectHtmlStr(communityDao.selectCellSelectHtmlStr(params),selectedCellId);
 	}
 	
 	@Override
+	@Transactional
 	public String queryPCCTVHtmlStr(Map<String, String> param, String code) {
 		return getSelectHtmlStr(administrativeService.queryPCCTVHtmlStr(param), code);
 	}
 	
 	@Override
+	@Transactional
 	public String getLineSelectHtmlStr(Map<String, String> param,String selectedLineId) {
 		return getSelectHtmlStr(communityDao.selectLineSelectHtmlStr(param), selectedLineId);
 	}
 	
 	@Override
+	@Transactional
 	public String getHeatTypeSelectHtmlStr(String heatTypeSelected) {
 		return getSelectHtmlStr(communityDao.getHeatTypeSelectHtmlStr(),heatTypeSelected);
 	}
