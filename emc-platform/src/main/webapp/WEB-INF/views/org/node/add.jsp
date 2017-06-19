@@ -211,22 +211,35 @@ $(function () {
             var index = top.layer.load(1, {
                 shade: [0.5,'#fff'] //0.1透明度的白色背景
             });
-            $.ajax({
-                url:_platform + '/station/add',
-                data:$stationForm.serialize(),
-                type:'post',
-                dataType:'json',
-                success: function (result) {
-                    if (result.flag) {
-                        top.layer.closeAll();
-                        top.layer.msg(result.msg);
-                        $('#station-table-list').bootstrapTable("refresh");
-                    } else {
-                        top.layer.msg(result.msg);
-                        top.layer.close(index);
+
+            var net =$stationForm.find("#netId").val();
+            var feed =$stationForm.find("#feedId").val();
+            if(net == "" && feed ==""){
+                top.layer.close(index);
+                top.layer.msg("请选择热源或者管网！");
+                return false;
+            }else if( net !="" && feed !=""){
+                top.layer.close(index);
+                top.layer.msg("只能选择热源或者管网中的一个！");
+                return false;
+            }else{
+                $.ajax({
+                    url:_platform + '/station/add',
+                    data:$stationForm.serialize(),
+                    type:'post',
+                    dataType:'json',
+                    success: function (result) {
+                        if (result.flag) {
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            $('#station-table-list').bootstrapTable("refresh");
+                        } else {
+                            top.layer.msg(result.msg);
+                            top.layer.close(index);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     });
 

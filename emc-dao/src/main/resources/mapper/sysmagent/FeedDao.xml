@@ -53,7 +53,7 @@
       #{steamturbineNum,jdbcType=INTEGER}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
       #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
       #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{heatArea,jdbcType=DOUBLE},
-      #{orgId,jdbcType=BIGINT},#{netId,jdbcType=VARCHAR},#{lineId,jdbcType=VARCHAR},#{comId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
+      #{orgId,jdbcType=BIGINT},#{netId,jdbcType=VARCHAR},#{comId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Feed">
     insert into t_emc_unit_feed
@@ -190,9 +190,7 @@
         <if test="netId != null">
             #{netId,jdbcType=VARCHAR},
         </if>
-        <if test="lineId != null">
-            #{lineId,jdbcType=VARCHAR},
-        </if>
+
         <if test="comId != null">
             #{comId,jdbcType=VARCHAR},
         </if>

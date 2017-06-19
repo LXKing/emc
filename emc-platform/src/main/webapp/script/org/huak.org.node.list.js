@@ -66,7 +66,19 @@ $(function () {
              {
                  title: '管理类型',
                  field: 'manageTypeId',
-                 align: 'center'
+                 align: 'center',
+                 formatter:function(value,row,index){
+                     if(value == '1'){
+                         return '统管';
+                     }
+                     if(value == '2'){
+                         return '自管';
+                     }
+                     if(value == '3'){
+                         return '代管';
+                     }
+                     return '';
+                 }
              },
              {
                  title: '地址',

@@ -198,8 +198,12 @@
           count(1)
         from t_emc_auth_menu
         where 1=1
-        and  MENU_NAME = #{menuName}
-        order by id
+        <if test="menuName != null and menuName !=''">
+            and  MENU_NAME = #{menuName}
+        </if>
+        <if test="seq != null and seq !=''">
+            and  SEQ = #{seq}
+        </if>
     </select>
 
     <delete id="delete"  parameterType="java.lang.String">
