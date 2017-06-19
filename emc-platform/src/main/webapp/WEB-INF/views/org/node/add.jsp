@@ -40,11 +40,12 @@ $(function () {
     $.validator.addMethod("nodeCodeUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
         var newcode = $(top.document).find("#stationCode").val();
+        var comId = $(top.document).find("[name='searchComp']").val();
         $.ajax({
             url:_platform+'/station/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {stationCode:newcode},
+            data: {stationCode:newcode,comId:comId},
             dataType: 'json',
             success:function(result) {
                 if (!result.flag) {
@@ -61,11 +62,12 @@ $(function () {
     $.validator.addMethod("nodeNameUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
         var stationName =  $(top.document).find("#stationName").val();
+        var comId = $(top.document).find("[name='searchComp']").val();
         $.ajax({
             url:_platform+'/station/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {stationName:stationName},
+            data: {stationName:stationName,comId:comId},
             dataType: 'json',
             success:function(result) {
                 if (!result.flag) {
@@ -78,6 +80,26 @@ $(function () {
         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
         return deferred.state() == "resolved" ? true : false;
     }, icon + "热力站名称已存在");
+
+    $.validator.addMethod("checklng", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的经度");
+
+    $.validator.addMethod("checklat", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的纬度");
 
     //提示信息绑定
     $('input:not(:submit):not(:button)').mousedown(function () {
@@ -145,6 +167,12 @@ $(function () {
             },
             heatType:{
                 required: true
+            },
+            lng:{
+                checklng: true
+            },
+            lat:{
+                checklat: true
             }
         },
         messages: {

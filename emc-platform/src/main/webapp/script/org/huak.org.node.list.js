@@ -115,6 +115,8 @@ $(function () {
  }
 
     function init(){
+        //下拉框js
+        $(".chosen-select").chosen();
         var org = new Org({
             class:"org-tree"
         });
@@ -137,29 +139,28 @@ $(function () {
         top.layer.confirm('是否删除数据？', {
             btn: ['删除', '取消'] //按钮
         }, function () {
+            debugger;
             var index = top.layer.load(1, {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
             $.ajax({
-                url: _platform + '/station/delete',
-                type: 'POST',
+                url: _platform + '/station/delete/'+ids,
+                type: 'DELETE',
                 dataType: 'json',
-                data: {id: ids},
                 success: function (result) {
                     if (result.flag) {
-                        layer.closeAll();
-                        layer.msg(result.msg);
-                        getNodeList();
+                        top.layer.closeAll();
+                        top.layer.msg(result.msg);
+                        $('#station-table-list').bootstrapTable('refresh');
                     } else {
-                        layer.close(index);
+                        top.layer.close(index);
                         layer.msg(result.msg);
                     }
                 }
             });
         });
     }
-    //下拉框js
-    $(".chosen-select").chosen();
+
 
 
 

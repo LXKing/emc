@@ -158,7 +158,7 @@ public class NodeController {
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteRole(@PathVariable("id") String id) {
+    public String deleteNode(@PathVariable("id") String id) {
         logger.info("删除热力站");
 
         JSONObject jo = new JSONObject();
