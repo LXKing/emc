@@ -63,7 +63,7 @@
 
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="dic-table-list"> 搜索
                                 </button>
-                                <<button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>单耗
+                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <c:if test="${sessionScope._auth['sysDicExport']}">
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
                                 </button>
