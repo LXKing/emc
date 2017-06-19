@@ -102,6 +102,26 @@
             return deferred.state() == "resolved" ? true : false;
         }, "菜单名称已存在");
 
+        $.validator.addMethod("checkSeq", function(value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url:_platform+'/menu/check',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {seq:value},
+                dataType: 'json',
+                success:function(result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, "菜单序号已存在");
+
         //提示信息绑定
         $('input:not(:submit):not(:button)').mousedown(function () {
             $(this).closest('.form-group').removeClass('has-error');
@@ -138,7 +158,9 @@
                     required: true
                 },
                 seq:{
-                    required: true
+                    checkSeq: true,
+                    required: true,
+                    digits: true
                 },
                 type:{
                     required: true
@@ -153,7 +175,8 @@
                     required: icon + "请输入菜单路径"
                 },
                 seq :{
-                    required: icon + "请输入序号"
+                    required: icon + "请输入序号",
+                    digits: icon + "菜单序号必须为正整数！"
                 },
                 type:{
                     required: icon + "请选择菜单类型"
