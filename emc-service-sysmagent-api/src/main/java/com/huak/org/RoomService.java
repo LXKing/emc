@@ -56,15 +56,63 @@ public interface RoomService {
 	 */
 	List<Map<String, Object>> exportRoom(Map<String, String> param);
 
+	/**
+	 * 获取公司下拉框html
+	 * @param selectedComId
+	 * @return
+	 */
 	String getCompanySelectHtmlStr(String selectedComId);
 
+	/**
+	 * 获取小区下拉框html
+	 * @param param
+	 * @param selectedCommunityId
+	 * @return
+	 */
 	String getCommunitySelectHtmlStr(Map<String, String> param, String selectedCommunityId);
 
+	/**
+	 * 获取楼座下拉框html
+	 * @param param
+	 * @param selectedBanId
+	 * @return
+	 */
 	String getBanSelectHtmlStr(Map<String, String> param, String selectedBanId);
 
+	/**
+	 * 获取单元下拉框html
+	 * @param param
+	 * @param selectedCellId
+	 * @return
+	 */
 	String getCellSelectHtmlStr(Map<String, String> param, String selectedCellId);
 
+	/**
+	 * 获取管线下拉框html
+	 * @param param
+	 * @param selectedLineId
+	 * @return
+	 */
 	String getLineSelectHtmlStr(Map<String, String> param, String selectedLineId);
 
+	/**
+	 * 获取供热类型下拉框html
+	 * @param heatTypeSelected
+	 * @return
+	 */
 	String getHeatTypeSelectHtmlStr(String heatTypeSelected);
+
+	/**
+	 * 户名称唯一
+	 * @param roomName
+	 * @return
+	 */
+	Long checkRoomName(Map<String,String> param);
+
+	/**
+	 * 户编码唯一
+	 * @param param
+	 * @return
+	 */
+	Long checkRoomCode(Map<String, String> param);
 }

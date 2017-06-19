@@ -52,4 +52,11 @@ public interface BanDao {
 	 */
 	List<Map<String, Object>> export(Map<String, String> param);
 
+	/**
+	 * 楼座名称唯一
+	 * @param param
+	 * @return
+	 */
+	Long selectBanCount(Map<String,String> param);
+
 }

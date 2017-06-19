@@ -89,10 +89,27 @@ public interface CommunityService {
 	 */
 	String getCellSelectHtmlStr(Map<String,String> params,String selectedCellId);
 
+	/**
+	 * 获取省市县乡村下拉框html
+	 * @param param
+	 * @param code
+	 * @return
+	 */
 	String queryPCCTVHtmlStr(Map<String, String> param, String code);
 
+	/**
+	 * 获取管线下拉框html
+	 * @param param
+	 * @param selectedLineId
+	 * @return
+	 */
 	String getLineSelectHtmlStr(Map<String, String> param, String selectedLineId);
 
+	/**
+	 * 获取供热类型下拉框html
+	 * @param heatTypeSelected
+	 * @return
+	 */
 	String getHeatTypeSelectHtmlStr(String heatTypeSelected);
 
 }

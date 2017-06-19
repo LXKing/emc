@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">单元名称</label>
                                     <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" name="cellName" placeholder="请输入单元名称">
+                                        <input type="text" class="form-control" id="cellName" name="cellName" placeholder="请输入单元名称">
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="cell-table-list"> 搜索</button>
-                                <button type="reset" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
                                 <c:if test="${sessionScope._auth['cellExport'] }">
                                 	<button type="button" class="btn btn-sm btn-primary" onclick="exportCell()"> 导出Excel</button>
                                 </c:if>
@@ -108,7 +108,6 @@
 		$('#banId').val('');
 		$('#communityId').val('');
 		$('#orgId').val('');
-		$('#comId').val('');
 	}
 </script>
 </body>

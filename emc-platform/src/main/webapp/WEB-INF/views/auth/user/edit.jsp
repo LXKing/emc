@@ -126,6 +126,7 @@ function treeNodeClick(){
 $(function () {
 	top.$('#memo').text('${user.memo}');//初始化备注
 	top.$('#useStatus').val('${user.useStatus}');//初始化使用状态下拉框
+	top.$('#empId').html('${emp}');
 	//初始化组织机构树
 	userEditOrg = new Org({
         class:"user-edit-org-tree"

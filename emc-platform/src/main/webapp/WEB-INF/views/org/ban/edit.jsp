@@ -33,7 +33,7 @@
 	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>所属小区：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onclick="editCommunity()" value="${ban.communityId }" id="communityId" name="communityId" class="form-control m-b" >
+	                        <select onclick="editCommunity()" id="communityId" name="communityId" class="form-control m-b" >
                             </select>
 	                    </div>
 	                </div>
@@ -125,6 +125,7 @@ top.editCommunity = function(){
 		return;
 	}
 }
+
 //获取小区下拉框html文
 top.getSelectHtml = function(){
 	top.$("#communityId").html('');
@@ -187,6 +188,11 @@ $(function () {
     });
 	banEditOrg.initTree();
 	
+	top.$('#communityId').on('change',function(){
+		top.$('input[name="banName"]').focus();
+		top.$('input[name="banName"]').blur();
+	});
+	
 	//获取表单元素
  	var $form = $(top.document).find("#banEditForm");
     var icon = "<i class='fa fa-times-circle'></i> ";
@@ -219,6 +225,7 @@ $(function () {
         	banName: {
                 required: true,
                 isName: true,
+                banNameUnique:true,
                 minlength: 2
             },
             comId: {
@@ -309,5 +316,28 @@ $(function () {
 		var name = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
 	    return this.optional(element) || (name.test(value));
 	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
+    
+    $.validator.addMethod("banNameUnique", function(value, element) {
+    	if(value=='${ban.banName}'&&top.$('#communityId').val()=='${ban.communityId}') return true;
+        var deferred = $.Deferred();//创建一个延迟对象
+        $.ajax({
+            url:_platform+'/ban/check/banName',
+            type:'POST',
+            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+            data: {banName:top.$('input[name="banName"]').val(),
+            	communityId:top.$('#communityId').val()
+            	},
+            dataType: 'json',
+            success:function(result) {
+                if (!result.flag) {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }
+        });
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "所属小区已存在此楼座名称");
 });
 </script>

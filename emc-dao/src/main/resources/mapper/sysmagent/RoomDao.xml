@@ -87,6 +87,17 @@
     <if test="lineId!=null and lineId!=''"> and r.LINE_ID = #{lineId,jdbcType=VARCHAR}</if>
   </select>
   
+  <select id="selectRoomCount" parameterType="java.util.Map" resultType="java.lang.Long">
+      select count(1) from t_emc_unit_room where ROOM_NAME = #{roomName,jdbcType=VARCHAR}  
+      and COMMUNITY_ID = #{communityId,jdbcType=VARCHAR} and BAN_ID = #{banId,jdbcType=VARCHAR}  
+      and CELL_ID = #{cellId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectRoomCodeCount" parameterType="java.util.Map" resultType="java.lang.Long">
+      select count(1) from t_emc_unit_room where ROOM_CODE = #{roomCode,jdbcType=VARCHAR}  
+      and COMMUNITY_ID = #{communityId,jdbcType=VARCHAR} and BAN_ID = #{banId,jdbcType=VARCHAR}  
+      and CELL_ID = #{cellId,jdbcType=VARCHAR}
+  </select>
+  
   <!-- 删除户信息 -->
   <delete id="deleteRoom" parameterType="java.lang.String" >
     delete from t_emc_unit_room

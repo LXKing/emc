@@ -99,23 +99,36 @@ public class CellServiceImpl implements CellService {
 	 * 导出单元信息
 	 */
 	@Override
+	@Transactional
 	public List<Map<String, Object>> exportCell(Map<String, String> param) {
 		return cellDao.export(param);
 	}
 
 	@Override
+	@Transactional
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return communityService.getCompanySelectHtmlStr(selectedComId);
 	}
 
 	@Override
+	@Transactional
 	public String getCommunitySelectHtmlStr(Map<String, String> param, String selectedCommunityId) {
 		return communityService.getCommunitySelectHtmlStr(param, selectedCommunityId);
 	}
 	
 	@Override
+	@Transactional
 	public String getBanSelectHtmlStr(Map<String, String> param, String selectBanId) {
 		return communityService.getBanSelectHtmlStr(param, selectBanId);
+	}
+
+	/**
+	 * 单元名称唯一
+	 */
+	@Override
+	@Transactional
+	public Long checkCellName(Map<String,String> param) {
+		return cellDao.selectCellCount(param);
 	}
 
 }

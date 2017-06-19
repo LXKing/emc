@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">小区名称</label>
                                     <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" name="communityName" placeholder="请输入小区名称">
+                                        <input type="text" class="form-control" id="communityName" name="communityName" placeholder="请输入小区名称">
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="community-table-list"> 搜索</button>
-                                <button type="reset" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
                                 <c:if test="${sessionScope._auth['communityExport'] }">
                                 	<button type="button" class="btn btn-sm btn-primary" onclick="exportCommunity()"> 导出Excel</button>
                                 </c:if>
@@ -90,7 +90,6 @@
 	function resetSearch(){
 		$('#communityName').val('');
 		$('#orgId').val('');
-		$('#comId').val('');
 	}
 </script>
 </body>

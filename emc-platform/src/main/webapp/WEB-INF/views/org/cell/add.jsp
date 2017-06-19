@@ -145,6 +145,11 @@ $(function () {
     });
 	banAddOrg.initTree();
 	
+	top.$('#banId').on('change',function(){
+		top.$('input[name="cellName"]').focus();
+		top.$('input[name="cellName"]').blur();
+	});
+	
 	//获取表单元素
  	var $form = $(top.document).find("#cellAddForm");
     var icon = "<i class='fa fa-times-circle'></i> ";
@@ -177,6 +182,7 @@ $(function () {
         	cellName: {
                 required: true,
                 isName: true,
+                cellNameUnique:true,
                 minlength: 2
             },
             orgId: {
@@ -232,5 +238,27 @@ $(function () {
 	    return this.optional(element) || (name.test(value));
 	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
 	
+	$.validator.addMethod("cellNameUnique", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        $.ajax({
+            url:_platform+'/cell/check/cellName',
+            type:'POST',
+            async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+            data: {cellName:top.$('input[name="cellName"]').val(),
+            	communityId:top.$('#communityId').val(),
+            	banId:top.$('#banId').val()
+            	},
+            dataType: 'json',
+            success:function(result) {
+                if (!result.flag) {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }
+        });
+        //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "所属楼座已存在此单元名称");
 });
 </script>

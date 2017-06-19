@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">楼座名称</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" name="banName" placeholder="请输入楼座名称">
+                                        <input type="text" class="form-control" id="banName" name="banName" placeholder="请输入楼座名称">
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="ban-table-list"> 搜索</button>
-                                <button type="reset" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" onclick="resetSearch()" class="btn btn-sm btn-success"> 重置</button>
                                 <c:if test="${sessionScope._auth['banExport'] }">
                                 	<button type="button" class="btn btn-sm btn-primary" onclick="exportBan()"> 导出Excel</button>
                                 </c:if>
@@ -98,7 +98,6 @@
 		$('#banName').val('');
 		$('#communityId').val('');
 		$('#orgId').val('');
-		$('#comId').val('');
 	}
 </script>
 </body>

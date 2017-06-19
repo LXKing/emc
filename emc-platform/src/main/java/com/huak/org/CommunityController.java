@@ -41,6 +41,11 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityService;
 	
+	/**
+	 * 跳转到小区页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String listPage(Model model){
 		logger.info("跳转到小区列表页面");
@@ -48,6 +53,12 @@ public class CommunityController {
 		return "/org/community/list";
 	}
 	
+	/**
+	 * 查询小区分页列表信息
+	 * @param params
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.PATCH)
 	@ResponseBody
 	public String list(@RequestParam Map<String,String> params,Page page){
@@ -60,6 +71,12 @@ public class CommunityController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 跳转到添加小区信息页面
+	 * @param model
+	 * @param companyId
+	 * @return
+	 */
 	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
 	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加小区页面");
@@ -67,6 +84,11 @@ public class CommunityController {
 		return "/org/community/add";
 	}
 	
+	/**
+	 * 添加小区信息
+	 * @param community
+	 * @return
+	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public String add(Community community){
@@ -88,6 +110,12 @@ public class CommunityController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 跳转到修改小区信息页面
+	 * @param model
+	 * @param communityId
+	 * @return
+	 */
 	@RequestMapping(value="/edit/{communityId}",method=RequestMethod.GET)
 	public String editPage(Model model,@PathVariable String communityId){
 		logger.info("跳转到修改小区页面");
@@ -99,6 +127,11 @@ public class CommunityController {
 		return "/org/community/edit";
 	}
 	
+	/**
+	 * 修改小区信息
+	 * @param community
+	 * @return
+	 */
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	@ResponseBody
 	public String edit(Community community){
@@ -120,6 +153,11 @@ public class CommunityController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 删除小区信息
+	 * @param communityId
+	 * @return
+	 */
 	@RequestMapping(value="/delete/{communityId}",method=RequestMethod.POST)
 	@ResponseBody
 	public String delete(@PathVariable String communityId){
@@ -141,6 +179,11 @@ public class CommunityController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 导出小区信息
+	 * @param param
+	 * @param response
+	 */
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, String> param, HttpServletResponse response) {
         logger.info("导出小区列表EXCEL");
@@ -174,6 +217,11 @@ public class CommunityController {
         }
     }
 	
+	/**
+	 * 查询省市县乡村html
+	 * @param param
+	 * @return
+	 */
 	@RequestMapping(value="/PCCTVHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String queryPCCTVHtmlStr(@RequestParam Map<String,String> param){

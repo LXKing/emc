@@ -99,11 +99,13 @@ public class BanServiceImpl implements BanService {
 	 * 导出楼座信息
 	 */
 	@Override
+	@Transactional
 	public List<Map<String, Object>> exportBan(Map<String, String> param) {
 		return banDao.export(param);
 	}
 
 	@Override
+	@Transactional
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return communityService.getCompanySelectHtmlStr(selectedComId);
 	}
@@ -114,14 +116,25 @@ public class BanServiceImpl implements BanService {
 	 * @return
 	 */
 	@Override
+	@Transactional
 	public String getCommunitySelectHtmlStr(Map<String, String> param,String selectedId) {
 		return communityService.getCommunitySelectHtmlStr(param,selectedId);
 	}
 
 	@Override
+	@Transactional
 	public String getPCCTVSelectHtmlStr(Map<String, String> param,
 			String selectedId) {
 		return communityService.queryPCCTVHtmlStr(param, selectedId);
+	}
+
+	/**
+	 * 楼座名称唯一
+	 */
+	@Override
+	@Transactional
+	public Long checkBanName(Map<String,String> param) {
+		return banDao.selectBanCount(param);
 	}
 
 }

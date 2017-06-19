@@ -42,6 +42,11 @@ public class RoomController {
 	@Autowired
 	private RoomService roomService;
 	
+	/**
+	 * 跳转到列表页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String listPage(Model model){
 		logger.info("跳转到户列表页面");
@@ -52,6 +57,12 @@ public class RoomController {
 		return "/org/room/list";
 	}
 	
+	/**
+	 * 查询户分页列表信息
+	 * @param params
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.PATCH)
 	@ResponseBody
 	public String list(@RequestParam Map<String,String> params,Page page){
@@ -64,6 +75,12 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 跳转到新增户信息页面
+	 * @param model
+	 * @param companyId
+	 * @return
+	 */
 	@RequestMapping(value="/add/{companyId}",method=RequestMethod.GET)
 	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加户页面");
@@ -72,6 +89,11 @@ public class RoomController {
 		return "/org/room/add";
 	}
 	
+	/**
+	 * 获取单元下拉框html
+	 * @param param
+	 * @return
+	 */
 	@RequestMapping(value="/cellSelectHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String getCellSelectHtmlStr(@RequestParam Map<String,String> param){
@@ -82,6 +104,11 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 获取管线下拉框html
+	 * @param param
+	 * @return
+	 */
 	@RequestMapping(value="/lineSelectHtmlStr",method=RequestMethod.GET)
 	@ResponseBody
 	public String querLineSelectHtmlStr(@RequestParam Map<String,String> param){
@@ -92,6 +119,11 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 新增户信息
+	 * @param room
+	 * @return
+	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public String add(Room room){
@@ -113,6 +145,12 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 跳转到修改户信息页面，查询该户的相关信息
+	 * @param model
+	 * @param roomId
+	 * @return
+	 */
 	@RequestMapping(value="/edit/{roomId}",method=RequestMethod.GET)
 	public String editPage(Model model,@PathVariable String roomId){
 		logger.info("跳转到修改户页面");
@@ -134,6 +172,11 @@ public class RoomController {
 		return "/org/room/edit";
 	}
 	
+	/**
+	 * 修改户信息
+	 * @param room
+	 * @return
+	 */
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	@ResponseBody
 	public String edit(Room room){
@@ -155,6 +198,11 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 删除户信息
+	 * @param roomId
+	 * @return
+	 */
 	@RequestMapping(value="/delete/{roomId}",method=RequestMethod.POST)
 	@ResponseBody
 	public String delete(@PathVariable String roomId){
@@ -176,6 +224,11 @@ public class RoomController {
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 导出户信息
+	 * @param param
+	 * @param response
+	 */
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, String> param, HttpServletResponse response) {
         logger.info("导出户列表EXCEL");
@@ -212,5 +265,49 @@ public class RoomController {
             logger.error("导出户列表EXCEL异常" + e.getMessage());
         }
 	}
+	
+	/**
+	 * 户名称唯一
+	 * @param roomName
+	 * @return
+	 */
+	@RequestMapping(value = "/check/roomName", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkRoomName(@RequestParam Map<String,String> param) {
+        logger.info("户名称唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = roomService.checkRoomName(param);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("户名称唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+	
+	/**
+	 * 户编码唯一
+	 * @param roomCode
+	 * @return
+	 */
+	@RequestMapping(value = "/check/roomCode", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkRoomCode(@RequestParam Map<String,String> param) {
+        logger.info("户编码唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = roomService.checkRoomCode(param);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("户编码唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
 	
 }
