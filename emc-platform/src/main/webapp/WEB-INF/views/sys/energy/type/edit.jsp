@@ -174,12 +174,12 @@ $.validator.setDefaults({
         $.validator.addMethod("isPrice", function(value, element){
             var tel = /^\d+(\.\d{1,2})?$/;
             return this.optional(element) || (tel.test(value));
-        }, icon + "单价格式错误");
+        }, icon + "单价格式错误,正确格式如1,1.21");
         //标煤校验
         $.validator.addMethod("isCoef", function(value, element){
             var tel = /^\d+(\.\d+)?$/;
             return this.optional(element) || (tel.test(value));
-        }, icon + "标煤格式错误");
+        }, icon + "标煤格式错误，正确格式如1,1.234");
 
 
         //提示信息绑定
