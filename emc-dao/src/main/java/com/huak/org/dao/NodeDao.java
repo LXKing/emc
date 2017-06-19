@@ -31,4 +31,8 @@ public interface NodeDao {
     List<Map<String,Object>> selectStationByMap(Map<String, Object> paramsMap);
 
     int deleteByStatus(String id);
+
+    Object selectNetByMap(Map<String, Object> params);
+
+    Object selectLineByMap(Map<String, Object> params);
 }
