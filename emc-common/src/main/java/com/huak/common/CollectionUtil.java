@@ -1,5 +1,8 @@
 package com.huak.common;
 
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -17,13 +20,14 @@ public class CollectionUtil {
 
     /**
      * 删除ArrayList中重复元素，保持顺序
+     *
      * @param list
      * @return
      */
     public static List removeDuplicateWithOrder(List list) {
         Set set = new HashSet();
         List newList = new ArrayList();
-        for (Iterator iter = list.iterator(); iter.hasNext();) {
+        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
             Object element = iter.next();
             if (set.add(element))
                 newList.add(element);
@@ -31,6 +35,25 @@ public class CollectionUtil {
         list.clear();
         list.addAll(newList);
         return list;
+    }
+
+    /**
+     * 对象转换map key为大写
+     *
+     * @param obj
+     * @return
+     * @throws Exception
+     */
+    public static Map<String, Object> Obj2Map(Object obj) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Field[] fields = obj.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            PropertyDescriptor pd = new PropertyDescriptor(field.getName(), obj.getClass());
+            Method getMethod = pd.getReadMethod();
+            map.put(field.getName().toUpperCase(), getMethod.invoke(obj));
+        }
+        return map;
     }
 
 }

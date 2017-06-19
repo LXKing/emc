@@ -2,12 +2,15 @@ package com.huak.web.home;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.CollectionUtil;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.home.ConsAnalysisService;
+import com.huak.home.model.ConsSecond;
 import com.huak.home.type.ToolVO;
 import com.huak.org.OrgService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -267,4 +273,74 @@ public class ConsAnalysisController {
         return jo.toJSONString();
 
     }
+
+    @RequestMapping(value = "/fgs/export", method = RequestMethod.GET)
+    public void export(ToolVO toolVO, HttpServletResponse response) {
+        logger.info("导出分公司单耗列表EXCEL");
+
+        String workBookName = "分公司单耗列表";//文件名
+        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+        cellName.put("ID", "组织主键");
+        cellName.put("orgName", "组织名称");
+        cellName.put("totalBq", "单耗总量本期");
+        cellName.put("totalTq", "单耗总量同期");
+        cellName.put("totalAn", "单耗总量同比");
+        cellName.put("waterBq", "水单耗量本期");
+        cellName.put("waterTq", "水单耗量同期");
+        cellName.put("waterAn", "水单耗量同比");
+        cellName.put("electricBq", "电单耗量本期");
+        cellName.put("electricTq", "电单耗量同期");
+        cellName.put("electricAn", "电单耗量同比");
+        cellName.put("gasBq", "气单耗量本期");
+        cellName.put("gasTq", "气单耗量同期");
+        cellName.put("gasAn", "气单耗量同比");
+        cellName.put("heatBq", "热单耗量本期");
+        cellName.put("heatTq", "热单耗量同期");
+        cellName.put("heatAn", "热单耗量同比");
+        cellName.put("coalBq", "煤单耗量本期");
+        cellName.put("coalTq", "煤单耗量同期");
+        cellName.put("coalAn", "煤单耗量同比");
+        cellName.put("oilBq", "油单耗量本期");
+        cellName.put("oilTq", "油单耗量同期");
+        cellName.put("oilAn", "油单耗量同比");
+        List<Map<String, Object>> cellValues = null;//列值
+        OutputStream out = null;
+        try {
+            /*封装条件*/
+            Map params = new HashMap<String, Object>();
+            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+            if(org.getpOrgId()==0){
+                params.put("pOrgId",org.getId());
+            }else{
+                params.put("orgId",org.getId());
+            }
+            params.put("comId",org.getComId());
+            params.put("feedType",toolVO.getToolFeedType());
+            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
+            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
+            params.put("orgType",toolVO.getToolOrgType());
+
+            List<ConsSecond> cons = consAnalysisService.exportAssessmentIndicators(params);
+            for(ConsSecond second: cons){
+                cellValues.add(CollectionUtil.Obj2Map(second));
+            }
+
+            HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            logger.error("导出分公司单耗列表EXCEL异常" + e.getMessage());
+        }
+    }
+
 }

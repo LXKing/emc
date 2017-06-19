@@ -1,23 +1,16 @@
 package com.huak.home;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.huak.base.dao.DateDao;
 import com.huak.home.dao.EnergyMonitorDao;
 import com.huak.home.dao.EnergySecondDao;
 import com.huak.home.model.EnergyMonitor;
 import com.huak.home.model.EnergySecond;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class EnergyMonitorServiceImpl implements EnergyMonitorService {
@@ -93,6 +86,18 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     @Transactional(readOnly = true)
     public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params) {
         return energySecondDao.fgsEnergyRanking(params);
+    }
+
+    /**
+     * 导出分公司列表
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<EnergySecond> exportAssessmentIndicators(Map<String, Object> params) {
+        return energySecondDao.exportAssessmentIndicators(params);
     }
 
     /**
