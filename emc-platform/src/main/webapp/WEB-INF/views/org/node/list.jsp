@@ -7,11 +7,6 @@
 <head>
     <jsp:include page="../../head.jsp"></jsp:include>
 
-    <script type="application/javascript">
-        function search(){
-            $table.bootstrapTable('refresh');
-        }
-    </script>
     <script src="${platform}/script/org/huak.org.node.list.js"></script>
 </head>
 <body class="gray-bg">

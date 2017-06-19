@@ -404,7 +404,7 @@
         ID ,MANAGE_TYPE_ID,
         (CASE MANAGE_TYPE_ID WHEN 1 THEN '统管' WHEN 2 THEN '自管' WHEN 3 THEN '代管' ELSE '' END)  MANAGE_TYPE,
         PROVINCE_ID , CITY_ID , COUNTY_ID , TOWN_ID, VILLAGE_ID , ADDR , LNG ,
-        LAT, STATION_NAME , STATION_CODE , HEAT_AREA , ORG_ID , NET_ID , FEED_ID ,  COM_ID,HEAT_TYE
+        LAT, STATION_NAME , STATION_CODE , HEAT_AREA , ORG_ID , NET_ID , FEED_ID ,  COM_ID,HEAT_TYPE
         FROM t_emc_unit_station WHERE 1=1
         <if test="manageTypeId != null and manageTypeId != ''">
             and  MANAGE_TYPE_ID = #{manageTypeId,jdbcType=TINYINT}
