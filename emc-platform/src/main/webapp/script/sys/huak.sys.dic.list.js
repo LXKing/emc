@@ -114,7 +114,7 @@ function search(){
     $('#dic-table-list').bootstrapTable('refresh');
 }
 
-function deleteRole(id) {
+function deleteDic(id) {
     top.layer.confirm('您是否确定删除字典？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
