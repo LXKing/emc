@@ -371,6 +371,13 @@ $(function () {
     $(".cancelBtn").click(function () {
         $("#selectdate").hide();
     });
+
+    /*导出列表*/
+    $(document).on("click", ".exportlist", function () {
+        var $from = $("#searchTools");
+        var url = $(this).attr('export-url') + '?' + $from.serialize();
+        window.open(url);
+    });
 });
 
 

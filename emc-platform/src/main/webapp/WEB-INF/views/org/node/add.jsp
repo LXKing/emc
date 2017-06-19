@@ -40,11 +40,12 @@ $(function () {
     $.validator.addMethod("nodeCodeUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
         var newcode = $(top.document).find("#stationCode").val();
+        var comId = $(top.document).find("[name='searchComp']").val();
         $.ajax({
             url:_platform+'/station/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {stationCode:newcode},
+            data: {stationCode:newcode,comId:comId},
             dataType: 'json',
             success:function(result) {
                 if (!result.flag) {
@@ -61,11 +62,12 @@ $(function () {
     $.validator.addMethod("nodeNameUnique", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
         var stationName =  $(top.document).find("#stationName").val();
+        var comId = $(top.document).find("[name='searchComp']").val();
         $.ajax({
             url:_platform+'/station/check',
             type:'POST',
             async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-            data: {stationName:stationName},
+            data: {stationName:stationName,comId:comId},
             dataType: 'json',
             success:function(result) {
                 if (!result.flag) {
@@ -78,6 +80,26 @@ $(function () {
         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
         return deferred.state() == "resolved" ? true : false;
     }, icon + "热力站名称已存在");
+
+    $.validator.addMethod("checklng", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的经度");
+
+    $.validator.addMethod("checklat", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的纬度");
 
     //提示信息绑定
     $('input:not(:submit):not(:button)').mousedown(function () {
@@ -140,17 +162,17 @@ $(function () {
             cityId:{
                 required: true
             },
-            countyId:{
-                required: true
-            },
-            townId:{
-                required: true
-            },
             heatArea:{
                 required: true
             },
-            lineId:{
+            heatType:{
                 required: true
+            },
+            lng:{
+                checklng: true
+            },
+            lat:{
+                checklat: true
             }
         },
         messages: {
@@ -178,39 +200,46 @@ $(function () {
             cityId:{
                 required: icon + "请选择城市"
             },
-            countyId:{
-                required: icon + "请选择县城"
-            },
-            townId:{
-                required: icon + "请选择乡镇"
-            },
             heatArea:{
                 required: icon + "请填写供热面积"
             },
-            lineId:{
-                required: icon + "请选择所属管线"
+            heatType:{
+                required: icon + "请选择供热类型"
             }
         },
         submitHandler: function () {
             var index = top.layer.load(1, {
                 shade: [0.5,'#fff'] //0.1透明度的白色背景
             });
-            $.ajax({
-                url:_platform + '/station/add',
-                data:$stationForm.serialize(),
-                type:'post',
-                dataType:'json',
-                success: function (result) {
-                    if (result.flag) {
-                        top.layer.closeAll();
-                        top.layer.msg(result.msg);
-                        $('#station-table-list').bootstrapTable("refresh");
-                    } else {
-                        top.layer.msg(result.msg);
-                        top.layer.close(index);
+
+            var net =$stationForm.find("#netId").val();
+            var feed =$stationForm.find("#feedId").val();
+            if(net == "" && feed ==""){
+                top.layer.close(index);
+                top.layer.msg("请选择热源或者管网！");
+                return false;
+            }else if( net !="" && feed !=""){
+                top.layer.close(index);
+                top.layer.msg("只能选择热源或者管网中的一个！");
+                return false;
+            }else{
+                $.ajax({
+                    url:_platform + '/station/add',
+                    data:$stationForm.serialize(),
+                    type:'post',
+                    dataType:'json',
+                    success: function (result) {
+                        if (result.flag) {
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            $('#station-table-list').bootstrapTable("refresh");
+                        } else {
+                            top.layer.msg(result.msg);
+                            top.layer.close(index);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     });
 
@@ -253,6 +282,19 @@ $(function () {
                         </div>
                         <div class="form-group">
                             <div class="td">
+                                <label class="col-md-2  control-label"><span class="red">*</span>供热类型：</label>
+                                <div class="col-sm-4">
+                                    <select id="heatType" name="heatType" class="chosen-select form-control"  >
+                                        <option value="">请选择供热类型</option>
+                                        <c:forEach items="${sysDic['supportheattype']}" var="type">
+                                            <option <c:if test="${object.heatType eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="td">
                                 <label class="col-md-2  control-label">所属管网：</label>
                                 <div class="col-sm-5">
                                     <select id="netId" name="netId" class="chosen-select form-control"  >
@@ -278,20 +320,7 @@ $(function () {
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="td">
-                                <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
-                                <div class="col-sm-5">
-                                    <select id="lineId" name="lineId" class="chosen-select form-control"  >
-                                        <option value="">请选择管线</option>
-                                        <c:forEach items="${secondnet}" var="line">
-                                            <option <c:if test="${object.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2  control-label">供热面积：</label>
+                            <label class="col-sm-2  control-label"><span class="red">*</span>供热面积：</label>
                             <div class="col-sm-5">
                                 <input name="heatArea" class="form-control" type="text" maxlength="64" placeholder="请输入居民面积">
                             </div>
@@ -309,7 +338,7 @@ $(function () {
 
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-sm-2  control-label">所属市：</label>
+                                <label class="col-sm-2  control-label"><span class="red">*</span>所属市：</label>
                                 <div class="col-sm-4">
                                     <select id="city" name="cityId" class="chosen-select form-control" >
                                         <option value="">请选择市</option>
@@ -320,7 +349,7 @@ $(function () {
 
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-md-2  control-label"><span class="red">*</span>所属县：</label>
+                                <label class="col-md-2  control-label">所属县：</label>
                                 <div class="col-sm-4">
                                     <select id="county" name="countyId" class="chosen-select form-control" >
                                         <option value="">请选择县</option>

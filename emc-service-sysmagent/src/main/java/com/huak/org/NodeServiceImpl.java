@@ -5,8 +5,7 @@ import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.dao.NodeDao;
-import com.huak.org.dao.OrgDao;
+import com.huak.org.dao.*;
 import com.huak.org.model.Node;
 import com.huak.org.model.Org;
 import com.huak.org.model.vo.NodeVo;
@@ -30,6 +29,15 @@ public class NodeServiceImpl implements NodeService{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private NodeDao nodeDao;
+
+    @Autowired
+    private OncenetDao oncenetDao;
+
+    @Autowired
+    private SecondnetDao secondnetDao;
+
+    @Autowired
+    private FeedDao feedDao;
 
     @Autowired
     private DateDao dateDao;
@@ -60,9 +68,6 @@ public class NodeServiceImpl implements NodeService{
 
         }
     }
-
-
-
     @Override
     @Transactional(readOnly = true)
     public Node selectById(String id) {
@@ -99,13 +104,48 @@ public class NodeServiceImpl implements NodeService{
     }
 
 
+
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> exportExcel(Map<String, Object> paramsMap) {
         return nodeDao.export(paramsMap);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectStationByMap(Map<String, Object> paramsMap) {
         return nodeDao.selectStationByMap(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Object selectNetAll(Map<String, Object> params) {
+        List<Map<String,Object>> oncenet = new ArrayList<>();
+        try {
+            oncenet = (List<Map<String, Object>>) nodeDao.selectNetByMap(params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return oncenet;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Object selectLineAll(Map<String, Object> params) {
+        List<Map<String,Object>> line = new ArrayList<>();
+        try {
+            line = (List<Map<String, Object>>) nodeDao.selectLineByMap(params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return line;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Object selectFeedByMap(Map<String, Object> params) {
+        return feedDao.selectFeedByMap(params);
     }
 }

@@ -7,11 +7,6 @@
 <head>
     <jsp:include page="../../head.jsp"></jsp:include>
 
-    <script type="application/javascript">
-        function search(){
-            $table.bootstrapTable('refresh');
-        }
-    </script>
     <script src="${platform}/script/org/huak.org.node.list.js"></script>
 </head>
 <body class="gray-bg">
@@ -78,7 +73,7 @@
 
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索</button>
-                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/station/export"> 导出Excel
                                 </button>
                             </div>

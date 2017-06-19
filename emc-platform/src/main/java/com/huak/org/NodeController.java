@@ -7,6 +7,7 @@ import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Node;
+import com.huak.org.model.Oncenet;
 import com.huak.org.model.vo.NodeVo;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -47,8 +48,6 @@ public class NodeController {
 
     @Resource
     private FeedService feedService;
-    @Resource
-    private OrgService orgService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
@@ -80,11 +79,11 @@ public class NodeController {
             params.put("comId",comId);
             params.put("orgId",pOrgId);
             modelMap.put(Constants.OBJECT,obj);
-            modelMap.put("oncenet",oncenetService.selectNetAll(params));
-            modelMap.put("secondnet",secondnetService.selectLineAll(params));
-            modelMap.put("feed",feedService.selectFeedByMap(params));
+            modelMap.put("oncenet",nodeService.selectNetAll(params));
+            modelMap.put("secondnet",nodeService.selectLineAll(params));
+            modelMap.put("feed",nodeService.selectFeedByMap(params));
         } catch (Exception e) {
-            logger.error("跳转到热力站编辑页出错！");
+                logger.error("跳转到热力站编辑页出错！");
             e.printStackTrace();
         }
         return "/org/node/add";
@@ -159,7 +158,7 @@ public class NodeController {
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteRole(@PathVariable("id") String id) {
+    public String deleteNode(@PathVariable("id") String id) {
         logger.info("删除热力站");
 
         JSONObject jo = new JSONObject();

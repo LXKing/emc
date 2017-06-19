@@ -45,7 +45,7 @@
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="company-table-list"> 搜索
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <c:if test="${sessionScope._auth['companyExport']}">
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/company/export"> 导出Excel
                                 </button>

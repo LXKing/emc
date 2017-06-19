@@ -90,6 +90,26 @@ $(function () {
         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
         return deferred.state() == "resolved" ? true : false;
     }, icon + "热力站名称已存在");
+    $.validator.addMethod("checklng", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的经度");
+
+    $.validator.addMethod("checklat", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的纬度");
+
     //提示信息绑定
     $('input:not(:submit):not(:button)').mousedown(function () {
         $(this).closest('.form-group').removeClass('has-error');
@@ -160,8 +180,11 @@ $(function () {
             heatArea:{
                 required: true
             },
-            lineId:{
-                required: true
+            lng:{
+                checklng: true
+            },
+            lat:{
+                checklat: true
             }
         },
         messages: {
@@ -197,31 +220,40 @@ $(function () {
             },
             heatArea:{
                 required: icon + "请填写供热面积"
-            },
-            lineId:{
-                required: icon + "请选择所属管线"
             }
         },
         submitHandler: function () {
             var index = top.layer.load(1, {
                 shade: [0.5,'#fff'] //0.1透明度的白色背景
             });
-            $.ajax({
-                url:_platform + '/station/edit',
-                data:$stationForm.serialize(),
-                type:'post',
-                dataType:'json',
-                success: function (result) {
-                    if (result.flag) {
-                        top.layer.closeAll();
-                        top.layer.msg(result.msg);
-                        $('#station-table-list').bootstrapTable("refresh");
-                    } else {
-                        top.layer.msg(result.msg);
-                        top.layer.close(index);
+            var net =$stationForm.find("#netId").val();
+            var feed =$stationForm.find("#feedId").val();
+            if(net == "" && feed ==""){
+                top.layer.close(index);
+                top.layer.msg("请选择热源或者管网！");
+                return false;
+            }else if( net !="" && feed !=""){
+                top.layer.close(index);
+                top.layer.msg("只能选择热源或者管网中的一个！");
+                return false;
+            }else {
+                $.ajax({
+                    url: _platform + '/station/edit',
+                    data: $stationForm.serialize(),
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.flag) {
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            $('#station-table-list').bootstrapTable("refresh");
+                        } else {
+                            top.layer.msg(result.msg);
+                            top.layer.close(index);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     });
 
@@ -268,6 +300,19 @@ $(function () {
                     </div>
                     <div class="form-group">
                         <div class="td">
+                            <label class="col-md-2  control-label"><span class="red">*</span>供热类型：</label>
+                            <div class="col-sm-4">
+                                <select id="heatType" name="heatType" class="chosen-select form-control"  >
+                                    <option value="">请选择供热类型</option>
+                                    <c:forEach items="${sysDic['supportheattype']}" var="type">
+                                        <option <c:if test="${node.heatType eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="td">
                             <label class="col-md-2  control-label">所属管网：</label>
                             <div class="col-sm-5">
                                 <select id="netId" name="netId" class="chosen-select form-control"  >
@@ -287,19 +332,6 @@ $(function () {
                                     <option value="">请选择热源</option>
                                     <c:forEach items="${feed}" var="feed">
                                         <option <c:if test="${node.feedId eq feed.ID}">selected="selected" </c:if> value="${feed.ID}">${feed.FEED_NAME}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="td">
-                            <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
-                            <div class="col-sm-5">
-                                <select id="lineId" name="lineId" class="chosen-select form-control"  >
-                                    <option value="">请选择管线</option>
-                                    <c:forEach items="${secondnet}" var="line">
-                                        <option <c:if test="${node.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
                                     </c:forEach>
                                 </select>
                             </div>

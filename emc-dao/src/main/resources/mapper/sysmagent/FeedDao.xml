@@ -27,14 +27,13 @@
       <arg column="HEAT_AREA" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="NET_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="LINE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
         <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     ID,FEED_NAME,FEED_CODE, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM,
-    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID,STATUS
+    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,COM_ID,STATUS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -48,13 +47,13 @@
   </delete>
   <insert id="insert" parameterType="com.huak.org.model.Feed">
     insert into t_emc_unit_feed (ID,FEED_NAME,FEED_CODE, FEED_TYPE, HEAT_TYPE, INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM,
-    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID,STATUS)
+    PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,COM_ID,STATUS)
     values (#{id,jdbcType=VARCHAR},#{feedName,jdbcType=VARCHAR},#{feedCode,jdbcType=VARCHAR}, #{feedType,jdbcType=TINYINT}, #{heatType,jdbcType=TINYINT},
       #{installCapacity,jdbcType=DOUBLE}, #{heatCapacity,jdbcType=DOUBLE}, #{boilerNum,jdbcType=INTEGER}, 
       #{steamturbineNum,jdbcType=INTEGER}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, 
       #{countyId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{villageId,jdbcType=VARCHAR}, 
       #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{heatArea,jdbcType=DOUBLE},
-      #{orgId,jdbcType=BIGINT},#{netId,jdbcType=VARCHAR},#{lineId,jdbcType=VARCHAR},#{comId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
+      #{orgId,jdbcType=BIGINT},#{netId,jdbcType=VARCHAR},#{comId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.org.model.Feed">
     insert into t_emc_unit_feed
@@ -122,9 +121,7 @@
         <if test="netId != null">
             NET_ID,
         </if>
-        <if test="lineId != null">
-            LINE_ID,
-        </if>
+
         <if test="comId != null">
             COM_ID,
         </if>
@@ -193,9 +190,7 @@
         <if test="netId != null">
             #{netId,jdbcType=VARCHAR},
         </if>
-        <if test="lineId != null">
-            #{lineId,jdbcType=VARCHAR},
-        </if>
+
         <if test="comId != null">
             #{comId,jdbcType=VARCHAR},
         </if>
@@ -273,9 +268,7 @@
         <if test="netId != null">
             NET_ID = #{netId,jdbcType=BIGINT},
         </if>
-        <if test="lineId != null">
-            LINE_ID = #{lineId,jdbcType=BIGINT},
-        </if>
+
         <if test="comId != null">
             COM_ID = #{comId,jdbcType=BIGINT},
         </if>
@@ -307,7 +300,7 @@
       HEAT_AREA = #{hetaArea,jdbcType=DOUBLE},
       ORG_ID = #{orgId,jdbcType=BIGINT},
       NET_ID = #{netId,jdbcType=VARCHAR},
-      LINE_ID = #{lineId,jdbcType=VARCHAR},
+
       COM_ID = #{comId,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=TINYINT}
     where ID = #{id,jdbcType=VARCHAR}
@@ -362,9 +355,7 @@
         <if test="netId != null and netId!=''">
             and   NET_ID = #{netId,jdbcType=BIGINT}
         </if>
-        <if test="lineId != null and lineId!=''">
-            and  LINE_ID = #{lineId,jdbcType=BIGINT}
-        </if>
+
         <if test="comId != null and comId!=''">
             and  COM_ID = #{comId,jdbcType=BIGINT}
         </if>
@@ -382,7 +373,7 @@
         (CASE FEED_TYPE WHEN 1 THEN '热电' WHEN 2 THEN '区域锅炉房' WHEN 3 THEN '核电' WHEN 4 THEN '工业余热' ELSE '' END)FEED_TYPE_NAME,
         (CASE HEAT_TYPE WHEN 1 THEN '区域供热' WHEN 2 THEN '集中供热' WHEN 3 THEN '尖峰供热' ELSE '' END)HEAT_TYPE_NAME,
         INSTALL_CAPACITY, HEAT_CAPACITY, BOILER_NUM, STEAMTURBINE_NUM,
-        PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,LINE_ID,COM_ID,STATUS
+        PROVINCE_ID, CITY_ID, COUNTY_ID, TOWN_ID, VILLAGE_ID, ADDR, LNG, LAT, HEAT_AREA,ORG_ID,NET_ID,COM_ID,STATUS
         from t_emc_unit_feed
         where 1=1
         <if test="feedName != null and feedName !=''" >
@@ -428,9 +419,6 @@
         </if>
         <if test="netId != null and netId !=''">
             and   NET_ID = #{netId,jdbcType=BIGINT}
-        </if>
-        <if test="lineId != null and lineId !=''">
-            and  LINE_ID = #{lineId,jdbcType=BIGINT}
         </if>
         <if test="comId != null and comId !=''">
             and  COM_ID = #{comId,jdbcType=BIGINT}

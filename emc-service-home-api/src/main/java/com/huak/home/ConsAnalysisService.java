@@ -51,4 +51,11 @@ public interface ConsAnalysisService {
      * @return
      */
     public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params);
+
+    /**
+     * 导出公司单耗列表
+     * @param params
+     * @return
+     */
+    public List<ConsSecond> exportAssessmentIndicators(Map<String, Object> params);
 }

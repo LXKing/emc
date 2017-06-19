@@ -66,7 +66,19 @@ $(function () {
              {
                  title: '管理类型',
                  field: 'manageTypeId',
-                 align: 'center'
+                 align: 'center',
+                 formatter:function(value,row,index){
+                     if(value == '1'){
+                         return '统管';
+                     }
+                     if(value == '2'){
+                         return '自管';
+                     }
+                     if(value == '3'){
+                         return '代管';
+                     }
+                     return '';
+                 }
              },
              {
                  title: '地址',
@@ -115,6 +127,8 @@ $(function () {
  }
 
     function init(){
+        //下拉框js
+        $(".chosen-select").chosen();
         var org = new Org({
             class:"org-tree"
         });
@@ -137,29 +151,28 @@ $(function () {
         top.layer.confirm('是否删除数据？', {
             btn: ['删除', '取消'] //按钮
         }, function () {
+            debugger;
             var index = top.layer.load(1, {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
             $.ajax({
-                url: _platform + '/station/delete',
-                type: 'POST',
+                url: _platform + '/station/delete/'+ids,
+                type: 'DELETE',
                 dataType: 'json',
-                data: {id: ids},
                 success: function (result) {
                     if (result.flag) {
-                        layer.closeAll();
-                        layer.msg(result.msg);
-                        getNodeList();
+                        top.layer.closeAll();
+                        top.layer.msg(result.msg);
+                        $('#station-table-list').bootstrapTable('refresh');
                     } else {
-                        layer.close(index);
+                        top.layer.close(index);
                         layer.msg(result.msg);
                     }
                 }
             });
         });
     }
-    //下拉框js
-    $(".chosen-select").chosen();
+
 
 
 

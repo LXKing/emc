@@ -43,14 +43,14 @@ public class Feed implements Serializable {
 
     private String netId;
 
-    private String lineId;
+
 
     private String comId;
 
     private Byte status;
 
     public Feed(String id,String feedName, String feedCode, Byte feedType, Byte heatType, Double installCapacity, Double heatCapacity, Integer boilerNum, Integer steamturbineNum, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, Double heatArea,
-                Long orgId,String netId,String lineId,String comId,Byte status) {
+                Long orgId,String netId,String comId,Byte status) {
         this.id = id;
         this.feedName = feedName;
         this.feedCode = feedCode;
@@ -70,7 +70,6 @@ public class Feed implements Serializable {
         this.lat = lat;
         this.orgId = orgId;
         this.netId = netId;
-        this.lineId = lineId;
         this.heatArea = heatArea;
         this.comId = comId;
         this.status = status;
@@ -238,14 +237,6 @@ public class Feed implements Serializable {
 
     public void setNetId(String netId) {
         this.netId = netId== null ? null : netId.trim();
-    }
-
-    public String getLineId() {
-        return lineId;
-    }
-
-    public void setLineId(String lineId) {
-        this.lineId = lineId== null ? null : lineId.trim();
     }
 
     public String getComId() {

@@ -23,7 +23,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">类型中文</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" name="typeZh" placeholder="请输入能源类型中文">
+                                        <input type="text" class="form-control" name="nameZh" placeholder="请输入能源类型中文">
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">类型英文</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" name="typeUs" placeholder="请输入能源类型英文">
+                                        <input type="text" class="form-control" name="nameEn" placeholder="请输入能源类型英文">
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
 
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="energyType-table-list"> 搜索
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-success"> 重置</button>
+                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <c:if test="${sessionScope._auth['energyTypeExport']}">
                                 <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/energy/type/export"> 导出Excel
                                 </button>

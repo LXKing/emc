@@ -57,4 +57,11 @@ public interface EnergyMonitorService {
      */
     public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params);
 
+    /**
+     * 导出分公司列表
+     * @param params
+     * @return
+     */
+    public List<EnergySecond> exportAssessmentIndicators(Map<String, Object> params);
+
 }

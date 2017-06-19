@@ -165,7 +165,7 @@
             alert("Connection error");
         },
         success : function(data) {
-            chart01Fun(data.data.pieceYardage.data, data.data.pieceYardage.yearDate, data.data.pieceYardage.other);
+            chart01Fun();
 
             chart02Fun(data.data.branchCost.data, data.data.branchCost.yearDate, data.data.branchCost.other);
 
@@ -238,10 +238,23 @@ function typefun(these, code) {
     }
 };
 
-
+function chart01Fun(){
+    $.ajax({
+        url:_web +'/component/energycomparison',
+        type:'post',
+        async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:$("#searchTools").serialize(),
+        dataType:"json",
+        success:function(result) {
+            console.info(result);
+            chart01Show(result.object.data,result.object.yearDate,result.object.other);
+        }
+    });
+}
 
 /*单耗趋势-折线图*/
-function chart01Fun(datalist, datelist, other){
+function chart01Show(datalist, datelist, other){
+    console.info(other)
     $("#chart01").empty();
     chart01 = echarts.init(document.getElementById('chart01'));
     var option = {
@@ -350,15 +363,15 @@ function chart01Fun(datalist, datelist, other){
         }
     }
     $.each(datelist,function(index,value){
-        upperList.push(parseFloat(other.upperLimit.data))
-        lowerList.push(parseFloat(other.lowerLimit.data))
-        averageList.push(parseFloat(other.average.data))
+        upperList.push(parseFloat(other.upperLimit.data[index]))
+        lowerList.push(parseFloat(other.lowerLimit.data[index]))
+        averageList.push(parseFloat(other.average.data[index]))
     })
     option.series.push({
         name:other.upperLimit.typeName,
         type:'line',
         symbolSize:1,
-        lineStyle:{normal:{type:'dashed',color:'#e8afa6'}},
+        lineStyle:{normal:{type:'dashed',color:'greenyellow'}},
         label:labelStyle,
         data:upperList
     });
@@ -366,7 +379,7 @@ function chart01Fun(datalist, datelist, other){
         name:other.lowerLimit.typeName,
         type:'line',
         symbolSize:1,
-        lineStyle:{normal:{type:'dashed',color:'#9ad9d7'}},
+        lineStyle:{normal:{type:'dashed',color:'red'}},
         label:labelStyle,
         data:lowerList
     });
@@ -662,7 +675,7 @@ function chart05Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            //debugger;
+            debugger;
             var energy = result.object.ccs;
             var device = result.object.device;
             var labor  = result.object.labor;

@@ -36,13 +36,13 @@ public class Node implements Serializable{
 
     private String feedId;
 
-    private String lineId;
 
     private String comId;
 
     private Byte status;
+    private Byte heatType;
 
-    public Node(String id, Byte manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, String stationName, String stationCode, Double heatArea, Long orgId, String netId, String feedId, String lineId, String comId, Byte status) {
+    public Node(String id, Byte manageTypeId, String provinceId, String cityId, String countyId, String townId, String villageId, String addr, Double lng, Double lat, String stationName, String stationCode, Double heatArea, Long orgId, String netId, String feedId,  String comId, Byte status,Byte heatType) {
         this.id = id;
         this.manageTypeId = manageTypeId;
         this.provinceId = provinceId;
@@ -59,9 +59,9 @@ public class Node implements Serializable{
         this.orgId = orgId;
         this.netId = netId;
         this.feedId = feedId;
-        this.lineId = lineId;
         this.comId = comId;
         this.status = status;
+        this.heatType = heatType;
     }
 
     public Node() {
@@ -196,14 +196,6 @@ public class Node implements Serializable{
         this.feedId = feedId == null ? null : feedId.trim();
     }
 
-    public String getLineId() {
-        return lineId;
-    }
-
-    public void setLineId(String lineId) {
-        this.lineId = lineId == null ? null : lineId.trim();
-    }
-
     public String getComId() {
         return comId;
     }
@@ -218,5 +210,13 @@ public class Node implements Serializable{
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Byte getHeatType() {
+        return heatType;
+    }
+
+    public void setHeatType(Byte heatType) {
+        this.heatType = heatType;
     }
 }

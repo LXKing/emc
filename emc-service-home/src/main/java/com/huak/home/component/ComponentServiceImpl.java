@@ -72,10 +72,26 @@ public class ComponentServiceImpl implements ComponentService{
             previousplan = componentDao.getplan(params);
         }
 
-        params.put("startTime",sdate);
-        params.put("endTime",edate);
-        params.put("pstartTime",psdate);
-        params.put("pendTime",pedate);
+        if(StringUtils.isNotBlank(sdate)){
+            params.put("startTime",sdate+" 00:00:00");
+        }else {
+            params.put("startTime",sdate);
+        }
+        if(StringUtils.isNotBlank(edate)){
+            params.put("endTime",edate+" 23:59:59");
+        }else{
+            params.put("endTime",edate);
+        }
+        if(StringUtils.isNotBlank(psdate)){
+            params.put("pstartTime",psdate+" 00:00:00");
+        }else {
+            params.put("pstartTime",psdate);
+        }
+        if(StringUtils.isNotBlank(pedate)){
+            params.put("pendTime",pedate+" 23:59:59");
+        }else{
+            params.put("pendTime",pedate);
+        }
         Map<String,Object> data =  componentDao.energyDetail(params);
         if(currentplan != null){
             data.put("currentPlan",currentplan.get("plan")==null?0:currentplan.get("plan"));
@@ -102,24 +118,109 @@ public class ComponentServiceImpl implements ComponentService{
     @Override
     @Transactional(readOnly = true)
     public Map<String, Object> costDetail(Map<String, Object> params) {
-        String starttime =  params.get("startTime").toString();
-        String endTime =  params.get("startTime").toString();
-        String pstartTime = "";
-        String pendTime = "";
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(starttime));
-            calendar.add(Calendar.YEAR, -1);
-            pstartTime = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
-            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
-            calendar.add(Calendar.YEAR, -1);
-            pendTime = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        String starttime =  params.get("startTime").toString()+" 00:00:00";
+        String endTime =  params.get("endTime").toString()+" 23:59:59";
+        String pstartTime = this.getPreviousDates(starttime,"yyyy-MM-dd HH:mm:ss");
+        String pendTime = this.getPreviousDates(endTime,"yyyy-MM-dd HH:mm:ss");
         params.put("pstartTime",pstartTime);
         params.put("pendTime",pendTime);
         return componentDao.costDetail(params);
+    }
+
+    /**
+     * 组件 单耗趋势
+     * @param params
+     * @return
+     */
+    @Override
+    public Map<String, Object> energycomparison(Map<String, Object> params) {
+        String starttime =  params.get("startTime").toString()+" 00:00:00";
+        String endTime =  params.get("endTime").toString()+" 23:59:59";
+        String pstartTime = this.getPreviousDates(starttime,"yyyy-MM-dd HH:mm:ss");
+        String pendTime = this.getPreviousDates(endTime,"yyyy-MM-dd HH:mm:ss");
+        List<Map<String, Object>> current = componentDao.getenergycomparision(params);
+        params.put("startTime",pstartTime);
+        params.put("endTime",pendTime);
+        List<Map<String, Object>> previous = componentDao.getenergycomparision(params);
+        Map<String,Object> previousValue = new HashMap<>();
+        for(Map pr : previous){
+            previousValue.put(pr.get("dates").toString(),pr.get("num"));
+        }
+        List<String> days = new ArrayList<>();//时间列表
+        List<Object> values = new ArrayList<>();//今年对应时间列表的值
+        List<Object> previousValues = new ArrayList<>();//去年对应时间列表的值
+        List<Object> avg = new ArrayList<>();;//今年的平均单耗
+        List<Object> excellent = new ArrayList<>();//今年的上线
+        List<Object> standard = new ArrayList<>();//今年的下线
+        double total = 0.0;
+        double avgs = 0.0;
+        for (Map da :current){
+            days.add(da.get("dates").toString());//时间列表
+            excellent.add(da.get("excellent"));//上线
+            standard.add(da.get("standard"));//下线
+            values.add(da.get("num").toString());//今年时间值
+            String pretime = this.getPreviousDates(da.get("dates").toString(),"yyyy-MM-dd");
+            if(previousValue.containsKey(pretime)){
+                previousValues.add(previousValue.get(pretime));
+            }else{
+                previousValues.add(0);
+            }
+            total += Double.valueOf(da.get("num").toString());
+        }
+        if(days.size()>0){
+            avgs = total/days.size();
+            for(int i=0 ;i< days.size();i++){
+                DecimalFormat df = new DecimalFormat("0.00");
+                avg.add(df.format(avgs));
+            }
+        }
+        List<Map<String,Object>> results = new ArrayList<>();
+        Map<String,Object> currentYear = new HashMap<>();
+        currentYear.put("typeName","今年");
+        currentYear.put("dataList",values);
+        results.add(currentYear);
+        Map<String,Object> preYear = new HashMap<>();
+        preYear.put("typeName","去年");
+        preYear.put("dataList",previousValues);
+        results.add(preYear);
+
+        //上线、下线、平均值
+        Map<String,Object> other = new HashMap<>();
+        Map<String,Object> upper = new HashMap<>();
+        upper.put("typeName","上线");
+        upper.put("data",excellent);
+
+        Map<String,Object> standa = new HashMap<>();
+        standa.put("typeName","下线");
+        standa.put("data",standard);
+
+        Map<String,Object> avgMap = new HashMap<>();
+        avgMap.put("typeName","平均值");
+        avgMap.put("data",avg);
+
+        other.put("upperLimit",upper);
+        other.put("lowerLimit",standa);
+        other.put("average",avgMap);
+
+        Map<String,Object> result = new HashMap<>();
+        result.put("yearDate",days);
+        result.put("data",results);
+        result.put("other",other);
+        return result;
+    }
+
+    private String getPreviousDates(String starttime,String format) {
+        String ptime = "";
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(new SimpleDateFormat(format).parse(starttime));
+            calendar.add(Calendar.YEAR, -1);
+            ptime = new SimpleDateFormat(format).format(calendar.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ptime;
     }
 
     /**

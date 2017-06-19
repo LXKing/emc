@@ -96,6 +96,26 @@ $(function () {
         return deferred.state() == "resolved" ? true : false;
     }, icon + "热源名称已存在");
 
+    $.validator.addMethod("checklng", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的经度");
+
+    $.validator.addMethod("checklat", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        if(!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))){
+            deferred.reject();
+        }else{
+            deferred.resolve();
+        }
+        return deferred.state() == "resolved" ? true : false;
+    }, icon + "请填写正确的纬度");
+
     $form.validate({
         onsubmit: true,// 是否在提交是验证
         //移开光标:如果有内容,则进行验证
@@ -140,10 +160,16 @@ $(function () {
                 required: true
             },
             installCapacity: {
-                required: true
+                number: true
             },
             heatCapacity: {
-                required: true
+                number: true
+            },
+            steamturbineNum: {
+                number: true
+            },
+            boilerNum: {
+                number:  true
             },
             addr: {
                 required: true
@@ -154,11 +180,11 @@ $(function () {
             cityId:{
                 required: true
             },
-            countyId:{
-                required: true
+            lng:{
+                checklng: true
             },
-            townId:{
-                required: true
+            lat:{
+                checklat: true
             }
         },
         messages: {
@@ -186,10 +212,16 @@ $(function () {
                 required: icon + "请选择热源性质"
             },
             installCapacity: {
-                required: icon + "请填写装机容量"
+                number: icon + "请输入正确的数字"
             },
             heatCapacity: {
-                required:  icon + "请填写供热能力"
+                number:  icon + "请输入正确的数字"
+            },
+            steamturbineNum: {
+                number: icon + "请输入正确的数字"
+            },
+            boilerNum: {
+                number:  icon + "请输入正确的数字"
             },
             addr: {
                 required: icon + "请填写详细地址"
@@ -199,13 +231,8 @@ $(function () {
             },
             cityId:{
                 required: icon + "请选择城市"
-            },
-            countyId:{
-                required: icon + "请选择县城"
-            },
-            townId:{
-                required: icon + "请选择乡镇"
             }
+
 
         },
         submitHandler: function () {
@@ -223,6 +250,7 @@ $(function () {
                         top.layer.msg(result.msg);
                         $('#feed-table-list').bootstrapTable("refresh");
                     } else {
+                        top.layer.close(index);
                         top.layer.msg(result.msg);
                     }
                 },
@@ -331,19 +359,6 @@ $(function () {
                         </div>
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
-                                <div class="col-sm-4">
-                                    <select id="lineId" name="lineId" class="chosen-select form-control"  >
-                                        <option value="">请选择管线</option>
-                                        <c:forEach items="${secondnet}" var="line">
-                                            <option <c:if test="${object.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="td">
                                 <label class="col-md-2  control-label"><span class="red">*</span>所属省：</label>
                                 <div class="col-sm-4">
                                     <select id="province" name="provinceId" class="chosen-select form-control" >
@@ -352,7 +367,6 @@ $(function () {
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="td">
                                 <label class="col-sm-2  control-label">所属市：</label>

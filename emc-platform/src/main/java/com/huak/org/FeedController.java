@@ -72,7 +72,6 @@ public class FeedController {
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap, Page page) {
         logger.info("热源列表页分页查询");
-
         JSONObject jo = new JSONObject();
         try {
             jo.put(Constants.LIST, feedService.queryByPage(paramsMap, page));
@@ -114,13 +113,15 @@ public class FeedController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("id") String id) {
+    @RequestMapping(value = "/edit/{id}/{orgId}/{comId}", method = RequestMethod.GET)
+    public String edit(Model model, @PathVariable("id") String id, @PathVariable("orgId") String orgId
+            , @PathVariable("comId") String comId) {
         logger.info("跳转修改热源页");
         try {
             Feed feed = feedService.selectByPrimaryKey(id);
             Map<String,Object> params = new HashMap<>();
-
+            params.put("orgId",orgId);
+            params.put("comId",comId);
             model.addAttribute("oncenet",oncenetService.selectNetAll(params));
             model.addAttribute("secondnet",secondnetService.selectLineAll(params));
             model.addAttribute(Constants.OBJECT, feed);
