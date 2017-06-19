@@ -26,7 +26,7 @@
                             class="red">*</span>字典类型(英文)：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeUs" class="form-control" type="text" value="${sysDic.typeUs}" maxlength="32" placeholder="请输入字典类型(英文)">
+                        <input name="typeUs" readonly class="form-control" type="text" value="${sysDic.typeUs}" maxlength="32" placeholder="请输入字典类型(英文)">
                     </div>
                 </div>
                 <div class="form-group">
@@ -34,7 +34,7 @@
                             class="red">*</span>字典类型(中文)：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeZh" class="form-control" type="text" maxlength="16" value="${sysDic.typeZh}" placeholder="请输入字典类型(中文)">
+                        <input name="typeZh" readonly class="form-control" type="text" maxlength="16" value="${sysDic.typeZh}" placeholder="请输入字典类型(中文)">
                     </div>
                 </div>
                 <div class="form-group">
