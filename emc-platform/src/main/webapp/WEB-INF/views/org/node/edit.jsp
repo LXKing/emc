@@ -159,9 +159,6 @@ $(function () {
             },
             heatArea:{
                 required: true
-            },
-            lineId:{
-                required: true
             }
         },
         messages: {
@@ -197,9 +194,6 @@ $(function () {
             },
             heatArea:{
                 required: icon + "请填写供热面积"
-            },
-            lineId:{
-                required: icon + "请选择所属管线"
             }
         },
         submitHandler: function () {
@@ -268,6 +262,19 @@ $(function () {
                     </div>
                     <div class="form-group">
                         <div class="td">
+                            <label class="col-md-2  control-label"><span class="red">*</span>供热类型：</label>
+                            <div class="col-sm-4">
+                                <select id="heatType" name="heatType" class="chosen-select form-control"  >
+                                    <option value="">请选择供热类型</option>
+                                    <c:forEach items="${sysDic['supportheattype']}" var="type">
+                                        <option <c:if test="${node.heatType eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="td">
                             <label class="col-md-2  control-label">所属管网：</label>
                             <div class="col-sm-5">
                                 <select id="netId" name="netId" class="chosen-select form-control"  >
@@ -287,19 +294,6 @@ $(function () {
                                     <option value="">请选择热源</option>
                                     <c:forEach items="${feed}" var="feed">
                                         <option <c:if test="${node.feedId eq feed.ID}">selected="selected" </c:if> value="${feed.ID}">${feed.FEED_NAME}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="td">
-                            <label class="col-md-2  control-label"><span class="red">*</span>所属管线：</label>
-                            <div class="col-sm-5">
-                                <select id="lineId" name="lineId" class="chosen-select form-control"  >
-                                    <option value="">请选择管线</option>
-                                    <c:forEach items="${secondnet}" var="line">
-                                        <option <c:if test="${node.lineId eq line.id}">selected="selected" </c:if> value="${line.id}">${line.lineName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
