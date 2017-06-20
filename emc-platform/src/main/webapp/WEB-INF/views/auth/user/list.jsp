@@ -128,7 +128,7 @@
                             <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
 
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="user-table-list"> 搜索</button>
-                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
+                                <button type="button" onclick="resetSearch()" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <c:if test="${sessionScope._auth['userExport'] }">
                                 	<button type="button" class="btn btn-sm btn-primary" onclick="exportUser()"> 导出Excel</button>
                                 </c:if>
@@ -146,5 +146,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	function resetSearch(){
+		var inputs = $('#user-form input:visible');
+		for(var i=0;i<inputs.length;i++){
+			$(inputs[i]).val('');
+		}
+		$('#orgId').val('');
+	}
+</script>
 </body>
 </html>

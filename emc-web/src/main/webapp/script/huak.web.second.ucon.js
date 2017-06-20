@@ -64,8 +64,9 @@ $(function(){
         }
     });
     $.ajax({
-        url : _web+"/static/json/6-1.json",
+        url : _web+"/cons/analysis/groupDanHao",
         type : "GET",
+        data:$("#searchTools").serialize(),
         dataType: "json",
         error : function(request) {
             alert("Connection error");
