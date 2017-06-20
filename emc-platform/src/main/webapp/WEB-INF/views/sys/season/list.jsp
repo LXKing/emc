@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3 col-xs-3 col-md-3 col-lg-3">名称</label>
                                     <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" name="name" placeholder="请输入名称">
+                                        <input type="text" id="name" class="form-control" name="name" placeholder="请输入名称">
                                     </div>
                                 </div>
                             </div>
@@ -39,10 +39,10 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-2 col-xs-2 col-md-2 col-lg-2">创建时间</label>
                                     <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                        <input id="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
+                                        <input id="start" name="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
                                     </div>
                                     <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                        <input id="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
+                                        <input id="end" name="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
                                     </div>
                                 </div>
                             </div>

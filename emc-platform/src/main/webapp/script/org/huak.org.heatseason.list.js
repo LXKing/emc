@@ -29,7 +29,9 @@ $(function () {
         queryParamsType: "undefined",
         queryParams: function queryParams(params) {
             var param = {
-                roleName:$('input[name="netTypeId"]').val(),
+                name:$('input[name="name"]').val(),
+                sdate:$('input[name="start"]').val(),
+                edate:$('input[name="end"]').val(),
                 _method: "PATCH",
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
@@ -58,11 +60,6 @@ $(function () {
                 formatter:function(value,row,index){
                     return index+1;
                 }
-            },
-            {
-                title: '公司id',
-                field: 'comid',
-                align: 'center'
             },
             {
                 title: '名称',
@@ -144,11 +141,11 @@ function addSeason(){
 }
 
 function search(){
-    $('#oncenet-table-list').bootstrapTable('refresh');
+    $('#season-table-list').bootstrapTable('refresh');
 }
 //layer
 function deleteSeason(id) {
-    top.layer.confirm('您是否确定删除管网吗？', {
+    top.layer.confirm('您是否确定删除该采暖季吗？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = top.layer.load(1, {

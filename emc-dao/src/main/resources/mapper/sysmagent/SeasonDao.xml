@@ -109,9 +109,14 @@
         from t_emc_heat_season
         where 1=1
         <if test="name != null and name !=''">
-            and  NAME =  #{name,jdbcType=VARCHAR}
+            and  NAME  like CONCAT('%',#{name},'%')
         </if>
-
+        <if test="sdate != null and sdate !=''">
+            and  SDATE &gt;= #{sdate,jdbcType=VARCHAR}
+        </if>
+        <if test="edate != null and edate !=''">
+            and  EDATE &lt;= #{edate,jdbcType=VARCHAR}
+        </if>
         order by id
     </select>
     <select id="CheckName" parameterType="java.lang.String" resultMap="BaseResultMap">
