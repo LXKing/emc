@@ -138,7 +138,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		for(String type:energyTypes){
 			List<String> curList = new ArrayList<String>();//每个能源类型今年某一时间段（查询条件中的时间段）的值，存储为list形式
 			List<String> lastList = new ArrayList<String>();//每个能源类型去年某一时间段（查询条件中的时间段）的值，存储为list形式
-			Double today = 0.0,lastYearToday = 0.0;//今天和去年今天的能耗数据
+			Double curYearTotal = 0.0,lastYearTotal = 0.0;//今天和去年今天的能耗数据
 			if(lmEmpty){//如果查询结果存在，需要设置上面所定义的变量，方便下面封装chartJson
 				for(String yd:clyearList){
 					boolean isHas = false;
@@ -150,10 +150,10 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 						String value = String.valueOf(map.get(type));
 						if("0".equals(curyear)){
 							lastList.add(value);//添加
-							lastYearToday += Double.parseDouble(value);//拿到去年今天的能耗
+							lastYearTotal += Double.parseDouble(value);//拿到去年今天的能耗
 						}else if("1".equals(curyear)){
 							curList.add(value);//添加
-							today += Double.parseDouble(value);//拿到今天的能耗
+							curYearTotal += Double.parseDouble(value);//拿到今天的能耗
 						}
 					}
 					if(!isHas){
@@ -190,16 +190,16 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 			Map<String,Object> rateMap = new HashMap<String,Object>();
 			//封装今天能耗数据的map
 			Map<String,Object> energy = new HashMap<String,Object>();
-			today = (double)Math.round(today*100)/100;
-			energy.put("value", lmEmpty?today:"0");
+			curYearTotal = (double)Math.round(curYearTotal*100)/100;
+			energy.put("value", lmEmpty?curYearTotal:"0");
 			energy.put("type", "0");
 			rateMap.put("energy", energy);
 			//封装同比数据的map
 			Map<String,Object> rate = new HashMap<String,Object>();
-			Double scale = Double.valueOf(lastYearToday)==0.0?0.0:
-				(double)Math.round((Double.valueOf(today)-Double.valueOf(lastYearToday))/Double.valueOf(lastYearToday)*10000)/100;//计算同比值
+			Double scale = Double.valueOf(lastYearTotal)==0.0?0.0:
+				(double)Math.round((Double.valueOf(curYearTotal)-Double.valueOf(lastYearTotal))/Double.valueOf(lastYearTotal)*10000)/100;//计算同比值
 			String rateType = "0";
-			if(lastYearToday>today)  rateType = "1";//设置同比数据后面的上下箭头
+			if(lastYearTotal>curYearTotal)  rateType = "1";//设置同比数据后面的上下箭头
 			rate.put("rate", lmEmpty?scale:"0");
 			rate.put("type", lmEmpty?rateType:"0");
 			rateMap.put("changeRate", rate);

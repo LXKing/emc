@@ -58,4 +58,11 @@ public interface ConsAnalysisService {
      * @return
      */
     public List<ConsSecond> exportAssessmentIndicators(Map<String, Object> params);
+
+    /**
+     * 查询单耗
+     * @param params
+     * @return
+     */
+	public Map<String, Object> groupDanHaoLine(Map<String, String> params) throws Exception;
 }

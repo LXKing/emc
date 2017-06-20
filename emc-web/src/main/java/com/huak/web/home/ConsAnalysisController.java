@@ -10,6 +10,7 @@ import com.huak.home.type.ToolVO;
 import com.huak.org.OrgService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.*;
@@ -343,4 +346,28 @@ public class ConsAnalysisController {
         }
     }
 
+    /**
+     * 查询单耗
+     * @param params
+     * @return
+     */
+    @RequestMapping(value="/groupDanHao",method=RequestMethod.GET)
+    @ResponseBody
+    public String groupDanHao(@RequestParam Map<String,String> params){
+    	logger.info("查询单耗数据");
+        JSONObject jo = new JSONObject();
+        try{
+        	jo.put("success", true);
+            jo.put("message", "查询单耗数据成功！");
+            //查询折线数据
+            Map<String,Object> retMap = consAnalysisService.groupDanHaoLine(params);
+            jo.put("data", retMap);
+        }catch(Exception e){
+        	logger.error("查询单耗数据异常" + e.getMessage());
+        	jo.put("success", false);
+            jo.put("message", "查询单耗数据异常！");
+        }
+        return jo.toJSONString();
+    }
+    
 }

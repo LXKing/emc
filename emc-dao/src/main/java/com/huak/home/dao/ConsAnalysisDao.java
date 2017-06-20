@@ -1,6 +1,7 @@
 package com.huak.home.dao;
 
 import com.huak.home.model.ConsSecond;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -61,4 +62,18 @@ public interface ConsAnalysisDao {
      * @return
      */
     public List<ConsSecond> exportAssessmentIndicators(Map<String, Object> params);
+
+    /**
+     * 查询单耗
+     * @param params
+     * @return
+     */
+	public List<Map<String, Object>> groupDanHao(Map<String, String> params);
+
+	/**
+	 * 查询单耗同比数据
+	 * @param params
+	 * @return
+	 */
+	public List<Map<String, Object>> groupDanHaoTotal(Map<String, String> params);
 }
