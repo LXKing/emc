@@ -372,6 +372,8 @@ public class EnergyMonitorController {
             jo.put("data", retMap);
         }catch(Exception e){
         	logger.error("查询集团能耗数据异常" + e.getMessage());
+        	jo.put("success", false);
+            jo.put("message", "查询能耗数据异常！");
         }
         return jo.toJSONString();
     }
