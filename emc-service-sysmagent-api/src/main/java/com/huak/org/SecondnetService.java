@@ -40,4 +40,6 @@ public interface SecondnetService {
     public List<Secondnet> selectLineAll(Map<String, Object> paramsMap);
 
     public boolean checkNetName(Map<String,Object> paramsMap);
+
+    public boolean checkNetCode(Map<String,Object> paramsMap);
 }

@@ -174,6 +174,24 @@ public class OncenetController {
         return jo.toJSONString();
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/checkcode", method = RequestMethod.POST)
+    public String checkNodeCode(@RequestParam  String netCode,
+                            @RequestParam  String comId ){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("netCode",netCode);
+        map.put("comId",comId);
+        JSONObject jo = new JSONObject();
+        boolean  flag =   oncenetService.checkNetCode(map);
+
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
+        }
+        return jo.toJSONString();
+    }
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, Object> paramsMap, HttpServletResponse response) {
         logger.info("导出管网列表EXCEL");

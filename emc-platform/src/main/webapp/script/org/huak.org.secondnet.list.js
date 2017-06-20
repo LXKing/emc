@@ -154,6 +154,23 @@ $(function () {
                 }
             },
             {
+                title: '供热类型',
+                field: 'heatType',
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '1'){
+                        return '区域供热';
+                    }
+                    if(value == '2'){
+                        return '集中供热';
+                    }
+                    if(value == '3'){
+                        return '尖峰供热';
+                    }
+                    return '';
+                }
+            },
+            {
                 title: '管线长度',
                 field: 'length',
                 align: 'center'
@@ -166,6 +183,16 @@ $(function () {
             {
                 title: '管段数量',
                 field: 'partNum',
+                align: 'center'
+            },
+            {
+                title: '热源',
+                field: 'feedName',
+                align: 'center'
+            },
+            {
+                title: '热力站',
+                field: 'stationName',
                 align: 'center'
             },
             {

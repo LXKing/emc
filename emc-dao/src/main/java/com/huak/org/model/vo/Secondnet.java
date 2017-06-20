@@ -23,11 +23,21 @@ public class Secondnet implements Serializable{
 
     private String comId;
 
+    private Byte heatType;
+
+    private String feedId;
+
+    private String stationId;
+
+    private String stationName;
+
+    private String feedName;
+
     public Secondnet() {
         super();
     }
 
-    public Secondnet(String id, String lineName, String lineCode, Byte netTypeId, Double length, Integer cellNum, Integer partNum, String medium, Long orgId, String comId) {
+    public Secondnet(String id, String lineName, String lineCode, Byte netTypeId, Double length, Integer cellNum, Integer partNum, String medium, Long orgId, String comId, Byte heatType, String feedId, String stationId, String stationName, String feedName) {
         this.id = id;
         this.lineName = lineName;
         this.lineCode = lineCode;
@@ -38,6 +48,11 @@ public class Secondnet implements Serializable{
         this.medium = medium;
         this.orgId = orgId;
         this.comId = comId;
+        this.heatType = heatType;
+        this.feedId = feedId;
+        this.stationId = stationId;
+        this.stationName = stationName;
+        this.feedName = feedName;
     }
 
     public String getId() {
@@ -118,5 +133,45 @@ public class Secondnet implements Serializable{
 
     public void setComId(String comId) {
         this.comId = comId;
+    }
+
+    public Byte getHeatType() {
+        return heatType;
+    }
+
+    public void setHeatType(Byte heatType) {
+        this.heatType = heatType;
+    }
+
+    public String getFeedId() {
+        return feedId;
+    }
+
+    public void setFeedId(String feedId) {
+        this.feedId = feedId;
+    }
+
+    public String getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public String getFeedName() {
+        return feedName;
+    }
+
+    public void setFeedName(String feedName) {
+        this.feedName = feedName;
     }
 }

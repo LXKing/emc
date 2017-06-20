@@ -180,11 +180,12 @@
         from t_emc_unit_net
         where 1=1
 
+
         <if test="netName != null and netName !=''">
-            and  NET_NAME =  #{netName,jdbcType=VARCHAR}
+            and  NET_NAME like concat(concat('%',#{netName}),'%')
         </if>
         <if test="netCode != null and netCode !=''">
-            and  NET_CODE =  #{netCode,jdbcType=VARCHAR}
+            and  NET_CODE like concat(concat('%',#{netCode}),'%')
         </if>
 
         <if test="netTypeId != null and netTypeId !=''">

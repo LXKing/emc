@@ -3,9 +3,7 @@ package com.huak.org;
 import com.huak.base.dao.DateDao;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.dao.AdministrativeDao;
-import com.huak.org.dao.CompanyDao;
-import com.huak.org.dao.OrgDao;
+import com.huak.org.dao.*;
 import com.huak.org.model.Administrative;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
@@ -37,7 +35,10 @@ public class OrgServiceImpl implements OrgService {
     private CompanyDao companyDao;
     @Resource
     private SysDicDao sysDicDao;
-
+    @Resource
+    private FeedDao feedDao;
+    @Resource
+    private NodeDao nodeDao;
 
     @Override
     public int insert(Administrative season) {
@@ -151,5 +152,19 @@ public class OrgServiceImpl implements OrgService {
     public List<Map<String, Object>> selectOrgTree(Map<String, Object> paramsMap) {
         List<Map<String, Object>> data = orgDao.selectOrgTree(paramsMap);
         return data;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectFeedByid(String orgId) {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
+        paramsMap.put("orgId",orgId);
+        return feedDao.selectFeedByMap(paramsMap);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectStationByid(String orgId) {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
+        paramsMap.put("orgId",orgId);
+        return nodeDao.selectStationByMap(paramsMap);
     }
 }

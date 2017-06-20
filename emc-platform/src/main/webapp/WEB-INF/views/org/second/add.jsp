@@ -27,7 +27,7 @@
                             class="red">*</span>管线代码：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="lineCode" class="form-control" type="text" maxlength="16" placeholder="请输入管线代码">
+                        <input name="lineCode" id="lineCode" class="form-control" type="text" maxlength="16" placeholder="请输入管线代码">
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,7 +46,52 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3  control-label"><span class="red">*</span>供热类型：</label>
 
+                    <div class="col-sm-8">
+                        <select id="heatType" name="heatType" class="chosen-select form-control">
+                            <option value="">请选择类型</option>
+                            <c:forEach items="${dicheat}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+                                <option value="${item.seq}">${item.des}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red"></span>热源：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+
+                        <select id="feedId" name="feedId" class="chosen-select form-control">
+                            <option value="">请选择热源</option>
+                            <c:forEach items="${feed}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+                                <option value="${item.ID}">${item.FEED_NAME}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red"></span>热力站：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+
+                        <select id="stationId" name="stationId" class="chosen-select form-control">
+                            <option value="">请选择热力站</option>
+                            <c:forEach items="${station}" var="item" varStatus="status" >
+                                <%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--　　var id = "${status.id}";//加引号--%>
+                                <option value="${item.id}">${item.stationName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>管线长度：</label>
@@ -137,7 +182,28 @@
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "管线名称已存在");
+        $.validator.addMethod("checkCodeUnique", function (value, element) {
+            var lineCode = $(top.document).find('#lineCode').val();
+            var comId = $(top.document).find("#comId").val();
 
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url: _platform + '/secondnet/checkcode',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {lineCode:lineCode,comId:comId},
+                dataType: 'json',
+                success: function (result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, "管线代码已存在");
         //提示信息绑定
         $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
@@ -173,7 +239,7 @@
                 return true;
             }
         }, "请确认输入的数值为正整数");
-        // 管线名称验证
+        // 管线代码验证
         $.validator.addMethod("isLineCode", function(value, element) {
             var reg = new RegExp("^[A-Za-z0-9]+$");
             if(!reg.test(value)){
@@ -182,7 +248,7 @@
             }else{
                 return true;
             }
-        }, "请输入正确的管线名称");
+        }, "请输入正确的管线代码（如：数字字母组合）");
         $form.validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
@@ -203,13 +269,24 @@
                 },
                 lineCode: {
                     required: true,
-                    isLineCode:true
+                    isLineCode:true,
+                    minlength: 2,
+                    checkCodeUnique:true
                 },
                 length: {
                     required: true,
                     isNumber:true
                 },
                 netTypeId: {
+                    required: true
+                },
+                partNum: {
+                    isCellNum:true
+                },
+                cellNum: {
+                    isCellNum:true
+                },
+                heatType: {
                     required: true
                 }
             },
@@ -226,12 +303,30 @@
                 },
                 netTypeId: {
                     required: icon + "请输入管线类型"
+                },
+                heatType: {
+                    required: icon + "请选择供热类型"
                 }
             },
             submitHandler: function () {
                 var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
+                var stationId = $(top.document).find('#stationId').val();
+                var feedId = $(top.document).find('#feedId').val();
+
+                if(stationId==''&&feedId==''){
+                    top.layer.msg("请选择热源或热力站其中的一个");
+                    top.layer.close(index);
+                    return false;
+                }else if(stationId!=''&&feedId!=''){
+                    top.layer.msg("只能选择热源或热力站其中的一个");
+                    top.layer.close(index);
+                    return false;
+                }else{
+                    top.layer.close(index);
+                }
+
                 //alert($form.serialize());
                 $.ajax({
                     url: _platform + '/secondnet/addvalue',

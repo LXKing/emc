@@ -47,4 +47,7 @@ public interface OrgService {
 
     List<Map<String, Object>> selectOrgTree(Map<String, Object> paramsMap);
 
+    List<Map<String, Object>> selectFeedByid(String orgId);
+
+    List<Map<String, Object>> selectStationByid(String orgId);
 }

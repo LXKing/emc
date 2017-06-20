@@ -41,5 +41,6 @@ public interface OncenetService {
 
     public boolean checkNetName(Map<String,Object> paramsMap);
 
+    public boolean checkNetCode(Map<String,Object> paramsMap);
 
 }

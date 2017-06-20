@@ -29,7 +29,7 @@
                             class="red">*</span>管网代码：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="netCode" class="form-control" type="text" maxlength="16" placeholder="请输入管网代码">
+                        <input name="netCode" id="netCode" class="form-control" type="text" maxlength="16" placeholder="请输入管网代码">
                     </div>
                 </div>
 
@@ -152,7 +152,28 @@
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "管网名称已存在");
+        $.validator.addMethod("checkCodeUnique", function (value, element) {
+            var netCode = $(top.document).find('#netCode').val();
+            var comId = $(top.document).find("#comId").val();
 
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url: _platform + '/oncenet/checkcode',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {netCode:netCode,comId:comId},
+                dataType: 'json',
+                success: function (result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, "管网代码已存在");
         $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
             $(this).siblings('.help-block').remove();
@@ -195,7 +216,7 @@
             }else{
                 return true;
             }
-        }, "请输入正确的管网代码");
+        }, "请输入正确的管网代码(如：数字字母组合)");
         $form.validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
@@ -216,7 +237,9 @@
                 },
                 netCode: {
                     required: true,
-                    isNetCode:true
+                    isNetCode:true,
+                    minlength: 2,
+                    checkCodeUnique: true
                 },
                 length: {
                     required: true,
@@ -227,6 +250,12 @@
                 },
                 heatType: {
                     required: true
+                },
+                partNum: {
+                    isCellNum:true
+                },
+                cellNum: {
+                    isCellNum:true
                 }
             },
             messages: {

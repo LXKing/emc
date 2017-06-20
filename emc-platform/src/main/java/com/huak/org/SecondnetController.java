@@ -72,9 +72,16 @@ public class SecondnetController {
     @RequestMapping(value = "/add/{orgId}", method = RequestMethod.GET)
     public String addPage(Model model,@PathVariable("orgId") String orgId) {
         String code = "pipeType";
+        String typeHeat="supportheattype";
         List<SysDic> dic = orgService.selectSysDicAll(code);
+        List<Map<String,Object>> feed =orgService.selectFeedByid(orgId);
+        List<Map<String,Object>> station =orgService.selectStationByid(orgId);
+        List<SysDic> dicheat = orgService.selectSysDicAll(typeHeat);
         model.addAttribute("sysdic",dic);
         model.addAttribute("orgId",orgId);
+        model.addAttribute("feed",feed);
+        model.addAttribute("station",station);
+        model.addAttribute("dicheat",dicheat);
         return "/org/second/add";
     }
 
@@ -104,10 +111,17 @@ public class SecondnetController {
         logger.info("跳转修改热源页");
         try {
             String code = "pipeType";
+            String typeHeat="supportheattype";
             List<SysDic> dic = orgService.selectSysDicAll(code);
+            List<SysDic> dicheat = orgService.selectSysDicAll(typeHeat);
             model.addAttribute("sysdic",dic);
             Secondnet secondnet = secondnetService.selectByPrimaryKey(id);
+            List<Map<String,Object>> feed =orgService.selectFeedByid(secondnet.getOrgId().toString());
+            List<Map<String,Object>> station =orgService.selectStationByid(secondnet.getOrgId().toString());
             model.addAttribute("secondnet", secondnet);
+            model.addAttribute("station",station);
+            model.addAttribute("dicheat",dicheat);
+            model.addAttribute("feed",feed);
         } catch (Exception e) {
             logger.error("跳转修改管线页异常" + e.getMessage());
         }
@@ -156,6 +170,24 @@ public class SecondnetController {
 
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("lineName",lineName);
+        map.put("comId",comId);
+        JSONObject jo = new JSONObject();
+        boolean  flag =   secondnetService.checkNetName(map);
+
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/checkcode", method = RequestMethod.POST)
+    public String checkCodeNode(@RequestParam  String lineCode,
+                            @RequestParam  String comId ){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("lineCode",lineCode);
         map.put("comId",comId);
         JSONObject jo = new JSONObject();
         boolean  flag =   secondnetService.checkNetName(map);

@@ -90,4 +90,16 @@ public class SecondnetServiceImpl implements SecondnetService {
         }
         return flag;
     }
+
+    @Override
+    public boolean checkNetCode(Map<String, Object> paramsMap) {
+        boolean flag=false;
+        List<Secondnet> list =  secondnetDao.selectPageByMap(paramsMap);
+        if(list.size()>0){
+            flag=true;
+        }else {
+            flag=false;
+        }
+        return flag;
+    }
 }
