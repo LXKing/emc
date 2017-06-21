@@ -2,10 +2,11 @@ package com.huak.auth.dao;
 
 
 import com.huak.auth.model.Employee;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-
+@Repository
 public interface EmployeeDao {
     /**
      * 分页查询员工列表
