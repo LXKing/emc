@@ -377,4 +377,100 @@ public class EnergyMonitorController {
         }
         return jo.toJSONString();
     }
+	
+	/**
+     * 查询能源流明细
+     * @param params
+     * @return
+     */
+	@RequestMapping(value = "/energyFlowTable", method = RequestMethod.GET)
+    @ResponseBody
+	public String energyFlowTable(@RequestParam Map<String,String> params){
+		logger.info("查询能源流明细");
+        JSONObject jo = new JSONObject();
+        try{
+        	jo.put("success", true);
+            jo.put("message", "查询能源流明细成功！");
+            //查询折线数据
+            List<Map<String,Object>> retMap = eaService.energyFlowTable(params);
+            jo.put("data", retMap);
+        }catch(Exception e){
+        	logger.error("查询能源流明细异常" + e.getMessage());
+        	jo.put("success", false);
+            jo.put("message", "查询能源流明细异常！");
+        }
+        return jo.toJSONString();
+	}
+	
+	/**
+     * 查询能源流占比分布图
+     * @param params
+     * @return
+     */
+	@RequestMapping(value = "/energyFlowPie", method = RequestMethod.GET)
+    @ResponseBody
+	public String energyFlowPie(@RequestParam Map<String,String> params){
+		logger.info("查询能源流占比分布图");
+        JSONObject jo = new JSONObject();
+        try{
+        	jo.put("success", true);
+            jo.put("message", "查询能源流占比分布图成功！");
+            //查询折线数据
+            List<Map<String,Object>> retMap = eaService.energyFlowPie(params);
+            jo.put("data", retMap);
+        }catch(Exception e){
+        	logger.error("查询能源流占比分布图异常" + e.getMessage());
+        	jo.put("success", false);
+            jo.put("message", "查询能源流占比分布图异常！");
+        }
+        return jo.toJSONString();
+	}
+	
+	/**
+     * 查询能源流趋势对比图
+     * @param params
+     * @return
+     */
+	@RequestMapping(value = "/energyFlowLine", method = RequestMethod.GET)
+    @ResponseBody
+	public String energyFlowLine(@RequestParam Map<String,String> params){
+		logger.info("查询能源流趋势对比图");
+        JSONObject jo = new JSONObject();
+        try{
+        	jo.put("success", true);
+            jo.put("message", "查询能源流趋势对比图成功！");
+            //查询折线数据
+            Map<String,Object> retMap = eaService.energyFlowLine(params);
+            jo.put("data", retMap);
+        }catch(Exception e){
+        	logger.error("查询能源流趋势对比图异常" + e.getMessage());
+        	jo.put("success", false);
+            jo.put("message", "查询能源流趋势对比图异常！");
+        }
+        return jo.toJSONString();
+	}
+	
+	/**
+     * 查询能源流同比
+     * @param params
+     * @return
+     */
+	@RequestMapping(value = "/energyFlowBar", method = RequestMethod.GET)
+    @ResponseBody
+	public String energyFlowBar(@RequestParam Map<String,String> params){
+		logger.info("查询能源流同比");
+        JSONObject jo = new JSONObject();
+        try{
+        	jo.put("success", true);
+            jo.put("message", "查询能源流同比成功！");
+            //查询折线数据
+            Map<String,Object> retMap = eaService.energyFlowBar(params);
+            jo.put("data", retMap);
+        }catch(Exception e){
+        	logger.error("查询能源流同比异常" + e.getMessage());
+        	jo.put("success", false);
+            jo.put("message", "查询能源流同比异常！");
+        }
+        return jo.toJSONString();
+	}
 }
