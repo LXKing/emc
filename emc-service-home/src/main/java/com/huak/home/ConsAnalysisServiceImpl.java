@@ -243,4 +243,97 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
 		date = calendar.getTime();
 		return sdf.format(date);
 	}
+	
+	/**
+	 * 查询能源流明细
+	 */
+	@Override
+	public List<Map<String, Object>> energyFlowTable(Map<String, String> params) {
+		List<Map<String, Object>> eftListMap = consAnalysisDao.energyFlowTable(params);
+		return eftListMap;
+	}
+
+	/**
+	 * 查询能源流占比分布图
+	 */
+	@Override
+	public List<Map<String, Object>> energyFlowPie(Map<String, String> params) {
+		List<Map<String, Object>> efpListMap = consAnalysisDao.energyFlowPie(params);
+		return efpListMap;
+	}
+
+	/**
+	 * 查询能源流趋势对比图
+	 */
+	@Override
+	public Map<String,Object> energyFlowLine(Map<String, String> params) throws Exception{
+		Map<String,Object> result = new HashMap<String,Object>();
+		String sDate = params.get("toolStartDate");//查询条件的开始时间
+		String eDate = params.get("toolEndDate");//查询条件的结束时间
+		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate;//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate;//如果查询条件的结束时间为空，设置默认的结束时间
+		//查询时间list
+		List<String> yearList = new ArrayList<String>();
+		//无查询结果时，设为默认值0
+		List<String> defaultValue = new ArrayList<String>();
+		while(!sDate.equals(eDate)){
+			yearList.add(sDate);
+			sDate = getYearDate(sDate,Calendar.DATE,1);
+			defaultValue.add("0");
+		}
+		yearList.add(eDate);
+		defaultValue.add("0");
+		//处理查询结果，为折线图做准备
+		List<Map<String, Object>> eflListMap = consAnalysisDao.energyFlowLine(params);
+		String[] unitType = {"type1","type2","type3","type4","type5"};
+		for(String type:unitType){
+			List<String> lineValue = new ArrayList<String>();
+			if(null!=eflListMap&&eflListMap.size()>0){
+				for(String d:yearList){
+					boolean isHas = false;
+					for(Map<String, Object> map:eflListMap){
+						if(type.equals(map.get("unittype")+"")&&d.equals(map.get("yeardate")+"")){
+							lineValue.add(map.get("total")+"");
+							isHas = true;
+						}
+					}
+					if(!isHas){
+						lineValue.add("0");
+					}
+				}
+				result.put(type, lineValue);
+			}else{
+				result.put(type, defaultValue);
+			}
+		}
+		result.put("yearDateList", yearList);
+		return result;
+	}
+
+	/**
+	 * 查询能源流同比
+	 */
+	@Override
+	public Map<String, Object> energyFlowBar(Map<String, String> params) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		List<String> last = new ArrayList<String>();
+		List<String> cur = new ArrayList<String>();
+		List<Map<String, Object>> efbListMap = consAnalysisDao.energyFlowBar(params);
+		for(int i=1;i<=5;i++){
+			if(null!=efbListMap&&efbListMap.size()>0){
+				for(Map<String, Object> map:efbListMap){
+					if((i+"").equals(map.get("unittype")+"")){
+						last.add(map.get("last")+"");
+						cur.add(map.get("cur")+"");
+					}
+				}
+			}else{
+				last.add("0");
+				cur.add("0");
+			}
+		}
+		result.put("last", last);
+		result.put("cur", cur);
+		return result;
+	}
 }

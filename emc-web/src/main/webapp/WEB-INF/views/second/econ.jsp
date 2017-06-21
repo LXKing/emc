@@ -241,7 +241,7 @@
                         <td>煤能耗总量（GJ）</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="energyFlowDetail">
                     <tr class="">
                         <td>
                             <a href="javascript:;" class="need_a">集团</a>

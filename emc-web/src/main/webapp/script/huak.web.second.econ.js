@@ -63,6 +63,8 @@ $(function(){
             chart04Fun(data);
         }
     });
+    
+    //能耗折线
     $.ajax({
         url : _web+"/energy/monitor/groupEnergy",
         type : "GET",
@@ -159,24 +161,70 @@ $(function(){
                 $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "↑)");
                 $("#coalchangeRate").addClass("energy-remind");
             };
-
-
             groupEnergyChartFun(data.data.groupEnergy.data, data.data.groupEnergy.yearDate);
             waterEnergyChartFun(data.data.waterEnergy.data, data.data.waterEnergy.yearDate);
             electricEnergyChartFun(data.data.electricEnergy.data, data.data.electricEnergy.yearDate);
             gasEnergyChartFun(data.data.gasEnergy.data, data.data.gasEnergy.yearDate);
             hotEnergyChartFun(data.data.hotEnergy.data, data.data.hotEnergy.yearDate);
             coalEnergyChartFun(data.data.coalEnergy.data, data.data.coalEnergy.yearDate);
-
-
         }
     });
-
-
-
-    chart05Fun();
-    chart06Fun();
-    chart07Fun();
+    
+    /**
+     * 能源流相关开始
+     */
+    //能源流明细
+    $.ajax({
+        url : _web+"/energy/monitor/energyFlowTable",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+        	renderEnergyFlowDetail(data.data);
+        }
+    });
+    //能源流能耗占比分布图
+    $.ajax({
+        url : _web+"/energy/monitor/energyFlowPie",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+        	chart2EnergyPie(data.data);
+        }
+    });
+    //能源流能耗趋势对比图
+    $.ajax({
+        url : _web+"/energy/monitor/energyFlowLine",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+        	chart2EnergyLine(data.data);
+        }
+    });
+    //能源流能耗同比
+    $.ajax({
+        url : _web+"/energy/monitor/energyFlowBar",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        error : function(request) {
+            alert("Connection error");
+        },
+        success : function(data) {
+        	chart2EnergyBar(data.data);
+        }
+    });
 })
 
 function fgsEnergyList(data){
@@ -292,7 +340,7 @@ function groupEnergyChartFun(datalist, datelist){
     });
     groupEnergyChart.setOption(option);
 }
-
+/*水能耗-折线图*/
 function waterEnergyChartFun(datalist, datelist){
     $("#waterEnergyChart").empty();
     waterEnergyChart = echarts.init(document.getElementById('waterEnergyChart'));
@@ -378,7 +426,7 @@ function waterEnergyChartFun(datalist, datelist){
     });
     waterEnergyChart.setOption(option);
 }
-
+/*电能耗-折线图*/
 function electricEnergyChartFun(datalist, datelist){
     $("#electricEnergyChart").empty();
     electricEnergyChart = echarts.init(document.getElementById('electricEnergyChart'));
@@ -1114,8 +1162,27 @@ function chart04Fun(data){
 }
 
 
+/*能源流能耗明细*/
+function renderEnergyFlowDetail(data){
+	$('#energyFlowDetail').html('');
+	var html = '';
+	for(var i=0;i<data.length;i++){
+		html+="<tr class=\""+(i%2==0?"":"bgc")+"\">";
+        html+="<td>";
+        html+="    <a href='javascript:;' class='need_a'>"+data[i].unitname+"</a>";
+        html+="</td>";
+        html+="<td class='need_title'>"+data[i].groupE+"（同<span class='bluecolor'>"+(data[i].groupS)+"%"+(data[i].groupR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="<td class='need_title'>"+data[i].waterE+"（同<span class='bluecolor'>"+(data[i].waterS)+"%"+(data[i].waterR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="<td>"+data[i].elecE+"（同<span class='bluecolor'>"+(data[i].elecS)+"%"+(data[i].elecR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="<td>"+data[i].gasE+"（同<span class='bluecolor'>"+(data[i].gasS)+"%"+(data[i].gasR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="<td>"+data[i].hotE+"（同<span class='bluecolor'>"+(data[i].hotS)+"%"+(data[i].hotR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="<td>"+data[i].coalE+"（同<span class='bluecolor'>"+(data[i].coalS)+"%"+(data[i].coalR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="</tr>";
+	}
+	$('#energyFlowDetail').html(html);
+}
 /*能源流能耗占比分布图*/
-function chart05Fun(){
+function chart2EnergyPie(data){
     var piechart_as = echarts.init(document.getElementById('piechart_as'));
     var option = {
 
@@ -1177,14 +1244,7 @@ function chart05Fun(){
                     }
                 },
                 color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
-                data:[
-                    {value:335, name:'一次网'},
-                    {value:310, name:'换热站'},
-                    {value:251, name:'二次网'},
-                    {value:135, name:'民户'},
-                    {value:1048, name:'供热源'}
-                ]
-
+                data:data
             }
         ]
     };
@@ -1193,7 +1253,7 @@ function chart05Fun(){
 
 
 /*能源流能耗趋势对比图*/
-function chart06Fun(){
+function chart2EnergyLine(data){
     var linechart_as = echarts.init(document.getElementById('linechart_as'));
     var option = {
 
@@ -1215,7 +1275,7 @@ function chart06Fun(){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:['一次网','换热站','二次网','民户','供热源']
+            data:['供热源','一次网','换热站','二次线','民户']
         },
         color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
         xAxis: {
@@ -1241,7 +1301,7 @@ function chart06Fun(){
             splitArea: {
                 show: true
             },
-            data: ['2015-11','2015-12','2016-01','2016-02','2016-03']
+            data: data.yearDateList
 
         },
         yAxis: {
@@ -1275,21 +1335,21 @@ function chart06Fun(){
                 type:'line',
                 symbol: 'circle',
                 smooth: false,
-                data:[120, 132, 101, 134, 90]
+                data:data.type2
             },
             {
                 name:'换热站',
                 type:'line',
                 symbol: 'circle',
                 smooth: false,
-                data:[140, 112, 51, 34, 69]
+                data:data.type3
             },
             {
-                name:'二次网',
+                name:'二次线',
                 type:'line',
                 symbol: 'circle',
                 smooth: false,
-                data:[220, 182, 191, 234, 290]
+                data:data.type4
             },
 
             {
@@ -1297,14 +1357,14 @@ function chart06Fun(){
                 type:'line',
                 symbol: 'circle',
                 smooth: false,
-                data:[320, 332, 301, 334, 390]
+                data:data.type5
             },
             {
                 name:'供热源',
                 type:'line',
                 symbol: 'circle',
                 smooth: false,
-                data:[820, 932, 901, 934, 629]
+                data:data.type1
             }
         ]
     };
@@ -1314,7 +1374,7 @@ function chart06Fun(){
 
 
 /*能源流能耗同比*/
-function chart07Fun(){
+function chart2EnergyBar(data){
     var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
     var option = {
         title:{
@@ -1375,7 +1435,7 @@ function chart07Fun(){
                     fontFamily: 'arial'
                 }
             },
-            data:['供热源','一次网','换热站','二次网','民户']
+            data:['供热源','一次网','换热站','二次线','民户']
 
         },
         yAxis: {
@@ -1411,13 +1471,13 @@ function chart07Fun(){
                 name:"今年",
                 type:'bar',
                 barWidth: '20',
-                data:[10, 52, 200, 390, 330]
+                data:data.cur
             },
             {
                 name:"去年",
                 type:'bar',
                 barWidth: '20',
-                data:[10, 52, 200, 334, 330]
+                data:data.last
             }
         ]
     }
