@@ -240,6 +240,11 @@ public class BanController {
 	        cellName.put("community_name", "小区名称");
 	        cellName.put("com_name", "所属公司");
 	        cellName.put("org_name", "所属机构");
+	        cellName.put("province_name", "所属省");
+	        cellName.put("city_name", "所属市");
+	        cellName.put("county_name", "所属县");
+	        cellName.put("town_name", "所属乡");
+	        cellName.put("village_name", "所属村");
 	        List<Map<String, Object>> cellValues = banService.exportBan(param);
             if(cellValues==null){
             	jo.put(Constants.MSG, "导出失败");
@@ -253,7 +258,7 @@ public class BanController {
             	String mimetype = "application/vnd.ms-excel";
                 response.setContentType(mimetype);
                 response.setCharacterEncoding("UTF-8");
-                String fileName = "banInfo.xls";
+                String fileName = "楼座列表.xls";
                 response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
                 wb.write(out);
                 out.flush();

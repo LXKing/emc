@@ -312,7 +312,7 @@
         from t_emc_unit_feed
         where 1=1
         <if test="feedName != null and feedName !=''">
-            and FEED_NAME = #{feedName,jdbcType=VARCHAR}
+            and FEED_NAME like concat(concat('%',#{feedName,jdbcType=VARCHAR}),'%')
         </if>
         <if test="feedCode != null and feedCode != ''">
             and FEED_CODE = #{feedCode,jdbcType=VARCHAR}
@@ -377,7 +377,8 @@
         from t_emc_unit_feed
         where 1=1
         <if test="feedName != null and feedName !=''" >
-            and FEED_NAME = #{feedName,jdbcType=VARCHAR}
+            and FEED_NAME like concat(concat('%',#{feedName,jdbcType=VARCHAR}),'%')
+
         </if>
         <if test="feedCode != null and feedCode !=''">
             and FEED_CODE = #{feedCode,jdbcType=VARCHAR}

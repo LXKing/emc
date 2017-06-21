@@ -353,20 +353,17 @@ public class UserController {
         	JSONObject jo = new JSONObject();
 	        jo.put(Constants.FLAG, false);
 	        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-//	        cellName.put("id", "用户主键");
-	        cellName.put("org_id", "部门主键");
-	        cellName.put("login", "登录账号");
-	        cellName.put("password", "密码");
-	        cellName.put("login_time", "登录时间");
-	        cellName.put("last_login_time", "上次登录时间");
-	        cellName.put("login_num", "登录次数");
-	        cellName.put("use_status", "使用状态");
-	        cellName.put("mobile", "联系电话");
-	        cellName.put("mail", "电子邮件");
 	        cellName.put("user_name", "用户名称");
-	        cellName.put("memo", "备注说明");
-	        cellName.put("creator", "创建者");
-	        cellName.put("create_time", "创建时间");
+	        cellName.put("login", "登录账号");
+	        cellName.put("mobile", "联系电话");
+	        cellName.put("mail", "电子邮箱");
+	        cellName.put("use_status", "使用状态");
+	        cellName.put("memo", "备注");
+//	        cellName.put("login_time", "登录时间");
+//	        cellName.put("last_login_time", "上次登录时间");
+//	        cellName.put("login_num", "登录次数");
+//	        cellName.put("creator", "创建者");
+//	        cellName.put("create_time", "创建时间");
 	        List<Map<String, Object>> cellValues = userService.exportUser(param);
             if(cellValues==null){
             	jo.put(Constants.MSG, "导出失败");
@@ -380,7 +377,7 @@ public class UserController {
             	String mimetype = "application/vnd.ms-excel";
                 response.setContentType(mimetype);
                 response.setCharacterEncoding("UTF-8");
-                String fileName = "userInfo.xls";
+                String fileName = "用户列表.xls";
                 response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
                 wb.write(out);
                 out.flush();
