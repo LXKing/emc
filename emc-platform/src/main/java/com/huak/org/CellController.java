@@ -217,6 +217,7 @@ public class CellController {
 	        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 	        cellName.put("cell_name", "单元名称");
 	        cellName.put("ban_name", "楼座名称");
+	        cellName.put("community_name", "小区名称");
 	        cellName.put("com_name", "所属公司");
 	        cellName.put("org_name", "所属机构");
 	        List<Map<String, Object>> cellValues = cellService.exportCell(param);
@@ -232,7 +233,7 @@ public class CellController {
             	String mimetype = "application/vnd.ms-excel";
                 response.setContentType(mimetype);
                 response.setCharacterEncoding("UTF-8");
-                String fileName = "cellInfo.xls";
+                String fileName = "单元列表.xls";
                 response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
                 wb.write(out);
                 out.flush();

@@ -237,6 +237,9 @@ public class RoomController {
 	        jo.put(Constants.FLAG, false);
 	        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 	        cellName.put("room_name", "户名称");
+	        cellName.put("room_code", "户编码");
+	        cellName.put("heat_area", "供热面积");
+	        cellName.put("line_name", "管线名称");
 	        cellName.put("cell_name", "单元名称");
 	        cellName.put("ban_name", "楼座名称");
 	        cellName.put("community_name", "小区名称");
@@ -256,7 +259,7 @@ public class RoomController {
             	String mimetype = "application/vnd.ms-excel";
                 response.setContentType(mimetype);
                 response.setCharacterEncoding("UTF-8");
-                String fileName = "roomInfo.xls";
+                String fileName = "户列表.xls";
                 response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
                 wb.write(out);
                 out.flush();
