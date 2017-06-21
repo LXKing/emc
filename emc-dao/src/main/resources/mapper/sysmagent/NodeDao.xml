@@ -304,7 +304,7 @@
           and LAT = #{lat,jdbcType=DOUBLE}
       </if>
       <if test="stationName != null and stationName != ''">
-          and STATION_NAME = #{stationName,jdbcType=VARCHAR}
+          and STATION_NAME like concat(concat('%',#{stationName,jdbcType=VARCHAR}),'%')
       </if>
       <if test="stationCode != null and stationCode != ''">
           and  STATION_CODE = #{stationCode,jdbcType=VARCHAR}
@@ -369,7 +369,8 @@
             and LAT = #{lat,jdbcType=DOUBLE}
         </if>
         <if test="stationName != null and stationName != ''">
-            and STATION_NAME = #{stationName,jdbcType=VARCHAR}
+            and STATION_NAME like concat(concat('%',#{stationName,jdbcType=VARCHAR}),'%')
+
         </if>
         <if test="stationCode != null and stationCode != ''">
             and  STATION_CODE = #{stationCode,jdbcType=VARCHAR}
@@ -434,7 +435,7 @@
             and LAT = #{lat,jdbcType=DOUBLE}
         </if>
         <if test="stationName != null and stationName != ''">
-            and STATION_NAME = #{stationName,jdbcType=VARCHAR}
+            and STATION_NAME like concat(concat('%',#{stationName,jdbcType=VARCHAR}),'%')
         </if>
         <if test="stationCode != null and stationCode != ''">
             and  STATION_CODE = #{stationCode,jdbcType=VARCHAR}

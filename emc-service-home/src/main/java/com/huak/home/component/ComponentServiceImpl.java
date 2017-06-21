@@ -377,26 +377,26 @@ public class ComponentServiceImpl implements ComponentService{
                 data.put("currentSeason",null);
                 data.put("preSeason",null);
             }else {//查询结果不为空
-                season = seasons.get(0);
+                season = seasons.get(0);//查询上个采暖季的结果不为空
                 Integer day = null;
                 try {
                     day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate);
-                    if(day>365){//如果查询最大采暖季结束时间大于365
-                         data.put("currentSeason",null);//获取本采暖季的时间
-                         if(day <=730){//获取到上个采暖季
+                    if(day>365){//计算上个采暖季记录中的结束时间距当前系统时间超过1年
+                         data.put("currentSeason",null);//则本采暖季的开始和结束日期不能用上个采暖季的开始结束日期
+                         if(day <=730){//如果获取到的采暖季结束日期距当前系统日期小于2年则为上上个采暖季
                              data.put("preSeason",season);
                          }else{
                              data.put("preSeason",null);
                          }
 
-                    }else{
-                        data.put("currentSeason",season);//获取本采暖季的时间
-                        if(seasons.size()>1){
-                            season = seasons.get(1);
+                    }else{//计算上个采暖季记录中的结束时间距当前系统时间没超过1年，则为刚过去采暖季
+                        data.put("currentSeason",season);//将刚过去的采暖季日期作为本采暖季显示
+                        if(seasons.size()>1){//查询上个采暖季的结果集大于2
+                            season = seasons.get(1);//上上个采暖季
                             day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate);
-                            if(day >730){
+                            if(day >730){//如果上上个采暖季距系统日期大于2年则说明上上个采暖季距上个采暖季大于1年，上上个采暖季为空
                                 data.put("preSeason",null);
-                            }else{
+                            }else{//上上个采暖季和上个采暖季都可用
                                 data.put("preSeason",season);
                             }
                         }

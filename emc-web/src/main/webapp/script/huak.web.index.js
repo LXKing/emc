@@ -1,5 +1,7 @@
 ﻿$(function() {
-
+    var myChartEnergy;
+    var myChartQualified;
+    var myChartCarbon;
     //$("#header").load("header.html",function(){});
     //$("#footer").load("footer.html", function() {});
     //All 数据 从后台去取
@@ -11,7 +13,6 @@
         data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-25 00:00:00'},
         dataType: "json",
         success : function(data) {
-            console.log(data.all);
             if(data.all.eTotal==null||data.all.eTotal==''){
                 $(".eTotal").html(0+" TCE");
             }else{
@@ -138,7 +139,6 @@
         data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
         dataType: "json",
         success : function(data) {
-                console.log(data.all);
             if(data.all.lineLen==null||data.all.lineLen==''){
                 $(".lineLen").html(0+" km");
             }else{
@@ -155,8 +155,7 @@
 //            alert("Connection error");
 //        }
     });
-    var myChartEnergy;
-    var myChartQualified;
+
     $.ajax({
         url : _web+"/static/json/h-1.json",
         type : "GET",
@@ -246,7 +245,6 @@ function chart01Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            console.info(result);
             chart01Show(result.object.data,result.object.yearDate,result.object.other);
         }
     });
@@ -254,7 +252,6 @@ function chart01Fun(){
 
 /*单耗趋势-折线图*/
 function chart01Show(datalist, datelist, other){
-    console.info(other)
     $("#chart01").empty();
     chart01 = echarts.init(document.getElementById('chart01'));
     var option = {
@@ -675,7 +672,6 @@ function chart05Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            debugger;
             var energy = result.object.ccs;
             var device = result.object.device;
             var labor  = result.object.labor;
@@ -947,27 +943,27 @@ function chart07Fun(){
         dataType:"json",
         success:function(result) {
             if (result.flag) {
+                console.info(result);
                 /*仪表盘*/
                 var kedu1 =0; //蓝色的刻度
                 var pcd = 0; //偏差度
                 var pcdz = 0; //偏差值
                 var currentPlan = 0;
                 var bm_total = 0;
+                var currentDays = result.object.currentDays;
+                var planDays = result.object.planDays;
                 if(result.object.isInCurrentSeason == true){
-                    var currentDays = result.object.currentDays;
-                    var planDays = result.object.planDays;
-                    currentPlan =result.object.currentPlan;
-                    bm_total =result.object.bm_total;
                     kedu1 =(currentDays/planDays)*0.75;
-                    pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
-                    pcd =  toDecimal(pcd);
-                    pcdz = bm_total - (currentDays/planDays)*currentPlan;
-                    pcdz =  toDecimal(pcdz);
                 }else{
                     kedu1 = 0.75;
                 }
+                currentPlan =result.object.currentPlan;
+                bm_total =result.object.bm_total;
                 initChart(kedu1,currentPlan,bm_total);
-
+                pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
+                pcd =  toDecimal(pcd);
+                pcdz = bm_total - (currentDays/planDays)*currentPlan;
+                pcdz =  toDecimal(pcdz);
                 $("#pc_plan_percent").html("偏差度("+pcd+"%)");
                 $("#pc_plan").html(pcdz);
                 /*总标煤展示*/
@@ -1069,7 +1065,7 @@ function initChart(kedu1,mx,bm_total){
             {
                 name: '能耗',
                 type: 'gauge',
-                z: 3,
+                z:50,
                 min: 0,
                 max: mx,
                 startAngle: 180,
@@ -1078,19 +1074,34 @@ function initChart(kedu1,mx,bm_total){
                 radius: '100%',
                 axisLine:{
                     show:true,
+                    formatter: function(v){
+                        alert(v);
+                        switch (v+''){
+                            case '10': return '弱';
+                            case '30': return '低';
+                            case '60': return '中';
+                            case '90': return '高';
+                            default: return '';
+                        }
+                    },
                     lineStyle:{
                         color:[[0.5, '#3b96db'],[1, '#df5f4a'] ],
                         width:10
                     }
                 },
                 itemStyle:{
+
                     normal:{
                         color:'#d44243'
                     }
                 },
 
                 detail:{
-                    show:false
+                    show: true,
+                    formatter: '{value}',
+                    textStyle: {
+                        fontSize: 20
+                    }
                 },
                 data:[{value: "50"}]
             }
@@ -1216,7 +1227,7 @@ function chart08Fun(){
 
 /*居民室温合格率--chartCarbon*/
 function chart09Fun(){
-    var myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
+     myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
     optionCarbon = {
         title: {
             text: "67.2",
