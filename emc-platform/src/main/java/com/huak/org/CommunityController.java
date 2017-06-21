@@ -207,7 +207,7 @@ public class CommunityController {
             	String mimetype = "application/vnd.ms-excel";
                 response.setContentType(mimetype);
                 response.setCharacterEncoding("UTF-8");
-                String fileName = "communityInfo.xls";
+                String fileName = "小区列表.xls";
                 response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
                 wb.write(out);
                 out.flush();
