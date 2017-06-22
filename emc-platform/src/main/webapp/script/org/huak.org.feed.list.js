@@ -6,11 +6,12 @@
  * Date: 2016/8/30<BR>
  */
 var bTable;
+var orgTree;
 $(function () {
     var org = new Org({
         class:"org-tree"
     });
-    org.initTree();
+    orgTree = org.initTree();
     /*查询热源列表页*/
     bootstraplist();
     //页面说明
@@ -173,7 +174,7 @@ function bootstraplist(){
                 align: 'center' ,
                 formatter:function(value,row,index){
                     var html = "";
-                    var treeNode = top.comm_tree.getSelectedNodes();
+                    var treeNode =orgTree.getSelectedNodes();
                     var ts = $(top.document).find("[name='searchComp']").val();
                     var orgId = null;
                     if(treeNode.length>0){
@@ -237,7 +238,7 @@ function treeNodeClick(e,treeId,treeNode){
 }
 
 function addFeed(){
-    var treeNode = top.comm_tree.getSelectedNodes();
+    var treeNode = orgTree.getSelectedNodes();
     var ts = $(top.document).find("[name='searchComp']").val();
     if(treeNode.length<1){
         layer.msg("请先选择一个组织机构！");

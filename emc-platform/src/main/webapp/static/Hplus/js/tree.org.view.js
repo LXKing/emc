@@ -14,25 +14,29 @@
     var Org = function(options) {
         return new Org.fn.init(options);
     }
-
+    var id = generateUUID();
+    Org.prototype.id = id;
     Org.fn = Org.prototype = {
         constructor: Org,
         init: function(options) {
+            this.id = id;
             this.options = options;
             this.initTree = function() {
-                this.view(this.options);
+               return this.view(this.options);
             }
         },
         view: function(options) {
             this.class ="."+options.class;
             var $this =$(top.document).find(this.class);
+            var $thisTree = null;
             if($this.length<1){
                 $this = $(this.class)
             }
             if($this.length>0) {
                 var ts = $(top.document).find("[name='searchComp']").val();
                 top.lightId = $this.attr("light");
-                $this.html("<div id='temp_org_tree' light='"+ top.lightId+"' class='ztree'></div>");
+                var id = 'temp_org_tree_'+this.id;
+                $this.html("<div id='"+id+"' light='"+ top.lightId+"' class='ztree'></div>");
                 var setting = {
                     async: { enable: true, url: _platform + '/common/org/tree/'+ts, autoParam: ["id"]},
                     view: {selectedMulti: false, fontCss: {color: "black"}},
@@ -41,20 +45,20 @@
                     edit: {enable: false },
                     callback: { onClick: treeNodeClick,onAsyncSuccess: zTreeOnAsyncSuccess}
                 };
-                var obj = $(top.document).find("#temp_org_tree");
+                var obj = $(top.document).find("#"+id);
                 if(obj.length<1){
-                    obj = $("#temp_org_tree");
+                    obj = $("#"+id);
                 }
-                top.comm_tree = $.fn.zTree.init(obj, setting);
-                top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree");
+                $thisTree = $.fn.zTree.init(obj, setting);
+                top.comm_ztree = $.fn.zTree.getZTreeObj(id);
             }
-            return top.comm_tree;
+            return $thisTree;
         }
     }
     var zTreeOnAsyncSuccess = function(){
         var lightId = top.lightId;
-        top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree");
-        var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+        top.comm_ztree = $.fn.zTree.getZTreeObj("temp_org_tree_"+id);
+        var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree_"+id);
         var nodes = [];
         if (lightId != "" && lightId != undefined) {
             nodes = lightId.split(",");
@@ -67,7 +71,15 @@
     Org.fn.init.prototype = Org.fn;
 
 
-
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+};
 
 
 
