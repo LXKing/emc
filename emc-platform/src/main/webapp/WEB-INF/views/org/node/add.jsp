@@ -83,8 +83,12 @@ $(function () {
 
     $.validator.addMethod("checklng", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
-            deferred.reject();
+        if(!(value =="" ||value == null)){
+            if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
+                deferred.reject();
+            }else{
+                deferred.resolve();
+            }
         }else{
             deferred.resolve();
         }
@@ -93,13 +97,18 @@ $(function () {
 
     $.validator.addMethod("checklat", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        if(!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))){
-            deferred.reject();
+        if(!(value =="" ||value == null)) {
+            if (!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))) {
+                deferred.reject();
+            } else {
+                deferred.resolve();
+            }
         }else{
             deferred.resolve();
         }
         return deferred.state() == "resolved" ? true : false;
     }, icon + "请填写正确的纬度");
+
 
     //提示信息绑定
     $('input:not(:submit):not(:button)').mousedown(function () {

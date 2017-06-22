@@ -111,8 +111,12 @@ $(function () {
 
     $.validator.addMethod("checklng", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
-            deferred.reject();
+        if(!(value =="" ||value == null)){
+            if(!(/^-?(?:(?:180(?:\.0{1,5})?)|(?:(?:(?:1[0-7]\d)|(?:[1-9]?\d))(?:\.\d{1,5})?))$/.test(value))){
+                deferred.reject();
+            }else{
+                deferred.resolve();
+            }
         }else{
             deferred.resolve();
         }
@@ -121,13 +125,18 @@ $(function () {
 
     $.validator.addMethod("checklat", function(value, element) {
         var deferred = $.Deferred();//创建一个延迟对象
-        if(!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))){
-            deferred.reject();
+        if(!(value =="" ||value == null)) {
+            if (!(/^-?(?:90(?:\.0{1,5})?|(?:[1-8]?\d(?:\.\d{1,5})?))$/.test(value))) {
+                deferred.reject();
+            } else {
+                deferred.resolve();
+            }
         }else{
             deferred.resolve();
         }
         return deferred.state() == "resolved" ? true : false;
     }, icon + "请填写正确的纬度");
+
 
     $form.validate({
         onsubmit: true,// 是否在提交是验证
@@ -203,6 +212,10 @@ $(function () {
             },
             lat:{
                 checklat: true
+            },
+            heatArea:{
+                required: true,
+                number:  true
             }
 
         },
@@ -256,6 +269,10 @@ $(function () {
             },
             townId:{
                 required: icon + "请选择乡镇"
+            },
+            heatArea: {
+                required: icon + "请填写供热面积",
+                number:  icon + "请输入正确的数字"
             }
         },
         submitHandler: function () {
@@ -396,7 +413,7 @@ $(function () {
 
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-sm-2  control-label">所属市：</label>
+                                <label class="col-sm-2  control-label"><span class="red">*</span>所属市：</label>
                                 <div class="col-sm-4">
                                     <select id="city" name="cityId" class="chosen-select form-control" >
                                         <option value="">请选择市</option>
@@ -406,7 +423,7 @@ $(function () {
                         </div>
                         <div class="form-group">
                             <div class="td">
-                                <label class="col-md-2  control-label"><span class="red">*</span>所属县：</label>
+                                <label class="col-md-2  control-label">所属县：</label>
                                 <div class="col-sm-4">
                                     <select id="county" name="countyId" class="chosen-select form-control" >
                                         <option value="">请选择县</option>
@@ -445,7 +462,7 @@ $(function () {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2  control-label">供热面积：</label>
+                            <label class="col-sm-2  control-label"><span class="red">*</span>供热面积：</label>
                             <div class="col-sm-4">
                                 <input name="heatArea" class="form-control" value="${object.heatArea}">
                             </div>
