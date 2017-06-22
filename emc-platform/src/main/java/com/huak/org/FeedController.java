@@ -97,9 +97,7 @@ public class FeedController {
             obj.setComId(comId);
             Map<String,Object> params = new HashMap<>();
             params.put("comId",comId);
-            params.put("orgId",pOrgId);
             modelMap.put("oncenet",oncenetService.selectNetAll(params));
-            modelMap.put("secondnet",secondnetService.selectLineAll(params));
             modelMap.put(Constants.OBJECT,obj);
         } catch (Exception e) {
             logger.error("跳转到热源编辑页出错！");

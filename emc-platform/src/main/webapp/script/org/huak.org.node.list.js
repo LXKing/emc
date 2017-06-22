@@ -197,7 +197,6 @@ function addStation(){
 }
 
 function treeNodeClick(e,treeId,treeNode){
-    top.orgId = treeNode.id;
     $("#orgId").val(treeNode.id);
     search();
 }
