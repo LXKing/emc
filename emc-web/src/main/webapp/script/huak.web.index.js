@@ -845,7 +845,6 @@ function initChart05(energy,device,manage,labor,other,total,tbl){
                         label : {show:false}
                     }
                 },
-
                 data:[
                     {value:labor, name:'人工费'},
                     {value:manage, name:'管理费'},
