@@ -15,11 +15,11 @@
     </resultMap>
     <resultMap id="CostResultMap" type="com.huak.org.model.vo.CostVo">
         <constructor>
-            <arg column="MANAGE" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="OTHER" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="DEVICE" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="LABOR" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="ENERGY" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MANAGE" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="OTHER" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="DEVICE" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="LABOR" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="ENERGY" javaType="java.lang.Double" jdbcType="DOUBLE" />
         </constructor>
     </resultMap>
     <!--标煤总量-->
@@ -309,7 +309,9 @@
 
     </select>
     <!--管网总成本-->
-    <select id="selectGetNetCost" parameterType="java.util.Map" resultMap="CostResultMap">
+    <select id="selectGetNetCost" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT (m.labor+m.device+m.manage+m.other) as gg from (
+
         select
         max(case when cc.TYPEID = '1' then cc.cost else 0 end) manage,
         max(case when cc.TYPEID = '2' then cc.cost else 0 end) other,
@@ -322,7 +324,8 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select * from v_emc_unit  where UNITTYPE='2' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
+        (select * from v_emc_unit where UNITTYPE='2' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id
+        from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
         t_emc_unit_net n
         where
         b.COMID = c.comid
@@ -336,7 +339,7 @@
         </if>
         GROUP BY
         b.TYPEID) cc
-
+        ) m
     </select>
 
     <!--热力站总能耗-->
@@ -485,7 +488,7 @@
 
         SELECT sum(b.fe) from (
         select sum(a.DOSAGE*a.COAL_COEF) as fe,a.typeid  from t_emc_final_data_hour a ,
-        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(39))) ) c,
+        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
 
         where

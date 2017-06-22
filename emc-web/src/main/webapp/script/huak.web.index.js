@@ -5,14 +5,22 @@
     //$("#header").load("header.html",function(){});
     //$("#footer").load("footer.html", function() {});
     //All 数据 从后台去取
-    var requestDate =$("#searchTools").serialize();
-    //alert(requestDate.toolOrgId);
+//       var requestDate =$("#searchTools").serialize();
+//       var requestDate1=requestDate.replace(/&/g,"\",\"");
+//       var endData=requestDate1.replace(/=/g,"\":\"");
+//       console.log(e);
+//       console.log(JSON.parse("{"+endData+"}"));
+//    var data=$('#searchTools').serialize();//获取值
+//    data= decodeURIComponent(data,true);//防止中文乱码
+//    var json=.formToJson(data);//转化为json
+//    alert(json);
     $.ajax({
         url : _web+"/energy/top/all",
         type : "GET",
-        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-25 00:00:00'},
+        data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
+            console.log(data.all);
             if(data.all.eTotal==null||data.all.eTotal==''){
                 $(".eTotal").html(0+" TCE");
             }else{
@@ -57,7 +65,7 @@
     $.ajax({
         url : _web+"/energy/top/feed",
         type : "GET",
-        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
             if(data.all.eTotal==null||data.all.eTotal==''){
@@ -85,7 +93,7 @@
     $.ajax({
         url : _web+"/energy/top/net",
         type : "GET",
-        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
             if(data.all.netLen==null||data.all.netLen==''){
@@ -108,7 +116,7 @@
     $.ajax({
         url : _web+"/energy/top/station",
         type : "GET",
-        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
             if(data.all.eTotal==null||data.all.eTotal==''){
@@ -136,7 +144,7 @@
     $.ajax({
         url : _web+"/energy/top/line",
         type : "GET",
-        data:{orgId:39,feetType:1,startTime:'2017-06-04 00:00:00',endTime:'2017-06-30 00:00:00'},
+        data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
             if(data.all.lineLen==null||data.all.lineLen==''){
@@ -155,7 +163,46 @@
 //            alert("Connection error");
 //        }
     });
+    //民户数据去取
+    $.ajax({
+        url : _web+"/energy/top/room",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            if(data.all.rTotal==null||data.all.rTotal==''){
+                $(".rTotal").html(0+" TCE");
+            }else{
+                $(".rTotal").html(data.all.rTotal+" TCE");
+            }
+            if(data.all.hgl==null||data.all.hgl==''){
+                $(".hgl").html(0+"%");
+            }else{
+                $(".hgl").html(data.all.hgl);
+            }
+            if(data.all.roomCost==null||data.all.roomCost==''){
+                $(".roomCost").html(0+" 万元");
+            }else{
+                $(".roomCost").html(data.all.roomCost+" 万元");
+            }
 
+        }
+//        error : function(request) {
+//            alert("Connection error");
+//        }
+    });
+
+
+////将从form中通过$('#form').serialize()获取的值转成json
+//    function  formToJson (data) {
+//            data=data.replace(/&/g,"\",\"");
+//            data=data.replace(/=/g,"\":\"");
+//            data="{\""+data+"\"}";
+//            return data;
+//        };
+
+    var myChartEnergy;
+    var myChartQualified;
     $.ajax({
         url : _web+"/static/json/h-1.json",
         type : "GET",
@@ -245,6 +292,7 @@ function chart01Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
+            console.info(result);
             chart01Show(result.object.data,result.object.yearDate,result.object.other);
         }
     });
@@ -252,6 +300,7 @@ function chart01Fun(){
 
 /*单耗趋势-折线图*/
 function chart01Show(datalist, datelist, other){
+    console.info(other)
     $("#chart01").empty();
     chart01 = echarts.init(document.getElementById('chart01'));
     var option = {
@@ -942,7 +991,6 @@ function chart07Fun(){
         dataType:"json",
         success:function(result) {
             if (result.flag) {
-                console.info(result);
                 /*仪表盘*/
                 var kedu1 =0; //蓝色的刻度
                 var pcd = 0; //偏差度
@@ -1056,7 +1104,6 @@ function chart07Fun(){
 
 function initChart(kedu1,mx,bm_total){
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
-    var max = returnFloat(mx/0.75);
     var option1 = {
         tooltip : {
             formatter: "{a} <br/>{c} {b}"
@@ -1134,6 +1181,7 @@ function returnFloat(value){
         return value;
     }
 }
+
 
 /*居民 合格率趋势*/
 function chart08Fun(){

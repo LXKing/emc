@@ -24,4 +24,25 @@ public interface TopAllDao {
 
     public CostVo selectFeedCostTotalByMap(Map<String, String> paramsMap);
 
+    public String selectGetNetLengh(Map<String, String> paramsMap);
+
+    public String selectGetNetCost(Map<String, String> paramsMap);
+
+    public String selectTopStationTotalByMap(Map<String, String> paramsMap);
+
+    public String selectTopStationCarbonTotalByMap(Map<String, String> paramsMap);
+
+    public CostVo selectStationCostTotalByMap(Map<String, String> paramsMap);
+
+    public String selectGetLineLengh(Map<String, String> paramsMap);
+
+    public CostVo selectGetLineCost(Map<String, String> paramsMap);
+
+    public String selectTopRoomTotalByMap(Map<String, String> paramsMap);
+
+    public String selectTopRoomNum1HglByMap(Map<String, String> paramsMap);
+
+    public String selectTopRoomTotalHglByMap(Map<String, String> paramsMap);
+
+    public CostVo selectTopRoomCostByMap(Map<String, String> paramsMap);
 }
