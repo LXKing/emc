@@ -6,7 +6,7 @@
  * Date: 2016/8/30<BR>
  */
 var bTable;
-
+var orgTree;
 $(function () {
     init();
     initable();
@@ -132,7 +132,7 @@ $(function () {
         var org = new Org({
             class:"org-tree"
         });
-        org.initTree();
+        orgTree =  org.initTree();
         var ts = $(top.document).find("[name='searchComp']").val();
         $("#comId").val(ts);
     }
@@ -178,21 +178,12 @@ $(function () {
 
 function params(params) {
 
-//    return {
-//        status:0,
-//        comId:ts,
-//        stationName:$("#stationName").val(),
-//        stationCode:$("#stationCode").val(),
-//        orgId:top.orgId,
-//        manageTypeId:$("#manageTypeId").val(),
-//        pageNumber: params.pageNumber,
-//        pageSize: params.pageSize
-//    };
+
     return $("#station-search-form").serialize();
 }
 
 function addStation(){
-    var treeNode = top.comm_tree.getSelectedNodes();
+    var treeNode = orgTree.getSelectedNodes();
     var ts = $(top.document).find("[name='searchComp']").val();
     if(treeNode.length<1){
         layer.msg("请先选择一个组织机构！");
