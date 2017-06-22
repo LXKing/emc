@@ -247,7 +247,7 @@ function addFeed(){
         layer.warn("只能选择一个上级组织！");
         return;
     }
-    openLayer(_platform+"/feed/add/"+treeNode[0].id+"/"+ts,"添加热力站","feed_add_Form",null,null);
+    openLayer(_platform+"/feed/add/"+treeNode[0].id+"/"+ts,"添加热源","feed_add_Form",null,null);
 }
 
 function resetFeedSearch(){
