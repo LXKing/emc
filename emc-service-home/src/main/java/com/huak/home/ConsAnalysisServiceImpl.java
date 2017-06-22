@@ -336,4 +336,13 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
 		result.put("cur", cur);
 		return result;
 	}
+	
+	/**
+	 * 导出能源流明细
+	 */
+	@Override
+	public List<Map<String, Object>> exportEnergyFlowDetail(
+			Map<String, String> params) {
+		return consAnalysisDao.exportEnergyFlowDetail(params);
+	}
 }

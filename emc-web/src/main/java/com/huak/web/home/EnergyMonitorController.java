@@ -473,4 +473,57 @@ public class EnergyMonitorController {
         }
         return jo.toJSONString();
 	}
+	
+	/**
+	 * 导出能源流明细
+	 */
+	@RequestMapping(value="exportEnergyFlowDetail",method=RequestMethod.GET)
+	public void exportEnergyFlowDetail(HttpServletResponse response,@RequestParam Map<String,String> params){
+		logger.info("导出能源流-能耗列表EXCEL");
+        try {
+        	
+        	JSONObject jo = new JSONObject();
+	        jo.put(Constants.FLAG, false);
+	        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+	        cellName.put("UNITNAME", "能源站");
+	        cellName.put("CURGROUP", "能耗总量本期");
+	        cellName.put("LASTGROUP", "能耗总量同期");
+	        cellName.put("GROUPS", "能耗总量同比");
+	        cellName.put("CURWATER", "水能耗量本期");
+	        cellName.put("LASTWATER", "水能耗量同期");
+	        cellName.put("WATERS", "水能耗量同比");
+	        cellName.put("CURELEC", "电能耗量本期");
+	        cellName.put("LASTELEC", "电能耗量同期");
+	        cellName.put("ELECS", "电能耗量同比");
+	        cellName.put("CURGAS", "气能耗量本期");
+	        cellName.put("LASTGAS", "气能耗量同期");
+	        cellName.put("GASS", "气能耗量同比");
+	        cellName.put("CURHOT", "热能耗量本期");
+	        cellName.put("LASTHOT", "热能耗量同期");
+	        cellName.put("HOTS", "热能耗量同比");
+	        cellName.put("CURCOAL", "煤能耗量本期");
+	        cellName.put("LASTCOAL", "煤能耗量同期");
+	        cellName.put("COALS", "煤能耗量同比");
+	        List<Map<String, Object>> cellValues = eaService.exportEnergyFlowDetail(params);
+            if(cellValues==null){
+            	jo.put(Constants.MSG, "导出失败");
+            }else if(cellValues.size()==0){
+            	jo.put(Constants.MSG, "没有数据要导出");
+            }else{
+            	jo.put(Constants.MSG, "导出失败");
+            	HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            	OutputStream out = response.getOutputStream();
+            	//输出Excel文件  
+            	String mimetype = "application/vnd.ms-excel";
+                response.setContentType(mimetype);
+                response.setCharacterEncoding("UTF-8");
+                String fileName = "能源流-能耗列表.xls";
+                response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+                wb.write(out);
+                out.flush();
+            }
+        } catch (Exception e) {
+            logger.error("导出能源流-能耗列表EXCEL异常" + e.getMessage());
+        }
+	}
 }

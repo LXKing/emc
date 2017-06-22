@@ -1171,15 +1171,21 @@ function renderEnergyFlowDetail(data){
         html+="<td>";
         html+="    <a href='javascript:;' class='need_a'>"+data[i].unitname+"</a>";
         html+="</td>";
-        html+="<td class='need_title'>"+data[i].groupE+"（同<span class='bluecolor'>"+(data[i].groupS)+"%"+(data[i].groupR=="1"?"↓":"↑")+"</span>）</td>";
-        html+="<td class='need_title'>"+data[i].waterE+"（同<span class='bluecolor'>"+(data[i].waterS)+"%"+(data[i].waterR=="1"?"↓":"↑")+"</span>）</td>";
-        html+="<td>"+data[i].elecE+"（同<span class='bluecolor'>"+(data[i].elecS)+"%"+(data[i].elecR=="1"?"↓":"↑")+"</span>）</td>";
-        html+="<td>"+data[i].gasE+"（同<span class='bluecolor'>"+(data[i].gasS)+"%"+(data[i].gasR=="1"?"↓":"↑")+"</span>）</td>";
-        html+="<td>"+data[i].hotE+"（同<span class='bluecolor'>"+(data[i].hotS)+"%"+(data[i].hotR=="1"?"↓":"↑")+"</span>）</td>";
-        html+="<td>"+data[i].coalE+"（同<span class='bluecolor'>"+(data[i].coalS)+"%"+(data[i].coalR=="1"?"↓":"↑")+"</span>）</td>";
+        html+="<td class='need_title'>"+data[i].groupE+"（同<span class='"+(data[i].groupS==0?"":(data[i].groupR==1?"bluecolor":"redcolor"))+"'>"+data[i].groupS+"%"+(data[i].groupS==0?"→":(data[i].groupR==1?"↓":"↑"))+"</span>）</td>";
+        html+="<td class='need_title'>"+data[i].waterE+"（同<span class='"+(data[i].waterS==0?"":(data[i].waterR==1?"bluecolor":"redcolor"))+"'>"+data[i].waterS+"%"+(data[i].waterS==0?"→":(data[i].waterR==1?"↓":"↑"))+"</span>）</td>";
+        html+="<td>"+data[i].elecE+"（同<span class='"+(data[i].elecS==0?"":(data[i].elecR==1?"bluecolor":"redcolor"))+"'>"+data[i].elecS+"%"+(data[i].elecS==0?"→":(data[i].elecR==1?"↓":"↑"))+"</span>）</td>";
+        html+="<td>"+data[i].gasE+"（同<span class='"+(data[i].gasS==0?"":(data[i].gasR==1?"bluecolor":"redcolor"))+"'>"+data[i].gasS+"%"+(data[i].gasS==0?"→":(data[i].gasR==1?"↓":"↑"))+"</span>）</td>";
+        html+="<td>"+data[i].hotE+"（同<span class='"+(data[i].hotS==0?"":(data[i].hotR==1?"bluecolor":"redcolor"))+"'>"+data[i].hotS+"%"+(data[i].hotS==0?"→":(data[i].hotR==1?"↓":"↑"))+"</span>）</td>";
+        html+="<td>"+data[i].coalE+"（同<span class='"+(data[i].coalS==0?"":(data[i].coalR==1?"bluecolor":"redcolor"))+"'>"+data[i].coalS+"%"+(data[i].coalS==0?"→":(data[i].coalR==1?"↓":"↑"))+"</span>）</td>";
         html+="</tr>";
 	}
 	$('#energyFlowDetail').html(html);
+}
+/*导出能源流明细*/
+function exportEnergyFlowDetail(){
+	var searchs = $("#searchTools").serialize();
+	var export_url = _web+"/energy/monitor/exportEnergyFlowDetail?"+searchs;
+	window.location.href = export_url;
 }
 /*能源流能耗占比分布图*/
 function chart2EnergyPie(data){

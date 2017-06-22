@@ -396,7 +396,7 @@
 				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
 			</when>
 			<otherwise>
-				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR)
+				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR))
 			</otherwise>
 		</choose>
 	  </sql>
@@ -440,351 +440,141 @@
 	  </sql>
     <!-- 查询单耗折线数据 -->
     <select id="groupDanHao" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT
-        	sum(C.dosage / C.area) groupEnergy,
-			sum(
-				CASE C.energyType
-				WHEN '4' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS hotEnergy,
-			sum(
-				CASE C.energyType
-				WHEN '2' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS electricEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '1' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS waterEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '3' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS gasEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '5' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS coalEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '6' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS oilEnergy,
-			C.yeardate,
-			(
-				CASE
-				WHEN DATE_FORMAT(C.yeardate, '%Y-%m-%d') 
-				BETWEEN 
-					<choose>
-						<when test="toolStartDate!=null and toolStartDate!=''">
-							#{toolStartDate,jdbcType=VARCHAR}
-						</when>
-						<otherwise>
-							SUBDATE(CURDATE(), INTERVAL 5 DAY)
-						</otherwise>
-					</choose>
-				AND 
-				<choose>
-					<when test="toolEndDate!=null and toolEndDate!=''">
-						#{toolEndDate,jdbcType=VARCHAR}
-					</when>
-					<otherwise>
-						CURDATE()
-					</otherwise>
-				</choose>
-				THEN '1' ELSE '0' END
-			) curyear
-		FROM
-			(
-				SELECT
-					sum(B.area) area,
-					sum(B.dosage) dosage,
-					SUM(B.total) total,
-					B.energytype,
-					B.yeardate
-				FROM
-					(
-						SELECT
-							vu.UNITID
-						FROM
-							(
-								t_emc_org
-								LEFT JOIN v_emc_unit vu ON ID = vu.ORGID
-								<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-							)
-						WHERE
-							FIND_IN_SET(
-								ID,
-								emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>)
-							)
-						AND P_ORG_ID != '0'
-					) A
-				LEFT JOIN (
-					SELECT
-						h.UNITID AS unitid,
-						avg(h.AREA) area,
-						sum(h.DOSAGE) AS dosage,
-						sum(h.DOSAGE * h.COAL_COEF) AS total,
-						et.type AS energytype,
-						DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
-					FROM
-						(
-							t_emc_final_data_hour h
-							LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
-						)
-					WHERE
-						1 = 1
-					<choose>
-						<when test="toolStartDate!=null and toolStartDate!=''">
-							AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
-						</when>
-						<otherwise>
-							AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
-						</otherwise>
-					</choose>
-					<choose>
-						<when test="toolEndDate!=null and toolEndDate!=''">
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
-						</when>
-						<otherwise>
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE())
-						</otherwise>
-					</choose>
-					<choose>
-						<when test="toolStartDate!=null and toolStartDate!=''">
-							OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR) 
-						</when>
-						<otherwise>
-							OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
-						</otherwise>
-					</choose>
-					<choose>
-						<when test="toolEndDate!=null and toolEndDate!=''">
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
-						</when>
-						<otherwise>
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR)
-						</otherwise>
-					</choose>
-					GROUP BY
-						unitid,
-						energytype,
-						yeardate
-				) B ON A.UNITID = B.unitid
-				GROUP BY
-					B.energytype,
-					B.yeardate
-			) C
-		WHERE
-			C.yeardate IS NOT NULL
-		GROUP BY
-			C.yeardate
-		ORDER BY
-			C.yearDate ASC
+        SELECT sum(C.dosage / C.area) groupEnergy, sum( CASE C.energyType WHEN '4' THEN C.dosage / C.area ELSE 0 END) AS hotEnergy, 
+        	   sum( CASE C.energyType WHEN '2' THEN C.dosage / C.area ELSE 0 END ) AS electricEnergy, 
+        	   SUM( CASE C.energyType WHEN '1' THEN C.dosage / C.area ELSE 0 END ) AS waterEnergy, 
+        	   SUM( CASE C.energyType WHEN '3' THEN C.dosage / C.area ELSE 0 END ) AS gasEnergy, 
+        	   SUM( CASE C.energyType WHEN '5' THEN C.dosage / C.area ELSE 0 END ) AS coalEnergy, 
+        	   SUM( CASE C.energyType WHEN '6' THEN C.dosage / C.area ELSE 0 END ) AS oilEnergy, C.yeardate,
+        	   ( CASE WHEN DATE_FORMAT(C.yeardate, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) curyear 
+        FROM ( 
+        	SELECT sum(B.area) area, sum(B.dosage) dosage, SUM(B.total) total, B.energytype, B.yeardate 
+        	FROM ( 
+        		SELECT vu.UNITID 
+        		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+        		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
+        		LEFT JOIN ( 
+        			SELECT h.UNITID AS unitid, avg(h.AREA) area, sum(h.DOSAGE) AS dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
+        			DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate 
+        			FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+        			WHERE 1 = 1 <include refid="cur_last_time" /> GROUP BY unitid, energytype, yeardate 
+        		) B ON A.UNITID = B.unitid 
+        		GROUP BY B.energytype, B.yeardate 
+        	) C 
+        WHERE C.yeardate IS NOT NULL 
+        GROUP BY C.yeardate 
+        ORDER BY C.yearDate ASC
     </select>
     
     <!-- 查询单耗同比统计数据 -->
     <select id="groupDanHaoTotal" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT
-			sum(C.total) / avg(C.area)  groupEnergy,
-			sum(
-				CASE C.energyType
-				WHEN '4' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS hotEnergy,
-			sum(
-				CASE C.energyType
-				WHEN '2' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS electricEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '1' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS waterEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '3' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS gasEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '5' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS coalEnergy,
-			SUM(
-				CASE C.energyType
-				WHEN '6' THEN
-					C.dosage / C.area
-				ELSE
-					0
-				END
-			) AS oilEnergy,
-			C.curyear
-		FROM
-			(
-				SELECT
-					sum(B.area) area,
-					sum(B.dosage) dosage,
-					SUM(B.total) total,
-					B.energytype,
-					B.curyear
-				FROM
-					(
-						SELECT
-							vu.UNITID
-						FROM
-							(
-								t_emc_org
-								LEFT JOIN v_emc_unit vu ON ID = vu.ORGID
-								<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-							)
-						WHERE
-							FIND_IN_SET(
-								ID,
-								emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>)
-							)
-						AND P_ORG_ID != '0'
-					) A
-				LEFT JOIN (
-					SELECT
-						h.UNITID AS unitid,
-						avg(h.AREA) area,
-						sum(h.DOSAGE) AS dosage,
-						sum(h.DOSAGE * h.COAL_COEF) AS total,
-						et.type AS energytype,
-						(
-							CASE
-							WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') 
-							BETWEEN 
-								<choose>
-									<when test="toolStartDate!=null and toolStartDate!=''">
-										#{toolStartDate,jdbcType=VARCHAR}
-									</when>
-									<otherwise>
-										SUBDATE(CURDATE(), INTERVAL 5 DAY)
-									</otherwise>
-								</choose>
-							AND 
-							<choose>
-								<when test="toolEndDate!=null and toolEndDate!=''">
-									#{toolEndDate,jdbcType=VARCHAR}
-								</when>
-								<otherwise>
-									CURDATE()
-								</otherwise>
-							</choose>
-							THEN '1' ELSE '0' END
-						) curyear
-					FROM
-						(
-							t_emc_final_data_hour h
-							LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
-						)
-					WHERE
-						1 = 1
-					<choose>
-						<when test="toolStartDate!=null and toolStartDate!=''">
-							AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
-						</when>
-						<otherwise>
-							AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
-						</otherwise>
-					</choose>
-					<choose>
-						<when test="toolEndDate!=null and toolEndDate!=''">
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
-						</when>
-						<otherwise>
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE())
-						</otherwise>
-					</choose>
-					<choose>
-						<when test="toolStartDate!=null and toolStartDate!=''">
-							OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR) 
-						</when>
-						<otherwise>
-							OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
-						</otherwise>
-					</choose>
-					<choose>
-						<when test="toolEndDate!=null and toolEndDate!=''">
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
-						</when>
-						<otherwise>
-							AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR)
-						</otherwise>
-					</choose>
-					GROUP BY
-						unitid,
-						energytype,
-						curyear
-				) B ON A.UNITID = B.unitid
-				GROUP BY
-					B.energytype,
-					B.curyear
-			) C
-		WHERE
-			C.curyear IS NOT NULL
-		GROUP BY C.curyear
+        SELECT sum(C.total) / avg(C.area) groupEnergy, sum( CASE C.energyType WHEN '4' THEN C.dosage / C.area ELSE 0 END) AS hotEnergy, 
+        	   sum( CASE C.energyType WHEN '2' THEN C.dosage / C.area ELSE 0 END ) AS electricEnergy, 
+        	   SUM( CASE C.energyType WHEN '1' THEN C.dosage / C.area ELSE 0 END ) AS waterEnergy, 
+        	   SUM( CASE C.energyType WHEN '3' THEN C.dosage / C.area ELSE 0 END ) AS gasEnergy, 
+        	   SUM( CASE C.energyType WHEN '5' THEN C.dosage / C.area ELSE 0 END ) AS coalEnergy, 
+        	   SUM( CASE C.energyType WHEN '6' THEN C.dosage / C.area ELSE 0 END ) AS oilEnergy, C.curyear 
+        FROM( 
+        	   SELECT sum(B.area) area, sum(B.dosage) dosage, SUM(B.total) total, B.energytype, B.curyear 
+        	   FROM ( 
+        	   		SELECT vu.UNITID 
+        	   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+        	   		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
+        	   		LEFT JOIN ( 
+        	   			SELECT h.UNITID AS unitid, avg(h.AREA) area, sum(h.DOSAGE) AS dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
+        	   			( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) curyear 
+        	   			FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+        	   			WHERE 1 = 1 <include refid="cur_last_time" /> 
+        	   			GROUP BY unitid, energytype, curyear 
+        	   		) B ON A.UNITID = B.unitid 
+        	   		GROUP BY B.energytype, B.curyear 
+        	   	) C 
+        WHERE C.curyear IS NOT NULL 
+        GROUP BY C.curyear
     </select>
     <!-- 查询能源流明细 -->
   <select id="energyFlowTable" resultType="java.util.Map" parameterType="java.util.Map">
 	  SELECT
 		D.unitname,
-		D.curGroupEnergy groupE,
+		round(D.curGroupEnergy,2) groupE,
 		round(if(D.lastGroupEnergy=0,0,(D.curGroupEnergy-D.lastGroupEnergy)/D.lastGroupEnergy*100),2) groupS,
 		if(D.lastGroupEnergy>D.curGroupEnergy,'1','0') groupR,
-		D.curWaterEnergy waterE,
+		round(D.curWaterEnergy,2) waterE,
 		round(if(D.lastWaterEnergy=0,0,(D.curWaterEnergy-D.lastWaterEnergy)/D.lastWaterEnergy*100),2) waterS,
 		if(D.lastWaterEnergy>D.curWaterEnergy,'1','0') waterR,
-		D.curElectricEnergy elecE,
+		round(D.curElectricEnergy,2) elecE,
 		round(if(D.lastElectricEnergy=0,0,(D.curElectricEnergy-D.lastElectricEnergy)/D.lastElectricEnergy*100),2) elecS,
 		if(D.lastElectricEnergy>D.curElectricEnergy,'1','0') elecR,
-		D.curGasEnergy gasE,
+		round(D.curGasEnergy,2) gasE,
 		round(if(D.lastGasEnergy=0,0,(D.curGasEnergy-D.lastGasEnergy)/D.lastGasEnergy*100),2) gasS,
 		if(D.lastGasEnergy>D.curGasEnergy,'1','0') gasR,
-		D.curGroupEnergy hotE,
+		round(D.curGroupEnergy,2) hotE,
 		round(if(D.lastGroupEnergy=0,0,(D.curGroupEnergy-D.lastGroupEnergy)/D.lastGroupEnergy*100),2) hotS,
 		if(D.lastGroupEnergy>D.curGroupEnergy,'1','0') hotR,
-		D.curCoalEnergy coalE,
+		round(D.curCoalEnergy,2) coalE,
 		round(if(D.lastCoalEnergy=0,0,(D.curCoalEnergy-D.lastCoalEnergy)/D.lastCoalEnergy*100),2) coalS,
 		if(D.lastCoalEnergy>D.curCoalEnergy,'1','0') coalR
+	FROM
+		(
+	  	SELECT C.unitname, SUM( CASE WHEN C.season='0' THEN C.total/C.area ELSE 0 END) AS lastGroupEnergy, 
+		  	SUM( CASE WHEN C.season='1' THEN C.total/C.area ELSE 0 END ) AS curGroupEnergy, 
+		  	SUM( CASE WHEN C.energyType='1' and C.season='0' THEN C.dosage/C.area ELSE 0 END ) AS lastWaterEnergy, 
+		  	SUM( CASE WHEN C.energyType='1' and C.season='1' THEN C.dosage/C.area ELSE 0 END ) AS curWaterEnergy, 
+		  	SUM( CASE WHEN C.energyType='2' and C.season='0' THEN C.dosage/C.area ELSE 0 END ) AS lastElectricEnergy, 
+		  	SUM( CASE WHEN C.energyType='2' and C.season='1' THEN C.dosage/C.area ELSE 0 END ) AS curElectricEnergy, 
+		  	SUM( CASE WHEN C.energyType='3' and C.season='0' THEN C.dosage/C.area ELSE 0 END ) AS lastGasEnergy, 
+		  	SUM( CASE WHEN C.energyType='3' and C.season='1' THEN C.dosage/C.area ELSE 0 END ) AS curGasEnergy, 
+		  	SUM( CASE WHEN C.energyType='4' and C.season='0' THEN C.dosage/C.area ELSE 0 END ) AS lastHotEnergy, 
+		  	SUM( CASE WHEN C.energyType='4' and C.season='1' THEN C.dosage/C.area ELSE 0 END ) AS curHotEnergy, 
+		  	SUM( CASE WHEN C.energyType='5' and C.season='0' THEN C.dosage/C.area ELSE 0 END ) AS lastCoalEnergy, 
+		  	SUM( CASE WHEN C.energyType='5' and C.season='1' THEN C.dosage/C.area ELSE 0 END ) AS curCoalEnergy 
+	  	FROM( 
+	  		SELECT B.unitid, 
+	  			( CASE A.UNITTYPE WHEN '1' THEN ( SELECT FEED_NAME FROM t_emc_unit_feed WHERE id = A.UNITID ) 
+	  			WHEN '2' THEN ( SELECT NET_NAME FROM t_emc_unit_net WHERE id = A.UNITID ) 
+	  			WHEN '3' THEN ( SELECT STATION_NAME FROM t_emc_unit_station WHERE id = A.UNITID ) 
+	  			WHEN '4' THEN ( SELECT LINE_NAME FROM t_emc_unit_line WHERE id = A.UNITID ) 
+	  			WHEN '5' THEN ( SELECT ROOM_NAME FROM t_emc_unit_room WHERE id = A.UNITID ) END ) unitname, 
+	  			sum(B.area) area,SUM(B.dosage) dosage, SUM(B.total) total, B.energytype, B.season 
+	  		FROM ( 
+	  			SELECT vu.UNITID, vu.UNITTYPE FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
+				<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+	  			WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
+	  				  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
+	  			LEFT JOIN ( 
+		  			SELECT h.UNITID AS unitid,avg(h.AREA) area, SUM(h.DOSAGE) AS dosage, SUM(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
+		  				( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
+		  			FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+		  			WHERE 1 = 1 <include refid="cur_last_time" />
+		  			GROUP BY unitid, energytype 
+		  		) B 
+	  			ON A.UNITID = B.unitid WHERE B.dosage IS NOT NULL 
+	  		GROUP BY B.unitid, B.energytype, B.season ) C 
+	  	GROUP BY C.unitid
+	 ) D
+  </select>
+  <!-- 导出能源流 -->
+  <select id="exportEnergyFlowDetail" resultType="java.util.Map" parameterType="java.util.Map">
+	  SELECT
+		D.unitname UNITNAME,
+		round(D.lastGroupEnergy,2) LASTGROUP,
+		round(D.curGroupEnergy,2) CURGROUP,
+		concat(cast(round(if(D.lastGroupEnergy=0,0,(D.curGroupEnergy-D.lastGroupEnergy)/D.lastGroupEnergy*100),2) as CHAR(32)),'%') GROUPS,
+		round(D.lastWaterEnergy,2) LASTWATER,
+		round(D.curWaterEnergy,2) CURWATER,
+		concat(cast(round(if(D.lastWaterEnergy=0,0,(D.curWaterEnergy-D.lastWaterEnergy)/D.lastWaterEnergy*100),2) as CHAR(32)),'%') WATERS,
+		round(D.lastElectricEnergy,2) LASTELEC,
+		round(D.curElectricEnergy,2) CURELEC,
+		concat(cast(round(if(D.lastElectricEnergy=0,0,(D.curElectricEnergy-D.lastElectricEnergy)/D.lastElectricEnergy*100),2) as CHAR(32)),'%') ELECS,
+		round(D.lastGasEnergy,2) LASTGAS,
+		round(D.curGasEnergy,2) CURGAS,
+		concat(cast(round(if(D.lastGasEnergy=0,0,(D.curGasEnergy-D.lastGasEnergy)/D.lastGasEnergy*100),2) as CHAR(32)),'%') GASS,
+		round(D.lastGroupEnergy,2) LASTHOT,
+		round(D.curGroupEnergy,2) CURHOT,
+		concat(cast(round(if(D.lastGroupEnergy=0,0,(D.curGroupEnergy-D.lastGroupEnergy)/D.lastGroupEnergy*100),2) as CHAR(32)),'%') HOTS,
+		round(D.lastCoalEnergy,2) LASTCOAL,
+		round(D.curCoalEnergy,2) CURCOAL,
+		concat(cast(round(if(D.lastCoalEnergy=0,0,(D.curCoalEnergy-D.lastCoalEnergy)/D.lastCoalEnergy*100),2) as CHAR(32)),'%') COALS
 	FROM
 		(
 	  	SELECT C.unitname, SUM( CASE WHEN C.season='0' THEN C.total/C.area ELSE 0 END) AS lastGroupEnergy, 

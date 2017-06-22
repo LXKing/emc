@@ -324,4 +324,13 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		return result;
 	}
 
+	/**
+	 * 导出能源流明细
+	 */
+	@Override
+	public List<Map<String, Object>> exportEnergyFlowDetail(
+			Map<String, String> params) {
+		return eaDao.exportEnergyFlowDetail(params);
+	}
+
 }

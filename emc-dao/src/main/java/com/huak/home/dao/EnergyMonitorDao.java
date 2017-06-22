@@ -47,4 +47,11 @@ public interface EnergyMonitorDao {
 	 */
 	List<Map<String, Object>> energyFlowBar(Map<String, String> params);
 
+	/**
+	 * 导出能源流明细
+	 * @param params
+	 * @return
+	 */
+	List<Map<String, Object>> exportEnergyFlowDetail(Map<String, String> params);
+
 }
