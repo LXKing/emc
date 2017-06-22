@@ -257,9 +257,9 @@ $(function () {
 	
 	//登录账号校验
 	$.validator.addMethod("isLogin", function(value, element){
-	    var tel = /^[\w\-\@\.]+$/;
+	    var tel = /^([a-zA-Z0-9]{1,20}$)/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的登录账号,只能是英文字母");
+	}, icon + "请输入正确的登录账号,只能是英文字母和数字");
 	
 	//密码校验,支持所有数字、英文大小写、英文键盘所有特殊符号
 	$.validator.addMethod("isPassword", function(value, element){
