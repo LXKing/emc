@@ -13,7 +13,7 @@
 	                <div class="form-group" style="width:50%;float: left;margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>联系电话：</label>
 	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <input name="mobile" class="form-control" type="text" maxlength="16" placeholder="请输入用户联系电话">
+	                        <input name="mobile" class="form-control" type="text" maxlength="12" placeholder="请输入用户联系电话">
 	                    </div>
 	                 </div>
                  </div>
@@ -100,8 +100,8 @@ $.validator.setDefaults({
 
 //点击组织机构树
 function treeNodeClick(){
-    var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-    var nodes = treeObj.getSelectedNodes();
+//     var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+    var nodes = userAddTree.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);
 	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
@@ -122,13 +122,13 @@ function treeNodeClick(){
 		}
 	},'json');
 }
-
+var userAddTree;
 $(function () {
 	//初始化组织机构树
 	userAddOrg = new Org({
         class:"user-add-org-tree"
     });
-	userAddOrg.initTree();
+	userAddTree = userAddOrg.initTree();
 
 	
 	//获取表单元素
@@ -243,8 +243,16 @@ $(function () {
 	
 	//手机号码校验
 	$.validator.addMethod("isPhone", function(value, element){
-	    var tel = /^(0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8})|(400|800)([0-9\\-]{7,10})|(([0-9]{4}|[0-9]{3})(-| )?)?([0-9]{7,8})((-| |转)*([0-9]{1,4}))?$/;
-	    return this.optional(element) || (tel.test(value));
+	    var shouji =/^1[34578]\d{9}$/;
+	    var zuoji = /^((\d{3,4}\-)|)\d{7,8}(|([-\u8f6c]{1}\d{1,5}))$/;
+	    debugger;
+	    var result;
+	    if(value.length==11&&value.indexOf('-')==-1&&value.indexOf('0')!=0){
+	    	result = shouji.test(value);
+	    }else{
+	    	result = zuoji.test(value);
+	    }
+	    return this.optional(element) || result;
 	}, icon + "请输入正确的手机号码或座机号");
 	
 	//登录账号校验
@@ -257,7 +265,7 @@ $(function () {
 	$.validator.addMethod("isPassword", function(value, element){
 	    var tel = /^[\w\-\@\.\\\!\#\$\%\^\&\*\(\)\+\=\`\~\,\/\<\>\?\;\:\'\"\[\]\{\}\|]+$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的密码");
+	}, icon + "请输入正确的密码,支持所有数字、英文大小写、英文键盘所有特殊符号");
 	
 	//电子邮箱校验
 	$.validator.addMethod("isEmail", function(value, element){

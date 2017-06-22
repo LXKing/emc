@@ -98,6 +98,7 @@
 		$('#banName').val('');
 		$('#communityId').val('');
 		$('#orgId').val('');
+		$('input[name="orgName"]').val('');
 	}
 </script>
 </body>

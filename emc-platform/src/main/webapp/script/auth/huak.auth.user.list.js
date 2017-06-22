@@ -1,8 +1,9 @@
+var userSearTree;
 $(function () {
 	userSearOrg = new Org({
         class:"org-tree"
     });
-	userSearOrg.initTree();
+	userSearTree = userSearOrg.initTree();
 	
 	initTreeBox();
 	//用户列表
@@ -138,11 +139,10 @@ var treeNodeClick = function(e,treeId,treeNode){
 };
 //初始化treebox
 function initTreeBox(){
-	if($.fn.zTree.getZTreeObj("temp_org_tree")==null){
+	if(userSearTree==null){
 		setTimeout('initTreeBox()',50)
 	}else{
-		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-		var box = $('input[name="orgName"]').treeBox({setting:treeObj.setting,zNodes:treeObj.getNodes()});
+		var box = $('input[name="orgName"]').treeBox({setting:userSearTree.setting,zNodes:userSearTree.getNodes()});
 	}
 }
 /**

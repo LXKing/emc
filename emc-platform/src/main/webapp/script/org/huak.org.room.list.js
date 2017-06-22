@@ -1,8 +1,9 @@
+var roomSearTree;
 $(function () {
 	roomSearOrg = new Org({
         class:"org-tree"
     });
-	roomSearOrg.initTree();
+	roomSearTree = roomSearOrg.initTree();
 	initTreeBox();
 	parent.$("[name='searchComp']").change(function(){
 		roomSearOrg.initTree();
@@ -140,11 +141,11 @@ var treeNodeClick = function(e,treeId,treeNode){
 
 //初始化treebox
 function initTreeBox(){
-	if($.fn.zTree.getZTreeObj("temp_org_tree")==null){
+	if(roomSearTree==null){
 		setTimeout('initTreeBox()',50)
 	}else{
-		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-		var box = $('input[name="orgName"]').treeBox({setting:treeObj.setting,zNodes:treeObj.getNodes()});
+//		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+		var box = $('input[name="orgName"]').treeBox({setting:roomSearTree.setting,zNodes:roomSearTree.getNodes()});
 	}
 }
 

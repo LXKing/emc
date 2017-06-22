@@ -90,6 +90,7 @@
 	function resetSearch(){
 		$('#communityName').val('');
 		$('#orgId').val('');
+		$('input[name="orgName"]').val('');
 	}
 </script>
 </body>

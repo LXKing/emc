@@ -1,8 +1,9 @@
+var banSearTree;
 $(function () {
 	banSearOrg = new Org({
         class:"org-tree"
     });
-	banSearOrg.initTree();
+	banSearTree = banSearOrg.initTree();
 	initTreeBox();
 	parent.$("[name='searchComp']").change(function(){
 		banSearOrg.initTree();
@@ -135,11 +136,11 @@ var treeNodeClick = function(e,treeId,treeNode){
 
 //初始化treebox
 function initTreeBox(){
-	if($.fn.zTree.getZTreeObj("temp_org_tree")==null){
+	if(banSearTree==null){
 		setTimeout('initTreeBox()',50)
 	}else{
-		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-		var box = $('input[name="orgName"]').treeBox({setting:treeObj.setting,zNodes:treeObj.getNodes()});
+//		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+		var box = $('input[name="orgName"]').treeBox({setting:banSearTree.setting,zNodes:banSearTree.getNodes()});
 	}
 }
 
