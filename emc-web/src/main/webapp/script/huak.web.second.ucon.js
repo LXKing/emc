@@ -1,6 +1,84 @@
 
 
 $(function(){
+
+//加载能源流明细
+    $.ajax({
+        url : _web+"/energy/secondary/detail",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            EnergyDetailList(data);
+        }
+    });
+    function EnergyDetailList(data){
+
+        var html = "";
+        $.each(data.list,function(idx,item){
+            html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
+            html +='<td><a href="javascript:;" class="need_a">';
+            if(item.id=="1"){
+                html+="供热源"+'</a></td>';
+            }else if(item.id=="2"){
+                html+="一次网"+'</a></td>';
+            }else if(item.id=="3"){
+                html+="换热站"+'</a></td>';
+            }else if(item.id=="4"){
+                html+="二次线"+'</a></td>';
+            }else if(item.id=="5"){
+                html+="民户"+'</a></td>';
+            }
+            html +=getHtmlTd(item.totalBq,item.totalTq);
+            html +=getHtmlTd(item.waterBq,item.waterTq);
+            html +=getHtmlTd(item.electricBq,item.electricTq);
+            html +=getHtmlTd(item.gasBq,item.gasTq);
+            html +=getHtmlTd(item.heatBq,item.heatTq);
+            html +=getHtmlTd(item.coalBq,item.coalTq);
+            html +=getHtmlTd(item.oilBq,item.oilTq);
+            html +='</tr>';
+        });
+
+        $("#EnergyDetailTbody").html(html);
+    }
+
+    function getHtmlTd(bq,an){
+        return '<td class="need_title">'+bq+'（同<span class="'+(an == 0?"":(an > 0?"redcolor":"bluecolor"))+'">'+toDecimal(an)+'%'+(an == 0?"→":(an > 0?"↑":"↓"))+'</span>）</td>';
+    }
+
+
+    //能源流能耗占比分布图
+    $.ajax({
+        url : _web+"/energy/secondary/proportion",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            console.log(data);
+            chart05Fun(data);
+        }
+    });
+    //能源流趋势分布图
+    $.ajax({
+        url : _web+"/energy/secondary/trend",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            console.log(data);
+            chart06Fun(data);
+        }
+    });
+    //能源流趋势分布图
+    $.ajax({
+        url : _web+"/energy/secondary/an",
+        type : "POST",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            chart07Fun(data);
+        }
+    });
     //加载分公司单耗
     $.ajax({
         url : _web+"/cons/analysis/fgs/list",
@@ -159,14 +237,22 @@ $(function(){
                 $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "↑)");
                 $("#coalchangeRate").addClass("energy-remind");
             };
+
+
             groupEnergyChartFun(data.data.groupEnergy.data, data.data.groupEnergy.yearDate);
             waterEnergyChartFun(data.data.waterEnergy.data, data.data.waterEnergy.yearDate);
             electricEnergyChartFun(data.data.electricEnergy.data, data.data.electricEnergy.yearDate);
             gasEnergyChartFun(data.data.gasEnergy.data, data.data.gasEnergy.yearDate);
             hotEnergyChartFun(data.data.hotEnergy.data, data.data.hotEnergy.yearDate);
             coalEnergyChartFun(data.data.coalEnergy.data, data.data.coalEnergy.yearDate);
+
+
         }
     });
+
+    //chart05Fun();
+    //chart06Fun();
+    // chart07Fun();
 })
 function fgsEnergyList(data){
 
@@ -189,8 +275,6 @@ function fgsEnergyList(data){
 function getHtmlTd(bq,an){
     return '<td class="need_title">'+bq+'（同<span class="'+(an == 0?"":(an > 0?"redcolor":"bluecolor"))+'">'+toDecimal(an)+'%'+(an == 0?"→":(an > 0?"↑":"↓"))+'</span>）</td>';
 }
-
-
 /*集团总单耗-折线图*/
 function groupEnergyChartFun(datalist, datelist){
     $("#groupEnergyChart").empty();
@@ -1102,10 +1186,6 @@ function chart04Fun(data){
 
     barchart02.setOption(option);
 }
-
-
-
-/*能源流单耗占比分布图*/
 
 /*能源流单耗占比分布图------*/
 function chart05Fun(data){
