@@ -212,7 +212,7 @@
         <div class="index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
                 <div class="pull-left energyTit analy_tit_as"><i></i>能源流明细<small class="font-sm">Assessment indicators</small></div>
-                <a onclick="exportEnergyFlowDetail()" class="pull-right exportlist mr15">导出列表</a>
+                <a class="pull-right exportlist mr15">导出列表</a>
             </div>
             <div class="AssessmentBox rconttable col-lg-12 no-padding">
                 <table class="table table-striped table-bordered table-hover col-lg-12 no-padding">
@@ -227,7 +227,7 @@
                         <td>煤能耗总量（GJ）</td>
                     </tr>
                     </thead>
-                    <tbody id="energyFlowDetail">
+                    <tbody>
                     <tr class="">
                         <td>
                             <a href="javascript:;" class="need_a">集团</a>

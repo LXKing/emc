@@ -167,61 +167,6 @@ $(function(){
             coalEnergyChartFun(data.data.coalEnergy.data, data.data.coalEnergy.yearDate);
         }
     });
-    /**
-     * 能源流相关开始
-     */
-    //能源流明细
-    $.ajax({
-        url : _web+"/cons/analysis/energyFlowTable",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
-        success : function(data) {
-        	renderEnergyFlowDetail(data.data);
-        }
-    });
-    //能源流能耗占比分布图
-    $.ajax({
-        url : _web+"/cons/analysis/energyFlowPie",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
-        success : function(data) {
-        	chart2EnergyPie(data.data);
-        }
-    });
-    //能源流能耗趋势对比图
-    $.ajax({
-        url : _web+"/cons/analysis/energyFlowLine",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
-        success : function(data) {
-        	chart2EnergyLine(data.data);
-        }
-    });
-    //能源流能耗同比
-    $.ajax({
-        url : _web+"/cons/analysis/energyFlowBar",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
-        success : function(data) {
-        	chart2EnergyBar(data.data);
-        }
-    });
 })
 function fgsEnergyList(data){
 
@@ -1160,33 +1105,10 @@ function chart04Fun(data){
 
 
 
-/*能源流能耗明细*/
-function renderEnergyFlowDetail(data){
-	$('#energyFlowDetail').html('');
-	var html = '';
-	for(var i=0;i<data.length;i++){
-		html+="<tr class=\""+(i%2==0?"":"bgc")+"\">";
-        html+="<td>";
-        html+="    <a href='javascript:;' class='need_a'>"+data[i].unitname+"</a>";
-        html+="</td>";
-        html+="<td class='need_title'>"+data[i].groupE+"（同<span class='"+(data[i].groupS==0?"":(data[i].groupR==1?"bluecolor":"redcolor"))+"'>"+data[i].groupS+"%"+(data[i].groupS==0?"→":(data[i].groupR==1?"↓":"↑"))+"</span>）</td>";
-        html+="<td class='need_title'>"+data[i].waterE+"（同<span class='"+(data[i].waterS==0?"":(data[i].waterR==1?"bluecolor":"redcolor"))+"'>"+data[i].waterS+"%"+(data[i].waterS==0?"→":(data[i].waterR==1?"↓":"↑"))+"</span>）</td>";
-        html+="<td>"+data[i].elecE+"（同<span class='"+(data[i].elecS==0?"":(data[i].elecR==1?"bluecolor":"redcolor"))+"'>"+data[i].elecS+"%"+(data[i].elecS==0?"→":(data[i].elecR==1?"↓":"↑"))+"</span>）</td>";
-        html+="<td>"+data[i].gasE+"（同<span class='"+(data[i].gasS==0?"":(data[i].gasR==1?"bluecolor":"redcolor"))+"'>"+data[i].gasS+"%"+(data[i].gasS==0?"→":(data[i].gasR==1?"↓":"↑"))+"</span>）</td>";
-        html+="<td>"+data[i].hotE+"（同<span class='"+(data[i].hotS==0?"":(data[i].hotR==1?"bluecolor":"redcolor"))+"'>"+data[i].hotS+"%"+(data[i].hotS==0?"→":(data[i].hotR==1?"↓":"↑"))+"</span>）</td>";
-        html+="<td>"+data[i].coalE+"（同<span class='"+(data[i].coalS==0?"":(data[i].coalR==1?"bluecolor":"redcolor"))+"'>"+data[i].coalS+"%"+(data[i].coalS==0?"→":(data[i].coalR==1?"↓":"↑"))+"</span>）</td>";
-        html+="</tr>";
-	}
-	$('#energyFlowDetail').html(html);
-}
-/*导出能源流明细*/
-function exportEnergyFlowDetail(){
-	var searchs = $("#searchTools").serialize();
-	var export_url = _web+"/cons/analysis/exportEnergyFlowDetail?"+searchs;
-	window.location.href = export_url;
-}
 /*能源流单耗占比分布图*/
-function chart2EnergyPie(data){
+
+/*能源流单耗占比分布图------*/
+function chart05Fun(data){
     var piechart_as = echarts.init(document.getElementById('piechart_as'));
     var option = {
 
@@ -1247,8 +1169,9 @@ function chart2EnergyPie(data){
                         label : {show:true}
                     }
                 },
-                color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
-                data:data
+                color:color,
+                data:data.list
+
             }
         ]
     };
@@ -1257,7 +1180,7 @@ function chart2EnergyPie(data){
 
 
 /*能源流单耗趋势对比图*/
-function chart2EnergyLine(data){
+function chart06Fun(data){
     var linechart_as = echarts.init(document.getElementById('linechart_as'));
     var option = {
 
@@ -1279,7 +1202,7 @@ function chart2EnergyLine(data){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:['供热源','一次网','换热站','二次线','民户']
+            data:data.legends
         },
         color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
         xAxis: {
@@ -1305,7 +1228,7 @@ function chart2EnergyLine(data){
             splitArea: {
                 show: true
             },
-            data: data.yearDateList
+            data: data.xaxis
 
         },
         yAxis: {
@@ -1333,44 +1256,7 @@ function chart2EnergyLine(data){
             }
         },
 
-        series: [
-            {
-                name:'一次网',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type2
-            },
-            {
-                name:'换热站',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type3
-            },
-            {
-                name:'二次线',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type4
-            },
-
-            {
-                name:'民户',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type5
-            },
-            {
-                name:'供热源',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type1
-            }
-        ]
+        series: data.list
     };
 
     linechart_as.setOption(option);
@@ -1378,7 +1264,7 @@ function chart2EnergyLine(data){
 
 
 /*能源流单耗同比*/
-function chart2EnergyBar(data){
+function chart07Fun(data){
     var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
     var option = {
         title:{
@@ -1439,7 +1325,7 @@ function chart2EnergyBar(data){
                     fontFamily: 'arial'
                 }
             },
-            data:['供热源','一次网','换热站','二次线','民户']
+            data:data.xaxis
 
         },
         yAxis: {
@@ -1475,13 +1361,13 @@ function chart2EnergyBar(data){
                 name:"今年",
                 type:'bar',
                 barWidth: '20',
-                data:data.cur
+                data:data.bq
             },
             {
                 name:"去年",
                 type:'bar',
                 barWidth: '20',
-                data:data.last
+                data:data.tq
             }
         ]
     }

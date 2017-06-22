@@ -21,12 +21,6 @@
     from t_emc_sys_administrative
     where ADM_CODE = #{admCode,jdbcType=VARCHAR}
   </select>
-  <select id="selectByMap" parameterType="java.util.Map" resultType="java.util.Map">
-  	select ADM_CODE ID,ADM_NAME NAME from t_emc_sys_administrative where 1=1
-  	<if test="code != null and code != ''"> and ADM_CODE = #{code,jdbcType=VARCHAR}</if>
-  	<if test="pCode != null and pCode != ''"> and P_CODE = #{pCode,jdbcType=VARCHAR}</if>
-  	<if test="level != null and level != ''"> and ADM_LEVEL = #{level,jdbcType=VARCHAR}</if>
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_emc_sys_administrative
     where ADM_CODE = #{admCode,jdbcType=VARCHAR}

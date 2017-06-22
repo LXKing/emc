@@ -66,37 +66,4 @@ public interface ConsAnalysisService {
      */
 	public Map<String, Object> groupDanHaoLine(Map<String, String> params) throws Exception;
 	
-	/**
-     * 查询能源流明细
-     * @param params
-     * @return
-     */
-	List<Map<String, Object>> energyFlowTable(Map<String, String> params);
-
-	/**
-     * 查询能源流占比分布图
-     * @param params
-     * @return
-     */
-	List<Map<String, Object>> energyFlowPie(Map<String, String> params);
-
-	/**
-     * 查询能源流趋势对比图
-     * @param params
-     * @return
-     */
-	Map<String,Object> energyFlowLine(Map<String, String> params) throws Exception;
-
-	/**
-     * 查询能源流同比
-     * @param params
-     * @return
-     */
-	Map<String, Object> energyFlowBar(Map<String, String> params);
-	
-	/**
-	 * 导出能源流明细
-	 * @return
-	 */
-	List<Map<String, Object>> exportEnergyFlowDetail(Map<String,String> params);
 }

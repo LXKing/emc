@@ -121,13 +121,6 @@ public class BanServiceImpl implements BanService {
 		return communityService.getCommunitySelectHtmlStr(param,selectedId);
 	}
 
-	@Override
-	@Transactional
-	public String getPCCTVSelectHtmlStr(Map<String, String> param,
-			String selectedId) {
-		return communityService.queryPCCTVHtmlStr(param, selectedId);
-	}
-
 	/**
 	 * 楼座名称唯一
 	 */

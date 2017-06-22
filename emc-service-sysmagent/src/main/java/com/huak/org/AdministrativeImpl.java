@@ -56,8 +56,4 @@ public class AdministrativeImpl implements AdministrativeService {
         return administrativeDao.findAllByLevel(paramsMap);
     }
 
-	@Override
-	public List<Map<String, String>> queryPCCTVHtmlStr(Map<String, String> param) {
-		return administrativeDao.selectByMap(param);
-	}
 }

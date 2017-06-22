@@ -38,52 +38,6 @@
 	                    </div>
 	                </div>
                 </div>
-                <!-- 省市县乡村开始 -->
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>省：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="queryPCCTV(this,'cityId','2',['cityId','countyId','townId','villageId'])" id="provinceId" name="provinceId" class="form-control m-b" >
-                            </select>
-	                    </div>
-	                </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>市：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="queryPCCTV(this,'countyId','3',['countyId','townId','villageId'])" id="cityId" name="cityId" class="form-control m-b" >
-                            </select>
-	                    </div>
-	                </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>县：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="queryPCCTV(this,'townId','4',['townId','villageId'])" id="countyId" name="countyId" class="form-control m-b" >
-                            </select>
-	                    </div>
-	                </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>乡：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select onchange="queryPCCTV(this,'villageId','5',['villageId'])" id="townId" name="townId" class="form-control m-b" >
-                            </select>
-	                    </div>
-	                </div>
-                </div>
-                <div class="row">
-	                <div class="form-group" style="width:100%;float: left;margin-right: 0px;">
-	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>村：</label>
-	                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-	                        <select id="villageId" name="villageId" class="form-control m-b" >
-                            </select>
-	                    </div>
-	                </div>
-                </div>
                 <div class="row">
 	                <div class="form-group" style="margin-right: 0px;">
 	                    <label class="col-sm-4 col-xs-4 col-md-4 col-lg-4 control-label"><span class="red">*</span>详细地址：</label>
@@ -139,26 +93,6 @@ top.getSelectHtml = function(){
 		top.$("#communityId").html(data.html);
 	},'json');
 }
-//查询省市县乡村html文
-top.queryPCCTV = function(obj,id,level,sub){
-	var _select=$(obj);
-	var code = _select.val();
-	if(code==null||code==''){
-		for(var i=0;i<sub.length;i++){
-			top.$('#'+sub[i]).html('');
-			top.$('#'+sub[i]).attr('disabled',true);
-		}
-		return;
-	}
-	top.$("#"+id).attr("disabled",false);
-	
-	$.get(_platform + '/community/PCCTVHtmlStr',{
-		"pCode":code,
-		"level":level
-	},function(data){
-		top.$("#"+id).html(data.html);
-	},'json');
-}
 
 //点击组织机构树
 function treeNodeClick(){
@@ -176,11 +110,6 @@ $(function () {
 	//初始化公司下拉框
 	top.$('#comId').html('${com}');
 	top.$('#communityId').html('${community}');//初始化小区下拉框
-	top.$('#provinceId').html('${province}');//初始化省下拉框
-	top.$('#cityId').html('${city}');//初始化市下拉框
-	top.$('#countyId').html('${county}');//初始化县下拉框
-	top.$('#townId').html('${town}');//初始化乡下拉框
-	top.$('#villageId').html('${village}');//初始化村下拉框
 	
 	//初始化组织机构树
 	banEditOrg = new Org({

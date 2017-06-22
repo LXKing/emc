@@ -24,5 +24,4 @@ public interface AdministrativeService {
 
     List<Map<String,Object>> findAllByLevel(Map<String, String> paramsMap);
 
-	List<Map<String, String>> queryPCCTVHtmlStr(Map<String, String> param);
 }

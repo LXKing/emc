@@ -90,14 +90,6 @@ public interface CommunityService {
 	String getCellSelectHtmlStr(Map<String,String> params,String selectedCellId);
 
 	/**
-	 * 获取省市县乡村下拉框html
-	 * @param param
-	 * @param code
-	 * @return
-	 */
-	String queryPCCTVHtmlStr(Map<String, String> param, String code);
-
-	/**
 	 * 获取管线下拉框html
 	 * @param param
 	 * @param selectedLineId

@@ -147,12 +147,6 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	@Transactional
-	public String queryPCCTVHtmlStr(Map<String, String> param, String code) {
-		return getSelectHtmlStr(administrativeService.queryPCCTVHtmlStr(param), code);
-	}
-	
-	@Override
-	@Transactional
 	public String getLineSelectHtmlStr(Map<String, String> param,String selectedLineId) {
 		return getSelectHtmlStr(communityDao.selectLineSelectHtmlStr(param), selectedLineId);
 	}

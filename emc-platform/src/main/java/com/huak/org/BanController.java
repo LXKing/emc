@@ -83,9 +83,6 @@ public class BanController {
 	public String addPage(Model model,@PathVariable String companyId){
 		logger.info("跳转到添加楼座页面");
 		model.addAttribute("com", banService.getCompanySelectHtmlStr(companyId));
-		Map<String,String> param = new HashMap<String,String>();
-		param.put("level", "1");
-		model.addAttribute("province", banService.getPCCTVSelectHtmlStr(param,null));
 		return "/org/ban/add";
 	}
 	
@@ -147,27 +144,6 @@ public class BanController {
 			param.put("comId", ban.getComId());
 			param.put("orgId", ban.getOrgId().toString());
 			model.addAttribute("community", banService.getCommunitySelectHtmlStr(param,ban.getCommunityId()));
-			param.put("level", "1");
-			model.addAttribute("province", banService.getPCCTVSelectHtmlStr(param,ban.getProvinceId()));
-			param.put("pCode", ban.getProvinceId());
-			param.remove("level");
-			param.put("level", "2");
-			model.addAttribute("city", banService.getPCCTVSelectHtmlStr(param,ban.getCityId()));
-			param.remove("pCode");
-			param.put("pCode", ban.getCityId());
-			param.remove("level");
-			param.put("level", "3");
-			model.addAttribute("county", banService.getPCCTVSelectHtmlStr(param,ban.getCountyId()));
-			param.remove("pCode");
-			param.put("pCode", ban.getCountyId());
-			param.remove("level");
-			param.put("level", "4");
-			model.addAttribute("town", banService.getPCCTVSelectHtmlStr(param,ban.getTownId()));
-			param.remove("pCode");
-			param.put("pCode", ban.getTownId());
-			param.remove("level");
-			param.put("level", "5");
-			model.addAttribute("village", banService.getPCCTVSelectHtmlStr(param,ban.getVillageId()));
 		}
 		return "/org/ban/edit";
 	}
