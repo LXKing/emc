@@ -265,7 +265,7 @@ $(function () {
 	$.validator.addMethod("isPassword", function(value, element){
 	    var tel = /^[\w\-\@\.\\\!\#\$\%\^\&\*\(\)\+\=\`\~\,\/\<\>\?\;\:\'\"\[\]\{\}\|]+$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的密码");
+	}, icon + "请输入正确的密码,支持所有数字、英文大小写、英文键盘所有特殊符号");
 	
 	//电子邮箱校验
 	$.validator.addMethod("isEmail", function(value, element){

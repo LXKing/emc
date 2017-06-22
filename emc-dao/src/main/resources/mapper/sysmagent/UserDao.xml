@@ -218,7 +218,10 @@
     	#{id}
     </foreach>
   </update>
-  
+  <!-- 用户登录成功，修改用户信息 -->
+  <update id="update2LoginSuccess">
+  	update t_emc_auth_user set LOGIN_NUM = (LOGIN_NUM+1),LAST_LOGIN_TIME = LOGIN_TIME,LOGIN_TIME=NOW() where ID = #{id}
+  </update>
   <!-- 更新用户信息 -->
   <update id="updateUser" parameterType="com.huak.auth.model.User" >
     update t_emc_auth_user

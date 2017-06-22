@@ -120,4 +120,9 @@ public interface UserService {
      * @return
      */
     Map<String, Boolean> getAuths(String id);
+
+    /**
+     * 登录成功后修改用户参数
+     */
+	void update2LoginSuccess(String id);
 }
