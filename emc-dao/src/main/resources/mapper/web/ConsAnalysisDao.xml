@@ -362,5 +362,114 @@
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
         GROUP BY v.fgsid,v.ORG_NAME
     </select>
+    <!-- 查询今年的集团单耗 -->
+	  <!-- 查询条件map内容：{toolOrgId=38, toolFeedType=2, toolStartDate=2016-11-15, toolEndDate=2017-06-15, toolOrgType=} -->
+	  <sql id="cur_last_time">
+	  	<choose>
+			<when test="toolStartDate!=null and toolStartDate!=''">
+				AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="toolEndDate!=null and toolEndDate!=''">
+				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
+			</when>
+			<otherwise>
+				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE())
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="toolStartDate!=null and toolStartDate!=''">
+				OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR) 
+			</when>
+			<otherwise>
+				OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="toolEndDate!=null and toolEndDate!=''">
+				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
+			</when>
+			<otherwise>
+				AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR))
+			</otherwise>
+		</choose>
+	  </sql>
+	  <sql id="between_and">
+	  	BETWEEN 
+			<choose>
+			<when test="toolStartDate!=null and toolStartDate!=''">
+				#{toolStartDate,jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				SUBDATE(CURDATE(), INTERVAL 5 DAY)
+			</otherwise>
+		</choose>
+		AND 
+		<choose>
+			<when test="toolEndDate!=null and toolEndDate!=''">
+				#{toolEndDate,jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				CURDATE()
+			</otherwise>
+		</choose>
+	  </sql>
+    <!-- 查询单耗折线数据 -->
+    <select id="groupDanHao" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT sum(C.dosage / C.area) groupEnergy, sum( CASE C.energyType WHEN '4' THEN C.dosage / C.area ELSE 0 END) AS hotEnergy, 
+        	   sum( CASE C.energyType WHEN '2' THEN C.dosage / C.area ELSE 0 END ) AS electricEnergy, 
+        	   SUM( CASE C.energyType WHEN '1' THEN C.dosage / C.area ELSE 0 END ) AS waterEnergy, 
+        	   SUM( CASE C.energyType WHEN '3' THEN C.dosage / C.area ELSE 0 END ) AS gasEnergy, 
+        	   SUM( CASE C.energyType WHEN '5' THEN C.dosage / C.area ELSE 0 END ) AS coalEnergy, 
+        	   SUM( CASE C.energyType WHEN '6' THEN C.dosage / C.area ELSE 0 END ) AS oilEnergy, C.yeardate,
+        	   ( CASE WHEN DATE_FORMAT(C.yeardate, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) curyear 
+        FROM ( 
+        	SELECT sum(B.area) area, sum(B.dosage) dosage, SUM(B.total) total, B.energytype, B.yeardate 
+        	FROM ( 
+        		SELECT vu.UNITID 
+        		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+        		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
+        		LEFT JOIN ( 
+        			SELECT h.UNITID AS unitid, avg(h.AREA) area, sum(h.DOSAGE) AS dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
+        			DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate 
+        			FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+        			WHERE 1 = 1 <include refid="cur_last_time" /> GROUP BY unitid, energytype, yeardate 
+        		) B ON A.UNITID = B.unitid 
+        		GROUP BY B.energytype, B.yeardate 
+        	) C 
+        WHERE C.yeardate IS NOT NULL 
+        GROUP BY C.yeardate 
+        ORDER BY C.yearDate ASC
+    </select>
     
+    <!-- 查询单耗同比统计数据 -->
+    <select id="groupDanHaoTotal" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT sum(C.total) / avg(C.area) groupEnergy, sum( CASE C.energyType WHEN '4' THEN C.dosage / C.area ELSE 0 END) AS hotEnergy, 
+        	   sum( CASE C.energyType WHEN '2' THEN C.dosage / C.area ELSE 0 END ) AS electricEnergy, 
+        	   SUM( CASE C.energyType WHEN '1' THEN C.dosage / C.area ELSE 0 END ) AS waterEnergy, 
+        	   SUM( CASE C.energyType WHEN '3' THEN C.dosage / C.area ELSE 0 END ) AS gasEnergy, 
+        	   SUM( CASE C.energyType WHEN '5' THEN C.dosage / C.area ELSE 0 END ) AS coalEnergy, 
+        	   SUM( CASE C.energyType WHEN '6' THEN C.dosage / C.area ELSE 0 END ) AS oilEnergy, C.curyear 
+        FROM( 
+        	   SELECT sum(B.area) area, sum(B.dosage) dosage, SUM(B.total) total, B.energytype, B.curyear 
+        	   FROM ( 
+        	   		SELECT vu.UNITID 
+        	   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+        	   		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
+        	   		LEFT JOIN ( 
+        	   			SELECT h.UNITID AS unitid, avg(h.AREA) area, sum(h.DOSAGE) AS dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
+        	   			( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) curyear 
+        	   			FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+        	   			WHERE 1 = 1 <include refid="cur_last_time" /> 
+        	   			GROUP BY unitid, energytype, curyear 
+        	   		) B ON A.UNITID = B.unitid 
+        	   		GROUP BY B.energytype, B.curyear 
+        	   	) C 
+        WHERE C.curyear IS NOT NULL 
+        GROUP BY C.curyear
+    </select>
 </mapper>
