@@ -209,6 +209,12 @@ public class ComponentServiceImpl implements ComponentService{
         return result;
     }
 
+    /**
+     * 工具-获取上年的日期并格式化
+     * @param starttime
+     * @param format
+     * @return
+     */
     private String getPreviousDates(String starttime,String format) {
         String ptime = "";
         Calendar calendar = Calendar.getInstance();
