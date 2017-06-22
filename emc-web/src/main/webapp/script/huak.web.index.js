@@ -774,7 +774,7 @@ function initChart05(energy,device,manage,labor,other,total,tbl){
             textStyle : {
                 color : '#8394aa',
                 fontFamily : '微软雅黑',
-                fontSize : 44,
+                fontSize : 40,
                 fontWeight : 'normal'
             },
             subtextStyle : {
@@ -1057,6 +1057,7 @@ function chart07Fun(){
 
 function initChart(kedu1,mx,bm_total){
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
+    var max = returnFloat(mx/0.75);
     var option1 = {
         tooltip : {
             formatter: "{a} <br/>{c} {b}"
@@ -1065,42 +1066,45 @@ function initChart(kedu1,mx,bm_total){
             {
                 name: '能耗',
                 type: 'gauge',
-                z:50,
+                z:1,
                 min: 0,
-                max: mx,
+                max: max,
                 startAngle: 180,
                 endAngle: 0,
-                splitNumber: -1,
+                splitNumber: 5,
                 radius: '100%',
                 axisLine:{
                     show:true,
-                    formatter: function(v){
-                        alert(v);
-                        switch (v+''){
-                            case '10': return '弱';
-                            case '30': return '低';
-                            case '60': return '中';
-                            case '90': return '高';
-                            default: return '';
-                        }
-                    },
                     lineStyle:{
                         color:[[0.5, '#3b96db'],[1, '#df5f4a'] ],
                         width:10
                     }
                 },
+                splitLine: {           // 分隔线
+                    length:20,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        color: 'auto'
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    length: 0,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto'
+                    }
+                },
                 itemStyle:{
-
                     normal:{
                         color:'#d44243'
                     }
                 },
-
+                pointer: {
+                    width:5
+                },
                 detail:{
                     show: true,
                     formatter: '{value}',
                     textStyle: {
-                        fontSize: 20
+                        fontSize: 15
                     }
                 },
                 data:[{value: "50"}]
@@ -1123,7 +1127,14 @@ function toDecimal(x) {
     return f;
 }
 
-
+function returnFloat(value){
+    var value=Math.round(parseFloat(value)*100)/100;
+    var xsd=value.toString().split(".");
+    if(xsd.length>1){
+            value=xsd[0];
+        return value;
+    }
+}
 
 /*居民 合格率趋势*/
 function chart08Fun(){
