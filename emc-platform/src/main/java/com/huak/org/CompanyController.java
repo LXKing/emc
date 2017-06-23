@@ -141,8 +141,8 @@ public class CompanyController {
         logger.info("导出公司列表EXCEL");
         String workBookName = "公司列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-        cellName.put("ID", "主键");
         cellName.put("CNAME", "公司名称");
+        cellName.put("NEXT_DES", "公司下级翻译");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
         try {

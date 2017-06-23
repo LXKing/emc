@@ -131,22 +131,38 @@
     <select id="exportEnergyTypes" parameterType="java.util.HashMap" resultType="java.util.Map">
         select
         ID, NAME_ZH, NAME_EN, DOSAGE_UNIT, PRICE, COEF,
-        (case
-        when ECO_TYPE=1 then '成本与产出'
-        when ECO_TYPE=2 then '成本'
-        when ECO_TYPE=3 then '产出'
-        when ECO_TYPE=4 then '其它'
-        else ECO_TYPE)
-        ECO_TYPE,
-        (case
-        when TYPE=1 then '水'
-        when TYPE=2 then '电'
-        when TYPE=3 then '气'
-        when TYPE=4 then '热'
-        when TYPE=5 then '煤'
-        when TYPE=6 then '油'
-        else TYPE)
+        (
+        CASE ECO_TYPE
+        WHEN 1 THEN
+        '成本与产出'
+        WHEN 2 THEN
+        '成本'
+        WHEN 3 THEN
+        '产出'
+        WHEN 4 THEN
+        '其它'
+        ELSE
+        ECO_TYPE
+        END
+        ) ECO_TYPE,
+        (
+        CASE TYPE
+        WHEN 1 THEN
+        '水'
+        WHEN 2 THEN
+        '电'
+        WHEN 3 THEN
+        '气'
+        WHEN 4 THEN
+        '热'
+        WHEN 5 THEN
+        '煤'
+        WHEN 6 THEN
+        '油'
+        ELSE
         TYPE
+        END
+        ) TYPE
         from t_emc_energy_type
         where 1=1
         <if test="nameZh != null and nameZh !=''">

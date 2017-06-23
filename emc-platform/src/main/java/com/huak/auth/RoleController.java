@@ -220,7 +220,6 @@ public class RoleController {
         logger.info("导出角色列表EXCEL");
         String workBookName = "角色列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-        cellName.put("ID", "主键");
         cellName.put("ROLE_NAME", "角色名称");
         cellName.put("ROLE_DES", "角色说明");
         cellName.put("memo", "备注");

@@ -147,7 +147,6 @@ public class SysDicController {
         logger.info("导出字典列表EXCEL");
         String workBookName = "字典列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-        cellName.put("ID", "主键");
         cellName.put("DES", "字典名称");
         cellName.put("TYPE_US", "字典类型(英文)");
         cellName.put("TYPE_ZH", "字典类型(中文)");

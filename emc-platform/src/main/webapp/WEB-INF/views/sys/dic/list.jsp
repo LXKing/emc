@@ -65,7 +65,7 @@
                                 </button>
                                 <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
                                 <c:if test="${sessionScope._auth['sysDicExport']}">
-                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
+                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/sys/dic/export"> 导出Excel
                                 </button>
                                 </c:if>
                             </div>
