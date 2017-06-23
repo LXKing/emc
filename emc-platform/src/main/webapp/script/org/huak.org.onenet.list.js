@@ -6,78 +6,24 @@
  * Date: 2016/8/30<BR>
  */
 var bTable;
-$(function () {
+var orgTree;
 
+$(function () {
+    init();
+    initable();
+});
+
+function init(){
+    //下拉框js
     var org = new Org({
         class:"org-tree"
     });
-    org.initTree();
-//    var setting = {
-//        view: {
-//            addHoverDom: addHoverDom,
-//            removeHoverDom: removeHoverDom,
-//            selectedMulti: false,
-//            fontCss:{color:"blue"}
-//        },
-//        check: {
-//            enable: true
-//        },
-//        data: {
-//            simpleData: {
-//                enable: true,
-//                idKey: "id",
-//                pIdKey: "pId",
-//                system:"Name",
-//                rootPId: ""
-//            }
-//        },
-//        async : { // 是否异步加载 相当于ajax
-//
-//            enable : true//设置 zTree 是否开启异步加载模式
-//            //默认值：false
-//
-//        },
-//
-//        edit: {
-//            enable: true
-//        },
-//        callback: {
-//            beforeRemove:beforeRemove,//点击删除时触发，用来提示用户是否确定删除
-//            beforeEditName: beforeEditName,//点击编辑时触发，用来判断该节点是否能编辑
-//            beforeRename:beforeRename,//编辑结束时触发，用来验证输入的数据是否符合要求
-//            onRemove:onRemove,//删除节点后触发，用户后台操作
-//            onRename:onRename,//编辑后触发，用于操作后台
-//            beforeDrag:beforeDrag, //用户禁止拖动节点
-//            onClick:clickNode//点击节点触发的事件
-//
-//        }
-//    };
-//    function ztreeValue(){
-//        $.ajax({
-//            type: "get",
-//            url: _platform+"/org/ztreeValue",
-//            data: {},
-//            dataType: "json",
-//            success: function (data) {
-//                //console.log(data);
-//                var nodes='';
-//                var zNodes ='[';
-//                for (var i=0;i<data.length;i++){
-//                    var orgName='"' + data[i].orgName + '"';
-//                    var id='"' + data[i].id + '"';
-//                    var pid='"' + data[i].pOrgId + '"';
-//                    zNodes+="{ id:"+id+", pId:"+pid+", name:"+orgName+", open:true},";
-//                };
-//                var newnodes=zNodes.substring(0,zNodes.length-1);
-//                nodes= newnodes+"]"
-//                //alert(nodes);
-//                $.fn.zTree.init($("#treeDemo"), setting, eval("(" + nodes + ")"));
-//            },
-//            error: function(data) {
-//                alert("data is erro");
-//            }
-//        });
-//    }
+    orgTree =  org.initTree();
+    var ts = $(top.document).find("[name='searchComp']").val();
+    $("#comId").val(ts);
+}
+
+function initable() {
 
     bTable = $('#oncenet-table-list').bootstrapTable({
         height: getHeight() + 30,//高度
@@ -250,7 +196,8 @@ $(function () {
     //下拉框js
     $(".chosen-select").chosen();
 
-});
+  }
+
 function search(){
     $('#oncenet-table-list').bootstrapTable('refresh');
 }
@@ -290,7 +237,7 @@ function treeNodeClick(e,treeId,treeNode){
 
 function addNet(){
     //alert(123);
-    var treeNode = top.comm_tree.getSelectedNodes();
+    var treeNode = orgTree.getSelectedNodes();
 
     //alert(treeNode[0].id);
     if(treeNode.length<1){

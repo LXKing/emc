@@ -223,6 +223,17 @@
             }
             return false;
         });
+        // 管线长度数值校验
+        $.validator.addMethod("isNumber", function(value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            var reg = new RegExp("^[0-9]+(.[0-9]{2})?$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请确认输入的数值为整数或小数(精确到2位小数：如:0.01)");
         // 小室数量和管段数量校验
         $.validator.addMethod("isCellNum", function(value, element) {
             var reg = new RegExp("^[0-9]*$");
@@ -268,7 +279,8 @@
                     checkCodeUnique:true
                 },
                 length: {
-                    required: true
+                    required: true,
+                    isNumber:true
                 },
                 netTypeId: {
                     required: true
