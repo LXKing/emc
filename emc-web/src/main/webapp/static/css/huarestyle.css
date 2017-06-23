@@ -316,6 +316,7 @@ input[type="text"].time-input{
 .cost-list-proportion{margin-left:5%;font-size:11px;color:#bbbbbb;}
 .cost-upper{}
 .cost-list-remind{color:#d4513b;}
+.cost-list-relax{color:green;}
 .cost-list-nyf{background-image: url(../img/index/costicon01.png);}
 .cost-list-sbf{background-image: url(../img/index/costicon02.png);}
 .cost-list-rgf{background-image: url(../img/index/costicon03.png);}

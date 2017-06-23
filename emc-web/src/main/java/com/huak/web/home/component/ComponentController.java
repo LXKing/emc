@@ -51,6 +51,7 @@ public class ComponentController {
             params.put("feedType",paramsMap.get("toolFeedType"));
             params.put("startTime",paramsMap.get("toolStartDate"));
             params.put("endTime",paramsMap.get("toolEndDate"));
+            params.put("type",paramsMap.get("toolOrgType"));
             params.put("comId",company.getId());
             Map<String,Object> map =  componentService.energyDetail(params);
             if (map!= null) {
@@ -84,6 +85,7 @@ public class ComponentController {
             params.put("feedType",paramsMap.get("toolFeedType"));
             params.put("startTime",paramsMap.get("toolStartDate"));
             params.put("endTime",paramsMap.get("toolEndDate"));
+            params.put("type",paramsMap.get("toolOrgType"));
             params.put("comId",company.getId());
             Map<String,Object> map =  componentService.costDetail(params);
             if (map!= null) {
@@ -116,6 +118,7 @@ public class ComponentController {
             params.put("feedType",paramsMap.get("toolFeedType"));
             params.put("startTime",paramsMap.get("toolStartDate"));
             params.put("endTime",paramsMap.get("toolEndDate"));
+            params.put("type",paramsMap.get("toolOrgType"));
             params.put("comId",company.getId());
             Map<String,Object> map =  componentService.energycomparison(params);
             if (map!= null) {

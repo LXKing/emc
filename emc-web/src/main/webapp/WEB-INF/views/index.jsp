@@ -126,27 +126,27 @@
                         <!--<div class="energyBoxLegendBtnLeft pull-left"></div>-->
                         <ul class="energyBoxLegendList clearfix pull-left">
                             <li>
-                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 energyBoxLegendListIcon01_cb"></div>
-                                <div class="energyBoxLegendListText energyBoxLegendListText_cb" id="whater"></div>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 " id="w1"></div>
+                                <div class="energyBoxLegendListText " id="whater"></div>
                                 <div class="energyBoxLegendListPara" id="whater_tb"></div>
                             </li>
                             <li>
-                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon02"></div>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon02" id="e1"></div>
                                 <div class="energyBoxLegendListText" id="electric"></div>
                                 <div class="energyBoxLegendListPara" id="electric_tb"></div>
                             </li>
                             <li>
-                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon03"></div>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon03" id="g1"></div>
                                 <div class="energyBoxLegendListText" id="gas"></div>
                                 <div class="energyBoxLegendListPara" id="gas_tb"></div>
                             </li>
                             <li>
-                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon04 energyBoxLegendListIcon04_cb"></div>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon05 " id="h1"></div>
                                 <div class="energyBoxLegendListText" id="heat"></div>
-                                <div class="energyBoxLegendListPara energyBoxLegendListPara_cb" id="heat_tb"></div>
+                                <div class="energyBoxLegendListPara " id="heat_tb"></div>
                             </li>
                             <li>
-                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon05"></div>
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon04" id="c1"></div>
                                 <div class="energyBoxLegendListText" id="coal"></div>
                                 <div class="energyBoxLegendListPara" id="coal_tb"></div>
                             </li>
@@ -171,8 +171,8 @@
                 <div class="cost-list-box cost-list-nyf">
                     <span class="cost-list-name">能源费</span>
                     <div class="">
-                        <span class="cost-list-num cost-list-remind" id="energy_cost"></span>
-                        <span class="cost-list-proportion cost-list-remind" id="energy_tb"></span>
+                        <span class="cost-list-num " id="energy_cost"></span>
+                        <span class="cost-list-proportion " id="energy_tb"></span>
                     </div>
                 </div>
                 <div class="cost-list-box cost-list-sbf">
@@ -186,7 +186,7 @@
                     <span class="cost-list-name">人工费</span>
                     <div class="">
                         <span class="cost-list-num " id="labor_cost"></span>
-                        <span class="cost-list-proportion cost-list-remind" id="labor_tb"></span>
+                        <span class="cost-list-proportion " id="labor_tb"></span>
                     </div>
                 </div>
                 <div class="cost-list-box cost-list-glf">
@@ -336,11 +336,11 @@
                         </label>
                         <label>
                             <span class="cb-legend-green"></span>
-                            上线
+                            上限
                         </label>
                         <label>
                             <span class="cb-legend-red"></span>
-                            下线
+                            下限
                         </label>
                     </div>
                 </div>
