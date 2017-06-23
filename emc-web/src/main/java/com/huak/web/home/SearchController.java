@@ -64,9 +64,16 @@ public class SearchController {
         logger.info("获取查询组件本采暖季时间段");
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
-        JSONObject jo = searchService.getSeason(company.getId());
+        JSONObject jo;
+        jo = searchService.getSeason(company.getId());
+
         if(jo == null){
-            return "";
+            jo = new JSONObject();
+            jo.put(Constants.FLAG,false);
+            jo.put(Constants.MSG,"未设置采暖季,请先设置本采暖季");
+        }else{
+
+            jo.put(Constants.FLAG,true);
         }
         return jo.toJSONString();
     }

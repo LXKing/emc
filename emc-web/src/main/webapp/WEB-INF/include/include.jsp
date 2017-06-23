@@ -41,9 +41,7 @@
 <script src="${web}/static/assets/js/bootstrap.min.js"></script>
 <script src="${web}/static/js/My97DatePicker/WdatePicker.js"></script>
 
-<script>
-    var _web = '${web}';
-</script>
+
 
 <script src="${web}/static/js/navscript.js"></script>
 
@@ -53,7 +51,13 @@
 <script type="text/javascript" src="${web}/static/js/daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="${web}/static/js/datetimepicker/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="${web}/static/js/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-<script type="text/javascript" src="${web}/static/js/layer/layer.js"></script>
-
+<script type="text/javascript" src="${web}/static/js/layer/layer.min.js"></script>
+<script>
+    var _web = '${web}';
+    layer.config({
+        extend: ['skin/moon/style.css'] //加载新皮肤
+        /*skin: 'layer-ext-moon' //一旦设定，所有弹层风格都采用此主题。*/
+    });
+</script>
 <script src="${web}/static/js/huak.cookie.js"></script>
 <script src="${web}/static/js/public.js"></script>

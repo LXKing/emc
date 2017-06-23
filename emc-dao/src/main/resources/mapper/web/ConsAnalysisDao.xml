@@ -23,8 +23,8 @@
     <select id="findAssessmentIndicators" parameterType="java.util.Map" resultMap="BaseResultMap">
 
         SELECT v.fgsid id,v.ORG_NAME orgname,
-        ROUND(IFNULL(SUM(v.BQBM)/AVG(v.BQAREA),0),2) BQDH,
-        ROUND(IFNULL(SUM(v1.BQBM)/AVG(v1.BQAREA),0),2) TQDH,
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
+        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH,
         ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.BQDH ELSE 0 END),2) bqwater,
         ROUND(MAX(CASE v1.TYPE WHEN '1' THEN v1.BQDH ELSE 0 END),2) tqwater,
         ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.BQDH ELSE 0 END),2) bqelectric,
@@ -128,8 +128,9 @@
             AND vu.UNITTYPE=#{orgType}
         </if>
         LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID
-        FROM t_emc_final_data_hour fdh
+        FROM t_emc_final_data_hour fdh ,t_emc_energy_type eet
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
+        AND fdh.TYPEID = eet.ID AND eet.TYPE!=4
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         GROUP BY a.fgsid,a.ORG_NAME,d1.TYPEID) f
         GROUP BY f.fgsid,f.ORG_NAME
@@ -153,16 +154,20 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        RIGHT JOIN (SELECT DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM t_emc_final_data_hour
-        WHERE DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND DOSAGE_TIME<![CDATA[ <= ]]> #{endTime} GROUP BY DATE_FORMAT(DOSAGE_TIME,'%y-%m-%d') ORDER BY DOSAGE_TIME) dt ON 1=1
+        RIGHT JOIN (SELECT DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME
+        FROM t_emc_final_data_hour
+        WHERE DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
+        GROUP BY DATE_FORMAT(DOSAGE_TIME,'%y-%m-%d') ORDER BY DOSAGE_TIME) dt ON 1=1
         LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
         LEFT JOIN  (
         SELECT d1.UNITID,SUM(d1.BM) BQBM,d1.DOSAGE_TIME,AVG(d1.AREA) AREA FROM
-        (SELECT fdh.UNITID,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM t_emc_final_data_hour fdh
+        (SELECT fdh.UNITID,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME
+        FROM t_emc_final_data_hour fdh ,t_emc_energy_type eet
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
+        AND fdh.TYPEID = eet.ID AND eet.TYPE!=4
         GROUP BY fdh.UNITID,fdh.DOSAGE_TIME) d1 GROUP BY d1.UNITID,d1.DOSAGE_TIME ORDER BY DOSAGE_TIME
         ) hd ON hd.UNITID = vu.unitid AND hd.DOSAGE_TIME = dt.DOSAGE_TIME
         GROUP BY a.fgsid,a.ORG_NAME,dt.DOSAGE_TIME
@@ -172,8 +177,8 @@
     <select  id="fgsEnergyAn" parameterType="java.util.Map" resultType="java.util.Map">
 
         SELECT v.fgsid ID,v.ORG_NAME ORGNAME,
-        ROUND(IFNULL(SUM(v.BQBM)/AVG(v.BQAREA),0),2) BQDH,
-        ROUND(IFNULL(SUM(v1.BQBM)/AVG(v1.BQAREA),0),2) TQDH
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
+        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH
         FROM
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
@@ -243,7 +248,7 @@
 
     <select id="fgsEnergyRanking" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT v.fgsid ID,v.ORG_NAME NAME,
-        ROUND(IFNULL(SUM(v.BQBM)/AVG(v.BQAREA),0),2) VALUE
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) VALUE
         FROM
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
@@ -283,8 +288,8 @@
     <select id="exportAssessmentIndicators" parameterType="java.util.Map" resultMap="BaseResultMap">
 
         SELECT v.fgsid id,v.ORG_NAME orgname,
-        ROUND(IFNULL(SUM(v.BQBM)/AVG(v.BQAREA),0),2) BQDH,
-        ROUND(IFNULL(SUM(v1.BQBM)/AVG(v1.BQAREA),0),2) TQDH,
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
+        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH,
         ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.BQDH ELSE 0 END),2) bqwater,
         ROUND(MAX(CASE v1.TYPE WHEN '1' THEN v1.BQDH ELSE 0 END),2) tqwater,
         ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.BQDH ELSE 0 END),2) bqelectric,
