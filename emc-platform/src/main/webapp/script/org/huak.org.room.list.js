@@ -137,6 +137,7 @@ var treeNodeClick = function(e,treeId,treeNode){
 	var orgName = treeNode.name;
 	$("#orgId").val(orgId);
 	$("input[name='orgName']").val(orgName);
+	communitySelect();
 };
 
 //初始化treebox

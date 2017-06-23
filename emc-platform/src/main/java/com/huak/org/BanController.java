@@ -51,7 +51,6 @@ public class BanController {
 	public String listPage(Model model){
 		logger.info("跳转到楼座列表页面");
 		model.addAttribute("com", banService.getCompanySelectHtmlStr(null));
-		model.addAttribute("community", banService.getCommunitySelectHtmlStr(new HashMap<String,String>(), null));
 		return "/org/ban/list";
 	}
 	

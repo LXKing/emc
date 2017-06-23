@@ -1,15 +1,20 @@
 var banSearTree;
 $(function () {
+	
+	//搜索栏中组织机构树初始化
 	banSearOrg = new Org({
         class:"org-tree"
     });
 	banSearTree = banSearOrg.initTree();
 	initTreeBox();
+	
+	//页面顶部 公司改变事件
 	parent.$("[name='searchComp']").change(function(){
 		banSearOrg.initTree();
 		initTreeBox();
 		window.location.reload(); 
 	});
+	
 	//楼座列表
 	var banTable = $('#ban-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
@@ -106,20 +111,25 @@ $(function () {
         ]
 	});
 });
-//组织机构树点击节点事件
+
+/**
+ * 组织机构树点击节点事件
+ */
 var treeNodeClick = function(e,treeId,treeNode){ 
 	var orgId = treeNode.id;
 	var orgName = treeNode.name;
 	$("#orgId").val(orgId);
 	$("input[name='orgName']").val(orgName);
+	communitySelect();
 };
 
-//初始化treebox
+/**
+ * 初始化搜索栏中的 treebox（组织机构树）
+ */
 function initTreeBox(){
 	if(banSearTree==null){
 		setTimeout('initTreeBox()',50)
 	}else{
-//		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
 		var box = $('input[name="orgName"]').treeBox({setting:banSearTree.setting,zNodes:banSearTree.getNodes()});
 	}
 }

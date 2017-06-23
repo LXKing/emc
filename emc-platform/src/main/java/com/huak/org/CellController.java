@@ -51,8 +51,6 @@ public class CellController {
 	public String listPage(Model model){
 		logger.info("跳转到单元列表页面");
 		model.addAttribute("com", cellService.getCompanySelectHtmlStr(null));
-		model.addAttribute("community", cellService.getCommunitySelectHtmlStr(new HashMap<String,String>(), null));
-		model.addAttribute("ban", cellService.getBanSelectHtmlStr(new HashMap<String,String>(), null));
 		return "/org/cell/list";
 	}
 	
