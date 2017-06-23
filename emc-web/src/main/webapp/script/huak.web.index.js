@@ -20,7 +20,6 @@
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-            console.log(data.all);
             if(data.all.eTotal==null||data.all.eTotal==''){
                 $(".eTotal").html(0+" TCE");
             }else{
@@ -282,6 +281,9 @@ function typefun(these, code) {
         $(".PeopleTabdiv").hide();
         $(".otherTabdiv").show();
     }
+    chart07Fun();
+    chart01Fun();
+
 };
 
 function chart01Fun(){
@@ -292,7 +294,6 @@ function chart01Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            console.info(result);
             chart01Show(result.object.data,result.object.yearDate,result.object.other);
         }
     });
@@ -300,7 +301,6 @@ function chart01Fun(){
 
 /*单耗趋势-折线图*/
 function chart01Show(datalist, datelist, other){
-    console.info(other)
     $("#chart01").empty();
     chart01 = echarts.init(document.getElementById('chart01'));
     var option = {
@@ -732,6 +732,7 @@ function chart05Fun(){
             var tbl ="";
             if(tb_flag == 'true'){
                 tbl ="("+total_tb+"↑)";
+
             }
             if(tb_flag == 'false'){
                 tbl= "("+total_tb+"↓)";
@@ -745,9 +746,12 @@ function chart05Fun(){
             var total_tb = result.object.tb_css;
             if(tb_flag == 'true'){
                 $("#energy_tb").html("("+total_tb+"↑)");
+                $("#energy_tb").attr('class',' cost-list-remind');
+
             }
             if(tb_flag == 'false'){
                 $("#energy_tb").html("("+total_tb+"↓)");
+                $("#energy_tb").attr('class',' cost-list-relax');
             }
             if(tb_flag == 'null'){
                 $("#energy_tb").html("("+total_tb+"→)");
@@ -758,9 +762,11 @@ function chart05Fun(){
             var total_tb = result.object.tb_device;
             if(tb_flag == 'true'){
                 $("#device_tb").html("("+total_tb+"↑)");
+                $("#device_tb").attr('class',' cost-list-remind');
             }
             if(tb_flag == 'false'){
                 $("#device_tb").html("("+total_tb+"↓)");
+                $("#device_tb").attr('class',' cost-list-relax');
             }
             if(tb_flag == 'null'){
                 $("#device_tb").html("("+total_tb+"→)");
@@ -771,9 +777,11 @@ function chart05Fun(){
             var total_tb = result.object.tb_labor;
             if(tb_flag == 'true'){
                 $("#labor_tb").html("("+total_tb+"↑)");
+                $("#labor_tb").attr('class',' cost-list-remind');
             }
             if(tb_flag == 'false'){
                 $("#labor_tb").html("("+total_tb+"↓)");
+                $("#labor_tb").attr('class',' cost-list-relax');
             }
             if(tb_flag == 'null'){
                 $("#labor_tb").html("("+total_tb+"→)");
@@ -784,9 +792,11 @@ function chart05Fun(){
             var total_tb = result.object.tb_manage;
             if(tb_flag == 'true'){
                 $("#manage_tb").html("("+total_tb+"↑)");
+                $("#manage_tb").attr('class',' cost-list-remind');
             }
             if(tb_flag == 'false'){
                 $("#manage_tb").html("("+total_tb+"↓)");
+                $("#manage_tb").attr('class',' cost-list-relax');
             }
             if(tb_flag == 'null'){
                 $("#manage_tb").html("("+total_tb+"→)");
@@ -797,9 +807,11 @@ function chart05Fun(){
             var total_tb = result.object.tb_other;
             if(tb_flag == 'true'){
                 $("#other_tb").html("("+total_tb+"↑)");
+                $("#other_tb").attr('class',' cost-list-remind');
             }
             if(tb_flag == 'false'){
                 $("#other_tb").html("("+total_tb+"↓)");
+                $("#other_tb").attr('class',' cost-list-relax');
             }
             if(tb_flag == 'null'){
                 $("#other_tb").html("("+total_tb+"→)");
@@ -813,6 +825,13 @@ function chart05Fun(){
 function initChart05(energy,device,manage,labor,other,total,tbl){
     $("#chart05").empty();
     chart05 = echarts.init(document.getElementById('chart05'));
+    var color = "#2eada8";
+    if(tbl.indexOf("↑")>0){
+        color = "red";
+    }
+    if(tbl.indexOf("↓")>0){
+        color = "green";
+    }
     var option = {
         title: {
             text: total,
@@ -827,7 +846,7 @@ function initChart05(energy,device,manage,labor,other,total,tbl){
                 fontWeight : 'normal'
             },
             subtextStyle : {
-                color : '#2eada8',
+                color :color,//'#8394aa'
                 fontFamily : '微软雅黑',
                 fontSize : 12,
                 fontWeight : 'normal'
@@ -990,6 +1009,7 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
+            console.info(result);
             if (result.flag) {
                 /*仪表盘*/
                 var kedu1 =0; //蓝色的刻度
@@ -1004,12 +1024,28 @@ function chart07Fun(){
                 }else{
                     kedu1 = 0.75;
                 }
+                debugger;
                 currentPlan =result.object.currentPlan;
                 bm_total =result.object.bm_total;
                 initChart(kedu1,currentPlan,bm_total);
-                pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
+                if(planDays == 0 ){
+                    if(currentPlan == 0){
+                        pcd = 0 ;
+                    }else{
+                        pcd = (bm_total - 0)/currentPlan*100;
+                    }
+                    pcdz = bm_total;
+                }else{
+                    if(currentPlan != 0){
+                        pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
+                    }else{
+                        pcd = 0;
+                    }
+                    pcdz = bm_total - (currentDays/planDays)*currentPlan;
+                }
+
                 pcd =  toDecimal(pcd);
-                pcdz = bm_total - (currentDays/planDays)*currentPlan;
+
                 pcdz =  toDecimal(pcdz);
                 $("#pc_plan_percent").html("偏差度("+pcd+"%)");
                 $("#pc_plan").html(pcdz);
@@ -1019,9 +1055,11 @@ function chart07Fun(){
                 var total_tb = result.object.total_tb;
                 if(tb_flag == true){
                     $("#total_tb").html("("+total_tb+"↑)");
+                    $("#total_tb").attr("class","energyBoxLegendListPara_cb");
                 }
                 if(tb_flag == false){
                     $("#total_tb").html("("+total_tb+"↓)");
+                    $("#total_tb").attr("class","energyBoxLegendListPara_cd");
                 }
                 if(tb_flag == null){
                     $("#total_tb").html("("+total_tb+"→)");
@@ -1032,9 +1070,14 @@ function chart07Fun(){
                 var total_tb = result.object.whater_tb;
                 if(tb_flag == true){
                     $("#whater_tb").html("("+total_tb+"↑)");
+                    $("#whater_tb").attr("class","energyBoxLegendListPara_cb");
+                    $("#whater").attr("class","energyBoxLegendListPara_cb");
+                    $("#w1").addClass("energyBoxLegendListIcon01_cb");
                 }
                 if(tb_flag == false){
                     $("#whater_tb").html("("+total_tb+"↓)");
+                    $("#whater_tb").attr("class","energyBoxLegendListPara_cd");
+                    $("#whater").attr("class","energyBoxLegendListPara_cd");
                 }
                 if(tb_flag == null){
                     $("#whater_tb").html("("+total_tb+"→)");
@@ -1045,9 +1088,14 @@ function chart07Fun(){
                 var total_tb = result.object.electric_tb;
                 if(tb_flag == true){
                     $("#electric_tb").html("("+total_tb+"↑)");
+                    $("#electric_tb").attr("class","energyBoxLegendListPara_cb");
+                    $("#electric").attr("class","energyBoxLegendListPara_cb");
+                    $("#e1").addClass("energyBoxLegendListIcon02_cb");
                 }
                 if(tb_flag == false){
                     $("#electric_tb").html("("+total_tb+"↓)");
+                    $("#electric_tb").attr("class","energyBoxLegendListPara_cd");
+                    $("#electric").attr("class","energyBoxLegendListPara_cd");
                 }
                 if(tb_flag == null){
                     $("#electric_tb").html("("+total_tb+"→)");
@@ -1058,9 +1106,14 @@ function chart07Fun(){
                 var total_tb = result.object.gas_tb;
                 if(tb_flag == true){
                     $("#gas_tb").html("("+total_tb+"↑)");
+                    $("#gas_tb").attr("class","energyBoxLegendListPara_cb");
+                    $("#gas").attr("class","energyBoxLegendListPara_cb");
+                    $("#g1").addClass("energyBoxLegendListIcon03_cb");
                 }
                 if(tb_flag == false){
                     $("#gas_tb").html("("+total_tb+"↓)");
+                    $("#gas_tb").attr("class","energyBoxLegendListPara_cd");
+                    $("#gas").attr("class","energyBoxLegendListPara_cd");
                 }
                 if(tb_flag == null){
                     $("#gas_tb").html("("+total_tb+"→)");
@@ -1071,9 +1124,14 @@ function chart07Fun(){
                 var total_tb = result.object.heat_tb;
                 if(tb_flag == true){
                     $("#heat_tb").html("("+total_tb+"↑)");
+                    $("#heat_tb").attr("class","energyBoxLegendListPara_cb");
+                    $("#heat").attr("class","energyBoxLegendListPara_cb");
+                    $("#h1").addClass("energyBoxLegendListIcon05_cb");
                 }
                 if(tb_flag == false){
                     $("#heat_tb").html("("+total_tb+"↓)");
+                    $("#heat_tb").attr("class","energyBoxLegendListPara_cd");
+                    $("#heat").attr("class","energyBoxLegendListPara_cd");
                 }
                 if(tb_flag == null){
                     $("#heat_tb").html("("+total_tb+"→)");
@@ -1084,9 +1142,14 @@ function chart07Fun(){
                 var total_tb = result.object.coal_tb;
                 if(tb_flag == true){
                     $("#coal_tb").html("("+total_tb+"↑)");
+                    $("#coal_tb").attr("class","energyBoxLegendListPara_cb");
+                    $("#coal").attr("class","energyBoxLegendListPara_cb");
+                    $("#c1").addClass("energyBoxLegendListIcon04_cb");
                 }
                 if(tb_flag == false){
                     $("#coal_tb").html("("+total_tb+"↓)");
+                    $("#coal_tb").attr("class","energyBoxLegendListPara_cd");
+                    $("#coal").attr("class","energyBoxLegendListPara_cd");
                 }
                 if(tb_flag == null){
                     $("#coal_tb").html("("+total_tb+"→)");
@@ -1104,7 +1167,11 @@ function chart07Fun(){
 
 function initChart(kedu1,mx,bm_total){
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
-    var max = returnFloat(mx/0.75);
+    debugger;
+    var max = returnFloat(mx/0.75)
+    if(max == undefined ){
+        max = 1;
+    }
     var option1 = {
         tooltip : {
             formatter: "{a} <br/>{c} {b}"
@@ -1118,17 +1185,17 @@ function initChart(kedu1,mx,bm_total){
                 max: max,
                 startAngle: 180,
                 endAngle: 0,
-                splitNumber: 5,
+                splitNumber:5,
                 radius: '100%',
                 axisLine:{
                     show:true,
                     lineStyle:{
                         color:[[0.5, '#3b96db'],[1, '#df5f4a'] ],
-                        width:10
+                        width:7
                     }
                 },
                 splitLine: {           // 分隔线
-                    length:20,         // 属性length控制线长
+                    length:16,         // 属性length控制线长
                     lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                         color: 'auto'
                     }

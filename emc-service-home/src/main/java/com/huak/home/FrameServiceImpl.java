@@ -75,7 +75,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public String selectGetNetCost(Map<String, String> paramsMap) {
+    public CostVo selectGetNetCost(Map<String, String> paramsMap) {
         return topAllDao.selectGetNetCost(paramsMap);
     }
 

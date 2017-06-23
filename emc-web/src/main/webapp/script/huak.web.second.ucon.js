@@ -13,7 +13,6 @@ $(function(){
         }
     });
     function EnergyDetailList(data){
-
         var html = "";
         $.each(data.list,function(idx,item){
             html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
@@ -38,7 +37,6 @@ $(function(){
             html +=getHtmlTd(item.oilBq,item.oilTq);
             html +='</tr>';
         });
-
         $("#EnergyDetailTbody").html(html);
     }
 

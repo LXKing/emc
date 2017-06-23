@@ -22,7 +22,7 @@ function toolReplace() {
     if (url.indexOf("?") > 0) {
         reurl = url.substr(0, url.indexOf("?"));
     }
-    document.location.replace(reurl + "?" + $("#searchTools").serialize());
+    document.location.replace(reurl);
 }
 /**
  * 保留2位小数
@@ -163,9 +163,11 @@ $(function () {
 
     //单击按钮事件
     $(".select-boxbtnAlarm .btnAlarm").click(function () {
-        $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
-
         var thisText = $(this).text();
+        if (thisText != "本采暖季") {
+            $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+        }
+
         if (thisText == "自定义") {
             $(".select-boxWdate input").attr("disabled", false).removeClass("time-input-disable");
             $("#begin").focus();
@@ -177,14 +179,20 @@ $(function () {
                 async:false,
                 dataType: "json",
                 success: function (data) {
-                    $('#toolStartDate').val(data.startDate);
-                    $('#toolEndDate').val(data.endDate);
-                    $('#begin').val(data.startDate);
-                    $('#end').val(data.endDate);
-                    setCookie('toolStartDate', data.startDate, 3);
-                    setCookie('toolEndDate', data.endDate, 3);
-                    setCookie('dateType', 2, 3);
-                    toolReplace();
+                    if(data.flag==false){
+                        top.layer.alert(data.msg);
+                    }else{
+                        $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+                        $('#toolStartDate').val(data.startDate);
+                        $('#toolEndDate').val(data.endDate);
+                        $('#begin').val(data.startDate);
+                        $('#end').val(data.endDate);
+                        setCookie('toolStartDate', data.startDate, 3);
+                        setCookie('toolEndDate', data.endDate, 3);
+                        setCookie('dateType', 2, 3);
+                        toolReplace();
+                    }
+
                 }
             });
         } else if (thisText == "本年度") {

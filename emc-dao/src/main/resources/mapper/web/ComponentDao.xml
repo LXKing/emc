@@ -19,7 +19,6 @@
 
       (max(case when mm.type ='qn' then mm.bm_electric else 0 end)+
       max(case when mm.type ='qn' then mm.bm_whater else 0 end) +
-      max(case when mm.type ='qn' then mm.bm_heat else 0 end) +
       max(case when mm.type ='qn' then mm.bm_gas else 0 end) +
       max(case when mm.type ='qn' then  mm.bm_coal else 0 end) +
       max(case when mm.type ='qn' then mm.bm_solar  else 0 end))qn_bm_total,
@@ -41,7 +40,6 @@
 
       (max(case when mm.type ='jn' then mm.bm_electric else 0 end)+
       max(case when mm.type ='jn' then mm.bm_whater else 0 end) +
-      max(case when mm.type ='jn' then mm.bm_heat else 0 end) +
       max(case when mm.type ='jn' then mm.bm_gas else 0 end) +
       max(case when mm.type ='jn' then  mm.bm_coal else 0 end) +
       max(case when mm.type ='jn' then mm.bm_solar  else 0 end) )bm_total
@@ -77,6 +75,9 @@
       </if>
       <if test="comId != null and comId !=''">
           and  COMID  = #{comId}
+      </if>
+      <if test="type != null and type !=''">
+          and  UNITTYPE  = #{type}
       </if>
       group by unitid
       ) oo where da.unitid = oo.unitid
@@ -120,6 +121,9 @@
           </if>
           <if test="comId != null and comId !=''">
               and  COMID  = #{comId}
+          </if>
+          <if test="type != null and type !=''">
+              and  UNITTYPE  = #{type}
           </if>
           group by unitid
       ) oo where da.unitid = oo.unitid
@@ -232,6 +236,9 @@
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
       </if>
+      <if test="type != null and type !=''">
+          and  UNITTYPE  = #{type}
+      </if>
       group by UNITID) c
       WHERE a.UNITID = c.unitid
       <if test="startTime != null and startTime !=''">
@@ -249,6 +256,9 @@
       </if>
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
+      </if>
+      <if test="type != null and type !=''">
+          and  UNITTYPE  = #{type}
       </if>
       GROUP BY UNITID )c
       where  b.UNITID = c.unitid
@@ -276,6 +286,9 @@
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
       </if>
+      <if test="type != null and type !=''">
+          and  UNITTYPE  = #{type}
+      </if>
       GROUP BY UNITID) c
       WHERE  a.UNITID = c.unitid
       <if test="pstartTime != null and pstartTime !=''">
@@ -293,6 +306,9 @@
        </if>
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
+      </if>
+      <if test="type != null and type !=''">
+          and  UNITTYPE  = #{type}
       </if>
       GROUP BY UNITID )c
       where  b.UNITID = c.unitid
@@ -346,7 +362,9 @@
                         <if test="comId != null and comId !=''">
                             and  COMID =#{comId}
                         </if>
-
+                        <if test="type != null and type !=''">
+                            and  UNITTYPE  = #{type}
+                        </if>
                    GROUP BY UNITID ) c
                 WHERE  a.UNITID = c.unitid
                 <if test="startTime != null and startTime !=''">

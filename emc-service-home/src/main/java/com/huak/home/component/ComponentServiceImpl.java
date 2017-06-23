@@ -149,7 +149,7 @@ public class ComponentServiceImpl implements ComponentService{
         List<String> days = new ArrayList<>();//时间列表
         List<Object> values = new ArrayList<>();//今年对应时间列表的值
         List<Object> previousValues = new ArrayList<>();//去年对应时间列表的值
-        List<Object> avg = new ArrayList<>();;//今年的平均单耗
+        List<Object> avg = new ArrayList<>();//今年的平均单耗
         List<Object> excellent = new ArrayList<>();//今年的上线
         List<Object> standard = new ArrayList<>();//今年的下线
         double total = 0.0;
@@ -187,11 +187,11 @@ public class ComponentServiceImpl implements ComponentService{
         //上线、下线、平均值
         Map<String,Object> other = new HashMap<>();
         Map<String,Object> upper = new HashMap<>();
-        upper.put("typeName","上线");
+        upper.put("typeName","上限");
         upper.put("data",excellent);
 
         Map<String,Object> standa = new HashMap<>();
-        standa.put("typeName","下线");
+        standa.put("typeName","下限");
         standa.put("data",standard);
 
         Map<String,Object> avgMap = new HashMap<>();
