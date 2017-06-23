@@ -284,4 +284,9 @@ public class UserServiceImpl implements UserService {
         }
         return  authMap;
     }
+
+	@Override
+	public void update2LoginSuccess(String id) {
+		userDao.update2LoginSuccess(id);
+	}
 }

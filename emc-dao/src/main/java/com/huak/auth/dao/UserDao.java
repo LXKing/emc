@@ -2,6 +2,7 @@ package com.huak.auth.dao;
 
 import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -85,4 +86,6 @@ public interface UserDao {
     List<Map<String,Object>> selectMenusByUser(Map<String, Object> paramsMap);
 
     List<Map<String,Object>> getAuthByUser(String id);
+
+	void update2LoginSuccess(String id);
 }

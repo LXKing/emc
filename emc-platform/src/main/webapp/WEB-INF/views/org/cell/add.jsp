@@ -124,8 +124,8 @@ top.getSelectHtml = function(){
 
 //点击组织机构树
 function treeNodeClick(){
-    var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-    var nodes = treeObj.getSelectedNodes();
+//     var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+    var nodes = cellAddTree.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);//选择组织机构节点的时候保存所选节点的组织Id
 	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
@@ -133,6 +133,7 @@ function treeNodeClick(){
 	top.getCommunitySelectHtml();//选择节点后更新此节点相关联的小区信息
 }
 
+var cellAddTree;
 $(function () {
 	//初始化公司下拉框
 	top.$('#com').html('${com}');
@@ -140,10 +141,10 @@ $(function () {
 	top.$('#comId').val(top.$('#com :selected').val());
 	
 	//初始化组织机构树
-	banAddOrg = new Org({
+	cellAddOrg = new Org({
         class:"cell-add-org-tree"
     });
-	banAddOrg.initTree();
+	cellAddTree = cellAddOrg.initTree();
 	
 	top.$('#banId').on('change',function(){
 		top.$('input[name="cellName"]').focus();

@@ -209,8 +209,8 @@ top.getSelectHtml = function(){
 }
 //点击组织机构树
 function treeNodeClick(){
-    var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-    var nodes = treeObj.getSelectedNodes();
+//     var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+    var nodes = roomEditTree.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);//选择组织机构节点的时候保存所选节点的组织Id
 	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
@@ -218,6 +218,7 @@ function treeNodeClick(){
 	top.getCommunityAndLineSelectHtml();//选择节点后更新此节点相关联的小区和管线信息
 }
 
+var roomEditTree;
 $(function () {
 	//初始化公司下拉框
 	top.$('#comId').html('${com}');
@@ -228,10 +229,10 @@ $(function () {
 	top.$('#lineId').html('${line}');//初始化管线下拉框
 	
 	//初始化组织机构树
-	banEditOrg = new Org({
+	roomEditOrg = new Org({
         class:"room-edit-org-tree"
     });
-	banEditOrg.initTree();
+	roomEditTree = roomEditOrg.initTree();
 	
 	top.$('#cellId').on('change',function(){
 		top.$('input[name="roomName"]').focus();

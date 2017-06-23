@@ -57,13 +57,14 @@ $.validator.setDefaults({
 
 //点击组织机构树
 function treeNodeClick(){
-    var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-    var nodes = treeObj.getSelectedNodes();
+//     var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
+    var nodes = communityEditTree.getSelectedNodes();
 	var selectedNode = nodes[0];
 	top.$('#orgId').val(selectedNode.id);//选择组织机构节点的时候保存所选节点的组织Id
 	top.$('#orgId-error').remove();//如果没选择组织结构点击保存会出现 错误提示 ，这样可以在选择节点后消除 错误提示
 	top.$('#orgId').closest('.form-group').removeClass('has-error').addClass('has-success');
 }
+var communityEditTree;
 $(function () {
 	//初始化公司下拉框
 	top.$('#comId').html('${com}');
@@ -72,7 +73,7 @@ $(function () {
 	communityEditOrg = new Org({
         class:"community-edit-org-tree"
     });
-	communityEditOrg.initTree();
+	communityEditTree = communityEditOrg.initTree();
 	
 	//获取表单元素
  	var $form = $(top.document).find("#communityEditForm");

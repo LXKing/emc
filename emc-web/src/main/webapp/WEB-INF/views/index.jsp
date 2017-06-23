@@ -89,9 +89,9 @@
                 <span>民户</span><span class="tipsindex">30</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07">400GJ</li>
-                <li class="tabicon08">67.9%</li>
-                <li class="tabicon03">80万元</li>
+                <li class="tabicon07 rTotal"></li>
+                <li class="tabicon08 hgl"></li>
+                <li class="tabicon03 roomCost"></li>
             </ul>
         </div>
     </div>

@@ -6,11 +6,12 @@
  * Date: 2016/8/30<BR>
  */
 var bTable;
+var orgTree;
 $(function () {
     var org = new Org({
         class:"org-tree"
     });
-    org.initTree();
+    orgTree = org.initTree();
     /*查询员工列表页*/
     bootstraplist();
     //日期范围限制
@@ -198,13 +199,12 @@ function queryParams(params) {
 }
 
 function treeNodeClick(e,treeId,treeNode){
-    top.orgId = treeNode.id;
     $("#orgId").val(treeNode.id);
     search();
 }
 
 function addEmployee(){
-    var treeNode = top.comm_tree.getSelectedNodes();
+    var treeNode = orgTree.getSelectedNodes();
     var ts = $(top.document).find("[name='searchComp']").val();
     if(treeNode.length<1){
         layer.msg("请先选择一个组织机构！");

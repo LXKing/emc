@@ -217,18 +217,4 @@ public class CommunityController {
         }
     }
 	
-	/**
-	 * 查询省市县乡村html
-	 * @param param
-	 * @return
-	 */
-	@RequestMapping(value="/PCCTVHtmlStr",method=RequestMethod.GET)
-	@ResponseBody
-	public String queryPCCTVHtmlStr(@RequestParam Map<String,String> param){
-		logger.info("查询省市县乡村下拉框html字符串");
-		JSONObject result = new JSONObject();
-		String htmlStr = communityService.queryPCCTVHtmlStr(param,null);
-		result.put("html", htmlStr);
-		return result.toJSONString();
-	}
 }

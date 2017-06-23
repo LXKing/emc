@@ -16,16 +16,15 @@ import java.io.Serializable;
 
 public class CostVo implements Serializable{
 
-    public String manage;//管理费
-    public String other;//其他费用
-    public String device;//设备费
-    public String labor;//人工费
-    public String energy;//能源费
+    public Double manage;//管理费
+    public Double other;//其他费用
+    public Double device;//设备费
+    public Double labor;//人工费
+    public Double energy;//能源费
     public CostVo() {
     }
 
-    public CostVo(String manage, String other, String device, String labor, String energy) {
-
+    public CostVo(Double manage, Double other, Double device, Double labor, Double energy) {
         this.manage = manage;
         this.other = other;
         this.device = device;
@@ -33,43 +32,43 @@ public class CostVo implements Serializable{
         this.energy = energy;
     }
 
-    public String getManage() {
+    public Double getManage() {
         return manage;
     }
 
-    public void setManage(String manage) {
+    public void setManage(Double manage) {
         this.manage = manage;
     }
 
-    public String getOther() {
+    public Double getOther() {
         return other;
     }
 
-    public void setOther(String other) {
+    public void setOther(Double other) {
         this.other = other;
     }
 
-    public String getDevice() {
+    public Double getDevice() {
         return device;
     }
 
-    public void setDevice(String device) {
+    public void setDevice(Double device) {
         this.device = device;
     }
 
-    public String getLabor() {
+    public Double getLabor() {
         return labor;
     }
 
-    public void setLabor(String labor) {
+    public void setLabor(Double labor) {
         this.labor = labor;
     }
 
-    public String getEnergy() {
+    public Double getEnergy() {
         return energy;
     }
 
-    public void setEnergy(String energy) {
+    public void setEnergy(Double energy) {
         this.energy = energy;
     }
 }
