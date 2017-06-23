@@ -76,6 +76,14 @@ public class EnergyDetail implements Serializable {
     }
     DecimalFormat format = new DecimalFormat("#.0000");
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Double getTotalBq() {
         return totalBq;
     }
