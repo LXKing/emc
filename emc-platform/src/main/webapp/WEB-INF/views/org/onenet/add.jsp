@@ -196,7 +196,7 @@
             }else{
                 return true;
             }
-        }, "请确认输入的数值为整数或小数");
+        }, "请确认输入的数值为整数或小数(精确到2位小数：如:0.01)");
         // 小室数量和管段数量校验
         $.validator.addMethod("isCellNum", function(value, element) {
             var reg = new RegExp("^[0-9]*$");

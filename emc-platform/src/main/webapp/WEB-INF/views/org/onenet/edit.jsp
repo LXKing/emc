@@ -156,7 +156,37 @@
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "管网名称已存在");
-
+// 管线长度数值校验
+        $.validator.addMethod("isNumber", function(value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            var reg = new RegExp("^[0-9]+(.[0-9]{2})?$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请确认输入的数值为整数或小数(精确到2位小数：如:0.01)");
+        // 小室数量和管段数量校验
+        $.validator.addMethod("isCellNum", function(value, element) {
+            var reg = new RegExp("^[0-9]*$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请确认输入的数值为正整数");
+        // 管网代码验证
+        $.validator.addMethod("isNetCode", function(value, element) {
+            var reg = new RegExp("^[A-Za-z0-9]+$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请输入正确的管网代码(如：数字字母组合)");
         $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
             $(this).siblings('.help-block').remove();
@@ -189,16 +219,26 @@
                     checkUnique: true
                 },
                 netCode: {
-                    required: true
+                    required: true,
+                    isNetCode:true,
+                    minlength: 2,
+                    checkCodeUnique: true
                 },
                 length: {
-                    required: true
+                    required: true,
+                    isNumber:true
                 },
                 netTypeId: {
                     required: true
                 },
                 heatType: {
                     required: true
+                },
+                partNum: {
+                    isCellNum:true
+                },
+                cellNum: {
+                    isCellNum:true
                 }
             },
             messages: {
