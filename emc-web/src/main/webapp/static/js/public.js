@@ -97,7 +97,7 @@ $(function () {
     //默认时间段
     if (getCookie("dateType") == null || getCookie("dateType") == "") {
         $.ajax({
-            url: _web + "/tools/search/season",
+            url: _web + "/tools/search/year",
             type: "POST",
             async:false,
             dataType: "json",
