@@ -306,7 +306,7 @@ public class ConsAnalysisController {
         cellName.put("oilBq", "油单耗量本期");
         cellName.put("oilTq", "油单耗量同期");
         cellName.put("oilAn", "油单耗量同比");
-        List<Map<String, Object>> cellValues = null;//列值
+        List<Map<String, Object>> cellValues = new ArrayList<>();//列值
         OutputStream out = null;
         try {
             /*封装条件*/
@@ -342,6 +342,7 @@ public class ConsAnalysisController {
             out.flush();
             out.close();
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("导出分公司单耗列表EXCEL异常" + e.getMessage());
         }
     }
