@@ -262,4 +262,11 @@ public class ConsSecond implements Serializable{
         this.oilAn = oilAn;
     }
 
+    public DecimalFormat getFormat() {
+        return format;
+    }
+
+    public void setFormat(DecimalFormat format) {
+        this.format = format;
+    }
 }

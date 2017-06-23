@@ -443,7 +443,9 @@
 	        	SELECT sum(B.area) area, sum(B.dosage) dosage, SUM(B.total) total, B.energytype, B.yeardate 
 	        	FROM ( 
 	        		SELECT vu.UNITID 
-	        		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+	        		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID  
+	        		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+	        		<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
 	        		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
 	        		LEFT JOIN ( 
 	        			SELECT h.UNITID AS unitid, avg(h.AREA) area, sum(h.DOSAGE) AS dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
@@ -478,7 +480,9 @@
         	   SELECT sum(B.area) area, sum(B.dosage) dosage, SUM(B.total) total, B.energytype, B.curyear 
         	   FROM ( 
         	   		SELECT vu.UNITID 
-        	   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
+        	   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
+        	   		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+        	   		<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
         	   		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
         	   		LEFT JOIN ( 
         	   			SELECT h.UNITID AS unitid, avg(h.AREA) area, sum(h.DOSAGE) AS dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 

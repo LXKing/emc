@@ -1205,12 +1205,6 @@ function renderEnergyFlowDetail(data){
 	}
 	$('#energyFlowDetail').html(html);
 }
-/*导出能源流明细*/
-function exportEnergyFlowDetail(){
-	var searchs = $("#searchTools").serialize();
-	var export_url = _web+"/energy/monitor/exportEnergyFlowDetail?"+searchs;
-	window.location.href = export_url;
-}
 /*能源流能耗占比分布图*/
 function chart2EnergyPie(data){
     var piechart_as = echarts.init(document.getElementById('piechart_as'));
