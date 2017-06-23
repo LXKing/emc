@@ -257,57 +257,59 @@
         order by id
     </select>
     <select id="selectLineByMap" parameterType="java.util.HashMap" resultType="java.util.Map">
-        select
-        ID,
-        LINE_NAME,
-        LINE_CODE,
-        (CASE NET_TYPE_ID WHEN 1 THEN '干线' WHEN 2 THEN '支线' WHEN 3 THEN '联通线' WHEN 4 THEN '户线' ELSE '' END) NET_TYPE_NAME,
-        LENGTH,
-        CELL_NUM,
-        PART_NUM,
-        MEDIUM,
-        ORG_ID,
-        COM_ID,
-        HEAT_TYPE,FEED_ID,STATION_ID
-        from t_emc_unit_line
+        SELECT
+        l.ID,
+        l.LINE_NAME,
+        l.LINE_CODE,
+        (CASE l.NET_TYPE_ID WHEN 1 THEN '干线' WHEN 2 THEN '支线' WHEN 3 THEN '联通线' WHEN 4 THEN '户线' ELSE '' END) NET_TYPE_NAME,
+        l.LENGTH,
+        l.CELL_NUM,
+        l.PART_NUM,
+        (CASE l.HEAT_TYPE WHEN 1 THEN '集中供热' WHEN 2 THEN '区域供热' WHEN 3 THEN '尖峰供热'  ELSE '' END) HEAT_NAME,
+        s.STATION_NAME ,
+        f.FEED_NAME,
+        l.MEDIUM
+        FROM t_emc_unit_line l
+        LEFT JOIN t_emc_unit_station s on l.STATION_ID=s.ID
+        LEFT JOIN t_emc_unit_feed f on l.FEED_ID=f.ID
         where 1=1
         <if test="lineName != null and lineName !=''">
-            and  LINE_NAME =  #{lineName,jdbcType=VARCHAR}
+            and  l.LINE_NAME like concat(concat('%',#{lineName}),'%')
         </if>
         <if test="lineCode != null and lineCode !=''">
-            and  LINE_CODE =  #{lineCode,jdbcType=VARCHAR}
+            and  l.LINE_CODE like concat(concat('%',#{lineCode}),'%')
         </if>
 
         <if test="netTypeId != null and netTypeId !=''">
-            and  NET_TYPE_ID =  #{netTypeId,jdbcType=TINYINT}
+            and  l.NET_TYPE_ID =  #{netTypeId,jdbcType=TINYINT}
         </if>
 
         <if test="length != null and length!=''">
-            and  LENGTH = #{length,jdbcType=DOUBLE}
+            and  l.LENGTH = #{length,jdbcType=DOUBLE}
         </if>
         <if test="cellNum != null and cellNum!=''">
-            and CELL_NUM = #{cellNum,jdbcType=INTEGER}
+            and l.CELL_NUM = #{cellNum,jdbcType=INTEGER}
         </if>
         <if test="partNum != null and partNum!=''">
-            and  PART_NUM = #{partNum,jdbcType=INTEGER}
+            and  l.PART_NUM = #{partNum,jdbcType=INTEGER}
         </if>
         <if test="medium != null and medium!=''">
-            and  MEDIUM = #{medium,jdbcType=VARCHAR}
+            and  l.MEDIUM = #{medium,jdbcType=VARCHAR}
         </if>
         <if test="orgId != null and orgId!=''">
-            and  ORG_ID = #{orgId,jdbcType=BIGINT}
+            and  l.ORG_ID = #{orgId,jdbcType=BIGINT}
         </if>
         <if test="comId != null and comId!=''">
-            and  COM_ID = #{comId,jdbcType=VARCHAR}
+            and  l.COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         <if test="heatType != null and heatType!=''">
-            and HEAT_TYPE=#{heatType,jdbcType=TINYINT}
+            and l.HEAT_TYPE=#{heatType,jdbcType=TINYINT}
         </if>
         <if test="feedId != null and feedId != ''">
-            and FEED_ID=#{feedId,jdbcType=VARCHAR}
+            and l.FEED_ID=#{feedId,jdbcType=VARCHAR}
         </if>
         <if test="stationId != null and stationId != ''">
-            and STATION_ID = #{stationId,jdbcType=VARCHAR}
+            and l.STATION_ID = #{stationId,jdbcType=VARCHAR}
         </if>
         order by id
     </select>

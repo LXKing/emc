@@ -211,6 +211,9 @@ public class SecondnetController {
         cellName.put("LENGTH", "长度");
         cellName.put("CELL_NUM", "小室数量");
         cellName.put("PART_NUM", "管段数量");
+        cellName.put("HEAT_NAME", "供热类型");
+        cellName.put("FEED_NAME","热源名称");
+        cellName.put("STATION_NAME","热力站名称");
         cellName.put("MEDIUM", "输送介质");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
