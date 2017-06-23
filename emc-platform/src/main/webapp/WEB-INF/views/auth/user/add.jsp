@@ -172,7 +172,8 @@ $(function () {
             login: {
                 required: true,
                 isLogin: true,
-                loginUnique:true
+                loginUnique:true,
+                minlength: 2
             },
             password: {
                 required: true,
@@ -192,13 +193,14 @@ $(function () {
         messages: {
         	userName: {
                 required: icon + "请输入用户名称",
-                minlength: icon + "用户名称必须2个字符以上"
+                minlength: icon + "用户名称必须2个字符以上"	
             },
             mobile: {
                 required: icon + "请输入手机号码"
             },
             login: {
-                required: icon + "请输入登录账号"
+                required: icon + "请输入登录账号",
+                minlength: icon + "登录名称必须2个字符以上"
             },
             password: {
                 required: icon + "请输入密码",
@@ -237,9 +239,9 @@ $(function () {
 	
 	//名称校验
 	$.validator.addMethod("isName", function(value, element){
-	    var tel = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
+	    var tel = /^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]*$/;
 	    return this.optional(element) || (tel.test(value));
-	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
+	},icon +  "请输入正确的名称，只能是以汉字或字母开头的汉字、字母、数字组合！");
 	
 	//手机号码校验
 	$.validator.addMethod("isPhone", function(value, element){
@@ -257,9 +259,9 @@ $(function () {
 	
 	//登录账号校验
 	$.validator.addMethod("isLogin", function(value, element){
-	    var tel = /^([a-zA-Z0-9]{1,20}$)/;
+	    var tel = /^[a-zA-Z][a-zA-Z0-9]*$/;
 	    return this.optional(element) || (tel.test(value));
-	}, icon + "请输入正确的登录账号,只能是英文字母和数字");
+	}, icon + "请输入正确的登录账号，只能是以字母开头的字母、数字组合！");
 	
 	//密码校验,支持所有数字、英文大小写、英文键盘所有特殊符号
 	$.validator.addMethod("isPassword", function(value, element){
