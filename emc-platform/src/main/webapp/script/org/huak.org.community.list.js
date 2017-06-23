@@ -177,6 +177,11 @@ function deleteCommunity(id) {
  * 导出小区信息到excel
  */
 function exportCommunity(){
+	var tableDatas = $('#community-table-list').bootstrapTable('getData');
+	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
+		layer.msg('没有数据要导出，请重新搜索！');
+		return;
+	}
 	var paramStr = formsParam({},"community-form",true);
 	var url = _platform + '/community/export?'+paramStr;
 	window.location.href = url;

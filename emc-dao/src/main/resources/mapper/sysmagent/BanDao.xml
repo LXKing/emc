@@ -24,16 +24,7 @@
     <result column="COM_ID" property="comId" jdbcType="VARCHAR" />
     <result column="COM_NAME" property="comName" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
-    <result column="PROVINCE_ID" property="provinceId" jdbcType="VARCHAR" />
-    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
-    <result column="CITY_ID" property="cityId" jdbcType="VARCHAR" />
-    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
-    <result column="COUNTY_ID" property="countyId" jdbcType="VARCHAR" />
-    <result column="COUNTY_NAME" property="countyName" jdbcType="VARCHAR" />
-    <result column="TOWM_ID" property="townId" jdbcType="VARCHAR" />
-    <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
-    <result column="VILLAGE_ID" property="villageId" jdbcType="VARCHAR" />
-    <result column="VILLAGE_NAME" property="villageName" jdbcType="VARCHAR" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
@@ -52,12 +43,7 @@
   <!-- 分页查询楼座信息 -->
   <select id="selectByPage" resultMap="BaseVOResultMap" parameterType="java.util.Map" >
     SELECT b.ID,b.BAN_NAME,c.ID COMMUNITY_ID,c.COMMUNITY_NAME,com.CNAME COM_NAME,
-    o.ORG_NAME,c.ORG_ID,c.COM_ID,b.PROVINCE_ID,b.CITY_ID,b.COUNTY_ID,b.TOWN_ID,b.VILLAGE_ID,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.PROVINCE_ID and ADM_LEVEL = '1') PROVINCE_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.CITY_ID and ADM_LEVEL = '2') CITY_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.COUNTY_ID and ADM_LEVEL = '3') COUNTY_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.TOWN_ID and ADM_LEVEL = '4') TOWN_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.VILLAGE_ID and ADM_LEVEL = '5') VILLAGE_NAME
+    o.ORG_NAME,c.ORG_ID,c.COM_ID,b.ADDR
 	FROM t_emc_unit_ban b,t_emc_unit_community c,t_emc_company com,t_emc_org o
 	WHERE b.COMMUNITY_ID = c.id AND b.ORG_ID = o.id AND b.COM_ID = com.id
     <if test="banName!=null and banName!=''"> and b.BAN_NAME LIKE CONCAT('%',#{banName,jdbcType=VARCHAR},'%')</if>
@@ -69,12 +55,7 @@
   <!-- 导出楼座信息 -->
   <select id="export" resultType="java.util.Map" parameterType="java.util.Map" >
     SELECT b.ID,b.BAN_NAME,c.ID COMMUNITY_ID,c.COMMUNITY_NAME,com.CNAME COM_NAME,
-    o.ORG_NAME,c.ORG_ID,c.COM_ID,b.PROVINCE_ID,b.CITY_ID,b.COUNTY_ID,b.TOWN_ID,b.VILLAGE_ID,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.PROVINCE_ID and ADM_LEVEL = '1') PROVINCE_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.CITY_ID and ADM_LEVEL = '2') CITY_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.COUNTY_ID and ADM_LEVEL = '3') COUNTY_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.TOWN_ID and ADM_LEVEL = '4') TOWN_NAME,
-	(select ADM_NAME from t_emc_sys_administrative where ADM_CODE = b.VILLAGE_ID and ADM_LEVEL = '5') VILLAGE_NAME
+    o.ORG_NAME,c.ORG_ID,c.COM_ID,b.ADDR
 	FROM t_emc_unit_ban b,t_emc_unit_community c,t_emc_company com,t_emc_org o
 	WHERE b.COMMUNITY_ID = c.id AND b.ORG_ID = o.id AND b.COM_ID = com.id
     <if test="banName!=null and banName!=''"> and b.BAN_NAME LIKE CONCAT('%',#{banName,jdbcType=VARCHAR},'%')</if>

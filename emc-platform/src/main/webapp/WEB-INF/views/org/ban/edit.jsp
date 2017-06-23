@@ -167,21 +167,6 @@ $(function () {
             communityId: {
                 required: true  
             },
-            provinceId: {
-                required: true
-            },
-            cityId: {
-                required: true
-            },
-            countyId: {
-                required: true
-            },
-            townId: {
-                required: true
-            },
-            villageId: {
-                required: true
-            },
             addr: {
                 required: true
             }
@@ -199,21 +184,6 @@ $(function () {
             },
             communityId:{
             	required: icon + "请选择所属小区"
-            },
-            provinceId: {
-                required: icon + "请选择所属省"
-            },
-            cityId: {
-                required: icon + "请选择所属市"
-            },
-            countyId: {
-                required: icon + "请选择所属县"
-            },
-            townId: {
-                required: icon + "请选择所属乡"
-            },
-            villageId: {
-                required: icon + "请选择所属村"
             },
             addr: {
                 required: icon + "请填写详细地址"
@@ -242,10 +212,11 @@ $(function () {
         }
     });
 	
-    $.validator.addMethod("isName", function(value, element){
-		var name = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
-	    return this.optional(element) || (name.test(value));
-	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
+    //名称校验
+	$.validator.addMethod("isName", function(value, element){
+	    var tel = /^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]*$/;
+	    return this.optional(element) || (tel.test(value));
+	},icon +  "请输入正确的名称，只能是以汉字或字母开头的汉字、字母、数字组合！");
     
     $.validator.addMethod("banNameUnique", function(value, element) {
     	if(value=='${ban.banName}'&&top.$('#communityId').val()=='${ban.communityId}') return true;

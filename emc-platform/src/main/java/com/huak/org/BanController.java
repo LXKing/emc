@@ -216,11 +216,7 @@ public class BanController {
 	        cellName.put("community_name", "小区名称");
 	        cellName.put("com_name", "所属公司");
 	        cellName.put("org_name", "所属机构");
-	        cellName.put("province_name", "所属省");
-	        cellName.put("city_name", "所属市");
-	        cellName.put("county_name", "所属县");
-	        cellName.put("town_name", "所属乡");
-	        cellName.put("village_name", "所属村");
+	        cellName.put("addr", "详细地址");
 	        List<Map<String, Object>> cellValues = banService.exportBan(param);
             if(cellValues==null){
             	jo.put(Constants.MSG, "导出失败");

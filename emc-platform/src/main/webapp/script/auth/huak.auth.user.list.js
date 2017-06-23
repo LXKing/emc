@@ -444,6 +444,11 @@ function deleteUser(id) {
  * 导出用户信息到excel
  */
 function exportUser(){
+	var tableDatas = $('#user-table-list').bootstrapTable('getData');
+	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
+		layer.msg('没有数据要导出，请重新搜索！');
+		return;
+	}
 	var paramStr = formsParam({},"user-form",true);
 	var url = _platform + '/user/export?'+paramStr;
 	window.location.href = url;

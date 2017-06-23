@@ -186,6 +186,11 @@ function deletecell(id) {
  * 导出楼座信息到excel
  */
 function exportCell(){
+	var tableDatas = $('#cell-table-list').bootstrapTable('getData');
+	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
+		layer.msg('没有数据要导出，请重新搜索！');
+		return;
+	}
 	var paramStr = formsParam({},"cell-form",true);
 	var url = _platform + '/cell/export?'+paramStr;
 	window.location.href = url;

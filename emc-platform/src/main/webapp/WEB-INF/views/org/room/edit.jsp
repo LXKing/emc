@@ -355,10 +355,11 @@ $(function () {
         }
     });
 	
-    $.validator.addMethod("isName", function(value, element){
-		var name = /^([\u4e00-\u9fa5_a-zA-Z0-9]{1,20}$)/;
-	    return this.optional(element) || (name.test(value));
-	},icon +  "请输入正确的名称,汉字、字母和数字的组合");
+    //名称校验
+	$.validator.addMethod("isName", function(value, element){
+	    var tel = /^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]*$/;
+	    return this.optional(element) || (tel.test(value));
+	},icon +  "请输入正确的名称，只能是以汉字或字母开头的汉字、字母、数字组合！");
 	
 	$.validator.addMethod("isNum", function(value, element){
 		var num = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;

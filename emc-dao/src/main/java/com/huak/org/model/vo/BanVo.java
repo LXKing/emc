@@ -12,16 +12,7 @@ public class BanVo implements Serializable {
 	private String orgName;
 	private String comId;
 	private String orgId;
-	private String provinceId;
-	private String provinceName;
-	private String cityId;
-	private String cityName;
-	private String countyId;
-	private String countyName;
-	private String townId;
-	private String townName;
-	private String villageId;
-	private String villageName;
+	private String addr;
 	public String getId() {
 		return id;
 	}
@@ -70,65 +61,11 @@ public class BanVo implements Serializable {
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
 	}
-	public String getProvinceId() {
-		return provinceId;
+	public String getAddr() {
+		return addr;
 	}
-	public void setProvinceId(String provinceId) {
-		this.provinceId = provinceId;
-	}
-	public String getProvinceName() {
-		return provinceName;
-	}
-	public void setProvinceName(String provinceName) {
-		this.provinceName = provinceName;
-	}
-	public String getCityId() {
-		return cityId;
-	}
-	public void setCityId(String cityId) {
-		this.cityId = cityId;
-	}
-	public String getCityName() {
-		return cityName;
-	}
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
-	}
-	public String getCountyId() {
-		return countyId;
-	}
-	public void setCountyId(String countyId) {
-		this.countyId = countyId;
-	}
-	public String getCountyName() {
-		return countyName;
-	}
-	public void setCountyName(String countyName) {
-		this.countyName = countyName;
-	}
-	public String getTownId() {
-		return townId;
-	}
-	public void setTownId(String townId) {
-		this.townId = townId;
-	}
-	public String getTownName() {
-		return townName;
-	}
-	public void setTownName(String townName) {
-		this.townName = townName;
-	}
-	public String getVillageId() {
-		return villageId;
-	}
-	public void setVillageId(String villageId) {
-		this.villageId = villageId;
-	}
-	public String getVillageName() {
-		return villageName;
-	}
-	public void setVillageName(String villageName) {
-		this.villageName = villageName;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 	
 }

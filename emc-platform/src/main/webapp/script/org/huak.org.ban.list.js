@@ -83,28 +83,8 @@ $(function () {
                 align: 'center'
             },
             {
-                title: '所属省',
-                field: 'provinceName',
-                align: 'center'
-            },
-            {
-                title: '所属市',
-                field: 'cityName',
-                align: 'center'
-            },
-            {
-                title: '所属县',
-                field: 'countyName',
-                align: 'center'
-            },
-            {
-                title: '所属乡',
-                field: 'townName',
-                align: 'center'
-            },
-            {
-                title: '所属村',
-                field: 'villageName',
+                title: '详细地址',
+                field: 'addr',
                 align: 'center'
             },
             {
@@ -206,6 +186,11 @@ function deleteban(id) {
  * 导出楼座信息到excel
  */
 function exportBan(){
+	var tableDatas = $('#ban-table-list').bootstrapTable('getData');
+	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
+		layer.msg('没有数据要导出，请重新搜索！');
+		return;
+	}
 	var paramStr = formsParam({},"ban-form",true);
 	var url = _platform + '/ban/export?'+paramStr;
 	window.location.href = url;
