@@ -91,6 +91,10 @@ $(function () {
         $('#toolOrgType').val("");
     }else{
         var toolOrgType = getCookie("toolOrgType");
+        $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + (Number(toolOrgType)+1) + ".png");
+        $(".index_menuBox.pull-left").removeClass("on");
+
+        $($(".index_menuBox.pull-left")[toolOrgType]).addClass("on");
         $('#toolOrgType').val(toolOrgType);
     }
 
