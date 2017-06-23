@@ -25,7 +25,7 @@
         d2.dht tqdht,d2.bqwater tqwater,d2.bqe tqelectric,d2.bqg tqgas,d2.bqh tqheat,d2.bqc tqcoal,d2.bql tqoil
         from
 
-        (SELECT  ROUND(IFNULL(sum(a.BM)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
+        (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '3' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqg,
@@ -53,7 +53,7 @@
         ) a
         GROUP BY a.UNITTYPE)d1
         LEFT JOIN
-        (SELECT  ROUND(IFNULL(sum(a.BM)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
+        (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '3' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqg,
@@ -83,7 +83,7 @@
     </select>
 
     <select id="selectEnergyProportion" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT  ROUND(IFNULL(sum(a.BM)/AVG(a.AREA),0),2) value ,
+        SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) value ,
             CASE a.UNITTYPE     WHEN '1' THEN '供热源'
 								WHEN '2' THEN '一次网'
 								WHEN '3' THEN '换热站'
@@ -159,7 +159,7 @@
         END AS NAME
         from
 
-        (SELECT  ROUND(IFNULL(sum(a.BM)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
+        (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '3' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqg,
@@ -187,7 +187,7 @@
         ) a
         GROUP BY a.UNITTYPE)d1
         LEFT JOIN
-        (SELECT  ROUND(IFNULL(sum(a.BM)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
+        (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '3' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqg,
@@ -229,7 +229,7 @@
         END AS NAME
         from
 
-        (SELECT  ROUND(IFNULL(sum(a.BM)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
+        (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '3' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqg,

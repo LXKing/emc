@@ -124,10 +124,13 @@ public class EnergyTopController {
         logger.info("查询首页顶部供热源的数据");
         JSONObject jo = new JSONObject();
         Map<String,String> params = new HashMap<String,String>();
+        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+
+        params.put("comId",org.getComId());
         params.put("orgId",toolVO.getToolOrgId());
         params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate());
-        params.put("endTime",toolVO.getToolEndDate());
+        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
         String eTotal=null;
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
@@ -245,11 +248,14 @@ public class EnergyTopController {
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         logger.info("查询首页顶部换热站的数据");
         JSONObject jo = new JSONObject();
+        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+
         Map<String,String> params = new HashMap<String,String>();
+        params.put("comId",org.getComId());
         params.put("orgId",toolVO.getToolOrgId());
         params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate());
-        params.put("endTime",toolVO.getToolEndDate());
+        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
         String eTotal=null;
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
