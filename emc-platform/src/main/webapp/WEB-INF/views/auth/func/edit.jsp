@@ -222,7 +222,9 @@
             rules: {
                 funcName: {
                     required: true,
-                    minlength: 2
+                    minlength: 2,
+                    isChinaName:true,
+                    checkFuncName:true
                 },
                 uname: {
                     required: true,
@@ -230,8 +232,12 @@
                     minlength: 4,
                     isEnglishName:true
                 },
+                issearch:{
+                    checkFuncSearch:true
+                },
                 seq: {
-                    required: true
+                    required: true,
+                    isSeq:true
                 }
             },
             messages: {
