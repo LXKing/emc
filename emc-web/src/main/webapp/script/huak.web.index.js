@@ -1009,7 +1009,6 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            console.info(result);
             if (result.flag) {
                 /*仪表盘*/
                 var kedu1 =0; //蓝色的刻度
@@ -1019,30 +1018,46 @@ function chart07Fun(){
                 var bm_total = 0;
                 var currentDays = result.object.currentDays;
                 var planDays = result.object.planDays;
-                if(result.object.isInCurrentSeason == true){
-                    kedu1 =(currentDays/planDays)*0.75;
-                }else{
-                    kedu1 = 0.75;
-                }
-                debugger;
                 currentPlan =result.object.currentPlan;
                 bm_total =result.object.bm_total;
-                initChart(kedu1,currentPlan,bm_total);
-                if(planDays == 0 ){
-                    if(currentPlan == 0){
-                        pcd = 0 ;
+
+                if(result.object.isInCurrentSeason == true){
+                    kedu1 =(currentDays/planDays)*0.75;
+                    if(planDays == 0 ){
+                        if(currentPlan == 0){
+                            pcd = 0 ;
+                        }else{
+                            pcd = (bm_total - 0)/currentPlan*100;
+                        }
+                        pcdz = bm_total;
                     }else{
-                        pcd = (bm_total - 0)/currentPlan*100;
+                        if(currentPlan != 0){
+                            pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
+                        }else{
+                            pcd = 0;
+                        }
+                        pcdz = bm_total - (currentDays/planDays)*currentPlan;
                     }
-                    pcdz = bm_total;
                 }else{
-                    if(currentPlan != 0){
-                        pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
+                    kedu1 = 0.75;
+                    if(planDays == 0 ){
+                        if(currentPlan == 0){
+                            pcd = 0 ;
+                        }else{
+                            pcd = (bm_total - 0)/currentPlan*100;
+                        }
+                        pcdz = bm_total;
                     }else{
-                        pcd = 0;
+                        if(currentPlan != 0){
+                            pcd = (bm_total -currentPlan)/currentPlan*100;
+                        }else{
+                            pcd = 0;
+                        }
+                        pcdz = bm_total -currentPlan;
                     }
-                    pcdz = bm_total - (currentDays/planDays)*currentPlan;
                 }
+
+                initChart(kedu1,currentPlan,bm_total);
 
                 pcd =  toDecimal(pcd);
 
@@ -1167,7 +1182,6 @@ function chart07Fun(){
 
 function initChart(kedu1,mx,bm_total){
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
-    debugger;
     var max = returnFloat(mx/0.75)
     if(max == undefined ){
         max = 1;

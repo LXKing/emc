@@ -261,4 +261,12 @@ public class EnergySecond implements Serializable {
     public void setOilAn(Double oilAn) {
         this.oilAn = oilAn;
     }
+
+    public DecimalFormat getFormat() {
+        return format;
+    }
+
+    public void setFormat(DecimalFormat format) {
+        this.format = format;
+    }
 }
