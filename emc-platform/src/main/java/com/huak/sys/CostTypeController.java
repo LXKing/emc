@@ -141,7 +141,6 @@ public class CostTypeController {
         logger.info("导出成本类型列表EXCEL");
         String workBookName = "成本类型列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-        cellName.put("ID", "主键");
         cellName.put("NAME_ZH", "类型名称(中文)");
         cellName.put("NAME_EN", "类型名称(英文)");
         cellName.put("DOSAGE_UNIT", "用量单位");

@@ -9,7 +9,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, cname,NEXT_DES
+    ID, CNAME,NEXT_DES
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
