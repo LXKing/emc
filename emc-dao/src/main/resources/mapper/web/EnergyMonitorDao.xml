@@ -105,23 +105,29 @@
 	</choose>
   </sql>
   <select id="groupEnergy" resultType="java.util.Map" parameterType="java.util.Map">
-  	select (D.waterEnergy+D.electricEnergy+D.gasEnergy+D.coalEnergy+D.oilEnergy) groupEnergy,D.* from (
-		SELECT sum(C.total) AS groupEnergy, 
-			sum( CASE C.energyType WHEN '4' THEN C.total ELSE 0 END) AS hotEnergy, 
-			sum( CASE C.energyType WHEN '2' THEN C.total ELSE 0 END ) AS electricEnergy, 
-			SUM( CASE C.energyType WHEN '1' THEN C.total ELSE 0 END ) AS waterEnergy, 
-			SUM( CASE C.energyType WHEN '3' THEN C.total ELSE 0 END ) AS gasEnergy, 
-			SUM( CASE C.energyType WHEN '5' THEN C.total ELSE 0 END ) AS coalEnergy, 
-			SUM( CASE C.energyType WHEN '6' THEN C.total ELSE 0 END ) AS oilEnergy, C.yeardate,
+  	select (D.water+D.electric+D.gas+D.coal+D.oil) groupEnergy,D.* from (
+		SELECT 
+			sum( CASE C.energyType WHEN '4' THEN C.dosage ELSE 0 END) AS hotEnergy, 
+			sum( CASE C.energyType WHEN '2' THEN C.dosage ELSE 0 END ) AS electricEnergy, 
+			SUM( CASE C.energyType WHEN '1' THEN C.dosage ELSE 0 END ) AS waterEnergy, 
+			SUM( CASE C.energyType WHEN '3' THEN C.dosage ELSE 0 END ) AS gasEnergy, 
+			SUM( CASE C.energyType WHEN '5' THEN C.dosage ELSE 0 END ) AS coalEnergy, 
+			SUM( CASE C.energyType WHEN '6' THEN C.dosage ELSE 0 END ) AS oilEnergy,
+			sum( CASE C.energyType WHEN '2' THEN C.total ELSE 0 END ) AS electric, 
+			SUM( CASE C.energyType WHEN '1' THEN C.total ELSE 0 END ) AS water, 
+			SUM( CASE C.energyType WHEN '3' THEN C.total ELSE 0 END ) AS gas, 
+			SUM( CASE C.energyType WHEN '5' THEN C.total ELSE 0 END ) AS coal, 
+			SUM( CASE C.energyType WHEN '6' THEN C.total ELSE 0 END ) AS oil, C.yeardate,
 			( CASE WHEN DATE_FORMAT(C.yeardate, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) curyear 
 		FROM ( 
-			SELECT SUM(B.total) total, B.energytype, B.yeardate 
+			SELECT SUM(B.dosage) dosage,SUM(B.total) total, B.energytype, B.yeardate 
 			FROM ( SELECT vu.UNITID FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
 				   <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> 
+				   <if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> 
 				 ) 
 			WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
 			LEFT JOIN ( 
-				SELECT h.UNITID AS unitid, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
+				SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
 				DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate 
 				FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
 				WHERE 1 = 1 <include refid="cur_last_time" /> 
@@ -163,32 +169,43 @@
 	  		SELECT '1' unittype FROM DUAL UNION SELECT '2' unittype FROM DUAL UNION SELECT '3' unittype FROM DUAL UNION 
 	  		SELECT '4' unittype FROM DUAL UNION SELECT '5' unittype FROM DUAL) type 
 	  		LEFT JOIN( 
-	  			select (CC.curWaterEnergy+CC.curElectricEnergy+CC.curGasEnergy+CC.curCoalEnergy+CC.curOilEnergy) curGroupEnergy,
-				(CC.lastWaterEnergy+CC.lastElectricEnergy+CC.lastGasEnergy+CC.lastCoalEnergy+CC.lastOilEnergy) lastGroupEnergy,
+	  			select (CC.curWater+CC.curElectric+CC.curGas+CC.curCoal+CC.curOil) curGroupEnergy,
+				(CC.lastWater+CC.lastElectric+CC.lastGas+CC.lastCoal+CC.lastOil) lastGroupEnergy,
 				CC.* from (
 					SELECT C.UNITTYPE,
-		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastWaterEnergy, 
-		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '1' THEN C.total ELSE 0 END ) AS curWaterEnergy, 
-		  			sum( CASE WHEN C.energyType = '2' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastElectricEnergy, 
-		  			sum( CASE WHEN C.energyType = '2' AND C.season = '1' THEN C.total ELSE 0 END ) AS curElectricEnergy, 
-		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastGasEnergy, 
-		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '1' THEN C.total ELSE 0 END ) AS curGasEnergy, 
-		  			sum( CASE WHEN C.energyType = '4' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastHotEnergy, 
-		  			sum( CASE WHEN C.energyType = '4' AND C.season = '1' THEN C.total ELSE 0 END ) AS curHotEnergy, 
-		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastCoalEnergy, 
-		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '1' THEN C.total ELSE 0 END ) AS curCoalEnergy, 
-		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastOilEnergy, 
-		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '1' THEN C.total ELSE 0 END ) AS curOilEnergy 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastWaterEnergy, 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curWaterEnergy, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastElectricEnergy, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curElectricEnergy, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastGasEnergy, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curGasEnergy, 
+		  			sum( CASE WHEN C.energyType = '4' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastHotEnergy, 
+		  			sum( CASE WHEN C.energyType = '4' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curHotEnergy, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastCoalEnergy, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curCoalEnergy, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastOilEnergy, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curOilEnergy, 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastWater, 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '1' THEN C.total ELSE 0 END ) AS curWater, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastElectric, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '1' THEN C.total ELSE 0 END ) AS curElectric, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastGas, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '1' THEN C.total ELSE 0 END ) AS curGas, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastCoal, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '1' THEN C.total ELSE 0 END ) AS curCoal, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastOil, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '1' THEN C.total ELSE 0 END ) AS curOil 
 		  			FROM ( 
-		  				SELECT A.UNITTYPE, SUM(B.total) total, B.energytype, B.season 
+		  				SELECT A.UNITTYPE, SUM(B.dosage) dosage,SUM(B.total) total, B.energytype, B.season 
 		  				FROM ( 
 		  					SELECT vu.UNITID, vu.UNITTYPE 
 		  					FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>  ) 
+		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+		  					<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>  ) 
 		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 		  					AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 		  					LEFT JOIN ( 
-		  						SELECT h.UNITID AS unitid,  
+		  						SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage,   
 		  						sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
 		  						( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
 		  						FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
@@ -232,37 +249,48 @@
 	  		SELECT '1' unittype FROM DUAL UNION SELECT '2' unittype FROM DUAL UNION SELECT '3' unittype FROM DUAL UNION 
 	  		SELECT '4' unittype FROM DUAL UNION SELECT '5' unittype FROM DUAL) type 
 	  		LEFT JOIN( 
-	  			select (CC.curWaterEnergy+CC.curElectricEnergy+CC.curGasEnergy+CC.curCoalEnergy+CC.curOilEnergy) curGroupEnergy,
-				(CC.lastWaterEnergy+CC.lastElectricEnergy+CC.lastGasEnergy+CC.lastCoalEnergy+CC.lastOilEnergy) lastGroupEnergy,
+	  			select (CC.curWater+CC.curElectric+CC.curGas+CC.curCoal+CC.curOil) curGroupEnergy,
+				(CC.lastWater+CC.lastElectric+CC.lastGas+CC.lastCoal+CC.lastOil) lastGroupEnergy,
 				CC.* from (
 					SELECT C.UNITTYPE,
-		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastWaterEnergy, 
-		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '1' THEN C.total ELSE 0 END ) AS curWaterEnergy, 
-		  			sum( CASE WHEN C.energyType = '2' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastElectricEnergy, 
-		  			sum( CASE WHEN C.energyType = '2' AND C.season = '1' THEN C.total ELSE 0 END ) AS curElectricEnergy, 
-		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastGasEnergy, 
-		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '1' THEN C.total ELSE 0 END ) AS curGasEnergy, 
-		  			sum( CASE WHEN C.energyType = '4' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastHotEnergy, 
-		  			sum( CASE WHEN C.energyType = '4' AND C.season = '1' THEN C.total ELSE 0 END ) AS curHotEnergy, 
-		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastCoalEnergy, 
-		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '1' THEN C.total ELSE 0 END ) AS curCoalEnergy, 
-		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastOilEnergy, 
-		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '1' THEN C.total ELSE 0 END ) AS curOilEnergy 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastWaterEnergy, 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curWaterEnergy, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastElectricEnergy, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curElectricEnergy, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastGasEnergy, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curGasEnergy, 
+		  			sum( CASE WHEN C.energyType = '4' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastHotEnergy, 
+		  			sum( CASE WHEN C.energyType = '4' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curHotEnergy, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastCoalEnergy, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curCoalEnergy, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '0' THEN C.dosage ELSE 0 END ) AS lastOilEnergy, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '1' THEN C.dosage ELSE 0 END ) AS curOilEnergy, 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastWater, 
+		  			SUM( CASE WHEN C.energyType = '1' AND C.season = '1' THEN C.total ELSE 0 END ) AS curWater, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastElectric, 
+		  			sum( CASE WHEN C.energyType = '2' AND C.season = '1' THEN C.total ELSE 0 END ) AS curElectric, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastGas, 
+		  			SUM( CASE WHEN C.energyType = '3' AND C.season = '1' THEN C.total ELSE 0 END ) AS curGas, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastCoal, 
+		  			SUM( CASE WHEN C.energyType = '5' AND C.season = '1' THEN C.total ELSE 0 END ) AS curCoal, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '0' THEN C.total ELSE 0 END ) AS lastOil, 
+		  			SUM( CASE WHEN C.energyType = '6' AND C.season = '1' THEN C.total ELSE 0 END ) AS curOil 
 		  			FROM ( 
-		  				SELECT A.UNITTYPE, SUM(B.total) total, B.energytype, B.season 
+		  				SELECT A.UNITTYPE, SUM(B.dosage) dosage,SUM(B.total) total, B.energytype, B.season 
 		  				FROM ( 
 		  					SELECT vu.UNITID, vu.UNITTYPE 
 		  					FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>  ) 
+		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+		  					<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>  ) 
 		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 		  					AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 		  					LEFT JOIN ( 
-		  						SELECT h.UNITID AS unitid,  
+		  						SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage,   
 		  						sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
 		  						( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
 		  						FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
 		  						WHERE 1 = 1 <include refid="cur_last_time" /> 
-		  						GROUP BY unitid, energytype,season  
+		  						GROUP BY unitid, energytype,season 
 		  					) B ON A.UNITID = B.unitid 
 		  				WHERE B.total IS NOT NULL 
 		  				GROUP BY A.UNITTYPE, B.energytype, B.season 
@@ -282,7 +310,8 @@
 	  	FROM( 
 	  		SELECT vu.UNITID, vu.UNITTYPE 
 	  		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-			<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>) 
+			<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+			<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
 	  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 	  			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  		LEFT JOIN ( 
@@ -305,7 +334,8 @@
   	FROM( 
   		SELECT vu.UNITID, vu.UNITTYPE 
   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>) 
+		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+		<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
   		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
   			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
   		LEFT JOIN ( 
@@ -329,7 +359,8 @@
   	LEFT JOIN (
 	  	SELECT A.UNITTYPE, IFNULL(sum(case B.season when '0' then B.total end),0) lastTotal, IFNULL(sum(case B.season when '1' then B.total end),0) curTotal 
 	  	FROM( SELECT vu.UNITID, vu.UNITTYPE FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>) 
+		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+		<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
 	  	WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 	  		  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  	LEFT JOIN ( 
