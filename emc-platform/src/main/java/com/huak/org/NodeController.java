@@ -77,10 +77,8 @@ public class NodeController {
             obj.setComId(comId);
             Map<String,Object> params = new HashMap<>();
             params.put("comId",comId);
-            params.put("orgId",pOrgId);
             modelMap.put(Constants.OBJECT,obj);
             modelMap.put("oncenet",nodeService.selectNetAll(params));
-            modelMap.put("secondnet",nodeService.selectLineAll(params));
             modelMap.put("feed",nodeService.selectFeedByMap(params));
         } catch (Exception e) {
                 logger.error("跳转到热力站编辑页出错！");

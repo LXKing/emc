@@ -55,7 +55,7 @@
                                         <select id="manageTypeId" name="manageTypeId" class="chosen-select form-control"  >
                                             <option value="">请选择管理类型</option>
                                             <c:forEach items="${sysDic['managetype']}" var="type">
-                                                <option <c:if test="${node.manageTypeId eq type.id}">selected="selected" </c:if> value="${type.id}">${type.des}</option>
+                                                <option  value="${type.seq}">${type.des}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
