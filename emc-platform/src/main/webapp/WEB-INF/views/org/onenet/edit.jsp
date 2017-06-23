@@ -27,7 +27,7 @@
                             class="red">*</span>管网代码：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="netCode" class="form-control" type="text" value="${oncenet.netCode}" maxlength="16" placeholder="请输入管网代码">
+                        <input name="netCode" id="netCode" class="form-control" type="text" value="${oncenet.netCode}" maxlength="16" placeholder="请输入管网代码">
                     </div>
                 </div>
                 <div class="form-group">
@@ -156,7 +156,34 @@
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
         }, "管网名称已存在");
-// 管线长度数值校验
+        $.validator.addMethod("checkCodeUnique", function (value, element) {
+            var netCode = $(top.document).find('#netCode').val();
+            var comId = $(top.document).find("#comId").val();
+           // alert(netCode+"--"+comId);
+            var deferred = $.Deferred();//创建一个延迟对象
+            if("${oncenet.netCode}" == $(top.document).find("#netCode").val()){
+                //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+                deferred.resolve();
+            }else {
+                $.ajax({
+                    url: _platform + '/oncenet/checkcode',
+                    type: 'POST',
+                    async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {netCode: netCode, comId: comId},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (!result.flag) {
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
+                    }
+                });
+            }
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, "管网代码已存在");
+        // 管线长度数值校验
         $.validator.addMethod("isNumber", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             var reg = new RegExp("^[0-9]+(.[0-9]{2})?$");
@@ -263,7 +290,7 @@
                 var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
-                alert($form.serialize());
+               // alert($form.serialize());
                 $.ajax({
                     url: _platform + '/oncenet/editvalue',
                     data: $form.serialize(),

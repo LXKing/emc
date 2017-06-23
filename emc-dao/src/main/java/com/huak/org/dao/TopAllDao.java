@@ -26,7 +26,7 @@ public interface TopAllDao {
 
     public String selectGetNetLengh(Map<String, String> paramsMap);
 
-    public String selectGetNetCost(Map<String, String> paramsMap);
+    public CostVo selectGetNetCost(Map<String, String> paramsMap);
 
     public String selectTopStationTotalByMap(Map<String, String> paramsMap);
 
