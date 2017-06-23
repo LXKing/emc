@@ -71,17 +71,20 @@
   <!-- selectUser2Excel 导出符合条件的用户信息到excel -->
   <select id="selectUser2Excel" parameterType="java.util.Map" resultType="java.util.Map" >
   	select 
-  	 <include refid="Base_Column_List" />
-    from t_emc_auth_user
-    where 1=1
-    <if test="userName!=null and userName!=''"> and USER_NAME LIKE CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
-    <if test="userAccount!=null and userAccount!=''"> and LOGIN LIKE CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')</if>
-  	<if test="userStatus!=null and userStatus!=''"> and USE_STATUS = #{userStatus,jdbcType=VARCHAR}</if>
-  	<if test="creator!=null and creator!=''"> and CREATOR LIKE CONCAT('%',#{creator,jdbcType=VARCHAR},'%')</if>
-  	<if test="cStartTime!=null and cStartTime!=''"> and CREATE_TIME >= #{cStartTime,jdbcType=VARCHAR}</if>
-  	<if test="cEndTime!=null and cEndTime!=''"> and CREATE_TIME &lt;= #{cEndTime,jdbcType=VARCHAR}</if>
-  	<if test="lStartTime!=null and lStartTime!=''"> and LOGIN_TIME >= #{lStartTime,jdbcType=VARCHAR}</if>
-  	<if test="lEndTime!=null and lEndTime!=''"> and LOGIN_TIME &lt;= #{lEndTime,jdbcType=VARCHAR}</if>
+	  	u1.ID, u1.LOGIN, u1.PASSWORD, u1.USER_NAME, u1.MOBILE, u1.MAIL, u1.LOGIN_TIME, u1.LAST_LOGIN_TIME, u1.LOGIN_NUM, 
+	    (case u1.USE_STATUS when '0' then '启用' when '1' then '禁用' end) USE_STATUS, u1.MEMO, u1.ORG_ID,u1.CREATOR, 
+	    u1.CREATE_TIME,u1.EMP_ID,u2.USER_NAME CREATE_NAME
+	from t_emc_auth_user u1 LEFT JOIN t_emc_auth_user u2 on u1.CREATOR = u2.ID
+	where 1=1
+    <if test="orgId!=null and orgId!=''"> and u1.ORG_ID = #{orgId,jdbcType=VARCHAR}</if>
+    <if test="userName!=null and userName!=''"> and u1.USER_NAME LIKE CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
+    <if test="userAccount!=null and userAccount!=''"> and u1.LOGIN LIKE CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')</if>
+  	<if test="userStatus!=null and userStatus!=''"> and u1.USE_STATUS = #{userStatus,jdbcType=VARCHAR}</if>
+  	<if test="creator!=null and creator!=''"> and u2.USER_NAME LIKE CONCAT('%',#{creator,jdbcType=VARCHAR},'%')</if>
+  	<if test="cStartTime!=null and cStartTime!=''"> and u1.CREATE_TIME >= #{cStartTime,jdbcType=VARCHAR}</if>
+  	<if test="cEndTime!=null and cEndTime!=''"> and u1.CREATE_TIME &lt;= #{cEndTime,jdbcType=VARCHAR}</if>
+  	<if test="lStartTime!=null and lStartTime!=''"> and u1.LOGIN_TIME >= #{lStartTime,jdbcType=VARCHAR}</if>
+  	<if test="lEndTime!=null and lEndTime!=''"> and u1.LOGIN_TIME &lt;= #{lEndTime,jdbcType=VARCHAR}</if>
   </select>
   
   <!-- 删除用户信息，可批量 -->
