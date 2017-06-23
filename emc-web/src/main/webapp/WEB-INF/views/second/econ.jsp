@@ -22,12 +22,12 @@
     <div class="col-lg-12 mb14  ">
         <div class=" index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class="pull-left groupEnergyTit energyTit"><i></i>集团总能耗<small class="font-sm">Energy Monitoring</small></div>
+                <div class="pull-left groupEnergyTit energyTit"><i></i>总能耗<small class="font-sm">Energy Monitoring</small></div>
             </div>
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
                     <div class="cb-header">
-                        <span class="cb-title">集团总能耗 (单位: GJ)</span>
+                        <span class="cb-title">总能耗 (单位: tce)</span>
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
                     <h3 id="groupTotal"><!--760.4--></h3>
-                    <div class="small">集团总能耗 (GJ/m3)</div>
+                    <div class="small">总能耗 (tce)</div>
                     <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
@@ -55,7 +55,7 @@
                         <span class="energy-list-name">水能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="waterTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">tce</span>
                             <span class="energy-list-proportion " id="waterchangeRate"></span>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <span class="energy-list-name">电能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="electricTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">tce</span>
                             <span class="energy-list-proportion" id="elechangeRate"></span>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                         <span class="energy-list-name">气能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="gasTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">tce</span>
                             <span class="energy-list-proportion " id="gaschangeRate"></span>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <span class="energy-list-name">热能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="hotTotal"></span>
-                            <span class="energy-list-measure">GJ</span>
+                            <span class="energy-list-measure">tce</span>
                             <span class="energy-list-proportion" id="hotchangeRate"></span>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                         <span class="energy-list-name">煤能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="coalTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure ">tce</span>
                             <span class="energy-list-proportion" id="coalchangeRate"></span>
                         </div>
                     </div>
@@ -233,12 +233,13 @@
                     <thead>
                     <tr class="first_tr">
                         <td>能源站</td>
-                        <td>能源总量（万GJ）</td>
-                        <td>水能总量（T）</td>
-                        <td>电耗总量(Kw/h)</td>
-                        <td>气能耗总量（M²）</td>
+                        <td>能源总量（tce）</td>
+                        <td>水能总量（t）</td>
+                        <td>电耗总量(kw·h)</td>
+                        <td>气能耗总量（m³）</td>
                         <td>热能耗总量（GJ）</td>
                         <td>煤能耗总量（GJ）</td>
+                        <td>油能耗总量（GJ）</td>
                     </tr>
                     </thead>
                     <tbody id="energyFlowDetail">

@@ -150,16 +150,19 @@ $(function(){
             alert("Connection error");
         },
         success : function(data) {
-            $("#groupTotal").html(data.data.groupTotal.energy.value);
-            if(data.data.groupTotal.energy.type == 1){
-                $("#groupTotal").addClass("energy_gray");
-            };
+        	$("#groupTotal").html(data.data.groupTotal.energy.value);
+        	if(data.data.groupTotal.energy.type == 1){
+        		$("#groupTotal").addClass("energy_gray");
+        	};
             if(data.data.groupTotal.changeRate.type == 1){
-                $("#groupchangeRate").addClass("energy_gray2");
+            	$("#groupchangeRate").css('color','#3db1b0');
                 $("#groupchangeRate").html(data.data.groupTotal.changeRate.rate + "<span class='arrow'>↓</span>");
-            }else{
+            }else if(data.data.groupTotal.changeRate.type == 0){
                 $("#groupchangeRate").html(data.data.groupTotal.changeRate.rate + "<span class='arrow'>↑</span>");
-            };
+            }else if(data.data.groupTotal.changeRate.type == -1){
+            	$("#groupchangeRate").css('color','#999');
+            	$("#groupchangeRate").html("0" + "<span class='arrow'>→</span>");
+            }
             //水单耗
             $("#waterTotal").html(data.data.waterTotal.energy.value);
             if(data.data.waterTotal.energy.type == 1){
@@ -168,13 +171,17 @@ $(function(){
                 $("#waterTotal").next("span").addClass("energy-remind");
                 $("#waterTotal").addClass("energy-remind");
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh-remind");
-            };
+            }
             if(data.data.waterTotal.changeRate.type == 1){
+            	$("#waterchangeRate").css('color','#3db1b0');
                 $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.waterTotal.changeRate.type == 0){
                 $("#waterchangeRate").addClass("energy-remind");
                 $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "↑)");
-            };
+            }else if(data.data.waterTotal.changeRate.type == -1){
+            	$("#waterchangeRate").css('color','#999');
+                $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "→)");
+            }
             //电单耗
             $("#electricTotal").html(data.data.electricTotal.energy.value);
             if(data.data.electricTotal.energy.type == 1){
@@ -185,10 +192,14 @@ $(function(){
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
             };
             if(data.data.electricTotal.changeRate.type == 1){
+            	$("#elechangeRate").css('color','#3db1b0');
                 $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.electricTotal.changeRate.type == 0){
                 $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "↑)");
                 $("#elechangeRate").addClass("energy-remind");
+            }else if(data.data.electricTotal.changeRate.type == -1){
+            	$("#elechangeRate").css('color','#999');
+                $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "→)");
             };
             //气单耗
             $("#gasTotal").html(data.data.gasTotal.energy.value);
@@ -200,10 +211,14 @@ $(function(){
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
             };
             if(data.data.gasTotal.changeRate.type == 1){
+            	$("#gaschangeRate").css('color','#3db1b0');
                 $("#gaschangeRate").html("("+data.data.gasTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.gasTotal.changeRate.type == 0){
                 $("#gaschangeRate").html("("+data.data.gasTotal.changeRate.rate + "↑)");
                 $("#gaschangeRate").addClass("energy-remind");
+            }else if(data.data.gasTotal.changeRate.type == -1){
+            	$("#gaschangeRate").css('color','#999');
+                $("#gaschangeRate").html("("+data.data.gasTotal.changeRate.rate + "→)");
             };
 
             //热单耗
@@ -216,10 +231,14 @@ $(function(){
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
             };
             if(data.data.hotTotal.changeRate.type == 1){
+            	$("#hotchangeRate").css('color','#3db1b0');
                 $("#hotchangeRate").html("("+data.data.hotTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.hotTotal.changeRate.type == 0){
                 $("#hotchangeRate").html("("+data.data.hotTotal.changeRate.rate + "↑)");
                 $("#hotchangeRate").addClass("energy-remind");
+            }else if(data.data.hotTotal.changeRate.type == -1){
+            	$("#hotchangeRate").css('color','#999');
+                $("#hotchangeRate").html("("+data.data.hotTotal.changeRate.rate + "→)");
             };
 
             //煤单耗
@@ -232,12 +251,15 @@ $(function(){
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
             };
             if(data.data.coalTotal.changeRate.type == 1){
+            	$("#coalchangeRate").css('color','#3db1b0');
                 $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.coalTotal.changeRate.type == 0){
                 $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "↑)");
                 $("#coalchangeRate").addClass("energy-remind");
+            }else if(data.data.coalTotal.changeRate.type == -1){
+            	$("#coalchangeRate").css('color','#999');
+                $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "→)");
             };
-
 
             groupEnergyChartFun(data.data.groupEnergy.data, data.data.groupEnergy.yearDate);
             waterEnergyChartFun(data.data.waterEnergy.data, data.data.waterEnergy.yearDate);

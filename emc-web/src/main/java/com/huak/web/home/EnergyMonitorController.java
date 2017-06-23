@@ -504,6 +504,9 @@ public class EnergyMonitorController {
 	        cellName.put("CURCOAL", "煤能耗量本期");
 	        cellName.put("LASTCOAL", "煤能耗量同期");
 	        cellName.put("COALS", "煤能耗量同比");
+	        cellName.put("CUROIL", "油能耗量本期");
+	        cellName.put("LASTOIL", "油能耗量同期");
+	        cellName.put("OILS", "油能耗量同比");
 	        List<Map<String, Object>> cellValues = eaService.exportEnergyFlowDetail(params);
             if(cellValues==null){
             	jo.put(Constants.MSG, "导出失败");

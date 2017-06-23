@@ -75,15 +75,18 @@ $(function(){
         },
         success : function(data) {
             $("#groupTotal").html(data.data.groupTotal.energy.value);
-            if(data.data.groupTotal.energy.type == 1){
-                $("#groupTotal").addClass("energy_gray");
-            };
+        	if(data.data.groupTotal.energy.type == 1){
+        		$("#groupTotal").addClass("energy_gray");
+        	};
             if(data.data.groupTotal.changeRate.type == 1){
-                $("#groupchangeRate").addClass("energy_gray2");
+            	$("#groupchangeRate").css('color','#3db1b0');
                 $("#groupchangeRate").html(data.data.groupTotal.changeRate.rate + "<span class='arrow'>↓</span>");
-            }else{
+            }else if(data.data.groupTotal.changeRate.type == 0){
                 $("#groupchangeRate").html(data.data.groupTotal.changeRate.rate + "<span class='arrow'>↑</span>");
-            };
+            }else if(data.data.groupTotal.changeRate.type == -1){
+            	$("#groupchangeRate").css('color','#999');
+            	$("#groupchangeRate").html("0" + "<span class='arrow'>→</span>");
+            }
             //水能耗
             $("#waterTotal").html(data.data.waterTotal.energy.value);
             if(data.data.waterTotal.energy.type == 1){
@@ -92,13 +95,17 @@ $(function(){
                 $("#waterTotal").next("span").addClass("energy-remind");
                 $("#waterTotal").addClass("energy-remind");
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh-remind");
-            };
+            }
             if(data.data.waterTotal.changeRate.type == 1){
+            	$("#waterchangeRate").css('color','#3db1b0');
                 $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.waterTotal.changeRate.type == 0){
                 $("#waterchangeRate").addClass("energy-remind");
                 $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "↑)");
-            };
+            }else if(data.data.waterTotal.changeRate.type == -1){
+            	$("#waterchangeRate").css('color','#999');
+                $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "→)");
+            }
             //电能耗
             $("#electricTotal").html(data.data.electricTotal.energy.value);
             if(data.data.electricTotal.energy.type == 1){
@@ -109,10 +116,14 @@ $(function(){
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
             };
             if(data.data.electricTotal.changeRate.type == 1){
+            	$("#elechangeRate").css('color','#3db1b0');
                 $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.electricTotal.changeRate.type == 0){
                 $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "↑)");
                 $("#elechangeRate").addClass("energy-remind");
+            }else if(data.data.electricTotal.changeRate.type == -1){
+            	$("#elechangeRate").css('color','#999');
+                $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "→)");
             };
             //气能耗
             $("#gasTotal").html(data.data.gasTotal.energy.value);
@@ -124,10 +135,14 @@ $(function(){
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
             };
             if(data.data.gasTotal.changeRate.type == 1){
+            	$("#gaschangeRate").css('color','#3db1b0');
                 $("#gaschangeRate").html("("+data.data.gasTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.gasTotal.changeRate.type == 0){
                 $("#gaschangeRate").html("("+data.data.gasTotal.changeRate.rate + "↑)");
                 $("#gaschangeRate").addClass("energy-remind");
+            }else if(data.data.gasTotal.changeRate.type == -1){
+            	$("#gaschangeRate").css('color','#999');
+                $("#gaschangeRate").html("("+data.data.gasTotal.changeRate.rate + "→)");
             };
 
             //热能耗
@@ -140,10 +155,14 @@ $(function(){
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
             };
             if(data.data.hotTotal.changeRate.type == 1){
+            	$("#hotchangeRate").css('color','#3db1b0');
                 $("#hotchangeRate").html("("+data.data.hotTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.hotTotal.changeRate.type == 0){
                 $("#hotchangeRate").html("("+data.data.hotTotal.changeRate.rate + "↑)");
                 $("#hotchangeRate").addClass("energy-remind");
+            }else if(data.data.hotTotal.changeRate.type == -1){
+            	$("#hotchangeRate").css('color','#999');
+                $("#hotchangeRate").html("("+data.data.hotTotal.changeRate.rate + "→)");
             };
 
             //煤能耗
@@ -156,10 +175,14 @@ $(function(){
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
             };
             if(data.data.coalTotal.changeRate.type == 1){
+            	$("#coalchangeRate").css('color','#3db1b0');
                 $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "↓)");
-            }else{
+            }else if(data.data.coalTotal.changeRate.type == 0){
                 $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "↑)");
                 $("#coalchangeRate").addClass("energy-remind");
+            }else if(data.data.coalTotal.changeRate.type == -1){
+            	$("#coalchangeRate").css('color','#999');
+                $("#coalchangeRate").html("("+data.data.coalTotal.changeRate.rate + "→)");
             };
             groupEnergyChartFun(data.data.groupEnergy.data, data.data.groupEnergy.yearDate);
             waterEnergyChartFun(data.data.waterEnergy.data, data.data.waterEnergy.yearDate);
@@ -1177,6 +1200,7 @@ function renderEnergyFlowDetail(data){
         html+="<td>"+data[i].gasE+"（同<span class='"+(data[i].gasS==0?"":(data[i].gasR==1?"bluecolor":"redcolor"))+"'>"+data[i].gasS+"%"+(data[i].gasS==0?"→":(data[i].gasR==1?"↓":"↑"))+"</span>）</td>";
         html+="<td>"+data[i].hotE+"（同<span class='"+(data[i].hotS==0?"":(data[i].hotR==1?"bluecolor":"redcolor"))+"'>"+data[i].hotS+"%"+(data[i].hotS==0?"→":(data[i].hotR==1?"↓":"↑"))+"</span>）</td>";
         html+="<td>"+data[i].coalE+"（同<span class='"+(data[i].coalS==0?"":(data[i].coalR==1?"bluecolor":"redcolor"))+"'>"+data[i].coalS+"%"+(data[i].coalS==0?"→":(data[i].coalR==1?"↓":"↑"))+"</span>）</td>";
+        html+="<td>"+data[i].oilE+"（同<span class='"+(data[i].oilS==0?"":(data[i].oilR==1?"bluecolor":"redcolor"))+"'>"+data[i].oilS+"%"+(data[i].oilS==0?"→":(data[i].oilR==1?"↓":"↑"))+"</span>）</td>";
         html+="</tr>";
 	}
 	$('#energyFlowDetail').html(html);
@@ -1384,7 +1408,7 @@ function chart2EnergyBar(data){
     var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
     var option = {
         title:{
-            subtext:'能源流能耗 (单位: GJ/㎡)',
+            subtext:'能源流能耗 (单位: TCE)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
