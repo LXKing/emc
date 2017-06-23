@@ -27,14 +27,6 @@
                         <div class="row">
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">小区名称</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" id="communityName" name="communityName" placeholder="请输入小区名称">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属公司</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
 <!--                                         <input type="hidden" class="form-control" id="comId" name="comId"> -->
@@ -49,6 +41,14 @@
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                                         <input type="hidden" class="form-control" id="orgId" name="orgId">
                                         <input type="text" class="form-control" name="orgName" placeholder="请输入所属机构">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">小区名称</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <input type="text" class="form-control" id="communityName" name="communityName" placeholder="请输入小区名称">
                                     </div>
                                 </div>
                             </div>

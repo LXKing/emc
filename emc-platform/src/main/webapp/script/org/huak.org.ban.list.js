@@ -1,15 +1,20 @@
 var banSearTree;
 $(function () {
+	
+	//搜索栏中组织机构树初始化
 	banSearOrg = new Org({
         class:"org-tree"
     });
 	banSearTree = banSearOrg.initTree();
 	initTreeBox();
+	
+	//页面顶部 公司改变事件
 	parent.$("[name='searchComp']").change(function(){
 		banSearOrg.initTree();
 		initTreeBox();
 		window.location.reload(); 
 	});
+	
 	//楼座列表
 	var banTable = $('#ban-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
@@ -83,28 +88,8 @@ $(function () {
                 align: 'center'
             },
             {
-                title: '所属省',
-                field: 'provinceName',
-                align: 'center'
-            },
-            {
-                title: '所属市',
-                field: 'cityName',
-                align: 'center'
-            },
-            {
-                title: '所属县',
-                field: 'countyName',
-                align: 'center'
-            },
-            {
-                title: '所属乡',
-                field: 'townName',
-                align: 'center'
-            },
-            {
-                title: '所属村',
-                field: 'villageName',
+                title: '详细地址',
+                field: 'addr',
                 align: 'center'
             },
             {
@@ -126,20 +111,25 @@ $(function () {
         ]
 	});
 });
-//组织机构树点击节点事件
+
+/**
+ * 组织机构树点击节点事件
+ */
 var treeNodeClick = function(e,treeId,treeNode){ 
 	var orgId = treeNode.id;
 	var orgName = treeNode.name;
 	$("#orgId").val(orgId);
 	$("input[name='orgName']").val(orgName);
+	communitySelect();
 };
 
-//初始化treebox
+/**
+ * 初始化搜索栏中的 treebox（组织机构树）
+ */
 function initTreeBox(){
 	if(banSearTree==null){
 		setTimeout('initTreeBox()',50)
 	}else{
-//		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
 		var box = $('input[name="orgName"]').treeBox({setting:banSearTree.setting,zNodes:banSearTree.getNodes()});
 	}
 }
@@ -206,6 +196,11 @@ function deleteban(id) {
  * 导出楼座信息到excel
  */
 function exportBan(){
+	var tableDatas = $('#ban-table-list').bootstrapTable('getData');
+	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
+		layer.msg('没有数据要导出，请重新搜索！');
+		return;
+	}
 	var paramStr = formsParam({},"ban-form",true);
 	var url = _platform + '/ban/export?'+paramStr;
 	window.location.href = url;

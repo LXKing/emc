@@ -51,9 +51,6 @@ public class RoomController {
 	public String listPage(Model model){
 		logger.info("跳转到户列表页面");
 		model.addAttribute("com", roomService.getCompanySelectHtmlStr(null));
-		model.addAttribute("community", roomService.getCommunitySelectHtmlStr(new HashMap<String,String>(), null));
-		model.addAttribute("ban", roomService.getBanSelectHtmlStr(new HashMap<String,String>(), null));
-		model.addAttribute("cell", roomService.getCellSelectHtmlStr(new HashMap<String,String>(), null));
 		return "/org/room/list";
 	}
 	

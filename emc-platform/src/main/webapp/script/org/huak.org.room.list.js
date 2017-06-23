@@ -137,6 +137,7 @@ var treeNodeClick = function(e,treeId,treeNode){
 	var orgName = treeNode.name;
 	$("#orgId").val(orgId);
 	$("input[name='orgName']").val(orgName);
+	communitySelect();
 };
 
 //初始化treebox
@@ -211,6 +212,11 @@ function deleteroom(id) {
  * 导出户信息到excel
  */
 function exportRoom(){
+	var tableDatas = $('#room-table-list').bootstrapTable('getData');
+	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
+		layer.msg('没有数据要导出，请重新搜索！');
+		return;
+	}
 	var paramStr = formsParam({},"room-form",true);
 	var url = _platform + '/room/export?'+paramStr;
 	window.location.href = url;

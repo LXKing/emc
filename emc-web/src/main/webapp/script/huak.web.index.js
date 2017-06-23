@@ -1104,6 +1104,7 @@ function chart07Fun(){
 
 function initChart(kedu1,mx,bm_total){
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
+    var max = returnFloat(mx/0.75);
     var option1 = {
         tooltip : {
             formatter: "{a} <br/>{c} {b}"

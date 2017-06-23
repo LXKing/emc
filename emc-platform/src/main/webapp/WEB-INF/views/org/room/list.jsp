@@ -24,38 +24,6 @@
                         <input type="hidden" id="pageNo" name="pageNo" value="1">
 
                         <div class="row">
-                        	<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">户名称</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" id="roomName" name="roomName" placeholder="请输入户名称">
-                                    </div>
-                                </div>
-                            </div>
-                        	<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属单元</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <select id="cellId" name="cellId" class="form-control m-b" ></select>
-                                    </div>
-                                </div>
-                            </div>
-                        	<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属楼座</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <select id="banId" name="banId" class="form-control m-b" ></select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属小区</label>
-                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                                        <select id="communityId" name="communityId" class="form-control m-b" ></select>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属公司</label>
@@ -70,6 +38,38 @@
                                     <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
                                         <input type="hidden" class="form-control" id="orgId" name="orgId">
                                         <input type="text" class="form-control" name="orgName" placeholder="请输入所属机构">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属小区</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <select id="communityId" onclick="banSelect();" name="communityId" class="form-control m-b" ></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属楼座</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <select id="banId" onclick="cellSelect();" name="banId" class="form-control m-b" ></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">所属单元</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <select id="cellId" name="cellId" class="form-control m-b" ></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">户名称</label>
+                                    <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                                        <input type="text" class="form-control" id="roomName" name="roomName" placeholder="请输入户名称">
                                     </div>
                                 </div>
                             </div>
@@ -107,16 +107,48 @@
 	});
 	$('#comId').html('${com}');
 	$('#comId').val(parent.$("[name='searchComp']").val());
-	$('#communityId').html('${community}');
-	$('#banId').html('${ban}');
-	$('#cellId').html('${cell}');
+	
+	communitySelect();
+	
+	//搜索栏中小区下拉框
+	function communitySelect(){
+		$.get('${platform}/ban/communitySelectHtmlStr',{
+			comId:$('#comId').val(),
+			orgId:$('#orgId').val()
+		},function(data){
+			$('#communityId').html(data.html);
+		},'json');
+		banSelect();
+	}
+	
+	//搜索栏中楼座下拉框
+	function banSelect(){
+		$.get('${platform}/cell/banSelectHtmlStr',{
+			comId:$('#comId').val(),
+			orgId:$('#orgId').val(),
+			communityId:$('#communityId').val()
+		},function(data){
+			$('#banId').html(data.html);
+		},'json');
+		cellSelect();
+	}
+	
+	function cellSelect(){
+		$.get('${platform}/room/cellSelectHtmlStr',{
+			comId:$('#comId').val(),
+			orgId:$('#orgId').val(),
+			communityId:$('#communityId').val(),
+			banId:$('#banId').val()
+		},function(data){
+			$('#cellId').html(data.html);
+		},'json');
+	}
+	
 	function resetSearch(){
 		$('#roomName').val('');
-		$('#cellId').val('');
-		$('#banId').val('');
-		$('#communityId').val('');
 		$('#orgId').val('');
 		$('input[name="orgName"]').val('');
+		communitySelect();
 	}
 </script>
 </body>

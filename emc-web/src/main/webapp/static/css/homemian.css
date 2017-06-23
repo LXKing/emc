@@ -54,7 +54,7 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .Alarminput{border-radius: 2px; width: 240px; height: 22px;background: #fff; line-height: 22px; border: 1px solid #cacccf;}
 .Alarminput>input{width: 208px; height: 18px; border: none; padding: 0; padding-left: 6px; font-size: 12px}
 .Alarminput>a{ vertical-align: middle; display: inline-block; margin-top: -8px;}
-.x-sfleft1{border-radius: 2px;}
+.x-sfleft1{border-radius: 2px;width:160px;}
 .select-boxWdate>span{ display: inline-block; padding: 0 4px;}
 .select-boxWdate .time-input-disable{background: #fff url(../img/picture/datePicker.png) no-repeat 82px;}
 .btnAlarm{ display: inline-block; /*float: left;*/ width: 64px; height: 22px; line-height: 22px;font-size: 12px; color: #666; text-align: center;}
@@ -97,7 +97,7 @@ input{padding: 0 !important; padding-left: 3px !important;}
 .index_menuBoxCon>span.tipsindex{color: #fff;background: #df5f4a;  border-radius: 20px; padding: 0px 5px; margin-left: 3px; height: 16px; line-height: 16px;}
 .index_menuBoxre .index_menuBoxCon{padding-top: 77%;}
 .index_menuBoxList{margin-left: 0; text-align: center;margin: 0 auto;margin-top: 12px; padding-left: 6%;}
-.index_menuBoxList li{background-repeat: no-repeat; display:inline-block; list-style: none;   height: 24px; line-height: 24px; padding-left: 18px; text-align: left;}
+.index_menuBoxList li{background-repeat: no-repeat; display:inline-block; list-style: none;   /*height: 24px; line-height: 24px;*/ padding-left: 18px; text-align: left;}
 .index_menuBoxAll .index_menuBoxList{min-width: 226px;}
 .index_menuBoxAll .index_menuBoxList li{background-position:0px ;}
 .index_menuBoxre .index_menuBoxList{ ___width: 210px ;}
