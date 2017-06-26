@@ -231,7 +231,7 @@ public class EnergyDetailController {
         cellName.put("oilBq", "油量本期");
         cellName.put("oilTq", "油量同期");
         cellName.put("oilAn", "油量同比");
-        List<Map<String, Object>> cellValues = null;//列值
+        List<Map<String, Object>> cellValues = new ArrayList<Map<String, Object>>();//列值
         OutputStream out = null;
         try {
             /*封装条件*/

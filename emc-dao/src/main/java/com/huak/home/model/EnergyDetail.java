@@ -92,6 +92,14 @@ public class EnergyDetail implements Serializable {
         this.totalBq = totalBq;
     }
 
+    public DecimalFormat getFormat() {
+        return format;
+    }
+
+    public void setFormat(DecimalFormat format) {
+        this.format = format;
+    }
+
     public Double getTotalTq() {
         return totalTq;
     }

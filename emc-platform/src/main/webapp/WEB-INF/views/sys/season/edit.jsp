@@ -37,7 +37,7 @@
 
         var start = {
             elem: '#start',
-            format: 'YYYY/MM/DD ',
+            format: 'YYYY-MM-DD ',
             //min: laydate.now(), //设定最小日期为当前日期
             max: '2099-06-16 ', //最大日期
             istime: true,
@@ -49,7 +49,7 @@
         };
         var end = {
             elem: '#end',
-            format: 'YYYY/MM/DD ',
+            format: 'YYYY-MM-DD ',
             max: '2099-06-16',
             istime: true,
             istoday: false,
@@ -62,7 +62,7 @@
 
         //下拉框js
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
-        debugger;
+
 //        $.validator.addMethod("checkSeason", function (value, element) {
 //            var deferred = $.Deferred();//创建一个延迟对象
 //            console.log(value);
@@ -132,17 +132,16 @@
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
                 season: {
-                    required: true,
-                    checkSeason: '#season'
+                    required: true
+//                    checkSeason: '#season'
                 },
                 sDate: {
-                    required: true,
-                    dateSeason: '#season'
+                    required: true
+                    //dateSeason: '#season'
                 },
                 eDate: {
-                    required: true,
-                    dateSeason: '#season',
-                    isGt: '#start'
+                    required: true
+                   //isGt: '#start'
                 }
             },
             messages: {
@@ -157,10 +156,9 @@
                 }
             },
             submitHandler: function () {
-                var index = layer.load(1, {
+                var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
-                alert(123);
                 $.ajax({
                     url: _platform + '/season/editvalue',
                     data: {
@@ -172,11 +170,10 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {
-                        alert(result.flag);
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            $(top.document).find('#season-table-list').bootstrapTable("refresh");
+                            $('#season-table-list').bootstrapTable("refresh");
                         } else {
                             top.layer.close(index);
                             top.layer.msg(result.msg);

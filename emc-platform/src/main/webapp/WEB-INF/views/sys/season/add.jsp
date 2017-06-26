@@ -37,7 +37,7 @@
 
         var start = {
             elem: '#start',
-            format: 'YYYY/MM/DD ',
+            format: 'YYYY-MM-DD ',
             //min: laydate.now(), //设定最小日期为当前日期
             max: '2099-06-16 ', //最大日期
             istime: true,
@@ -49,7 +49,7 @@
         };
         var end = {
             elem: '#end',
-            format: 'YYYY/MM/DD ',
+            format: 'YYYY-MM-DD ',
             max: '2099-06-16',
             istime: true,
             istoday: false,
@@ -62,17 +62,15 @@
 
         //下拉框js
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
-        debugger;
         $.validator.addMethod("checkSeason", function (value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             console.log(value);
-            alert("校验采暖季度");
-            var name = $(top.document).find('#season').val();
-            $.ajax({
-                url: _platform + '/season/addvalue',
+            //alert("校验采暖季度");
+             $.ajax({
+                url: _platform + '/season/checkname',
                 type: 'POST',
                 async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {season: $('#season').val()},
+                data: {season: $('#season').val(),comId:$(top.document).find(".chosen-select").find("option:selected").val()},
                 dataType: 'json',
                 success: function (result) {
                     if (!result.flag) {
@@ -103,6 +101,33 @@
             return this.optional(element) || (value > startDate);
         }, icon + "结束时间必须大于开始时间");
 
+        //验证结束时间是否大于开始时间
+        $.validator.addMethod("isAmong", function (value, element, param) {
+            //alert("验证结束时间是否大于开始时间");
+            var startDate = $(top.document).find(param).val();
+            var comId = $(top.document).find(".chosen-select").find("option:selected").val();
+//            if(startDate==null||startDate==""){
+//                top.layer.msg("请输开始时间！");
+//            }
+//            if(value==null||value==""){
+//                top.layer.msg("请输结束时间！");
+//            }
+            $.ajax({
+                url: _platform + '/season/check',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {sdate:param,edate:value,comId:comId},
+                dataType: 'json',
+                success: function (result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            return this.optional(element) || (value > startDate);
+        }, icon + "结束时间和开始时间格式不对,在其他采暖季已经存在");
         //提示信息绑定
         $(top.document).find('input:not(:submit):not(:button)').mousedown(function () {
             //alert("提示绑定信息");
@@ -136,13 +161,14 @@
                     checkSeason: '#season'
                 },
                 sDate: {
-                    required: true,
-                    dateSeason: '#season'
+                    required: true
+                    //dateSeason: '#season'
                 },
                 eDate: {
-                    required: true,
-                    dateSeason: '#season',
-                    isGt: '#start'
+                    required: true
+                   // dateSeason: '#season',
+//                    isGt: '#start',
+//                    isAmong:'#start'
                 }
             },
             messages: {
@@ -157,20 +183,24 @@
                 }
             },
             submitHandler: function () {
-                var index = layer.load(1, {
+                var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
+
                 $.ajax({
                     url: _platform + '/season/addvalue',
-                    data: {name:$(top.document).find('#season').val(),sdate:$(top.document).find('#start').val(),edate:$(top.document).find('#end').val()},
+                    data: {name:$(top.document).find('#season').val(),
+                        sdate:$(top.document).find('#start').val(),
+                        edate:$(top.document).find('#end').val(),
+                        comId:$(top.document).find(".chosen-select").find("option:selected").val()},
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {
-                        alert(result.flag);
+                       // alert(result.flag);
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            $(top.document).find('#season-table-list').bootstrapTable("refresh");
+                            $('#season-table-list').bootstrapTable("refresh");
                         } else {
                             top.layer.close(index);
                             top.layer.msg(result.msg);
@@ -207,7 +237,7 @@
                     <label class="col-sm-3 control-label"><span class="red">*</span>结束时间：</label>
 
                     <div class="col-sm-8">
-                        <input id="end" type="text" class="laydate-icon  form-control layer-date"  name="eDate"
+                        <input id="end" type="text" class="laydate-icon  form-control layer-date validateDate"  name="eDate"
                                placeholder="请选择结束时间"/>
                     </div>
                 </div>
