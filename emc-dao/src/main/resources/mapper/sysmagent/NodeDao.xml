@@ -464,7 +464,7 @@
     </select>
 
 
-    <select id="selectNetByMap" parameterType="java.util.HashMap" resultType="java.util.Map">
+    <select id="selectNetByMap" parameterType="java.util.Map" resultType="java.util.Map">
         select
         ID,
         NET_NAME,

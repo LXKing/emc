@@ -158,9 +158,10 @@
                     required: true
                 },
                 seq:{
-                    checkSeq: true,
                     required: true,
-                    digits: true
+                    digits: true,
+                    checkSeq: true
+
                 },
                 type:{
                     required: true

@@ -133,9 +133,10 @@ function bootstraplist(){
             },
             {
                 title: '供热类型',
-                field: 'feedType',
+                field: 'heatType',
                 align: 'center',
                 formatter:function(value,row,index){
+
                     if(value == '1'){
                         return '区域供热';
                     }
