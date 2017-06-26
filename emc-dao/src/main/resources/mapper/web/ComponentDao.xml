@@ -339,45 +339,53 @@
         END)  standard
         FROM
         (SELECT
-            bb.dates,
-            FORMAT(sum(bb.ne), 2) AS num,
+        bb.dates,
+        FORMAT(sum(bb.ne), 2) AS num,
         (select sum(EXCELLENT) from t_emc_expend_check where bb.dates <![CDATA[ >= ]]> SDATE and bb.dates <![CDATA[ <= ]]> EDATE and COMID=#{comId} and ORG_ID=#{orgId} group by ORG_ID) excellent,
         (select sum(STANDARD) from t_emc_expend_check where bb.dates <![CDATA[ >= ]]> SDATE and bb.dates <![CDATA[ <= ]]> EDATE and COMID=#{comId} and ORG_ID=#{orgId} group by ORG_ID) standard
         FROM
-            (SELECT
-                    date_format(a.DOSAGE_TIME, '%Y-%m-%d') dates,
-                    a.typeid type,
-                    sum(a.DOSAGE * a.COAL_COEF) / avg(a.AREA) ne
-                FROM
-                    t_emc_final_data_hour a,
-                    (SELECT UNITID FROM v_emc_unit
-                        WHERE 1 = 1
-                        <if test="orgId != null and orgId !=''">
-                            and   ORGID in (select id from t_emc_org where
-                            FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
-                        </if>
-                        <if test="feedType != null and feedType !=''">
-                            and  HEAT_TYPE =#{feedType}
-                        </if>
-                        <if test="comId != null and comId !=''">
-                            and  COMID =#{comId}
-                        </if>
-                        <if test="type != null and type !=''">
-                            and  UNITTYPE  = #{type}
-                        </if>
-                   GROUP BY UNITID ) c
-                WHERE  a.UNITID = c.unitid
-                <if test="startTime != null and startTime !=''">
-                    and   a.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime}
-                </if>
-                <if test="endTime != null and endTime != ''">
-                    and    a.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
-                </if>
-                GROUP BY date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	a.typeid) bb
+        (select
+        dd.dates,dd.type,sum(dd.num)/sum(dd.area) ne
+        from (select b.area,b.dates,b.num,b.UNITID,c.TYPE type from (SELECT
+        c.UNITID,
+        date_format(a.DOSAGE_TIME, '%Y-%m-%d') dates,
+        a.typeid type,
+        sum(a.DOSAGE * a.COAL_COEF) num,
+        avg(a.AREA) area
+        FROM
+        t_emc_final_data_hour a,
+        (SELECT UNITID FROM v_emc_unit
+        WHERE 1 = 1
+        <if test="orgId != null and orgId !=''">
+            and   ORGID in (select id from t_emc_org where
+            FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+        </if>
+        <if test="feedType != null and feedType !=''">
+            and  HEAT_TYPE =#{feedType}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  COMID =#{comId}
+        </if>
+        <if test="type != null and type !=''">
+            and  UNITTYPE  = #{type}
+        </if>
+        GROUP BY UNITID ) c
+        WHERE  a.UNITID = c.unitid
+        <if test="startTime != null and startTime !=''">
+            and   a.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and    a.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
+        </if>
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	a.typeid) b
+        LEFT JOIN t_emc_energy_type c on b.type = c.id)dd group by  dd.dates,dd.TYPE) bb
         GROUP BY
-            bb.dates
+        bb.dates
         ORDER BY
-            bb.dates ASC)cc order by cc.dates;
+        bb.dates ASC)cc order by cc.dates;
+
+
+
     </select>
 
     <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">
