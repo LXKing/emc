@@ -343,17 +343,15 @@
         FORMAT(sum(bb.ne), 2) AS num,
         (select sum(EXCELLENT) from t_emc_expend_check where bb.dates <![CDATA[ >= ]]> SDATE and bb.dates <![CDATA[ <= ]]> EDATE and COMID=#{comId} and ORG_ID=#{orgId} group by ORG_ID) excellent,
         (select sum(STANDARD) from t_emc_expend_check where bb.dates <![CDATA[ >= ]]> SDATE and bb.dates <![CDATA[ <= ]]> EDATE and COMID=#{comId} and ORG_ID=#{orgId} group by ORG_ID) standard
-        FROM
-        (select
-        dd.dates,dd.type,sum(dd.num)/sum(dd.area) ne
-        from (select b.area,b.dates,b.num,b.UNITID,c.TYPE type from (SELECT
+        FROM (
+        select m.dates,m.type,sum(m.num)/sum(m.area) ne from(select b.area,b.dates,b.num,b.UNITID,b.type type from (SELECT
         c.UNITID,
         date_format(a.DOSAGE_TIME, '%Y-%m-%d') dates,
-        a.typeid type,
+        bbb.TYPE type,
         sum(a.DOSAGE * a.COAL_COEF) num,
         avg(a.AREA) area
         FROM
-        t_emc_final_data_hour a,
+        t_emc_final_data_hour a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
         WHERE 1 = 1
         <if test="orgId != null and orgId !=''">
@@ -370,15 +368,15 @@
             and  UNITTYPE  = #{type}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <> ]]>'4'
         <if test="startTime != null and startTime !=''">
             and   a.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime}
         </if>
         <if test="endTime != null and endTime != ''">
             and    a.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         </if>
-        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	a.typeid) b
-        LEFT JOIN t_emc_energy_type c on b.type = c.id)dd group by  dd.dates,dd.TYPE) bb
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type) b)m group by  m.dates,m.type
+        ) bb
         GROUP BY
         bb.dates
         ORDER BY
