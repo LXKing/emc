@@ -200,8 +200,7 @@
 		  				FROM ( 
 		  					SELECT vu.UNITID, vu.UNITTYPE 
 		  					FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-		  					<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>  ) 
+		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>  ) 
 		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 		  					AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 		  					LEFT JOIN ( 
@@ -217,7 +216,9 @@
 		  			) C 
 	  			GROUP BY C.UNITTYPE
 	  		) CC
-	 ) D ON D.UNITTYPE = type.unittype
+	 ) D ON D.UNITTYPE = type.unittype 
+	 where 1=1 
+	 <if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
   </select>
   <!-- 导出 -->
   <select id="exportEnergyFlowDetail" resultType="java.util.Map" parameterType="java.util.Map">
@@ -280,8 +281,7 @@
 		  				FROM ( 
 		  					SELECT vu.UNITID, vu.UNITTYPE 
 		  					FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-		  					<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>  ) 
+		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
 		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 		  					AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 		  					LEFT JOIN ( 
@@ -297,7 +297,9 @@
 		  			) C 
 	  			GROUP BY C.UNITTYPE
 	  		) CC
-	 ) D ON D.UNITTYPE = type.unittype
+	 ) D ON D.UNITTYPE = type.unittype 
+	 where 1=1
+	 <if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
   </select>
   <!-- 查询能源流占比分布图 -->
   <select id="energyFlowPie" resultType="java.util.Map" parameterType="java.util.Map">
@@ -310,8 +312,7 @@
 	  	FROM( 
 	  		SELECT vu.UNITID, vu.UNITTYPE 
 	  		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-			<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-			<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
+			<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
 	  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 	  			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  		LEFT JOIN ( 
@@ -326,7 +327,9 @@
 	  		) B ON A.UNITID = B.unitid 
 	  	WHERE B.total IS NOT NULL 
 	  	GROUP BY A.UNITTYPE
-	) C on type.unittype = C.UNITTYPE
+	) C on type.unittype = C.UNITTYPE 
+	where 1=1 
+	<if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
   </select>
   <!-- 查询能源流趋势对比图 -->
   <select id="energyFlowLine" resultType="java.util.Map" parameterType="java.util.Map">
@@ -334,8 +337,7 @@
   	FROM( 
   		SELECT vu.UNITID, vu.UNITTYPE 
   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-		<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
+		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
   		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
   			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
   		LEFT JOIN ( 
@@ -347,7 +349,7 @@
   			WHERE 1 = 1 <include refid="cur_time" /> and et.TYPE !='4' 
   			GROUP BY unitid,yeardate 
   		) B ON A.UNITID = B.unitid 
-  	WHERE B.total IS NOT NULL 
+  	WHERE B.total IS NOT NULL <if test="toolOrgType!=null and toolOrgType!=''"> AND A.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>
   	GROUP BY A.UNITTYPE,B.yeardate
   	ORDER BY B.yeardate asc
   </select>
@@ -359,8 +361,7 @@
   	LEFT JOIN (
 	  	SELECT A.UNITTYPE, IFNULL(sum(case B.season when '0' then B.total end),0) lastTotal, IFNULL(sum(case B.season when '1' then B.total end),0) curTotal 
 	  	FROM( SELECT vu.UNITID, vu.UNITTYPE FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
-		<if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> ) 
+		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
 	  	WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 	  		  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  	LEFT JOIN ( 
@@ -375,7 +376,8 @@
 	  	) B ON A.UNITID = B.unitid 
 	  	WHERE B.total IS NOT NULL 
 	  	GROUP BY A.UNITTYPE
-	) C ON type.unittype = C.UNITTYPE
+	) C ON type.unittype = C.UNITTYPE 
+	where 1=1 <if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
 	ORDER BY type.unittype
   </select>
   <!-- 能耗子页面，能耗曲线，能源流相关数据查询结束 -->
