@@ -122,7 +122,7 @@ public class NodeServiceImpl implements NodeService{
     public Object selectNetAll(Map<String, Object> params) {
         List<Map<String,Object>> oncenet = new ArrayList<>();
         try {
-            oncenet = (List<Map<String, Object>>) nodeDao.selectNetByMap(params);
+            oncenet =  oncenetDao.selectNetByMap(params);
         }catch (Exception e){
             e.printStackTrace();
         }
