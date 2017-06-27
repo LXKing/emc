@@ -4,7 +4,6 @@ import com.huak.base.BaseTest;
 import com.huak.common.UUIDGenerator;
 import com.huak.home.model.EnergyMonitor;
 import org.junit.Test;
-import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -49,7 +48,7 @@ public class SearchText extends BaseTest{
      * 生成测试数据
      */
     @Test
-    @Rollback(true)
+    //@Rollback(true)
     public void createData(){
         Random random = new Random();
         String[] coms = {"74ee3b6752254435b724b6672f9fde8d","74ee3b6752254435b724b6672f9fde8d",
@@ -70,11 +69,11 @@ public class SearchText extends BaseTest{
         Double[] itemps = {22d,24d,26d,28d};
         Double[] citemps = {22d,24d,26d,28d};
 
-        for(int i = 0;i<500;i=i+7){//时间循环
+        for(int i = 0;i<11680;i=i+7){//时间循环
             String time = getTime(i);
             for(String unitId:units){//用能单位循环
                 Double area = areas[random.nextInt(3)];
-                for(int j=0;i<7;j++){//能源类型循环
+                for(int j=0;j<7;j++){//能源类型循环
                     EnergyMonitor em = new EnergyMonitor();
                     em.setId(UUIDGenerator.getUUID());
                     em.setComid(coms[random.nextInt(6)]);
@@ -103,7 +102,7 @@ public class SearchText extends BaseTest{
     private static String getTime(int i){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
         Calendar c = Calendar.getInstance();
-        c.set(2016,10,1);
+        c.set(2015,11,1);
         c.set(Calendar.HOUR,i);
         return  format.format(c.getTime());
     }
