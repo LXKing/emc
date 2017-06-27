@@ -2,10 +2,9 @@ package com.huak.sys;
 
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.model.Feed;
-import com.huak.org.model.Oncenet;
 import com.huak.season.model.Season;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +28,13 @@ public interface SeasonService {
 
     public PageResult<Season> queryByPage(Map<String,Object> paramsMap, Page page);
 
-    boolean checkName(String name);
+    boolean checkName(Map<String,Object> map);
 
     public int updateByPrimaryKeySelective(Season record);
+
+    public boolean checkTime(Map<String,Object> paramsMap);
+
+    public String getNowTime();
+
+    public List<Map<String,Object>> exportSeason(Map<String,Object> paramsMap);
 }

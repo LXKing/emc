@@ -117,12 +117,50 @@
         <if test="edate != null and edate !=''">
             and  EDATE &lt;= #{edate,jdbcType=VARCHAR}
         </if>
-        order by id
+        order by NAME DESC
     </select>
-    <select id="CheckName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="checkName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_heat_season
-        where NAME = #{name,jdbcType=VARCHAR}
+        where NAME = #{name,jdbcType=VARCHAR} and COMID = #{comId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="checkTime" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        t_emc_heat_season s
+        WHERE
+        (s.SDATE &lt;= #{sdate,jdbcType=VARCHAR}
+        AND s.EDATE  &gt;= #{edate,jdbcType=VARCHAR})
+        OR (s.SDATE  &gt;= #{sdate,jdbcType=VARCHAR}
+        AND s.EDATE  &lt;= #{edate,jdbcType=VARCHAR})
+        and s.COMID = #{comId,jdbcType=VARCHAR};
+    </select>
+    <select id="getNowTime" parameterType="java.util.HashMap" resultType="java.lang.String">
+
+        select date_format(now(),'%Y-%m-%d');
+    </select>
+
+    <select id="exportSeason" parameterType="java.util.HashMap" resultType="java.util.Map">
+
+        SELECT
+        c.CNAME CNAME,
+        s.NAME NAME,
+        s.SDATE SDATE,
+        s.EDATE EDATE
+        FROM
+        t_emc_heat_season s,t_emc_company c where s.COMID = c.ID
+        <if test="name != null and name !=''">
+            and  s.NAME =#{name,jdbcType=VARCHAR}
+        </if>
+        <if test="start != null and start !=''">
+            and  s.SDATE &gt;= #{start,jdbcType=VARCHAR}
+        </if>
+        <if test="end != null and end !=''">
+            and  s.EDATE &lt;= #{end,jdbcType=VARCHAR}
+        </if>
+        order by NAME DESC
     </select>
 </mapper>

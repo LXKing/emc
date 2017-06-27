@@ -7,7 +7,6 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.season.dao.SeasonDao;
 import com.huak.season.model.Season;
-import com.huak.sys.SeasonService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,9 +59,9 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public boolean checkName(String name) {
+    public boolean checkName(Map<String,Object> map) {
         boolean flag=false;
-        List<Season> list = seasonDao.CheckName(name);
+        List<Season> list = seasonDao.checkName(map);
         if(list.size()>0){
             flag=true;
         }
@@ -73,5 +72,25 @@ public class SeasonServiceImpl implements SeasonService {
     @Transactional(readOnly = false)
     public int updateByPrimaryKeySelective(Season record) {
         return seasonDao.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public boolean checkTime(Map<String, Object> paramsMap) {
+        boolean flag=false;
+        List<Season> list = seasonDao.checkTime(paramsMap);
+        if(list.size()>0){
+            flag=true;
+        }
+        return flag;
+    }
+
+    @Override
+    public String getNowTime() {
+        return seasonDao.getNowTime();
+    }
+
+    @Override
+    public List<Map<String, Object>> exportSeason(Map<String, Object> paramsMap) {
+        return seasonDao.exportSeason(paramsMap);
     }
 }
