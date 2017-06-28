@@ -8,11 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     //以下为官方示例
-    var today = '2016-06-16';
     $(function () {
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
         var $form = $(top.document).find("#seasonEditForm");
+        var today = $(top.document).find("#today").val();
         //初始化采暖季度下拉框
         var yearSpan = 10;//上下跨度
         var year = Number(today.substr(0, 4));
@@ -62,30 +62,6 @@
 
         //下拉框js
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
-
-//        $.validator.addMethod("checkSeason", function (value, element) {
-//            var deferred = $.Deferred();//创建一个延迟对象
-//            console.log(value);
-//            alert("校验采暖季度");
-//            var name = $(top.document).find('#season').val();
-//            $.ajax({
-//                url: _platform + '/season/addvalue',
-//                type: 'POST',
-//                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-//                data: {season: $('#season').val()},
-//                dataType: 'json',
-//                success: function (result) {
-//                    if (!result.flag) {
-//                        deferred.reject();
-//                    } else {
-//                        deferred.resolve();
-//                    }
-//                }
-//            });
-//            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-//            return deferred.state() == "resolved" ? true : false;
-//        }, "采暖季度已存在");
-
         //验证时间是否在采暖季度之间
         $.validator.addMethod("dateSeason", function (value, element, param) {
 
@@ -102,7 +78,33 @@
             var startDate = $(top.document).find(param).val();
             return this.optional(element) || (value > startDate);
         }, icon + "结束时间必须大于开始时间");
-
+        $.validator.addMethod("checkSeason", function (value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            console.log(value);
+            var  name =$(top.document).find(element).find("option:selected").val();
+            var comId=$(top.document).find(".chosen-select").find("option:selected").val();
+            if("${season.name}" == name){
+                //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+                deferred.resolve();
+            }else {
+                $.ajax({
+                    url: _platform + '/season/checkname',
+                    type: 'POST',
+                    async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {name: value, comId: comId},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (!result.flag) {
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
+                    }
+                });
+            }
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, "采暖季已存在");
         //提示信息绑定
         $(top.document).find('input:not(:submit):not(:button)').mousedown(function () {
             //alert("提示绑定信息");
@@ -117,7 +119,34 @@
             }
             return false;
         });
+        //该采暖季的时间段 是否已经存在
+        $.validator.addMethod("isAmong", function (value, element, param) {
+            //alert("验证结束时间是否大于开始时间");
+            var start = $(top.document).find(param).val();
 
+            var comId = $(top.document).find(".chosen-select").find("option:selected").val();
+            var deferred = $.Deferred();//创建一个延迟对象
+            if("${season.edate}" == value&&"${season.sdate}"==start){
+                //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+                deferred.resolve();
+            }else {
+                $.ajax({
+                    url: _platform + '/season/check',
+                    type: 'POST',
+                    async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {sdate: start, edate: value, comId: comId},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.flag) {
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
+                    }
+                });
+            }
+                return deferred.state() == "resolved" ? true : false;
+        }, icon + "结束时间和开始时间格式不对或在其他采暖季之间");
         $form.validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
@@ -132,16 +161,17 @@
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
                 season: {
-                    required: true
-//                    checkSeason: '#season'
+                    required: true,
+                    checkSeason: '#season'
                 },
                 sDate: {
                     required: true
                     //dateSeason: '#season'
                 },
                 eDate: {
-                    required: true
-                   //isGt: '#start'
+                    required: true,
+                    isGt: '#start',
+                    isAmong:'#start'
                 }
             },
             messages: {
@@ -158,14 +188,15 @@
             submitHandler: function () {
                 var index = top.layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
-                });
+                })
                 $.ajax({
                     url: _platform + '/season/editvalue',
                     data: {
                            id:$(top.document).find('#id').val(),
-                           name:$(top.document).find('#season').val(),
+                           name:$(top.document).find("#season").val(),
                            sdate:$(top.document).find('#start').val(),
-                           edate:$(top.document).find('#end').val()
+                           edate:$(top.document).find('#end').val(),
+                           comId:$(top.document).find(".chosen-select").find("option:selected").val()
                           },
                     type: 'POST',
                     dataType: 'json',
@@ -190,13 +221,13 @@
         <div class="col-sm-12">
             <form class="form-horizontal" id="seasonEditForm" rseasonAddFormole="form">
                 <input type="hidden" name="id" id="id" value="${season.id}" />
+                <input type="hidden" id="today" value="${todayNow}">
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>采暖季度：</label>
 
                     <div class="col-sm-8">
                         <select id="season" name="season" class="chosen-select form-control">
-
-                            <option value="">${season.name}</option>
+                            <option value="${season.name}" selected="selected">${season.name}</option>
                         </select>
                     </div>
                 </div>
