@@ -54,9 +54,9 @@ public class ComponentServiceImpl implements ComponentService{
             params.put("endTime",edate);
             try {
                 if(StringUtils.isNotBlank(sdate) && StringUtils.isNotBlank(edate)){
-                    planDays = DateUtils.daysBetween(sdate,edate);
+                    planDays = DateUtils.daysBetween(sdate,edate)+1;
                     String nowDate = dateDao.getDate();
-                    currentDays = DateUtils.daysBetween(sdate, nowDate);
+                    currentDays = DateUtils.daysBetween(sdate, nowDate)+1;
                 }
 
             } catch (ParseException e) {
@@ -138,6 +138,8 @@ public class ComponentServiceImpl implements ComponentService{
         String endTime =  params.get("endTime").toString()+" 23:59:59";
         String pstartTime = this.getPreviousDates(starttime,"yyyy-MM-dd HH:mm:ss");
         String pendTime = this.getPreviousDates(endTime,"yyyy-MM-dd HH:mm:ss");
+        params.put("startTime",starttime);
+        params.put("endTime",endTime);
         List<Map<String, Object>> current = componentDao.getenergycomparision(params);
         params.put("startTime",pstartTime);
         params.put("endTime",pendTime);
@@ -386,7 +388,7 @@ public class ComponentServiceImpl implements ComponentService{
                 season = seasons.get(0);//查询上个采暖季的结果不为空
                 Integer day = null;
                 try {
-                    day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate);
+                    day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate) +1;
                     if(day>365){//计算上个采暖季记录中的结束时间距当前系统时间超过1年
                          data.put("currentSeason",null);//则本采暖季的开始和结束日期不能用上个采暖季的开始结束日期
                          if(day <=730){//如果获取到的采暖季结束日期距当前系统日期小于2年则为上上个采暖季
@@ -399,7 +401,7 @@ public class ComponentServiceImpl implements ComponentService{
                         data.put("currentSeason",season);//将刚过去的采暖季日期作为本采暖季显示
                         if(seasons.size()>1){//查询上个采暖季的结果集大于2
                             season = seasons.get(1);//上上个采暖季
-                            day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate);
+                            day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate)+1;
                             if(day >730){//如果上上个采暖季距系统日期大于2年则说明上上个采暖季距上个采暖季大于1年，上上个采暖季为空
                                 data.put("preSeason",null);
                             }else{//上上个采暖季和上个采暖季都可用
@@ -421,7 +423,7 @@ public class ComponentServiceImpl implements ComponentService{
                 season = seasons.get(0);
                 Integer day = null;
                 try {
-                    day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate);
+                    day = DateUtils.daysBetween(season.get("EDATE").toString(), nowDate)+1;
                     if(day>365) {//如果查询最大采暖季结束时间大于365
                             data.put("preSeason", null);
                     }else{

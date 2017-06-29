@@ -364,7 +364,7 @@ function chart01Show(datalist, datelist, other){
                 }
             }
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color:['#3B96DD', '#c2ccd3','green'],
         series: []
     }
     $.each(datalist,function(index,value){
@@ -433,7 +433,7 @@ function chart01Show(datalist, datelist, other){
         name:other.average.typeName,
         type:'line',
         symbolSize:1,
-        lineStyle:{normal:{type:'dashed',color:'#3B96DD'}},
+        lineStyle:{normal:{type:'dashed',color:'green'}},
         label:labelStyle,
         data:averageList
     });
@@ -1036,6 +1036,7 @@ function chart07Fun(){
                         }else{
                             pcd = 0;
                         }
+                        debugger;
                         pcdz = bm_total - (currentDays/planDays)*currentPlan;
                     }
                 }else{

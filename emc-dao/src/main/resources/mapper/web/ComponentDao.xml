@@ -381,9 +381,6 @@
         bb.dates
         ORDER BY
         bb.dates ASC)cc order by cc.dates;
-
-
-
     </select>
 
     <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">
