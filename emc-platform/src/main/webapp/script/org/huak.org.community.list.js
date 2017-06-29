@@ -7,8 +7,6 @@ $(function () {
 	initTreeBox();
 	
 	parent.$("[name='searchComp']").change(function(){
-		communitySearOrg.initTree();
-		initTreeBox();
 		window.location.reload(); 
 	});
 	//小区列表

@@ -6,8 +6,6 @@ $(function () {
 	cellSearTree = cellSearOrg.initTree();
 	initTreeBox();
 	parent.$("[name='searchComp']").change(function(){
-		cellSearOrg.initTree();
-		initTreeBox();
 		window.location.reload(); 
 	});
 	//楼座列表
