@@ -8,14 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     //以下为官方示例
-    var today = '2016-06-16';
+
     $(function () {
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
         var $form = $(top.document).find("#seasonAddForm");
+        var today = $(top.document).find("#today").val();
         //初始化采暖季度下拉框
         var yearSpan = 10;//上下跨度
-        var year = Number(today.substr(0, 4));
+        var year = Number(today.toString().substr(0, 4));
         console.info(year)
         for (var i = 0 - yearSpan; i < yearSpan; i++) {
             var year1 = year + i;
@@ -62,15 +63,18 @@
 
         //下拉框js
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
+
         $.validator.addMethod("checkSeason", function (value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
             console.log(value);
-            //alert("校验采暖季度");
+            var season = $(top.document).find(element).val();
+            var comId=$(top.document).find(".chosen-select").find("option:selected").val();
+            //alert(season+"---"+comId);
              $.ajax({
                 url: _platform + '/season/checkname',
                 type: 'POST',
                 async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {season: $('#season').val(),comId:$(top.document).find(".chosen-select").find("option:selected").val()},
+                data: {name: value,comId:comId},
                 dataType: 'json',
                 success: function (result) {
                     if (!result.flag) {
@@ -82,7 +86,7 @@
             });
             //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
             return deferred.state() == "resolved" ? true : false;
-        }, "采暖季度已存在");
+        }, "采暖季已存在");
 
         //验证时间是否在采暖季度之间
         $.validator.addMethod("dateSeason", function (value, element, param) {
@@ -101,33 +105,27 @@
             return this.optional(element) || (value > startDate);
         }, icon + "结束时间必须大于开始时间");
 
-        //验证结束时间是否大于开始时间
+        //该采暖季的时间段 是否已经存在
         $.validator.addMethod("isAmong", function (value, element, param) {
             //alert("验证结束时间是否大于开始时间");
-            var startDate = $(top.document).find(param).val();
+            var start = $(top.document).find(param).val();
             var comId = $(top.document).find(".chosen-select").find("option:selected").val();
-//            if(startDate==null||startDate==""){
-//                top.layer.msg("请输开始时间！");
-//            }
-//            if(value==null||value==""){
-//                top.layer.msg("请输结束时间！");
-//            }
+            var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
                 url: _platform + '/season/check',
                 type: 'POST',
                 async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {sdate:param,edate:value,comId:comId},
+                data: {sdate:start,edate:value,comId:comId},
                 dataType: 'json',
                 success: function (result) {
-                    if (!result.flag) {
+                    if (result.flag) {
                         deferred.reject();
                     } else {
                         deferred.resolve();
                     }
                 }
-            });
-            return this.optional(element) || (value > startDate);
-        }, icon + "结束时间和开始时间格式不对,在其他采暖季已经存在");
+            }); return deferred.state() == "resolved" ? true : false;
+        }, icon + "结束时间和开始时间格式不对,在其他采暖季之间或该采暖季已存在");
         //提示信息绑定
         $(top.document).find('input:not(:submit):not(:button)').mousedown(function () {
             //alert("提示绑定信息");
@@ -165,10 +163,10 @@
                     //dateSeason: '#season'
                 },
                 eDate: {
-                    required: true
-                   // dateSeason: '#season',
-//                    isGt: '#start',
-//                    isAmong:'#start'
+                    required: true,
+                    dateSeason: '#season',
+                    isGt: '#start',
+                    isAmong:'#start'
                 }
             },
             messages: {
@@ -216,6 +214,7 @@
     <div class="row">
         <div class="col-sm-12">
             <form class="form-horizontal" id="seasonAddForm" rseasonAddFormole="form">
+                <input type="hidden" id="today" value="${todayNow}">
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>采暖季度：</label>
 

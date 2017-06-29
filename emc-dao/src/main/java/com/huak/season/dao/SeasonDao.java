@@ -1,8 +1,6 @@
 package com.huak.season.dao;
 
 
-import com.huak.org.model.Oncenet;
-import com.huak.org.model.Org;
 import com.huak.season.model.Season;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,7 +24,13 @@ public interface SeasonDao {
 
     List<Season> selectPageByName(@Param("name")String name);
 
-    List<Season> CheckName(String name);
+    List<Season> checkName(Map<String,Object> map);
 
     List<Season> selectPageByMap(Map<String,Object> paramsMap);
+
+    List<Season> checkTime(Map<String,Object> paramsMap);
+
+    String getNowTime();
+
+    public List<Map<String,Object>> exportSeason(Map<String,Object> paramsMap);
 }

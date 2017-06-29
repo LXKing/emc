@@ -64,8 +64,8 @@
 <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
 </button>
 <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
-<button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/user/export"> 导出Excel
-</button>
+<button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/season/export"> 导出Excel
+    </button>
 
 </div>
 </div>

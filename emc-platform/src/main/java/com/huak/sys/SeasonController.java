@@ -1,13 +1,13 @@
 package com.huak.sys;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.model.Org;
-import com.huak.sys.SeasonService;
 import com.huak.season.model.Season;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +47,7 @@ public class SeasonController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
         logger.info("转至系统采暖季列表页");
+
         return "/sys/season/list";
     }
 
@@ -60,16 +67,22 @@ public class SeasonController {
         return jo.toJSONString();
     }
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(Model model) {
+        model.addAttribute("todayNow", seasonService.getNowTime());
         return "/sys/season/add";
     }
 
     @ResponseBody
     @RequestMapping(value = "/checkname", method = RequestMethod.POST)
-    public String checkNode(@RequestParam  String name ){
+    public String checkNode(@RequestParam  String name,
+                            @RequestParam  String comId){
 
         JSONObject jo = new JSONObject();
-        boolean  flag =   seasonService.checkName(name);
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        map.put("name",name);
+        map.put("comId",comId);
+        boolean  flag =   seasonService.checkName(map);
 
         if(flag){
             jo.put(Constants.FLAG,false);
@@ -80,19 +93,34 @@ public class SeasonController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    public String checkTime(@RequestParam  String sdate,
+                            @RequestParam  String edate,
+                            @RequestParam  String comId){
+
+        JSONObject jo = new JSONObject();
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("sdate",sdate);
+        map.put("edate",edate);
+        map.put("comId",comId);
+        boolean  flag =   seasonService.checkTime(map);
+        jo.put(Constants.FLAG,flag);
+        return jo.toJSONString();
+    }
+    @ResponseBody
     @RequestMapping(value = "/addvalue", method = RequestMethod.POST)
     public String addNodeValue(@RequestParam  String name,
                                @RequestParam  String sdate,
-                               @RequestParam  String edate, HttpServletRequest request){
+                               @RequestParam  String edate, HttpServletRequest request,
+                               @RequestParam  String comId){
         logger.info("添加采暖");
-        com.alibaba.fastjson.JSONObject jo = new com.alibaba.fastjson.JSONObject();
-        jo.put(Constants.FLAG, false);
+        JSONObject jo = new JSONObject();
         try {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
             Season season = new Season();
             season.setId(UUIDGenerator.getUUID());
-            season.setComid("012");
+            season.setComid(comId);
             season.setName(name);
             season.setSdate(sdate);
             season.setEdate(edate);
@@ -110,6 +138,7 @@ public class SeasonController {
         logger.info("跳转修改采暖页");
         try {
             model.addAttribute("season", seasonService.selectByPrimaryKey(id));
+            model.addAttribute("todayNow", seasonService.getNowTime());
         } catch (Exception e) {
             logger.error("跳转修改采暖页异常" + e.getMessage());
         }
@@ -121,6 +150,7 @@ public class SeasonController {
                             @RequestParam  String sdate,
                             @RequestParam  String edate,
                             @RequestParam  String id,
+                            @RequestParam  String comId,
                             HttpServletRequest request){
         logger.info("修改采暖");
         com.alibaba.fastjson.JSONObject jo = new com.alibaba.fastjson.JSONObject();
@@ -130,7 +160,7 @@ public class SeasonController {
             HttpSession session = request.getSession();
             Season season = new Season();
             season.setId(id);
-            season.setComid("013");
+            season.setComid(comId);
             season.setName(name);
             season.setSdate(sdate);
             season.setEdate(edate);
@@ -159,5 +189,33 @@ public class SeasonController {
             jo.put(Constants.MSG, "删除采暖失败");
         }
         return jo.toJSONString();
+    }
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(@RequestParam Map<String, Object> paramsMap, HttpServletResponse response) {
+        logger.info("导出采暖季列表EXCEL");
+        String workBookName = "采暖季列表";//文件名
+        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+        cellName.put("CNAME", "公司名称");
+        cellName.put("NAME", "采暖季名称");
+        cellName.put("SDATE", "开始时间");
+        cellName.put("EDATE", "结束时间");
+        List<Map<String, Object>> cellValues = null;//列值
+        OutputStream out = null;
+        try {
+            cellValues = seasonService.exportSeason(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            logger.error("导出采暖季列表EXCEL异常" + e.getMessage());
+        }
     }
 }

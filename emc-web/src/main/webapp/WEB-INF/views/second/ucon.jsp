@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <meta name="decorator" content="main"/>
+    <meta name="decorator" content="main_top"/>
     <title>华热能管系统-单耗分析</title>
     <script src="${web}/script/huak.web.second.ucon.js"></script>
 </head>

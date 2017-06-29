@@ -101,9 +101,11 @@
 <div class="col-xs-12 no-padding">
 <div class="col-xs-4 mb14">
     <div class="index_contentBox energy_consumption">
-        <a href="${web}/energy/monitor/tsec">
+
             <div class="titbox clearfix no-padding no-margin">
+                <a href="${web}/energy/monitor/tsec">
                 <div class="pull-left energyTit"><i></i>能耗明细<small class="font-sm">Energy Consumption</small></div>
+                </a>
             </div>
             <div class="energyBox">
                 <div class="col-xs-12 no-padding">
@@ -155,7 +157,7 @@
                     </div>
                 </div>
             </div>
-        </a>
+
     </div>
 </div>
 <div class=" col-xs-4 mb14">
@@ -317,9 +319,11 @@
 </div>
 <div class=" col-xs-4">
     <div class="index_contentBox">
-        <a href="${web}/cons/analysis/tsec">
+
         <div class="titbox clearfix no-padding no-margin">
+            <a href="${web}/cons/analysis/tsec">
             <div class="pull-left carbonTit energyTit"><i></i>单耗趋势<small class="font-sm">Comparison of Energy</small></div>
+            </a>
         </div>
         <div class="energyBox ComparisonBox">
             <div class="chart-box">
@@ -347,7 +351,7 @@
                 <div id="chart01" class="chart"></div>
             </div>
         </div>
-        </a>
+
     </div>
 </div>
 <div class=" col-xs-4">
