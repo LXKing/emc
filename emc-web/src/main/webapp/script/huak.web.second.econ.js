@@ -1299,7 +1299,7 @@ function chart2EnergyLine(data){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:['供热源','一次网','换热站','二次线','民户']
+            data:data.legends
         },
         color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
         xAxis: {
@@ -1325,7 +1325,7 @@ function chart2EnergyLine(data){
             splitArea: {
                 show: true
             },
-            data: data.yearDateList
+            data: data.xDate
 
         },
         yAxis: {
@@ -1353,44 +1353,45 @@ function chart2EnergyLine(data){
             }
         },
 
-        series: [
-            {
-                name:'一次网',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type2
-            },
-            {
-                name:'换热站',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type3
-            },
-            {
-                name:'二次线',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type4
-            },
-
-            {
-                name:'民户',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type5
-            },
-            {
-                name:'供热源',
-                type:'line',
-                symbol: 'circle',
-                smooth: false,
-                data:data.type1
-            }
-        ]
+        series: data.series
+//        	[
+//            {
+//                name:'一次网',
+//                type:'line',
+//                symbol: 'circle',
+//                smooth: false,
+//                data:data.type2
+//            },
+//            {
+//                name:'换热站',
+//                type:'line',
+//                symbol: 'circle',
+//                smooth: false,
+//                data:data.type3
+//            },
+//            {
+//                name:'二次线',
+//                type:'line',
+//                symbol: 'circle',
+//                smooth: false,
+//                data:data.type4
+//            },
+//
+//            {
+//                name:'民户',
+//                type:'line',
+//                symbol: 'circle',
+//                smooth: false,
+//                data:data.type5
+//            },
+//            {
+//                name:'供热源',
+//                type:'line',
+//                symbol: 'circle',
+//                smooth: false,
+//                data:data.type1
+//            }
+//        ]
     };
 
     linechart_as.setOption(option);
