@@ -1,0 +1,45 @@
+package com.huak.sys;
+
+import com.huak.sys.dao.ExpendcheckDao;
+import com.huak.sys.model.Expendcheck;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Created by MR-BIN on 2017/6/29.
+ */
+@Service
+public class ExpendcheckServiceImpl implements ExpendcheckService {
+    @Autowired
+    private ExpendcheckDao expendcheckDao;
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return 0;
+    }
+
+    @Override
+    public int insert(Expendcheck record) {
+        return 0;
+    }
+
+    @Override
+    public int insertSelective(Expendcheck record) {
+        return 0;
+    }
+
+    @Override
+    public Expendcheck selectByPrimaryKey(String id) {
+        return null;
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Expendcheck record) {
+        return 0;
+    }
+
+    @Override
+    public int updateByPrimaryKey(Expendcheck record) {
+        return 0;
+    }
+}

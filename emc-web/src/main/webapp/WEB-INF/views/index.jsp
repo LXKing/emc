@@ -328,7 +328,7 @@
         <div class="energyBox ComparisonBox">
             <div class="chart-box">
                 <div class="cb-header">
-                    <span class="cb-title">单耗 (单位: GJ/㎡)</span>
+                    <span class="cb-title">单耗 (单位: Tce/㎡)</span>
                     <div class="cb-title-right">
                         <label>
                             <span class="cb-legend-blue"></span>

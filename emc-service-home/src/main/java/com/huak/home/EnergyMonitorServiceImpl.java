@@ -273,8 +273,23 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		defaultValue.add("0");
 		//处理查询结果，为折线图做准备
 		List<Map<String, Object>> eflListMap = eaDao.energyFlowLine(params);
-		String[] unitType = {"type1","type2","type3","type4","type5"};
+		String[] unitType = null;
+		int toolorgtype = Integer.valueOf("".equals((params.get("toolOrgType")+""))?"-1":(params.get("toolOrgType")+""));
+		switch(toolorgtype){
+			case 1:unitType = new String[]{"供热源"};break;
+			case 2:unitType = new String[]{"一次网"};break;
+			case 3:unitType = new String[]{"换热站"};break;
+			case 4:unitType = new String[]{"二次线"};break;
+			case 5:unitType = new String[]{"民户"};break;
+			default:unitType = new String[]{"供热源","一次网","换热站","二次线","民户"};
+		}
+		List<Map<String,Object>> series = new ArrayList<Map<String,Object>>();
 		for(String type:unitType){
+			Map<String, Object> serie = new HashMap<String,Object>();
+			serie.put("name",type);
+			serie.put("type","line");
+			serie.put("symbol","circle");
+			serie.put("smooth",false);
 			List<String> lineValue = new ArrayList<String>();
 			if(null!=eflListMap&&eflListMap.size()>0){
 				for(String d:yearList){
@@ -289,12 +304,15 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 						lineValue.add("0");
 					}
 				}
-				result.put(type, lineValue);
+				serie.put("data",lineValue);
 			}else{
-				result.put(type, defaultValue);
+				serie.put("data",defaultValue);
 			}
+			series.add(serie);
 		}
-		result.put("yearDateList", yearList);
+		result.put("xDate", yearList);
+		result.put("series", series);
+		result.put("legends", unitType);
 		return result;
 	}
 

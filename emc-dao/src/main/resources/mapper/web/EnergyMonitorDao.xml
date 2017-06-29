@@ -316,13 +316,16 @@
 	  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 	  			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  		LEFT JOIN ( 
-	  			SELECT h.UNITID AS unitid, sum(h.DOSAGE * h.COAL_COEF) AS total, 
-	  			( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
-	  			FROM (
-					t_emc_final_data_hour h
-					LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
-				)
-	  			WHERE 1 = 1 <include refid="cur_time" /> and et.TYPE !='4' 
+	  			select BB.unitid,sum(BB.dosage*BB.cc) as total,BB.season from(
+		  			SELECT h.UNITID AS unitid, h.DOSAGE dosage, h.COAL_COEF cc,
+		  			( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season,
+		  			et.TYPE type 
+		  			FROM (
+						t_emc_final_data_hour h
+						LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
+					)
+		  			WHERE 1 = 1 <include refid="cur_time" /> 
+		  		) BB where BB.type !='4'
 	  			GROUP BY unitid 
 	  		) B ON A.UNITID = B.unitid 
 	  	WHERE B.total IS NOT NULL 
@@ -333,20 +336,23 @@
   </select>
   <!-- 查询能源流趋势对比图 -->
   <select id="energyFlowLine" resultType="java.util.Map" parameterType="java.util.Map">
-  	SELECT concat('type',A.UNITTYPE) unittype, SUM(B.total) total, B.yeardate 
+  	SELECT (case A.UNITTYPE when '1' then '供热源' when '2' then '一次网' when '3' then '换热站' when '4' then '二次线' when '5' then '民户' end) unittype,
+  		   SUM(B.total) total, B.yeardate 
   	FROM( 
   		SELECT vu.UNITID, vu.UNITTYPE 
   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
 		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
   		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
   			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
-  		LEFT JOIN ( 
-  			SELECT h.UNITID AS unitid, sum(h.DOSAGE * h.COAL_COEF) AS total, DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate 
-  			FROM (
-  				t_emc_final_data_hour h 
-				LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id 
-			) 
-  			WHERE 1 = 1 <include refid="cur_time" /> and et.TYPE !='4' 
+  		LEFT JOIN (
+  			select BB.unitid,sum(BB.dosage*BB.cc) as total,BB.yeardate from ( 
+	  			SELECT h.UNITID AS unitid,h.DOSAGE dosage,h.COAL_COEF cc,
+					   DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate,et.TYPE type
+	  			FROM (
+	  				t_emc_final_data_hour h 
+					LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id 
+				) 
+	  			WHERE 1 = 1 <include refid="cur_time" /> ) BB where BB.type != '4'
   			GROUP BY unitid,yeardate 
   		) B ON A.UNITID = B.unitid 
   	WHERE B.total IS NOT NULL <if test="toolOrgType!=null and toolOrgType!=''"> AND A.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>
@@ -365,13 +371,16 @@
 	  	WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
 	  		  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  	LEFT JOIN ( 
-	  		SELECT h.UNITID AS unitid, sum(h.DOSAGE * h.COAL_COEF) AS total, 
-	  		( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
-	  		FROM (
-	  			t_emc_final_data_hour h 
-				LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id 
-	  		) 
-	  		WHERE 1 = 1 <include refid="cur_last_time" />  and et.TYPE !='4' 
+	  		select BB.unitid, sum(BB.dosage * BB.cc) AS total, BB.season
+			from (
+		  		SELECT h.UNITID AS unitid, h.DOSAGE dosage, h.COAL_COEF cc,
+		  		( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season, 
+		  		et.TYPE type 
+		  		FROM (
+		  			t_emc_final_data_hour h 
+					LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id 
+		  		) 
+		  		WHERE 1 = 1 <include refid="cur_last_time" /> ) BB where BB.type != '4'
 	  		GROUP BY unitid,season  
 	  	) B ON A.UNITID = B.unitid 
 	  	WHERE B.total IS NOT NULL 
