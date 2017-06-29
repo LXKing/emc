@@ -41,7 +41,7 @@
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -62,17 +62,17 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
         WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v LEFT JOIN
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -93,11 +93,11 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
-        WHERE fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
         GROUP BY v.fgsid,v.ORG_NAME
@@ -127,12 +127,12 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE
         FROM t_emc_final_data_hour fdh ,t_emc_energy_type eet
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         AND fdh.TYPEID = eet.ID AND eet.TYPE!=4
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPEID) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME
     </select>
 
@@ -183,7 +183,7 @@
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -204,17 +204,17 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
         WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v LEFT JOIN
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -235,11 +235,11 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
         WHERE fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
         GROUP BY v.fgsid,v.ORG_NAME
@@ -253,7 +253,7 @@
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -274,11 +274,11 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v
         GROUP BY v.fgsid,v.ORG_NAME
@@ -306,7 +306,7 @@
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -327,17 +327,17 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
         WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v LEFT JOIN
         (
         SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,eet.TYPE FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
         (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
@@ -358,11 +358,11 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
         WHERE fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
-        GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
-        GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
+        GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
         GROUP BY v.fgsid,v.ORG_NAME
