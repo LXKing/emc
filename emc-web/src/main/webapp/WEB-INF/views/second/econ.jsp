@@ -55,7 +55,7 @@
                         <span class="energy-list-name">水能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="waterTotal"></span>
-                            <span class="energy-list-measure ">tce</span>
+                            <span class="energy-list-measure ">T</span>
                             <span class="energy-list-proportion " id="waterchangeRate"></span>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <span class="energy-list-name">电能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="electricTotal"></span>
-                            <span class="energy-list-measure ">tce</span>
+                            <span class="energy-list-measure ">KW·H</span>
                             <span class="energy-list-proportion" id="elechangeRate"></span>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                         <span class="energy-list-name">气能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="gasTotal"></span>
-                            <span class="energy-list-measure ">tce</span>
+                            <span class="energy-list-measure ">M³</span>
                             <span class="energy-list-proportion " id="gaschangeRate"></span>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <span class="energy-list-name">热能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="hotTotal"></span>
-                            <span class="energy-list-measure">tce</span>
+                            <span class="energy-list-measure">GJ</span>
                             <span class="energy-list-proportion" id="hotchangeRate"></span>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                         <span class="energy-list-name">煤能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="coalTotal"></span>
-                            <span class="energy-list-measure ">tce</span>
+                            <span class="energy-list-measure ">T</span>
                             <span class="energy-list-proportion" id="coalchangeRate"></span>
                         </div>
                     </div>
@@ -143,13 +143,13 @@
                     <thead>
                     <tr class="first_tr">
                         <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
-                        <td>能源总量（tce）</td>
+                        <td>能源总量（TCE）</td>
                         <td>水能总量（T）</td>
-                        <td>电耗总量(Kw/h)</td>
+                        <td>电耗总量(KW·H)</td>
                         <td>气能耗总量（M²）</td>
                         <td>热能耗总量（GJ）</td>
-                        <td>煤能耗总量（GJ）</td>
-                        <td>油能耗总量（GJ）</td>
+                        <td>煤能耗总量（T）</td>
+                        <td>油能耗总量（L）</td>
                     </tr>
                     </thead>
                     <tbody id="fgsEnergyTbody">
@@ -233,13 +233,13 @@
                     <thead>
                     <tr class="first_tr">
                         <td>能源站</td>
-                        <td>能源总量（tce）</td>
-                        <td>水能总量（t）</td>
-                        <td>电耗总量(kw·h)</td>
-                        <td>气能耗总量（m³）</td>
+                        <td>能源总量（TCE）</td>
+                        <td>水能总量（T）</td>
+                        <td>电耗总量(KW·H)</td>
+                        <td>气能耗总量（M²）</td>
                         <td>热能耗总量（GJ）</td>
-                        <td>煤能耗总量（GJ）</td>
-                        <td>油能耗总量（GJ）</td>
+                        <td>煤能耗总量（T）</td>
+                        <td>油能耗总量（L）</td>
                     </tr>
                     </thead>
                     <tbody id="energyFlowDetail">
