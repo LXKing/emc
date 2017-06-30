@@ -6,8 +6,6 @@ $(function () {
 	roomSearTree = roomSearOrg.initTree();
 	initTreeBox();
 	parent.$("[name='searchComp']").change(function(){
-		roomSearOrg.initTree();
-		initTreeBox();
 		window.location.reload(); 
 	});
 	//户列表

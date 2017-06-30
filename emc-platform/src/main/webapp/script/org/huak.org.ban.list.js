@@ -10,8 +10,6 @@ $(function () {
 	
 	//页面顶部 公司改变事件
 	parent.$("[name='searchComp']").change(function(){
-		banSearOrg.initTree();
-		initTreeBox();
 		window.location.reload(); 
 	});
 	

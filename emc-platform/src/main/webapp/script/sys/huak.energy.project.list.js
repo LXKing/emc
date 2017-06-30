@@ -1,18 +1,19 @@
-var cellSearTree;
+var epSearTree;
 $(function () {
-	cellSearOrg = new Org({
+	epSearOrg = new Org({
         class:"org-tree"
     });
-	cellSearTree = cellSearOrg.initTree();
+	epSearTree = epSearOrg.initTree();
 	initTreeBox();
+	
 	parent.$("[name='searchComp']").change(function(){
 		window.location.reload(); 
 	});
-	//楼座列表
-	var cellTable = $('#cell-table-list').bootstrapTable({
+	//小区列表
+	var communityTable = $('#energyProject-table-list').bootstrapTable({
 		height: getHeight() + 30,//高度
         cache: false,//禁用 AJAX 数据缓存
-        url: _platform + '/cell/list',//获取数据的Servlet地址
+        url: _platform + '/energy/project/list',//获取数据的Servlet地址
         method: 'post',//使用POST请求到服务器获取数据
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
@@ -34,7 +35,7 @@ $(function () {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize
             };
-            formsParam(param,'cell-form',false);
+            formsParam(param,'energyProject-form',false);
             return param;
         }, formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
@@ -61,28 +62,18 @@ $(function () {
                 }
             },
             {
-                title: '单元名称',
-                field: 'cellName',
-                align: 'center'
-            },
-            {
-                title: '楼座名称',
-                field: 'banName',
-                align: 'center'
-            },
-            {
-                title: '小区名称',
-                field: 'communityName',
-                align: 'center'
-            },
-            {
                 title: '所属机构',
                 field: 'orgName',
                 align: 'center'
             },
             {
-                title: '所属公司',
-                field: 'comName',
+                title: '所属采暖季',
+                field: 'seasonName',
+                align: 'center'
+            },
+            {
+                title: '计划能耗',
+                field: 'num',
                 align: 'center'
             },
             {
@@ -91,12 +82,12 @@ $(function () {
                 align: 'center' ,
                 formatter:function(value,row,index){
                 	var html = "";
-                	if($('#cellUpdate').val()){
-                		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="cellEditForm" layer-title="编辑单元" layer-url="'+_platform+'/cell/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
-                	}
-                	if($('#cellDelete').val()){
-                		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deletecell(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
-                	}
+//                	if($('#communityUpdate').val()){
+                		html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="energyProjectEditForm" layer-title="编辑能耗计划" layer-url="'+_platform+'/energy/project/edit/'+row.id+'?comId='+parent.$("[name='searchComp']").val()+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+//                	}
+//                	if($('#communityDelete').val()){
+                		html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteEnergyProject(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+//                	}
                 	return html;
                 }
             }
@@ -110,16 +101,14 @@ var treeNodeClick = function(e,treeId,treeNode){
 	var orgName = treeNode.name;
 	$("#orgId").val(orgId);
 	$("input[name='orgName']").val(orgName);
-	communitySelect();
 };
 
 //初始化treebox
 function initTreeBox(){
-	if(cellSearTree==null){
+	if(epSearTree==null){
 		setTimeout('initTreeBox()',50)
 	}else{
-//		var treeObj = $.fn.zTree.getZTreeObj("temp_org_tree");
-		var box = $('input[name="orgName"]').treeBox({setting:cellSearTree.setting,zNodes:cellSearTree.getNodes()});
+		var box = $('input[name="orgName"]').treeBox({setting:epSearTree.setting,zNodes:epSearTree.getNodes()});
 	}
 }
 
@@ -153,24 +142,24 @@ function formsParam(param,formId,isVisible){
 }
 
 /**
- * 删除楼座
+ * 删除能耗计划
  * @param id
  */
-function deletecell(id) {
-    layer.confirm('您是否确定删除楼座？', {
+function deleteEnergyProject(id) {
+    layer.confirm('您是否确定删除能耗计划？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: _platform + '/cell/delete/' + id,
+            url: _platform + '/energy/project/delete/' + id,
             type: 'POST',
             dataType: 'json',
             success: function (result) {
                 if (result.flag) {
                     layer.closeAll();
-                    $('#cell-table-list').bootstrapTable("refresh");
+                    $('#energyProject-table-list').bootstrapTable("refresh");
                     layer.msg(result.msg);
                 } else {
                     layer.close(index);
@@ -179,18 +168,4 @@ function deletecell(id) {
             }
         });
     });
-}
-
-/**
- * 导出楼座信息到excel
- */
-function exportCell(){
-	var tableDatas = $('#cell-table-list').bootstrapTable('getData');
-	if(tableDatas==null||tableDatas=='null'||tableDatas==''){
-		layer.msg('没有数据要导出，请重新搜索！');
-		return;
-	}
-	var paramStr = formsParam({},"cell-form",true);
-	var url = _platform + '/cell/export?'+paramStr;
-	window.location.href = url;
 }
