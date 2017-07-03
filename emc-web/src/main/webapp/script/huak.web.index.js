@@ -37,9 +37,9 @@
                 $(".costAll").html(data.all.costAll+" 万元");
             }
             if(data.all.yardage==null||data.all.yardage==''){
-                $(".yardage").html(0+" GJ/㎡");
+                $(".yardage").html(0+" TCE/㎡");
             }else{
-                $(".yardage").html(data.all.yardage+" GJ/㎡");
+                $(".yardage").html(data.all.yardage+" TCE/㎡");
             }
 //            if(data.all.yardage==null||data.all.yardage==''){
 //                $(".zyardage").html(0+" GJ/㎡");

@@ -31,14 +31,22 @@
 
         WHERE c.ID=v.ORGID
         and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
-
+        <if test="orgType != null and orgType !=''">
+            and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
+        </if>
         GROUP BY v.UNITID,v.UNITTYPE
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
         FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
-        WHERE  fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
-                and et.TYPE!=4
+        WHERE   1=1
+        <if test="startTime != null and startTime !=''">
+            AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            AND fd.DOSAGE_TIME  &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+            and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
         ) a
@@ -114,47 +122,112 @@
     </select>
     <!--单耗-->
     <select id="selectYardageByMap" parameterType="java.util.Map" resultType="java.lang.String">
-        SELECT ROUND(SUM(a.BM)/AVG(a.AREA),1) DH from (
+
+        SELECT ROUND(z.zbm/z.area,2)  DH from (
+        SELECT  sum(b.area) area,
+        (SELECT SUM(a.bm) from (
         SELECT  sum(h.BM) BM,sum(h.DOSAGE) DOSAGE,h.TYPE,ou.UNITTYPE,SUM(h.AREA) AREA  from (
         SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM
-        t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) c,v_emc_unit v
+        t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR}))
+
+        <if test="comId != null and comId !=''">
+            and o.COM_ID=#{comId,jdbcType=VARCHAR}
+        </if>
+        ) c,v_emc_unit v
 
         WHERE c.ID=v.ORGID
         and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
-
+        <if test="orgType != null and orgType !=''">
+            and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
+        </if>
         GROUP BY v.UNITID,v.UNITTYPE
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
         FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
-        WHERE  fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
+        WHERE 1=1
+        <if test="startTime != null and startTime !=''">
+            AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            AND fd.DOSAGE_TIME  &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
         and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
-        ) a
+        )a) zbm from (
+        SELECT  a.UNITTYPE , avg(a.AREA) area from (
+        SELECT  sum(h.BM) BM,sum(h.DOSAGE) DOSAGE,h.TYPE,ou.UNITTYPE,SUM(h.AREA) AREA  from (
+        SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM
+        t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR}))
+
+        <if test="comId != null and comId !=''">
+            and o.COM_ID=#{comId,jdbcType=VARCHAR}
+        </if>
+
+        ) c,v_emc_unit v
+        WHERE c.ID=v.ORGID
+        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        <if test="orgType != null and orgType !=''">
+            and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
+        </if>
+        GROUP BY v.UNITID,v.UNITTYPE
+        ) ou
+        LEFT JOIN
+        (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
+        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        WHERE 1=1
+        <if test="startTime != null and startTime !=''">
+            AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            AND fd.DOSAGE_TIME  &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+        and et.TYPE!=4
+        GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
+        GROUP BY h.TYPE,ou.UNITTYPE
+        ) a GROUP BY a.UNITTYPE
+        )b
+        ) z
+
     </select>
     <!--折算单耗-->
 
     <!--成本平方米-->
     <select id="selectPriceAreaByMap" parameterType="java.util.Map" resultType="java.lang.String">
-        SELECT ROUND(sum(a.AREA)/10000,3) DH from (
-        SELECT  sum(h.BM) BM,sum(h.DOSAGE) DOSAGE,h.TYPE,ou.UNITTYPE,SUM(h.AREA) AREA  from (
-        SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM
-        t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) c,v_emc_unit v
 
+        SELECT ROUND(sum(b.area)/10000,4) area from (
+            SELECT  a.UNITTYPE , avg(a.AREA) area from (
+            SELECT  sum(h.BM) BM,sum(h.DOSAGE) DOSAGE,h.TYPE,ou.UNITTYPE,SUM(h.AREA) AREA  from (
+            SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM
+        t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR}))
+
+        <if test="comId != null and comId !=''">
+            and o.COM_ID=#{comId,jdbcType=VARCHAR}
+        </if>
+
+        ) c,v_emc_unit v
         WHERE c.ID=v.ORGID
         and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
-
+        <if test="orgType != null and orgType !=''">
+            and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
+        </if>
         GROUP BY v.UNITID,v.UNITTYPE
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
         FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
-        WHERE  fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
+        WHERE  1=1
+        <if test="startTime != null and startTime !=''">
+        AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            AND fd.DOSAGE_TIME  &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
         and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
-        ) a
+        ) a GROUP BY a.UNITTYPE )b
     </select>
     <!--供热源总能耗-->
     <select id="selectTopFeedTotalByMap" parameterType="java.util.Map" resultType="java.lang.String">
@@ -248,25 +321,19 @@
 
     <!--管网总长度-->
     <select id="selectGetNetLengh" parameterType="java.util.Map" resultType="java.lang.String">
-
-        SELECT
-                ROUND(sum(n.LENGTH),1) len
+       SELECT ROUND(sum(t.LENGTH),2) from t_emc_unit_net t where t.ORG_ID in (SELECT
+              id
             FROM
-                t_emc_unit_net n,
-                v_emc_unit v
+            t_emc_org
             WHERE
-                n.COM_ID = v.COMID
-            AND v.ORGID in( SELECT
-                id
-            FROM
-                t_emc_org
-            WHERE
-                FIND_IN_SET(
-                    id,
-                    emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
-                ))
-            and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
-
+            FIND_IN_SET(
+            id,
+            emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
+            ))
+            <if test="comId != null and comId !=''">
+                and t.COM_ID=#{comId,jdbcType=VARCHAR}
+            </if>
+                and t.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
     </select>
     <!--管网总成本-->
     <select id="selectGetNetCost" parameterType="java.util.Map" resultMap="CostResultMap">
@@ -392,24 +459,20 @@
     </select>
     <!--管线总长度-->
     <select id="selectGetLineLengh" parameterType="java.util.Map" resultType="java.lang.String">
+      SELECT sum(n.LENGTH) from  t_emc_unit_line n where n.ORG_ID in (SELECT
+            id
+            FROM
+            t_emc_org
+            WHERE
+            FIND_IN_SET(
+            id,
+            emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
+            ))
+            <if test="comId != null and comId !=''">
+                and n.COM_ID=#{comId,jdbcType=VARCHAR}
+            </if>
+                and n.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
 
-        SELECT
-        ROUND(sum(n.LENGTH),1) len
-        FROM
-        t_emc_unit_line n,
-        v_emc_unit v
-        WHERE
-        n.COM_ID = v.COMID
-        AND v.ORGID in( SELECT
-        id
-        FROM
-        t_emc_org
-        WHERE
-        FIND_IN_SET(
-        id,
-        emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
-        ))
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
 
     </select>
 
