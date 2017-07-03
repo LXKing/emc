@@ -83,9 +83,6 @@ $(function(){
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
         success : function(data) {
             fgsEnergyList(data);
         }
@@ -95,9 +92,6 @@ $(function(){
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
         success : function(data) {
             chart01Fun(data.list);
         }
@@ -107,9 +101,6 @@ $(function(){
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
         success : function(data) {
             chart02Fun(data);
         }
@@ -119,9 +110,6 @@ $(function(){
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
         success : function(data) {
             chart03Fun(data);
         }
@@ -131,9 +119,6 @@ $(function(){
         type : "POST",
         data:$("#searchTools").serialize(),
         dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
         success : function(data) {
             console.info(data)
             chart04Fun(data);
@@ -144,9 +129,6 @@ $(function(){
         type : "GET",
         data:$("#searchTools").serialize(),
         dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
         success : function(data) {
         	$("#groupTotal").html(data.data.groupTotal.energy.value);
         	if(data.data.groupTotal.energy.type == 1){
