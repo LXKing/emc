@@ -1009,59 +1009,16 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
+            debugger;
             if (result.flag) {
                 /*仪表盘*/
-                var kedu1 =0; //蓝色的刻度
-                var pcd = 0; //偏差度
-                var pcdz = 0; //偏差值
-                var currentPlan = 0;
-                var bm_total = 0;
-                var currentDays = result.object.currentDays;
-                var planDays = result.object.planDays;
-                currentPlan =result.object.currentPlan;
-                bm_total =result.object.bm_total;
-
-                if(result.object.isInCurrentSeason == true){
-                    kedu1 =(currentDays/planDays)*0.75;
-                    if(planDays == 0 ){
-                        if(currentPlan == 0){
-                            pcd = 0 ;
-                        }else{
-                            pcd = (bm_total - 0)/currentPlan*100;
-                        }
-                        pcdz = bm_total;
-                    }else{
-                        if(currentPlan != 0){
-                            pcd = (bm_total - (currentDays/planDays)*currentPlan)/currentPlan*100;
-                        }else{
-                            pcd = 0;
-                        }
-                        debugger;
-                        pcdz = bm_total - (currentDays/planDays)*currentPlan;
-                    }
-                }else{
-                    kedu1 = 0.75;
-                    if(planDays == 0 ){
-                        if(currentPlan == 0){
-                            pcd = 0 ;
-                        }else{
-                            pcd = (bm_total - 0)/currentPlan*100;
-                        }
-                        pcdz = bm_total;
-                    }else{
-                        if(currentPlan != 0){
-                            pcd = (bm_total -currentPlan)/currentPlan*100;
-                        }else{
-                            pcd = 0;
-                        }
-                        pcdz = bm_total -currentPlan;
-                    }
-                }
-
+                var kedu1 = result.object.kedu1; //蓝色的刻度
+                var pcd =result.object.pcd; //偏差度
+                var pcdz = result.object.pcdz; //偏差值
+                var currentPlan =result.object.currentPlan;
+                var bm_total =result.object.bm_total;
                 initChart(kedu1,currentPlan,bm_total);
-
                 pcd =  toDecimal(pcd);
-
                 pcdz =  toDecimal(pcdz);
                 $("#pc_plan_percent").html("偏差度("+pcd+"%)");
                 $("#pc_plan").html(pcdz);
