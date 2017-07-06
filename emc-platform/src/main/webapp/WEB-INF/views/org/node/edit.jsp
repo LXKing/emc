@@ -180,12 +180,6 @@ $(function () {
             cityId:{
                 required: true
             },
-            countyId:{
-                required: true
-            },
-            townId:{
-                required: true
-            },
             heatArea:{
                 required: true
             },
@@ -220,12 +214,6 @@ $(function () {
             },
             cityId:{
                 required: icon + "请选择城市"
-            },
-            countyId:{
-                required: icon + "请选择县城"
-            },
-            townId:{
-                required: icon + "请选择乡镇"
             },
             heatArea:{
                 required: icon + "请填写供热面积"
@@ -376,7 +364,7 @@ $(function () {
 
                     <div class="form-group">
                         <div class="td">
-                            <label class="col-md-2  control-label"><span class="red">*</span>所属县：</label>
+                            <label class="col-md-2  control-label">所属县：</label>
                             <div class="col-sm-4">
                                 <select id="county" name="countyId" class="chosen-select form-control" >
                                     <option value="">请选择县</option>
