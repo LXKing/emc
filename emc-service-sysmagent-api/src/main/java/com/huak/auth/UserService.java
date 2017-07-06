@@ -5,6 +5,7 @@ import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -99,6 +100,9 @@ public interface UserService {
      * 给用户分配角色
      */
     void grantRole(Map<String, Object> paramsMap );
+
+    @Transactional(readOnly = false)
+    void deleteRoleByUser(Map<String, Object> paramsMap);
 
     /**
      * 根据账号密码查询用户

@@ -145,7 +145,7 @@
 
     <delete id="deleteRoleByUser" parameterType="java.util.HashMap">
         delete from t_emc_auth_role_user_rel
-        where role_id = #{roleId} and user_id=#{userId}
+        where  user_id=#{userId}
     </delete>
 
     <insert id="grantRoleByUser" parameterType="java.util.HashMap">
