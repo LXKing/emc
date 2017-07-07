@@ -266,7 +266,7 @@
         l.LENGTH,
         l.CELL_NUM,
         l.PART_NUM,
-        (CASE l.HEAT_TYPE WHEN 1 THEN '集中供热' WHEN 2 THEN '区域供热' WHEN 3 THEN '尖峰供热'  ELSE '' END) HEAT_NAME,
+        (CASE l.HEAT_TYPE WHEN 1 THEN '区域供热' WHEN 2 THEN '集中供热' WHEN 3 THEN '尖峰供热'  ELSE '' END) HEAT_NAME,
         s.STATION_NAME ,
         f.FEED_NAME,
         l.MEDIUM

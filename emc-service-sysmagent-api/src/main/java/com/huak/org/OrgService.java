@@ -2,7 +2,7 @@ package com.huak.org;
 
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.org.model.Administrative;
+import com.huak.sys.model.Administrative;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.sys.model.SysDic;

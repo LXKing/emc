@@ -206,12 +206,12 @@ public class SecondnetController {
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 
         cellName.put("LINE_NAME", "管线名称");
-        cellName.put("LINE_CODE", "管线编号");
+        cellName.put("LINE_CODE", "管线代码");
         cellName.put("NET_TYPE_NAME", "管线类型");
+        cellName.put("HEAT_NAME", "供热类型");
         cellName.put("LENGTH", "长度");
         cellName.put("CELL_NUM", "小室数量");
         cellName.put("PART_NUM", "管段数量");
-        cellName.put("HEAT_NAME", "供热类型");
         cellName.put("FEED_NAME","热源名称");
         cellName.put("STATION_NAME","热力站名称");
         cellName.put("MEDIUM", "输送介质");

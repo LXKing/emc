@@ -186,7 +186,7 @@
         // 管线长度数值校验
         $.validator.addMethod("isNumber", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
-            var reg = new RegExp("^[0-9]+(.[0-9]{2})?$");
+            var reg = new RegExp("^[0-9]+(.[0-9]{1,2})?$");
             if(!reg.test(value)){
                 //top.layer.msg("请输入数字!");
                 return false;

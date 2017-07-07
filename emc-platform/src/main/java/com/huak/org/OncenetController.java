@@ -199,11 +199,12 @@ public class OncenetController {
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 
         cellName.put("NET_NAME", "管网名称");
-        cellName.put("NET_CODE", "管网编号");
+        cellName.put("NET_CODE", "管网代码");
         cellName.put("NET_TYPE_NAME", "管网类型");
         cellName.put("LENGTH", "长度");
         cellName.put("CELL_NUM", "小室数量");
         cellName.put("PART_NUM", "管段数量");
+        cellName.put("HEAT_NAME", "供热类型");
         cellName.put("MEDIUM", "输送介质");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
