@@ -2,6 +2,7 @@ package com.huak.home.component;
 
 
 import com.huak.base.dao.DateDao;
+import com.huak.common.MathsUtil;
 import com.huak.common.utils.DateUtils;
 import com.huak.home.dao.SearchDao;
 import com.huak.home.dao.component.ComponentDao;
@@ -106,6 +107,11 @@ public class ComponentServiceImpl implements ComponentService{
         data.put("planDays",planDays);
         data.put("currentDays",currentDays);
         data.put("isInCurrentSeason",season.get("isInCurrentSeason"));
+
+
+
+
+
         return this.digitData(data);
 
     }
@@ -360,6 +366,54 @@ public class ComponentServiceImpl implements ComponentService{
                 }else{
                     data.put("coal_tb","#%");
                 }
+
+                double pcd = 0.0;
+                double kedu1 = 0.0;
+                double pcdz = 0.0;
+                boolean fla = (boolean) data.get("isInCurrentSeason");
+                int currentDays = (int) data.get("currentDays");
+                int planDays = (int) data.get("planDays");
+                double currentPlan = (double) data.get("currentPlan");
+                if(fla){
+                    kedu1 =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(currentDays,planDays),0.75),2);
+                    if(planDays == 0 ){
+                        if(currentPlan == 0){
+                            pcd = 0 ;
+                        }else{
+                            pcd =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(jn_total,currentPlan),100),4);
+                        }
+                        pcdz = jn_total;
+                    }else{
+                        if(currentPlan != 0){
+                            pcd = MathsUtil.round(MathsUtil.div(MathsUtil.sub(jn_total,MathsUtil.mul(MathsUtil.div(currentDays,planDays),currentPlan)),currentPlan)*100,4);
+                        }else{
+                            pcd = 0;
+                        }
+                        pcdz =MathsUtil.round(MathsUtil.sub(jn_total,MathsUtil.mul(MathsUtil.div(currentDays,planDays),currentPlan)),2);
+
+                    }
+                }else{
+                    kedu1 = 0.75;
+                    if(planDays == 0 ){
+                        if(currentPlan == 0){
+                            pcd = 0 ;
+                        }else{
+                            pcd = MathsUtil.round(MathsUtil.div(jn_total,currentPlan)*100,2);
+
+                        }
+                        pcdz = jn_total;
+                    }else{
+                        if(currentPlan != 0){
+                            pcd = MathsUtil.round(MathsUtil.div((jn_total -currentPlan),currentPlan)*100,2);
+                        }else{
+                            pcd = 0;
+                        }
+                        pcdz = jn_total -currentPlan;
+                    }
+                }
+                data.put("pcd",pcd);
+                data.put("pcdz",pcdz);
+                data.put("kedu1",kedu1);
             }
 
         return data;
