@@ -3,6 +3,7 @@
 <mapper namespace="com.huak.org.dao.SecondnetDao">
     <resultMap id="BaseResultMap" type="com.huak.org.model.vo.Secondnet">
         <constructor>
+
             <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="LINE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="LINE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
