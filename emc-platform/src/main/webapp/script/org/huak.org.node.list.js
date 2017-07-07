@@ -111,9 +111,10 @@ $(function () {
                  field: 'opt',
                  align: 'center' ,
                  formatter:function(value,row,index){
+                     debugger;
                      var html = "";
                      if($("#nodeUpdateAuth").val()){
-                         html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'" > <i class="fa fa-edit"></i></a>&nbsp;';
+                         html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="stationEditForm" layer-title="编辑热力站" layer-url="'+_platform+'/station/edit/'+row.id+'/'+row.orgId+'/'+row.comId+'" > <i class="fa fa-edit"></i></a>&nbsp;';
                      }
                      if($("#nodeDeleteAuth").val()){
                          html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deletestation(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;' ;

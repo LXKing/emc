@@ -315,7 +315,7 @@ $(function () {
                                 <select id="netId" name="netId" class="chosen-select form-control"  >
                                     <option value="">请选择管网</option>
                                     <c:forEach items="${oncenet}" var="net">
-                                        <option <c:if test="${node.netId eq net.id}">selected="selected" </c:if> value="${net.id}">${net.netName}</option>
+                                        <option <c:if test="${node.netId eq net.ID}">selected="selected" </c:if> value="${net.ID}">${net.NET_NAME}</option>
                                     </c:forEach>
                                 </select>
                             </div>

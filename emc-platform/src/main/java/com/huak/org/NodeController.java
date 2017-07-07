@@ -77,6 +77,7 @@ public class NodeController {
             obj.setComId(comId);
             Map<String,Object> params = new HashMap<>();
             params.put("comId",comId);
+            params.put("orgId",pOrgId);
             modelMap.put(Constants.OBJECT,obj);
             modelMap.put("oncenet",nodeService.selectNetAll(params));
             modelMap.put("feed",nodeService.selectFeedByMap(params));
@@ -117,15 +118,16 @@ public class NodeController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editPage(Model model,  @PathVariable("id") String id) {
+    @RequestMapping(value = "/edit/{id}/{orgId}/{comId}", method = RequestMethod.GET)
+    public String editPage(Model model,  @PathVariable("id") String id,@PathVariable("orgId") Long pOrgId,@PathVariable("comId") String comId) {
         logger.info("跳转修改热力站页");
         try {
             model.addAttribute("node", nodeService.selectById(id));
             Map<String,Object> params = new HashMap<>();
-            model.addAttribute("oncenet",oncenetService.selectNetAll(params));
-            model.addAttribute("secondnet",secondnetService.selectLineAll(params));
-            model.addAttribute("feed",feedService.selectFeedByMap(params));
+            params.put("comId",comId);
+            params.put("orgId",pOrgId);
+            model.addAttribute("oncenet",nodeService.selectNetAll(params));
+            model.addAttribute("feed",nodeService.selectFeedByMap(params));
         } catch (Exception e) {
             logger.error("跳转修改热力站页异常" + e.getMessage());
         }
