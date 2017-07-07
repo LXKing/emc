@@ -123,4 +123,8 @@
     <dubbo:service interface="com.huak.sys.CostTypeService" ref="costTypeService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="energyProjectService" class="com.huak.sys.EnergyProjectServiceImpl"></bean>
+    <dubbo:service interface="com.huak.sys.EnergyProjectService" ref="energyProjectService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>

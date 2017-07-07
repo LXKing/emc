@@ -204,6 +204,9 @@
         <if test="seq != null and seq !=''">
             and  SEQ = #{seq}
         </if>
+        <if test="pMenuId != null and pMenuId !=''">
+            and  P_MENU_ID = #{pMenuId}
+        </if>
     </select>
 
     <delete id="delete"  parameterType="java.lang.String">

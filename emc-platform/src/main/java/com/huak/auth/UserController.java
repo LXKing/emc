@@ -407,6 +407,7 @@ public class UserController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
+            userService.deleteRoleByUser(paramsMap);
             userService.grantRole(paramsMap);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "分配角色成功");

@@ -283,7 +283,8 @@ $(function () {
                 startView: 2,
                 minView: 2,
                 forceParse: 0,
-                format: 'yyyy-mm-dd'
+                format: 'yyyy-mm-dd',
+                initialDate:$("#begin").val()
             }).on('changeDate', function (ev) {
                 startDate = ev.date;
 
@@ -296,7 +297,8 @@ $(function () {
                 todayHighlight: 1,
                 startView: 2,
                 minView: 2,
-                forceParse: 0
+                forceParse: 0,
+                initialDate:$("#end").val()
             }).on('changeDate', function (ev) {
                 endDate = ev.date;
 

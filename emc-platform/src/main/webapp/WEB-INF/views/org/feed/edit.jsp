@@ -201,12 +201,6 @@ $(function () {
             cityId:{
                 required: true
             },
-            countyId:{
-                required: true
-            },
-            townId:{
-                required: true
-            },
             lng:{
                 checklng: true
             },
@@ -263,12 +257,6 @@ $(function () {
             },
             cityId:{
                 required: icon + "请选择城市"
-            },
-            countyId:{
-                required: icon + "请选择县城"
-            },
-            townId:{
-                required: icon + "请选择乡镇"
             },
             heatArea: {
                 required: icon + "请填写供热面积",

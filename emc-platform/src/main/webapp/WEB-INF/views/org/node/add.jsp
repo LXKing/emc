@@ -377,7 +377,6 @@ $(function () {
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-2  control-label"><span class="red">*</span>详细地址：</label>
                             <div class="col-sm-5">

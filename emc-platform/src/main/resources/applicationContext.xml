@@ -12,10 +12,10 @@
 
     <context:property-placeholder location="classpath:application-env.properties" ignore-unresolvable="true" />
     <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
-    <dubbo:application name="emc-platform" />
+    <dubbo:application name="${dubbo.name}" />
 
     <!-- 使用zookeeper注册中心暴露服务地址 -->
-    <dubbo:registry protocol="zookeeper" address="192.168.171.75:2181,192.168.171.82:2181" />
+    <dubbo:registry protocol="zookeeper" address="${dubbo.address}" />
 
     <!-- 组播注册 -->
     <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
@@ -45,7 +45,7 @@
 	<dubbo:reference id="banService"    interface="com.huak.org.BanService" timeout="12000"  check="true" version="${service.version}"/>
 	<dubbo:reference id="cellService"    interface="com.huak.org.CellService" timeout="12000"  check="true" version="${service.version}"/>
 	<dubbo:reference id="roomService"    interface="com.huak.org.RoomService" timeout="12000"  check="true" version="${service.version}"/>
-
+    <dubbo:reference id="energyProjectService"    interface="com.huak.sys.EnergyProjectService" timeout="12000"  check="true" version="${service.version}" />
     <!-- 验证码 -->
     <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">

@@ -218,8 +218,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = false)
     public void grantRole(Map<String, Object> paramsMap) {
-        roleDao.deleteRoleByUser(paramsMap);
         roleDao.grantRoleByUser(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteRoleByUser(Map<String, Object> paramsMap) {
+        roleDao.deleteRoleByUser(paramsMap);
     }
 
     /**
