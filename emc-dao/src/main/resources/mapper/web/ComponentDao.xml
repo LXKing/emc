@@ -66,9 +66,9 @@
       sum(da.DOSAGE*da.COAL_COEF) AS num,
       sum(da.DOSAGE) as nums
       FROM
-      t_emc_final_data_hour da,( select unitid from v_emc_unit where
+      t_emc_final_data_hour da,( select unitid from v_emc_unit where 1=1
       <if test="feedType != null and feedType !=''">
-            HEAT_TYPE = #{feedType}
+          and  HEAT_TYPE = #{feedType}
       </if>
       <if test="orgId != null and orgId !=''">
           and  ORGID in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
@@ -112,9 +112,9 @@
       sum(da.DOSAGE) as nums
       FROM
       t_emc_final_data_hour da,(
-          select unitid from v_emc_unit where
+          select unitid from v_emc_unit where 1=1
           <if test="feedType != null and feedType !=''">
-              HEAT_TYPE = #{feedType}
+             and  HEAT_TYPE = #{feedType}
           </if>
           <if test="orgId != null and orgId !=''">
               and  ORGID in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
