@@ -1,5 +1,8 @@
 package com.huak.sys.type;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -40,5 +43,20 @@ public enum AdminLevelType {
 
     public void setValue(String value) {
         this.value = value;
+    }
+    public static <T extends Enum> List<T> toList(Class<T> clazz) {
+        return Arrays.asList(clazz.getEnumConstants());
+    }
+
+    public static void main(String[] args){
+        //System.out.print(OrgType.GS.getKey()+"--------"+OrgType.GS.getValue());
+        //遍历所有的枚举
+        for( AdminLevelType color : AdminLevelType.values()){
+            System.out.println( color + "  name: " + color.getKey() + "  index: " + color.getValue() );
+        }
+        List<AdminLevelType> list =  AdminLevelType.toList(AdminLevelType.class);
+        for (int i = 0; i < list.size() ; i++) {
+            System.out.println(list.get(i).getKey()+"---"+list.get(i).getValue());
+        }
     }
 }

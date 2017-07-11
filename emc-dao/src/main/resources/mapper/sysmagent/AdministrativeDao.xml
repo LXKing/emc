@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huak.org.dao.AdministrativeDao">
-  <resultMap id="BaseResultMap" type="com.huak.org.model.Administrative">
+<mapper namespace="com.huak.sys.dao.AdministrativeDao">
+  <resultMap id="BaseResultMap" type="com.huak.sys.model.Administrative">
     <constructor>
       <idArg column="ADM_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ADM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     delete from t_emc_sys_administrative
     where ADM_CODE = #{admCode,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huak.org.model.Administrative">
+  <insert id="insert" parameterType="com.huak.sys.model.Administrative">
     insert into t_emc_sys_administrative (ADM_CODE, ADM_NAME, P_CODE, 
       ADM_LEVEL, ADM_TYPE, LNG, 
       LAT)
@@ -33,7 +33,7 @@
       #{admLevel,jdbcType=TINYINT}, #{admType,jdbcType=VARCHAR}, #{lng,jdbcType=DOUBLE}, 
       #{lat,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.huak.org.model.Administrative">
+  <insert id="insertSelective" parameterType="com.huak.sys.model.Administrative">
     insert into t_emc_sys_administrative
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="admCode != null">
@@ -82,7 +82,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huak.org.model.Administrative">
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.sys.model.Administrative">
     update t_emc_sys_administrative
     <set>
       <if test="admName != null">
@@ -106,7 +106,7 @@
     </set>
     where ADM_CODE = #{admCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huak.org.model.Administrative">
+  <update id="updateByPrimaryKey" parameterType="com.huak.sys.model.Administrative">
     update t_emc_sys_administrative
     set ADM_NAME = #{admName,jdbcType=VARCHAR},
       P_CODE = #{pCode,jdbcType=VARCHAR},
@@ -125,5 +125,23 @@
             and  ADM_LEVEL = #{admLevel,jdbcType=TINYINT}
         </if>
         order by ADM_LEVEL
+    </select>
+    <select id="findAllAdministrative"  parameterType="java.util.Map"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_sys_active
+
+    </select>
+    <select id="getAdministrativeSize" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_sys_administrative
+        where ADM_CODE = #{admCode,jdbcType=VARCHAR}
+    </select>
+    <select id="getAdministrativeSizeCheckName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_sys_administrative
+        where ADM_NAME = #{admName,jdbcType=VARCHAR}
     </select>
 </mapper>

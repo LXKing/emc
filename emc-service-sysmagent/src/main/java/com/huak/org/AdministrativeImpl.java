@@ -3,8 +3,8 @@ package com.huak.org;
 
 
 
-import com.huak.org.dao.AdministrativeDao;
-import com.huak.org.model.Administrative;
+import com.huak.sys.dao.AdministrativeDao;
+import com.huak.sys.model.Administrative;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,36 @@ public class AdministrativeImpl implements AdministrativeService {
     private AdministrativeDao administrativeDao;
 
     @Override
-    public int deleteByPrimaryKey(String admCode) {
-        return 0;
+    public boolean deleteByPrimaryKey(String admCode) {
+        boolean flag=false;
+        String[] ids = admCode.split(",");
+        try {
+            if(ids.length>1){
+                for (int i = 0; i <ids.length ; i++) {
+                    administrativeDao.deleteByPrimaryKey(admCode);
+                }
+                flag=true;
+            }else{
+                administrativeDao.deleteByPrimaryKey(admCode);
+                flag=true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            flag=false;
+        }
+        return flag;
+
     }
 
     @Override
-    public int insert(Administrative record) {
-        return 0;
+    public boolean insert(Administrative record) {
+        boolean flag=false;
+        int i = administrativeDao.insert(record);
+        if(i>0){
+            flag=true;
+        }
+        return flag;
     }
 
     @Override
@@ -38,12 +61,17 @@ public class AdministrativeImpl implements AdministrativeService {
 
     @Override
     public Administrative selectByPrimaryKey(String admCode) {
-        return null;
+        return administrativeDao.selectByPrimaryKey(admCode);
     }
 
     @Override
-    public int updateByPrimaryKeySelective(Administrative record) {
-        return 0;
+    public boolean updateByPrimaryKeySelective(Administrative record) {
+        boolean flag=false;
+        int i =  administrativeDao.updateByPrimaryKeySelective(record);
+        if(i>0){
+            flag=true;
+        }
+        return flag;
     }
 
     @Override
@@ -56,4 +84,18 @@ public class AdministrativeImpl implements AdministrativeService {
         return administrativeDao.findAllByLevel(paramsMap);
     }
 
+    @Override
+    public List<Administrative> findAllAdministrative() {
+        return administrativeDao.findAllAdministrative();
+    }
+
+    @Override
+    public List<Administrative> getAdministrativeSize(String admCode) {
+        return administrativeDao.getAdministrativeSize(admCode);
+    }
+
+    @Override
+    public List<Administrative> getAdministrativeSizeCheckName(String admCode) {
+        return administrativeDao.getAdministrativeSizeCheckName(admCode);
+    }
 }

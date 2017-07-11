@@ -1,24 +1,23 @@
-package com.huak.org;
-
+package com.huak.sys.dao;
 
 import com.huak.sys.model.Administrative;
+
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by MR-BIN on 2017/5/17.
- */
-public interface AdministrativeService {
-    boolean deleteByPrimaryKey(String admCode);
+@Repository
+public interface AdministrativeDao {
+    int deleteByPrimaryKey(String admCode);
 
-    boolean insert(Administrative record);
+    int insert(Administrative record);
 
     int insertSelective(Administrative record);
 
     Administrative selectByPrimaryKey(String admCode);
 
-    boolean updateByPrimaryKeySelective(Administrative record);
+    int updateByPrimaryKeySelective(Administrative record);
 
     int updateByPrimaryKey(Administrative record);
 
