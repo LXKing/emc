@@ -16,6 +16,7 @@
         <module>emc-service-sysmagent-api</module>
         <module>emc-service-home</module>
         <module>emc-service-home-api</module>
+        <module>emc-task</module>
         <!--<module>emc-sql</module>-->
         <!--业务层-->
     </modules>
