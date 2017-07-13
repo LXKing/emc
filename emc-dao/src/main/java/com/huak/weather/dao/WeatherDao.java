@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
-public interface WeaterDao {
+public interface WeatherDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(Weather record);
@@ -24,4 +25,6 @@ public interface WeaterDao {
     List<Weather> selectWeathers(HashMap<String, Object> selParams);
 
     void updateWeather(Weather weather);
+
+    Weather selectByPrimaryKey(Map<String, Object> params);
 }

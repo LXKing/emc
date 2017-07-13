@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.huak.base.dao.DateDao;
 import com.huak.common.enums.WeatherEnum;
 import com.huak.common.utils.HttpWeatherUtils;
-import com.huak.weather.dao.WeaterDao;
+import com.huak.weather.dao.WeatherDao;
 import com.huak.weather.dao.WeatherAqiDao;
 import com.huak.weather.dao.WeekforcastDao;
 import com.huak.weather.model.Weather;
@@ -25,7 +25,7 @@ import java.util.*;
 public class WeatherServiceImpl implements WeatherTaskService{
 
     @Resource
-    private WeaterDao weaterDao;
+    private WeatherDao weaterDao;
 
     @Resource
     private WeatherAqiDao weatherAqiDao;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MR-BIN on 2017/7/13.
@@ -29,4 +30,11 @@ public interface WeatherAqiDao {
      * @param weatherAQI
      */
     void update(WeatherAQI weatherAQI);
+
+    /**
+     * 根据id查询空气质量
+     * @param params
+     * @return
+     */
+    WeatherAQI selectById(Map<String, Object> params);
 }
