@@ -36,6 +36,12 @@ public class WeatherServiceImpl implements WeatherTaskService{
     @Transactional(readOnly = false)
     public void executeWeatherTask(Map<String,Object> params) {
         this.weatherActual(params);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void executeWeather7dTask(Map<String, Object> params) {
+        weekforcastDao.deletebyParmas(params);
         this.weekForcast(params);
     }
 
@@ -45,7 +51,6 @@ public class WeatherServiceImpl implements WeatherTaskService{
      */
     private void weekForcast(Map<String, Object> params) {
         List<Weekforcast>  weeforca = this.weekForcastParse(params);
-        weekforcastDao.deletebyParmas(params);
         if(weeforca != null && weeforca.size()>0){
             weekforcastDao.insertWeekForcastByArray(weeforca);
         }
