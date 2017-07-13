@@ -5,8 +5,10 @@ import com.huak.base.dao.DateDao;
 import com.huak.common.enums.WeatherEnum;
 import com.huak.common.utils.HttpWeatherUtils;
 import com.huak.weather.dao.WeaterDao;
+import com.huak.weather.dao.WeatherAqiDao;
 import com.huak.weather.dao.WeekforcastDao;
 import com.huak.weather.model.Weather;
+import com.huak.weather.model.WeatherAQI;
 import com.huak.weather.model.Weekforcast;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,10 @@ public class WeatherServiceImpl implements WeatherTaskService{
 
     @Resource
     private WeaterDao weaterDao;
+
+    @Resource
+    private WeatherAqiDao weatherAqiDao;
+
     @Resource
     private WeekforcastDao weekforcastDao;
     @Resource
@@ -37,11 +43,67 @@ public class WeatherServiceImpl implements WeatherTaskService{
     @Transactional(readOnly = false)
     public void executeWeatherTask(Map<String,Object> params) {
         this.weatherActual(params);
+        this.curentWeatherAQI(params);
+    }
+
+    /**
+     * 公共接口实时空气质量
+     * @param params
+     */
+    private void curentWeatherAQI(Map<String, Object> params) {
+        WeatherAQI weatherAQI = this.parseWeatherAqi(params);
+        if(weatherAQI != null){
+            HashMap<String,Object> selParams = new HashMap<>();
+            selParams.put("reportDate",weatherAQI.getReportDate());
+            selParams.put("code",weatherAQI.getCode());
+            selParams.put("status",weatherAQI.getStatus());
+            List<WeatherAQI>  weathers = new ArrayList<>();
+            try {
+                weathers = weatherAqiDao.selectAqis(selParams);
+                if(weathers == null|| weathers.size()<1){
+                    weatherAqiDao.insert(weatherAQI);
+                }else{
+                    weatherAqiDao.update(weatherAQI);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    /**
+     * 实时空气质量解析
+     * @param params
+     * @return
+     */
+    private WeatherAQI parseWeatherAqi(Map<String, Object> params) {
+        String jsondata =  HttpWeatherUtils.getCurrentAQI(params.get("weatherId").toString(),"json");
+        Map<String,Object> obj = (Map<String, Object>) JSON.parse(jsondata);
+        String times = dateDao.getTime().substring(0,13)+":21";
+        if(obj.get("success").equals("1")){
+            Map<String,Object> data = (Map<String, Object>) obj.get("result");
+            WeatherAQI weather = new WeatherAQI();
+            weather.setCode(data.get("cityid").toString());
+            weather.setAqi(data.get("aqi").toString());
+            weather.setAqiLevel(data.get("aqi_levnm").toString());
+            weather.setAqiRemark(data.get("aqi_remark").toString());
+            weather.setAqiScope(data.get("aqi_scope").toString());
+            weather.setReportDate(times);
+            weather.setStatus((byte)0);
+            return weather;
+        }else{
+            System.out.println(obj.get("msg"));
+        }
+        return null;
     }
 
     @Override
     @Transactional(readOnly = false)
     public void executeWeather7dTask(Map<String, Object> params) {
+        HashMap<String,Object> param = new HashMap<>();
+        param.put("code",params.get("weatherId"));
+        param.put("status",params.get("status"));
         weekforcastDao.deletebyParmas(params);
         this.weekForcast(params);
     }
@@ -73,7 +135,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
             List<Weather>  weathers = new ArrayList<>();
             try {
                 weathers = weaterDao.selectWeathers(selParams);
-                if(weathers != null && weathers.size()<1){
+                if(weathers == null && weathers.size()<1){
                     weaterDao.insert(weather);
                 }else{
                     weaterDao.updateWeather(weather);

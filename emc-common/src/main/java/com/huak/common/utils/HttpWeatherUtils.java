@@ -234,4 +234,30 @@ public class HttpWeatherUtils {
         }
         return sendPost(url, param, "utf-8") ;
     }
+
+
+    /**
+     *
+     * @param weatherid 城市名字
+     * @param format 返回格式  json或xml  默认json
+     * @return 当天天气情况
+     */
+    public static  String getCurrentAQI(String weatherid , String format){
+        Map<String , String > param = new HashMap<String , String>();
+        if(null != weatherid && !weatherid.equals("") ){
+            param.put("app", "weather.pm25");
+            param.put("weaid", weatherid);
+            param.put("appkey", "10003");
+            param.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
+            if(format.equals("xml")){
+                param.put("format", format);
+            }else{
+                param.put("format", "json");
+            }
+
+        }else{
+            return "城市名字为空  ！ " ;
+        }
+        return sendPost(url, param, "utf-8") ;
+    }
 }

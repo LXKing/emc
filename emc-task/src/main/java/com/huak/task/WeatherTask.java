@@ -26,14 +26,14 @@ public class WeatherTask {
     public void currentWeather(){
         System.out.println("-----------------ceshi");
         Map<String,Object> params = new HashMap<>();
-        params.put("weatherId","101031200");
+        params.put("weatherId","101030100");
         params.put("status",0);
         weatherTaskService.executeWeatherTask(params);
     }
     public void forcastWeather7d(){
         System.out.println("-----------------");
         Map<String,Object> params = new HashMap<>();
-        params.put("weatherId","101031200");
+        params.put("weatherId","101030100");
         params.put("status",0);
         weatherTaskService.executeWeather7dTask(params);
     }
