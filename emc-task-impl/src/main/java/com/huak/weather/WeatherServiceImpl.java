@@ -8,6 +8,7 @@ import com.huak.weather.dao.WeaterDao;
 import com.huak.weather.dao.WeekforcastDao;
 import com.huak.weather.model.Weather;
 import com.huak.weather.model.Weekforcast;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -137,8 +138,8 @@ public class WeatherServiceImpl implements WeatherTaskService{
             weather.setHumiLow(data.get("humi_low").toString());
             weather.setreportDate(data.get("days").toString() + " " + times + ":21");
             weather.setTemperatureCurr(data.get("temperature_curr").toString());
-            weather.setTempHigh(new BigDecimal(data.get("temp_high").toString()));
-            weather.setTempLow(new BigDecimal(data.get("temp_low").toString()));
+            weather.setTempHigh(StringUtils.isBlank(data.get("temp_high").toString())?null:(new BigDecimal(data.get("temp_high").toString())));
+            weather.setTempLow(StringUtils.isBlank(data.get("temp_low").toString())?null:(new BigDecimal(data.get("temp_low").toString())));
             weather.setWeatherCurrent(data.get("weather_curr").toString());
             weather.setWeatherIcon(WeatherEnum.getName(Integer.parseInt(data.get("weatid").toString())));
             weather.setWeekDay(data.get("week").toString());

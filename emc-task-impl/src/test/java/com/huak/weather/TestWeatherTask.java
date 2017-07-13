@@ -17,7 +17,7 @@ public class TestWeatherTask extends BaseTest {
     @Test
     public void testWeather(){
         Map<String,Object> params = new HashMap<>();
-        params.put("weatherId","101060201");
+        params.put("weatherId","101031200");
         params.put("status",0);
         weatherTaskService.executeWeatherTask(params);
     }
