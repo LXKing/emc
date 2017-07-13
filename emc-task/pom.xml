@@ -17,7 +17,13 @@
         <maven.compiler.source>${java.source.version}</maven.compiler.source>
         <maven.compiler.target>${java.target.version}</maven.compiler.target>
     </properties>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.huak</groupId>
+            <artifactId>emc-task-api</artifactId>
+            <version>${emc.task.api.version}</version>
+        </dependency>
+    </dependencies>
     <build>
         <finalName>emc-task</finalName>
         <resources>

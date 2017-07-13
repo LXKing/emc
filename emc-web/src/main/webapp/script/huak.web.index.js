@@ -1157,7 +1157,7 @@ function initChart(kedu1,mx,bm_total){
                 max: max,
                 startAngle: 180,
                 endAngle: 0,
-                splitNumber:5,
+                splitNumber:5,//这个是分刻度
                 radius: '100%',
                 axisLine:{
                     show:true,
@@ -1200,7 +1200,7 @@ function initChart(kedu1,mx,bm_total){
     }
    var  colorvalue = [[kedu1, '#3b96db'],[0.75, '#32bbb6'],[1, '#df5f4a']];
     option1.series[0].axisLine.lineStyle.color=colorvalue;
-    option1.series[0].data[0].value= bm_total;
+    option1.series[0].data[0].value= bm_total;//这个值设大点
     myChartEnergy.setOption(option1);
 }
 

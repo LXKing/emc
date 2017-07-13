@@ -1,0 +1,27 @@
+package com.huak.weather.dao;
+
+
+import com.huak.weather.model.Weather;
+import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.List;
+
+@Repository
+public interface WeaterDao {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(Weather record);
+
+    int insertSelective(Weather record);
+
+    Weather selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Weather record);
+
+    int updateByPrimaryKey(Weather record);
+
+    List<Weather> selectWeathers(HashMap<String, Object> selParams);
+
+    void updateWeather(Weather weather);
+}

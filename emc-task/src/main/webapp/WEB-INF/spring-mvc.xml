@@ -25,7 +25,7 @@
     <mvc:default-servlet-handler/>
 
     <task:scheduled-tasks>
-        <task:scheduled ref="testTask" method="execute1" cron="30 * * * * ?"/>
+        <task:scheduled ref="weatherTask" method="execute1" cron="50 * * * * ?"/>
     </task:scheduled-tasks>
 
 </beans>

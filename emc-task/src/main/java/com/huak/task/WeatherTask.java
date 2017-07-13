@@ -1,8 +1,11 @@
 package com.huak.task;
 
+import com.huak.weather.WeatherTaskService;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -16,8 +19,14 @@ import java.util.Date;
  * Function List:  <BR>
  */
 @Component
-public class TestTask {
+public class WeatherTask {
+    @Resource
+    private WeatherTaskService weatherTaskService;
+
     public void execute1(){
-        System.out.printf("Task: %s, Current time: %s\n", 1, new Date());
+        Map<String,Object> params = new HashMap<>();
+        params.put("weatherId","101030100");
+        params.put("status",0);
+        weatherTaskService.executeWeatherTask(params);
     }
 }
