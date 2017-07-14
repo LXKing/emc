@@ -43,7 +43,7 @@ public class EmcOrgApi {
 
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object exportRoomTemp( HttpServletRequest request ,String json) throws IOException {
+    public Object exportOrgEcc( HttpServletRequest request ,String json) throws IOException {
         //接收请求参数
         InputStreamReader reader=new InputStreamReader(request.getInputStream(),"UTF-8");
         BufferedReader buffer=new BufferedReader(reader);
