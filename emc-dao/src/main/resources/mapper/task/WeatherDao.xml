@@ -25,12 +25,6 @@
     ID, CODE, REPORT_DATE, WEEK_DAY, TEMPERATURE_CURR, CITY_NAME, HUMIDITY, WIND, WINP, 
     TEMP_HIGH, TEMP_LOW, HUMI_HIGH, HUMI_LOW, WEATHER_ICON, STATUS, WEATHER_CURRENT
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_emc_weather_actual
-    where ID = #{id,jdbcType=BIGINT}
-  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap">
     select

@@ -6,6 +6,12 @@ import com.huak.common.MathsUtil;
 import com.huak.common.utils.DateUtils;
 import com.huak.home.dao.SearchDao;
 import com.huak.home.dao.component.ComponentDao;
+import com.huak.weather.dao.WeatherAqiDao;
+import com.huak.weather.dao.WeatherDao;
+import com.huak.weather.dao.WeekforcastDao;
+import com.huak.weather.model.Weather;
+import com.huak.weather.model.WeatherAQI;
+import com.huak.weather.model.Weekforcast;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +36,15 @@ public class ComponentServiceImpl implements ComponentService{
 
     @Autowired
     private SearchDao searchDao;
+
+    @Autowired
+    private WeatherAqiDao weatherAqiDao;
+
+    @Autowired
+    private WeekforcastDao weekforcastDao;
+
+    @Autowired
+    private WeatherDao weatherDao;
 
     /**
      * 组件能耗明细查询
@@ -107,11 +122,6 @@ public class ComponentServiceImpl implements ComponentService{
         data.put("planDays",planDays);
         data.put("currentDays",currentDays);
         data.put("isInCurrentSeason",season.get("isInCurrentSeason"));
-
-
-
-
-
         return this.digitData(data);
 
     }
@@ -131,6 +141,26 @@ public class ComponentServiceImpl implements ComponentService{
         params.put("pstartTime",pstartTime);
         params.put("pendTime",pendTime);
         return componentDao.costDetail(params);
+    }
+
+    /**
+     * 天气-空气质量组件
+     * @param params
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> weatherForcast(Map<String, Object> params) {
+        Map<String,Object> data = new HashMap<>();
+        String times = dateDao.getTime().substring(0,13)+":21:00";
+        params.put("reportDate",times);
+        List<Weekforcast> weekforcasts = weekforcastDao.selectByParams(params);
+        Weather  weather = weatherDao.selectByPrimaryKey(params);
+        WeatherAQI weatherAQI = weatherAqiDao.selectById(params);
+        data.put("weekForcast",weekforcasts);
+        data.put("currentWeather",weather);
+        data.put("aqi",weatherAQI);
+        return data;
     }
 
     /**
@@ -216,6 +246,8 @@ public class ComponentServiceImpl implements ComponentService{
         result.put("other",other);
         return result;
     }
+
+
 
     /**
      * 工具-获取上年的日期并格式化

@@ -132,4 +132,34 @@ public class ComponentController {
         return jo.toJSONString();
     }
 
+    /**
+     * 天气组件
+     * @param paramsMap
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/weather", method = RequestMethod.POST)
+    @ResponseBody
+    public String weather(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+        logger.info("单耗趋势");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            Map<String,Object> params = new HashMap<>();
+            params.put("weatherId","101031100");
+            params.put("status","0");
+            Map<String,Object> map =  componentService.weatherForcast(params);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else
+                jo.put(Constants.FLAG,false);
+        } catch (Exception e) {
+            logger.error("单耗趋势查询查询异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
 }

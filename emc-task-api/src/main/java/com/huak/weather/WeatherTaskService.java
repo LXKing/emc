@@ -1,5 +1,6 @@
 package com.huak.weather;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,11 +11,11 @@ public interface WeatherTaskService {
      * 实时数据
      * @param params
      */
-    void executeWeatherTask(Map<String,Object> params);
+    void executeWeatherTask(List<Map<String, Object>> params);
 
     /**
      * 7d预测
      * @param params
      */
-    void executeWeather7dTask(Map<String, Object> params);
+    void executeWeather7dTask(List<Map<String, Object>> params);
 }
