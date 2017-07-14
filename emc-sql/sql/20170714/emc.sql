@@ -1,4 +1,4 @@
-
+--对接接口所建的表
 
 drop table if exists t_emc_temperature_tj;
 
