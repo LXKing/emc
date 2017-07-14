@@ -24,7 +24,7 @@ public class WeatherTask {
     private WeatherTaskService weatherTaskService;
 
     public void currentWeather(){
-        System.out.println("-----------------");
+        System.out.println("-----------------ceshi");
         Map<String,Object> params = new HashMap<>();
         params.put("weatherId","101030100");
         params.put("status",0);

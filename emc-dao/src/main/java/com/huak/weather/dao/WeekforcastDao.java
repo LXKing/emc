@@ -22,4 +22,6 @@ public interface WeekforcastDao {
     void deletebyParmas(Map<String, Object> params);
 
     void insertWeekForcastByArray(List<Weekforcast> weeforca);
+
+    List<Weekforcast> selectByParams(Map<String, Object> params);
 }
