@@ -25,4 +25,11 @@ public interface ComponentService {
      * @return
      */
     Map<String,Object> energycomparison(Map<String, Object> params);
+
+    /**
+     * 天气预测和历史
+     * @param params
+     * @return
+     */
+    Map<String,Object> weatherForcast(Map<String, Object> params);
 }

@@ -4,8 +4,7 @@ import com.huak.weather.WeatherTaskService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -25,16 +24,27 @@ public class WeatherTask {
 
     public void currentWeather(){
         System.out.println("-----------------ceshi");
-        Map<String,Object> params = new HashMap<>();
-        params.put("weatherId","101030100");
-        params.put("status",0);
+        List<Map<String,Object>> params = new ArrayList<>();
+        Map<String,Object> param = new HashMap<>();
+        param.put("weatherId","101030100");
+        param.put("status",0);
+        params.add(param);
+        Map<String,Object> param1 = new HashMap<>();
+        param1.put("weatherId","101010100");
+        param1.put("status",0);
+        params.add(param1);
         weatherTaskService.executeWeatherTask(params);
     }
     public void forcastWeather7d(){
-        System.out.println("-----------------");
-        Map<String,Object> params = new HashMap<>();
-        params.put("weatherId","101030100");
-        params.put("status",0);
+        List<Map<String,Object>> params = new ArrayList<>();
+        Map<String,Object> param = new HashMap<>();
+        param.put("weatherId","101030100");
+        param.put("status",0);
+        params.add(param);
+        Map<String,Object> param1 = new HashMap<>();
+        param1.put("weatherId","101010100");
+        param1.put("status",0);
+        params.add(param1);
         weatherTaskService.executeWeather7dTask(params);
     }
 }

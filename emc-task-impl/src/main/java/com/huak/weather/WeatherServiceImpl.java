@@ -36,14 +36,37 @@ public class WeatherServiceImpl implements WeatherTaskService{
     private DateDao dateDao;
 
     /**
-     * 公共接口入库每小时天气
+     * 公共接口入库每小时天气和空气质量
      * @param params
      */
     @Override
     @Transactional(readOnly = false)
-    public void executeWeatherTask(Map<String,Object> params) {
-        this.weatherActual(params);
-        this.curentWeatherAQI(params);
+    public void executeWeatherTask(List<Map<String, Object>> params) {
+        if(params != null && params.size()>1) {
+            for (Map param : params) {
+                this.weatherActual(param);
+                this.curentWeatherAQI(param);
+            }
+        }
+
+    }
+
+    /**
+     * 七天预测
+     * @param params
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public void executeWeather7dTask(List<Map<String, Object>> params) {
+        if(params != null && params.size()>1){
+            for (Map param : params){
+                HashMap<String,Object> tempparam = new HashMap<>();
+                tempparam.put("code",param.get("weatherId"));
+                tempparam.put("status",param.get("status"));
+                weekforcastDao.deletebyParmas(tempparam);
+                this.weekForcast(tempparam);
+            }
+        }
     }
 
     /**
@@ -78,7 +101,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
      * @return
      */
     private WeatherAQI parseWeatherAqi(Map<String, Object> params) {
-        String jsondata =  HttpWeatherUtils.getCurrentAQI(params.get("weatherId").toString(),"json");
+        String jsondata =  HttpWeatherUtils.getCurrentAQI(params.get("weatherId").toString(), "json");
         Map<String,Object> obj = (Map<String, Object>) JSON.parse(jsondata);
         String times = dateDao.getTime().substring(0,13)+":21";
         if(obj.get("success").equals("1")){
@@ -98,16 +121,6 @@ public class WeatherServiceImpl implements WeatherTaskService{
         return null;
     }
 
-    @Override
-    @Transactional(readOnly = false)
-    public void executeWeather7dTask(Map<String, Object> params) {
-        HashMap<String,Object> param = new HashMap<>();
-        param.put("code",params.get("weatherId"));
-        param.put("status",params.get("status"));
-        weekforcastDao.deletebyParmas(params);
-        this.weekForcast(params);
-    }
-
     /**
      * 7天天气预测
      * @param params
@@ -119,8 +132,6 @@ public class WeatherServiceImpl implements WeatherTaskService{
         }
 
     }
-
-
 
     /**
      * 当天实时数据接口
