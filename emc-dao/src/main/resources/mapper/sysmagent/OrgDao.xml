@@ -30,6 +30,9 @@
         #{comId,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.huak.org.model.Org">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into t_emc_org
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
