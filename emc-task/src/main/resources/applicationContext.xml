@@ -22,5 +22,7 @@
     <!-- 生成远程服务代理，可以像使用本地bean一样使用SeasonService -->
     <dubbo:reference id="weatherTaskService"    interface="com.huak.weather.WeatherTaskService" timeout="12000"  check="true" version="${service.version}" />
     <!-- 生成远程服务代理，可以像使用本地bean一样使用SeasonService -->
+    <dubbo:reference id="tempService"    interface="com.huak.temp.TempService" timeout="12000"  check="true" version="${service.version}" />
+    <!-- 生成远程服务代理，可以像使用本地bean一样使用SeasonService -->
 
 </beans>
