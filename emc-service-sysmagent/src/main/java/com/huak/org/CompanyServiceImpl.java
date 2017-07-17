@@ -80,4 +80,28 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> selectAllByMap(Map<String, Object> paramsMap) {
         return companyDao.selectAllByMap(paramsMap);
     }
+
+    /**
+     * 查询天气城市列表
+     *
+     * @param paramsMap
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectWeatherCity(Map<String, Object> paramsMap) {
+        return companyDao.selectWeatherCity(paramsMap);
+    }
+
+    /**
+     * 查询上级
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> selectParentWeatherByCode(String code) {
+        return companyDao.selectParentWeatherByCode(code);
+    }
 }

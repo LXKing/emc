@@ -3,6 +3,7 @@ package com.huak.org;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.StringUtils;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Company;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +63,31 @@ public class CompanyController {
         return jo.toJSONString();
     }
 
+    @RequestMapping(value = "/weather/city", method = RequestMethod.PATCH)
+    @ResponseBody
+    public String weatherCity(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("查询天气城市列表");
+
+        JSONObject jo = new JSONObject();
+        try {
+            if(paramsMap.get("wPCode")==null||paramsMap.get("wPCode").toString().trim().equals("")){
+                jo.put(Constants.LIST, "");
+            }else{
+                jo.put(Constants.LIST, companyService.selectWeatherCity(paramsMap));
+            }
+
+        } catch (Exception e) {
+            logger.error("查询天气城市列表异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(Model model) {
+        Map<String, Object> paramsMap = new HashMap();
+        paramsMap.put("wLevel",1);
+        List<Map<String,Object>> cites = companyService.selectWeatherCity(paramsMap);
+        model.addAttribute("cites",cites);
         return "/org/company/add";
     }
 
@@ -74,7 +99,12 @@ public class CompanyController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            company.setId(UUIDGenerator.getUUID());
+            String uuid = UUIDGenerator.getUUID();
+            company.setId(uuid);
+            /*如果没有wcode 则表示气象选择的是自定义接口*/
+            if(StringUtils.isEmpty(company.getWcode())){
+                company.setWcode(uuid);
+            }
             companyService.insertSelective(company);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加公司成功");
@@ -89,7 +119,32 @@ public class CompanyController {
     public String editPage(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改公司页");
         try {
-            model.addAttribute("company", companyService.selectByPrimaryKey(id));
+            Map<String, Object> paramsMap = new HashMap();
+            paramsMap.put("wLevel",1);
+            List<Map<String,Object>> cites = companyService.selectWeatherCity(paramsMap);
+            model.addAttribute("cites",cites);
+            Company company = companyService.selectByPrimaryKey(id);
+            String wcode = company.getWcode();
+            /*判断天气采集类型
+            * 自定义 id == code
+            * 气象节点 id!=code
+            * */
+            if(!company.getId().equals(wcode)){
+                Map<String,Object> weatherCity = companyService.selectParentWeatherByCode(wcode);
+                Map<String,Object> weatherPrivence = companyService.selectParentWeatherByCode(weatherCity.get("W_CODE").toString());
+                String pcode = weatherPrivence.get("W_CODE").toString();
+                String ccode = weatherCity.get("W_CODE").toString();
+                paramsMap.clear();
+                paramsMap.put("wPCode",pcode);
+                List<Map<String,Object>> pcties = companyService.selectWeatherCity(paramsMap);
+                paramsMap.put("wPCode",ccode);
+                List<Map<String,Object>> ccties = companyService.selectWeatherCity(paramsMap);
+                model.addAttribute("ccode",pcode);
+                model.addAttribute("pcties",pcties);
+                model.addAttribute("pcode",ccode);
+                model.addAttribute("ccties",ccties);
+            }
+            model.addAttribute("company", company);
         } catch (Exception e) {
             logger.error("跳转修改公司页异常" + e.getMessage());
         }

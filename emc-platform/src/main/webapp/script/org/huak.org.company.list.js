@@ -68,6 +68,11 @@ $(function () {
                 align: 'center'
             },
             {
+                title: '天气采集点',
+                field: 'wname',
+                align: 'center'
+            },
+            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,

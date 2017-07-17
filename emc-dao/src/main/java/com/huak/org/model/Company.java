@@ -9,6 +9,26 @@ public class Company implements Serializable{
 
     private String nextDes;
 
+    private String wcode;
+
+    private String wname;
+
+    public String getWname() {
+        return wname;
+    }
+
+    public void setWname(String wname) {
+        this.wname = wname;
+    }
+
+    public String getWcode() {
+        return wcode;
+    }
+
+    public void setWcode(String wcode) {
+        this.wcode = wcode;
+    }
+
     public String getNextDes() {
         return nextDes;
     }
@@ -17,10 +37,12 @@ public class Company implements Serializable{
         this.nextDes = nextDes;
     }
 
-    public Company(String id, String cname,String nextDes) {
+    public Company(String id, String cname,String nextDes,String wcode,String wname) {
         this.id = id;
         this.cname = cname;
         this.nextDes = nextDes;
+        this.wcode = wcode;
+        this.wname = wname;
     }
     public Company() {
         super();
