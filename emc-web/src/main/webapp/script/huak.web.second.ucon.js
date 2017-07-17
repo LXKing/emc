@@ -838,7 +838,7 @@ function chart01Fun(data){
         series : [
             {
                 type:'pie',
-                radius : ['0', '80%'],
+                radius : ['0', '70%'],
                 silent:true,
                 itemStyle : {
                     normal : {
@@ -858,7 +858,7 @@ function chart01Fun(data){
             {
                 name:'分公司单耗占比',
                 type:'pie',
-                radius : ['60%', '80%'],
+                radius : ['70%', '80%'],
 
                 // for funnel
                 x: '60%',
@@ -1218,7 +1218,7 @@ function chart05Fun(data){
         series : [
             {
                 type:'pie',
-                radius : ['0', '80%'],
+                radius : ['0', '70%'],
                 silent:true,
                 itemStyle : {
                     normal : {
@@ -1238,7 +1238,7 @@ function chart05Fun(data){
             {
                 name:'能源流单耗占比',
                 type:'pie',
-                radius : ['60%', '80%'],
+                radius : ['70%', '80%'],
 
                 // for funnel
                 x: '60%',
