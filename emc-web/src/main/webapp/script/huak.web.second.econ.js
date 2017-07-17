@@ -1204,7 +1204,7 @@ function chart2EnergyPie(data){
         series : [
             {
                 type:'pie',
-                radius : ['0', '80%'],
+                radius : ['0', '60%'],
                 silent:true,
                 itemStyle : {
                     normal : {

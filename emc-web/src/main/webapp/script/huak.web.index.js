@@ -2,18 +2,6 @@
     var myChartEnergy;
     var myChartQualified;
     var myChartCarbon;
-    //$("#header").load("header.html",function(){});
-    //$("#footer").load("footer.html", function() {});
-    //All 数据 从后台去取
-//       var requestDate =$("#searchTools").serialize();
-//       var requestDate1=requestDate.replace(/&/g,"\",\"");
-//       var endData=requestDate1.replace(/=/g,"\":\"");
-//       console.log(e);
-//       console.log(JSON.parse("{"+endData+"}"));
-//    var data=$('#searchTools').serialize();//获取值
-//    data= decodeURIComponent(data,true);//防止中文乱码
-//    var json=.formToJson(data);//转化为json
-//    alert(json);
     $.ajax({
         url : _web+"/energy/top/all",
         type : "GET",
@@ -41,11 +29,6 @@
             }else{
                 $(".yardage").html(data.all.yardage+" TCE/㎡");
             }
-//            if(data.all.yardage==null||data.all.yardage==''){
-//                $(".zyardage").html(0+" GJ/㎡");
-//            }else{
-//                $(".zyardage").html(2358+" GJ/㎡");
-//            }
             $(".zyardage").html(2358+" GJ/㎡");
             if(data.all.priceArea==null||data.all.priceArea==''){
                 $(".priceArea").html(0+" 万㎡");
@@ -54,9 +37,7 @@
             }
 
         }
-//        error : function(request) {
-//            alert("Connection error");
-//        }
+
     });
 
 
@@ -84,9 +65,7 @@
             }
 
         }
-//        error : function(request) {
-//            alert("Connection error");
-//        }
+
         });
 //管网数据去取
     $.ajax({
@@ -107,9 +86,7 @@
             }
 
         }
-//        error : function(request) {
-//            alert("Connection error");
-//        }
+
     });
     //换热站数据去取
     $.ajax({
@@ -135,9 +112,7 @@
             }
 
         }
-//        error : function(request) {
-//            alert("Connection error");
-//        }
+
     });
     //管网数据去取
     $.ajax({
@@ -158,9 +133,7 @@
             }
 
         }
-//        error : function(request) {
-//            alert("Connection error");
-//        }
+
     });
     //民户数据去取
     $.ajax({
@@ -186,22 +159,9 @@
             }
 
         }
-//        error : function(request) {
-//            alert("Connection error");
-//        }
+
     });
 
-
-////将从form中通过$('#form').serialize()获取的值转成json
-//    function  formToJson (data) {
-//            data=data.replace(/&/g,"\",\"");
-//            data=data.replace(/=/g,"\":\"");
-//            data="{\""+data+"\"}";
-//            return data;
-//        };
-
-    var myChartEnergy;
-    var myChartQualified;
     $.ajax({
         url : _web+"/static/json/h-1.json",
         type : "GET",
@@ -227,11 +187,24 @@
             chart08Fun();
 
             chart09Fun();
+
+            chart10Fun();
+
+            chart11Fun();
+            chart12Fun();
         }
     });
 
 });
-
+var myChartEnergy;
+var myChartQualified;
+var chart01;
+var chart02;
+var chart03;
+var chart04;
+var chart05;
+var chart11;
+var chart12;
 /*website*/
 var websiteheight;
 websiteheight = $("#website").height() - 12;
@@ -246,7 +219,6 @@ window.onresize = function() {
     chart05.resize();
     myChartQualified.resize();
     myChartCarbon.resize();
-
     websiteheight = $("#website").height() - 12;
     $(".index_menuBox").height(websiteheight);
 };
@@ -440,6 +412,97 @@ function chart01Show(datalist, datelist, other){
     chart01.setOption(option);
 }
 
+/*分公司成本-柱状图*/
+function chart02Fun(datalist, datelist, other) {
+    $("#branchcost-year").html(other.year);
+    $("#chart02").empty();
+    chart02 = echarts.init(document.getElementById('chart02'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '15',
+            top: '10',
+            right: '45',
+            bottom: '10',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
+            },
+            data: datelist
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitArea: {
+                show: true
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: ['#3B96DD'],
+        series: []
+    }
+    $.each(datalist, function(index, data) {
+        var typeName = data.typeName;
+        var item = {
+            name: typeName,
+            type: 'bar',
+            barWidth: '20',
+            markLine: {
+                data: [{
+                    type: 'average',
+                    name: '平均值'
+                }]
+            },
+            data: data.dataList
+        }
+        option.series.push(item);
+    });
+    chart02.setOption(option);
+}
 
 /*分公司成本-柱状图*/
 
@@ -821,98 +884,107 @@ function chart05Fun(){
     });
 
 }
-
+/*成本明细-饼图初始化*/
 function initChart05(energy,device,manage,labor,other,total,tbl){
     $("#chart05").empty();
     chart05 = echarts.init(document.getElementById('chart05'));
-    var color = "#2eada8";
-    if(tbl.indexOf("↑")>0){
-        color = "red";
-    }
-    if(tbl.indexOf("↓")>0){
-        color = "green";
-    }
     var option = {
         title: {
-            text: total,
-            subtext: '成本总量（万元）\n'+tbl,  //↑↓
+            text: "897.2",
+            subtext: '成本总量（万元）\n（1.6%↓）', //↑↓
             x: 'center',
             y: 'center',
-            itemGap: -5,
-            textStyle : {
-                color : '#8394aa',
-                fontFamily : '微软雅黑',
-                fontSize : 40,
-                fontWeight : 'normal'
+            top: '40%',
+            itemGap: 0,
+            textStyle: {
+                color: '#8394aa',
+                fontFamily: '微软雅黑',
+                fontSize: 44,
+                fontWeight: 'normal'
             },
-            subtextStyle : {
-                color :color,//'#8394aa'
-                fontFamily : '微软雅黑',
-                fontSize : 12,
-                fontWeight : 'normal'
+            subtextStyle: {
+                color: '#2eada8',
+                fontFamily: '微软雅黑',
+                fontSize: 12,
+                fontWeight: 'normal'
             }
         },
-        tooltip : {
+        tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)",
-            show:true
+            show: true
         },
         legend: {
-            orient : 'vertical',
-            x : 'left',
-            data:[]
+            orient: 'vertical',
+            x: 'left',
+            data: []
         },
         toolbox: {
-            show : false,
-            feature : {
-                mark : {show: true},
-                dataView : {show: true, readOnly: false},
-                magicType : {
+            show: false,
+            feature: {
+                mark: {
+                    show: true
+                },
+                dataView: {
+                    show: true,
+                    readOnly: false
+                },
+                magicType: {
                     show: true,
                     type: ['pie', 'funnel']
                 },
-                restore : {show: true},
-                saveAsImage : {show: true}
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    show: true
+                }
             }
         },
-        calculable : false,
-        color:['#32bbb6', '#8394aa', '#b7c1cf', '#df5f4a', '#3b96db'],
-        series : [
-            {
-                type:'pie',
-                radius : ['0', '80%'],
-                silent:true,
-                itemStyle : {
-                    normal : {
-                        color:'#ffffff',
-                        label : {
-                            show : false
-                        },
-                        labelLine : {
-                            show : false
-                        }
+        calculable: false,
+        color: ['#32bbb6', '#8394aa', '#b7c1cf', '#df5f4a', '#3b96db'],
+        series: [{
+            type: 'pie',
+            radius: ['0%', '64%'],
+            silent: true,
+            itemStyle: {
+                normal: {
+                    color: '#ffffff',
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
                     }
-                },
-                data:[
-                    {value:1, name:'圈', selected:false,hoverAnimation:false}
-                ]
+                }
             },
+            data: [{
+                value: 1,
+                name: '圈',
+                selected: false,
+                hoverAnimation: false,
+            }]
+        },
             {
-                name:'成本明细',
-                type:'pie',
-                radius : ['60%', '80%'],
+                name: '成本明细',
+                type: 'pie',
+                radius: ['70%', '80%'],
 
                 // for funnel
                 x: '60%',
                 width: '35%',
                 funnelAlign: 'left',
-                itemStyle : {
-                    normal : {
-                        borderColor: '#fff',
-                        borderWidth: '4',
-                        label : {show:false}
+                itemStyle: {
+                    normal: {
+                        borderColor: '#f0f1f2',
+                        borderWidth: '2',
+                        label: {
+                            show: false
+                        }
                     }
                 },
+
+
                 data:[
                     {value:labor, name:'人工费'},
                     {value:manage, name:'管理费'},
@@ -1138,6 +1210,7 @@ function chart07Fun(){
 
 }
 
+/*能耗明细图表初始化*/
 function initChart(kedu1,mx,bm_total){
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
     var max = returnFloat(mx/0.75)
@@ -1148,53 +1221,92 @@ function initChart(kedu1,mx,bm_total){
         tooltip : {
             formatter: "{a} <br/>{c} {b}"
         },
-        series : [
-            {
-                name: '能耗',
-                type: 'gauge',
-                z:1,
-                min: 0,
-                max: max,
-                startAngle: 180,
-                endAngle: 0,
-                splitNumber:5,//这个是分刻度
-                radius: '100%',
-                axisLine:{
-                    show:true,
-                    lineStyle:{
-                        color:[[0.5, '#3b96db'],[1, '#df5f4a'] ],
-                        width:7
-                    }
+        series: [{
+            name: '能耗',
+            type: 'gauge',
+            z: 3,
+            min: 0,
+            max: max,
+            startAngle: 180,
+            endAngle: 0,
+            splitNumber: -1,
+            radius: '100%',
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: [
+                        [0.5, '#3b96db'],
+                        [1, '#df5f4a']
+                    ],
+                    width: 10
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#d44243'
+                }
+            },
+            detail: {
+                show: true,
+                formatter: '{value}',
+                textStyle: {
+                    fontSize: 15
+                }
+            },
+            data: [{
+                value: "100"
+            }]
+        }, {
+
+            type: 'gauge',
+            z: 4,
+            min: 0,
+            max: max,
+            startAngle: 180,
+            endAngle: 0,
+            radius: '88%',
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: [
+                        [1, '#ccc']
+                    ],
+                    width: 2
+                }
+            },
+            itemStyle: {
+                normal: {
+                    opacity: 0,
+                    color: '#fff'
+                }
+            },
+            axisTick: {
+                lineStyle: {
+                    color: "#ccc",
+                    width: 1
                 },
-                splitLine: {           // 分隔线
-                    length:16,         // 属性length控制线长
-                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                        color: 'auto'
-                    }
-                },
-                axisTick: {            // 坐标轴小标记
-                    length: 0,        // 属性length控制线长
-                    lineStyle: {       // 属性lineStyle控制线条样式
-                        color: 'auto'
-                    }
-                },
-                itemStyle:{
-                    normal:{
-                        color:'#d44243'
-                    }
-                },
-                pointer: {
-                    width:5
-                },
-                detail:{
-                    show: true,
-                    formatter: '{value}',
-                    textStyle: {
-                        fontSize: 15
-                    }
-                },
-                data:[{value: "50"}]
-            }
+                length: 2,
+                splitNumber: 1
+            },
+            splitLine: {
+                show: true,
+                length: 10,
+                lineStyle: {
+                    color: '#ccc',
+                    width: 1
+                }
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#ccc'
+                }
+
+            },
+
+            data: [{
+                value: "0"
+            }]
+        }
 
         ]
     }
@@ -1204,6 +1316,11 @@ function initChart(kedu1,mx,bm_total){
     myChartEnergy.setOption(option1);
 }
 
+/**
+ * 保留小数位
+ * @param x
+ * @returns {Number}
+ */
 function toDecimal(x) {
     var f = parseFloat(x);
     if (isNaN(f)) {
@@ -1213,6 +1330,11 @@ function toDecimal(x) {
     return f;
 }
 
+/**
+ * 返回float
+ * @param value
+ * @returns {number}
+ */
 function returnFloat(value){
     var value=Math.round(parseFloat(value)*100)/100;
     var xsd=value.toString().split(".");
@@ -1426,6 +1548,277 @@ function chart09Fun(){
     myChartCarbon.setOption(optionCarbon);
 }
 
+function chart10Fun() {
+    $("#chart10").empty();
+    chart10 = echarts.init(document.getElementById('chart10'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '15',
+            top: '10',
+            right: '10',
+            bottom: '10',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitArea: {
+                show: true
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            data: ["现在", "1点", "2点", "3点", "4点"]
+
+        },
+
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            }
+        },
+        series: [{
+            name: "天气",
+            type: 'line',
+            symbol: 'circle',
+            smooth: false,
+            hoverAnimation: false,
+            symbolSize: [8, 8],
+            lineStyle: {
+                normal: {
+                    color: '#277aba'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#277aba',
+                    borderWidth: 1,
+                    borderColor: "#fff"
+                }
+            },
+            data: [10, 30, 40, 20, 30, 20]
+        }]
+    }
+
+    chart10.setOption(option);
+}
+
+function chart11Fun() {
+    $("#chart11").empty();
+    chart11 = echarts.init(document.getElementById('chart11'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '15',
+            top: '10',
+            right: '20',
+            bottom: '10',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
+            },
+            data: ['1月', '2月', '3月', '4月', '5月']
+
+        },
+        yAxis: [{
+            name: '条',
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitArea: {
+                show: true
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
+            }
+        }, {
+            type: 'value',
+            name: '线',
+            position: 'right',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#666',
+                    fontFamily: 'arial'
+                }
+            }
+        }],
+        color: ['#3B96DD'],
+
+        series: [{
+            name: '条',
+            type: 'bar',
+            barWidth: '20',
+            data: [10, 20, 10, 30, 40]
+        }, {
+            name: '线',
+            yAxisIndex: 1,
+            type: 'line',
+            label: {
+                normal: {
+                    show: false
+
+                }
+            },
+            smooth: true,
+            symbol: 'circle',
+            symbolSize: 9,
+            showSymbol: false,
+            lineStyle: {
+                normal: {
+                    shadowOffsetY: 2,
+                    shadowColor: '#f0f1f2'
+                }
+            },
+            data: [1, 13, 37, 35, 15]
+        }]
+    }
+
+    chart11.setOption(option);
+}
+
+function chart12Fun() {
+
+    //value1 严重 value2中度 value3轻度
+    var data = [{
+        value1: 0,
+        value2: 1,
+        value3: 2
+    },{
+        value1: 0,
+        value2: 1,
+        value3: 2
+    }]; //参数数量有几个写几个 自动识别前台样式 1工况运行 2经济运行 3 服务情况 4作业管理
+    var html = "";
+    var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
+
+    html += "<div>";
+    for(var i = 0; i < titledata.length; i++) {
+        var classname = "runa";
+        if(i == data.length - 1) {
+            classname = "runb";
+        } else if(i >= data.length) {
+            classname = "runc";
+        }
+        html += "<div class='" + classname + "'><h1>" + titledata[i] + "</h1>" +
+            "<div><div><div></div></div></div></div>";
+    }
+    html += "</div>";
+
+    html += "<div>";
+
+    for(var i = 0; i < titledata.length; i++) {
+        var v1 = "--";
+        var v2 = "--";
+        var v3 = "--";
+        var vc1 = "";
+        var vc3 = "";
+        var vc2 = "";
+        if(i < data.length) {
+            v1 = data[i].value1;
+            v2 = data[i].value2;
+            v3 = data[i].value3;
+            if(parseInt(v1) > 0) {
+                vc1 = "c";
+            }
+            if(parseInt(v2) > 0) {
+                vc2 = "c";
+            }
+            if(parseInt(v3) > 0) {
+                vc3 = "c";
+            }
+        }
+        var classname = "runa";
+        if(i == data.length - 1) {
+            classname = "runb";
+        } else if(i >= data.length) {
+            classname = "runc";
+        }
+        html += "<div class='" + classname + "'><div class='jiao'></div><ul>";
+        html += "<li>严重<span class='" + vc1 + "'>" + v1 + "</span></li>";
+        html += "<li>中度<span class='" + vc2 + "'>" + v2 + "</span></li>";
+        html += "<li>轻度<span class='" + vc3 + "'>" + v3 + "</span></li>";
+        html += "</ul></div>";
+    }
+    html += "</div>";
+
+    $("#chart12").html(html);
+}
 
 function cutNh(){
     if($("#bg-left").hasClass("button-group-act")) return;
@@ -1470,16 +1863,3 @@ function selectYear(changeYear){
         }
     });
 }
-
-/*window.onresize = function(){
- chart01.resize();
- chart02.resize();
- chart03.resize();
- chart04.resize();
-
- myChartEnergy.resize();
- chart05.resize();
-
- myChartQualified.resize();
- myChartCarbon.resize();
- }*/
