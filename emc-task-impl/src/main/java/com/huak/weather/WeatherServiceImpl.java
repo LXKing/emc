@@ -60,8 +60,8 @@ public class WeatherServiceImpl implements WeatherTaskService{
     public void executeWeather7dTask(List<Map<String, Object>> params) {
         if(params != null){
             for (Map param : params){
-                weekforcastDao.deletebyParmas(param);
-                this.weekForcast(param);
+                if(weekforcastDao.deletebyParmas(param)>0)
+                     this.weekForcast(param);
             }
         }
     }

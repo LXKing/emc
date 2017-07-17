@@ -27,10 +27,8 @@
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_emc_weather_actual
-    where CODE = #{code,jdbcType=VARCHAR} AND REPORT_DATE = #{reportDate,jdbcType=VARCHAR} AND STATUS = #{status,jdbcType=TINYINT}
+      select   <include refid="Base_Column_List" /> from t_emc_weather_actual where (code,REPORT_DATE) = (
+      select code,max(report_date) from t_emc_weather_actual where code =#{code,jdbcType=VARCHAR} group by code)
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

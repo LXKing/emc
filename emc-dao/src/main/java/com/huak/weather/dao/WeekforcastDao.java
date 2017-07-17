@@ -20,7 +20,7 @@ public interface WeekforcastDao {
 
     int updateByPrimaryKey(Weekforcast record);
 
-    void deletebyParmas(Map<String, Object> params);
+    int deletebyParmas(Map<String, Object> params);
 
     void insertWeekForcastByArray(List<Weekforcast> weeforca);
 
