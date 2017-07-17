@@ -25,4 +25,6 @@ public interface WeekforcastDao {
     void insertWeekForcastByArray(List<Weekforcast> weeforca);
 
     List<Weekforcast> selectByParams(Map<String, Object> params);
+
+    List<Weekforcast> selectByComponent(Map<String, Object> params);
 }

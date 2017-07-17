@@ -205,6 +205,7 @@ var chart04;
 var chart05;
 var chart11;
 var chart12;
+var chart10;
 /*website*/
 var websiteheight;
 websiteheight = $("#website").height() - 12;
@@ -962,7 +963,7 @@ function initChart05(energy,device,manage,labor,other,total,tbl){
                 value: 1,
                 name: '圈',
                 selected: false,
-                hoverAnimation: false,
+                hoverAnimation: false
             }]
         },
             {
@@ -1081,7 +1082,6 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            debugger;
             if (result.flag) {
                 /*仪表盘*/
                 var kedu1 = result.object.kedu1; //蓝色的刻度
@@ -1549,6 +1549,56 @@ function chart09Fun(){
 }
 
 function chart10Fun() {
+    $.ajax({
+        url:_web +'/component/weather',
+        type:'post',
+        async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+//        data:$("#searchTools").serialize(),
+        dataType:"json",
+        success:function(result) {
+            $(".chart-content.clearfix").empty();
+            if(result.flag == true){
+                if(result.object.aqi != null && result.object.currentWeather != null){
+                    var dates = new  Pdate();
+                    var date = dates.format(result.object.aqi.reportDate);
+                    var s = dates.showCal(result.object.aqi.reportDate);
+                    var html = '<div class="cb-header clearfix" id="dates">'+
+                        '<span class="cb-title" >'+date+' '+result.object.currentWeather.weekDay+' 农历'+s+'</span>'+
+                        '<div class="cb-title-right ">实时空气质量：<span >'+result.object.aqi.aqi+''+result.object.aqi.aqiLevel+'</span></div></div>'
+                    $(".chart-content.clearfix").append(html) ;
+                    var html2 ="<ul>";
+                    html2 +=" <li> <div class='wather weather01'></div>"+
+                                "<div class='detail clearfix'> <div>22</div>"+
+                                "<div> <p>℃</p> <p>"+result.object.currentWeather.weatherCurrent+"（实时）</p></div></div>"+
+                                "<h3>"+result.object.currentWeather.tempLow+"~"+result.object.currentWeather.tempHigh+"℃<h5>"+result.object.currentWeather.wind+"</h5>"+
+                            " </li>"
+                    if(result.object.weekForcast.length>0){
+                          result.object.weekForcast.forEach(function(value, index, array) {
+                              html2 +=" <li>"+
+                                  "<h1>"+value.week+"</h1>"+
+                                  "<h2>"+ dates.format(value.reportDate)+"</h2>"+
+                                  "<div class='wather weather01'></div>"+
+                                  "<h3>"+value.tempLow+"~"+value.tempHigh+"℃</h3>"+
+                                  "<h4>"+value.weather+"</h4>"+
+                                  "<h5>"+value.wind+""+value.winp+"</h5>"+
+                                  "</li>";
+                          });
+                    }
+                    html2 +="</ul>";
+                    $(".chart-content.clearfix").append(html2);
+                }
+            }
+            initchart10(result.object.weathers.hour,result.object.weathers.temp);
+        }
+
+    });
+
+}
+
+
+
+/*天气预报图表*/
+function initchart10(hours,temps){
     $("#chart10").empty();
     chart10 = echarts.init(document.getElementById('chart10'));
     var option = {
@@ -1580,7 +1630,7 @@ function chart10Fun() {
                     color: '#9a9a9b'
                 }
             },
-            data: ["现在", "1点", "2点", "3点", "4点"]
+            data: hours
 
         },
 
@@ -1597,7 +1647,7 @@ function chart10Fun() {
             }
         },
         series: [{
-            name: "天气",
+            name: "温度",
             type: 'line',
             symbol: 'circle',
             smooth: false,
@@ -1615,12 +1665,14 @@ function chart10Fun() {
                     borderColor: "#fff"
                 }
             },
-            data: [10, 30, 40, 20, 30, 20]
+            data:temps
         }]
     }
 
     chart10.setOption(option);
 }
+
+
 
 function chart11Fun() {
     $("#chart11").empty();

@@ -153,13 +153,27 @@ public class ComponentServiceImpl implements ComponentService{
     public Map<String, Object> weatherForcast(Map<String, Object> params) {
         Map<String,Object> data = new HashMap<>();
         String times = dateDao.getTime().substring(0,13)+":21:00";
-        List<Weekforcast> weekforcasts = weekforcastDao.selectByParams(params);
+        List<Weekforcast> weekforcasts = weekforcastDao.selectByComponent(params);
         params.put("reportDate",times);
+        List<Weather> weathers = weatherDao.getLatestWeathers(params);
         Weather  weather = weatherDao.selectByPrimaryKey(params);
         WeatherAQI weatherAQI = weatherAqiDao.selectById(params);
+        Map<String,Object> datas = new HashMap<>();
+        List<String> hours = new ArrayList<>();
+        List<String> tem = new ArrayList<>();
+        if(weathers!=null && weathers.size()>0){
+            for(int i = weathers.size()-1; i>=0;i--){
+                String hour =  weathers.get(i).getreportDate().substring(6,13);
+                hours.add(hour);
+                tem.add(weathers.get(i).getTemperatureCurr().replace("℃",""));
+            }
+            datas.put("hour",hours);
+            datas.put("temp",tem);
+        }
         data.put("weekForcast",weekforcasts);
         data.put("currentWeather",weather);
         data.put("aqi",weatherAQI);
+        data.put("weathers",datas);
         return data;
     }
 

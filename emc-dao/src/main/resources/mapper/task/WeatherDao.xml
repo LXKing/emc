@@ -31,6 +31,22 @@
       select code,max(report_date) from t_emc_weather_actual where code =#{code,jdbcType=VARCHAR} group by code)
   </select>
 
+  <select id="getLatestWeathers" parameterType="java.util.Map" resultMap="BaseResultMap">
+      SELECT
+      <include refid="Base_Column_List" />
+      FROM
+      t_emc_weather_actual
+      WHERE
+      CODE =#{code,jdbcType=VARCHAR}
+      and
+      REPORT_DATE <![CDATA[ <= ]]> #{reportDate,jdbcType=VARCHAR}
+      ORDER BY
+      REPORT_DATE DESC
+      LIMIT 0,
+      23;
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_emc_weather_actual
     where ID = #{id,jdbcType=BIGINT}

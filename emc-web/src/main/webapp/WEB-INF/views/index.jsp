@@ -485,71 +485,12 @@
         </div>
         <div class="energyBox comparisonBox">
             <div class="chart-box">
-                <div class="cb-header clearfix">
-                    <span class="cb-title" id="nh-title">06月14日 周二 农历五月二十</span>
 
-                    <div class="cb-title-right ">
-                        实时空气质量：
-                        <span>64良</span>
-
-                    </div>
-                </div>
                 <div class="chart-content clearfix">
-                    <ul>
-
-                        <li>
-                            <div class="wather weather01"></div>
-                            <div class="detail clearfix">
-                                <div>22</div>
-                                <div>
-                                    <p>℃</p>
-                                    <p>阵雨（实时）</p>
-                                </div>
-
-                            </div>
-
-                            <h3>22~35℃</h3>
-                            <h4>晴</h4>
-                            <h5>西南风微风</h5>
-                        </li>
-                        <li>
-                            <h1>周四</h1>
-                            <h2>06月15日</h2>
-                            <div class="wather weather01"></div>
-                            <h3>22~35℃</h3>
-                            <h4>晴</h4>
-                            <h5>西南风微风</h5>
-                        </li>
-                        <li>
-                            <h1>周四</h1>
-                            <h2>06月15日</h2>
-                            <div class="wather weather01"></div>
-                            <h3>22~35℃</h3>
-                            <h4>晴</h4>
-                            <h5>西南风微风</h5>
-                        </li>
-                        <li>
-                            <h1>周四</h1>
-                            <h2>06月15日</h2>
-                            <div class="wather weather01"></div>
-                            <h3>22~35℃</h3>
-                            <h4>晴</h4>
-                            <h5>西南风微风</h5>
-                        </li>
-                        <li>
-                            <h1>周四</h1>
-                            <h2>06月15日</h2>
-                            <div class="wather weather01"></div>
-                            <h3>22~35℃</h3>
-                            <h4>晴</h4>
-                            <h5>西南风微风</h5>
-                        </li>
-                    </ul>
-                </div>
-
-                <div id="chart10" class="chart">
 
                 </div>
+
+                <div id="chart10" class="chart"> </div>
             </div>
 
         </div>
