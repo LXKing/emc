@@ -2,10 +2,11 @@ package com.huak.weather.dao;
 
 
 import com.huak.weather.model.Weekforcast;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-
+@Repository
 public interface WeekforcastDao {
     int deleteByPrimaryKey(Integer id);
 
