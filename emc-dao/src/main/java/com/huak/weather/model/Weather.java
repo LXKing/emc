@@ -1,9 +1,10 @@
 package com.huak.weather.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class Weather {
+public class Weather implements Serializable {
     private Long id;
 
     private String code;

@@ -41,55 +41,22 @@ public class RoomTempApi {
   @ResponseBody
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public Object exportRoomTemp( HttpServletRequest request ,String json) throws IOException {
-      logger.info("室温导入数据的入参"+json);
       //接收请求参数
       InputStreamReader reader=new InputStreamReader(request.getInputStream(),"UTF-8");
       BufferedReader buffer=new BufferedReader(reader);
       String data=buffer.readLine();
-      System.out.println(data);
-      return null;
-//       String data = request.getParameter("json");
-//       System.out.print(data);
-//      Map<String,Object> map = (Map<String,Object>) JSON.parse(json);
-//      JSONObject jsonObj = new JSONObject();
-//      List<Temperature> list = tempService.isExsistTemp(map);
-//        if(list.size()>0){
-//            jsonObj.put("status","0");
-//            jsonObj.put("msg","该室温数据已存在");
-//            return jsonObj;
-//        }else {
-//
-//            Temperature t = JSON.parseObject(json,Temperature.class);
-//            logger.info("---------------------开始导入数据---------------------");
-//            Map<String,Object> result = tempService.insertTemp(t);
-//            if(result.get("flag")==true){
-//                jsonObj.put("status","1");
-//                jsonObj.put("msg","室温数据导入成功");
-//                return jsonObj;
-//            }
-//        }
-//              jsonObj.put("status","2");
-//              jsonObj.put("msg","系统导入数据异常");
-//              logger.info("返回给客户端的jsonstr"+json.toString());
-//       return jsonObj;
-  }
-
-    @ResponseBody
-    @RequestMapping(value = "/addtest", method = RequestMethod.GET)
-    public com.alibaba.fastjson.JSONObject exportRoomTempTest( HttpServletRequest request ,String json){
-        logger.info("室温导入数据的入参"+json);
-        String data = request.getParameter("json");
-        System.out.print(data);
-        Map<String,Object> map = (Map<String,Object>) JSON.parse(json);
-        JSONObject jsonObj = new JSONObject();
-        List<Temperature> list = tempService.isExsistTemp(map);
+      logger.info("室温导入数据的入参"+data);
+      JSONObject jb = JSON.parseObject(data);
+      Object o =jb.get("json");
+      Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
+      JSONObject jsonObj = new JSONObject();
+      List<Temperature> list = tempService.isExsistTemp(map);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该室温数据已存在");
             return jsonObj;
         }else {
-
-            Temperature t = JSON.parseObject(json,Temperature.class);
+            Temperature t = JSON.parseObject(o.toString(),Temperature.class);
             logger.info("---------------------开始导入数据---------------------");
             Map<String,Object> result = tempService.insertTemp(t);
             if(result.get("flag")==true){
@@ -98,10 +65,10 @@ public class RoomTempApi {
                 return jsonObj;
             }
         }
-        jsonObj.put("status","2");
-        jsonObj.put("msg","系统导入数据异常");
-        logger.info("返回给客户端的jsonstr"+json.toString());
-        return jsonObj;
-    }
+              jsonObj.put("status","2");
+              jsonObj.put("msg","系统导入数据异常");
+              logger.info("返回给客户端的jsonstr"+json.toString());
+       return jsonObj;
+  }
 
 }

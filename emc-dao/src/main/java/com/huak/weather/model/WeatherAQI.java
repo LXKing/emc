@@ -1,9 +1,11 @@
 package com.huak.weather.model;
 
+import java.io.Serializable;
+
 /**
  * Created by MR-BIN on 2017/7/13.
  */
-public class WeatherAQI {
+public class WeatherAQI implements Serializable {
 
     private String code;
 

@@ -1,6 +1,10 @@
 package com.huak.temp;
 
+import com.huak.org.dao.OrgDao;
+import com.huak.org.model.Org;
+import com.huak.task.dao.EmcOrgInterDao;
 import com.huak.task.dao.TemperatureDao;
+import com.huak.task.model.EmcOrgInter;
 import com.huak.task.model.Temperature;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +30,12 @@ public class TempServiceImpl implements com.huak.temp.TempService{
     @Resource
     TemperatureDao tempDao;
 
+    @Resource
+    EmcOrgInterDao emcOrgInterDao;
+
+    @Resource
+    OrgDao orgDao;
+
     @Override
     public List<Temperature> isExsistTemp(Map<String, Object> map) {
         return tempDao.selectAllByMap(map);
@@ -44,5 +54,31 @@ public class TempServiceImpl implements com.huak.temp.TempService{
              map.put("msg","导入失败");
          }
         return map;
+    }
+
+    @Override
+    public List<EmcOrgInter> isExsistInter(Map<String, Object> map) {
+        return emcOrgInterDao.selectAllByMap(map);
+    }
+
+    @Override
+    public Map<String, Object> insertOrg(Org org) {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            orgDao.insertSelective(org);
+            map.put("emcId",org.getId());
+            map.put("flag",true);
+            map.put("msg","导入成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("flag",false);
+            map.put("msg","导入失败");
+        }
+        return map;
+    }
+
+    @Override
+    public void insertEmcOrgInter(EmcOrgInter inter) {
+        emcOrgInterDao.insert(inter);
     }
 }

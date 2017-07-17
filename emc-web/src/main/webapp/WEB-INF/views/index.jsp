@@ -99,6 +99,7 @@
 </div>
 <div class="index_content row no-margin">
 <div class="col-xs-12 no-padding">
+
 <div class="col-xs-4 mb14">
     <div class="index_contentBox energy_consumption">
 
@@ -317,9 +318,8 @@
     </div>
 
 </div>
-<div class=" col-xs-4">
+<div class=" col-xs-4 mb14">
     <div class="index_contentBox">
-
         <div class="titbox clearfix no-padding no-margin">
             <a href="${web}/cons/analysis/tsec">
             <div class="pull-left carbonTit energyTit"><i></i>单耗趋势<small class="font-sm">Comparison of Energy</small></div>
@@ -354,7 +354,8 @@
 
     </div>
 </div>
-<div class=" col-xs-4">
+
+<div class=" col-xs-4 mb14">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>成本对比<small class="font-sm">Cost comparison</small></div>
@@ -383,7 +384,9 @@
 
     </div>
 </div>
-<div class=" col-xs-4">
+
+
+<div class=" col-xs-4 mb14">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>碳排放趋势<small class="font-sm">Comparison of carbon</small></div>
@@ -431,6 +434,130 @@
     </div>
 
 </div>
+<div class=" col-xs-4 mb14  ">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>健康指数<small class="font-sm">HEALTH INDEX</small></div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div class="chart-box">
+                <div class="barwrap">
+                    <div class="clearfix">
+                        <span>正在检测服务情况...</span>
+												<span>
+												检测中
+												<span>66.7%</span>
+												</span>
+                    </div>
+                    <div>
+                        <div style="width:30%"></div>
+                    </div>
+                </div>
+                <div id="chart12" class="quanquanwrap">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" col-xs-4 mb14  ">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>折算能耗<small class="font-sm">COST COMPARISON</small></div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div class="chart-box">
+                <div class="cb-header">
+                    <span class="cb-title">能耗 (单位: GJ)</span>
+                    <div class="cb-title-right">
+                        温度 (单位: ℃)
+                    </div>
+                </div>
+                <div id="chart11" class="chart"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class=" col-xs-4 mb14  weather">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>天气情况<small class="font-sm">WEATHER CONDITIONS</small></div>
+        </div>
+        <div class="energyBox comparisonBox">
+            <div class="chart-box">
+                <div class="cb-header clearfix">
+                    <span class="cb-title" id="nh-title">06月14日 周二 农历五月二十</span>
+
+                    <div class="cb-title-right ">
+                        实时空气质量：
+                        <span>64良</span>
+
+                    </div>
+                </div>
+                <div class="chart-content clearfix">
+                    <ul>
+
+                        <li>
+                            <div class="wather weather01"></div>
+                            <div class="detail clearfix">
+                                <div>22</div>
+                                <div>
+                                    <p>℃</p>
+                                    <p>阵雨（实时）</p>
+                                </div>
+
+                            </div>
+
+                            <h3>22~35℃</h3>
+                            <h4>晴</h4>
+                            <h5>西南风微风</h5>
+                        </li>
+                        <li>
+                            <h1>周四</h1>
+                            <h2>06月15日</h2>
+                            <div class="wather weather01"></div>
+                            <h3>22~35℃</h3>
+                            <h4>晴</h4>
+                            <h5>西南风微风</h5>
+                        </li>
+                        <li>
+                            <h1>周四</h1>
+                            <h2>06月15日</h2>
+                            <div class="wather weather01"></div>
+                            <h3>22~35℃</h3>
+                            <h4>晴</h4>
+                            <h5>西南风微风</h5>
+                        </li>
+                        <li>
+                            <h1>周四</h1>
+                            <h2>06月15日</h2>
+                            <div class="wather weather01"></div>
+                            <h3>22~35℃</h3>
+                            <h4>晴</h4>
+                            <h5>西南风微风</h5>
+                        </li>
+                        <li>
+                            <h1>周四</h1>
+                            <h2>06月15日</h2>
+                            <div class="wather weather01"></div>
+                            <h3>22~35℃</h3>
+                            <h4>晴</h4>
+                            <h5>西南风微风</h5>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="chart10" class="chart">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 </div>
 <!-- <div class="index_contentList">-->
 </div>

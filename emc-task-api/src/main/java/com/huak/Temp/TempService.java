@@ -1,5 +1,7 @@
 package com.huak.temp;
 
+import com.huak.org.model.Org;
+import com.huak.task.model.EmcOrgInter;
 import com.huak.task.model.Temperature;
 
 import java.util.List;
@@ -28,4 +30,19 @@ public interface TempService {
      * 确认后导入室温数据
      */
     public Map<String, Object>  insertTemp(Temperature temp);
+
+    /**
+     * 确认组织机构是否存在将要导入的数据
+     */
+    public List<EmcOrgInter>  isExsistInter(Map<String,Object> map);
+
+    /**
+     * 确认后导入组织机构
+     */
+    public Map<String, Object>  insertOrg(Org org);
+
+    /**
+     * 保存组织机构关系表数据
+     */
+    void  insertEmcOrgInter(EmcOrgInter inter);
 }

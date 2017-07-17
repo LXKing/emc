@@ -17,7 +17,7 @@ import java.util.*;
  * Description:   定时任务测试  <BR>
  * Function List:  <BR>
  */
-@Component
+@Component("weatherTask")
 public class WeatherTask {
     @Resource
     private WeatherTaskService weatherTaskService;
@@ -29,10 +29,6 @@ public class WeatherTask {
         param.put("weatherId","101030100");
         param.put("status",0);
         params.add(param);
-        Map<String,Object> param1 = new HashMap<>();
-        param1.put("weatherId","101010100");
-        param1.put("status",0);
-        params.add(param1);
         weatherTaskService.executeWeatherTask(params);
     }
     public void forcastWeather7d(){
@@ -41,10 +37,6 @@ public class WeatherTask {
         param.put("weatherId","101030100");
         param.put("status",0);
         params.add(param);
-        Map<String,Object> param1 = new HashMap<>();
-        param1.put("weatherId","101010100");
-        param1.put("status",0);
-        params.add(param1);
         weatherTaskService.executeWeather7dTask(params);
     }
 }

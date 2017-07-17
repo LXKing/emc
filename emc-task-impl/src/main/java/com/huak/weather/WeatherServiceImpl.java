@@ -42,7 +42,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
     @Override
     @Transactional(readOnly = false)
     public void executeWeatherTask(List<Map<String, Object>> params) {
-        if(params != null && params.size()>1) {
+        if(params != null) {
             for (Map param : params) {
                 this.weatherActual(param);
                 this.curentWeatherAQI(param);
@@ -58,13 +58,10 @@ public class WeatherServiceImpl implements WeatherTaskService{
     @Override
     @Transactional(readOnly = false)
     public void executeWeather7dTask(List<Map<String, Object>> params) {
-        if(params != null && params.size()>1){
+        if(params != null){
             for (Map param : params){
-                HashMap<String,Object> tempparam = new HashMap<>();
-                tempparam.put("code",param.get("weatherId"));
-                tempparam.put("status",param.get("status"));
-                weekforcastDao.deletebyParmas(tempparam);
-                this.weekForcast(tempparam);
+                weekforcastDao.deletebyParmas(param);
+                this.weekForcast(param);
             }
         }
     }
@@ -146,7 +143,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
             List<Weather>  weathers = new ArrayList<>();
             try {
                 weathers = weaterDao.selectWeathers(selParams);
-                if(weathers == null && weathers.size()<1){
+                if(weathers == null || weathers.size()<1){
                     weaterDao.insert(weather);
                 }else{
                     weaterDao.updateWeather(weather);
@@ -209,7 +206,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
             weather.setHumidity(data.get("humidity").toString());
             weather.setHumiHigh(data.get("humi_high").toString());
             weather.setHumiLow(data.get("humi_low").toString());
-            weather.setreportDate(data.get("days").toString() + " " + times + ":21");
+            weather.setreportDate(data.get("days").toString() + " " + times + ":21:00");
             weather.setTemperatureCurr(data.get("temperature_curr").toString());
             weather.setTempHigh(StringUtils.isBlank(data.get("temp_high").toString())?null:(new BigDecimal(data.get("temp_high").toString())));
             weather.setTempLow(StringUtils.isBlank(data.get("temp_low").toString())?null:(new BigDecimal(data.get("temp_low").toString())));
