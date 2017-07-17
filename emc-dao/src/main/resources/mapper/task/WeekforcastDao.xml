@@ -85,10 +85,10 @@
     delete from t_emc_weather_weekforcast
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-    <delete id="deletebyParmas" parameterType="java.util.Map">
-        delete from t_emc_weather_weekforcast where
-        STATUS = #{status,jdbcType=TINYINT} AND CODE = #{weatherId,jdbcType=VARCHAR}
-    </delete>
+  <delete id="deletebyParmas" parameterType="java.util.Map">
+      delete from t_emc_weather_weekforcast
+      where   CODE = #{code,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.huak.weather.model.Weekforcast">
     insert into t_emc_weather_weekforcast (ID, CODE, REPORT_DATE, 
       WEEK, WIND, WINP, TEMP_HIGH, 

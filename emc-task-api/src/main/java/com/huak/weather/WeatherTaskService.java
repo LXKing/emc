@@ -18,4 +18,11 @@ public interface WeatherTaskService {
      * @param params
      */
     void executeWeather7dTask(List<Map<String, Object>> params);
+
+    /**
+     * 获取需要获取天气的城市
+     * @return
+     */
+    List<Map<String,Object>> getParams();
+
 }

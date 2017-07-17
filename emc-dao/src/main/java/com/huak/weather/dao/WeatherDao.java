@@ -29,4 +29,7 @@ public interface WeatherDao {
     Weather selectByPrimaryKey(Map<String, Object> params);
 
     List<Weather> getLatestWeathers(Map<String, Object> params);
+
+    List<Map<String,Object>> getParams();
+
 }
