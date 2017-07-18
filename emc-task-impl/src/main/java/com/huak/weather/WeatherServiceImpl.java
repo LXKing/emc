@@ -180,7 +180,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
                     Weekforcast week = new Weekforcast();
                     week.setWind(weekdata.get("wind").toString());
                     week.setWinp(weekdata.get("winp").toString());
-                    week.setWeatherIcon(WeatherEnum.getName(Integer.parseInt(weekdata.get("weatid").toString())));
+                    week.setWeatherIcon(WeatherEnum.getName(weekdata.get("weather").toString()));
                     week.setCode(weekdata.get("cityid").toString());
                     week.setReportDate(weekdata.get("days").toString());
                     week.setStatus((byte)0);
@@ -220,7 +220,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
             weather.setTempHigh(StringUtils.isBlank(data.get("temp_high").toString())?null:(new BigDecimal(data.get("temp_high").toString())));
             weather.setTempLow(StringUtils.isBlank(data.get("temp_low").toString())?null:(new BigDecimal(data.get("temp_low").toString())));
             weather.setWeatherCurrent(data.get("weather").toString());
-            weather.setWeatherIcon(WeatherEnum.getName(Integer.parseInt(data.get("weatid").toString())));
+            weather.setWeatherIcon(WeatherEnum.getName(data.get("weather").toString()));
             weather.setWeekDay(data.get("week").toString());
             weather.setWind(data.get("wind").toString());
             weather.setStatus((byte)0);
