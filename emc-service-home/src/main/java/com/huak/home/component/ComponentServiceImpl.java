@@ -419,7 +419,7 @@ public class ComponentServiceImpl implements ComponentService{
                 boolean fla = (boolean) data.get("isInCurrentSeason");
                 int currentDays = (int) data.get("currentDays");
                 int planDays = (int) data.get("planDays");
-                double currentPlan = (double) data.get("currentPlan");
+                double currentPlan = Double.parseDouble(data.get("currentPlan").toString());
                 if(fla){
                     kedu1 =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(currentDays,planDays),0.75),2);
                     if(planDays == 0 ){

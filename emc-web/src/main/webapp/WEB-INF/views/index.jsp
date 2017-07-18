@@ -416,6 +416,9 @@
             <div class="pull-left carbonTit energyTit"><i></i>合格率趋势<small class="font-sm">Qualified rate trend</small></div>
         </div>
         <div class="energyBox carbonBox">
+            <div id="barchart" class="clearfix">
+
+            </div>
             <div class="chart-box">
                 <div class="cb-header">
                     <span class="cb-title">室温 (单位: ℃)</span>
@@ -432,6 +435,8 @@
         </div>
 
     </div>
+
+</div>
 
 </div>
 <div class=" col-xs-4 mb14  ">

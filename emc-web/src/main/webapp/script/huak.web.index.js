@@ -1346,7 +1346,25 @@ function returnFloat(value){
 
 
 /*居民 合格率趋势*/
-function chart08Fun(){
+function chart08Fun() {
+    var databar = [{
+        value: 24,
+        color: '#32bbb6',
+        text: '18℃以下'
+    }, {
+        value: 76,
+        color: '#32ccb6',
+        text: '18℃'
+    }];
+
+    var barchartdiv = $("#barchart");
+    var barcharthtml = "";
+    for(var i = 0; i < databar.length; i++) {
+        barcharthtml += "<div style='width:" + databar[i].value + "%;'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
+    }
+    barchartdiv.html(barcharthtml);
+
+    /*居民 合格率趋势*/
     myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
     var data = [
         ['15-01', 4.374394],
@@ -1357,7 +1375,7 @@ function chart08Fun(){
         ['16-13', 3.129283]
     ];
 
-// See https://github.com/ecomfe/echarts-stat
+    // See https://github.com/ecomfe/echarts-stat
     var myRegression = ecStat.regression('linear', data);
 
     myRegression.points.sort(function(a, b) {
@@ -1374,14 +1392,19 @@ function chart08Fun(){
         },
         grid: {
             left: '15',
-            top: '30',
-            right: '40',
+            top: '10',
+            right: '30',
             bottom: '10',
             containLabel: true
         },
         xAxis: {
             type: 'category',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
+            splitArea: {
+                show: true
+            },
             splitLine: {
                 show: false
             },
@@ -1391,8 +1414,8 @@ function chart08Fun(){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
                     color: '#666',
                     fontFamily: 'arial'
@@ -1403,7 +1426,10 @@ function chart08Fun(){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
+
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -1418,7 +1444,7 @@ function chart08Fun(){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
                     color: '#666',
                     fontFamily: 'arial'
@@ -1429,13 +1455,16 @@ function chart08Fun(){
             name: '室温',
             type: 'scatter',
             markLine: {
-                data: [
-                    {type: 'average', name: '平均值'}
-                ]
+                //				symbolSize:[0,0],
+                data: [{
+                    type: 'average',
+                    name: '平均值'
+                    //					symbolSize:[0,0],
+                }]
             },
-            itemStyle : {
-                normal : {
-                    color:'#7fb7e1'
+            itemStyle: {
+                normal: {
+                    color: '#7fb7e1'
                 }
             },
             data: data

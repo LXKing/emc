@@ -146,9 +146,10 @@ public class ComponentController {
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+
         try {
             Map<String,Object> params = new HashMap<>();
-            params.put("code","101030100");
+            params.put("code",company.getWcode());
             params.put("status","0");
             Map<String,Object> map =  componentService.weatherForcast(params);
             if (map!= null) {
