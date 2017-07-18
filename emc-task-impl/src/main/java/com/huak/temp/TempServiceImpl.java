@@ -1,6 +1,10 @@
 package com.huak.temp;
 
+import com.huak.org.dao.FeedDao;
+import com.huak.org.dao.NodeDao;
 import com.huak.org.dao.OrgDao;
+import com.huak.org.model.Feed;
+import com.huak.org.model.Node;
 import com.huak.org.model.Org;
 import com.huak.task.dao.EmcOrgInterDao;
 import com.huak.task.dao.TemperatureDao;
@@ -36,6 +40,11 @@ public class TempServiceImpl implements com.huak.temp.TempService{
     @Resource
     OrgDao orgDao;
 
+    @Resource
+    FeedDao feedDao;
+
+    @Resource
+    NodeDao nodeDao;
     @Override
     public List<Temperature> isExsistTemp(Map<String, Object> map) {
         return tempDao.selectAllByMap(map);
@@ -80,5 +89,35 @@ public class TempServiceImpl implements com.huak.temp.TempService{
     @Override
     public void insertEmcOrgInter(EmcOrgInter inter) {
         emcOrgInterDao.insert(inter);
+    }
+
+    @Override
+    public Map<String, Object> insertFeed(Feed feed) {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            feedDao.insertSelective(feed);
+            map.put("flag",true);
+            map.put("msg","导入成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("flag",false);
+            map.put("msg","导入失败");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> inserStation(Node node) {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            nodeDao.insertSelective(node);
+            map.put("flag",true);
+            map.put("msg","导入成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("flag",false);
+            map.put("msg","导入失败");
+        }
+        return map;
     }
 }

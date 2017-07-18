@@ -23,9 +23,9 @@
     <mvc:default-servlet-handler/>
 
     <mvc:annotation-driven ></mvc:annotation-driven>
-    <!--<task:scheduled-tasks>-->
-        <!--<task:scheduled ref="weatherTask" method="currentWeather" cron="10 * * * * ?"/>-->
-        <!--<task:scheduled ref="weatherTask" method="forcastWeather7d" cron="10 * * * * ?"/>-->
-    <!--</task:scheduled-tasks>-->
+    <task:scheduled-tasks>
+        <task:scheduled ref="weatherTask" method="currentWeather" cron="0 30 * * * ?"/>
+        <task:scheduled ref="weatherTask" method="forcastWeather7d" cron="0 30 * * * ?"/>
+    </task:scheduled-tasks>
 
 </beans>

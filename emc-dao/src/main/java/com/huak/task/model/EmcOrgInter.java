@@ -9,11 +9,14 @@ public class EmcOrgInter {
 
     private String emcId;
 
-    public EmcOrgInter(String id, String comId, String orgId, String emcId) {
+    private String unitType;
+
+    public EmcOrgInter(String id, String comId, String orgId, String emcId,String unitType) {
         this.id = id;
         this.comId = comId;
         this.orgId = orgId;
         this.emcId = emcId;
+        this.unitType=unitType;
     }
 
     public EmcOrgInter() {
@@ -50,5 +53,13 @@ public class EmcOrgInter {
 
     public void setEmcId(String emcId) {
         this.emcId = emcId == null ? null : emcId.trim();
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
     }
 }

@@ -2,7 +2,8 @@ package com.huak.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.huak.org.model.Org;
+import com.huak.common.UUIDGenerator;
+import com.huak.org.model.Node;
 import com.huak.task.model.EmcOrgInter;
 import com.huak.temp.TempService;
 import org.slf4j.Logger;
@@ -27,15 +28,14 @@ import java.util.Map;
  * Author:  Administrator  <BR>
  * Project:emc    <BR>
  * Version: v 1.0      <BR>
- * Date: 2017/7/14<BR>
+ * Date: 2017/7/17<BR>
  * Description:     <BR>
  * Function List:  <BR>
  */
 
 @Controller
-@RequestMapping("/org")
-public class EmcOrgApi {
-
+@RequestMapping("/station")
+public class StationApi {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -48,36 +48,39 @@ public class EmcOrgApi {
         InputStreamReader reader=new InputStreamReader(request.getInputStream(),"UTF-8");
         BufferedReader buffer=new BufferedReader(reader);
         String data=buffer.readLine();
-        logger.info("组织机构导入数据的入参："+data);
+        logger.info("导入数据的入参："+data);
         JSONObject jb = JSON.parseObject(data);
         Object o =jb.get("json");
         Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
+        map.put("unitType","2");
         JSONObject jsonObj = new JSONObject();
         List<EmcOrgInter> list = tempService.isExsistInter(map);
         if(list.size()>0){
             jsonObj.put("status","0");
-            jsonObj.put("msg","该组织机构数据已存在");
+            jsonObj.put("msg","该数据已存在");
             return jsonObj;
         }else {
-            Org eccOrg = JSON.parseObject(o.toString(),Org.class);
+            Node eccNode = JSON.parseObject(o.toString(),Node.class);
             EmcOrgInter inter = new EmcOrgInter();
-            Long eccOrgId = eccOrg.getId();
+            String uuid = UUIDGenerator.getUUID();
+            eccNode.setId(uuid);
             logger.info("---------------------开始导入数据---------------------");
-            Map<String,Object> result = tempService.insertOrg(eccOrg);
-                if(result.get("flag")==true){
-                    logger.info("----------建立关系表数据----------");
-                    inter.setComId(eccOrg.getComId());
-                    inter.setEmcId(result.get("emcId").toString());
-                    inter.setOrgId(eccOrgId.toString());
-                    tempService.insertEmcOrgInter(inter);
-                    jsonObj.put("status","1");
-                    jsonObj.put("msg","组织机构数据导入成功");
-                    return jsonObj;
-                }
+            Map<String,Object> result = tempService.inserStation(eccNode);
+            if(result.get("flag")==true){
+                logger.info("----------建立关系表数据----------");
+                inter.setComId(eccNode.getComId());
+                inter.setEmcId(uuid);
+                inter.setOrgId(eccNode.getOrgId().toString());
+                inter.setUnitType("1");
+                tempService.insertEmcOrgInter(inter);
+                jsonObj.put("status","2");
+                jsonObj.put("msg","数据导入成功");
+                return jsonObj;
+            }
         }
-            jsonObj.put("status","2");
-            jsonObj.put("msg","系统导入数据异常");
-            logger.info("返回给客户端的jsonstr："+json.toString());
+        jsonObj.put("status","2");
+        jsonObj.put("msg","系统导入数据异常");
+        logger.info("返回给客户端的jsonstr："+json.toString());
         return jsonObj;
     }
 }

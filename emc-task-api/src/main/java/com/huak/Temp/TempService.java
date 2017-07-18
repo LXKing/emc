@@ -1,5 +1,7 @@
 package com.huak.temp;
 
+import com.huak.org.model.Feed;
+import com.huak.org.model.Node;
 import com.huak.org.model.Org;
 import com.huak.task.model.EmcOrgInter;
 import com.huak.task.model.Temperature;
@@ -45,4 +47,14 @@ public interface TempService {
      * 保存组织机构关系表数据
      */
     void  insertEmcOrgInter(EmcOrgInter inter);
+
+    /**
+     *确认后导入热源信息数据
+     */
+    public Map<String, Object>  insertFeed(Feed feed);
+
+    /**
+     * 确认后导入热力站信息数据
+     */
+    public Map<String, Object>  inserStation(Node node);
 }

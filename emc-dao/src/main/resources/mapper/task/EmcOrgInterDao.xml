@@ -7,10 +7,11 @@
       <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="EMC_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="UNIT_TYPE" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, COM_ID, ORG_ID, EMC_ID
+    ID, COM_ID, ORG_ID, EMC_ID,UNIT_TYPE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -24,9 +25,9 @@
   </delete>
   <insert id="insert" parameterType="com.huak.task.model.EmcOrgInter">
     insert into t_emc_org_inter (ID, COM_ID, ORG_ID, 
-      EMC_ID)
+      EMC_ID,UNIT_TYPE)
     values (#{id,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, 
-      #{emcId,jdbcType=VARCHAR})
+      #{emcId,jdbcType=VARCHAR},#{unitType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.task.model.EmcOrgInter">
     insert into t_emc_org_inter
@@ -43,6 +44,9 @@
       <if test="emcId != null">
         EMC_ID,
       </if>
+      <if test="emcId != null">
+        UNIT_TYPE
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -56,6 +60,9 @@
       </if>
       <if test="emcId != null">
         #{emcId,jdbcType=VARCHAR},
+      </if>
+      <if test="emcId != null">
+        #{unitType,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -71,6 +78,9 @@
       <if test="emcId != null">
         EMC_ID = #{emcId,jdbcType=VARCHAR},
       </if>
+      <if test="unitType != null">
+            UNIT_TYPE = #{unitType,jdbcType=VARCHAR}
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -78,7 +88,8 @@
     update t_emc_org_inter
     set COM_ID = #{comId,jdbcType=VARCHAR},
       ORG_ID = #{orgId,jdbcType=VARCHAR},
-      EMC_ID = #{emcId,jdbcType=VARCHAR}
+      EMC_ID = #{emcId,jdbcType=VARCHAR},
+      UNIT_TYPE = #{unitType,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -96,6 +107,9 @@
 
         <if test="emcId != null and emcId!=''">
             and  EMC_ID = #{emcId,jdbcType=VARCHAR}
+        </if>
+        <if test="unitType !=null and unitType!=''">
+            and UNIT_TYPE = #{unitType,jdbcType=VARCHAR}
         </if>
     </select>
 </mapper>

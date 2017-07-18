@@ -4,8 +4,8 @@ import com.huak.base.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by MR-BIN on 2017/7/11.
@@ -19,6 +19,6 @@ public class TestWeatherTask extends BaseTest {
         Map<String,Object> params = new HashMap<>();
         params.put("weatherId","101031200");
         params.put("status",0);
-        weatherTaskService.executeWeatherTask(params);
+        //weatherTaskService.executeWeatherTask(params);
     }
 }
