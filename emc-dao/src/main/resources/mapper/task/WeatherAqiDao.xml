@@ -54,10 +54,8 @@
   </update>
 
   <select id="selectById" parameterType="java.util.Map" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from t_emc_weather_aqi
-        where CODE = #{code,jdbcType=VARCHAR} AND REPORT_DATE = #{reportDate,jdbcType=VARCHAR} AND STATUS = #{status,jdbcType=TINYINT}
+      select   <include refid="Base_Column_List" /> from t_emc_weather_aqi where (code,REPORT_DATE) = (
+      select code,max(report_date) from t_emc_weather_aqi where code =#{code,jdbcType=VARCHAR} group by code)
   </select>
 
 </mapper>

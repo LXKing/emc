@@ -33,4 +33,12 @@ public class StringUtils {
     public static void main(String[] args) {
         System.out.println(getRandomString(3));
     }
+
+    public static boolean isEmpty(Object obj) {
+        if(obj!=null&&!obj.toString().trim().equals("")){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

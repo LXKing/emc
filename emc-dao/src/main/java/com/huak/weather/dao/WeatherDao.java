@@ -27,4 +27,9 @@ public interface WeatherDao {
     void updateWeather(Weather weather);
 
     Weather selectByPrimaryKey(Map<String, Object> params);
+
+    List<Weather> getLatestWeathers(Map<String, Object> params);
+
+    List<Map<String,Object>> getParams();
+
 }

@@ -23,4 +23,8 @@ public interface CompanyDao {
     List<Company> selectAllByMap(Map<String,Object> paramsMap);
 
     List<Company> selectCompanyAll();
+
+    List<Map<String,Object>> selectWeatherCity(Map<String, Object> paramsMap);
+
+    Map<String,Object> selectParentWeatherByCode(String code);
 }

@@ -43,7 +43,7 @@ function chart01Fun(datalist, datelist, other){
 	           show: true
 	        },
             splitLine: {
-				show: false,
+				show: false
 			},
 			axisLine: {
 				show: true,
@@ -55,7 +55,7 @@ function chart01Fun(datalist, datelist, other){
                 show:true,
                 textStyle: {
                     color: '#666',
-	            	fontFamily: 'arial',
+	            	fontFamily: 'arial'
                 }
             },
 	        data: datelist
@@ -83,7 +83,7 @@ function chart01Fun(datalist, datelist, other){
                     color: '#666',
 	            	fontFamily: 'arial'
                 }
-	        },
+	        }
 	    },
 	    color:['#3B96DD', '#c2ccd3'],
 	    series: []
@@ -183,7 +183,7 @@ function chart02Fun(datalist, datelist, other){
 	        type: 'category',
 	        axisTick:{show:false},
             splitLine: {
-				show: false,
+				show: false
 			},
 			
 			axisLine: {
@@ -196,7 +196,7 @@ function chart02Fun(datalist, datelist, other){
                 show:true,
                 textStyle: {
                     color: '#666',
-	            	fontFamily: 'arial',
+	            	fontFamily: 'arial'
                 }
             },
 	        data: datelist
@@ -227,7 +227,7 @@ function chart02Fun(datalist, datelist, other){
                     color: '#666',
 	            	fontFamily: 'arial'
                 }
-	        },
+	        }
 	    },
 	    color:['#3B96DD'],
 	    series: []
@@ -270,7 +270,7 @@ function chart03Fun(datalist,datelist){
 	        boundaryGap: false,
 	        axisTick:{show:false},
             splitLine: {
-				show: false,
+				show: false
 			},
 			splitArea: {
 		        show: true
@@ -285,7 +285,7 @@ function chart03Fun(datalist,datelist){
                 show:true,
                 textStyle: {
                     color: '#666',
-	            	fontFamily: 'arial',
+	            	fontFamily: 'arial'
                 }
             },
 	        data: datelist
@@ -314,7 +314,7 @@ function chart03Fun(datalist,datelist){
                     color: '#666',
 	            	fontFamily: 'arial'
                 }
-	        },
+	        }
 	    },
 	    color:['#3B96DD', '#c2ccd3'],
 	    series: []
@@ -362,7 +362,7 @@ function chart04Fun(datalist,datelist, other){
 	        boundaryGap: false,
 	        axisTick:{show:false},
             splitLine: {
-				show: false,
+				show: false
 			},
 			splitArea: {
 		        show: true
@@ -377,7 +377,7 @@ function chart04Fun(datalist,datelist, other){
                 show:true,
                 textStyle: {
                     color: '#666',
-	            	fontFamily: 'arial',
+	            	fontFamily: 'arial'
                 }
             },
 	        data: datelist
@@ -405,7 +405,7 @@ function chart04Fun(datalist,datelist, other){
                     color: '#666',
 	            	fontFamily: 'arial'
                 }
-	        },
+	        }
 	    },
 	    color:['#3B96DD', '#c2ccd3'],
 	    series: []
@@ -499,7 +499,7 @@ function chart05Fun(datalist, datelist, other){
 						}
 					},
 					data:[
-						{value:1, name:'圈', selected:false,hoverAnimation:false,}
+						{value:1, name:'圈', selected:false,hoverAnimation:false}
 					]
 				},
 				{
@@ -630,19 +630,19 @@ var option1 = {
 				lineStyle:{
 				  color:[[0.5, '#3b96db'],[1, '#df5f4a'] ],  
 				  width:10
-				},
+				}
 			},
 			itemStyle:{
 				normal:{
-					color:'#d44243',
-				},
+					color:'#d44243'
+				}
 			},
 			
 			detail:{
-				show:false,
+				show:false
 			},
 			data:[{value: "100"}]
-		},
+		}
 		
 	]
 };
@@ -696,7 +696,7 @@ optionQualified = {
         type: 'category',
         axisTick:{show:false},
         splitLine: {
-			show: false,
+			show: false
 		},
 		axisLine: {
 			show: true,
@@ -708,7 +708,7 @@ optionQualified = {
             show:true,
             textStyle: {
                 color: '#666',
-            	fontFamily: 'arial',
+            	fontFamily: 'arial'
             }
         },
         data: ['15-01', '15-03', '16-03', '16-06', '16-13']
@@ -736,7 +736,7 @@ optionQualified = {
                 color: '#666',
             	fontFamily: 'arial'
             }
-        },
+        }
     },
     series: [{
         name: '室温',
@@ -799,7 +799,7 @@ optionCarbon = {
 				}
 			},
 			data:[
-				{value:1, name:'背景', selected:false,hoverAnimation:false,}
+				{value:1, name:'背景', selected:false,hoverAnimation:false}
 			]
 		},
 		{
@@ -813,7 +813,7 @@ optionCarbon = {
 				}
 			},
 			data:[
-				{value:1, name:'圈', selected:false,hoverAnimation:false,}
+				{value:1, name:'圈', selected:false,hoverAnimation:false}
 			]
 		},
 		{
@@ -833,7 +833,7 @@ optionCarbon = {
 						normal: {
 							color: '#3b96db'
 						}
-					},
+					}
 				}, {
 					value: 800,
 					name: '占位',

@@ -24,19 +24,11 @@ public class WeatherTask {
 
     public void currentWeather(){
         System.out.println("-----------------ceshi");
-        List<Map<String,Object>> params = new ArrayList<>();
-        Map<String,Object> param = new HashMap<>();
-        param.put("weatherId","101030100");
-        param.put("status",0);
-        params.add(param);
+        List<Map<String,Object>> params = weatherTaskService.getParams();
         weatherTaskService.executeWeatherTask(params);
     }
     public void forcastWeather7d(){
-        List<Map<String,Object>> params = new ArrayList<>();
-        Map<String,Object> param = new HashMap<>();
-        param.put("weatherId","101030100");
-        param.put("status",0);
-        params.add(param);
+        List<Map<String,Object>> params =  weatherTaskService.getParams();
         weatherTaskService.executeWeather7dTask(params);
     }
 }

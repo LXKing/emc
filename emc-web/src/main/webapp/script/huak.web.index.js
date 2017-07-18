@@ -205,6 +205,7 @@ var chart04;
 var chart05;
 var chart11;
 var chart12;
+var chart10;
 /*website*/
 var websiteheight;
 websiteheight = $("#website").height() - 12;
@@ -962,7 +963,7 @@ function initChart05(energy,device,manage,labor,other,total,tbl){
                 value: 1,
                 name: '圈',
                 selected: false,
-                hoverAnimation: false,
+                hoverAnimation: false
             }]
         },
             {
@@ -1081,7 +1082,6 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            debugger;
             if (result.flag) {
                 /*仪表盘*/
                 var kedu1 = result.object.kedu1; //蓝色的刻度
@@ -1346,7 +1346,25 @@ function returnFloat(value){
 
 
 /*居民 合格率趋势*/
-function chart08Fun(){
+function chart08Fun() {
+    var databar = [{
+        value: 24,
+        color: '#32bbb6',
+        text: '18℃以下'
+    }, {
+        value: 76,
+        color: '#32ccb6',
+        text: '18℃'
+    }];
+
+    var barchartdiv = $("#barchart");
+    var barcharthtml = "";
+    for(var i = 0; i < databar.length; i++) {
+        barcharthtml += "<div style='width:" + databar[i].value + "%;'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
+    }
+    barchartdiv.html(barcharthtml);
+
+    /*居民 合格率趋势*/
     myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
     var data = [
         ['15-01', 4.374394],
@@ -1357,7 +1375,7 @@ function chart08Fun(){
         ['16-13', 3.129283]
     ];
 
-// See https://github.com/ecomfe/echarts-stat
+    // See https://github.com/ecomfe/echarts-stat
     var myRegression = ecStat.regression('linear', data);
 
     myRegression.points.sort(function(a, b) {
@@ -1374,14 +1392,19 @@ function chart08Fun(){
         },
         grid: {
             left: '15',
-            top: '30',
-            right: '40',
+            top: '10',
+            right: '30',
             bottom: '10',
             containLabel: true
         },
         xAxis: {
             type: 'category',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
+            splitArea: {
+                show: true
+            },
             splitLine: {
                 show: false
             },
@@ -1391,8 +1414,8 @@ function chart08Fun(){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
                     color: '#666',
                     fontFamily: 'arial'
@@ -1403,7 +1426,10 @@ function chart08Fun(){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
+
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -1418,7 +1444,7 @@ function chart08Fun(){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
                     color: '#666',
                     fontFamily: 'arial'
@@ -1429,13 +1455,16 @@ function chart08Fun(){
             name: '室温',
             type: 'scatter',
             markLine: {
-                data: [
-                    {type: 'average', name: '平均值'}
-                ]
+                //				symbolSize:[0,0],
+                data: [{
+                    type: 'average',
+                    name: '平均值'
+                    //					symbolSize:[0,0],
+                }]
             },
-            itemStyle : {
-                normal : {
-                    color:'#7fb7e1'
+            itemStyle: {
+                normal: {
+                    color: '#7fb7e1'
                 }
             },
             data: data
@@ -1549,6 +1578,56 @@ function chart09Fun(){
 }
 
 function chart10Fun() {
+    $.ajax({
+        url:_web +'/component/weather',
+        type:'post',
+        async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+//        data:$("#searchTools").serialize(),
+        dataType:"json",
+        success:function(result) {
+            $(".chart-content.clearfix").empty();
+            if(result.flag == true){
+                if(result.object.aqi != null && result.object.currentWeather != null){
+                    var dates = new  Pdate();
+                    var date = dates.format(result.object.aqi.reportDate);
+                    var s = dates.showCal(result.object.aqi.reportDate);
+                    var html = '<div class="cb-header clearfix" id="dates">'+
+                        '<span class="cb-title" >'+date+' '+result.object.currentWeather.weekDay+' 农历'+s+'</span>'+
+                        '<div class="cb-title-right ">实时空气质量：<span >'+result.object.aqi.aqi+''+result.object.aqi.aqiLevel+'</span></div></div>'
+                    $(".chart-content.clearfix").append(html) ;
+                    var html2 ="<ul>";
+                    html2 +=" <li> <div class='wather weather01'></div>"+
+                                "<div class='detail clearfix'> <div>22</div>"+
+                                "<div> <p>℃</p> <p>"+result.object.currentWeather.weatherCurrent+"（实时）</p></div></div>"+
+                                "<h3>"+result.object.currentWeather.tempLow+"~"+result.object.currentWeather.tempHigh+"℃<h5>"+result.object.currentWeather.wind+"</h5>"+
+                            " </li>"
+                    if(result.object.weekForcast.length>0){
+                          result.object.weekForcast.forEach(function(value, index, array) {
+                              html2 +=" <li>"+
+                                  "<h1>"+value.week+"</h1>"+
+                                  "<h2>"+ dates.format(value.reportDate)+"</h2>"+
+                                  "<div class='wather weather01'></div>"+
+                                  "<h3>"+value.tempLow+"~"+value.tempHigh+"℃</h3>"+
+                                  "<h4>"+value.weather+"</h4>"+
+                                  "<h5>"+value.wind+""+value.winp+"</h5>"+
+                                  "</li>";
+                          });
+                    }
+                    html2 +="</ul>";
+                    $(".chart-content.clearfix").append(html2);
+                }
+            }
+            initchart10(result.object.weathers.hour,result.object.weathers.temp);
+        }
+
+    });
+
+}
+
+
+
+/*天气预报图表*/
+function initchart10(hours,temps){
     $("#chart10").empty();
     chart10 = echarts.init(document.getElementById('chart10'));
     var option = {
@@ -1580,7 +1659,7 @@ function chart10Fun() {
                     color: '#9a9a9b'
                 }
             },
-            data: ["现在", "1点", "2点", "3点", "4点"]
+            data: hours
 
         },
 
@@ -1597,7 +1676,7 @@ function chart10Fun() {
             }
         },
         series: [{
-            name: "天气",
+            name: "温度",
             type: 'line',
             symbol: 'circle',
             smooth: false,
@@ -1615,12 +1694,14 @@ function chart10Fun() {
                     borderColor: "#fff"
                 }
             },
-            data: [10, 30, 40, 20, 30, 20]
+            data:temps
         }]
     }
 
     chart10.setOption(option);
 }
+
+
 
 function chart11Fun() {
     $("#chart11").empty();

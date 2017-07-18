@@ -146,9 +146,10 @@ public class ComponentController {
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+
         try {
             Map<String,Object> params = new HashMap<>();
-            params.put("weatherId","101031100");
+            params.put("code",company.getWcode());
             params.put("status","0");
             Map<String,Object> map =  componentService.weatherForcast(params);
             if (map!= null) {
@@ -157,7 +158,7 @@ public class ComponentController {
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("单耗趋势查询查询异常" + e.getMessage());
+            logger.error("天气查询查询异常" + e.getMessage());
         }
         return jo.toJSONString();
     }

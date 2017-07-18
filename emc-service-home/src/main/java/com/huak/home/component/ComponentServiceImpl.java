@@ -153,13 +153,27 @@ public class ComponentServiceImpl implements ComponentService{
     public Map<String, Object> weatherForcast(Map<String, Object> params) {
         Map<String,Object> data = new HashMap<>();
         String times = dateDao.getTime().substring(0,13)+":21:00";
+        List<Weekforcast> weekforcasts = weekforcastDao.selectByComponent(params);
         params.put("reportDate",times);
-        List<Weekforcast> weekforcasts = weekforcastDao.selectByParams(params);
+        List<Weather> weathers = weatherDao.getLatestWeathers(params);
         Weather  weather = weatherDao.selectByPrimaryKey(params);
         WeatherAQI weatherAQI = weatherAqiDao.selectById(params);
+        Map<String,Object> datas = new HashMap<>();
+        List<String> hours = new ArrayList<>();
+        List<String> tem = new ArrayList<>();
+        if(weathers!=null && weathers.size()>0){
+            for(int i = weathers.size()-1; i>=0;i--){
+                String hour =  weathers.get(i).getreportDate().substring(6,13);
+                hours.add(hour);
+                tem.add(weathers.get(i).getTemperatureCurr().replace("℃",""));
+            }
+            datas.put("hour",hours);
+            datas.put("temp",tem);
+        }
         data.put("weekForcast",weekforcasts);
         data.put("currentWeather",weather);
         data.put("aqi",weatherAQI);
+        data.put("weathers",datas);
         return data;
     }
 
@@ -405,7 +419,7 @@ public class ComponentServiceImpl implements ComponentService{
                 boolean fla = (boolean) data.get("isInCurrentSeason");
                 int currentDays = (int) data.get("currentDays");
                 int planDays = (int) data.get("planDays");
-                double currentPlan = (double) data.get("currentPlan");
+                double currentPlan = Double.parseDouble(data.get("currentPlan").toString());
                 if(fla){
                     kedu1 =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(currentDays,planDays),0.75),2);
                     if(planDays == 0 ){

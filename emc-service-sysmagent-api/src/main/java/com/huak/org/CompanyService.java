@@ -32,4 +32,18 @@ public interface CompanyService {
     public List<Map<String,Object>> exportCompanys(Map<String, Object> paramsMap);
 
     public List<Company> selectAllByMap(Map<String,Object> paramsMap);
+
+    /**
+     * 查询天气城市列表
+     * @param paramsMap
+     * @return
+     */
+    public List<Map<String,Object>> selectWeatherCity(Map<String, Object> paramsMap);
+
+    /**
+     * 查询上级
+     * @param code
+     * @return
+     */
+    public Map<String, Object> selectParentWeatherByCode(String code);
 }

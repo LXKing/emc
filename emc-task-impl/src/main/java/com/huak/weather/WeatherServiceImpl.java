@@ -60,10 +60,19 @@ public class WeatherServiceImpl implements WeatherTaskService{
     public void executeWeather7dTask(List<Map<String, Object>> params) {
         if(params != null){
             for (Map param : params){
-                weekforcastDao.deletebyParmas(param);
-                this.weekForcast(param);
+                List<Weekforcast> tempLists = weekforcastDao.selectByParams(param);
+                if(tempLists != null && tempLists.size()>0){
+                    weekforcastDao.deletebyParmas(param);
+                }
+                 this.weekForcast(param);
             }
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> getParams() {
+        return weaterDao.getParams();
     }
 
     /**
@@ -98,7 +107,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
      * @return
      */
     private WeatherAQI parseWeatherAqi(Map<String, Object> params) {
-        String jsondata =  HttpWeatherUtils.getCurrentAQI(params.get("weatherId").toString(), "json");
+        String jsondata =  HttpWeatherUtils.getCurrentAQI(params.get("code").toString(), "json");
         Map<String,Object> obj = (Map<String, Object>) JSON.parse(jsondata);
         String times = dateDao.getTime().substring(0,13)+":21";
         if(obj.get("success").equals("1")){
@@ -161,7 +170,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
      * @return
      */
     private List<Weekforcast> weekForcastParse(Map<String, Object> params) {
-        String jsondata =  HttpWeatherUtils.getWeatherFuture(params.get("weatherId").toString(),"json");
+        String jsondata =  HttpWeatherUtils.getWeatherFuture(params.get("code").toString(),"json");
         Map<String,Object> obj = (Map<String, Object>) JSON.parse(jsondata);
         List<Weekforcast> weeks = new ArrayList<>();
         if(obj.get("success").equals("1")){
@@ -195,7 +204,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
      * 实时天气解析接口
      */
     private Weather parseWeatherJson(Map<String,Object> params) {
-        String jsondata =  HttpWeatherUtils.getCurrtentWeather(params.get("weatherId").toString(),"json");
+        String jsondata =  HttpWeatherUtils.getCurrtentWeather(params.get("code").toString(),"json");
         Map<String,Object> obj = (Map<String, Object>) JSON.parse(jsondata);
         String times = dateDao.getTime().substring(11,13);
         if(obj.get("success").equals("1")){
