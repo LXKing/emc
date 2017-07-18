@@ -5,7 +5,6 @@ import com.huak.home.FrameService;
 import com.huak.home.type.ToolVO;
 import com.huak.org.OrgService;
 import com.huak.org.model.Org;
-import com.huak.org.model.vo.CostVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +63,7 @@ public class EnergyTopController {
         //Map<String,String> costMap = new HashMap<String,String>();
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
-        CostVo costVo =new CostVo();
+        //CostVo costVo =new CostVo();
         String yardage=null;
         String priceArea=null;
         Double device=0.00;
@@ -73,29 +71,35 @@ public class EnergyTopController {
         Double labor =0.00;
         Double manage=0.00;
         Double other= 0.00;
+        Double costAll=0.00;
         try{
 
             eTotal= frameService.selectTopEtotalByMap(params);
             carbonTotal = frameService.selectCarbonTotalByMap(params);
             yardage = frameService.selectYardageByMap(params);
             priceArea = frameService.selectPriceAreaByMap(params);
-            costVo = frameService.selectCostTotalByMap(params);
-            if(costVo.getDevice()!=null&&!"".equals(costVo.getDevice())){
-                device=costVo.getDevice();
+            Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
+            if(costVo.isEmpty()||costVo==null) {
+                logger.info("----------------------该成本没有值--------------------------");
+            }else {
+                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+                    device = Double.valueOf(costVo.get("device").toString());
+                }
+                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+                    energy = Double.valueOf(costVo.get("energy").toString());
+                }
+                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+                    labor = Double.valueOf(costVo.get("labor").toString());
+                }
+                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+                    manage = Double.valueOf(costVo.get("manage").toString());
+                }
+                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+                    other = Double.valueOf(costVo.get("other").toString());
+                }
+               costAll=device+energy+labor+manage+other;
             }
-            if(costVo.getEnergy()!=null&&!"".equals(costVo.getEnergy())){
-                energy=costVo.getEnergy();
-            }
-            if(costVo.getLabor()!=null&&!"".equals(costVo.getLabor())){
-                labor=costVo.getLabor();
-            }
-            if (costVo.getManage()!=null&&!"".equals(costVo.getManage())){
-                manage= costVo.getManage();
-            }
-            if (costVo.getOther()!=null&&!"".equals(costVo.getOther())){
-                other=costVo.getOther();
-            }
-            Double costAll=device+energy+labor+manage+other;
+
             topAll.put("eTotal",eTotal);
             topAll.put("carbonTotal",carbonTotal);
             topAll.put("yardage",yardage);
@@ -135,32 +139,36 @@ public class EnergyTopController {
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
-        CostVo costVo =new CostVo();
         Double device=0.00;
         Double energy=0.00;
         Double labor =0.00;
         Double manage=0.00;
         Double other= 0.00;
+        Double costAll=0.00;
         try{
             eTotal= frameService.selectFeedTotalByMap(params);
             carbonTotal = frameService.selectTopFeedCarbonTotalByMap(params);
-            costVo = frameService.selectFeedCostTotalByMap(params);
-            if(costVo.getDevice()!=null&&!"".equals(costVo.getDevice())){
-                device=costVo.getDevice();
+            Map<String, Object> costVo = frameService.selectFeedCostTotalByMap(params);
+            if(costVo.isEmpty()||costVo==null) {
+                logger.info("----------------------该成本没有值--------------------------");
+            }else {
+                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+                    device = Double.valueOf(costVo.get("device").toString());
+                }
+                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+                    energy = Double.valueOf(costVo.get("energy").toString());
+                }
+                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+                    labor = Double.valueOf(costVo.get("labor").toString());
+                }
+                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+                    manage = Double.valueOf(costVo.get("manage").toString());
+                }
+                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+                    other = Double.valueOf(costVo.get("other").toString());
+                }
+               costAll=device+energy+labor+manage+other;
             }
-            if(costVo.getEnergy()!=null&&!"".equals(costVo.getEnergy())){
-                energy=costVo.getEnergy();
-            }
-            if(costVo.getLabor()!=null&&!"".equals(costVo.getLabor())){
-                labor=costVo.getLabor();
-            }
-            if (costVo.getManage()!=null&&!"".equals(costVo.getManage())){
-                manage= costVo.getManage();
-            }
-            if (costVo.getOther()!=null&&!"".equals(costVo.getOther())){
-                other=costVo.getOther();
-            }
-            Double costAll=device+energy+labor+manage+other;
             topAll.put("eTotal",eTotal);
             topAll.put("carbonTotal",carbonTotal);
             topAll.put("costAll",costAll);
@@ -195,32 +203,38 @@ public class EnergyTopController {
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
-        CostVo costVo =new CostVo();
+
         BigDecimal b1 = new BigDecimal(0.0);
         Double device=0.00;
         Double energy=0.00;
         Double labor =0.00;
         Double manage=0.00;
         Double other= 0.00;
+        Double costAll=0.00;
         try{
             netlen= frameService.selectGetNetLengh(params);
-            costVo = frameService.selectGetNetCost(params);
-            if(costVo.getDevice()!=null&&!"".equals(costVo.getDevice())){
-                device=costVo.getDevice();
+            Map<String, Object> costVo = frameService.selectGetNetCost(params);
+            if(costVo.isEmpty()||costVo==null) {
+                logger.info("----------------------该成本没有值--------------------------");
+            }else {
+                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+                    device = Double.valueOf(costVo.get("device").toString());
+                }
+                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+                    energy = Double.valueOf(costVo.get("energy").toString());
+                }
+                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+                    labor = Double.valueOf(costVo.get("labor").toString());
+                }
+                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+                    manage = Double.valueOf(costVo.get("manage").toString());
+                }
+                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+                    other = Double.valueOf(costVo.get("other").toString());
+                }
+                costAll=device+energy+labor+manage+other;
             }
-            if(costVo.getEnergy()!=null&&!"".equals(costVo.getEnergy())){
-                energy=costVo.getEnergy();
-            }
-            if(costVo.getLabor()!=null&&!"".equals(costVo.getLabor())){
-                labor=costVo.getLabor();
-            }
-            if (costVo.getManage()!=null&&!"".equals(costVo.getManage())){
-                manage= costVo.getManage();
-            }
-            if (costVo.getOther()!=null&&!"".equals(costVo.getOther())){
-                other=costVo.getOther();
-            }
-            Double costAll=device+energy+labor+manage+other;
+
             topAll.put("netLen",netlen);
 //            topAll.put("carbonTotal",Double.valueOf(carbonTotal));
 
@@ -260,36 +274,40 @@ public class EnergyTopController {
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
-        CostVo costVo =new CostVo();
         Double device=0.00;
         Double energy=0.00;
         Double labor =0.00;
         Double manage=0.00;
         Double other= 0.00;
+        Double costAll=0.00;
         try{
             eTotal= frameService.selectTopStationTotalByMap(params);
             carbonTotal = frameService.selectTopStationCarbonTotalByMap(params);
-            costVo = frameService.selectStationCostTotalByMap(params);
+//            Map<String, Object> costVo = frameService.selectStationCostTotalByMap(params);
+//            if(costVo.isEmpty()||costVo==null) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//                costAll=device+energy+labor+manage+other;
+//            }
 
-              if(costVo.getDevice()!=null&&!"".equals(costVo.getDevice())){
-                  device=costVo.getDevice();
-              }
-              if(costVo.getEnergy()!=null&&!"".equals(costVo.getEnergy())){
-                  energy=costVo.getEnergy();
-              }
-              if(costVo.getLabor()!=null&&!"".equals(costVo.getLabor())){
-                  labor=costVo.getLabor();
-              }
-              if (costVo.getManage()!=null&&!"".equals(costVo.getManage())){
-                  manage= costVo.getManage();
-              }
-              if (costVo.getOther()!=null&&!"".equals(costVo.getOther())){
-                  other=costVo.getOther();
-              }
-            Double costAll=device+energy+labor+manage+other;
             topAll.put("eTotal",eTotal);
             topAll.put("carbonTotal",carbonTotal);
-            topAll.put("costAll",costAll);
+            //topAll.put("costAll",costAll);
         }
         catch(Exception e)
         {
@@ -322,33 +340,37 @@ public class EnergyTopController {
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
-        CostVo costVo =new CostVo();
         Double device=0.00;
         Double energy=0.00;
         Double labor =0.00;
         Double manage=0.00;
         Double other= 0.00;
+        Double costAll=0.00;
         try{
             linelen= frameService.selectGetLineLengh(params);
-            costVo = frameService.selectGetLineCost(params);
-            topAll.put("lineLen",linelen);
-            if(costVo.getDevice()!=null&&!"".equals(costVo.getDevice())){
-                device=costVo.getDevice();
+            Map<String, Object> costVo = frameService.selectGetLineCost(params);
+            if(costVo.isEmpty()||costVo==null) {
+                logger.info("----------------------该成本没有值--------------------------");
+            }else {
+                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+                    device = Double.valueOf(costVo.get("device").toString());
+                }
+                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+                    energy = Double.valueOf(costVo.get("energy").toString());
+                }
+                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+                    labor = Double.valueOf(costVo.get("labor").toString());
+                }
+                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+                    manage = Double.valueOf(costVo.get("manage").toString());
+                }
+                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+                    other = Double.valueOf(costVo.get("other").toString());
+                }
+                costAll=device+energy+labor+manage+other;
             }
-            if(costVo.getEnergy()!=null&&!"".equals(costVo.getEnergy())){
-                energy=costVo.getEnergy();
-            }
-            if(costVo.getLabor()!=null&&!"".equals(costVo.getLabor())){
-                labor=costVo.getLabor();
-            }
-            if (costVo.getManage()!=null&&!"".equals(costVo.getManage())){
-                manage= costVo.getManage();
-            }
-            if (costVo.getOther()!=null&&!"".equals(costVo.getOther())){
-                other=costVo.getOther();
-            }
-            Double costAll=device+energy+labor+manage+other;
             topAll.put("lineCost",costAll);
+            topAll.put("lineLen",linelen);
 //            topAll.put("carbonTotal",Double.valueOf(carbonTotal));
         }
         catch(Exception e)
@@ -382,32 +404,36 @@ public class EnergyTopController {
         String hgl=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
-        CostVo costVo =new CostVo();
         Double device=0.00;
         Double energy=0.00;
         Double labor =0.00;
         Double manage=0.00;
         Double other= 0.00;
+        Double costAll=0.00;
         try{
             rTotal= frameService.selectTopRoomTotalByMap(params);
             hgl = frameService.selectTopRoomHglByMap(params);
-            costVo = frameService.getTopRoomCostByMap(params);
-            if(costVo.getDevice()!=null&&!"".equals(costVo.getDevice())){
-                device=costVo.getDevice();
+            Map<String, Object> costVo = frameService.getTopRoomCostByMap(params);
+            if(costVo.isEmpty()||costVo==null) {
+                logger.info("----------------------该成本没有值--------------------------");
+            }else {
+                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+                    device = Double.valueOf(costVo.get("device").toString());
+                }
+                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+                    energy = Double.valueOf(costVo.get("energy").toString());
+                }
+                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+                    labor = Double.valueOf(costVo.get("labor").toString());
+                }
+                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+                    manage = Double.valueOf(costVo.get("manage").toString());
+                }
+                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+                    other = Double.valueOf(costVo.get("other").toString());
+                }
+                costAll=device+energy+labor+manage+other;
             }
-            if(costVo.getEnergy()!=null&&!"".equals(costVo.getEnergy())){
-                energy=costVo.getEnergy();
-            }
-            if(costVo.getLabor()!=null&&!"".equals(costVo.getLabor())){
-                labor=costVo.getLabor();
-            }
-            if (costVo.getManage()!=null&&!"".equals(costVo.getManage())){
-                manage= costVo.getManage();
-            }
-            if (costVo.getOther()!=null&&!"".equals(costVo.getOther())){
-                other=costVo.getOther();
-            }
-            Double costAll=device+energy+labor+manage+other;
             topAll.put("roomCost",costAll);
             topAll.put("rTotal",rTotal);
             topAll.put("hgl",hgl);
@@ -423,10 +449,23 @@ public class EnergyTopController {
     }
 
     public static void  main (String[] args){
-        String s ="213.12321";
-        DecimalFormat decimalFormat=new DecimalFormat(".00");
-                decimalFormat.format(s);
-            System.out.print(String.format("%.2f", s).toString());
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("EEC","234");
+        map.put("MMN","");
+//        if(map.get("MMN")==null||"".equals(map.get("MMN"))){
+//            System.out.print("1为空");
+//        }
+//        if(map.get("EEC")==null||"".equals(map.get("EEC"))){
+//            System.out.print("2为空");
+//        }
+          if(map.isEmpty()){
+              System.out.print("是空的啊");
+          }else {
+              System.out.print("不是空的啊");
+          }
+//        System.out.print("是这个值吗---"+map.get("MMN"));
+//        System.out.print("是这个值吗---"+map.get("EEC"));
+
     }
 
 }

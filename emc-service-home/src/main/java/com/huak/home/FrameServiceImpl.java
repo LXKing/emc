@@ -3,7 +3,6 @@ package com.huak.home;
 import com.huak.home.dao.EnergyDetailDao;
 import com.huak.home.model.EnergyDetail;
 import com.huak.org.dao.TopAllDao;
-import com.huak.org.model.vo.CostVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,7 +39,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public CostVo selectCostTotalByMap(Map<String, String> paramsMap) {
+    public Map<String, Object> selectCostTotalByMap(Map<String, String> paramsMap) {
         return topAllDao.selectCostTotalByMap(paramsMap);
     }
 
@@ -65,7 +64,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public CostVo selectFeedCostTotalByMap(Map<String, String> paramsMap) {
+    public Map<String, Object> selectFeedCostTotalByMap(Map<String, String> paramsMap) {
         return topAllDao.selectFeedCostTotalByMap(paramsMap);
     }
 
@@ -75,7 +74,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public CostVo selectGetNetCost(Map<String, String> paramsMap) {
+    public Map<String, Object> selectGetNetCost(Map<String, String> paramsMap) {
         return topAllDao.selectGetNetCost(paramsMap);
     }
 
@@ -90,7 +89,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public CostVo selectStationCostTotalByMap(Map<String, String> paramsMap) {
+    public Map<String, Object> selectStationCostTotalByMap(Map<String, String> paramsMap) {
         return topAllDao.selectStationCostTotalByMap(paramsMap);
     }
 
@@ -100,7 +99,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public CostVo selectGetLineCost(Map<String, String> paramsMap) {
+    public Map<String, Object> selectGetLineCost(Map<String, String> paramsMap) {
         return topAllDao.selectGetLineCost(paramsMap);
     }
 
@@ -121,7 +120,7 @@ public class FrameServiceImpl implements FrameService {
     }
 
     @Override
-    public CostVo getTopRoomCostByMap(Map<String, String> paramsMap) {
+    public Map<String, Object> getTopRoomCostByMap(Map<String, String> paramsMap) {
         return topAllDao.selectTopRoomCostByMap(paramsMap);
     }
 

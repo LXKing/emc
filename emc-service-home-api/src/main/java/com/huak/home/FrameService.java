@@ -1,7 +1,6 @@
 package com.huak.home;
 
 import com.huak.home.model.EnergyDetail;
-import com.huak.org.model.vo.CostVo;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public interface FrameService {
 
     public String selectCarbonTotalByMap(Map<String, String> paramsMap);
 
-    public CostVo selectCostTotalByMap(Map<String, String> paramsMap);
+    public Map<String, Object> selectCostTotalByMap(Map<String, String> paramsMap);
 
     public String selectYardageByMap(Map<String, String> paramsMap);
 
@@ -33,27 +32,27 @@ public interface FrameService {
 
     public String selectTopFeedCarbonTotalByMap(Map<String, String> paramsMap);
 
-    public CostVo selectFeedCostTotalByMap(Map<String, String> paramsMap);
+    public Map<String, Object> selectFeedCostTotalByMap(Map<String, String> paramsMap);
 
     public String selectGetNetLengh(Map<String, String> paramsMap);
 
-    public CostVo selectGetNetCost(Map<String, String> paramsMap);
+    public Map<String, Object> selectGetNetCost(Map<String, String> paramsMap);
 
     public String selectTopStationTotalByMap(Map<String, String> paramsMap);
 
     public String selectTopStationCarbonTotalByMap(Map<String, String> paramsMap);
 
-    public CostVo selectStationCostTotalByMap(Map<String, String> paramsMap);
+    public Map<String, Object> selectStationCostTotalByMap(Map<String, String> paramsMap);
 
     public String selectGetLineLengh(Map<String, String> paramsMap);
 
-    public CostVo selectGetLineCost(Map<String, String> paramsMap);
+    public Map<String, Object> selectGetLineCost(Map<String, String> paramsMap);
 
     public String selectTopRoomTotalByMap(Map<String, String> paramsMap);
 
     public String selectTopRoomHglByMap(Map<String, String> paramsMap);
 
-    public CostVo getTopRoomCostByMap(Map<String, String> paramsMap);
+    public Map<String, Object> getTopRoomCostByMap(Map<String, String> paramsMap);
 
     public List<EnergyDetail> selectEnergyDetail(Map<String, Object> paramsMap);
 
