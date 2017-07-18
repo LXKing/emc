@@ -219,7 +219,7 @@ public class WeatherServiceImpl implements WeatherTaskService{
             weather.setTemperatureCurr(data.get("temperature_curr").toString());
             weather.setTempHigh(StringUtils.isBlank(data.get("temp_high").toString())?null:(new BigDecimal(data.get("temp_high").toString())));
             weather.setTempLow(StringUtils.isBlank(data.get("temp_low").toString())?null:(new BigDecimal(data.get("temp_low").toString())));
-            weather.setWeatherCurrent(data.get("weather_curr").toString());
+            weather.setWeatherCurrent(data.get("weather").toString());
             weather.setWeatherIcon(WeatherEnum.getName(Integer.parseInt(data.get("weatid").toString())));
             weather.setWeekDay(data.get("week").toString());
             weather.setWind(data.get("wind").toString());
