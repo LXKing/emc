@@ -192,6 +192,7 @@
 
             chart11Fun();
             chart12Fun();
+            chart13Fun();
         }
     });
 
@@ -1463,15 +1464,11 @@ function chart08Sd(data,times){
             }
         },
         series: [{
-                name:"最大值",
-                type: 'scatter',
-                data:[],
-                makeLine:{
-                    data:{value:18}
-                }
-             },{
                 name: '室温',
                 type: 'scatter',
+                symbolSize: function (data) {
+                    return 6;
+                },
                 markLine: {
                     lineStyle: {
                         normal: {
@@ -1610,9 +1607,10 @@ function chart10Fun() {
                     var dates = new  Pdate();
                     var date = dates.format(result.object.aqi.reportDate);
                     var s = dates.showCal(result.object.aqi.reportDate);
+                    debugger;
                     var html = '<div class="cb-header clearfix" id="dates">'+
                         '<span class="cb-title" >'+date+' '+result.object.currentWeather.weekDay+' 农历'+s+'</span>'+
-                        '<div class="cb-title-right ">实时空气质量：<span >'+result.object.aqi.aqi+''+result.object.aqi.aqiLevel+'</span></div></div>'
+                        '<div class="cb-title-right ">空气质量：<span >'+result.object.aqi.aqiLevel+'</span></div></div>'
                     $(".chart-content.clearfix").append(html) ;
                     var html2 ="<ul>";
                     html2 +=" <li> <div class='wather weather01'></div>"+
@@ -1635,8 +1633,9 @@ function chart10Fun() {
                     html2 +="</ul>";
                     $(".chart-content.clearfix").append(html2);
                 }
+                initchart10(result.object.weathers.hour,result.object.weathers.temp);
             }
-            initchart10(result.object.weathers.hour,result.object.weathers.temp);
+
         }
 
     });
@@ -1644,6 +1643,95 @@ function chart10Fun() {
 }
 
 
+function chart13Fun() {
+    //trend 1升  2降
+    var recentdata = [{
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }, {
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }, {
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }];
+
+    var recenthtml = "";
+    var recentlisthtml = "";
+    var unitlist =['T','kwh','m3','GJ'];
+    for(var i = 0; i < recentdata.length; i++) {
+        recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
+
+        recentlisthtml += "<ul>";
+        for(var j = 0; j < recentdata[i].list.length; j++) {
+            recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : "") + "</span></li>";
+        }
+        recentlisthtml += "</ul>";
+    }
+    $("#recentall").html(recenthtml);
+    $("#recentlist").html(recentlisthtml);
+
+}
 
 /*天气预报图表*/
 function initchart10(hours,temps){
@@ -1853,7 +1941,6 @@ function chart11Fun() {
 }
 
 function chart12Fun() {
-
     //value1 严重 value2中度 value3轻度
     var data = [{
         value1: 0,
@@ -1866,7 +1953,6 @@ function chart12Fun() {
     }]; //参数数量有几个写几个 自动识别前台样式 1工况运行 2经济运行 3 服务情况 4作业管理
     var html = "";
     var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
-
     html += "<div>";
     for(var i = 0; i < titledata.length; i++) {
         var classname = "runa";
@@ -1916,7 +2002,6 @@ function chart12Fun() {
         html += "</ul></div>";
     }
     html += "</div>";
-
     $("#chart12").html(html);
 }
 

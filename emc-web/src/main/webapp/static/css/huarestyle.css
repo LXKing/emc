@@ -330,7 +330,7 @@ input[type="text"].time-input{
 .wave p{line-height:15px;margin:0;font-size: 12px;}
 .wave .wave-name{color: #666;}
 .wave .wave-proportion{color: #bbbbbb;}
-.wave-hot b, .wave-hot .wave-proportion{color: #d4513b;}
+.wave-hot b, .wave-hot .wave-proportion{color: #d4513b;font-family: 'Eurostile LT';}
 .wave canvas{position:absolute;left:0;top:0;z-index:2;}
 
 .emission-list{width:40%;height:313px;background-color: #FFFFFF;float: left;}
@@ -350,8 +350,8 @@ input[type="text"].time-input{
 .groupEnergy-chart{/*width:75%;float:left;*/}
 .groupEnergy-info{padding: 40px 0 0 60px;/*width:25%;float:left;*/}
 .groupEnergy-info .small{color:#666;font-size: 12px;}
-.groupEnergy-info h3{margin:0;font-size: 60px;color: #d4513b;font-weight: normal;}
-.groupEnergy-info h4{margin:40px 0 0;font-size: 44px;color: #d4513b;font-weight: normal;}
+.groupEnergy-info h3{margin:0;font-size: 60px;color: #d4513b;font-weight: normal;    font-family: 'Eurostile LT';}
+.groupEnergy-info h4{margin:40px 0 0;font-size: 44px;color: #d4513b;font-weight: normal;    font-family: 'Eurostile LT';}
 .groupEnergy-info h4 .arrow{font-size: 35px;vertical-align: 6px;}
 
 .energy-list{margin-top:25px;padding-bottom: 20px !important;}
@@ -372,9 +372,9 @@ input[type="text"].time-input{
 .energy-list-rect{width:8px;height:8px;background-color:#8394aa;border-radius:2px;display: inline-block;}
 .energy-list-info{line-height:28px;}
 .energy-list-name{line-height: 0;font-size:14px;color:#666666;}
-.energy-list-num{font-size:30px;color:#666666;}
+.energy-list-num{font-size:30px;color:#666666;    font-family: 'Eurostile LT';}
 .energy-list-measure{font-size:14px;color:#666666;}
 .energy-list-proportion{font-size:14px;color:#999;}
-.energy-remind{color:#d4513b;}
+.energy-remind{color:#d4513b;    font-family: 'Eurostile LT';}
 .energy-chart > div{width: 100%;height:170px;margin-top:25px;}
 
