@@ -8,6 +8,7 @@
     <file type="web" url="file://$PROJECT_DIR$/eccp-platform" />
     <file type="web" url="file://$PROJECT_DIR$/eccp-web" />
     <file type="web" url="file://$PROJECT_DIR$/emc-platform" />
+    <file type="web" url="file://$PROJECT_DIR$/emc-task" />
     <file type="web" url="file://$PROJECT_DIR$/emc-web" />
   </component>
   <component name="IdProvider" IDEtalkID="8CB7571419AC3978EE542A7705C6E9D2" />

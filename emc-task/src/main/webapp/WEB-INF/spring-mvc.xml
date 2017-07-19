@@ -24,8 +24,8 @@
 
     <mvc:annotation-driven ></mvc:annotation-driven>
     <task:scheduled-tasks>
-        <task:scheduled ref="weatherTask" method="currentWeather" cron="0 30 * * * ?"/>
-        <task:scheduled ref="weatherTask" method="forcastWeather7d" cron="0 30 * * * ?"/>
+        <task:scheduled ref="weatherTask" method="currentWeather" cron="0 43 * * * ?"/>
+        <task:scheduled ref="weatherTask" method="forcastWeather7d" cron="0 43 * * * ?"/>
     </task:scheduled-tasks>
 
 </beans>

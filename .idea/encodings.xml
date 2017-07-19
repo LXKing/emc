@@ -6,8 +6,13 @@
     <file url="file://$PROJECT_DIR$/emc-dao" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/emc-generator" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/emc-platform" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/emc-service-home" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/emc-service-home-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/emc-service-sysmagent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/emc-service-sysmagent-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/emc-task" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/emc-task-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/emc-task-impl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/emc-web" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
