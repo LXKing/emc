@@ -1,4 +1,4 @@
-package com.huak.temp;
+package com.huak.api;
 
 import com.huak.org.model.Feed;
 import com.huak.org.model.Node;
@@ -21,7 +21,7 @@ import java.util.Map;
  * Function List:  <BR>
  */
 
-public interface TempService {
+public interface RoomTempService {
 
     /**
      * 确认室温内是否存在将要导入的数据

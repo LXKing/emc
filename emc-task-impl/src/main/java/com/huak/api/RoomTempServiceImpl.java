@@ -1,4 +1,4 @@
-package com.huak.temp;
+package com.huak.api;
 
 import com.huak.org.dao.FeedDao;
 import com.huak.org.dao.NodeDao;
@@ -29,7 +29,7 @@ import java.util.Map;
  * Function List:  <BR>
  */
 @Service
-public class TempServiceImpl implements com.huak.temp.TempService{
+public class RoomTempServiceImpl implements RoomTempService {
 
     @Resource
     TemperatureDao tempDao;

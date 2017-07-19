@@ -23,8 +23,8 @@
     <dubbo:service interface="com.huak.weather.WeatherTaskService" ref="weatherTaskService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
-    <bean id="tempService" class="com.huak.temp.TempServiceImpl"></bean>
-    <dubbo:service interface="com.huak.temp.TempService" ref="tempService" timeout="300" loadbalance="random"
+    <bean id="roomTempService" class="com.huak.api.RoomTempServiceImpl"></bean>
+    <dubbo:service interface="com.huak.api.RoomTempService" ref="roomTempService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>

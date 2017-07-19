@@ -3,7 +3,6 @@ package com.huak.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.task.model.Temperature;
-import com.huak.temp.TempService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ import java.util.Map;
 public class RoomTempApi {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private TempService tempService;
+    private RoomTempService roomTempService;
 
   @ResponseBody
   @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -50,7 +49,7 @@ public class RoomTempApi {
       Object o =jb.get("json");
       Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
       JSONObject jsonObj = new JSONObject();
-      List<Temperature> list = tempService.isExsistTemp(map);
+      List<Temperature> list = roomTempService.isExsistTemp(map);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该室温数据已存在");
@@ -58,7 +57,7 @@ public class RoomTempApi {
         }else {
             Temperature t = JSON.parseObject(o.toString(),Temperature.class);
             logger.info("---------------------开始导入数据---------------------");
-            Map<String,Object> result = tempService.insertTemp(t);
+            Map<String,Object> result = roomTempService.insertTemp(t);
             if(result.get("flag")==true){
                 jsonObj.put("status","1");
                 jsonObj.put("msg","室温数据导入成功");

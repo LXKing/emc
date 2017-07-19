@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.UUIDGenerator;
 import com.huak.org.model.Feed;
 import com.huak.task.model.EmcOrgInter;
-import com.huak.temp.TempService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class FeedApi {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private TempService tempService;
+    private RoomTempService roomTempService;
 
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -54,7 +53,7 @@ public class FeedApi {
         Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
         map.put("unitType","1");
         JSONObject jsonObj = new JSONObject();
-        List<EmcOrgInter> list = tempService.isExsistInter(map);
+        List<EmcOrgInter> list = roomTempService.isExsistInter(map);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该数据已存在");
@@ -65,14 +64,14 @@ public class FeedApi {
             String uuid = UUIDGenerator.getUUID();
             eccFeed.setId(uuid);
             logger.info("---------------------开始导入数据---------------------");
-            Map<String,Object> result = tempService.insertFeed(eccFeed);
+            Map<String,Object> result = roomTempService.insertFeed(eccFeed);
             if(result.get("flag")==true){
                 logger.info("----------建立关系表数据----------");
                 inter.setComId(eccFeed.getComId());
                 inter.setEmcId(uuid);
                 inter.setOrgId(eccFeed.getOrgId().toString());
                 inter.setUnitType("1");
-                tempService.insertEmcOrgInter(inter);
+                roomTempService.insertEmcOrgInter(inter);
                 jsonObj.put("status","1");
                 jsonObj.put("msg","数据导入成功");
                 return jsonObj;
