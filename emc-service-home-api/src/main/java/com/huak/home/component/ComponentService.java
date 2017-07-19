@@ -32,4 +32,11 @@ public interface ComponentService {
      * @return
      */
     Map<String,Object> weatherForcast(Map<String, Object> params);
+
+    /**
+     * 室温散点图数据查询
+     * @param params
+     * @return
+     */
+    Map<String,Object> roomTemperature(Map<String, Object> params);
 }

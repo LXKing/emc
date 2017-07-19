@@ -6,6 +6,8 @@ import com.huak.common.MathsUtil;
 import com.huak.common.utils.DateUtils;
 import com.huak.home.dao.SearchDao;
 import com.huak.home.dao.component.ComponentDao;
+import com.huak.task.dao.TemperatureDao;
+import com.huak.task.model.Temperature;
 import com.huak.weather.dao.WeatherAqiDao;
 import com.huak.weather.dao.WeatherDao;
 import com.huak.weather.dao.WeekforcastDao;
@@ -46,8 +48,11 @@ public class ComponentServiceImpl implements ComponentService{
     @Autowired
     private WeatherDao weatherDao;
 
+    @Autowired
+    private TemperatureDao temperatureDao;
+
     /**
-     * 组件能耗明细查询
+     * 组件 能耗明细查询
      * @param params
      * @return
      */
@@ -127,7 +132,7 @@ public class ComponentServiceImpl implements ComponentService{
     }
 
     /**
-     * 成本明细
+     * 组件 成本明细
      * @param params
      * @return
      */
@@ -144,7 +149,7 @@ public class ComponentServiceImpl implements ComponentService{
     }
 
     /**
-     * 天气-空气质量组件
+     * 组件 天气-空气质量
      * @param params
      * @return
      */
@@ -152,7 +157,7 @@ public class ComponentServiceImpl implements ComponentService{
     @Transactional(readOnly = true)
     public Map<String, Object> weatherForcast(Map<String, Object> params) {
         Map<String,Object> data = new HashMap<>();
-        String times = dateDao.getTime().substring(0,13)+":21:00";
+        String times = dateDao.getTime().substring(0, 13)+":21:00";
         List<Weekforcast> weekforcasts = weekforcastDao.selectByComponent(params);
         params.put("reportDate",times);
         List<Weather> weathers = weatherDao.getLatestWeathers(params);
@@ -175,6 +180,65 @@ public class ComponentServiceImpl implements ComponentService{
         data.put("aqi",weatherAQI);
         data.put("weathers",datas);
         return data;
+    }
+
+    /**
+     * 组件 室温散点查询
+     * @param params
+     * @return
+     */
+    @Override
+    public Map<String, Object> roomTemperature(Map<String, Object> params) {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> datas = temperatureDao.selectByMap(params);
+        List<String> times = new ArrayList<>();
+        List<Map<String,Object>> minlist= new ArrayList<>();//最小临界值的数据
+        List<Map<String,Object>> maxlist= new ArrayList<>();//最大临界值的数据
+        List<Map<String,Object>> rangelist= new ArrayList<>();//范围数据
+        List<Map<String,Object>> barlist = new ArrayList<>();//bar组件的数据
+        Double min = Double.parseDouble(params.get("min").toString());
+        Double max = Double.parseDouble( params.get("max").toString());
+        Double minpercent = 0.0;
+        Double maxpercent = 0.0;
+        Double rangepercent = 0.0;
+        for(Map data:datas){
+            times.add(data.get("times").toString());
+            Double temps = Double.parseDouble(data.get("temps").toString());
+            if(temps> max){
+                maxlist.add(data);
+            }
+            if(temps< min){
+                minlist.add(data);
+            }
+            if(temps>= min && temps<= max){
+                rangelist.add(data);
+            }
+        }
+        /*line-bar占比*/
+        if(datas.size()>0){
+            minpercent =  MathsUtil.round(MathsUtil.div(minlist.size(),datas.size()),2)*100;
+            maxpercent =  MathsUtil.round(MathsUtil.div(maxlist.size(),datas.size()),2)*100;
+            rangepercent =  MathsUtil.round(MathsUtil.div(rangelist.size(),datas.size()),2)*100;
+        }
+        Map<String,Object> minmap= new HashMap<>();
+        minmap.put("value",minpercent);
+        minmap.put("color","#32bbb6");
+        minmap.put("text",min+"℃以下");
+        Map<String,Object> maxmap= new HashMap<>();
+        maxmap.put("value",maxpercent);
+        maxmap.put("color","#32bbb6");
+        maxmap.put("text",max+"℃以上");
+        Map<String,Object> rangemap= new HashMap<>();
+        rangemap.put("value",rangepercent);
+        rangemap.put("color","#32bbb6");
+        rangemap.put("text",min+"~"+max+"℃");
+        barlist.add(minmap);
+        barlist.add(rangemap);
+        barlist.add(maxmap);
+        result.put("bar",barlist);
+        result.put("datas",datas);
+        result.put("times",times);
+        return result;
     }
 
     /**
@@ -284,7 +348,7 @@ public class ComponentServiceImpl implements ComponentService{
     }
 
     /**
-     * 计算同比环比
+     * 工具 计算同比环比
      * @param data
      * @return
      */
@@ -466,7 +530,7 @@ public class ComponentServiceImpl implements ComponentService{
     }
 
     /**
-     * 获取采暖季
+     * 工具 获取采暖季
      * @return
      */
     private Map<String, Object> getSeason(Map<String,Object> params) {

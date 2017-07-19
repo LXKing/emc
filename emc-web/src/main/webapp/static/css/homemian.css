@@ -1,4 +1,9 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'Eurostile LT';
+    src: url('../fonts/Eurostile LT Medium.ttf');
+}
+
 body {
     color: #666;
     font-size: 12px
@@ -905,11 +910,13 @@ input {
     font-size: 40px;
     font-family: arial;
     line-height: 28px;
+    font-family: 'Eurostile LT';
 }
 
 .EnergyChartTextnumbolb {
     color: #df5f4a;
-    font-size: 28px
+    font-size: 28px;
+    font-family: 'Eurostile LT';
 }
 
 .EnergyChartTextnumbolb_cb {
@@ -1326,6 +1333,7 @@ input {
     font-size: 30px;
     width: 32%;
     line-height: 20px;
+    font-family: 'Eurostile LT';
 }
 
 .weather .chart-content ul div.detail>div>p:first-child {
@@ -1709,4 +1717,108 @@ input {
 
 .quanquanwrap .runb .jiao {
     background: url(../img/index/jiao01.png) no-repeat center center;
+}
+
+.recentwrap {
+    width: 416px;
+    height: 211px;
+    background: url(../img/jinri_bg.png) no-repeat top left;
+    background-size: 100% auto;
+    margin: 0 auto;
+    margin-top: 40px;
+    position: relative;
+}
+
+#recenttitle {
+    position: absolute;
+    left: 10px;
+    top: 90px;
+    color: #666666;
+    font-size: 12px;
+}
+
+#recenttitle>div {
+    height: 32px;
+    line-height: 32px;
+}
+
+#recentall>div {
+    float: left;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-family: 'Eurostile LT';
+    padding-left: 8%;
+    line-height: 100%;
+}
+
+#recentall>div>p {
+    font-size: 12px;
+    color: #666666;
+}
+
+#recentall>div:nth-child(1),
+#recentlist>ul:nth-child(1) {
+    margin-left: 3%;
+    width: 33%;
+    color: #2eada8;
+}
+
+#recentall>div:nth-child(2),
+#recentlist>ul:nth-child(2) {
+    width: 33%;
+    color: #df713c;
+}
+
+#recentall>div:nth-child(3),
+#recentlist>ul:nth-child(3) {
+    width: 31%;
+    color: #3b96db;
+}
+
+#recentlist {
+    margin-top: 42px;
+}
+
+#recentlist>ul {
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    padding-left: 8%;
+}
+
+#recentlist>ul li {
+    height: 34px;
+    line-height: 34px;
+}
+
+#recentlist>ul li:after {
+    clear: both;
+    content: '';
+}
+
+#recentlist>ul li p {
+    float: left;
+    width: 56px;
+    margin: 0px;
+    height: 34px;
+}
+
+#recentlist>ul li p>span:nth-child(1) {
+    font-size: 18px;
+}
+
+#recentlist>ul li p>span:nth-child(2) {
+    font-size: 10px;
+}
+
+#recentlist>ul li>span:nth-child(2) {
+    font-size: 12px;
+    color: #bbbbbb;
+}
+
+#recentlist>ul li>span:nth-child(3) {
+    font-size: 12px;
+    color: #bbbbbb;
 }

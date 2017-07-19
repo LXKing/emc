@@ -189,4 +189,33 @@
         <!--</if>-->
 
     </select>
+
+    <select id="selectByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        STATION_NAME as station,
+        COMMUNITY_NAME village,
+        DATE_FORMAT(REDE_TIME, '%H:%i') times,
+        ROMM_CODE roomcode,
+        (CASE WHEN avg(TEMP) IS NULL THEN 0 ELSE avg(TEMP) END) temps
+        FROM
+        t_emc_temperature_tj
+        WHERE 1=1
+        <if test="startTime != null and startTime!='' and startTime !='null'">
+            AND REDE_TIME <![CDATA[ >= ]]>  #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime!='' and endTime !='null'">
+            AND REDE_TIME <![CDATA[ <= ]]>  #{endTime,jdbcType=VARCHAR}
+        </if>
+        <if test="comId != null and comId!='' and comId !='null'">
+            AND  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        GROUP BY
+        STATION_NAME,
+        COMMUNITY_NAME,
+        DATE_FORMAT(REDE_TIME, '%H:%i'),
+        ROMM_CODE
+        ORDER BY
+        REDE_TIME ASC
+    </select>
+
 </mapper>

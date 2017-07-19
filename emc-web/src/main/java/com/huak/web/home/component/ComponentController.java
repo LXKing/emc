@@ -146,7 +146,6 @@ public class ComponentController {
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
-
         try {
             Map<String,Object> params = new HashMap<>();
             params.put("code",company.getWcode());
@@ -162,5 +161,34 @@ public class ComponentController {
         }
         return jo.toJSONString();
     }
+
+
+    /**
+     * 室温散点组件
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/roomtemperature", method = RequestMethod.POST)
+    @ResponseBody
+    public String roomtemperature(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+        logger.info("室温散点组件");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+
+        try {
+            Map<String,Object> map =  componentService.roomTemperature(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else
+                jo.put(Constants.FLAG,false);
+        } catch (Exception e) {
+            logger.error("室温散点组件查询异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
 
 }

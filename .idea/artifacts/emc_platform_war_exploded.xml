@@ -44,9 +44,7 @@
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.15.0-GA" />
           <element id="library" level="project" name="Maven: org.jboss.netty:netty:3.2.5.Final" />
           <element id="library" level="project" name="Maven: org.apache.zookeeper:zookeeper:3.4.8" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.9" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.5.8" />
-          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" />
           <element id="library" level="project" name="Maven: jline:jline:0.9.94" />
           <element id="library" level="project" name="Maven: io.netty:netty:3.7.0.Final" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
@@ -55,10 +53,11 @@
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.5" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.9" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.2" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.2" />
           <element id="library" level="project" name="Maven: org.logback-extensions:logback-ext-spring:0.1.1" />
-          <element id="library" level="project" name="Maven: org.slf4j:log4j-over-slf4j:1.7.8" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
           <element id="library" level="project" name="Maven: com.jayway.jsonpath:json-path:2.0.0" />
           <element id="library" level="project" name="Maven: net.minidev:json-smart:2.1.1" />
           <element id="library" level="project" name="Maven: net.minidev:asm:1.0.2" />
@@ -79,9 +78,9 @@
           <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.2" />
           <element id="library" level="project" name="Maven: commons-configuration:commons-configuration:1.9" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
-          <element id="library" level="project" name="Maven: org.sitemesh:sitemesh:3.0.0" />
           <element id="library" level="project" name="Maven: com.github.penggle:kaptcha:2.3.2" />
           <element id="library" level="project" name="Maven: com.jhlabs:filters:2.0.235-1" />
+          <element id="library" level="project" name="Maven: opensymphony:sitemesh:2.4.2" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="emc-platform/web/Web" />

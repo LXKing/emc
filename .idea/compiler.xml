@@ -30,9 +30,14 @@
         <module name="emc-dao" />
         <module name="emc-generator" />
         <module name="emc-platform" />
+        <module name="emc-service-home" />
+        <module name="emc-service-home-api" />
         <module name="emc-service-sysmagent" />
         <module name="emc-service-sysmagent-api" />
         <module name="emc-sql" />
+        <module name="emc-task" />
+        <module name="emc-task-api" />
+        <module name="emc-task-impl" />
         <module name="emc-web" />
       </profile>
     </annotationProcessing>
@@ -49,8 +54,13 @@
       <module name="emc-generator" target="1.7" />
       <module name="emc-platform" target="1.7" />
       <module name="emc-service" target="1.7" />
+      <module name="emc-service-home" target="1.7" />
+      <module name="emc-service-home-api" target="1.7" />
       <module name="emc-service-sysmagent" target="1.7" />
       <module name="emc-service-sysmagent-api" target="1.7" />
+      <module name="emc-task" target="1.7" />
+      <module name="emc-task-api" target="1.7" />
+      <module name="emc-task-impl" target="1.7" />
       <module name="emc-web" target="1.7" />
     </bytecodeTargetLevel>
   </component>

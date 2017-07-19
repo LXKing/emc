@@ -20,7 +20,7 @@ Pdate.prototype.format = function (date){
     da = new Date(da);
     var month = da.getMonth()+1+'月';
     var date = da.getDate()+'日';
-    return [month,date].join('-');
+    return [month,date].join('');
 }
 
 //定义全局变量

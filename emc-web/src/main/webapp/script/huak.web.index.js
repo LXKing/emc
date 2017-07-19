@@ -192,6 +192,7 @@
 
             chart11Fun();
             chart12Fun();
+            chart13Fun();
         }
     });
 
@@ -210,19 +211,6 @@ var chart10;
 var websiteheight;
 websiteheight = $("#website").height() - 12;
 $(".index_menuBox").height(websiteheight);
-
-window.onresize = function() {
-    chart01.resize();
-    chart02.resize();
-    chart03.resize();
-    chart04.resize();
-    myChartEnergy.resize();
-    chart05.resize();
-    myChartQualified.resize();
-    myChartCarbon.resize();
-    websiteheight = $("#website").height() - 12;
-    $(".index_menuBox").height(websiteheight);
-};
 
 function typefun(these, code) {
     $(these).addClass("on").siblings().removeClass("on");
@@ -1347,43 +1335,68 @@ function returnFloat(value){
 
 /*居民 合格率趋势*/
 function chart08Fun() {
-    var databar = [{
-        value: 24,
-        color: '#32bbb6',
-        text: '18℃以下'
-    }, {
-        value: 76,
-        color: '#32ccb6',
-        text: '18℃'
-    }];
+    $.ajax({
+        url: _web + '/component/roomtemperature',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:{min:18,max:22},
+        dataType: "json",
+        success: function (result) {
+            console.info(result);
+            if(result.flag == true){
+                if(result.object.bar != null)
+                    chart08Bar(result.object.bar);
+                chart08Sd(result.object.datas,result.object.times,result.object.low,result.object.range,result.object.high)
+            }
+        }
+    });
 
+
+
+
+}
+
+/*居民 合格率趋势图 bar*/
+function chart08Bar(data){
+    var databar = [];
+    data.forEach(function(value, index, array) {
+        var item ={
+            value: value.value,
+            color: '#32bbb6',
+            text: value.text
+        };
+        databar.push(item);
+    });
     var barchartdiv = $("#barchart");
     var barcharthtml = "";
     for(var i = 0; i < databar.length; i++) {
         barcharthtml += "<div style='width:" + databar[i].value + "%;'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
     }
     barchartdiv.html(barcharthtml);
+}
+
+/*居民 合格率趋势图 散点图*/
+function chart08Sd(data,times){
+    var obj = new Array();
+    $.each(data,function(index,value){
+        var temp = [];
+        temp.push(value.times);
+        temp.push(value.temps);
+        temp.push(value.station);
+        temp.push(value.village);
+        temp.push(value.roomcode);
+        obj.push(temp);
+    });
 
     /*居民 合格率趋势*/
     myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
-    var data = [
-        ['15-01', 4.374394],
-        ['15-01', 3.374394],
-        ['15-01', 4.774394],
-        ['15-03', 3.213817],
-        ['16-03', 3.952681],
-        ['16-13', 3.129283]
-    ];
 
     // See https://github.com/ecomfe/echarts-stat
-    var myRegression = ecStat.regression('linear', data);
-
+    var myRegression = ecStat.regression('linear', obj);
     myRegression.points.sort(function(a, b) {
         return a[0] - b[0];
     });
-
     optionQualified = {
-
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -1421,8 +1434,7 @@ function chart08Fun() {
                     fontFamily: 'arial'
                 }
             },
-            data: ['15-01', '15-03', '16-03', '16-06', '16-13']
-
+            data:times
         },
         yAxis: {
             type: 'value',
@@ -1452,28 +1464,32 @@ function chart08Fun() {
             }
         },
         series: [{
-            name: '室温',
-            type: 'scatter',
-            markLine: {
-                //				symbolSize:[0,0],
-                data: [{
-                    type: 'average',
-                    name: '平均值'
-                    //					symbolSize:[0,0],
-                }]
-            },
-            itemStyle: {
-                normal: {
-                    color: '#7fb7e1'
-                }
-            },
-            data: data
+                name: '室温',
+                type: 'scatter',
+                symbolSize: function (data) {
+                    return 6;
+                },
+                markLine: {
+                    lineStyle: {
+                        normal: {
+                            color:'red'
+                        }
+                    },
+                    data: [{
+                        type: 'average',
+                        name: '平均值'
+                    }]
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#7fb7e1'
+                    }
+                },
+                data: obj
         }]
     };
     myChartQualified.setOption(optionQualified);
-
 }
-
 /*居民室温合格率--chartCarbon*/
 function chart09Fun(){
      myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
@@ -1591,9 +1607,10 @@ function chart10Fun() {
                     var dates = new  Pdate();
                     var date = dates.format(result.object.aqi.reportDate);
                     var s = dates.showCal(result.object.aqi.reportDate);
+                    debugger;
                     var html = '<div class="cb-header clearfix" id="dates">'+
                         '<span class="cb-title" >'+date+' '+result.object.currentWeather.weekDay+' 农历'+s+'</span>'+
-                        '<div class="cb-title-right ">实时空气质量：<span >'+result.object.aqi.aqi+''+result.object.aqi.aqiLevel+'</span></div></div>'
+                        '<div class="cb-title-right ">空气质量：<span >'+result.object.aqi.aqiLevel+'</span></div></div>'
                     $(".chart-content.clearfix").append(html) ;
                     var html2 ="<ul>";
                     html2 +=" <li> <div class='wather weather01'></div>"+
@@ -1616,8 +1633,9 @@ function chart10Fun() {
                     html2 +="</ul>";
                     $(".chart-content.clearfix").append(html2);
                 }
+                initchart10(result.object.weathers.hour,result.object.weathers.temp);
             }
-            initchart10(result.object.weathers.hour,result.object.weathers.temp);
+
         }
 
     });
@@ -1625,6 +1643,95 @@ function chart10Fun() {
 }
 
 
+function chart13Fun() {
+    //trend 1升  2降
+    var recentdata = [{
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }, {
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }, {
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }];
+
+    var recenthtml = "";
+    var recentlisthtml = "";
+    var unitlist =['T','kwh','m3','GJ'];
+    for(var i = 0; i < recentdata.length; i++) {
+        recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
+
+        recentlisthtml += "<ul>";
+        for(var j = 0; j < recentdata[i].list.length; j++) {
+            recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : "") + "</span></li>";
+        }
+        recentlisthtml += "</ul>";
+    }
+    $("#recentall").html(recenthtml);
+    $("#recentlist").html(recentlisthtml);
+
+}
 
 /*天气预报图表*/
 function initchart10(hours,temps){
@@ -1834,7 +1941,6 @@ function chart11Fun() {
 }
 
 function chart12Fun() {
-
     //value1 严重 value2中度 value3轻度
     var data = [{
         value1: 0,
@@ -1847,7 +1953,6 @@ function chart12Fun() {
     }]; //参数数量有几个写几个 自动识别前台样式 1工况运行 2经济运行 3 服务情况 4作业管理
     var html = "";
     var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
-
     html += "<div>";
     for(var i = 0; i < titledata.length; i++) {
         var classname = "runa";
@@ -1897,7 +2002,6 @@ function chart12Fun() {
         html += "</ul></div>";
     }
     html += "</div>";
-
     $("#chart12").html(html);
 }
 

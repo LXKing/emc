@@ -29,6 +29,11 @@
             <artifactId>emc-service-sysmagent-api</artifactId>
             <version>${emc.service.sysmagent.api.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.huak</groupId>
+            <artifactId>emc-task-api</artifactId>
+            <version>${emc.task.api.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
