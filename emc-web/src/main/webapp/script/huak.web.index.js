@@ -41,126 +41,126 @@
     });
 
 
-//    //供热源数据去取
-//    $.ajax({
-//        url : _web+"/energy/top/feed",
-//        type : "GET",
-//        data:$("#searchTools").serialize(),
-//        dataType: "json",
-//        success : function(data) {
-//            if(data.all.eTotal==null||data.all.eTotal==''){
-//                $(".feTotal").html(0+" TCE");
-//            }else{
-//                $(".feTotal").html(data.all.eTotal+" TCE");
-//            }
-//            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
-//                $(".fCarbonTotal").html(0+" T");
-//            }else{
-//                $(".fCarbonTotal").html(data.all.carbonTotal+" T");
-//            }
-//            if(data.all.costAll==null||data.all.costAll==''){
-//                $(".fCostAll").html(0+" 万元");
-//            }else{
-//                $(".fCostAll").html(data.all.costAll+" 万元");
-//            }
-//
-//        }
-//
-//        });
-////管网数据去取
-//    $.ajax({
-//        url : _web+"/energy/top/net",
-//        type : "GET",
-//        data:$("#searchTools").serialize(),
-//        dataType: "json",
-//        success : function(data) {
-//            if(data.all.netLen==null||data.all.netLen==''){
-//                $(".netLen").html(0+" km");
-//            }else{
-//                $(".netLen").html(data.all.netLen+" km");
-//            }
-//            if(data.all.netCost==null||data.all.netCost==''){
-//                $(".netCost").html(0+" 万元");
-//            }else{
-//                $(".netCost").html(data.all.netCost+" 万元");
-//            }
-//
-//        }
-//
-//    });
-//    //换热站数据去取
-//    $.ajax({
-//        url : _web+"/energy/top/station",
-//        type : "GET",
-//        data:$("#searchTools").serialize(),
-//        dataType: "json",
-//        success : function(data) {
-//            if(data.all.eTotal==null||data.all.eTotal==''){
-//                $(".seTotal").html(0+" TCE");
-//            }else{
-//                $(".seTotal").html(data.all.eTotal+" TCE");
-//            }
-//            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
-//                $(".sCarbonTotal").html(0+" T");
-//            }else{
-//                $(".sCarbonTotal").html(data.all.carbonTotal+" T");
-//            }
-//            if(data.all.costAll==null||data.all.costAll==''){
-//                $(".sCostAll").html(0+" 万元");
-//            }else{
-//                $(".sCostAll").html(data.all.costAll+" 万元");
-//            }
-//
-//        }
-//
-//    });
-//    //管网数据去取
-//    $.ajax({
-//        url : _web+"/energy/top/line",
-//        type : "GET",
-//        data:$("#searchTools").serialize(),
-//        dataType: "json",
-//        success : function(data) {
-//            if(data.all.lineLen==null||data.all.lineLen==''){
-//                $(".lineLen").html(0+" km");
-//            }else{
-//                $(".lineLen").html(data.all.lineLen+" km");
-//            }
-//            if(data.all.lineCost==null||data.all.lineCost==''){
-//                $(".lineCost").html(0+" 万元");
-//            }else{
-//                $(".lineCost").html(data.all.lineCost+" 万元");
-//            }
-//
-//        }
-//
-//    });
-//    //民户数据去取
-//    $.ajax({
-//        url : _web+"/energy/top/room",
-//        type : "GET",
-//        data:$("#searchTools").serialize(),
-//        dataType: "json",
-//        success : function(data) {
-//            if(data.all.rTotal==null||data.all.rTotal==''){
-//                $(".rTotal").html(0+" TCE");
-//            }else{
-//                $(".rTotal").html(data.all.rTotal+" TCE");
-//            }
-//            if(data.all.hgl==null||data.all.hgl==''){
-//                $(".hgl").html(0+"%");
-//            }else{
-//                $(".hgl").html(data.all.hgl);
-//            }
-//            if(data.all.roomCost==null||data.all.roomCost==''){
-//                $(".roomCost").html(0+" 万元");
-//            }else{
-//                $(".roomCost").html(data.all.roomCost+" 万元");
-//            }
-//
-//        }
-//
-//    });
+    //供热源数据去取
+    $.ajax({
+        url : _web+"/energy/top/feed",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            if(data.all.eTotal==null||data.all.eTotal==''){
+                $(".feTotal").html(0+" TCE");
+            }else{
+                $(".feTotal").html(data.all.eTotal+" TCE");
+            }
+            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+                $(".fCarbonTotal").html(0+" T");
+            }else{
+                $(".fCarbonTotal").html(data.all.carbonTotal+" T");
+            }
+            if(data.all.costAll==null||data.all.costAll==''){
+                $(".fCostAll").html(0+" 万元");
+            }else{
+                $(".fCostAll").html(data.all.costAll+" 万元");
+            }
+
+        }
+
+        });
+//管网数据去取
+    $.ajax({
+        url : _web+"/energy/top/net",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            if(data.all.netLen==null||data.all.netLen==''){
+                $(".netLen").html(0+" km");
+            }else{
+                $(".netLen").html(data.all.netLen+" km");
+            }
+            if(data.all.netCost==null||data.all.netCost==''){
+                $(".netCost").html(0+" 万元");
+            }else{
+                $(".netCost").html(data.all.netCost+" 万元");
+            }
+
+        }
+
+    });
+    //换热站数据去取
+    $.ajax({
+        url : _web+"/energy/top/station",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            if(data.all.eTotal==null||data.all.eTotal==''){
+                $(".seTotal").html(0+" TCE");
+            }else{
+                $(".seTotal").html(data.all.eTotal+" TCE");
+            }
+            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+                $(".sCarbonTotal").html(0+" T");
+            }else{
+                $(".sCarbonTotal").html(data.all.carbonTotal+" T");
+            }
+            if(data.all.costAll==null||data.all.costAll==''){
+                $(".sCostAll").html(0+" 万元");
+            }else{
+                $(".sCostAll").html(data.all.costAll+" 万元");
+            }
+
+        }
+
+    });
+    //管网数据去取
+    $.ajax({
+        url : _web+"/energy/top/line",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            if(data.all.lineLen==null||data.all.lineLen==''){
+                $(".lineLen").html(0+" km");
+            }else{
+                $(".lineLen").html(data.all.lineLen+" km");
+            }
+            if(data.all.lineCost==null||data.all.lineCost==''){
+                $(".lineCost").html(0+" 万元");
+            }else{
+                $(".lineCost").html(data.all.lineCost+" 万元");
+            }
+
+        }
+
+    });
+    //民户数据去取
+    $.ajax({
+        url : _web+"/energy/top/room",
+        type : "GET",
+        data:$("#searchTools").serialize(),
+        dataType: "json",
+        success : function(data) {
+            if(data.all.rTotal==null||data.all.rTotal==''){
+                $(".rTotal").html(0+" TCE");
+            }else{
+                $(".rTotal").html(data.all.rTotal+" TCE");
+            }
+            if(data.all.hgl==null||data.all.hgl==''){
+                $(".hgl").html(0+"%");
+            }else{
+                $(".hgl").html(data.all.hgl);
+            }
+            if(data.all.roomCost==null||data.all.roomCost==''){
+                $(".roomCost").html(0+" 万元");
+            }else{
+                $(".roomCost").html(data.all.roomCost+" 万元");
+            }
+
+        }
+
+    });
 
     $.ajax({
         url : _web+"/static/json/h-1.json",
