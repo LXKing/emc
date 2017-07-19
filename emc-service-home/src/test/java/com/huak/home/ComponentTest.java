@@ -22,4 +22,13 @@ public class ComponentTest  extends BaseTest {
         params.put("status","0");
         Map<String,Object> map =  componentService.weatherForcast(params);
     }
+
+    @Test
+    public void testComponent(){
+        Map<String,Object> params = new HashMap<>();
+        params.put("comId","a3e5e868e7844c349e5cf51c5e6bc37d");
+        params.put("min",18);
+        params.put("max",22);
+        Map<String,Object> map =  componentService.roomTemperature(params);
+    }
 }

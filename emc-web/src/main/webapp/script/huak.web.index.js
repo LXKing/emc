@@ -41,126 +41,126 @@
     });
 
 
-    //供热源数据去取
-    $.ajax({
-        url : _web+"/energy/top/feed",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        success : function(data) {
-            if(data.all.eTotal==null||data.all.eTotal==''){
-                $(".feTotal").html(0+" TCE");
-            }else{
-                $(".feTotal").html(data.all.eTotal+" TCE");
-            }
-            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
-                $(".fCarbonTotal").html(0+" T");
-            }else{
-                $(".fCarbonTotal").html(data.all.carbonTotal+" T");
-            }
-            if(data.all.costAll==null||data.all.costAll==''){
-                $(".fCostAll").html(0+" 万元");
-            }else{
-                $(".fCostAll").html(data.all.costAll+" 万元");
-            }
-
-        }
-
-        });
-//管网数据去取
-    $.ajax({
-        url : _web+"/energy/top/net",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        success : function(data) {
-            if(data.all.netLen==null||data.all.netLen==''){
-                $(".netLen").html(0+" km");
-            }else{
-                $(".netLen").html(data.all.netLen+" km");
-            }
-            if(data.all.netCost==null||data.all.netCost==''){
-                $(".netCost").html(0+" 万元");
-            }else{
-                $(".netCost").html(data.all.netCost+" 万元");
-            }
-
-        }
-
-    });
-    //换热站数据去取
-    $.ajax({
-        url : _web+"/energy/top/station",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        success : function(data) {
-            if(data.all.eTotal==null||data.all.eTotal==''){
-                $(".seTotal").html(0+" TCE");
-            }else{
-                $(".seTotal").html(data.all.eTotal+" TCE");
-            }
-            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
-                $(".sCarbonTotal").html(0+" T");
-            }else{
-                $(".sCarbonTotal").html(data.all.carbonTotal+" T");
-            }
-            if(data.all.costAll==null||data.all.costAll==''){
-                $(".sCostAll").html(0+" 万元");
-            }else{
-                $(".sCostAll").html(data.all.costAll+" 万元");
-            }
-
-        }
-
-    });
-    //管网数据去取
-    $.ajax({
-        url : _web+"/energy/top/line",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        success : function(data) {
-            if(data.all.lineLen==null||data.all.lineLen==''){
-                $(".lineLen").html(0+" km");
-            }else{
-                $(".lineLen").html(data.all.lineLen+" km");
-            }
-            if(data.all.lineCost==null||data.all.lineCost==''){
-                $(".lineCost").html(0+" 万元");
-            }else{
-                $(".lineCost").html(data.all.lineCost+" 万元");
-            }
-
-        }
-
-    });
-    //民户数据去取
-    $.ajax({
-        url : _web+"/energy/top/room",
-        type : "GET",
-        data:$("#searchTools").serialize(),
-        dataType: "json",
-        success : function(data) {
-            if(data.all.rTotal==null||data.all.rTotal==''){
-                $(".rTotal").html(0+" TCE");
-            }else{
-                $(".rTotal").html(data.all.rTotal+" TCE");
-            }
-            if(data.all.hgl==null||data.all.hgl==''){
-                $(".hgl").html(0+"%");
-            }else{
-                $(".hgl").html(data.all.hgl);
-            }
-            if(data.all.roomCost==null||data.all.roomCost==''){
-                $(".roomCost").html(0+" 万元");
-            }else{
-                $(".roomCost").html(data.all.roomCost+" 万元");
-            }
-
-        }
-
-    });
+//    //供热源数据去取
+//    $.ajax({
+//        url : _web+"/energy/top/feed",
+//        type : "GET",
+//        data:$("#searchTools").serialize(),
+//        dataType: "json",
+//        success : function(data) {
+//            if(data.all.eTotal==null||data.all.eTotal==''){
+//                $(".feTotal").html(0+" TCE");
+//            }else{
+//                $(".feTotal").html(data.all.eTotal+" TCE");
+//            }
+//            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+//                $(".fCarbonTotal").html(0+" T");
+//            }else{
+//                $(".fCarbonTotal").html(data.all.carbonTotal+" T");
+//            }
+//            if(data.all.costAll==null||data.all.costAll==''){
+//                $(".fCostAll").html(0+" 万元");
+//            }else{
+//                $(".fCostAll").html(data.all.costAll+" 万元");
+//            }
+//
+//        }
+//
+//        });
+////管网数据去取
+//    $.ajax({
+//        url : _web+"/energy/top/net",
+//        type : "GET",
+//        data:$("#searchTools").serialize(),
+//        dataType: "json",
+//        success : function(data) {
+//            if(data.all.netLen==null||data.all.netLen==''){
+//                $(".netLen").html(0+" km");
+//            }else{
+//                $(".netLen").html(data.all.netLen+" km");
+//            }
+//            if(data.all.netCost==null||data.all.netCost==''){
+//                $(".netCost").html(0+" 万元");
+//            }else{
+//                $(".netCost").html(data.all.netCost+" 万元");
+//            }
+//
+//        }
+//
+//    });
+//    //换热站数据去取
+//    $.ajax({
+//        url : _web+"/energy/top/station",
+//        type : "GET",
+//        data:$("#searchTools").serialize(),
+//        dataType: "json",
+//        success : function(data) {
+//            if(data.all.eTotal==null||data.all.eTotal==''){
+//                $(".seTotal").html(0+" TCE");
+//            }else{
+//                $(".seTotal").html(data.all.eTotal+" TCE");
+//            }
+//            if(data.all.carbonTotal==null||data.all.carbonTotal==''){
+//                $(".sCarbonTotal").html(0+" T");
+//            }else{
+//                $(".sCarbonTotal").html(data.all.carbonTotal+" T");
+//            }
+//            if(data.all.costAll==null||data.all.costAll==''){
+//                $(".sCostAll").html(0+" 万元");
+//            }else{
+//                $(".sCostAll").html(data.all.costAll+" 万元");
+//            }
+//
+//        }
+//
+//    });
+//    //管网数据去取
+//    $.ajax({
+//        url : _web+"/energy/top/line",
+//        type : "GET",
+//        data:$("#searchTools").serialize(),
+//        dataType: "json",
+//        success : function(data) {
+//            if(data.all.lineLen==null||data.all.lineLen==''){
+//                $(".lineLen").html(0+" km");
+//            }else{
+//                $(".lineLen").html(data.all.lineLen+" km");
+//            }
+//            if(data.all.lineCost==null||data.all.lineCost==''){
+//                $(".lineCost").html(0+" 万元");
+//            }else{
+//                $(".lineCost").html(data.all.lineCost+" 万元");
+//            }
+//
+//        }
+//
+//    });
+//    //民户数据去取
+//    $.ajax({
+//        url : _web+"/energy/top/room",
+//        type : "GET",
+//        data:$("#searchTools").serialize(),
+//        dataType: "json",
+//        success : function(data) {
+//            if(data.all.rTotal==null||data.all.rTotal==''){
+//                $(".rTotal").html(0+" TCE");
+//            }else{
+//                $(".rTotal").html(data.all.rTotal+" TCE");
+//            }
+//            if(data.all.hgl==null||data.all.hgl==''){
+//                $(".hgl").html(0+"%");
+//            }else{
+//                $(".hgl").html(data.all.hgl);
+//            }
+//            if(data.all.roomCost==null||data.all.roomCost==''){
+//                $(".roomCost").html(0+" 万元");
+//            }else{
+//                $(".roomCost").html(data.all.roomCost+" 万元");
+//            }
+//
+//        }
+//
+//    });
 
     $.ajax({
         url : _web+"/static/json/h-1.json",
@@ -210,19 +210,6 @@ var chart10;
 var websiteheight;
 websiteheight = $("#website").height() - 12;
 $(".index_menuBox").height(websiteheight);
-
-window.onresize = function() {
-    chart01.resize();
-    chart02.resize();
-    chart03.resize();
-    chart04.resize();
-    myChartEnergy.resize();
-    chart05.resize();
-    myChartQualified.resize();
-    myChartCarbon.resize();
-    websiteheight = $("#website").height() - 12;
-    $(".index_menuBox").height(websiteheight);
-};
 
 function typefun(these, code) {
     $(these).addClass("on").siblings().removeClass("on");
@@ -1347,43 +1334,68 @@ function returnFloat(value){
 
 /*居民 合格率趋势*/
 function chart08Fun() {
-    var databar = [{
-        value: 24,
-        color: '#32bbb6',
-        text: '18℃以下'
-    }, {
-        value: 76,
-        color: '#32ccb6',
-        text: '18℃'
-    }];
+    $.ajax({
+        url: _web + '/component/roomtemperature',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:{min:18,max:22},
+        dataType: "json",
+        success: function (result) {
+            console.info(result);
+            if(result.flag == true){
+                if(result.object.bar != null)
+                    chart08Bar(result.object.bar);
+                chart08Sd(result.object.datas,result.object.times,result.object.low,result.object.range,result.object.high)
+            }
+        }
+    });
 
+
+
+
+}
+
+/*居民 合格率趋势图 bar*/
+function chart08Bar(data){
+    var databar = [];
+    data.forEach(function(value, index, array) {
+        var item ={
+            value: value.value,
+            color: '#32bbb6',
+            text: value.text
+        };
+        databar.push(item);
+    });
     var barchartdiv = $("#barchart");
     var barcharthtml = "";
     for(var i = 0; i < databar.length; i++) {
         barcharthtml += "<div style='width:" + databar[i].value + "%;'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
     }
     barchartdiv.html(barcharthtml);
+}
+
+/*居民 合格率趋势图 散点图*/
+function chart08Sd(data,times){
+    var obj = new Array();
+    $.each(data,function(index,value){
+        var temp = [];
+        temp.push(value.times);
+        temp.push(value.temps);
+        temp.push(value.station);
+        temp.push(value.village);
+        temp.push(value.roomcode);
+        obj.push(temp);
+    });
 
     /*居民 合格率趋势*/
     myChartQualified = echarts.init(document.getElementById('QualifiedChart'));
-    var data = [
-        ['15-01', 4.374394],
-        ['15-01', 3.374394],
-        ['15-01', 4.774394],
-        ['15-03', 3.213817],
-        ['16-03', 3.952681],
-        ['16-13', 3.129283]
-    ];
 
     // See https://github.com/ecomfe/echarts-stat
-    var myRegression = ecStat.regression('linear', data);
-
+    var myRegression = ecStat.regression('linear', obj);
     myRegression.points.sort(function(a, b) {
         return a[0] - b[0];
     });
-
     optionQualified = {
-
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -1421,8 +1433,7 @@ function chart08Fun() {
                     fontFamily: 'arial'
                 }
             },
-            data: ['15-01', '15-03', '16-03', '16-06', '16-13']
-
+            data:times
         },
         yAxis: {
             type: 'value',
@@ -1452,28 +1463,36 @@ function chart08Fun() {
             }
         },
         series: [{
-            name: '室温',
-            type: 'scatter',
-            markLine: {
-                //				symbolSize:[0,0],
-                data: [{
-                    type: 'average',
-                    name: '平均值'
-                    //					symbolSize:[0,0],
-                }]
-            },
-            itemStyle: {
-                normal: {
-                    color: '#7fb7e1'
+                name:"最大值",
+                type: 'scatter',
+                data:[],
+                makeLine:{
+                    data:{value:18}
                 }
-            },
-            data: data
+             },{
+                name: '室温',
+                type: 'scatter',
+                markLine: {
+                    lineStyle: {
+                        normal: {
+                            color:'red'
+                        }
+                    },
+                    data: [{
+                        type: 'average',
+                        name: '平均值'
+                    }]
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#7fb7e1'
+                    }
+                },
+                data: obj
         }]
     };
     myChartQualified.setOption(optionQualified);
-
 }
-
 /*居民室温合格率--chartCarbon*/
 function chart09Fun(){
      myChartCarbon = echarts.init(document.getElementById('chartCarbon'));

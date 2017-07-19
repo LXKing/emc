@@ -19,4 +19,11 @@ public interface TemperatureDao {
     int updateByPrimaryKey(Temperature record);
 
     List<Temperature> selectAllByMap(Map<String,Object> map);
+
+    /**
+     * 返回 组件室温散点图调用listMap
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> selectByMap(Map<String, Object> params);
 }
