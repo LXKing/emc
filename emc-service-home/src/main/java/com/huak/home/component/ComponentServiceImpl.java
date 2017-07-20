@@ -158,6 +158,8 @@ public class ComponentServiceImpl implements ComponentService{
     public Map<String, Object> weatherForcast(Map<String, Object> params) {
         Map<String,Object> data = new HashMap<>();
         String times = dateDao.getTime().substring(0, 13)+":21:00";
+        String date = dateDao.getDate();
+        params.put("reportDate",date);
         List<Weekforcast> weekforcasts = weekforcastDao.selectByComponent(params);
         params.put("reportDate",times);
         List<Weather> weathers = weatherDao.getLatestWeathers(params);

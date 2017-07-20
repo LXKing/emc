@@ -25,10 +25,12 @@ public class WeatherTask {
     public void currentWeather(){
         System.out.println("-----------------ceshi");
         List<Map<String,Object>> params = weatherTaskService.getParams();
+        System.out.println(params.size());
         weatherTaskService.executeWeatherTask(params);
     }
     public void forcastWeather7d(){
         List<Map<String,Object>> params =  weatherTaskService.getParams();
+        System.out.println(params.size());
         weatherTaskService.executeWeather7dTask(params);
     }
 }

@@ -75,7 +75,7 @@
             and  STATUS = #{status,jdbcType=TINYINT}
         </if>
         <if test="reportDate != null and reportDate != ''">
-            and  REPORT_DATE = #{reportDate,jdbcType=VARCHAR}
+            and  REPORT_DATE <![CDATA[ >= ]]> #{reportDate,jdbcType=VARCHAR}
         </if>
         order  by REPORT_DATE asc limit 1,4
     </select>
