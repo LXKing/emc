@@ -56,4 +56,11 @@ public interface ComponentDao {
      * @return
      */
     Map<String,Object> previousComparison(Map<String, Object> params);
+
+    /**
+     * 组件-近期单耗详情
+     * @param paramsMap
+     * @return
+     */
+    List<Map<String,Object>> selectrecentDetail(Map<String, Object> paramsMap);
 }

@@ -39,8 +39,6 @@
         }
 
     });
-
-
     //供热源数据去取
     $.ajax({
         url : _web+"/energy/top/feed",
@@ -213,9 +211,8 @@ websiteheight = $("#website").height() - 12;
 $(".index_menuBox").height(websiteheight);
 
 function typefun(these, code) {
-    $(these).addClass("on").siblings().removeClass("on");
+//    $(these).addClass("on").siblings().removeClass("on");
     $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
-
     if(code == 6) {
         $(".PeopleTabdiv").show();
         $(".otherTabdiv").hide();
@@ -247,6 +244,7 @@ function typefun(these, code) {
 
 };
 
+/*组件-单耗趋势*/
 function chart01Fun(){
     $.ajax({
         url:_web +'/component/energycomparison',
@@ -1070,6 +1068,7 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
+            console.info(result);
             if (result.flag) {
                 /*仪表盘*/
                 var kedu1 = result.object.kedu1; //蓝色的刻度
@@ -1593,6 +1592,7 @@ function chart09Fun(){
     myChartCarbon.setOption(optionCarbon);
 }
 
+/*组件-天气预报*/
 function chart10Fun() {
     $.ajax({
         url:_web +'/component/weather',
@@ -1614,8 +1614,8 @@ function chart10Fun() {
                     $(".chart-content.clearfix").append(html) ;
                     var html2 ="<ul>";
                     html2 +=" <li> <div class='wather weather01'></div>"+
-                                "<div class='detail clearfix'> <div>22</div>"+
-                                "<div> <p>℃</p> <p>"+result.object.currentWeather.weatherCurrent+"（实时）</p></div></div>"+
+                                "<div class='detail clearfix'> <div>"+result.object.currentWeather.temperatureCurr+"</div>"+
+                                "<div><p>"+result.object.currentWeather.weatherCurrent+"（实时）</p></div></div>"+
                                 "<h3>"+result.object.currentWeather.tempLow+"~"+result.object.currentWeather.tempHigh+"℃<h5>"+result.object.currentWeather.wind+"</h5>"+
                             " </li>"
                     if(result.object.weekForcast.length>0){
@@ -1642,96 +1642,6 @@ function chart10Fun() {
 
 }
 
-
-function chart13Fun() {
-    //trend 1升  2降
-    var recentdata = [{
-        value: 281.9,
-        list: [{
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }]
-    }, {
-        value: 281.9,
-        list: [{
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }]
-    }, {
-        value: 281.9,
-        list: [{
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }]
-    }];
-
-    var recenthtml = "";
-    var recentlisthtml = "";
-    var unitlist =['T','kwh','m3','GJ'];
-    for(var i = 0; i < recentdata.length; i++) {
-        recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
-
-        recentlisthtml += "<ul>";
-        for(var j = 0; j < recentdata[i].list.length; j++) {
-            recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : "") + "</span></li>";
-        }
-        recentlisthtml += "</ul>";
-    }
-    $("#recentall").html(recenthtml);
-    $("#recentlist").html(recentlisthtml);
-
-}
 
 /*天气预报图表*/
 function initchart10(hours,temps){
@@ -1807,6 +1717,94 @@ function initchart10(hours,temps){
 
     chart10.setOption(option);
 }
+
+/*组件-昨天、今天、前天 日单耗对比*/
+function chart13Fun() {
+    //trend 1升  2降
+    var recentdata = [{
+        value: 281.9,
+        list: [{
+            value: 260,
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+            value2: '5.0',
+            trend: 1
+        }]
+    }, {
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }, {
+        value: 281.9,
+        list: [{
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }, {
+            value: 260,
+
+            value2: '5.0',
+            trend: 1
+        }]
+    }];
+
+    var recenthtml = "";
+    var recentlisthtml = "";
+    var unitlist =['T','kwh','m3','GJ'];
+    for(var i = 0; i < recentdata.length; i++) {
+        recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
+        recentlisthtml += "<ul>";
+        for(var j = 0; j < recentdata[i].list.length; j++) {
+            recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : "") + "</span></li>";
+        }
+        recentlisthtml += "</ul>";
+    }
+    $("#recentall").html(recenthtml);
+    $("#recentlist").html(recentlisthtml);
+
+}
+
 
 
 

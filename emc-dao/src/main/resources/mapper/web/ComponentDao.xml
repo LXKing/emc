@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huak.home.dao.component.ComponentDao" >
 
+    <!--组件-能耗明细-->
   <select id="energyDetail" resultType="java.util.Map" parameterType="java.util.Map" >
       SELECT
       max(case when mm.type ='qn' then mm.bm_electric else 0 end)as qn_bm_electric,
@@ -139,7 +140,7 @@
       ))mm
   </select>
 
-
+<!--组件-费用明细-->
   <select id="costDetail" resultType="java.util.Map" parameterType="java.util.Map">
       SELECT
       mm.ccs,
@@ -320,7 +321,7 @@
       </if>
       GROUP BY b.TYPEID) cc)qq)mm;
   </select>
-
+<!--组件-单耗趋势-->
     <select id="getenergycomparision" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
         cc.dates,
@@ -381,6 +382,145 @@
         bb.dates
         ORDER BY
         bb.dates ASC)cc order by cc.dates;
+    </select>
+
+    <!--组件-昨天、今天、明天-->
+    <select id="selectrecentDetail"  resultType="java.util.Map" parameterType="java.util.Map">
+        select q.dates as 'today',sum(q.totalcol) as total,max((case when q.type= 1 then q.dh else 0 end)) as whater,
+        max((case when q.type= 2 then q.dh else 0 end)) as electric,
+        max((case when q.type= 3 then q.dh else 0 end)) as gas,
+        max((case when q.type= 5 then q.dh else 0 end)) as coal,
+        max((case when q.type= 6 then q.dh else 0 end)) as solar
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh,sum(mm.coles) as totalcol
+        from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
+        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        FROM
+        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        (SELECT UNITID FROM v_emc_unit
+        WHERE 1 = 1
+        <if test="orgId != null and orgId !=''">
+            and   ORGID in (select id from t_emc_org where
+            FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+        </if>
+        <if test="feedType != null and feedType !=''">
+            and  HEAT_TYPE =#{feedType}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  COMID =#{comId}
+        </if>
+        <if test="type != null and type !=''">
+            and  UNITTYPE  = #{type}
+        </if>
+        GROUP BY UNITID ) c
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        <if test="today != null and today !=''">
+            and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{today},' 00:00:00')
+            and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{today},' 23:59:59')
+        </if>
+
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates
+
+        union all
+        ( select q.dates as 'yesterday',sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        max((case when q.type= 2 then q.dh else 0 end)),
+        max((case when q.type= 3 then q.dh else 0 end)),
+        max((case when q.type= 5 then q.dh else 0 end)),
+        max((case when q.type= 6 then q.dh else 0 end))
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
+        from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
+        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        FROM
+        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        (SELECT UNITID FROM v_emc_unit
+        WHERE 1 = 1
+        <if test="orgId != null and orgId !=''">
+            and   ORGID in (select id from t_emc_org where
+            FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+        </if>
+        <if test="feedType != null and feedType !=''">
+            and  HEAT_TYPE =#{feedType}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  COMID =#{comId}
+        </if>
+        <if test="type != null and type !=''">
+            and  UNITTYPE  = #{type}
+        </if>
+        GROUP BY UNITID ) c
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        <if test="yesterday != null and yesterday !=''">
+            and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{yesterday},' 00:00:00')
+            and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{yesterday},' 23:59:59')
+        </if>
+
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates)
+        union ALL
+        ( select q.dates as 'towdayago',sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        max((case when q.type= 2 then q.dh else 0 end)),
+        max((case when q.type= 3 then q.dh else 0 end)),
+        max((case when q.type= 5 then q.dh else 0 end)),
+        max((case when q.type= 6 then q.dh else 0 end))
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
+        from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
+        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        FROM
+        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        (SELECT UNITID FROM v_emc_unit
+        WHERE 1 = 1
+        <if test="orgId != null and orgId !=''">
+            and   ORGID in (select id from t_emc_org where
+            FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+        </if>
+        <if test="feedType != null and feedType !=''">
+            and  HEAT_TYPE =#{feedType}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  COMID =#{comId}
+        </if>
+        <if test="type != null and type !=''">
+            and  UNITTYPE  = #{type}
+        </if>
+        GROUP BY UNITID ) c
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        <if test="towdayago != null and towdayago !=''">
+            and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{towdayago},' 00:00:00')
+            and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{towdayago},' 23:59:59')
+        </if>
+
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates)
+        union ALL
+        ( select q.dates as 'treedayago',sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        max((case when q.type= 2 then q.dh else 0 end)),
+        max((case when q.type= 3 then q.dh else 0 end)),
+        max((case when q.type= 5 then q.dh else 0 end)),
+        max((case when q.type= 6 then q.dh else 0 end))
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
+        from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
+        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        FROM
+        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        (SELECT UNITID FROM v_emc_unit
+        WHERE 1 = 1
+        <if test="orgId != null and orgId !=''">
+            and   ORGID in (select id from t_emc_org where
+            FIND_IN_SET(id,emc_func_org_getchilds(#{orgId})))
+        </if>
+        <if test="feedType != null and feedType !=''">
+            and  HEAT_TYPE =#{feedType}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  COMID =#{comId}
+        </if>
+        <if test="type != null and type !=''">
+            and  UNITTYPE  = #{type}
+        </if>
+        GROUP BY UNITID ) c
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        <if test="treedayago != null and treedayago !=''">
+            and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{treedayago},' 00:00:00')
+            and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{treedayago},' 23:59:59')
+        </if>
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates) order by dates asc
     </select>
 
     <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">

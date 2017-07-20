@@ -22,7 +22,7 @@
     <img src="${web}/static/img/index/websitet_cs01.png" id="website" style="min-width: 1346px;max-width: 1920px;" width="100%" />
     <div class="index_menu clearfix" id="index_menu">
 
-        <div class="index_menuBox index_menuBoxAll on pull-left" onclick="typefun(this,1)">
+        <div class="index_menuBox index_menuBoxAll  pull-left" onclick="typefun(this,1)">
             <div class="index_menuBoxCon">
                 <span>能源流</span><span class="tipsindex">999</span>
             </div>

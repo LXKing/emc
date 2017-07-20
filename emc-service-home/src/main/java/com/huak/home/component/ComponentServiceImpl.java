@@ -15,10 +15,16 @@ import com.huak.weather.model.Weather;
 import com.huak.weather.model.WeatherAQI;
 import com.huak.weather.model.Weekforcast;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +35,7 @@ import java.util.*;
  */
 @Service
 public class ComponentServiceImpl implements ComponentService{
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ComponentDao componentDao;
 
@@ -190,6 +196,7 @@ public class ComponentServiceImpl implements ComponentService{
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Object> roomTemperature(Map<String, Object> params) {
         Map<String,Object> result = new HashMap<>();
         List<Map<String,Object>> datas = temperatureDao.selectByMap(params);
@@ -241,6 +248,31 @@ public class ComponentServiceImpl implements ComponentService{
         result.put("datas",datas);
         result.put("times",times);
         return result;
+    }
+
+    /**
+     * 组件-近期单耗详情
+     * @param paramsMap
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> selectrecentDetail(Map<String, Object> paramsMap) {
+
+        try {
+            String date = dateDao.getDate();
+            String yesterday = DateUtils.getDay(date,-1);
+            String towdayago = DateUtils.getDay(date,-2);
+            String treedayago = DateUtils.getDay(date,-3);
+            paramsMap.put("today",date);
+            paramsMap.put("yesterday",yesterday);
+            paramsMap.put("towdayago",towdayago);
+            paramsMap.put("treedayago",treedayago);
+            List<Map<String,Object>> result = componentDao.selectrecentDetail(paramsMap);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -358,8 +390,8 @@ public class ComponentServiceImpl implements ComponentService{
 
             if(data != null){
                 /*标煤同比增长*/
-                double jn_total = (double) data.get("bm_total");
-                double qn_total = (double) data.get("qn_bm_total");
+                Double jn_total = (double) data.get("bm_total");
+                Double qn_total = (double) data.get("qn_bm_total");
                 if(jn_total>qn_total){
                     data.put("total_flag",true);
                 }
@@ -520,9 +552,14 @@ public class ComponentServiceImpl implements ComponentService{
                         }else{
                             pcd = 0;
                         }
-                        pcdz = jn_total -currentPlan;
+
+                        pcdz =  MathsUtil.sub(jn_coal,currentPlan);
+
                     }
+
                 }
+                data.put("jn_coal",jn_coal);
+                data.put("currentPlan",currentPlan);
                 data.put("pcd",pcd);
                 data.put("pcdz",pcdz);
                 data.put("kedu1",kedu1);

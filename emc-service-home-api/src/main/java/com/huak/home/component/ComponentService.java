@@ -39,4 +39,11 @@ public interface ComponentService {
      * @return
      */
     Map<String,Object> roomTemperature(Map<String, Object> params);
+
+    /**
+     * 近期单耗详情
+     * @param paramsMap
+     * @return
+     */
+    Map<String,Object> selectrecentDetail(Map<String, Object> paramsMap);
 }

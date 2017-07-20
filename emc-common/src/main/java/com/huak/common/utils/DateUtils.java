@@ -50,7 +50,6 @@ public class DateUtils {
 
     /**
      * 获取当年的第一天
-     * @param year
      * @return
      */
     public static Date getCurrYearFirst(){
@@ -60,8 +59,19 @@ public class DateUtils {
     }
 
     /**
+     * 获取日期
+     * @return
+     */
+    public static String getDay(String date,int i) throws ParseException {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        calendar.add(Calendar.DATE,  i);
+        return new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+    }
+
+    /**
      * 获取当年的最后一天
-     * @param year
+
      * @return
      */
     public static Date getCurrYearLast(){
