@@ -3,7 +3,6 @@
 <mapper namespace="com.huak.task.dao.EmcOrgInterDao">
   <resultMap id="BaseResultMap" type="com.huak.task.model.EmcOrgInter">
     <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="EMC_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -11,7 +10,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, COM_ID, ORG_ID, EMC_ID,UNIT_TYPE
+    COM_ID, ORG_ID, EMC_ID,UNIT_TYPE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -19,22 +18,15 @@
     from t_emc_org_inter
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_emc_org_inter
-    where ID = #{id,jdbcType=VARCHAR}
-  </delete>
   <insert id="insert" parameterType="com.huak.task.model.EmcOrgInter">
-    insert into t_emc_org_inter (ID, COM_ID, ORG_ID, 
+    insert into t_emc_org_inter (COM_ID, ORG_ID,
       EMC_ID,UNIT_TYPE)
-    values (#{id,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, 
+    values (#{comId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR},
       #{emcId,jdbcType=VARCHAR},#{unitType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.task.model.EmcOrgInter">
     insert into t_emc_org_inter
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
       <if test="comId != null">
         COM_ID,
       </if>
@@ -49,9 +41,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
       <if test="comId != null">
         #{comId,jdbcType=VARCHAR},
       </if>
@@ -93,7 +82,7 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectAllByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    <select id="selectAllByMap" parameterType="com.huak.task.model.EmcOrgInter" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_org_inter
@@ -102,7 +91,26 @@
             and  COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         <if test="orgId != null and orgId !=''">
-            and  ORG_ID =  #{id,jdbcType=VARCHAR}
+            and  ORG_ID =  #{orgId,jdbcType=VARCHAR}
+        </if>
+
+        <if test="emcId != null and emcId!=''">
+            and  EMC_ID = #{emcId,jdbcType=VARCHAR}
+        </if>
+        <if test="unitType !=null and unitType!=''">
+            and UNIT_TYPE = #{unitType,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectEmcOrgByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_org_inter
+        where 1=1
+        <if test="comId != null and comId!='' and comId !='null'">
+            and  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="pid != null and pid !=''">
+            and  ORG_ID =  #{pid,jdbcType=VARCHAR}
         </if>
 
         <if test="emcId != null and emcId!=''">

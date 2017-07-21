@@ -11,6 +11,7 @@ import com.huak.task.dao.TemperatureDao;
 import com.huak.task.model.EmcOrgInter;
 import com.huak.task.model.Temperature;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -46,11 +47,13 @@ public class RoomTempServiceImpl implements RoomTempService {
     @Resource
     NodeDao nodeDao;
     @Override
-    public List<Temperature> isExsistTemp(Map<String, Object> map) {
-        return tempDao.selectAllByMap(map);
+    @Transactional(readOnly = true)
+    public List<Temperature> isExsistTemp(Temperature record) {
+        return tempDao.selectAllByMap(record);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Map<String, Object> insertTemp(Temperature temp) {
         Map<String, Object> map = new HashMap<String,Object>();
          try {
@@ -66,11 +69,13 @@ public class RoomTempServiceImpl implements RoomTempService {
     }
 
     @Override
-    public List<EmcOrgInter> isExsistInter(Map<String, Object> map) {
-        return emcOrgInterDao.selectAllByMap(map);
+    @Transactional(readOnly = true)
+    public List<EmcOrgInter> isExsistInter(EmcOrgInter record) {
+        return emcOrgInterDao.selectAllByMap(record);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Map<String, Object> insertOrg(Org org) {
         Map<String, Object> map = new HashMap<String,Object>();
         try {
@@ -87,11 +92,13 @@ public class RoomTempServiceImpl implements RoomTempService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void insertEmcOrgInter(EmcOrgInter inter) {
         emcOrgInterDao.insert(inter);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Map<String, Object> insertFeed(Feed feed) {
         Map<String, Object> map = new HashMap<String,Object>();
         try {
@@ -107,6 +114,7 @@ public class RoomTempServiceImpl implements RoomTempService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Map<String, Object> inserStation(Node node) {
         Map<String, Object> map = new HashMap<String,Object>();
         try {
@@ -119,5 +127,27 @@ public class RoomTempServiceImpl implements RoomTempService {
             map.put("msg","导入失败");
         }
         return map;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public EmcOrgInter selectEmcOrgByMap(Map<String, Object> map) {
+        return emcOrgInterDao.selectEmcOrgByMap(map);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void updateOrgPidByCid(Org org) {
+        orgDao.updateByPrimaryKeySelective(org);
+    }
+
+    @Override
+    public void updateFeed(Feed feed) {
+        feedDao.updateByPrimaryKeySelective(feed);
+    }
+
+    @Override
+    public void updateNode(Node node) {
+        nodeDao.updateByPrimaryKeySelective(node);
     }
 }

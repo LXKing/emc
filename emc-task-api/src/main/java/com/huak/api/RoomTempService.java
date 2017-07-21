@@ -26,7 +26,7 @@ public interface RoomTempService {
     /**
      * 确认室温内是否存在将要导入的数据
      */
-    public List<Temperature>  isExsistTemp(Map<String,Object> map);
+    public List<Temperature>  isExsistTemp(Temperature temp);
 
     /**
      * 确认后导入室温数据
@@ -36,7 +36,7 @@ public interface RoomTempService {
     /**
      * 确认组织机构是否存在将要导入的数据
      */
-    public List<EmcOrgInter>  isExsistInter(Map<String,Object> map);
+    public List<EmcOrgInter>  isExsistInter(EmcOrgInter record);
 
     /**
      * 确认后导入组织机构
@@ -57,4 +57,25 @@ public interface RoomTempService {
      * 确认后导入热力站信息数据
      */
     public Map<String, Object>  inserStation(Node node);
+
+    /**
+     * 通过pid和comid查询存在的Emcid;
+     */
+    public EmcOrgInter  selectEmcOrgByMap(Map<String,Object> map);
+
+    /**
+     * 通过公司id修改导入 数据后的t_emc_org 实现两个数据库的pid对应关系
+     * @param comId
+     */
+    void updateOrgPidByCid(Org org);
+
+    /**
+     * 修改热源数据
+     */
+    void updateFeed(Feed feed);
+
+    /**
+     * 修改热力站
+     */
+    void updateNode(Node node);
 }

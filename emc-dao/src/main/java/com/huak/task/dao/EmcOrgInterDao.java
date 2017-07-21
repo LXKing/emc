@@ -18,5 +18,9 @@ public interface EmcOrgInterDao {
 
     int updateByPrimaryKey(EmcOrgInter record);
 
-    List<EmcOrgInter> selectAllByMap(Map<String,Object> map);
+    List<EmcOrgInter> selectAllByMap(EmcOrgInter record);
+
+    EmcOrgInter selectEmcOrgByMap(Map<String,Object> map);
+
+
 }

@@ -163,7 +163,7 @@
       REDE_TIME = #{redeTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-    <select id="selectAllByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    <select id="selectAllByMap" parameterType="com.huak.task.model.Temperature" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_temperature_tj

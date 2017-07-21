@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,16 +51,30 @@ public class StationApi {
         logger.info("导入数据的入参："+data);
         JSONObject jb = JSON.parseObject(data);
         Object o =jb.get("json");
-        Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
-        map.put("unitType","2");
+        JSONObject jbAll = JSON.parseObject(o.toString());
+        Object eccOrgId=jbAll.get("ORGID");
+        jbAll.remove("ORGID");
+        jbAll.put("ORGID","-1");
+        Node eccNode = JSON.parseObject(jbAll.toString(),Node.class);
         JSONObject jsonObj = new JSONObject();
-        List<EmcOrgInter> list = roomTempService.isExsistInter(map);
+        EmcOrgInter orgInter = new EmcOrgInter();
+        orgInter.setComId(eccNode.getComId());
+        orgInter.setOrgId(eccNode.getId());
+        List<EmcOrgInter> list = roomTempService.isExsistInter(orgInter);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该数据已存在");
             return jsonObj;
         }else {
-            Node eccNode = JSON.parseObject(o.toString(),Node.class);
+            Map<String,Object> params = new HashMap<String, Object>();
+            params.put("pid",eccOrgId.toString());
+            params.put("unitType","0");
+            EmcOrgInter emcOrgInter =  roomTempService.selectEmcOrgByMap(params);
+            if(emcOrgInter==null){
+                jsonObj.put("status","3");
+                jsonObj.put("msg","没有上级");
+                return jsonObj;
+            }
             EmcOrgInter inter = new EmcOrgInter();
             String uuid = UUIDGenerator.getUUID();
             eccNode.setId(uuid);
@@ -69,9 +84,13 @@ public class StationApi {
                 logger.info("----------建立关系表数据----------");
                 inter.setComId(eccNode.getComId());
                 inter.setEmcId(uuid);
-                inter.setOrgId(eccNode.getOrgId().toString());
-                inter.setUnitType("1");
+                inter.setOrgId(eccNode.getId());
+                inter.setUnitType("3");
                 roomTempService.insertEmcOrgInter(inter);
+                Node node = new Node();
+                node.setId(uuid);
+                node.setOrgId(new Long(emcOrgInter.getEmcId()));
+                roomTempService.updateNode(node);
                 jsonObj.put("status","2");
                 jsonObj.put("msg","数据导入成功");
                 return jsonObj;
