@@ -7,7 +7,6 @@ import com.huak.common.utils.DateUtils;
 import com.huak.home.dao.SearchDao;
 import com.huak.home.dao.component.ComponentDao;
 import com.huak.task.dao.TemperatureDao;
-import com.huak.task.model.Temperature;
 import com.huak.weather.dao.WeatherAqiDao;
 import com.huak.weather.dao.WeatherDao;
 import com.huak.weather.dao.WeekforcastDao;
@@ -21,10 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -257,10 +252,10 @@ public class ComponentServiceImpl implements ComponentService{
      */
     @Override
     @Transactional(readOnly = true)
-    public Map<String, Object> selectrecentDetail(Map<String, Object> paramsMap) {
-
+    public List<Map<String, Object>> selectrecentDetail(Map<String, Object> paramsMap) {
+       Map<String,Object> result = null;
         try {
-            String date = dateDao.getDate();
+            String date = "2017-06-05";
             String yesterday = DateUtils.getDay(date,-1);
             String towdayago = DateUtils.getDay(date,-2);
             String treedayago = DateUtils.getDay(date,-3);
@@ -268,11 +263,300 @@ public class ComponentServiceImpl implements ComponentService{
             paramsMap.put("yesterday",yesterday);
             paramsMap.put("towdayago",towdayago);
             paramsMap.put("treedayago",treedayago);
-            List<Map<String,Object>> result = componentDao.selectrecentDetail(paramsMap);
+             result = componentDao.selectrecentDetail(paramsMap);
+            logger.info(result+"----------");
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("组件-近期单耗详情" + e);
         }
-        return null;
+        return this.assemblyData(result);
+    }
+
+    /**
+     * 组件-近期单耗详情数据组装
+     * @param data
+     * @return
+     */
+    private List<Map<String, Object>> assemblyData(Map<String, Object> data) {
+        if(null == data){
+            return null;
+        }
+        List<Map<String,Object>> results = new ArrayList<>();//昨天、今天、明天
+        Map<String,Object> towdayagao = new HashMap<>();//前天map
+        List<Map<String,Object>> temp = new ArrayList<>();//前天list
+        /*水*/
+        Map<String,Object> typewhater = new HashMap<>();
+        typewhater.put("value",data.get("towwhater"));
+        typewhater.put("value2",data.get("towwhaterzz"));
+        Double towwhaterzz = Double.parseDouble(data.get("towwhaterzz").toString());
+        if(towwhaterzz>0){
+            typewhater.put("trend",1);
+        }else if(towwhaterzz < 0){
+            typewhater.put("trend",2);
+        }else{
+            typewhater.put("trend",3);
+        }
+        /*电*/
+        Map<String,Object> typeelectric = new HashMap<>();
+        typeelectric.put("value",data.get("towelectric"));
+        typeelectric.put("value2",data.get("towelectriczz"));
+        Double towelectriczz = Double.parseDouble(data.get("towelectriczz").toString());
+        if(towelectriczz > 0){
+            typeelectric.put("trend",1);
+        }else if(towelectriczz < 0){
+            typeelectric.put("trend",2);
+        }else{
+            typeelectric.put("trend",3);
+        }
+
+        /*气*/
+        Map<String,Object> typegas = new HashMap<>();
+        typegas.put("value",data.get("towgas"));
+        typegas.put("value2",data.get("towgaszz"));
+        Double towgaszz = Double.parseDouble(data.get("towgaszz").toString());
+        if(towgaszz > 0){
+            typegas.put("trend",1);
+        }else if(towgaszz < 0){
+            typegas.put("trend",2);
+        }else{
+            typegas.put("trend",3);
+        }
+
+         /*热*/
+        Map<String,Object> typeheat = new HashMap<>();
+        typeheat.put("value",data.get("towheat"));
+        typeheat.put("value2",data.get("towheatzz"));
+        Double towheatzz = Double.parseDouble(data.get("towheatzz").toString());
+        if(towheatzz > 0){
+            typeheat.put("trend",1);
+        }else if(towheatzz < 0){
+            typeheat.put("trend",2);
+        }else{
+            typeheat.put("trend",3);
+        }
+
+        /*煤*/
+        Map<String,Object> typecoal = new HashMap<>();
+        typecoal.put("value",data.get("towcoal"));
+        typecoal.put("value2",data.get("towcoalzz"));
+        Double towcoalzz = Double.parseDouble(data.get("towcoalzz").toString());
+        if(towcoalzz > 0){
+            typecoal.put("trend",1);
+        }else if(towcoalzz < 0){
+            typecoal.put("trend",2);
+        }else{
+            typecoal.put("trend",3);
+        }
+
+        /*天然气*/
+        Map<String,Object> typesolar = new HashMap<>();
+        typesolar.put("value",data.get("towsolar"));
+        typesolar.put("value2",data.get("towsolarzz"));
+        Double towsolarzz = Double.parseDouble(data.get("towsolarzz").toString());
+        if(towsolarzz > 0){
+            typesolar.put("trend",1);
+        }else if(towcoalzz < 0){
+            typesolar.put("trend",2);
+        }else{
+            typesolar.put("trend",3);
+        }
+
+
+
+        Map<String,Object> yesterday = new HashMap<>();//昨天map
+        List<Map<String,Object>> yesterdaytemp = new ArrayList<>();//昨天list
+        /*水*/
+        Map<String,Object> typewhater1 = new HashMap<>();
+        typewhater1.put("value",data.get("ywhater"));
+        typewhater1.put("value2",data.get("ywhaterzz"));
+        Double ywhaterzz = Double.parseDouble(data.get("ywhaterzz").toString());
+        logger.info(ywhaterzz+"------------------------------------");
+        if(ywhaterzz>0){
+            typewhater1.put("trend",1);
+        }else if(ywhaterzz < 0){
+            typewhater1.put("trend",2);
+        }else{
+            typewhater1.put("trend",3);
+        }
+
+        /*电*/
+        Map<String,Object> typeelectric1 = new HashMap<>();
+        typeelectric1.put("value",data.get("yelectric"));
+        typeelectric1.put("value2",data.get("yelectriczz"));
+        Double yelectriczz = Double.parseDouble(data.get("yelectriczz").toString());
+        if(yelectriczz > 0){
+            typeelectric1.put("trend",1);
+        }else if(yelectriczz < 0){
+            typeelectric1.put("trend",2);
+        }else{
+            typeelectric1.put("trend",3);
+        }
+
+        /*气*/
+        Map<String,Object> typegas1 = new HashMap<>();
+        typegas1.put("value",data.get("ygas"));
+        typegas1.put("value2",data.get("ygaszz"));
+        Double ygaszz = Double.parseDouble(data.get("ygaszz").toString());
+        if(ygaszz > 0){
+            typegas1.put("trend",1);
+        }else if(ygaszz < 0){
+            typegas1.put("trend",2);
+        }else{
+            typegas1.put("trend",3);
+        }
+
+             /*热*/
+        Map<String,Object> typeheat1 = new HashMap<>();
+        typeheat1.put("value",data.get("yheat"));
+        typeheat1.put("value2",data.get("yheatzz"));
+        Double yheatzz = Double.parseDouble(data.get("yheatzz").toString());
+        if(yheatzz > 0){
+            typeheat1.put("trend",1);
+        }else if(yheatzz < 0){
+            typeheat1.put("trend",2);
+        }else{
+            typeheat1.put("trend",3);
+        }
+
+
+        /*煤*/
+        Map<String,Object> typecoal1 = new HashMap<>();
+        typecoal1.put("value",data.get("ycoal"));
+        typecoal1.put("value2",data.get("ycoalzz"));
+        Double ycoalzz = Double.parseDouble(data.get("ycoalzz").toString());
+        if(ycoalzz > 0){
+            typecoal1.put("trend",1);
+        }else if(ycoalzz < 0){
+            typecoal1.put("trend",2);
+        }else{
+            typecoal1.put("trend",3);
+        }
+
+        /*天然气*/
+        Map<String,Object> typesolar1 = new HashMap<>();
+        typesolar1.put("value",data.get("ysolar"));
+        typesolar1.put("value2",data.get("ysolarzz"));
+        Double ysolarzz = Double.parseDouble(data.get("ysolarzz").toString());
+        if(ysolarzz > 0){
+            typesolar1.put("trend",1);
+        }else if(ysolarzz < 0){
+            typesolar1.put("trend",2);
+        }else{
+            typesolar1.put("trend",3);
+        }
+
+
+        Map<String,Object> today = new HashMap<>();//今天map
+        List<Map<String,Object>> todaytemp = new ArrayList<>();//今天list
+        /*水*/
+        Map<String,Object> typewhater2 = new HashMap<>();
+        typewhater2.put("value",data.get("twhater"));
+        typewhater2.put("value2",data.get("twhaterzz"));
+        Double twhaterzz = Double.parseDouble(data.get("twhaterzz").toString());
+        if(twhaterzz>0){
+            typewhater2.put("trend",1);
+        }else if(twhaterzz < 0){
+            typewhater2.put("trend",2);
+        }else{
+            typewhater2.put("trend",3);
+        }
+
+        /*电*/
+        Map<String,Object> typeelectric2 = new HashMap<>();
+        typeelectric2.put("value",data.get("telectric"));
+        typeelectric2.put("value2",data.get("telectriczz"));
+        Double telectriczz = Double.parseDouble(data.get("telectriczz").toString());
+        if(telectriczz > 0){
+            typeelectric2.put("trend",1);
+        }else if(telectriczz < 0){
+            typeelectric2.put("trend",2);
+        }else{
+            typeelectric2.put("trend",3);
+        }
+
+        /*气*/
+        Map<String,Object> typegas2 = new HashMap<>();
+        typegas2.put("value",data.get("tgas"));
+        typegas2.put("value2",data.get("tgaszz"));
+        Double tgaszz = Double.parseDouble(data.get("tgaszz").toString());
+        if(tgaszz > 0){
+            typegas2.put("trend",1);
+        }else if(tgaszz < 0){
+            typegas2.put("trend",2);
+        }else{
+            typegas2.put("trend",3);
+        }
+
+        Map<String,Object> typeheat2 = new HashMap<>();
+        typeheat2.put("value",data.get("theat"));
+        typeheat2.put("value2",data.get("theatzz"));
+        Double theatzz = Double.parseDouble(data.get("theatzz").toString());
+        if(theatzz > 0){
+            typeheat2.put("trend",1);
+        }else if(theatzz < 0){
+            typeheat2.put("trend",2);
+        }else{
+            typeheat2.put("trend",3);
+        }
+
+        /*煤*/
+        Map<String,Object> typecoal2 = new HashMap<>();
+        typecoal2.put("value",data.get("tcoal"));
+        typecoal2.put("value2",data.get("tcoalzz"));
+        Double tcoalzz = Double.parseDouble(data.get("tcoalzz").toString());
+        if(tcoalzz > 0){
+            typecoal2.put("trend",1);
+        }else if(tcoalzz < 0){
+            typecoal2.put("trend",2);
+        }else{
+            typecoal2.put("trend",3);
+        }
+
+        /*天然气*/
+        Map<String,Object> typesolar2 = new HashMap<>();
+        typesolar2.put("value",data.get("tsolar"));
+        typesolar2.put("value2",data.get("tsolarzz"));
+        Double tsolarzz = Double.parseDouble(data.get("tsolarzz").toString());
+        if(tsolarzz > 0){
+            typesolar2.put("trend",1);
+        }else if(tsolarzz < 0){
+            typesolar2.put("trend",2);
+        }else{
+            typesolar2.put("trend",3);
+        }
+
+
+        /*前天map*/
+        temp.add(typewhater);
+        temp.add(typeelectric);
+        temp.add(typegas);
+        temp.add(typeheat);
+//        temp.add(typesolar);
+        towdayagao.put("value",data.get("towtotal"));
+        towdayagao.put("list",temp);
+
+        /*昨天map*/
+        yesterdaytemp.add(typewhater1);
+        yesterdaytemp.add(typeelectric1);
+        yesterdaytemp.add(typegas1);
+        yesterdaytemp.add(typeheat1);
+//        yesterdaytemp.add(typecoal1);
+//        yesterdaytemp.add(typesolar1);
+        yesterday.put("value",data.get("ytotal"));
+        yesterday.put("list",yesterdaytemp);
+
+         /*今天map*/
+        todaytemp.add(typewhater2);
+        todaytemp.add(typeelectric2);
+        todaytemp.add(typegas2);
+        todaytemp.add(typeheat2);
+//        todaytemp.add(typecoal2);
+//        todaytemp.add(typesolar2);
+        today.put("value",data.get("ttotal"));
+        today.put("list",todaytemp);
+        results.add(towdayagao);
+        results.add(yesterday);
+        results.add(today);
+        return results;
     }
 
     /**
@@ -518,13 +802,17 @@ public class ComponentServiceImpl implements ComponentService{
                 int currentDays = (int) data.get("currentDays");
                 int planDays = (int) data.get("planDays");
                 double currentPlan = Double.parseDouble(data.get("currentPlan").toString());
+
                 if(fla){
+
                     kedu1 =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(currentDays,planDays),0.75),2);
+                    logger.info(kedu1+"--------------------------------------------kedu1");
                     if(planDays == 0 ){
                         if(currentPlan == 0){
                             pcd = 0 ;
                         }else{
                             pcd =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(jn_total,currentPlan),100),4);
+                            logger.info(pcd+"--------------------------------------------pcd");
                         }
                         pcdz = jn_total;
                     }else{
@@ -533,8 +821,12 @@ public class ComponentServiceImpl implements ComponentService{
                         }else{
                             pcd = 0;
                         }
+                        logger.info(currentDays+"--------------------------------------------pcdz");
+                        logger.info(planDays+"--------------------------------------------pcdz");
+                        logger.info(currentPlan+"--------------------------------------------pcdz");
+                        logger.info(jn_total+"--------------------------------------------jn_total");
                         pcdz =MathsUtil.round(MathsUtil.sub(jn_total,MathsUtil.mul(MathsUtil.div(currentDays,planDays),currentPlan)),2);
-
+                        logger.info(pcdz+"--------------------------------------------pcdz");
                     }
                 }else{
                     kedu1 = 0.75;

@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -198,7 +199,7 @@ public class ComponentController {
     @RequestMapping(value = "/recentdetail", method = RequestMethod.POST)
     @ResponseBody
     public String recentdetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("室温散点组件");
+        logger.info("组件-近期单耗详情");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -209,14 +210,14 @@ public class ComponentController {
             params.put("feedType",paramsMap.get("toolFeedType"));
             params.put("type",paramsMap.get("toolOrgType"));
             params.put("comId",company.getId());
-            Map<String,Object> map =  componentService.selectrecentDetail(paramsMap);
+            List<Map<String,Object>> map =  componentService.selectrecentDetail(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("室温散点组件查询异常" + e.getMessage());
+            logger.error("组件-近期单耗详情" + e.getMessage());
         }
         return jo.toJSONString();
     }

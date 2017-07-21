@@ -386,9 +386,65 @@
 
     <!--组件-昨天、今天、明天-->
     <select id="selectrecentDetail"  resultType="java.util.Map" parameterType="java.util.Map">
-        select q.dates as 'today',sum(q.totalcol) as total,max((case when q.type= 1 then q.dh else 0 end)) as whater,
+        select
+        CC.ttotal,CC.twhater,CC.telectric,CC.tgas,CC.theat,CC.tcoal,CC.tsolar,
+        CC.ytotal,CC.ywhater,CC.yelectric,CC.ygas,CC.yheat,CC.ycoal,CC.ysolar,
+        CC.towtotal,CC.towwhater,CC.towelectric,CC.towgas,CC.towheat,CC.towcoal,CC.towsolar,
+        CC.treewhater,CC.treeelectric,CC.treegas,CC.treeheat,CC.treetotal,CC.treesolar,
+        (CASE WHEN CC.twhater=0 then 0 else ROUND((CC.twhater-CC.ywhater)/CC.twhater,2) end) as twhaterzz,
+        (CASE WHEN CC.telectric=0 then 0 else ROUND((CC.telectric-CC.yelectric)/CC.telectric,2) end) as telectriczz,
+        (CASE WHEN CC.tgas=0 then 0 else ROUND((CC.tgas-CC.ygas)/CC.tgas,2) end) as tgaszz,
+        (CASE WHEN CC.theat=0 then 0 else ROUND((CC.theat-CC.yheat)/CC.theat,2) end) as theatzz,
+        (CASE WHEN CC.tcoal=0 then 0 else ROUND((CC.tcoal-CC.ycoal)/CC.tcoal,2) end) as tcoalzz,
+        (CASE WHEN CC.tsolar=0 then 0 else ROUND((CC.tsolar-CC.ysolar)/CC.tsolar,2) end) as tsolarzz,
+
+        (CASE WHEN CC.ywhater=0 then 0 else ROUND((CC.ywhater-CC.towwhater)/CC.ywhater,2) end) as ywhaterzz,
+        (CASE WHEN CC.yelectric=0 then 0 else ROUND((CC.yelectric-CC.towelectric)/CC.yelectric,2) end) as yelectriczz,
+        (CASE WHEN CC.ygas=0 then 0 else ROUND((CC.ygas-CC.towgas)/CC.ygas,2) end) as ygaszz,
+        (CASE WHEN CC.yheat=0 then 0 else ROUND((CC.yheat-CC.towheat)/CC.yheat,2) end) as yheatzz,
+        (CASE WHEN CC.ycoal=0 then 0 else ROUND((CC.ycoal-CC.towcoal)/CC.ycoal,2) end) as ycoalzz,
+        (CASE WHEN CC.ysolar=0 then 0 else ROUND((CC.ysolar-CC.towsolar)/CC.ysolar,2) end) as ysolarzz,
+
+        (CASE WHEN CC.towwhater=0 then 0 else ROUND((CC.towwhater-CC.treewhater)/CC.towwhater,2) end) as towwhaterzz,
+        (CASE WHEN CC.towelectric=0 then 0 else ROUND((CC.towelectric-CC.treeelectric)/CC.towelectric,2) end) as towelectriczz,
+        (CASE WHEN CC.towgas=0 then 0 else ROUND((CC.towgas-CC.treegas)/CC.towgas,2) end) as towgaszz,
+        (CASE WHEN CC.towheat=0 then 0 else ROUND((CC.towheat-CC.treeheat)/CC.towheat,2) end) as towheatzz,
+        (CASE WHEN CC.towcoal=0 then 0 else ROUND((CC.towcoal-CC.treecoal)/CC.towcoal,2) end) as towcoalzz,
+        (CASE WHEN CC.towsolar=0 then 0 else ROUND((CC.towsolar-CC.treesolar)/CC.towsolar,2) end) as towsolarzz
+        from (SELECT
+        max(case when AA.days = 'today' THEN AA.total else 0 end) ttotal,
+        max(case when AA.days = 'today' THEN AA.whater else 0 end) twhater,
+        max(case when AA.days = 'today' THEN AA.electric else 0 end) telectric,
+        max(case when AA.days = 'today' THEN AA.heat else 0 end) theat,
+        max(case when AA.days = 'today' THEN AA.gas else 0 end)  tgas,
+        max(case when AA.days = 'today' THEN AA.coal else 0 end) tcoal,
+        max(case when AA.days = 'today' THEN AA.solar else 0 end) tsolar,
+        max(case when AA.days = 'yesterday' THEN AA.total else 0 end) ytotal,
+        max(case when AA.days = 'yesterday' THEN AA.whater else 0 end) ywhater,
+        max(case when AA.days = 'yesterday' THEN AA.electric else 0 end) yelectric,
+        max(case when AA.days = 'yesterday' THEN AA.heat else 0 end) yheat,
+        max(case when AA.days = 'yesterday' THEN AA.gas else 0 end)  ygas,
+        max(case when AA.days = 'yesterday' THEN AA.coal else 0 end) ycoal,
+        max(case when AA.days = 'yesterday' THEN AA.solar else 0 end) ysolar,
+        max(case when AA.days = 'towdayago' THEN AA.total else 0 end) towtotal,
+        max(case when AA.days = 'towdayago' THEN AA.whater else 0 end) towwhater,
+        max(case when AA.days = 'towdayago' THEN AA.electric else 0 end) towelectric,
+        max(case when AA.days = 'towdayago' THEN AA.heat else 0 end) towheat,
+        max(case when AA.days = 'towdayago' THEN AA.gas else 0 end)  towgas,
+        max(case when AA.days = 'towdayago' THEN AA.coal else 0 end) towcoal,
+        max(case when AA.days = 'towdayago' THEN AA.solar else 0 end) towsolar,
+        max(case when AA.days = 'treedayago' THEN AA.total else 0 end) treetotal,
+        max(case when AA.days = 'treedayago' THEN AA.whater else 0 end) treewhater,
+        max(case when AA.days = 'treedayago' THEN AA.electric else 0 end) treeelectric,
+        max(case when AA.days = 'treedayago' THEN AA.heat else 0 end) treeheat,
+        max(case when AA.days = 'treedayago' THEN AA.gas else 0 end)  treegas,
+        max(case when AA.days = 'treedayago' THEN AA.coal else 0 end) treecoal,
+        max(case when AA.days = 'treedayago' THEN AA.solar else 0 end) treesolar
+
+        FROM (select 'today' as days,sum(q.totalcol) as total,max((case when q.type= 1 then q.dh else 0 end)) as whater,
         max((case when q.type= 2 then q.dh else 0 end)) as electric,
         max((case when q.type= 3 then q.dh else 0 end)) as gas,
+        max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)) as coal,
         max((case when q.type= 6 then q.dh else 0 end)) as solar
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh,sum(mm.coles) as totalcol
@@ -412,18 +468,18 @@
             and  UNITTYPE  = #{type}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="today != null and today !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{today},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{today},' 23:59:59')
         </if>
-
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates
 
         union all
-        ( select q.dates as 'yesterday',sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        ( select 'yesterday' as days,sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
+         max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
@@ -447,17 +503,17 @@
             and  UNITTYPE  = #{type}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="yesterday != null and yesterday !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{yesterday},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{yesterday},' 23:59:59')
         </if>
-
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates)
         union ALL
-        ( select q.dates as 'towdayago',sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        ( select 'towdayago' as days,sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
+         max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
@@ -481,7 +537,7 @@
             and  UNITTYPE  = #{type}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="towdayago != null and towdayago !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{towdayago},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{towdayago},' 23:59:59')
@@ -489,9 +545,10 @@
 
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates)
         union ALL
-        ( select q.dates as 'treedayago',sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        ( select 'treedayago' as days,sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
+         max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
@@ -515,12 +572,12 @@
             and  UNITTYPE  = #{type}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <>]]> '4'
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="treedayago != null and treedayago !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{treedayago},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{treedayago},' 23:59:59')
         </if>
-        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates) order by dates asc
+        GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates))AA)CC
     </select>
 
     <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">

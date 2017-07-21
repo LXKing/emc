@@ -45,5 +45,5 @@ public interface ComponentService {
      * @param paramsMap
      * @return
      */
-    Map<String,Object> selectrecentDetail(Map<String, Object> paramsMap);
+    java.util.List<Map<String, Object>> selectrecentDetail(Map<String, Object> paramsMap);
 }

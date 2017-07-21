@@ -62,5 +62,5 @@ public interface ComponentDao {
      * @param paramsMap
      * @return
      */
-    List<Map<String,Object>> selectrecentDetail(Map<String, Object> paramsMap);
+    Map<String,Object> selectrecentDetail(Map<String, Object> paramsMap);
 }
