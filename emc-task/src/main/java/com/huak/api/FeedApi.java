@@ -45,10 +45,25 @@ public class FeedApi {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object exportOrgEcc( HttpServletRequest request ,String json) throws IOException {
         //接收请求参数
-        InputStreamReader reader=new InputStreamReader(request.getInputStream(),"UTF-8");
-        BufferedReader buffer=new BufferedReader(reader);
-        String data=buffer.readLine();
-        logger.info("导入数据的入参："+data);
+        String data=null;
+        BufferedReader buffer=null;
+        try {
+            InputStreamReader  reader = new InputStreamReader(request.getInputStream(), "UTF-8");
+            buffer = new BufferedReader(reader);
+            data = buffer.readLine();
+            logger.info("热源导入数据的入参："+data);
+        }catch (IOException e){
+            logger.info("数据导入时异常");
+        }finally {
+            if (buffer != null) {
+                try {
+                    buffer.close();
+                } catch (IOException io) {
+                    logger.info("流关闭异常"+io.getMessage());
+                }
+            }
+        }
+
         JSONObject jb = JSON.parseObject(data);
 
         Object o =jb.get("json");
