@@ -451,7 +451,6 @@
         </div>
         <div class="energyBox carbonBox">
             <div id="barchart" class="clearfix">
-
             </div>
             <div class="chart-box">
                 <div class="cb-header">
@@ -470,7 +469,6 @@
         </div>
 
     </div>
-
 </div>
 
 <div class=" col-xs-4 mb14  ">
