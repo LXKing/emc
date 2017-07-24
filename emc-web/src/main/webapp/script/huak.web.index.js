@@ -1682,6 +1682,7 @@ function initchart10(hours,temps){
 
         yAxis: {
             type: 'value',
+            max: 50,
             axisTick: {
                 show: false
             },
