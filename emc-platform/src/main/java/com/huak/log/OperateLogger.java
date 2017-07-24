@@ -1,13 +1,9 @@
 package com.huak.log;
 
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.huak.auth.model.User;
+import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
+import com.huak.log.model.OperateLog;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -17,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
-import com.huak.log.model.OperateLog;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Aspect
 public class OperateLogger {
@@ -55,6 +52,7 @@ public class OperateLogger {
 		//获取request中的信息
 		Object[] params = jp.getArgs();
 		HttpServletRequest request = null;
+        User user = null;
 		for(Object param:params){
 			if(param instanceof HttpServletRequest){
 				request = (HttpServletRequest)param;break;
@@ -75,6 +73,7 @@ public class OperateLogger {
 			log.setRemotePort(port);
 			log.setReqUri(uri);
 			log.setReqUrl(url);
+            user = (User)request.getSession().getAttribute(Constants.SESSION_KEY);
 		}
 		//封装操作日志信息
 		log.setId(UUIDGenerator.getUUID());
@@ -84,8 +83,11 @@ public class OperateLogger {
 		log.setClassName(className);
 		log.setMethodName(methodName);
 		//从session信息中获取当前操作者
-		log.setCreator(request.getSession().getAttribute(Constants.SESSION_KEY)==null
-				?"":request.getSession().getAttribute(Constants.SESSION_KEY).toString());
+
+        if(user!=null){
+            log.setCreator(user.getId());
+        }
+
 		//保存操作日志
 		logService.saveOperateLog(log);
 		return jp.proceed();
@@ -110,11 +112,12 @@ public class OperateLogger {
 	                //根据网卡取本机配置的IP  
 	                InetAddress inet=null;  
 	                try {  
-	                    inet = InetAddress.getLocalHost();  
-	                } catch (UnknownHostException e) {  
+	                    inet = InetAddress.getLocalHost();
+                        ipAddress= inet.getHostAddress();
+                    } catch (UnknownHostException e) {
 	                    e.printStackTrace();  
 	                }  
-	                ipAddress= inet.getHostAddress();  
+
 	            }  
 	        }  
 	        //对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割  

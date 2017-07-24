@@ -62,7 +62,7 @@ public class CommonExcelExport {
                                  HSSFWorkbook wb,
                                  int startRow,
                                  List<Map<Integer, Object>> cellValues,
-                                 String workBookName) {
+                                 String workBookName) throws IOException {
         OutputStream out = null;
         //获取工作簿中的第一个sheet
         HSSFSheet sheet = wb.getSheetAt(0);
@@ -93,11 +93,10 @@ public class CommonExcelExport {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
+            if(out!=null){
                 out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
         }
     }
 
