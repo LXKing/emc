@@ -15,7 +15,7 @@
 <!-- page specific plugin styles -->
 <link rel="stylesheet" href="${web}/static/css/huarestyle.css" />
 <link rel="stylesheet" href="${web}/static/css/homemian.css" />
-
+<link rel="stylesheet" href="${web}/static/css/weather.css" />
 <!--[if lte IE 9]>
 <link rel="stylesheet" href="${web}/static/assets/css/ace-part2.css" class="ace-main-stylesheet" />
 <![endif]-->

@@ -1599,6 +1599,7 @@ function chart10Fun() {
 //        data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
+            console.info(result);
             $(".chart-content.clearfix").empty();
             if(result.flag == true){
                 if(result.object.aqi != null && result.object.currentWeather != null){
@@ -1610,17 +1611,19 @@ function chart10Fun() {
                         '<div class="cb-title-right ">空气质量：<span >'+result.object.aqi.aqiLevel+'</span></div></div>'
                     $(".chart-content.clearfix").append(html) ;
                     var html2 ="<ul>";
-                    html2 +=" <li> <div class='wather weather01'></div>"+
+                    var weathericon ='wather weather'+result.object.currentWeather.weatherIcon;
+                    html2 +=" <li> <div class='"+weathericon+"'></div>"+
                                 "<div class='detail clearfix'> <div>"+result.object.currentWeather.temperatureCurr+"</div>"+
-                                "<div><p>"+result.object.currentWeather.weatherCurrent+"（实时）</p></div></div>"+
-                                "<h3>"+result.object.currentWeather.tempLow+"~"+result.object.currentWeather.tempHigh+"℃<h5>"+result.object.currentWeather.wind+"</h5>"+
+                                "<div><p>"+result.object.currentWeather.weatherCurrent+"</p></div></div>"+
+                                "<h3>"+result.object.currentWeather.tempLow+"~"+result.object.currentWeather.tempHigh+"℃<h6>"+result.object.currentWeather.wind+"</h6>"+
                             " </li>"
                     if(result.object.weekForcast.length>0){
                           result.object.weekForcast.forEach(function(value, index, array) {
+                              var iconclass ='wather weather'+value.weatherIcon;
                               html2 +=" <li>"+
                                   "<h1>"+value.week+"</h1>"+
                                   "<h2>"+ dates.format(value.reportDate)+"</h2>"+
-                                  "<div class='wather weather01'></div>"+
+                                  "<div class='"+iconclass+"'></div>"+
                                   "<h3>"+value.tempLow+"~"+value.tempHigh+"℃</h3>"+
                                   "<h4>"+value.weather+"</h4>"+
                                   "<h5>"+value.wind+""+value.winp+"</h5>"+
@@ -1736,7 +1739,6 @@ function chart13Fun() {
                     recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
                     recentlisthtml += "<ul>";
                     for(var j = 0; j < recentdata[i].list.length; j++) {
-                        alert(recentdata[i].list[j].trend);
                         recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" :(recentdata[i].list[j].trend == 2 ?"↓":"→")) + "</span></li>";
                     }
                     recentlisthtml += "</ul>";
