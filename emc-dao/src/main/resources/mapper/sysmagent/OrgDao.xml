@@ -157,4 +157,16 @@
         </if>
         order by ORG_NAME ASC
     </select>
+    <update id="updateOrgPid" parameterType="java.lang.String">
+        UPDATE t_emc_org t SET t.P_ORG_ID=
+        (SELECT EMC_ID FROM
+        (
+        SELECT i.EMC_ID,o.ID FROM t_emc_org o ,t_emc_org_inter i WHERE  o.P_ORG_ID = i.ORG_ID
+        and o.COM_ID = #{comId,jdbcType=VARCHAR}
+        AND i.UNIT_TYPE='0'
+        AND o.P_ORG_ID!=0  ) a WHERE a.ID = t.ID)
+        WHERE t.COM_ID=#{comId,jdbcType=VARCHAR}
+        AND t.P_ORG_ID!=0
+
+    </update>
 </mapper>

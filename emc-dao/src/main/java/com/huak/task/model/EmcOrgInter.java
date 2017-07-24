@@ -1,8 +1,8 @@
 package com.huak.task.model;
 
-public class EmcOrgInter {
-    private String id;
+import java.io.Serializable;
 
+public class EmcOrgInter implements Serializable{
     private String comId;
 
     private String orgId;
@@ -11,8 +11,7 @@ public class EmcOrgInter {
 
     private String unitType;
 
-    public EmcOrgInter(String id, String comId, String orgId, String emcId,String unitType) {
-        this.id = id;
+    public EmcOrgInter(String comId, String orgId, String emcId,String unitType) {
         this.comId = comId;
         this.orgId = orgId;
         this.emcId = emcId;
@@ -21,14 +20,6 @@ public class EmcOrgInter {
 
     public EmcOrgInter() {
         super();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
     }
 
     public String getComId() {

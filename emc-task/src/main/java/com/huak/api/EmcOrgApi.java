@@ -6,16 +6,17 @@ import com.huak.org.model.Org;
 import com.huak.task.model.EmcOrgInter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class EmcOrgApi {
 
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Resource
+    @Autowired
     private RoomTempService roomTempService;
 
     @ResponseBody
@@ -51,24 +52,41 @@ public class EmcOrgApi {
         JSONObject jb = JSON.parseObject(data);
         Object o =jb.get("json");
         Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
+        //Org eccOrg = JSON.parseObject(o.toString(),Org.class);
+
+        Org eccOrg = new Org();
+        eccOrg.setComId(map.get("comId").toString());
+        eccOrg.setOrgName(map.get("ORGNAME").toString());
+        eccOrg.setpOrgId(new Long(-1));
         JSONObject jsonObj = new JSONObject();
-        List<EmcOrgInter> list = roomTempService.isExsistInter(map);
+        EmcOrgInter orgInter = new EmcOrgInter();
+        orgInter.setComId(eccOrg.getComId());
+        orgInter.setOrgId(map.get("ID").toString());
+        List<EmcOrgInter> list = roomTempService.isExsistInter(orgInter);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该组织机构数据已存在");
             return jsonObj;
         }else {
-            Org eccOrg = JSON.parseObject(o.toString(),Org.class);
             EmcOrgInter inter = new EmcOrgInter();
-            Long eccOrgId = eccOrg.getId();
+            //Long eccOrgId = eccOrg.getId();
             logger.info("---------------------开始导入数据---------------------");
             Map<String,Object> result = roomTempService.insertOrg(eccOrg);
                 if(result.get("flag")==true){
                     logger.info("----------建立关系表数据----------");
                     inter.setComId(eccOrg.getComId());
                     inter.setEmcId(result.get("emcId").toString());
-                    inter.setOrgId(eccOrgId.toString());
+                    inter.setOrgId(map.get("ID").toString());
+                    inter.setUnitType("0");
                     roomTempService.insertEmcOrgInter(inter);
+                    //更新对应的pid
+                    Org orgUpdate = new Org();
+                    orgUpdate.setId(new Long(result.get("emcId").toString()));
+                    Map<String,Object> params = new HashMap<String, Object>();
+                    params.put("pid",map.get("PORGID").toString());
+                    EmcOrgInter emcOrgInter =  roomTempService.selectEmcOrgByMap(params);
+                    orgUpdate.setpOrgId(new Long(emcOrgInter.getEmcId()));
+                    roomTempService.updateOrgPidByCid(orgUpdate);
                     jsonObj.put("status","1");
                     jsonObj.put("msg","组织机构数据导入成功");
                     return jsonObj;

@@ -1068,7 +1068,6 @@ function chart07Fun(){
         data:$("#searchTools").serialize(),
         dataType:"json",
         success:function(result) {
-            console.info(result);
             if (result.flag) {
                 /*仪表盘*/
                 var kedu1 = result.object.kedu1; //蓝色的刻度
@@ -1341,7 +1340,6 @@ function chart08Fun() {
         data:{min:18,max:22},
         dataType: "json",
         success: function (result) {
-            console.info(result);
             if(result.flag == true){
                 if(result.object.bar != null)
                     chart08Bar(result.object.bar);
@@ -1607,7 +1605,6 @@ function chart10Fun() {
                     var dates = new  Pdate();
                     var date = dates.format(result.object.aqi.reportDate);
                     var s = dates.showCal(result.object.aqi.reportDate);
-                    debugger;
                     var html = '<div class="cb-header clearfix" id="dates">'+
                         '<span class="cb-title" >'+date+' '+result.object.currentWeather.weekDay+' 农历'+s+'</span>'+
                         '<div class="cb-title-right ">空气质量：<span >'+result.object.aqi.aqiLevel+'</span></div></div>'
@@ -1721,87 +1718,38 @@ function initchart10(hours,temps){
 /*组件-昨天、今天、前天 日单耗对比*/
 function chart13Fun() {
     //trend 1升  2降
-    var recentdata = [{
-        value: 281.9,
-        list: [{
-            value: 260,
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
+    $.ajax({
+        url:_web +'/component/recentdetail',
+        type:'post',
+        async:true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:$("#searchTools").serialize(),
+        dataType:"json",
+        success:function(result) {
+            console.info(result);
+            if(result.flag == true){
+                var recentdata =  result.object;
+                var recenthtml = "";
+                var recentlisthtml = "";
+                var unitlist =['T','kwh','m3','GJ'];
+                for(var i = 0; i < recentdata.length; i++) {
 
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-            value2: '5.0',
-            trend: 1
-        }]
-    }, {
-        value: 281.9,
-        list: [{
-            value: 260,
+                    recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
+                    recentlisthtml += "<ul>";
+                    for(var j = 0; j < recentdata[i].list.length; j++) {
+                        alert(recentdata[i].list[j].trend);
+                        recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" :(recentdata[i].list[j].trend == 2 ?"↓":"→")) + "</span></li>";
+                    }
+                    recentlisthtml += "</ul>";
+                }
+                $("#recentall").html(recenthtml);
+                $("#recentlist").html(recentlisthtml);
+            }
 
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }]
-    }, {
-        value: 281.9,
-        list: [{
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }, {
-            value: 260,
-
-            value2: '5.0',
-            trend: 1
-        }]
-    }];
-
-    var recenthtml = "";
-    var recentlisthtml = "";
-    var unitlist =['T','kwh','m3','GJ'];
-    for(var i = 0; i < recentdata.length; i++) {
-        recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
-        recentlisthtml += "<ul>";
-        for(var j = 0; j < recentdata[i].list.length; j++) {
-            recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : "") + "</span></li>";
         }
-        recentlisthtml += "</ul>";
-    }
-    $("#recentall").html(recenthtml);
-    $("#recentlist").html(recentlisthtml);
+
+    });
+
+
 
 }
 

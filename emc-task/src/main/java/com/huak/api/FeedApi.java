@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,17 +50,34 @@ public class FeedApi {
         String data=buffer.readLine();
         logger.info("导入数据的入参："+data);
         JSONObject jb = JSON.parseObject(data);
+
         Object o =jb.get("json");
-        Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
-        map.put("unitType","1");
+        JSONObject jbAll = JSON.parseObject(o.toString());
+        Object eccOrgId=jbAll.get("ORGID");
+        jbAll.remove("ORGID");
+        jbAll.put("ORGID","-1");
+        Feed eccFeed = JSON.parseObject(jbAll.toString(),Feed.class);
+
         JSONObject jsonObj = new JSONObject();
-        List<EmcOrgInter> list = roomTempService.isExsistInter(map);
+        EmcOrgInter orgInter = new EmcOrgInter();
+        orgInter.setComId(eccFeed.getComId());
+        orgInter.setOrgId(eccFeed.getId());
+        List<EmcOrgInter> list = roomTempService.isExsistInter(orgInter);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该数据已存在");
             return jsonObj;
         }else {
-            Feed eccFeed = JSON.parseObject(o.toString(),Feed.class);
+            //Feed eccFeed = JSON.parseObject(o.toString(),Feed.class);
+            Map<String,Object> params = new HashMap<String, Object>();
+            params.put("pid",eccOrgId.toString());
+            params.put("unitType","0");
+            EmcOrgInter emcOrgInter =  roomTempService.selectEmcOrgByMap(params);
+            if(emcOrgInter==null){
+                jsonObj.put("status","3");
+                jsonObj.put("msg","该数据没有上级");
+                return jsonObj;
+            }
             EmcOrgInter inter = new EmcOrgInter();
             String uuid = UUIDGenerator.getUUID();
             eccFeed.setId(uuid);
@@ -69,9 +87,13 @@ public class FeedApi {
                 logger.info("----------建立关系表数据----------");
                 inter.setComId(eccFeed.getComId());
                 inter.setEmcId(uuid);
-                inter.setOrgId(eccFeed.getOrgId().toString());
+                inter.setOrgId(eccFeed.getId());
                 inter.setUnitType("1");
                 roomTempService.insertEmcOrgInter(inter);
+                Feed feedUpdate = new Feed();
+                feedUpdate.setId(uuid);
+                feedUpdate.setOrgId(new Long(emcOrgInter.getEmcId()));
+                roomTempService.updateFeed(feedUpdate);
                 jsonObj.put("status","1");
                 jsonObj.put("msg","数据导入成功");
                 return jsonObj;

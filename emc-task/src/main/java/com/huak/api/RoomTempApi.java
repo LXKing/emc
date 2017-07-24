@@ -47,15 +47,14 @@ public class RoomTempApi {
       logger.info("室温导入数据的入参"+data);
       JSONObject jb = JSON.parseObject(data);
       Object o =jb.get("json");
-      Map<String,Object> map = (Map<String,Object>) JSON.parse(o.toString());
+      Temperature t = JSON.parseObject(o.toString(),Temperature.class);
       JSONObject jsonObj = new JSONObject();
-      List<Temperature> list = roomTempService.isExsistTemp(map);
+      List<Temperature> list = roomTempService.isExsistTemp(t);
         if(list.size()>0){
             jsonObj.put("status","0");
             jsonObj.put("msg","该室温数据已存在");
             return jsonObj;
         }else {
-            Temperature t = JSON.parseObject(o.toString(),Temperature.class);
             logger.info("---------------------开始导入数据---------------------");
             Map<String,Object> result = roomTempService.insertTemp(t);
             if(result.get("flag")==true){
