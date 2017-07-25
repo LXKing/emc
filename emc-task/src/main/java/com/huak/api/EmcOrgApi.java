@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
@@ -47,9 +48,12 @@ public class EmcOrgApi {
         //接收请求参数
         String data=null;
         BufferedReader buffer=null;
+        InputStream inputStream=null;
+        InputStreamReader inputStreamReader=null;
         try {
-            InputStreamReader reader = new InputStreamReader(request.getInputStream(), "UTF-8");
-             buffer = new BufferedReader(reader);
+            inputStream=request.getInputStream();
+            inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+             buffer = new BufferedReader(inputStreamReader);
              data = buffer.readLine();
             logger.info("组织机构导入数据的入参："+data);
         }catch (IOException e){
@@ -58,6 +62,20 @@ public class EmcOrgApi {
             if (buffer != null) {
                 try {
                     buffer.close();
+                } catch (IOException io) {
+                    logger.info("流关闭异常"+io.getMessage());
+                }
+            }
+            if (inputStreamReader != null) {
+                try {
+                    inputStreamReader.close();
+                } catch (IOException io) {
+                    logger.info("流关闭异常"+io.getMessage());
+                }
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
                 } catch (IOException io) {
                     logger.info("流关闭异常"+io.getMessage());
                 }
