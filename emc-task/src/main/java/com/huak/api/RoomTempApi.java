@@ -51,7 +51,7 @@ public class RoomTempApi {
           inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
           buffer = new BufferedReader(inputStreamReader);
           data = buffer.readLine();
-          logger.info("组织机构导入数据的入参："+data);
+          logger.info("导入数据的入参："+data);
       }catch (IOException e){
           logger.info("数据导入时异常");
       }finally {
