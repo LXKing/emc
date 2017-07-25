@@ -27,17 +27,8 @@ $(function () {
         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
         //设置为limit可以获取limit, offset, search, sort, order
         queryParamsType: "undefined",
-        queryParams: function queryParams(params) {
-            var param = {
-                name:$('input[name="name"]').val(),
-                sdate:$('input[name="start"]').val(),
-                edate:$('input[name="end"]').val(),
-                _method: "PATCH",
-                pageNumber: params.pageNumber,
-                pageSize: params.pageSize
-            };
-            return param;
-        }, formatLoadingMessage: function () {
+        queryParams: params,
+        formatLoadingMessage: function () {
             return "请稍等，正在加载中...";
         },
         responseHandler: function (res) {
@@ -173,4 +164,11 @@ function deleteSeason(id) {
 function treeNodeClick(e,treeId,treeNode){
     alert(123);
     search();
+}
+
+function params(params) {
+    var ts = $(top.document).find("[name='searchComp']").val();
+    alert(ts);
+    $("#comId").val(ts);
+    return $("#season-form").serialize();
 }
