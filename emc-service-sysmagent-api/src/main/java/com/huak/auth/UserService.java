@@ -42,6 +42,13 @@ public interface UserService {
 	 */
 	User getUser(String id) throws Exception;
 
+    /**
+     * 获取用户信息，根据登录账号
+     * @param userName
+     * @return
+     */
+    User getUserByName(String userName) throws Exception;
+
 	/**
 	 * 编辑用户信息 
 	 * @param user

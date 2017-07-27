@@ -349,4 +349,11 @@ AND tr.ID = trf.ROLE_ID
 AND tf.ID = trf.FUNC_ID
 AND tu.ID = #{id}
     </select>
+
+    <select id="selectUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_user
+        where LOGIN=#{userName} AND  USE_STATUS=0
+    </select>
 </mapper>

@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
 	 * 根据主键获取用户信息
 	 */
 	@Override
+    @Transactional(readOnly = true)
 	public User getUser(String id) throws Exception{
 		User user = null;
 		try{
@@ -88,7 +89,27 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-	/**
+    /**
+     * 获取用户信息，根据登录账号
+     *
+     * @param userName
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public User getUserByName(String userName) throws Exception {
+        User user = userDao.selectUserByName(userName);
+        if(null == user){
+            return null;
+        }else{
+            //密码解密
+            String password = DESUtil.decrypt(user.getPassword(), desKey);
+            user.setPassword(password);
+        }
+        return user;
+    }
+
+    /**
 	 * 更新用户信息，编辑
 	 */
 	@Override

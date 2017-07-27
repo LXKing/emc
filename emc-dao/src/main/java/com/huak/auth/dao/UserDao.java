@@ -88,4 +88,6 @@ public interface UserDao {
     List<Map<String,Object>> getAuthByUser(String id);
 
 	void update2LoginSuccess(String id);
+
+    User selectUserByName(String userName);
 }
