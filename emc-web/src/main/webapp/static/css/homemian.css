@@ -1377,9 +1377,7 @@ input {
     border-bottom: none;
 }
 
-.weather .weather01 {
-    background: url(../img/qing.png) no-repeat center center;
-}
+
 
 #barchart {
     width: 80%;

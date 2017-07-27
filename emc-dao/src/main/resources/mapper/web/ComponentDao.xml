@@ -391,26 +391,26 @@
         CC.ytotal,CC.ywhater,CC.yelectric,CC.ygas,CC.yheat,CC.ycoal,CC.ysolar,
         CC.towtotal,CC.towwhater,CC.towelectric,CC.towgas,CC.towheat,CC.towcoal,CC.towsolar,
         CC.treewhater,CC.treeelectric,CC.treegas,CC.treeheat,CC.treetotal,CC.treesolar,
-        (CASE WHEN CC.twhater=0 then 0 else ROUND((CC.twhater-CC.ywhater)/CC.twhater,2) end) as twhaterzz,
-        (CASE WHEN CC.telectric=0 then 0 else ROUND((CC.telectric-CC.yelectric)/CC.telectric,2) end) as telectriczz,
-        (CASE WHEN CC.tgas=0 then 0 else ROUND((CC.tgas-CC.ygas)/CC.tgas,2) end) as tgaszz,
-        (CASE WHEN CC.theat=0 then 0 else ROUND((CC.theat-CC.yheat)/CC.theat,2) end) as theatzz,
-        (CASE WHEN CC.tcoal=0 then 0 else ROUND((CC.tcoal-CC.ycoal)/CC.tcoal,2) end) as tcoalzz,
-        (CASE WHEN CC.tsolar=0 then 0 else ROUND((CC.tsolar-CC.ysolar)/CC.tsolar,2) end) as tsolarzz,
+        (CASE WHEN CC.twhater=0 then 0 else ROUND((CC.twhater-CC.ywhater)/CC.twhater,1) end) as twhaterzz,
+        (CASE WHEN CC.telectric=0 then 0 else ROUND((CC.telectric-CC.yelectric)/CC.telectric,1) end) as telectriczz,
+        (CASE WHEN CC.tgas=0 then 0 else ROUND((CC.tgas-CC.ygas)/CC.tgas,1) end) as tgaszz,
+        (CASE WHEN CC.theat=0 then 0 else ROUND((CC.theat-CC.yheat)/CC.theat,1) end) as theatzz,
+        (CASE WHEN CC.tcoal=0 then 0 else ROUND((CC.tcoal-CC.ycoal)/CC.tcoal,1) end) as tcoalzz,
+        (CASE WHEN CC.tsolar=0 then 0 else ROUND((CC.tsolar-CC.ysolar)/CC.tsolar,1) end) as tsolarzz,
 
-        (CASE WHEN CC.ywhater=0 then 0 else ROUND((CC.ywhater-CC.towwhater)/CC.ywhater,2) end) as ywhaterzz,
-        (CASE WHEN CC.yelectric=0 then 0 else ROUND((CC.yelectric-CC.towelectric)/CC.yelectric,2) end) as yelectriczz,
-        (CASE WHEN CC.ygas=0 then 0 else ROUND((CC.ygas-CC.towgas)/CC.ygas,2) end) as ygaszz,
-        (CASE WHEN CC.yheat=0 then 0 else ROUND((CC.yheat-CC.towheat)/CC.yheat,2) end) as yheatzz,
-        (CASE WHEN CC.ycoal=0 then 0 else ROUND((CC.ycoal-CC.towcoal)/CC.ycoal,2) end) as ycoalzz,
-        (CASE WHEN CC.ysolar=0 then 0 else ROUND((CC.ysolar-CC.towsolar)/CC.ysolar,2) end) as ysolarzz,
+        (CASE WHEN CC.ywhater=0 then 0 else ROUND((CC.ywhater-CC.towwhater)/CC.ywhater,1) end) as ywhaterzz,
+        (CASE WHEN CC.yelectric=0 then 0 else ROUND((CC.yelectric-CC.towelectric)/CC.yelectric,1) end) as yelectriczz,
+        (CASE WHEN CC.ygas=0 then 0 else ROUND((CC.ygas-CC.towgas)/CC.ygas,1) end) as ygaszz,
+        (CASE WHEN CC.yheat=0 then 0 else ROUND((CC.yheat-CC.towheat)/CC.yheat,1) end) as yheatzz,
+        (CASE WHEN CC.ycoal=0 then 0 else ROUND((CC.ycoal-CC.towcoal)/CC.ycoal,1) end) as ycoalzz,
+        (CASE WHEN CC.ysolar=0 then 0 else ROUND((CC.ysolar-CC.towsolar)/CC.ysolar,1) end) as ysolarzz,
 
-        (CASE WHEN CC.towwhater=0 then 0 else ROUND((CC.towwhater-CC.treewhater)/CC.towwhater,2) end) as towwhaterzz,
-        (CASE WHEN CC.towelectric=0 then 0 else ROUND((CC.towelectric-CC.treeelectric)/CC.towelectric,2) end) as towelectriczz,
-        (CASE WHEN CC.towgas=0 then 0 else ROUND((CC.towgas-CC.treegas)/CC.towgas,2) end) as towgaszz,
-        (CASE WHEN CC.towheat=0 then 0 else ROUND((CC.towheat-CC.treeheat)/CC.towheat,2) end) as towheatzz,
-        (CASE WHEN CC.towcoal=0 then 0 else ROUND((CC.towcoal-CC.treecoal)/CC.towcoal,2) end) as towcoalzz,
-        (CASE WHEN CC.towsolar=0 then 0 else ROUND((CC.towsolar-CC.treesolar)/CC.towsolar,2) end) as towsolarzz
+        (CASE WHEN CC.towwhater=0 then 0 else ROUND((CC.towwhater-CC.treewhater)/CC.towwhater,1) end) as towwhaterzz,
+        (CASE WHEN CC.towelectric=0 then 0 else ROUND((CC.towelectric-CC.treeelectric)/CC.towelectric,1) end) as towelectriczz,
+        (CASE WHEN CC.towgas=0 then 0 else ROUND((CC.towgas-CC.treegas)/CC.towgas,1) end) as towgaszz,
+        (CASE WHEN CC.towheat=0 then 0 else ROUND((CC.towheat-CC.treeheat)/CC.towheat,1) end) as towheatzz,
+        (CASE WHEN CC.towcoal=0 then 0 else ROUND((CC.towcoal-CC.treecoal)/CC.towcoal,1) end) as towcoalzz,
+        (CASE WHEN CC.towsolar=0 then 0 else ROUND((CC.towsolar-CC.treesolar)/CC.towsolar,1) end) as towsolarzz
         from (SELECT
         max(case when AA.days = 'today' THEN AA.total else 0 end) ttotal,
         max(case when AA.days = 'today' THEN AA.whater else 0 end) twhater,
@@ -447,7 +447,7 @@
         max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)) as coal,
         max((case when q.type= 6 then q.dh else 0 end)) as solar
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
         FROM
@@ -482,7 +482,7 @@
          max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
         FROM
@@ -516,7 +516,7 @@
          max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
         FROM
@@ -551,7 +551,7 @@
          max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),2)dh ,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
         FROM
