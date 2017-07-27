@@ -27,4 +27,8 @@
     <dubbo:service interface="com.huak.api.RoomTempService" ref="roomTempService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="energyAnalyService" class="com.huak.api.EnergyAnalyServiceImpl"></bean>
+    <dubbo:service interface="com.huak.api.EnergyAnalyService" ref="energyAnalyService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>
