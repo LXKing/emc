@@ -160,41 +160,33 @@
 
     });
 
-    $.ajax({
-        url: _web + "/static/json/h-1.json",
-        type: "GET",
-        dataType: "json",
-        error: function (request) {
-            alert("Connection error");
-        },
-        success: function (data) {
-            chart01Fun();
-
-            chart02Fun(data.data.branchCost.data, data.data.branchCost.yearDate, data.data.branchCost.other);
-
-            chart03Fun(data.data.carbonEmission.data, data.data.carbonEmission.yearDate);
-
-            chart04Fun(data.data.cost.data, data.data.cost.yearDate, data.data.cost.other);
-
-            chart05Fun();
-
-            chart06Fun();
-
-            chart07Fun();
-
-            chart08Fun();
-
-            chart09Fun();
-
-            chart10Fun();
-
-            chart11Fun();
-            chart12Fun();
-            chart13Fun();
-        }
-    });
-
 });
+
+function loadDataFun(){
+    chart01Fun();
+
+    chart02Fun();
+
+    chart03Fun();
+
+    chart04Fun();
+
+    chart05Fun();
+
+    chart06Fun();
+
+    chart07Fun();
+
+    chart08Fun();
+
+    chart09Fun();
+
+    chart10Fun();
+
+    chart11Fun();
+    chart12Fun();
+    chart13Fun();
+}
 var myChartEnergy;
 var myChartQualified;
 var chart01;
@@ -212,8 +204,12 @@ $(".index_menuBox").height(websiteheight);
 
 function typefun(these, code) {
 //    $(these).addClass("on").siblings().removeClass("on");
-    $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
-
+    //$("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
+    if(faceKey == "dark") {
+        $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs0" + code + ".png");
+    } else {
+        $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
+    }
     if (code == 6) {
         $(".PeopleTabdiv").show();
         $(".otherTabdiv").hide();
@@ -279,7 +275,10 @@ function chart01Show(datalist, datelist, other) {
             boundaryGap: false,
             axisTick: {show: false},
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             splitLine: {
                 show: false
@@ -293,7 +292,7 @@ function chart01Show(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             },
@@ -319,12 +318,12 @@ function chart01Show(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             }
         },
-        color: ['#3B96DD', '#c2ccd3', 'green'],
+        color: chartsColor.chart01.color,
         series: []
     }
     $.each(datalist, function (index, value) {
@@ -357,7 +356,7 @@ function chart01Show(datalist, datelist, other) {
         normal: {
             show: true,
             position: 'right',
-            textStyle: {color: '#666666'},
+            textStyle: {color: chartsColor.linefontcolor},
             formatter: function (params) {
                 if (params.dataIndex == datelist.length - 1) {
                     return params.data
@@ -377,7 +376,7 @@ function chart01Show(datalist, datelist, other) {
         name: other.upperLimit.typeName,
         type: 'line',
         symbolSize: 1,
-        lineStyle: {normal: {type: 'dashed', color: 'greenyellow'}},
+        lineStyle: {normal: {type: 'dashed', color: '#e8afa6'}},
         label: labelStyle,
         data: upperList
     });
@@ -385,7 +384,7 @@ function chart01Show(datalist, datelist, other) {
         name: other.lowerLimit.typeName,
         type: 'line',
         symbolSize: 1,
-        lineStyle: {normal: {type: 'dashed', color: 'red'}},
+        lineStyle: {normal: {type: 'dashed', color: '#9ad9d7'}},
         label: labelStyle,
         data: lowerList
     });
@@ -393,7 +392,7 @@ function chart01Show(datalist, datelist, other) {
         name: other.average.typeName,
         type: 'line',
         symbolSize: 1,
-        lineStyle: {normal: {type: 'dashed', color: 'green'}},
+        lineStyle: {normal: {type: 'dashed', color: '#3B96DD'}},
         label: labelStyle,
         data: averageList
     });
@@ -401,8 +400,8 @@ function chart01Show(datalist, datelist, other) {
 }
 
 /*分公司成本-柱状图*/
-function chart02Fun(datalist, datelist, other) {
-    $("#branchcost-year").html(other.year);
+function chart02Fun() {
+    $("#branchcost-year").html("2016");
     $("#chart02").empty();
     chart02 = echarts.init(document.getElementById('chart02'));
     var option = {
@@ -434,11 +433,18 @@ function chart02Fun(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             },
-            data: datelist
+            data: [
+                "朝一",
+                "朝二",
+                "东城",
+                "西城",
+                "海淀",
+                "丰台"
+            ]
 
         },
         yAxis: {
@@ -453,7 +459,10 @@ function chart02Fun(datalist, datelist, other) {
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             splitLine: {
                 show: false,
@@ -465,14 +474,27 @@ function chart02Fun(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             }
         },
-        color: ['#3B96DD'],
+        color: chartsColor.chart02.color,
         series: []
     }
+    var datalist = [
+        {
+            "typeName": "成本",
+            "dataList": [
+                "600",
+                "300",
+                "500",
+                "400",
+                "620",
+                "320"
+            ]
+        }
+    ]
     $.each(datalist, function (index, data) {
         var typeName = data.typeName;
         var item = {
@@ -496,8 +518,8 @@ function chart02Fun(datalist, datelist, other) {
 
 /*分公司成本-柱状图*/
 
-function chart02Fun(datalist, datelist, other) {
-    $("#branchcost-year").html(other.year);
+function chart02Fun() {
+    $("#branchcost-year").html("2016");
     $("#chart02").empty();
     chart02 = echarts.init(document.getElementById('chart02'));
     var option = {
@@ -513,7 +535,9 @@ function chart02Fun(datalist, datelist, other) {
         },
         xAxis: {
             type: 'category',
-            axisTick: {show: false},
+            axisTick: {
+                show: false
+            },
             splitLine: {
                 show: false
             },
@@ -527,16 +551,25 @@ function chart02Fun(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             },
-            data: datelist
+            data: [
+                "朝一",
+                "朝二",
+                "东城",
+                "西城",
+                "海淀",
+                "丰台"
+            ]
 
         },
         yAxis: {
             type: 'value',
-            axisTick: {show: false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -544,7 +577,10 @@ function chart02Fun(datalist, datelist, other) {
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             splitLine: {
                 show: false,
@@ -556,14 +592,27 @@ function chart02Fun(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color: ['#3B96DD'],
+        color: chartsColor.chart02.color,
         series: []
     }
+    var datalist = [
+        {
+            "typeName": "成本",
+            "dataList": [
+                "600",
+                "300",
+                "500",
+                "400",
+                "620",
+                "320"
+            ]
+        }
+    ]
     $.each(datalist, function (index, data) {
         var typeName = data.typeName;
         var item = {
@@ -583,7 +632,7 @@ function chart02Fun(datalist, datelist, other) {
 }
 
 /*碳排放趋势-折线图*/
-function chart03Fun(datalist, datelist) {
+function chart03Fun() {
     $("#chart03").empty();
     chart03 = echarts.init(document.getElementById('chart03'));
     var option = {
@@ -605,7 +654,10 @@ function chart03Fun(datalist, datelist) {
                 show: false
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             axisLine: {
                 show: true,
@@ -616,11 +668,17 @@ function chart03Fun(datalist, datelist) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
-            data: datelist
+            data: [
+                "15-11",
+                "15-12",
+                "16-01",
+                "16-02",
+                "16-03"
+            ]
 
         },
         yAxis: {
@@ -643,14 +701,36 @@ function chart03Fun(datalist, datelist) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             }
         },
-        color: ['#3B96DD', '#c2ccd3'],
+        color: chartsColor.chart03.color,
         series: []
     }
+    var datalist = [
+        {
+            "typeName": "今年",
+            "dataList": [
+                "600",
+                "300",
+                "500",
+                "400",
+                "620"
+            ]
+        },
+        {
+            "typeName": "去年",
+            "dataList": [
+                "810",
+                "500",
+                "700",
+                "500",
+                "720"
+            ]
+        }
+    ]
     $.each(datalist, function (index, data) {
         var typeName = data.typeName;
         var typeLine = "";
@@ -674,8 +754,8 @@ function chart03Fun(datalist, datelist) {
 }
 
 /*公司成本-折线图*/
-function chart04Fun(datalist, datelist, other) {
-    $("#branchcost-year").html(other.year);
+function chart04Fun() {
+    $("#branchcost-year").html("2016");
     $("#chart04").empty();
     chart04 = echarts.init(document.getElementById('chart04'));
     var option = {
@@ -697,7 +777,10 @@ function chart04Fun(datalist, datelist, other) {
                 show: false
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             axisLine: {
                 show: true,
@@ -708,11 +791,17 @@ function chart04Fun(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
-            data: datelist
+            data: [
+                "15-11",
+                "15-12",
+                "16-01",
+                "16-02",
+                "16-03"
+            ]
 
         },
         yAxis: {
@@ -734,14 +823,36 @@ function chart04Fun(datalist, datelist, other) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             }
         },
         color: ['#3B96DD', '#c2ccd3'],
         series: []
     }
+    var datalist = [
+        {
+            "typeName": "今年",
+            "dataList": [
+                "600",
+                "300",
+                "500",
+                "400",
+                "620"
+            ]
+        },
+        {
+            "typeName": "去年",
+            "dataList": [
+                "810",
+                "500",
+                "700",
+                "500",
+                "720"
+            ]
+        }
+    ]
     $.each(datalist, function (index, data) {
         var typeName = data.typeName;
         var typeLine = "";
@@ -887,13 +998,13 @@ function initChart05(energy, device, manage, labor, other, total, tbl) {
             top: '40%',
             itemGap: 0,
             textStyle: {
-                color: '#8394aa',
+                color: chartsColor.chart05.facecolor1,
                 fontFamily: '微软雅黑',
                 fontSize: 44,
                 fontWeight: 'normal'
             },
             subtextStyle: {
-                color: '#2eada8',
+                color: chartsColor.chart05.facecolor2,
                 fontFamily: '微软雅黑',
                 fontSize: 12,
                 fontWeight: 'normal'
@@ -932,15 +1043,15 @@ function initChart05(energy, device, manage, labor, other, total, tbl) {
             }
         },
         calculable: false,
-        color: ['#32bbb6', '#8394aa', '#b7c1cf', '#df5f4a', '#3b96db'],
+        color: chartsColor.chart05.facecolor6,
         series: [
             {
                 type: 'pie',
-                radius: ['0%', '64%'],
+                radius: chartsColor.chart05.facecolor5,
                 silent: true,
                 itemStyle: {
                     normal: {
-                        color: '#ffffff',
+                        color: chartsColor.chart05.facecolor3,
                         label: {
                             show: false
                         },
@@ -969,7 +1080,7 @@ function initChart05(energy, device, manage, labor, other, total, tbl) {
                 funnelAlign: 'left',
                 itemStyle: {
                     normal: {
-                        borderColor: '#f0f1f2',
+                        borderColor: chartsColor.chart05.facecolor4,
                         borderWidth: '2',
                         label: {
                             show: false
@@ -1272,7 +1383,7 @@ function initChart(kedu1, mx, bm_total) {
                     show: true,
                     lineStyle: {
                         color: [
-                            [1, '#ccc']
+                            [1, chartsColor.chart07.facecolor1]
                         ],
                       width: 2
                     }
@@ -1285,7 +1396,7 @@ function initChart(kedu1, mx, bm_total) {
                 },
                 axisTick: {
                     lineStyle: {
-                        color: "#ccc",
+                        color: chartsColor.chart07.facecolor1,
                         width: 1
                     },
                     length: 2,
@@ -1295,20 +1406,22 @@ function initChart(kedu1, mx, bm_total) {
                     show: true,
                     length: 10,
                     lineStyle: {
-                        color: '#ccc',
+                        color: chartsColor.chart07.facecolor1,
                         width: 1
                     }
                 },
                 axisLabel: {
                     textStyle: {
-                        color: '#ccc'
+                        color: chartsColor.chart07.facecolor1
                     }
 
                 },
-
+                detail: {
+                    show: false
+                },
                 data: [
                     {
-                        value: "0"
+                        value: "1"
                     }
                 ]
             }
@@ -1435,7 +1548,10 @@ function chart08Sd(data, times) {
                 show: false
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             splitLine: {
                 show: false
@@ -1449,8 +1565,8 @@ function chart08Sd(data, times) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: times
@@ -1477,8 +1593,8 @@ function chart08Sd(data, times) {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             }
         },
@@ -1504,7 +1620,7 @@ function chart08Sd(data, times) {
                 },
                 itemStyle: {
                     normal: {
-                        color: '#7fb7e1'
+                        color: chartsColor.chart08.facecolor1
                     }
                 },
                 data: obj
@@ -1524,13 +1640,13 @@ function chart09Fun() {
             y: 'center',
             itemGap: -5,
             textStyle: {
-                color: '#348bce',
+                color: chartsColor.chart09.facecolor4,
                 fontFamily: '微软雅黑',
                 fontSize: 44,
                 fontWeight: 'normal'
             },
             subtextStyle: {
-                color: '#d4513b',
+                color: chartsColor.chart09.facecolor5,
                 fontFamily: '微软雅黑',
                 fontSize: 12,
                 fontWeight: 'normal'
@@ -1543,11 +1659,11 @@ function chart09Fun() {
         series: [
             {
                 type: 'pie',
-                radius: ['0', '82%'],
+                radius: chartsColor.chart09.facecolor6,
                 silent: true,
                 itemStyle: {
                     normal: {
-                        color: '#ffffff',
+                        color: chartsColor.chart09.facecolor1,
                         label: {
                             show: false
                         },
@@ -1566,7 +1682,7 @@ function chart09Fun() {
                 radius: ['60%', '80%'],
                 itemStyle: {
                     normal: {
-                        color: '#dce0e5',
+                        color: chartsColor.chart09.facecolor2,
                         label: {show: false}
                     }
                 },
@@ -1577,7 +1693,7 @@ function chart09Fun() {
             {
                 name: '合格率',
                 type: 'pie',
-                radius: ['60%', '80%'],
+                radius: ['72%', '80%'],
                 funnelAlign: 'left',
                 itemStyle: {
                     normal: {
@@ -1590,7 +1706,7 @@ function chart09Fun() {
                         name: '合格率',
                         itemStyle: {
                             normal: {
-                                color: '#3b96db'
+                                color: chartsColor.chart09.facecolor3
                             }
                         }
                     },
@@ -1643,7 +1759,7 @@ function chart10Fun() {
                     var weathericon = 'wather weather' + result.object.currentWeather.weatherIcon;
                     html2 += " <li> <div class='" + weathericon + "'></div>" +
                         "<div class='detail clearfix'> <div>" + result.object.currentWeather.temperatureCurr + "</div>" +
-                        "<div><p>" + result.object.currentWeather.weatherCurrent + "</p></div></div>" +
+                        "<div><p>℃</p><p>" + result.object.currentWeather.weatherCurrent + "</p></div></div>" +
                         "<h3>" + result.object.currentWeather.tempLow + "~" + result.object.currentWeather.tempHigh + "℃<h6>" + result.object.currentWeather.wind + "</h6>" +
                         " </li>"
                     if (result.object.weekForcast.length > 0) {
@@ -1693,13 +1809,19 @@ function initchart10(hours, temps) {
             axisTick: {
                 show: false
             },
+            splitArea: {
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
+            },
             splitLine: {
                 show: false
             },
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#9a9a9b'
+                    color: chartsColor.chart10.facecolor1
                 }
             },
             data: hours
@@ -1712,10 +1834,17 @@ function initchart10(hours, temps) {
             axisTick: {
                 show: false
             },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: chartsColor.chart10.facecolor3,
+                    type: 'solid'
+                }
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#9a9a9b'
+                    color: chartsColor.chart10.facecolor1
                 }
             }
         },
@@ -1729,12 +1858,12 @@ function initchart10(hours, temps) {
                 symbolSize: [8, 8],
                 lineStyle: {
                     normal: {
-                        color: '#277aba'
+                        color: chartsColor.chart10.facecolor2
                     }
                 },
                 itemStyle: {
                     normal: {
-                        color: '#277aba',
+                        color: chartsColor.chart10.facecolor2,
                         borderWidth: 1,
                         borderColor: "#fff"
                     }
@@ -1757,7 +1886,6 @@ function chart13Fun() {
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (result) {
-            console.info(result);
             if (result.flag == true) {
                 var recentdata = result.object;
                 var recenthtml = "";
@@ -1816,8 +1944,8 @@ function chart11Fun() {
             axisLabel: {
                 show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: ['1月', '2月', '3月', '4月', '5月']
@@ -1837,7 +1965,10 @@ function chart11Fun() {
                     }
                 },
                 splitArea: {
-                    show: true
+                    show: true,
+                    areaStyle: {
+                        color: chartsColor.areacolor
+                    }
                 },
                 splitLine: {
                     show: false,
@@ -1849,7 +1980,7 @@ function chart11Fun() {
                 axisLabel: {
                     show: true,
                     textStyle: {
-                        color: '#666',
+                        color: chartsColor.linefontcolor,
                         fontFamily: 'arial'
                     }
                 }
@@ -1877,13 +2008,13 @@ function chart11Fun() {
                 axisLabel: {
                     show: true,
                     textStyle: {
-                        color: '#666',
+                        color: chartsColor.linefontcolor,
                         fontFamily: 'arial'
                     }
                 }
             }
         ],
-        color: ['#3B96DD'],
+        color: chartsColor.chart11.facecolor1,
 
         series: [
             {
@@ -1919,38 +2050,24 @@ function chart11Fun() {
     chart11.setOption(option);
 }
 
-function chart12Fun() {
+/*组件-健康指数检测初始化*/
+function initchart12(titledata){
     //value1 严重 value2中度 value3轻度
-    var data = [{
-        value1: 0,
-        value2: 1,
-        value3: 2
-    },{
-        value1: 0,
-        value2: 1,
-        value3: 2
-    }]; //参数数量有几个写几个 自动识别前台样式 1工况运行 2经济运行 3 服务情况 4作业管理
+    var data = []; //参数数量有几个写几个 自动识别前台样式 1工况运行 2经济运行 3 服务情况 4作业管理
     var html = "";
-    var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
+
     html += "<div>";
     for(var i = 0; i < titledata.length; i++) {
-        var classname = "runa";
-        if(i == data.length - 1) {
-            classname = "runb";
-        } else if(i >= data.length) {
-            classname = "runc";
-        }
-        html += "<div class='" + classname + "'><h1>" + titledata[i] + "</h1>" +
+        var classname = "runc";
+        html += "<div id='"+(parseInt(i)+parseInt(1))+"' class='" + classname + "'><h1>" + titledata[i] + "</h1>" +
             "<div><div><div></div></div></div></div>";
     }
     html += "</div>";
-
     html += "<div>";
-
-    for(var i = 0; i < titledata.length; i++) {
-        var v1 = "--";
-        var v2 = "--";
-        var v3 = "--";
+    for(var i = 1; i <= titledata.length; i++) {
+        var v1 = "";
+        var v2 = "";
+        var v3 = "";
         var vc1 = "";
         var vc3 = "";
         var vc2 = "";
@@ -1962,26 +2079,99 @@ function chart12Fun() {
                 vc1 = "c";
             }
             if(parseInt(v2) > 0) {
-                vc2 = "c";
+                vc2 = "b";
             }
             if(parseInt(v3) > 0) {
-                vc3 = "c";
+                vc3 = "a";
             }
         }
-        var classname = "runa";
-        if(i == data.length - 1) {
-            classname = "runb";
-        } else if(i >= data.length) {
-            classname = "runc";
-        }
-        html += "<div class='" + classname + "'><div class='jiao'></div><ul>";
-        html += "<li>严重<span class='" + vc1 + "'>" + v1 + "</span></li>";
-        html += "<li>中度<span class='" + vc2 + "'>" + v2 + "</span></li>";
-        html += "<li>轻度<span class='" + vc3 + "'>" + v3 + "</span></li>";
+        var classname = "runc";
+        html += "<div id='"+i+1+"'  class='" + classname + "'><div class='jiao'></div><ul>";
+        html += "<li>严重<span class='a'>" + v1 + "</span></li>";
+        html += "<li>中度<span class='b'>" + v2 + "</span></li>";
+        html += "<li>轻度<span class='c'>" + v3 + "</span></li>";
         html += "</ul></div>";
     }
     html += "</div>";
     $("#chart12").html(html);
+}
+
+/*组件-健康指数*/
+function chart12Fun() {
+    var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
+    initchart12(titledata);
+    $.ajax({
+        url: _web + "/component/healthcheck",
+        type: "GET",
+        data: $("#searchTools").serialize(),
+        dataType: "json",
+        success: function (data) {
+            doCss(data);
+        }
+    });
+
+
+}
+
+/*组件-健康指数定时器改变样式*/
+function doCss(data){
+    timerTask(1,data);
+    run(1);
+
+}
+
+/*组件-健康指数-定时器任务1*/
+function timerTask(i,data){
+    console.info(data);
+    $("#"+i).attr("class","runm");
+    setTimeout(function(){
+
+        if(i == 1){
+            $("#"+i).attr("class","run"+data.object.fwqk.css);
+            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
+            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.fwqk.moderate);
+            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.fwqk.mild);
+            $("#"+i+1).attr("class","run"+data.object.fwqk.css);
+        }else if( i == 2){
+            $("#"+i).attr("class","run"+data.object.gkyx.css);
+            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.gkyx.serious);
+            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.gkyx.moderate);
+            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.gkyx.mild);
+            $("#"+i+1).attr("class","run"+data.object.gkyx.css);
+        }else if (i == 3){
+            $("#"+i).attr("class","run"+data.object.jjyx.css);
+            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.jjyx.serious);
+            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.jjyx.moderate);
+            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.jjyx.mild);
+            $("#"+i+1).attr("class","run"+data.object.jjyx.css);
+        }else if( i == 4){
+            $("#"+i).attr("class","run"+data.object.zygl.css);
+            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.zygl.serious);
+            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.zygl.moderate);
+            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.zygl.mild);
+            $("#"+i+1).attr("class","run"+data.object.zygl.css);
+        }
+        if(i<=4){
+            timerTask(parseInt(i)+1,data);
+        }else{
+            return;
+        }
+    },i*2000);
+}
+
+/*组件-健康指数-定时器任务2*/
+function run(i){
+    var bar = document.getElementById("barjc");
+    var total = document.getElementById("totals");
+    bar.style.width=parseInt(bar.style.width) + 1 + "%";
+    total.innerHTML = bar.style.width;
+    if(bar.style.width == "100%"){
+        clearTimeout(timeout);
+        $("#totaltitle").html("");
+        $("#checktitle").html("检测完成");
+        return;
+    }
+    var timeout=setTimeout("run()",200);
 }
 
 function cutNh(){
@@ -2011,19 +2201,3 @@ function cutQs(){
     chart04.resize();
 }
 
-function selectYear(changeYear){
-    $.ajax({
-        url : "json/h-2.json",
-        data: parseInt($("#branchcost-year").html()) + changeYear,
-        type : "GET",
-        dataType: "json",
-        error : function(request) {
-            alert("Connection error");
-        },
-        success : function(data) {
-            chart02Fun(data.data.branchCost.data, data.data.branchCost.yearDate, data.data.branchCost.other);
-
-            chart04Fun(data.data.branchCost.data, data.data.branchCost.yearDate, data.data.cost.other);
-        }
-    });
-}

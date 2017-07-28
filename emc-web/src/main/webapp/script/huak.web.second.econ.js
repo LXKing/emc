@@ -1,6 +1,6 @@
 
 
-$(function(){
+function loadDataFun(){
     //加载分公司能耗
     $.ajax({
         url : _web+"/energy/monitor/fgs/list",
@@ -218,7 +218,7 @@ $(function(){
         	chart2EnergyBar(data.data);
         }
     });
-})
+}
 
 function fgsEnergyList(data){
 
@@ -262,25 +262,28 @@ function groupEnergyChartFun(datalist, datelist){
             boundaryGap: false,
             axisTick:{show:false},
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             splitLine: {
                 show: true,
                 lineStyle: {
-                    color: '#dbdcdf'
+                    color: chartsColor.ec1.facecolor1
                 }
             },
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#abcd'
+                    color: chartsColor.ec1.facecolor2
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: datelist
@@ -288,28 +291,30 @@ function groupEnergyChartFun(datalist, datelist){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#9a9a9b'
+                    color: chartsColor.ec1.facecolor3
                 }
             },
             splitLine: {
                 show: true,
                 lineStyle: {
-                    color: '#dbdcdf'
+                    color: chartsColor.ec1.facecolor4
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color: chartsColor.ec1.facecolor5,
         series: []
     }
     $.each(datalist,function(index,data){
@@ -351,9 +356,11 @@ function waterEnergyChartFun(datalist, datelist){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
-            splitLine: {
+            axisTick: {
                 show: false
+            },
+            splitLine: {
+                show: false,
             },
             axisLine: {
                 show: true,
@@ -361,11 +368,11 @@ function waterEnergyChartFun(datalist, datelist){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: datelist
@@ -373,7 +380,9 @@ function waterEnergyChartFun(datalist, datelist){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -388,14 +397,14 @@ function waterEnergyChartFun(datalist, datelist){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color: chartsColor.ec2.facecolor1,
         series: []
     }
     $.each(datalist,function(index,data){
@@ -437,9 +446,11 @@ function electricEnergyChartFun(datalist, datelist){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
-            splitLine: {
+            axisTick: {
                 show: false
+            },
+            splitLine: {
+                show: false,
             },
             axisLine: {
                 show: true,
@@ -447,11 +458,11 @@ function electricEnergyChartFun(datalist, datelist){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: datelist
@@ -459,7 +470,9 @@ function electricEnergyChartFun(datalist, datelist){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -474,14 +487,14 @@ function electricEnergyChartFun(datalist, datelist){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color: chartsColor.ec2.facecolor1,
         series: []
     }
     $.each(datalist,function(index,data){
@@ -524,9 +537,11 @@ function gasEnergyChartFun(datalist, datelist){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
-            splitLine: {
+            axisTick: {
                 show: false
+            },
+            splitLine: {
+                show: false,
             },
             axisLine: {
                 show: true,
@@ -534,11 +549,11 @@ function gasEnergyChartFun(datalist, datelist){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: datelist
@@ -546,7 +561,9 @@ function gasEnergyChartFun(datalist, datelist){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -561,14 +578,14 @@ function gasEnergyChartFun(datalist, datelist){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color: chartsColor.ec2.facecolor1,
         series: []
     }
     $.each(datalist,function(index,data){
@@ -611,9 +628,11 @@ function hotEnergyChartFun(datalist, datelist){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
-            splitLine: {
+            axisTick: {
                 show: false
+            },
+            splitLine: {
+                show: false,
             },
             axisLine: {
                 show: true,
@@ -621,11 +640,11 @@ function hotEnergyChartFun(datalist, datelist){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: datelist
@@ -633,7 +652,9 @@ function hotEnergyChartFun(datalist, datelist){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -648,14 +669,14 @@ function hotEnergyChartFun(datalist, datelist){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color: chartsColor.ec2.facecolor1,
         series: []
     }
     $.each(datalist,function(index,data){
@@ -698,9 +719,11 @@ function coalEnergyChartFun(datalist, datelist){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
-            splitLine: {
+            axisTick: {
                 show: false
+            },
+            splitLine: {
+                show: false,
             },
             axisLine: {
                 show: true,
@@ -708,11 +731,11 @@ function coalEnergyChartFun(datalist, datelist){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data: datelist
@@ -720,7 +743,9 @@ function coalEnergyChartFun(datalist, datelist){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -735,14 +760,14 @@ function coalEnergyChartFun(datalist, datelist){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD', '#c2ccd3'],
+        color: chartsColor.ec2.facecolor1,
         series: []
     }
     $.each(datalist,function(index,data){
@@ -803,11 +828,11 @@ function chart01Fun(data){
         series : [
             {
                 type:'pie',
-                radius : ['0', '70%'],
+                radius: chartsColor.chart05.facecolor5,
                 silent:true,
                 itemStyle : {
                     normal : {
-                        color:'#fff',
+                        color: chartsColor.ec3.facecolor1,
                         label : {
                             show : false
                         },
@@ -823,7 +848,7 @@ function chart01Fun(data){
             {
                 name:'分公司能耗占比',
                 type:'pie',
-                radius : ['70%', '80%'],
+                radius: ['70%', '80%'],
 
                 // for funnel
                 x: '60%',
@@ -831,8 +856,8 @@ function chart01Fun(data){
                 funnelAlign: 'left',
                 itemStyle : {
                     normal : {
-                        borderColor: '#fff',
-                        borderWidth: '4',
+                        borderColor: chartsColor.ec3.facecolor1,
+                        borderWidth: '2',
                         label : {show:true}
                     }
                 },
@@ -875,36 +900,43 @@ function chart02Fun(data){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             splitLine: {
                 show: false
             },
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#9a9a9b'
+                    color: chartsColor.ec4.facecolor1
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             data: data.xaxis
 
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#9a9a9b'
+                    color: chartsColor.ec4.facecolor2
                 }
             },
             splitLine: {
@@ -915,14 +947,13 @@ function chart02Fun(data){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-
         series: data.list
     };
 
@@ -939,7 +970,7 @@ function chart03Fun(data) {
             top:'-18px',
             left:'35px',
             subtextStyle:{
-                color: '#666',
+                color: chartsColor.linefontcolor,
                 fontStyle: 'normal',
                 fontWeight: 'normal',
                 fontFamily: '微软雅黑',
@@ -959,7 +990,7 @@ function chart03Fun(data) {
             right: '40',
             top:'10px',
             textStyle: {
-                color: '#666',
+                color: chartsColor.linefontcolor,
                 fontStyle: 'normal',
                 fontWeight: 'lighter',
                 fontFamily: '微软雅黑',
@@ -988,8 +1019,8 @@ function chart03Fun(data) {
             axisLabel : {
                 show:true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data:data.xaxis
@@ -1012,12 +1043,15 @@ function chart03Fun(data) {
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             axisLabel: {
                 show:true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             }
@@ -1052,7 +1086,7 @@ function chart04Fun(data){
             top:'-18px',
             left:'35px',
             subtextStyle:{
-                color: '#666',
+                color: chartsColor.linefontcolor,
                 fontStyle: 'normal',
                 fontWeight: 'normal',
                 fontFamily: '微软雅黑',
@@ -1072,7 +1106,7 @@ function chart04Fun(data){
             right: '40',
             top:'10px',
             textStyle: {
-                color: '#666',
+                color: chartsColor.linefontcolor,
                 fontStyle: 'normal',
                 fontWeight: 'lighter',
                 fontFamily: '微软雅黑',
@@ -1101,8 +1135,8 @@ function chart04Fun(data){
             axisLabel : {
                 show:true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data:data.xaxis
@@ -1125,17 +1159,20 @@ function chart04Fun(data){
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             axisLabel: {
                 show:true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             }
         },
-        color:['#3B96DD'],
+        color:chartsColor.ec4.facecolor4,
         series: [
             {
                 name:"分公司能耗",
@@ -1204,11 +1241,11 @@ function chart2EnergyPie(data){
         series : [
             {
                 type:'pie',
-                radius : ['0', '70%'],
+                radius: chartsColor.chart05.facecolor5,
                 silent:true,
                 itemStyle : {
                     normal : {
-                        color:'#fff',
+                        color: chartsColor.ec3.facecolor1,
                         label : {
                             show : false
                         },
@@ -1232,8 +1269,8 @@ function chart2EnergyPie(data){
                 funnelAlign: 'left',
                 itemStyle : {
                     normal : {
-                        borderColor: '#fff',
-                        borderWidth: '4',
+                        borderColor: chartsColor.ec3.facecolor1,
+                        borderWidth: '2',
                         label : {show:true}
                     }
                 },
@@ -1275,7 +1312,9 @@ function chart2EnergyLine(data){
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             splitLine: {
                 show: false
             },
@@ -1285,22 +1324,27 @@ function chart2EnergyLine(data){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             data: data.xDate
 
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -1315,12 +1359,12 @@ function chart2EnergyLine(data){
                 }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
 
         series: data.series
@@ -1377,7 +1421,7 @@ function chart2EnergyBar(data){
             top:'-18px',
             left:'35px',
             subtextStyle:{
-                color: '#666',
+                color: chartsColor.linefontcolor,
                 fontStyle: 'normal',
                 fontWeight: 'normal',
                 fontFamily: '微软雅黑',
@@ -1397,7 +1441,7 @@ function chart2EnergyBar(data){
             right: '40',
             top:'10px',
             textStyle: {
-                color: '#666',
+                color: chartsColor.linefontcolor,
                 fontStyle: 'normal',
                 fontWeight: 'lighter',
                 fontFamily: '微软雅黑',
@@ -1413,9 +1457,11 @@ function chart2EnergyBar(data){
         },
         xAxis: {
             type: 'category',
-            axisTick:{show:false},
-            splitLine: {
+            axisTick: {
                 show: false
+            },
+            splitLine: {
+                show: false,
             },
             axisLine: {
                 show: true,
@@ -1423,11 +1469,11 @@ function chart2EnergyBar(data){
                     color: '#9a9a9b'
                 }
             },
-            axisLabel : {
-                show:true,
+            axisLabel: {
+                show: true,
                 textStyle: {
-                    color: '#666',
-                    fontFamily: 'arial'
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial',
                 }
             },
             data:['供热源','一次网','换热站','二次线','民户']
@@ -1435,7 +1481,9 @@ function chart2EnergyBar(data){
         },
         yAxis: {
             type: 'value',
-            axisTick:{show:false},
+            axisTick: {
+                show: false
+            },
             axisLine: {
                 show: true,
                 lineStyle: {
@@ -1450,17 +1498,20 @@ function chart2EnergyBar(data){
                 }
             },
             splitArea: {
-                show: true
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
             },
             axisLabel: {
-                show:true,
+                show: true,
                 textStyle: {
-                    color: '#666',
+                    color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            }
+            },
         },
-        color:['#3B96DD','#a1b1c5'],
+        color: chartsColor.ec4.facecolor3,
         series: [
             {
                 name:"今年",

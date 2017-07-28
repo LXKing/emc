@@ -3,7 +3,10 @@
     font-family: 'Eurostile LT';
     src: url('../fonts/Eurostile LT Medium.ttf');
 }
-
+@font-face {
+    font-family: 'guan';
+    src: url('../fonts/msyh.ttf');
+}
 body {
     color: #666;
     font-size: 12px
@@ -587,22 +590,22 @@ input {
     background-image: url(../img/index/tabicon10_cb.png)
 }
 
-.index_menuBox.on .index_menuBoxCon {
-    color: #fff;
-}
+/*.index_menuBox.on .index_menuBoxCon {
+	color: #fff;
+}*/
 
-.index_menuBox.on .index_menuBoxList li {
-    color: #fff;
-}
+/*.index_menuBox.on .index_menuBoxList li {
+	color: #fff;
+}*/
 
-.index_menuBox.on .tabicon10 {
-    color: #fff;
-}
+/*.index_menuBox.on .tabicon10 {
+	color: #fff;
+}*/
 
-.index_menuBox.on .index_menuBoxCon>span.tipsindex {
-    background: #fff;
-    color: #348bce;
-}
+/*.index_menuBox.on .index_menuBoxCon>span.tipsindex {
+	background: #fff;
+	color: #348bce;
+}*/
 
 .index_menuBoxAll.on .index_menuBoxCon,
 .index_menuBoxAll.on .index_menuBoxList li {
@@ -654,205 +657,205 @@ input {
     background-image: url(../img/index/tabicon10_on.png)
 }
 
-.index_menuBoxre.on .tabicon01 {
-    background-image: url(../img/index/tabicon01_on.png)
+/*.index_menuBoxre.on .tabicon01 {
+	background-image: url(../img/index/tabicon01_on.png)
 }
 
 .index_menuBoxre.on .tabicon02 {
-    background-image: url(../img/index/tabicon02_on.png)
+	background-image: url(../img/index/tabicon02_on.png)
 }
 
 .index_menuBoxre.on .tabicon03 {
-    background-image: url(../img/index/tabicon03_on.png)
-}
+	background-image: url(../img/index/tabicon03_on.png)
+}*/
 
-.index_menuBoxre.on .tabicon04 {
-    background-image: url(../img/index/tabicon04_on.png)
+/*.index_menuBoxre.on .tabicon04 {
+	background-image: url(../img/index/tabicon04_on.png)
 }
 
 .index_menuBoxre.on .tabicon05 {
-    background-image: url(../img/index/tabicon05_on.png)
+	background-image: url(../img/index/tabicon05_on.png)
 }
 
 .index_menuBoxre.on .tabicon06 {
-    background-image: url(../img/index/tabicon06_on.png)
+	background-image: url(../img/index/tabicon06_on.png)
 }
 
 .index_menuBoxre.on .tabicon07 {
-    background-image: url(../img/index/tabicon07_on.png)
+	background-image: url(../img/index/tabicon07_on.png)
 }
 
 .index_menuBoxre.on .tabicon08 {
-    background-image: url(../img/index/tabicon08_on.png)
+	background-image: url(../img/index/tabicon08_on.png)
 }
 
 .index_menuBoxre.on .tabicon09 {
-    background-image: url(../img/index/tabicon09_on.png)
+	background-image: url(../img/index/tabicon09_on.png)
 }
 
 .index_menuBoxre.on .tabicon10 {
-    background-image: url(../img/index/tabicon10_on.png)
-}
+	background-image: url(../img/index/tabicon10_on.png)
+}*/
 
-.index_menuBoxweb.on .tabicon01 {
-    background-image: url(../img/index/tabicon01_on.png)
+/*.index_menuBoxweb.on .tabicon01 {
+	background-image: url(../img/index/tabicon01_on.png)
 }
 
 .index_menuBoxweb.on .tabicon02 {
-    background-image: url(../img/index/tabicon02_on.png)
+	background-image: url(../img/index/tabicon02_on.png)
 }
 
 .index_menuBoxweb.on .tabicon03 {
-    background-image: url(../img/index/tabicon03_on.png)
+	background-image: url(../img/index/tabicon03_on.png)
 }
 
 .index_menuBoxweb.on .tabicon04 {
-    background-image: url(../img/index/tabicon04_on.png)
+	background-image: url(../img/index/tabicon04_on.png)
 }
 
 .index_menuBoxweb.on .tabicon05 {
-    background-image: url(../img/index/tabicon05_on.png)
+	background-image: url(../img/index/tabicon05_on.png)
 }
 
 .index_menuBoxweb.on .tabicon06 {
-    background-image: url(../img/index/tabicon06_on.png)
+	background-image: url(../img/index/tabicon06_on.png)
 }
 
 .index_menuBoxweb.on .tabicon07 {
-    background-image: url(../img/index/tabicon07_on.png)
+	background-image: url(../img/index/tabicon07_on.png)
 }
 
 .index_menuBoxweb.on .tabicon08 {
-    background-image: url(../img/index/tabicon08_on.png)
+	background-image: url(../img/index/tabicon08_on.png)
 }
 
 .index_menuBoxweb.on .tabicon09 {
-    background-image: url(../img/index/tabicon09_on.png)
+	background-image: url(../img/index/tabicon09_on.png)
 }
 
 .index_menuBoxweb.on .tabicon10 {
-    background-image: url(../img/index/tabicon10_on.png)
+	background-image: url(../img/index/tabicon10_on.png)
 }
 
 .index_menuBoxsite.on .tabicon01 {
-    background-image: url(../img/index/tabicon01_on.png)
+	background-image: url(../img/index/tabicon01_on.png)
 }
 
 .index_menuBoxsite.on .tabicon02 {
-    background-image: url(../img/index/tabicon02_on.png)
+	background-image: url(../img/index/tabicon02_on.png)
 }
 
 .index_menuBoxsite.on .tabicon03 {
-    background-image: url(../img/index/tabicon03_on.png)
+	background-image: url(../img/index/tabicon03_on.png)
 }
 
 .index_menuBoxsite.on .tabicon04 {
-    background-image: url(../img/index/tabicon04_on.png)
+	background-image: url(../img/index/tabicon04_on.png)
 }
 
 .index_menuBoxsite.on .tabicon05 {
-    background-image: url(../img/index/tabicon05_on.png)
+	background-image: url(../img/index/tabicon05_on.png)
 }
 
 .index_menuBoxsite.on .tabicon06 {
-    background-image: url(../img/index/tabicon06_on.png)
+	background-image: url(../img/index/tabicon06_on.png)
 }
 
 .index_menuBoxsite.on .tabicon07 {
-    background-image: url(../img/index/tabicon07_on.png)
+	background-image: url(../img/index/tabicon07_on.png)
 }
 
 .index_menuBoxsite.on .tabicon08 {
-    background-image: url(../img/index/tabicon08_on.png)
+	background-image: url(../img/index/tabicon08_on.png)
 }
 
 .index_menuBoxsite.on .tabicon09 {
-    background-image: url(../img/index/tabicon09_on.png)
+	background-image: url(../img/index/tabicon09_on.png)
 }
 
 .index_menuBoxsite.on .tabicon10 {
-    background-image: url(../img/index/tabicon10_on.png)
+	background-image: url(../img/index/tabicon10_on.png)
 }
 
 .index_menuBoxline.on .tabicon01 {
-    background-image: url(../img/index/tabicon01_on.png)
+	background-image: url(../img/index/tabicon01_on.png)
 }
 
 .index_menuBoxline.on .tabicon02 {
-    background-image: url(../img/index/tabicon02_on.png)
+	background-image: url(../img/index/tabicon02_on.png)
 }
 
 .index_menuBoxline.on .tabicon03 {
-    background-image: url(../img/index/tabicon03_on.png)
+	background-image: url(../img/index/tabicon03_on.png)
 }
 
 .index_menuBoxline.on .tabicon04 {
-    background-image: url(../img/index/tabicon04_on.png)
+	background-image: url(../img/index/tabicon04_on.png)
 }
 
 .index_menuBoxline.on .tabicon05 {
-    background-image: url(../img/index/tabicon05_on.png)
+	background-image: url(../img/index/tabicon05_on.png)
 }
 
 .index_menuBoxline.on .tabicon06 {
-    background-image: url(../img/index/tabicon06_on.png)
+	background-image: url(../img/index/tabicon06_on.png)
 }
 
 .index_menuBoxline.on .tabicon07 {
-    background-image: url(../img/index/tabicon07_on.png)
+	background-image: url(../img/index/tabicon07_on.png)
 }
 
 .index_menuBoxline.on .tabicon08 {
-    background-image: url(../img/index/tabicon08_on.png)
+	background-image: url(../img/index/tabicon08_on.png)
 }
 
 .index_menuBoxline.on .tabicon09 {
-    background-image: url(../img/index/tabicon09_on.png)
+	background-image: url(../img/index/tabicon09_on.png)
 }
 
 .index_menuBoxline.on .tabicon10 {
-    background-image: url(../img/index/tabicon10_on.png)
+	background-image: url(../img/index/tabicon10_on.png)
 }
 
 .index_menuBoxjum.on .tabicon01 {
-    background-image: url(../img/index/tabicon01_on.png)
+	background-image: url(../img/index/tabicon01_on.png)
 }
 
 .index_menuBoxjum.on .tabicon02 {
-    background-image: url(../img/index/tabicon02_on.png)
+	background-image: url(../img/index/tabicon02_on.png)
 }
 
 .index_menuBoxjum.on .tabicon03 {
-    background-image: url(../img/index/tabicon03_on.png)
+	background-image: url(../img/index/tabicon03_on.png)
 }
 
 .index_menuBoxjum.on .tabicon04 {
-    background-image: url(../img/index/tabicon04_on.png)
+	background-image: url(../img/index/tabicon04_on.png)
 }
 
 .index_menuBoxjum.on .tabicon05 {
-    background-image: url(../img/index/tabicon05_on.png)
+	background-image: url(../img/index/tabicon05_on.png)
 }
 
 .index_menuBoxjum.on .tabicon06 {
-    background-image: url(../img/index/tabicon06_on.png)
+	background-image: url(../img/index/tabicon06_on.png)
 }
 
 .index_menuBoxjum.on .tabicon07 {
-    background-image: url(../img/index/tabicon07_on.png)
+	background-image: url(../img/index/tabicon07_on.png)
 }
 
 .index_menuBoxjum.on .tabicon08 {
-    background-image: url(../img/index/tabicon08_on.png)
+	background-image: url(../img/index/tabicon08_on.png)
 }
 
 .index_menuBoxjum.on .tabicon09 {
-    background-image: url(../img/index/tabicon09_on.png)
+	background-image: url(../img/index/tabicon09_on.png)
 }
 
 .index_menuBoxjum.on .tabicon10 {
-    background-image: url(../img/index/tabicon10_on.png)
-}
+	background-image: url(../img/index/tabicon10_on.png)
+}*/
 
 .energyTit {
     padding-left: 40px;
@@ -1096,10 +1099,9 @@ input {
     display: block;
     position: absolute;
     height: 1px;
-    width: 100%;
-    margin-left: 43px;
+    width: 75%;
     background: #eee;
-    left: 0;
+    right: 0;
     bottom: 0;
 }
 
@@ -1119,10 +1121,9 @@ input {
     display: block;
     position: absolute;
     height: 1px;
-    width: 100%;
-    margin-left: 15px;
+    width: 92%;
     background: #eee;
-    left: 0;
+    right: 0;
     bottom: 0;
 }
 
@@ -1377,7 +1378,9 @@ input {
     border-bottom: none;
 }
 
-
+.weather .weather01 {
+    background: url(../img/qing.png) no-repeat center center;
+}
 
 #barchart {
     width: 80%;
@@ -1547,12 +1550,17 @@ input {
     background-image: -ms-linear-gradient( -45deg, rgb(50, 187, 182) 0%, rgb(59, 150, 219) 100%);
 }
 
-.quanquanwrap>div:nth-child(1)>div.runb>div>div,
+.quanquanwrap>div:nth-child(1)>div.runb>div>div{
+    background: url(../img/qiansedong.gif) no-repeat;
+}
 .quanquanwrap>div:nth-child(1)>div.runb>div:after {
     background-image: -moz-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
     background-image: -webkit-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
     background-image: -ms-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
+
 }
+
+
 
 .quanquanwrap>div:nth-child(1)>div>div>div {
     width: 56px;
@@ -1599,7 +1607,25 @@ input {
     background-repeat: no-repeat;
     border: 1px solid #dedede;
 }
+.quanquanwrap>div:nth-child(1)>div:nth-child(1).runm>div>div>div:after {
+    background-size:86px 86px;-moz-background-size:50% 50%;
+    background-image: url(../img/qiansedong.gif);
+}
 
+.quanquanwrap>div:nth-child(1)>div:nth-child(2).runm>div>div>div:after {
+    background-size:86px 86px;-moz-background-size:50% 50%;
+    background-image: url(../img/qiansedong.gif);
+}
+
+.quanquanwrap>div:nth-child(1)>div:nth-child(3).runm>div>div>div:after {
+    background-size:86px 86px;-moz-background-size:50% 50%;
+    background-image: url(../img/qiansedong.gif);
+}
+
+.quanquanwrap>div:nth-child(1)>div:nth-child(4).runm>div>div>div:after {
+    background-size:86px 86px;-moz-background-size:50% 50%;
+    background-image: url(../img/qiansedong.gif);
+}
 .quanquanwrap>div:nth-child(1)>div:nth-child(1)>div>div>div:after {
     background-image: url(../img/index/icon1_1_h.png);
 }
@@ -1819,4 +1845,31 @@ input {
 #recentlist>ul li>span:nth-child(3) {
     font-size: 12px;
     color: #bbbbbb;
+}
+.recentchartT > div{
+    float:left;
+    width: 33%;
+    box-sizing: border-box;
+    color:#fff;
+    line-height: 28px;
+}
+.recentchartT > div:nth-child(1){
+    padding-left: 22px;
+}
+.recentchartT > div:nth-child(2){
+    padding-left: 22px;
+}
+.recentchartT > div:nth-child(3){
+    padding-left:28px;
+}
+#header .changeface{
+    display: block;
+    position: absolute;
+    right: 0px;
+    top:0px;
+    width:40px;
+    height: 40px;
+    background: url(../img/index/changeface.png) no-repeat;
+    cursor: pointer;
+    z-index: 9999;
 }

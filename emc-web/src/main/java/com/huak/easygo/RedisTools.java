@@ -1,14 +1,9 @@
 package com.huak.easygo;
 
+import redis.clients.jedis.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 
 public class RedisTools {
 	private static JedisPool pool = null;
@@ -16,8 +11,6 @@ public class RedisTools {
 	
 	/**
 	 * 构建redis连接池
-	 * @param ip
-	 * @param port
 	 * @return JedisPool
 	 */
 	public synchronized static JedisPool getPool() {
@@ -109,7 +102,9 @@ public class RedisTools {
 			value = jedis.get(key);
 		} catch (Exception e) {
 			// 释放redis对象
-			pool.returnBrokenResource(jedis);
+            if(null != pool){
+                pool.returnBrokenResource(jedis);
+            }
 			e.printStackTrace();
 		} finally {
 			// 返还到连接池

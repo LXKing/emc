@@ -19,8 +19,7 @@
 <body>
 <div class="index_mainbody  ">
 <div class="index_menubg">
-    <img src="${web}/static/img/index/websitet_cs01.png" id="website" style="min-width: 1346px;max-width: 1920px;"
-         width="100%"/>
+    <img src="${web}/static/img/index/websitet_cs01.png" id="website" width="100%"/>
 
     <div class="index_menu clearfix" id="index_menu">
 
@@ -175,7 +174,7 @@
         </div>
         <div class="col-xs-12 no-padding energyBox TotalBox clearfix">
             <div class="cost-chart">
-                <div id="chart05" style="width: 100%;height:310px;"></div>
+                <div id="chart05"></div>
             </div>
             <div class="cost-list">
                 <div class="cost-list-box cost-list-nyf">
@@ -292,7 +291,7 @@
         </div>
         <div class="col-xs-12 no-padding energyBox CarbonBox">
             <div class="emission-chart ">
-                <div id="chartCarbon" style="width: 100%;height:310px;"></div>
+                <div id="chartCarbon"></div>
             </div>
             <div class="emission-list">
                 <div class="emission-list-box emission-list-hot">
@@ -502,14 +501,14 @@
             <div class="chart-box">
                 <div class="barwrap">
                     <div class="clearfix">
-                        <span>正在检测服务情况...</span>
-												<span>
+                        <span id="checktitle">正在检测服务情况...</span>
+												<span id="totaltitle">
 												检测中
-												<span>66.7%</span>
+												<span id="totals">0%</span>
 												</span>
                     </div>
                     <div>
-                        <div style="width:100%"></div>
+                        <div id="barjc" style="width: 0%"></div>
                     </div>
                 </div>
                 <div id="chart12" class="quanquanwrap">

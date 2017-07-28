@@ -15,7 +15,7 @@
     <script src="${web}/script/huak.web.second.econ.js"></script>
 </head>
 <body>
-<div class="index_mainbody selectbg ">
+<div class="index_mainbody ">
 
 <div class="index_content row no-margin">
 <div class="col-lg-12 no-padding index_contentList">

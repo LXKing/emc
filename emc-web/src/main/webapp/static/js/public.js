@@ -392,7 +392,116 @@ $(function () {
         var url = $(this).attr('export-url') + '?' + $from.serialize();
         window.open(url);
     });
+
+    changeFace();
+    $("#header .changeface").click(function() {
+        faceKey = faceKey == "dark" ? "" : "dark";
+        changeFace();
+    });
 });
 
+
+/**
+ * 换肤
+ * @type {string}
+ */
+var path = _web+"/static/";
+var faceKey = localStorage.faceKey == null||localStorage.faceKey == ""?"dark":localStorage.faceKey; //dark
+var chartsColor;
+
+function changeFace() {
+    $('html').removeClass();
+    localStorage.faceKey = faceKey;
+    chartsColor = {
+        linefontcolor: faceKey == 'dark' ? '#fff' : '#666',
+        areacolor: faceKey == 'dark' ? ['transparent', 'rgba(15,54,66,.7)'] : ['#F3F3F4', '#E4E4E5'],
+        chart01: {
+            color: faceKey == 'dark' ? ['#33fff8', '#304d60'] : ['#3B96DD', '#c2ccd3'],
+
+        },
+        chart02: {
+            color: faceKey == 'dark' ? ['#33fff8'] : ['#3B96DD'],
+
+        },
+        chart03: {
+            color: faceKey == 'dark' ? ['#33fff8', '#304d60'] : ['#3B96DD', '#c2ccd3'],
+
+        },
+        chart10: {
+            facecolor1: faceKey == 'dark' ? '#618292' : '#9a9a9b',
+            facecolor2: faceKey == 'dark' ? '#33fff8' : '#277aba',
+            facecolor3: faceKey == 'dark' ? '#30515e' : ''
+        },
+        chart11: {
+            facecolor1: faceKey == 'dark' ? ['#33fff8'] : ['#3B96DD'],
+
+        },
+        chart08: {
+            facecolor1: faceKey == 'dark' ? ['#21a7a9'] : ['#7fb7e1'],
+
+        },
+        chart05: {
+            facecolor1: faceKey == 'dark' ? '#fff' : '#8394aa',
+            facecolor2: faceKey == 'dark' ? '#33fff8' : '#2eada8',
+            facecolor3: faceKey == 'dark' ? '#325e70' : '#ffffff',
+            facecolor4: faceKey == 'dark' ? '#093043' : '#f0f1f2',
+            facecolor5: faceKey == 'dark' ? ['63%', '64%'] : ['0%', '64%'],
+            facecolor6: faceKey == 'dark' ? ['#33fff8', '#32657f', '#1d465b', '#ff6349', '#3db4ff']:['#32bbb6', '#8394aa', '#b7c1cf', '#df5f4a', '#3b96db']
+        },
+        chart07: {
+            facecolor1: faceKey == 'dark' ? '#244150' : '#ccc',
+        },
+        chart09: {
+            facecolor1: faceKey == 'dark' ? '#325e70' : '#ffffff',
+            facecolor2: faceKey == 'dark' ? '#1d465b' : '#dce0e5',
+            facecolor3: faceKey == 'dark' ? '#33fff8' : '#3b96db',
+            facecolor4: faceKey == 'dark' ? '#33fff8' : '#348bce',
+            facecolor5: faceKey == 'dark' ? '#f86148' : '#d4513b',
+            facecolor6: faceKey == 'dark' ? ['63%', '64%'] : ['0%', '64%'],
+        },
+        ec1:{
+            facecolor1: faceKey == 'dark' ? '#325d6c' : '#dbdcdf',
+            facecolor2: faceKey == 'dark' ? '#325d6c' : '#abcd',
+            facecolor3: faceKey == 'dark' ? '#618292' : '#9a9a9b',
+            facecolor4: faceKey == 'dark' ? '#2f4f5f' : '#dbdcdf',
+            facecolor5: faceKey == 'dark' ? ['#33fff8', '#32657f'] : ['#3B96DD', '#c2ccd3'],
+        },
+        ec2:{
+            facecolor1: faceKey == 'dark' ? ['#33fff8', '#32657f'] : ['#3B96DD', '#c2ccd3'],
+
+        },
+        ec3:{
+            facecolor1: faceKey == 'dark' ? "transparent":"#fff",
+
+        },
+        ec4:{
+            facecolor1: faceKey == 'dark' ? "#618292":"#9a9a9b",
+            facecolor2: faceKey == 'dark' ? "#618292":"#9a9a9b",
+            facecolor3: faceKey == 'dark' ? ['#33fff8', '#304d60']:['#3B96DD', '#a1b1c5'],
+            facecolor4: faceKey == 'dark' ?['#33fff8']: ['#3B96DD'],
+        }
+
+    }
+
+    if(faceKey == "dark") {
+        $("#website").attr("src", path + "imgdark/index/websitet_cs01.png");
+        $('html').addClass('facedark');
+        $(".energy_black img").eq(0).attr("src", path + "imgdark/images/btn01.png");
+        $(".energy_black img").eq(1).attr("src", path + "imgdark/images/btn02.png");
+        $(".energy_black img").eq(2).attr("src", path + "imgdark/images/btn03.png");
+        $(".bordertopnone img").eq(0).attr("src", path + "imgdark/tijian.png");
+    }else{
+        $("#website").attr("src", path + "img/index/websitet_cs01.png");
+        $(".energy_black img").eq(0).attr("src", path + "img/images/btn01.png");
+        $(".energy_black img").eq(1).attr("src", path + "img/images/btn02.png");
+        $(".energy_black img").eq(2).attr("src", path + "img/images/btn03.png");
+        $(".bordertopnone img").eq(0).attr("src", path + "img/tijian.png");
+    }
+    loadDataFun();
+}
+
+function loadDataFun(){
+
+}
 
 

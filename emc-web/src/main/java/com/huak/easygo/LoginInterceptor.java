@@ -95,13 +95,25 @@ public class LoginInterceptor implements HandlerInterceptor {
                                 Org org = null;
                                 Company company = null;
                                 if(null == session.getAttribute(Constants.SESSION_KEY)){
-                                    user = userService.getUser(userName);
+                                    user = userService.getUserByName(userName);
                                 }
                                 if(null == session.getAttribute(Constants.SESSION_ORG_KEY)){
-                                    org = orgService.selectByPrimaryKey(user.getOrgId());
+                                    if(null == user || null == user.getOrgId()){
+                                        response.sendRedirect(request.getContextPath() + "/login");
+                                        return false;
+                                    }else{
+                                        org = orgService.selectByPrimaryKey(user.getOrgId());
+                                    }
+
                                 }
                                 if(null == session.getAttribute(Constants.SESSION_COM_KEY)){
-                                    company = companyService.selectByPrimaryKey(org.getComId());
+                                    if(null == org || null == org.getComId()){
+                                        response.sendRedirect(request.getContextPath() + "/login");
+                                        return false;
+                                    }else{
+                                        company = companyService.selectByPrimaryKey(org.getComId());
+                                    }
+
                                 }
                                 session.setAttribute(Constants.SESSION_KEY, user);
                                 session.setAttribute(Constants.SESSION_ORG_KEY, org);
