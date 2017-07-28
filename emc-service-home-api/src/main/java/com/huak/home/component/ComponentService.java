@@ -1,5 +1,6 @@
 package com.huak.home.component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,4 +47,11 @@ public interface ComponentService {
      * @return
      */
     java.util.List<Map<String, Object>> selectrecentDetail(Map<String, Object> paramsMap);
+
+    /**
+     * 健康指数检测
+     * @param paramsMap
+     * @return
+     */
+    Map<String,Object> healthcheck(Map<String, Object> paramsMap);
 }
