@@ -1634,7 +1634,7 @@ function chart09Fun() {
     myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
     optionCarbon = {
         title: {
-            text: "67.2",
+            text: "25.2",
             subtext: '室温合格率（%）\n（1.6%↓）',  //↑↓
             x: 'center',
             y: 'center',
@@ -1679,7 +1679,7 @@ function chart09Fun() {
             {
                 name: '合格率',
                 type: 'pie',
-                radius: ['60%', '80%'],
+                radius: ['70%', '80%'],
                 itemStyle: {
                     normal: {
                         color: chartsColor.chart09.facecolor2,
