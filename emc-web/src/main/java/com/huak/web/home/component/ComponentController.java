@@ -38,10 +38,10 @@ public class ComponentController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/energyDetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/energyDetail", method = RequestMethod.GET)
     @ResponseBody
     public String energyDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("能耗明细查询");
+        logger.info("组件-能耗明细加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -62,7 +62,7 @@ public class ComponentController {
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("能耗明细查询异常" + e.getMessage());
+            logger.error("组件-能耗明细加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
@@ -72,10 +72,10 @@ public class ComponentController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/costDetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/costDetail", method = RequestMethod.GET)
     @ResponseBody
     public String costDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("成本明细查询");
+        logger.info("组件-成本明细加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -95,7 +95,7 @@ public class ComponentController {
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("成本明细查询查询异常" + e.getMessage());
+            logger.error("组件-成本明细加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
@@ -105,10 +105,10 @@ public class ComponentController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/energycomparison", method = RequestMethod.POST)
+    @RequestMapping(value = "/energycomparison", method = RequestMethod.GET)
     @ResponseBody
     public String energycomparison(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("单耗趋势");
+        logger.info("组件-单耗趋势加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -128,7 +128,7 @@ public class ComponentController {
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("单耗趋势查询查询异常" + e.getMessage());
+            logger.error("组件-单耗趋势加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
@@ -139,10 +139,10 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/weather", method = RequestMethod.POST)
+    @RequestMapping(value = "/weather", method = RequestMethod.GET)
     @ResponseBody
     public String weather(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("单耗趋势");
+        logger.info("组件-天气预报加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -158,7 +158,7 @@ public class ComponentController {
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("天气查询查询异常" + e.getMessage());
+            logger.error("组件-天气预报加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
@@ -169,10 +169,10 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/roomtemperature", method = RequestMethod.POST)
+    @RequestMapping(value = "/roomtemperature", method = RequestMethod.GET)
     @ResponseBody
     public String roomtemperature(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("室温散点组件");
+        logger.info("组件-室温散点加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -186,7 +186,7 @@ public class ComponentController {
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("室温散点组件查询异常" + e.getMessage());
+            logger.error("组件-室温散点加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
@@ -196,10 +196,10 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/recentdetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/recentdetail", method = RequestMethod.GET)
     @ResponseBody
     public String recentdetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
-        logger.info("组件-近期单耗详情");
+        logger.info("组件-近期单耗详情加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
@@ -210,14 +210,69 @@ public class ComponentController {
             params.put("feedType",paramsMap.get("toolFeedType"));
             params.put("type",paramsMap.get("toolOrgType"));
             params.put("comId",company.getId());
-            List<Map<String,Object>> map =  componentService.selectrecentDetail(paramsMap);
+            List<Map<String,Object>> map =  componentService.selectrecentDetail(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
             }else
                 jo.put(Constants.FLAG,false);
         } catch (Exception e) {
-            logger.error("组件-近期单耗详情" + e.getMessage());
+            logger.error("组件-近期单耗详情异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     * 组件-健康指数检测
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
+    @ResponseBody
+    public String healthcheck(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+        logger.info("组件-健康指数检测加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            Map<String,Object> params = new HashMap<>();
+            params.put("orgId",paramsMap.get("toolOrgId"));
+            params.put("feedType",paramsMap.get("toolFeedType"));
+            params.put("type",paramsMap.get("toolOrgType"));
+            params.put("comId",company.getId());
+            Map<String,Object> data = new HashMap<>();
+            Map<String,Object> gkdata = new HashMap<>();
+            gkdata.put("serious",135);
+            gkdata.put("moderate",135);
+            gkdata.put("mild",135);
+            gkdata.put("css","b");
+            Map<String,Object> jjdata = new HashMap<>();
+            jjdata.put("serious",0);
+            jjdata.put("moderate",28);
+            jjdata.put("mild",360);
+            jjdata.put("css","a");
+            Map<String,Object> fwdata = new HashMap<>();
+            fwdata.put("serious",0);
+            fwdata.put("moderate",0);
+            fwdata.put("mild",0);
+            fwdata.put("css","a");
+            Map<String,Object> zydata = new HashMap<>();
+            zydata.put("serious",1000);
+            zydata.put("moderate",380);
+            zydata.put("mild",600);
+            zydata.put("css","b");
+            data.put("gkyx",gkdata);
+            data.put("jjyx",jjdata);
+            data.put("fwqk",fwdata);
+            data.put("zygl",zydata);
+            if (data!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, data);
+            }else
+                jo.put(Constants.FLAG,false);
+        } catch (Exception e) {
+            logger.error("组件-健康指数检测加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }

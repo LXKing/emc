@@ -194,7 +194,10 @@ public class ComponentServiceImpl implements ComponentService{
     @Transactional(readOnly = true)
     public Map<String, Object> roomTemperature(Map<String, Object> params) {
         Map<String,Object> result = new HashMap<>();
+        String date = "2017-02-15";
+        params.put("date",date);
         List<Map<String,Object>> datas = temperatureDao.selectByMap(params);
+
         List<String> times = new ArrayList<>();
         List<Map<String,Object>> minlist= new ArrayList<>();//最小临界值的数据
         List<Map<String,Object>> maxlist= new ArrayList<>();//最大临界值的数据
@@ -269,6 +272,41 @@ public class ComponentServiceImpl implements ComponentService{
             logger.error("组件-近期单耗详情" + e);
         }
         return this.assemblyData(result);
+    }
+
+    /**
+     * 组件-健康指数检测
+     * @param paramsMap
+     * @return
+     */
+    @Override
+    public Map<String, Object> healthcheck(Map<String, Object> paramsMap) {
+        Map<String,Object> data = new HashMap<>();
+        Map<String,Object> gkdata = new HashMap<>();
+        gkdata.put("serious",135);
+        gkdata.put("moderate",135);
+        gkdata.put("mild",135);
+        gkdata.put("css","b");
+        Map<String,Object> jjdata = new HashMap<>();
+        jjdata.put("serious",0);
+        jjdata.put("moderate",28);
+        jjdata.put("mild",360);
+        jjdata.put("css","a");
+        Map<String,Object> fwdata = new HashMap<>();
+        fwdata.put("serious",0);
+        fwdata.put("moderate",0);
+        fwdata.put("mild",0);
+        fwdata.put("css","a");
+        Map<String,Object> zydata = new HashMap<>();
+        zydata.put("serious",1000);
+        zydata.put("moderate",380);
+        zydata.put("mild",600);
+        zydata.put("css","b");
+        data.put("gkyx",gkdata);
+        data.put("jjyx",jjdata);
+        data.put("fwqk",fwdata);
+        data.put("zygl",zydata);
+        return data;
     }
 
     /**
