@@ -94,7 +94,7 @@ public class Weather implements Serializable {
     }
 
     public String getTemperatureCurr() {
-        return temperatureCurr;
+        return temperatureCurr.replace("℃","");
     }
 
     public void setTemperatureCurr(String temperatureCurr) {
