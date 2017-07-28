@@ -1331,7 +1331,7 @@ input {
 }
 
 .weather .chart-content ul div.detail div:first-child {
-    font-size: 30px;
+    font-size: 26px;
     width: 32%;
     line-height: 20px;
     font-family: 'Eurostile LT';
