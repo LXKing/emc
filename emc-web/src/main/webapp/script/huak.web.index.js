@@ -1770,8 +1770,8 @@ function chart10Fun() {
                                 "<h2>" + dates.format(value.reportDate) + "</h2>" +
                                 "<div class='" + iconclass + "'></div>" +
                                 "<h3>" + value.tempLow + "~" + value.tempHigh + "℃</h3>" +
-                                "<h4>" + value.weather + "</h4>" +
-                                "<h5>" + value.wind + "" + value.winp + "</h5>" +
+                                "<h4 title='" + value.weather + "'>" + value.weather + "</h4>" +
+                                "<h5 title='" + value.wind + "" + value.winp + "'>" + value.wind + "" + value.winp + "</h5>" +
                                 "</li>";
                         });
                     }
@@ -2102,7 +2102,7 @@ function chart12Fun() {
     initchart12(titledata);
     $.ajax({
         url: _web + "/component/healthcheck",
-        type: "GET",
+        type: "POST",
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (data) {

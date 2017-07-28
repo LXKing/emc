@@ -6,7 +6,6 @@ import com.huak.home.component.ComponentService;
 import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +37,7 @@ public class ComponentController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/energyDetail", method = RequestMethod.GET)
+    @RequestMapping(value = "/energyDetail", method = RequestMethod.POST)
     @ResponseBody
     public String energyDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-能耗明细加载");
@@ -72,7 +71,7 @@ public class ComponentController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/costDetail", method = RequestMethod.GET)
+    @RequestMapping(value = "/costDetail", method = RequestMethod.POST)
     @ResponseBody
     public String costDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-成本明细加载");
@@ -105,7 +104,7 @@ public class ComponentController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/energycomparison", method = RequestMethod.GET)
+    @RequestMapping(value = "/energycomparison", method = RequestMethod.POST)
     @ResponseBody
     public String energycomparison(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-单耗趋势加载");
@@ -139,7 +138,7 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/weather", method = RequestMethod.GET)
+    @RequestMapping(value = "/weather", method = RequestMethod.POST)
     @ResponseBody
     public String weather(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-天气预报加载");
@@ -169,7 +168,7 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/roomtemperature", method = RequestMethod.GET)
+    @RequestMapping(value = "/roomtemperature", method = RequestMethod.POST)
     @ResponseBody
     public String roomtemperature(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-室温散点加载");
@@ -196,7 +195,7 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/recentdetail", method = RequestMethod.GET)
+    @RequestMapping(value = "/recentdetail", method = RequestMethod.POST)
     @ResponseBody
     public String recentdetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-近期单耗详情加载");
@@ -227,7 +226,7 @@ public class ComponentController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
+    @RequestMapping(value = "/healthcheck", method = RequestMethod.POST)
     @ResponseBody
     public String healthcheck(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
         logger.info("组件-健康指数检测加载");
