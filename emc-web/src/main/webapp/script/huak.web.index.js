@@ -1744,7 +1744,6 @@ function chart10Fun() {
 //        data:$("#searchTools").serialize(),
         dataType: "json",
         success: function (result) {
-            console.info(result);
             $(".chart-content.clearfix").empty();
             if (result.flag == true) {
                 if (result.object.aqi != null && result.object.currentWeather != null) {
