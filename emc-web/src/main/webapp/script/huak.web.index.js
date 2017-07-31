@@ -1451,7 +1451,6 @@ function toDecimal(x) {
     f = Math.round(x * 100, 2) / 100;
     return f;
 }
-
 /**
  * 返回float
  * @param value
