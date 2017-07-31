@@ -15,6 +15,7 @@ import java.util.List;
  * Function List:  <BR>
  */
 public class PageResult<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 数据集
