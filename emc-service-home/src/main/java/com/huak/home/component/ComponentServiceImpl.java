@@ -162,6 +162,8 @@ public class ComponentServiceImpl implements ComponentService{
         String date = dateDao.getDate();
         params.put("reportDate",date);
         List<Weekforcast> weekforcasts = weekforcastDao.selectByComponent(params);
+        List<Weekforcast> obj = weekforcastDao.selectByParams(params);
+        Weekforcast weekforcast = (null!=obj)?obj.get(0):null;
         params.put("reportDate",times);
         List<Weather> weathers = weatherDao.getLatestWeathers(params);
         Weather  weather = weatherDao.selectByPrimaryKey(params);
@@ -182,6 +184,7 @@ public class ComponentServiceImpl implements ComponentService{
         data.put("currentWeather",weather);
         data.put("aqi",weatherAQI);
         data.put("weathers",datas);
+        data.put("currentForcast",weekforcast);
         return data;
     }
 

@@ -669,7 +669,7 @@ function chart03Fun() {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: [
@@ -792,7 +792,7 @@ function chart04Fun() {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: [
@@ -824,7 +824,7 @@ function chart04Fun() {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             }
         },
@@ -1566,7 +1566,7 @@ function chart08Sd(data, times) {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: times
@@ -1594,7 +1594,7 @@ function chart08Sd(data, times) {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             }
         },
@@ -1757,13 +1757,22 @@ function chart10Fun() {
                     $(".chart-content.clearfix").append(html);
                     var html2 = "<ul>";
                     var weathericon = 'wather weather' + result.object.currentWeather.weatherIcon;
+                    var curentwindp=  result.object.currentForcast.wind+""+ result.object.currentForcast.winp;
+                    if(curentwindp.length>4){
+                        curentwindp = curentwindp.substr(0,4)+"...";
+                    }
                     html2 += " <li> <div class='" + weathericon + "'></div>" +
                         "<div class='detail clearfix'> <div>" + result.object.currentWeather.temperatureCurr + "</div>" +
                         "<div><p>℃</p><p>" + result.object.currentWeather.weatherCurrent + "</p></div></div>" +
-                        "<h3>" + result.object.currentWeather.tempLow + "~" + result.object.currentWeather.tempHigh + "℃<h6>" + result.object.currentWeather.wind + "</h6>" +
+                        "<h3>" + result.object.currentForcast.tempLow + "~" + result.object.currentForcast.tempHigh + "℃<h4>" + result.object.currentForcast.weather +
+                        "</h4><h5>" + curentwindp + "</h5>" +
                         " </li>"
                     if (result.object.weekForcast.length > 0) {
                         result.object.weekForcast.forEach(function (value, index, array) {
+                            var tempwindp =   value.wind + "" + value.winp ;
+                            if(curentwindp.length>4){
+                                tempwindp = tempwindp.substr(0,4)+"...";
+                            }
                             var iconclass = 'wather weather' + value.weatherIcon;
                             html2 += " <li>" +
                                 "<h1>" + value.week + "</h1>" +
@@ -1771,7 +1780,7 @@ function chart10Fun() {
                                 "<div class='" + iconclass + "'></div>" +
                                 "<h3>" + value.tempLow + "~" + value.tempHigh + "℃</h3>" +
                                 "<h4 title='" + value.weather + "'>" + value.weather + "</h4>" +
-                                "<h5 title='" + value.wind + "" + value.winp + "'>" + value.wind + "" + value.winp + "</h5>" +
+                                "<h5 title='" + value.wind + "" + value.winp + "'>"+tempwindp+"</h5>" +
                                 "</li>";
                         });
                     }
@@ -1892,7 +1901,6 @@ function chart13Fun() {
                 var recentlisthtml = "";
                 var unitlist = ['T', 'kwh', 'm3', 'GJ'];
                 for (var i = 0; i < recentdata.length; i++) {
-                    debugger;
                     recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
                     recentlisthtml += "<ul>";
                     for (var j = 0; j < recentdata[i].list.length; j++) {
@@ -1945,7 +1953,7 @@ function chart11Fun() {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: ['1月', '2月', '3月', '4月', '5月']
@@ -2122,10 +2130,8 @@ function doCss(data){
 
 /*组件-健康指数-定时器任务1*/
 function timerTask(i,data){
-    console.info(data);
     $("#"+i).attr("class","runm");
     setTimeout(function(){
-
         if(i == 1){
             $("#"+i).attr("class","run"+data.object.fwqk.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
