@@ -57,10 +57,14 @@ public class ComponentController {
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+
+            }
+
         } catch (Exception e) {
-            e.printStackTrace();
+            jo.put(Constants.FLAG,false);
             logger.error("组件-能耗明细加载异常" + e.getMessage());
         }
         return jo.toJSONString();
@@ -91,9 +95,14 @@ public class ComponentController {
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+
+            }
+
         } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
             logger.error("组件-成本明细加载异常" + e.getMessage());
         }
         return jo.toJSONString();
@@ -124,9 +133,13 @@ public class ComponentController {
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+            }
+
         } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
             logger.error("组件-单耗趋势加载异常" + e.getMessage());
         }
         return jo.toJSONString();
@@ -154,9 +167,13 @@ public class ComponentController {
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+            }
+
         } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
             logger.error("组件-天气预报加载异常" + e.getMessage());
         }
         return jo.toJSONString();
@@ -182,9 +199,12 @@ public class ComponentController {
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+            }
         } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
             logger.error("组件-室温散点加载异常" + e.getMessage());
         }
         return jo.toJSONString();
@@ -213,9 +233,13 @@ public class ComponentController {
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+            }
+
         } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
             logger.error("组件-近期单耗详情异常" + e.getMessage());
         }
         return jo.toJSONString();
@@ -268,9 +292,12 @@ public class ComponentController {
             if (data!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, data);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, null);
+            }
         } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
             logger.error("组件-健康指数检测加载异常" + e.getMessage());
         }
         return jo.toJSONString();
