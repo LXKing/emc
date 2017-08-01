@@ -237,7 +237,6 @@ public class ComponentController {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT,  new HashMap<>());
             }
-
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("组件-近期单耗详情异常" + e.getMessage());
