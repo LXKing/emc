@@ -449,7 +449,7 @@
         max((case when q.type= 6 then q.dh else 0 end)) as solar
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
         t_emc_final_data_hour a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
@@ -484,7 +484,7 @@
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
         t_emc_final_data_hour a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
@@ -518,7 +518,7 @@
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
         t_emc_final_data_hour a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
@@ -553,7 +553,7 @@
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE*a.COAL_COEF)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
         t_emc_final_data_hour a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit

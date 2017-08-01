@@ -409,22 +409,22 @@ var path = _web+"/static/";
 var faceKey = localStorage.faceKey == null||localStorage.faceKey == ""?"dark":localStorage.faceKey; //dark
 var chartsColor;
 
-function changeFace() {
+function    changeFace() {
     $('html').removeClass();
     localStorage.faceKey = faceKey;
     chartsColor = {
         linefontcolor: faceKey == 'dark' ? '#fff' : '#666',
         areacolor: faceKey == 'dark' ? ['transparent', 'rgba(15,54,66,.7)'] : ['#F3F3F4', '#E4E4E5'],
         chart01: {
-            color: faceKey == 'dark' ? ['#33fff8', '#304d60'] : ['#3B96DD', '#c2ccd3'],
+            color: faceKey == 'dark' ? ['#33fff8', '#304d60'] : ['#3B96DD', '#c2ccd3']
 
         },
         chart02: {
-            color: faceKey == 'dark' ? ['#33fff8'] : ['#3B96DD'],
+            color: faceKey == 'dark' ? ['#33fff8'] : ['#3B96DD']
 
         },
         chart03: {
-            color: faceKey == 'dark' ? ['#33fff8', '#304d60'] : ['#3B96DD', '#c2ccd3'],
+            color: faceKey == 'dark' ? ['#33fff8', '#304d60'] : ['#3B96DD', '#c2ccd3']
 
         },
         chart10: {
@@ -433,11 +433,11 @@ function changeFace() {
             facecolor3: faceKey == 'dark' ? '#30515e' : ''
         },
         chart11: {
-            facecolor1: faceKey == 'dark' ? ['#33fff8'] : ['#3B96DD'],
+            facecolor1: faceKey == 'dark' ? ['#33fff8'] : ['#3B96DD']
 
         },
         chart08: {
-            facecolor1: faceKey == 'dark' ? ['#21a7a9'] : ['#7fb7e1'],
+            facecolor1: faceKey == 'dark' ? ['#21a7a9'] : ['#7fb7e1']
 
         },
         chart05: {
@@ -449,7 +449,7 @@ function changeFace() {
             facecolor6: faceKey == 'dark' ? ['#33fff8', '#32657f', '#1d465b', '#ff6349', '#3db4ff']:['#32bbb6', '#8394aa', '#b7c1cf', '#df5f4a', '#3b96db']
         },
         chart07: {
-            facecolor1: faceKey == 'dark' ? '#244150' : '#ccc',
+            facecolor1: faceKey == 'dark' ? '#244150' : '#ccc'
         },
         chart09: {
             facecolor1: faceKey == 'dark' ? '#325e70' : '#ffffff',
@@ -457,28 +457,28 @@ function changeFace() {
             facecolor3: faceKey == 'dark' ? '#33fff8' : '#3b96db',
             facecolor4: faceKey == 'dark' ? '#33fff8' : '#348bce',
             facecolor5: faceKey == 'dark' ? '#f86148' : '#d4513b',
-            facecolor6: faceKey == 'dark' ? ['63%', '64%'] : ['0%', '64%'],
+            facecolor6: faceKey == 'dark' ? ['63%', '64%'] : ['0%', '64%']
         },
         ec1:{
             facecolor1: faceKey == 'dark' ? '#325d6c' : '#dbdcdf',
             facecolor2: faceKey == 'dark' ? '#325d6c' : '#abcd',
             facecolor3: faceKey == 'dark' ? '#618292' : '#9a9a9b',
             facecolor4: faceKey == 'dark' ? '#2f4f5f' : '#dbdcdf',
-            facecolor5: faceKey == 'dark' ? ['#33fff8', '#32657f'] : ['#3B96DD', '#c2ccd3'],
+            facecolor5: faceKey == 'dark' ? ['#33fff8', '#32657f'] : ['#3B96DD', '#c2ccd3']
         },
         ec2:{
-            facecolor1: faceKey == 'dark' ? ['#33fff8', '#32657f'] : ['#3B96DD', '#c2ccd3'],
+            facecolor1: faceKey == 'dark' ? ['#33fff8', '#32657f'] : ['#3B96DD', '#c2ccd3']
 
         },
         ec3:{
-            facecolor1: faceKey == 'dark' ? "transparent":"#fff",
+            facecolor1: faceKey == 'dark' ? "transparent":"#fff"
 
         },
         ec4:{
             facecolor1: faceKey == 'dark' ? "#618292":"#9a9a9b",
             facecolor2: faceKey == 'dark' ? "#618292":"#9a9a9b",
             facecolor3: faceKey == 'dark' ? ['#33fff8', '#304d60']:['#3B96DD', '#a1b1c5'],
-            facecolor4: faceKey == 'dark' ?['#33fff8']: ['#3B96DD'],
+            facecolor4: faceKey == 'dark' ?['#33fff8']: ['#3B96DD']
         }
 
     }
@@ -504,4 +504,40 @@ function loadDataFun(){
 
 }
 
+function typefun(these, code) {
+//    $(these).addClass("on").siblings().removeClass("on");
+    //$("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
+    if(faceKey == "dark") {
+        $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs0" + code + ".png");
+    } else {
+        $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
+    }
+    if (code == 6) {
+        $(".PeopleTabdiv").show();
+        $(".otherTabdiv").hide();
+        myChartQualified.resize();
+        myChartCarbon.resize();
+        setCookie('toolOrgType', 5, 3);
+        $("#toolOrgType").val(5);
+    } else if (code == 5) {
+        setCookie('toolOrgType', 4, 3);
+        $("#toolOrgType").val(4);
+    } else if (code == 4) {
+        setCookie('toolOrgType', 3, 3);
+        $("#toolOrgType").val(3);
+    } else if (code == 3) {
+        setCookie('toolOrgType', 2, 3);
+        $("#toolOrgType").val(2);
+    } else if (code == 2) {
+        setCookie('toolOrgType', 1, 3);
+        $("#toolOrgType").val(1);
+    } else if (code == 1) {
+        setCookie('toolOrgType', '', 3);
+        $("#toolOrgType").val("");
+    } else {
+        $(".PeopleTabdiv").hide();
+        $(".otherTabdiv").show();
+    }
+    loadDataFun();
+};
 

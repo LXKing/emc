@@ -202,44 +202,6 @@ var websiteheight;
 websiteheight = $("#website").height() - 12;
 $(".index_menuBox").height(websiteheight);
 
-function typefun(these, code) {
-//    $(these).addClass("on").siblings().removeClass("on");
-    //$("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
-    if(faceKey == "dark") {
-        $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs0" + code + ".png");
-    } else {
-        $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
-    }
-    if (code == 6) {
-        $(".PeopleTabdiv").show();
-        $(".otherTabdiv").hide();
-        myChartQualified.resize();
-        myChartCarbon.resize();
-        setCookie('toolOrgType', 5, 3);
-        $("#toolOrgType").val(5);
-    } else if (code == 5) {
-        setCookie('toolOrgType', 4, 3);
-        $("#toolOrgType").val(4);
-    } else if (code == 4) {
-        setCookie('toolOrgType', 3, 3);
-        $("#toolOrgType").val(3);
-    } else if (code == 3) {
-        setCookie('toolOrgType', 2, 3);
-        $("#toolOrgType").val(2);
-    } else if (code == 2) {
-        setCookie('toolOrgType', 1, 3);
-        $("#toolOrgType").val(1);
-    } else if (code == 1) {
-        setCookie('toolOrgType', '', 3);
-        $("#toolOrgType").val("");
-    } else {
-        $(".PeopleTabdiv").hide();
-        $(".otherTabdiv").show();
-    }
-    chart07Fun();
-    chart01Fun();
-
-};
 
 /*组件-单耗趋势*/
 function chart01Fun() {
@@ -595,7 +557,7 @@ function chart02Fun() {
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.chart02.color,
         series: []
@@ -1761,7 +1723,7 @@ function chart10Fun() {
                     }
                     html2 += " <li> <div class='" + weathericon + "'></div>" +
                         "<div class='detail clearfix'> <div>" + result.object.currentWeather.temperatureCurr + "</div>" +
-                        "<div><p>℃</p><p>" + result.object.currentWeather.weatherCurrent + "</p></div></div>" +
+                        "<div><p>℃</p><p>" + result.object.currentWeather.weatherCurrent + "（实时）</p></div></div>" +
                         "<h3>" + result.object.currentForcast.tempLow + "~" + result.object.currentForcast.tempHigh + "℃<h4>" + result.object.currentForcast.weather +
                         "</h4><h5>" + curentwindp + "</h5>" +
                         " </li>"
@@ -1897,7 +1859,7 @@ function chart13Fun() {
                 var recentdata = result.object;
                 var recenthtml = "";
                 var recentlisthtml = "";
-                var unitlist = ['T', 'kwh', 'm3', 'GJ'];
+                var unitlist = ['T/㎡', 'kwh/㎡', 'm3/㎡', 'GJ/㎡'];
                 for (var i = 0; i < recentdata.length; i++) {
                     recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
                     recentlisthtml += "<ul>";
@@ -2056,12 +2018,27 @@ function chart11Fun() {
     chart11.setOption(option);
 }
 
+/*组件-健康指数*/
+function chart12Fun() {
+    var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
+    initchart12(titledata);
+    $.ajax({
+        url: _web + "/component/healthcheck",
+        type: "POST",
+        data: $("#searchTools").serialize(),
+        dataType: "json",
+        success: function (data) {
+            doCss(data);
+        }
+    });
+}
+
 /*组件-健康指数检测初始化*/
 function initchart12(titledata){
+    $("#chart12").html("");
     //value1 严重 value2中度 value3轻度
     var data = []; //参数数量有几个写几个 自动识别前台样式 1工况运行 2经济运行 3 服务情况 4作业管理
     var html = "";
-
     html += "<div>";
     for(var i = 0; i < titledata.length; i++) {
         var classname = "runc";
@@ -2102,28 +2079,18 @@ function initchart12(titledata){
     $("#chart12").html(html);
 }
 
-/*组件-健康指数*/
-function chart12Fun() {
-    var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
-    initchart12(titledata);
-    $.ajax({
-        url: _web + "/component/healthcheck",
-        type: "POST",
-        data: $("#searchTools").serialize(),
-        dataType: "json",
-        success: function (data) {
-            doCss(data);
-        }
-    });
 
-
-}
 
 /*组件-健康指数定时器改变样式*/
 function doCss(data){
     timerTask(1,data);
-    run(1);
-
+    var bar = document.getElementById("barjc");
+    bar.style.width=parseInt(0)+ "%";
+    $("#totals").html("100%");
+    $("#checktitle").html("正在检测服务情况...");
+    if( bar.style.width == "0%"){
+        run();
+    }
 }
 
 /*组件-健康指数-定时器任务1*/
@@ -2131,23 +2098,23 @@ function timerTask(i,data){
     $("#"+i).attr("class","runm");
     setTimeout(function(){
         if(i == 1){
-            $("#"+i).attr("class","run"+data.object.fwqk.css);
-            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
-            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.fwqk.moderate);
-            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.fwqk.mild);
-            $("#"+i+1).attr("class","run"+data.object.fwqk.css);
-        }else if( i == 2){
             $("#"+i).attr("class","run"+data.object.gkyx.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.gkyx.serious);
             $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.gkyx.moderate);
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.gkyx.mild);
             $("#"+i+1).attr("class","run"+data.object.gkyx.css);
-        }else if (i == 3){
+        }else if( i == 2){
             $("#"+i).attr("class","run"+data.object.jjyx.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.jjyx.serious);
             $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.jjyx.moderate);
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.jjyx.mild);
             $("#"+i+1).attr("class","run"+data.object.jjyx.css);
+        }else if (i == 3){
+            $("#"+i).attr("class","run"+data.object.fwqk.css);
+            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
+            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.fwqk.moderate);
+            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.fwqk.mild);
+            $("#"+i+1).attr("class","run"+data.object.fwqk.css);
         }else if( i == 4){
             $("#"+i).attr("class","run"+data.object.zygl.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.zygl.serious);
@@ -2155,7 +2122,7 @@ function timerTask(i,data){
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.zygl.mild);
             $("#"+i+1).attr("class","run"+data.object.zygl.css);
         }
-        if(i<=4){
+        if(i<=3){
             timerTask(parseInt(i)+1,data);
         }else{
             return;
@@ -2164,18 +2131,18 @@ function timerTask(i,data){
 }
 
 /*组件-健康指数-定时器任务2*/
-function run(i){
+function run(){
     var bar = document.getElementById("barjc");
     var total = document.getElementById("totals");
     bar.style.width=parseInt(bar.style.width) + 1 + "%";
     total.innerHTML = bar.style.width;
     if(bar.style.width == "100%"){
         clearTimeout(timeout);
-        $("#totaltitle").html("");
+        $("#totals").html("100%");
         $("#checktitle").html("检测完成");
         return;
     }
-    var timeout=setTimeout("run()",200);
+    var timeout = setTimeout("run()",200);
 }
 
 function cutNh(){
