@@ -59,7 +59,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, map);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
 
             }
 
@@ -97,7 +97,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, map);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
 
             }
 
@@ -135,7 +135,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, map);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
             }
 
         } catch (Exception e) {
@@ -169,7 +169,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, map);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
             }
 
         } catch (Exception e) {
@@ -201,7 +201,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, map);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
             }
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
@@ -235,7 +235,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, map);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
             }
 
         } catch (Exception e) {
@@ -294,7 +294,7 @@ public class ComponentController {
                 jo.put(Constants.OBJECT, data);
             }else{
                 jo.put(Constants.FLAG, true);
-                jo.put(Constants.OBJECT, null);
+                jo.put(Constants.OBJECT,  new HashMap<>());
             }
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
