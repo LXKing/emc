@@ -25,74 +25,74 @@
 
         <div class="index_menuBox index_menuBoxAll  pull-left" onclick="typefun(this,1)">
             <div class="index_menuBoxCon">
-                <span>能源流</span><span class="tipsindex">999</span>
+                <span>能源流</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 eTotal"></li>
-                <li class="tabicon02 carbonTotal"></li>
-                <li class="tabicon03 costAll"></li>
-                <li class="tabicon04 yardage"></li>
-                <li class="tabicon05 zyardage"></li>
-                <li class="tabicon06 priceArea"></li>
+                <li class="tabicon01 eTotal">0TCE</li>
+                <li class="tabicon02 carbonTotal">0T</li>
+                <li class="tabicon03 costAll">0万元</li>
+                <li class="tabicon04 yardage">0TCE/㎡</li>
+                <li class="tabicon05 zyardage">0GJ/㎡</li>
+                <li class="tabicon06 priceArea">0万㎡</li>
             </ul>
         </div>
 
         <div class="index_menuBox index_menuBoxre  pull-left" onclick="typefun(this,2)">
             <div class="index_menuBoxCon">
-                <span>供热源</span><span class="tipsindex">259</span>
+                <span>供热源</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 feTotal"></li>
-                <li class="tabicon02 fCarbonTotal"></li>
-                <li class="tabicon03 fCostAll"></li>
+                <li class="tabicon01 feTotal">0TCE</li>
+                <li class="tabicon02 fCarbonTotal">0T</li>
+                <li class="tabicon03 fCostAll">0万元</li>
             </ul>
-            <div class="tabicon10 tabicon10cb">200GJ</div>
+            <div class="tabicon10 tabicon10cb">0GJ</div>
         </div>
 
         <div class="index_menuBox index_menuBoxweb index_menuBoxre pull-left" onclick="typefun(this,3)">
             <div class="index_menuBoxCon">
-                <span>管网</span><span class="tipsindex">169</span>
+                <span>管网</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07 netLen"></li>
-                <li class="tabicon09 tabicon09cb">200km</li>
-                <li class="tabicon03 netCost"></li>
+                <li class="tabicon07 netLen">0TCE</li>
+                <li class="tabicon09 tabicon09cb">0km</li>
+                <li class="tabicon03 netCost">0万元</li>
             </ul>
-            <div class="tabicon10">200GJ</div>
+            <div class="tabicon10">0GJ</div>
         </div>
 
         <div class="index_menuBox index_menuBoxsite index_menuBoxre pull-left" onclick="typefun(this,4)">
             <div class="index_menuBoxCon">
-                <span>换热站</span><span class="tipsindex">1069</span>
+                <span>换热站</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 seTotal"></li>
-                <li class="tabicon02 sCarbonTotal tabicon02cb"></li>
-                <li class="tabicon03 sCostAll"></li>
+                <li class="tabicon01 seTotal">0TCE</li>
+                <li class="tabicon02 sCarbonTotal tabicon02cb">0T</li>
+                <li class="tabicon03 sCostAll">0万元</li>
             </ul>
-            <div class="tabicon10">200GJ</div>
+            <div class="tabicon10">0GJ</div>
         </div>
 
         <div class="index_menuBox index_menuBoxline index_menuBoxre pull-left" onclick="typefun(this,5)">
             <div class="index_menuBoxCon">
-                <span>管线</span><span class="tipsindex">320</span>
+                <span>管线</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07 lineLen"></li>
-                <li class="tabicon09">200km</li>
-                <li class="tabicon03 lineCost"></li>
+                <li class="tabicon07 lineLen">0km</li>
+                <li class="tabicon09">0km</li>
+                <li class="tabicon03 lineCost">0万元</li>
             </ul>
-            <div class="tabicon10">200GJ</div>
+            <div class="tabicon10">0GJ</div>
         </div>
 
         <div class="index_menuBox index_menuBoxjum index_menuBoxre pull-left " onclick="typefun(this,6)">
             <div class="index_menuBoxCon">
-                <span>民户</span><span class="tipsindex">30</span>
+                <span>民户</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07 rTotal"></li>
-                <li class="tabicon08 hgl"></li>
-                <li class="tabicon03 roomCost"></li>
+                <li class="tabicon07 rTotal">0TCE</li>
+                <li class="tabicon08 hgl">0%</li>
+                <li class="tabicon03 roomCost">0万元</li>
             </ul>
         </div>
     </div>
