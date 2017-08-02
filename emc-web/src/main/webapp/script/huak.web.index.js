@@ -68,7 +68,7 @@
                 } else {
                     $(".yardage").html(data.all.yardage + "TCE/㎡");
                 }
-                $(".zyardage").html(2358 + "GJ/㎡");
+                $(".zyardage").html(0 + "GJ/㎡");
                 if (data.all.priceArea == null || data.all.priceArea == '') {
                     $(".priceArea").html(0 + "万㎡");
                 } else {
@@ -193,6 +193,7 @@
                     $(".roomCost").html(0 + " 万元");
                 } else {
 //                    $(".roomCost").html(data.all.roomCost + " 万元");
+                    $(".roomCost").html(0 + " 万元");
                     $(".roomCost").html(0 + " 万元");
                 }
 
