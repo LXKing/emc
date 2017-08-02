@@ -1,12 +1,9 @@
 @charset "UTF-8";
 @font-face {
     font-family: 'Eurostile LT';
-    src: url('../fonts/Eurostile LT Medium.ttf');
+    src: url('../fonts/EurostileLTMedium.ttf'), url('../fonts/Eurostile LT Medium.eot'), url('../fonts/Eurostile LT Medium.svg'), url('../fonts/Eurostile LT Medium.woff'), url('../fonts/Eurostile LT Medium.woff2');
 }
-@font-face {
-    font-family: 'guan';
-    src: url('../fonts/msyh.ttf');
-}
+
 body {
     color: #666;
     font-size: 12px
@@ -590,17 +587,21 @@ input {
     background-image: url(../img/index/tabicon10_cb.png)
 }
 
+
 /*.index_menuBox.on .index_menuBoxCon {
 	color: #fff;
 }*/
+
 
 /*.index_menuBox.on .index_menuBoxList li {
 	color: #fff;
 }*/
 
+
 /*.index_menuBox.on .tabicon10 {
 	color: #fff;
 }*/
+
 
 /*.index_menuBox.on .index_menuBoxCon>span.tipsindex {
 	background: #fff;
@@ -657,6 +658,7 @@ input {
     background-image: url(../img/index/tabicon10_on.png)
 }
 
+
 /*.index_menuBoxre.on .tabicon01 {
 	background-image: url(../img/index/tabicon01_on.png)
 }
@@ -668,6 +670,7 @@ input {
 .index_menuBoxre.on .tabicon03 {
 	background-image: url(../img/index/tabicon03_on.png)
 }*/
+
 
 /*.index_menuBoxre.on .tabicon04 {
 	background-image: url(../img/index/tabicon04_on.png)
@@ -696,6 +699,7 @@ input {
 .index_menuBoxre.on .tabicon10 {
 	background-image: url(../img/index/tabicon10_on.png)
 }*/
+
 
 /*.index_menuBoxweb.on .tabicon01 {
 	background-image: url(../img/index/tabicon01_on.png)
@@ -876,16 +880,27 @@ input {
     background-image: url(../img/index/tit04.png);
 }
 
+.EnergyChartBg:before {
+    content: '';
+    background: url(../img/index/yibiaopian_01.png) no-repeat 2px 19px;
+    height: 190px;
+    position: absolute;
+    width: 500px;
+}
+
 .EnergyChartBg {
-    background: url(../img/index/yibiaopian_01.png) no-repeat center top;
-    height: 157px;
-    margin-top: 26px;
+    height: 190px;
+    padding-left: 20px !important;
+    /*margin-top: 26px;*/
+    position: relative;
+    width: 287px;
 }
 
 .EnergyChart {
     width: 100%;
     height: 100%;
-    top: 50px;
+    top: 23px !important;
+    left: -19% !important;
 }
 
 .EnergyChartText {
@@ -912,7 +927,7 @@ input {
     color: #df5f4a;
     font-size: 40px;
     font-family: arial;
-    line-height: 28px;
+    line-height: 35px;
     font-family: 'Eurostile LT';
 }
 
@@ -989,7 +1004,6 @@ input {
     /*width: 75px;*/
     width: 20%;
     text-align: center;
-    height: 66px;
     border-right: 1px solid #eee;
 }
 
@@ -1086,7 +1100,7 @@ input {
 
 .cost-list-box {
     position: relative;
-    padding: 8px 0 8px 43px;
+    padding: 5px 0 5px 43px;
     margin-left: 10%;
 }
 
@@ -1106,10 +1120,12 @@ input {
 }
 
 .emission-list-box {
-    padding: 12px 0;
     margin-left: 12px;
     border: none;
     position: relative;
+    padding: 0px;
+    height: 36px;
+    line-height: 36px;
 }
 
 .emission-list-box:last-child:after {
@@ -1550,17 +1566,15 @@ input {
     background-image: -ms-linear-gradient( -45deg, rgb(50, 187, 182) 0%, rgb(59, 150, 219) 100%);
 }
 
-.quanquanwrap>div:nth-child(1)>div.runb>div>div{
+.quanquanwrap>div:nth-child(1)>div.runb>div>div {
     background: url(../img/qiansedong.gif) no-repeat;
 }
+
 .quanquanwrap>div:nth-child(1)>div.runb>div:after {
     background-image: -moz-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
     background-image: -webkit-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
     background-image: -ms-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
-
 }
-
-
 
 .quanquanwrap>div:nth-child(1)>div>div>div {
     width: 56px;
@@ -1846,28 +1860,33 @@ input {
     font-size: 12px;
     color: #bbbbbb;
 }
-.recentchartT > div{
-    float:left;
+
+.recentchartT>div {
+    float: left;
     width: 33%;
     box-sizing: border-box;
-    color:#fff;
+    color: #fff;
     line-height: 28px;
 }
-.recentchartT > div:nth-child(1){
+
+.recentchartT>div:nth-child(1) {
     padding-left: 22px;
 }
-.recentchartT > div:nth-child(2){
+
+.recentchartT>div:nth-child(2) {
     padding-left: 22px;
 }
-.recentchartT > div:nth-child(3){
-    padding-left:28px;
+
+.recentchartT>div:nth-child(3) {
+    padding-left: 28px;
 }
-#header .changeface{
+
+#header .changeface {
     display: block;
     position: absolute;
     right: 0px;
-    top:0px;
-    width:40px;
+    top: 0px;
+    width: 40px;
     height: 40px;
     background: url(../img/index/changeface.png) no-repeat;
     cursor: pointer;

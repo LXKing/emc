@@ -195,8 +195,8 @@
 .facedark .mainShanchu{background:url(../imgdark/picture/shanchu.png) no-repeat center}
 .facedark .select-boxWdate .time-input-disable{background:#fff url(../imgdark/picture/datePicker.png) no-repeat 82px}
 
- 
- 
+
+
 .facedark .index_menuBox .tabicon01{background-image:url(../imgdark/index/tabicon01.png)}
 .facedark .index_menuBox .tabicon02{background-image:url(../imgdark/index/tabicon02.png)}
 .facedark .index_menuBox .tabicon03{background-image:url(../imgdark/index/tabicon03.png)}
@@ -327,9 +327,9 @@
 .facedark .x-sfleft1{background-color: transparent!important;}
 .facedark  .select-boxbtnAlarm{background: none;}
 
- 
+
 .facedark .recentchartT > div{
-	color: #000000;
+    color: #000000;
 }
 
 
@@ -349,39 +349,54 @@
 }
 
 .facedark .EnergyChartTextnumb ,.facedark  .cb_color,.facedark .EnergyChartTextnumbolb{
-	color:#00aca6 ;
+    color:#00aca6 ;
 }
 .facedark #header .changeface{
-	background: url(../imgdark/index/changeface.png) no-repeat;
+    background: url(../imgdark/index/changeface.png) no-repeat;
 }
 .facedark .index_menuBoxCon>span{
-	color: #fff;
+    color: #fff;
 }
 .facedark #recentall>div>p{
-	color: #fff;
+    color: #fff;
 }
 .facedark .weather .chart-content ul li{
-	border-right: 1px solid #1d2f3a;
+    border-right: 1px solid #1d2f3a;
 }
 .facedark .quanquanwrap>div:nth-child(1)>div>div>div>div{
-	background:none;
-	border:none;
+    background:none;
+    border:none;
 }
 .facedark .quanquanwrap>div:nth-child(1)>div>div>div>div:after{
-	border:none;
+    border:none;
 }
 
 .facedark .quanquanwrap>div:nth-child(1)>div.runb>div>div{
-	background: url(../imgdark/qiansedong.gif) no-repeat;
+    background: url(../imgdark/qiansedong.gif) no-repeat;
 }
 
- .facedark .quanquanwrap>div:nth-child(1)>div>div>div ,
- .facedark  .quanquanwrap>div:nth-child(1)>div>div:after{
- 	background: #1d465b;
- }
+.facedark .quanquanwrap>div:nth-child(1)>div>div>div ,
+.facedark  .quanquanwrap>div:nth-child(1)>div>div:after{
+    background: #1d465b;
+}
 
 
- .facedark .main-box{
- 	background: rgba(4,23,36,.75);
+.facedark .main-box{
+    background: rgba(4,23,36,.75);
     box-shadow: 0 0 3px rgba(4,23,36,.75);
- }
+}
+
+.facedark .barwrap2 {
+    background: url(../imgdark/pic1.png) no-repeat left top ;
+    border: 1px solid #2e4957;
+}
+.facedark .barwrap2 > div:nth-child(2) p{
+    color:#33fff8;
+}
+
+.facedark .barwrap2 > div:nth-child(1){
+    color: #33fff8;
+}
+.facedark .EnergyChartBg:before{
+    background: none;
+}

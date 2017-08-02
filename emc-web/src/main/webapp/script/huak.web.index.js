@@ -1340,7 +1340,7 @@ function initChart(kedu1, mx, bm_total) {
                 max: max,
                 startAngle: 180,
                 endAngle: 0,
-                radius: '88%',
+                radius: '78%',
                 axisLine: {
                     show: true,
                     lineStyle: {
