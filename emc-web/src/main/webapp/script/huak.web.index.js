@@ -187,7 +187,7 @@
                 if (data.all.hgl == null || data.all.hgl == '') {
                     $(".hgl").html(0 + "%");
                 } else {
-                    $(".hgl").html("75%");
+                    $(".hgl").html("0%");
                 }
                 if (data.all.roomCost == null || data.all.roomCost == '') {
                     $(".roomCost").html(0 + " 万元");

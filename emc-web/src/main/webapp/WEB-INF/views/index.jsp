@@ -233,11 +233,11 @@
             <div class="emission-chart ">
                 <div id="chart06" class="wave">
                     <div class="wave-main wave-hot">
-                        <b class="" id="level_num">290.2</b>
+                        <b class="" id="level_num">0</b>
 
                         <p class="wave-name">碳排放总量（万T）</p>
 
-                        <p class="wave-proportion">(1.6%↑)</p>
+                        <p class="wave-proportion">(0%↑)</p>
                     </div>
                 </div>
             </div>
@@ -245,38 +245,38 @@
                 <div class="emission-list-box emission-list-hot">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">朝一</span>
-                    <span class="emission-list-num">208.4</span>
-                    <span class="emission-list-proportion">(1.6%↑)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↑)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">朝二</span>
-                    <span class="emission-list-num">192.8</span>
-                    <span class="emission-list-proportion">(2.6%↓)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↓)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">东城</span>
-                    <span class="emission-list-num">187.2</span>
-                    <span class="emission-list-proportion">(2.6%↓)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↓)</span>
                 </div>
                 <div class="emission-list-box emission-list-hot">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">西城</span>
-                    <span class="emission-list-num">245.9</span>
-                    <span class="emission-list-proportion">(1.6%↑)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↑)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">海淀</span>
-                    <span class="emission-list-num">312.0</span>
-                    <span class="emission-list-proportion">(2.6%↓)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↓)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">丰台</span>
-                    <span class="emission-list-num">254.6</span>
-                    <span class="emission-list-proportion">(1.6%↑)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↑)</span>
                 </div>
             </div>
         </div>
@@ -297,38 +297,38 @@
                 <div class="emission-list-box emission-list-hot">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">朝一</span>
-                    <span class="emission-list-num">208.4</span>
-                    <span class="emission-list-proportion">(1.6%↑)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↑)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">朝二</span>
-                    <span class="emission-list-num">192.8</span>
-                    <span class="emission-list-proportion">(2.6%↓)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↓)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">东城</span>
-                    <span class="emission-list-num">187.2</span>
-                    <span class="emission-list-proportion">(2.6%↓)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↓)</span>
                 </div>
                 <div class="emission-list-box emission-list-hot">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">西城</span>
-                    <span class="emission-list-num">245.9</span>
-                    <span class="emission-list-proportion">(1.6%↑)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↑)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">海淀</span>
-                    <span class="emission-list-num">312.0</span>
-                    <span class="emission-list-proportion">(2.6%↓)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↓)</span>
                 </div>
                 <div class="emission-list-box">
                     <span class="emission-list-rect"></span>
                     <span class="emission-list-num">丰台</span>
-                    <span class="emission-list-num">254.6</span>
-                    <span class="emission-list-proportion">(1.6%↑)</span>
+                    <span class="emission-list-num">0</span>
+                    <span class="emission-list-proportion">(0%↑)</span>
                 </div>
             </div>
         </div>
