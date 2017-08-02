@@ -79,7 +79,7 @@ public class EnergyTopController {
 //            yardage = frameService.selectYardageByMap(params);
 //            priceArea = frameService.selectPriceAreaByMap(params);
             Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
-            if(costVo.isEmpty()||costVo==null) {
+            if(costVo==null||costVo.isEmpty()) {
                 logger.info("----------------------该成本没有值--------------------------");
             }else {
                 if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
@@ -151,7 +151,7 @@ public class EnergyTopController {
             yardage = frameService.selectYardageByMap(params);
             priceArea = frameService.selectPriceAreaByMap(params);
 //            Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
-//            if(costVo.isEmpty()||costVo==null) {
+//            if(costVo==null||costVo.isEmpty()) {
 //                logger.info("----------------------该成本没有值--------------------------");
 //            }else {
 //                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
@@ -221,7 +221,7 @@ public class EnergyTopController {
             eTotal= frameService.selectFeedTotalByMap(params);
             carbonTotal = frameService.selectTopFeedCarbonTotalByMap(params);
             Map<String, Object> costVo = frameService.selectFeedCostTotalByMap(params);
-            if(costVo.isEmpty()||costVo==null) {
+            if(costVo==null||costVo.isEmpty()) {
                 logger.info("----------------------该成本没有值--------------------------");
             }else {
                 if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
@@ -286,7 +286,7 @@ public class EnergyTopController {
         try{
             netlen= frameService.selectGetNetLengh(params);
             Map<String, Object> costVo = frameService.selectGetNetCost(params);
-            if(costVo.isEmpty()||costVo==null) {
+            if(costVo==null||costVo.isEmpty()) {
                 logger.info("----------------------该成本没有值--------------------------");
             }else {
                 if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
@@ -356,7 +356,7 @@ public class EnergyTopController {
             eTotal= frameService.selectTopStationTotalByMap(params);
             carbonTotal = frameService.selectTopStationCarbonTotalByMap(params);
 //            Map<String, Object> costVo = frameService.selectStationCostTotalByMap(params);
-//            if(costVo.isEmpty()||costVo==null) {
+//            if(costVo==null||costVo.isEmpty()) {
 //                logger.info("----------------------该成本没有值--------------------------");
 //            }else {
 //                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
@@ -421,7 +421,7 @@ public class EnergyTopController {
         try{
             linelen= frameService.selectGetLineLengh(params);
             Map<String, Object> costVo = frameService.selectGetLineCost(params);
-            if(costVo.isEmpty()||costVo==null) {
+            if(costVo==null||costVo.isEmpty()) {
                 logger.info("----------------------该成本没有值--------------------------");
             }else {
                 if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
@@ -486,7 +486,7 @@ public class EnergyTopController {
             rTotal= frameService.selectTopRoomTotalByMap(params);
             hgl = frameService.selectTopRoomHglByMap(params);
             Map<String, Object> costVo = frameService.getTopRoomCostByMap(params);
-            if(costVo.isEmpty()||costVo==null) {
+            if(costVo==null||costVo.isEmpty()) {
                 logger.info("----------------------该成本没有值--------------------------");
             }else {
                 if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
