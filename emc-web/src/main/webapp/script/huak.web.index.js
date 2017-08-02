@@ -212,7 +212,14 @@ function chart01Fun() {
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (result) {
-            chart01Show(result.object.data, result.object.yearDate, result.object.other);
+            if(result.flag == true){
+                if(null != result.object){
+                    chart01Show(result.object.data, result.object.yearDate, result.object.other);
+                }else{
+                    chart01Show([],[],null);
+                }
+            }
+
         }
     });
 }
