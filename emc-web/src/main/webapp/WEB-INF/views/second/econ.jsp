@@ -51,6 +51,7 @@
 
             <div class="clearfix energy-list col-lg-12 ">
                 <div class="energy-list-box energy-list-box-first">
+                    <a href="${web}/third/energy/page/1">
                     <div class="energy-head ">
                         <span class="energy-list-name">水能耗</span>
                         <div class="energy-list-info">
@@ -59,6 +60,7 @@
                             <span class="energy-list-proportion " id="waterchangeRate"></span>
                         </div>
                     </div>
+                    </a>
 
                     <div class="energy-chart">
                         <div id="waterEnergyChart"></div>
@@ -66,6 +68,7 @@
                 </div>
 
                 <div class="energy-list-box">
+                    <a href="${web}/third/energy/page/2">
                     <div class="energy-head ">
                         <span class="energy-list-name">电能耗</span>
                         <div class="energy-list-info">
@@ -74,12 +77,14 @@
                             <span class="energy-list-proportion" id="elechangeRate"></span>
                         </div>
                     </div>
+                    </a>
                     <div class="energy-chart">
                         <div id="electricEnergyChart"></div>
                     </div>
                 </div>
 
                 <div class="energy-list-box">
+                    <a href="${web}/third/energy/page/2">
                     <div class="energy-head ">
                         <span class="energy-list-name">气能耗</span>
                         <div class="energy-list-info">
@@ -88,13 +93,14 @@
                             <span class="energy-list-proportion " id="gaschangeRate"></span>
                         </div>
                     </div>
-
+                    </a>
                     <div class="energy-chart">
                         <div id="gasEnergyChart"></div>
                     </div>
                 </div>
 
                 <div class="energy-list-box">
+                    <a href="${web}/third/energy/page/4">
                     <div class="energy-head ">
                         <span class="energy-list-name">热能耗</span>
                         <div class="energy-list-info">
@@ -103,13 +109,14 @@
                             <span class="energy-list-proportion" id="hotchangeRate"></span>
                         </div>
                     </div>
-
+                    </a>
                     <div class="energy-chart">
                         <div id="hotEnergyChart"></div>
                     </div>
                 </div>
 
                 <div class="energy-list-box energy-list-box-last">
+                    <a href="${web}/third/energy/page/5">
                     <div class="energy-head ">
                         <span class="energy-list-name">煤能耗</span>
                         <div class="energy-list-info">
@@ -118,7 +125,7 @@
                             <span class="energy-list-proportion" id="coalchangeRate"></span>
                         </div>
                     </div>
-
+                    </a>
                     <div class="energy-chart">
                         <div id="coalEnergyChart"></div>
                     </div>

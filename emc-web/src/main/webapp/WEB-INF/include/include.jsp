@@ -63,3 +63,4 @@
 <script src="${web}/static/js/huak.cookie.js"></script>
 <script src="${web}/static/js/public.js"></script>
 <script src="${web}/static/js/date.js"></script>
+<script src="${web}/static/js/echartsConfig.js"></script>
