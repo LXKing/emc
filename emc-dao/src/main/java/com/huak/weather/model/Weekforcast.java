@@ -40,6 +40,18 @@ public class Weekforcast implements Serializable{
         this.status = status;
     }
 
+    public Weekforcast( String reportDate, String week, String wind, String winp, String tempHigh, String tempLow, String weather, String weatherIcon, Byte status) {
+        this.reportDate = reportDate;
+        this.week = week;
+        this.wind = wind;
+        this.winp = winp;
+        this.tempHigh = tempHigh;
+        this.tempLow = tempLow;
+        this.weather = weather;
+        this.weatherIcon = weatherIcon;
+        this.status = status;
+    }
+
     public Weekforcast() {
         super();
     }
