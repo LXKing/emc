@@ -59,7 +59,7 @@ public class EnergyTopController {
         params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
         params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
         String eTotal=null;
-        String carbonTotal=null;
+        //String carbonTotal=null;
         //Map<String,String> costMap = new HashMap<String,String>();
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
@@ -75,7 +75,7 @@ public class EnergyTopController {
         try{
 
             eTotal= frameService.selectTopEtotalByMap(params);
-            carbonTotal = frameService.selectCarbonTotalByMap(params);
+            //carbonTotal = frameService.selectCarbonTotalByMap(params);
 //            yardage = frameService.selectYardageByMap(params);
 //            priceArea = frameService.selectPriceAreaByMap(params);
             Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
@@ -101,7 +101,7 @@ public class EnergyTopController {
             }
 
             topAll.put("eTotal",eTotal);
-            topAll.put("carbonTotal",carbonTotal);
+            //topAll.put("carbonTotal",carbonTotal);
 //            topAll.put("yardage",yardage);
 //            topAll.put("priceArea",priceArea);
             topAll.put("costAll",costAll);

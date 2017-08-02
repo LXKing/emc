@@ -10,20 +10,21 @@
             dataType: "json",
             success: function (data) {
                 if (data.all.eTotal == null || data.all.eTotal == '') {
-                    $(".eTotal").html(0 + " TCE");
+                    $(".eTotal").html(0 + "TCE");
                 } else {
-                    $(".eTotal").html(data.all.eTotal + " TCE");
+                    $(".eTotal").html(data.all.eTotal + "TCE");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
-                    $(".carbonTotal").html(0 + " T");
+                    $(".carbonTotal").html(0 + "T");
                 } else {
-                    $(".carbonTotal").html(data.all.carbonTotal + " T");
+                    //$(".carbonTotal").html(data.all.carbonTotal + "T");
+                    $(".carbonTotal").html(0 + "T");
                 }
 
                 if (data.all.costAll == null || data.all.costAll == '') {
-                    $(".costAll").html(0 + " 万元");
+                    $(".costAll").html(0 + "万元");
                 } else {
-                    $(".costAll").html(data.all.costAll + " 万元");
+                    $(".costAll").html(data.all.costAll + "万元");
                 }
 //                if (data.all.yardage == null || data.all.yardage == '') {
 //                    $(".yardage").html(0 + " TCE/㎡");
@@ -63,15 +64,15 @@
 //                    $(".costAll").html(data.all.costAll + " 万元");
 //                }
                 if (data.all.yardage == null || data.all.yardage == '') {
-                    $(".yardage").html(0 + " TCE/㎡");
+                    $(".yardage").html(0 + "TCE/㎡");
                 } else {
-                    $(".yardage").html(data.all.yardage + " TCE/㎡");
+                    $(".yardage").html(data.all.yardage + "TCE/㎡");
                 }
-                $(".zyardage").html(2358 + " GJ/㎡");
+                $(".zyardage").html(2358 + "GJ/㎡");
                 if (data.all.priceArea == null || data.all.priceArea == '') {
-                    $(".priceArea").html(0 + " 万㎡");
+                    $(".priceArea").html(0 + "万㎡");
                 } else {
-                    $(".priceArea").html(data.all.priceArea + " 万㎡");
+                    $(".priceArea").html(data.all.priceArea + "万㎡");
                 }
 
             }
