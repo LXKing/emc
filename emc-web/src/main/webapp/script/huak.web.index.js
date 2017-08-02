@@ -1039,15 +1039,15 @@ function initChart05(energy, device, manage, labor, other, total, tbl) {
     chart05 = echarts.init(document.getElementById('chart05'));
     var option = {
         title: {
-            text: "897.2",
-            subtext: '成本总量（万元）\n（1.6%↓）', //↑↓
+            text: total,
+            subtext: '成本总量（万元）\n（'+tbl+'%↓）', //↑↓
             x: 'center',
             y: 'center',
             top: '40%',
             itemGap: 0,
             textStyle: {
                 color: chartsColor.chart05.facecolor1,
-                fontFamily: '微软雅黑',
+                fontFamily:'Eurostile LT',
                 fontSize: 44,
                 fontWeight: 'normal'
             },
