@@ -25,6 +25,43 @@
                 } else {
                     $(".costAll").html(data.all.costAll + " 万元");
                 }
+//                if (data.all.yardage == null || data.all.yardage == '') {
+//                    $(".yardage").html(0 + " TCE/㎡");
+//                } else {
+//                    $(".yardage").html(data.all.yardage + " TCE/㎡");
+//                }
+//                $(".zyardage").html(2358 + " GJ/㎡");
+//                if (data.all.priceArea == null || data.all.priceArea == '') {
+//                    $(".priceArea").html(0 + " 万㎡");
+//                } else {
+//                    $(".priceArea").html(data.all.priceArea + " 万㎡");
+//                }
+
+            }
+
+        });
+        $.ajax({
+            url: _web + "/energy/top/all1",
+            type: "GET",
+            data: $("#searchTools").serialize(),
+            dataType: "json",
+            success: function (data) {
+//                if (data.all.eTotal == null || data.all.eTotal == '') {
+//                    $(".eTotal").html(0 + " TCE");
+//                } else {
+//                    $(".eTotal").html(data.all.eTotal + " TCE");
+//                }
+//                if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
+//                    $(".carbonTotal").html(0 + " T");
+//                } else {
+//                    $(".carbonTotal").html(data.all.carbonTotal + " T");
+//                }
+//
+//                if (data.all.costAll == null || data.all.costAll == '') {
+//                    $(".costAll").html(0 + " 万元");
+//                } else {
+//                    $(".costAll").html(data.all.costAll + " 万元");
+//                }
                 if (data.all.yardage == null || data.all.yardage == '') {
                     $(".yardage").html(0 + " TCE/㎡");
                 } else {
@@ -149,12 +186,13 @@
                 if (data.all.hgl == null || data.all.hgl == '') {
                     $(".hgl").html(0 + "%");
                 } else {
-                    $(".hgl").html(data.all.hgl);
+                    $(".hgl").html("75%");
                 }
                 if (data.all.roomCost == null || data.all.roomCost == '') {
                     $(".roomCost").html(0 + " 万元");
                 } else {
-                    $(".roomCost").html(data.all.roomCost + " 万元");
+//                    $(".roomCost").html(data.all.roomCost + " 万元");
+                    $(".roomCost").html(0 + " 万元");
                 }
 
             }
