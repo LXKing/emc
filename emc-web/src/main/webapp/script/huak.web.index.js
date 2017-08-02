@@ -1804,13 +1804,21 @@ function chart10Fun() {
                     var html2 = "<ul>";
                     var weathericon = 'wather weather' + result.object.currentWeather.weatherIcon;
                     var curentwindp=  result.object.currentForcast.wind+""+ result.object.currentForcast.winp;
+                    var tempcureent = result.object.currentWeather.weatherCurrent;
+                    var forcastweather = result.object.currentForcast.weather;
                     if(curentwindp.length>4){
                         curentwindp = curentwindp.substr(0,4)+"...";
                     }
+                    if(tempcureent.length>4){
+                        tempcureent = tempcureent.substr(0,4)+"...";
+                    }
+                    if(forcastweather.length>4){
+                        forcastweather = forcastweather.substr(0,4)+"...";
+                    }
                     html2 += " <li> <div class='" + weathericon + "'></div>" +
                         "<div class='detail clearfix'> <div>" + result.object.currentWeather.temperatureCurr + "</div>" +
-                        "<div><p>℃</p><p>" + result.object.currentWeather.weatherCurrent + "（实时）</p></div></div>" +
-                        "<h3>" + result.object.currentForcast.tempLow + "~" + result.object.currentForcast.tempHigh + "℃<h4>" + result.object.currentForcast.weather +
+                        "<div><p>℃</p><p title='"+ result.object.currentWeather.weatherCurrent+"'>" + tempcureent + "（实时）</p></div></div>" +
+                        "<h3>" + result.object.currentForcast.tempLow + "~" + result.object.currentForcast.tempHigh + "℃<h4 title='"+result.object.currentForcast.weather+"'>" + forcastweather  +
                         "</h4><h5>" + curentwindp + "</h5>" +
                         " </li>"
                     if (result.object.weekForcast.length > 0) {
