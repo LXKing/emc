@@ -86,17 +86,7 @@ $(function () {
         }
     }
 
-    //top（tools.jsp） 顶部源、网、站、线、户 的toolOrgType 默认值设置
-    if(getCookie("toolOrgType") == null || getCookie("toolOrgType") == ""){
-        $('#toolOrgType').val("");
-    }else{
-        var toolOrgType = getCookie("toolOrgType");
-        $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + (Number(toolOrgType)+1) + ".png");
-        $(".index_menuBox.pull-left").removeClass("on");
 
-        $($(".index_menuBox.pull-left")[toolOrgType]).addClass("on");
-        $('#toolOrgType').val(toolOrgType);
-    }
 
     //默认时间段
     if (getCookie("dateType") == null || getCookie("dateType") == "") {
@@ -395,7 +385,7 @@ $(function () {
 
     changeFace();
     $("#header .changeface").click(function() {
-        faceKey = faceKey == "dark" ? "" : "dark";
+        faceKey = faceKey == "dark" ? "white" : "dark";
         changeFace();
     });
 });
@@ -485,15 +475,32 @@ function changeFace() {
 
     }
 
+    //top（tools.jsp） 顶部源、网、站、线、户 的toolOrgType 默认值设置
+    if(getCookie("toolOrgType") == null || getCookie("toolOrgType") == ""){
+        $('#toolOrgType').val("");
+        if(faceKey == "dark"){
+            $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs01.png");
+        }else{
+            $("#website").attr("src", _web + "/static/img/index/websitet_cs01.png");
+        }
+    }else{
+        var toolOrgType = getCookie("toolOrgType");
+        if(faceKey == "dark"){
+            $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs0" + (Number(toolOrgType)+1) + ".png");
+        }else{
+            $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + (Number(toolOrgType)+1) + ".png");
+        }
+
+        $('#toolOrgType').val(toolOrgType);
+    }
+
     if(faceKey == "dark") {
-        $("#website").attr("src", path + "imgdark/index/websitet_cs01.png");
         $('html').addClass('facedark');
         $(".energy_black img").eq(0).attr("src", path + "imgdark/images/btn01.png");
         $(".energy_black img").eq(1).attr("src", path + "imgdark/images/btn02.png");
         $(".energy_black img").eq(2).attr("src", path + "imgdark/images/btn03.png");
         $(".bordertopnone img").eq(0).attr("src", path + "imgdark/tijian.png");
     }else{
-        $("#website").attr("src", path + "img/index/websitet_cs01.png");
         $(".energy_black img").eq(0).attr("src", path + "img/images/btn01.png");
         $(".energy_black img").eq(1).attr("src", path + "img/images/btn02.png");
         $(".energy_black img").eq(2).attr("src", path + "img/images/btn03.png");
