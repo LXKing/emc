@@ -45,8 +45,8 @@ public class EnergyTopController {
      * @return
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    @ResponseBody
-    public String getAllData(ToolVO toolVO){
+     @ResponseBody
+     public String getAllData(ToolVO toolVO){
         logger.info("查询首页顶部All的数据");
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         JSONObject jo = new JSONObject();
@@ -64,8 +64,8 @@ public class EnergyTopController {
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
         Map<String,Object> topAll = new HashMap<String,Object>();
         //CostVo costVo =new CostVo();
-        String yardage=null;
-        String priceArea=null;
+//        String yardage=null;
+//        String priceArea=null;
         Double device=0.00;
         Double energy=0.00;
         Double labor =0.00;
@@ -76,8 +76,8 @@ public class EnergyTopController {
 
             eTotal= frameService.selectTopEtotalByMap(params);
             carbonTotal = frameService.selectCarbonTotalByMap(params);
-            yardage = frameService.selectYardageByMap(params);
-            priceArea = frameService.selectPriceAreaByMap(params);
+//            yardage = frameService.selectYardageByMap(params);
+//            priceArea = frameService.selectPriceAreaByMap(params);
             Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
             if(costVo.isEmpty()||costVo==null) {
                 logger.info("----------------------该成本没有值--------------------------");
@@ -97,18 +97,90 @@ public class EnergyTopController {
                 if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
                     other = Double.valueOf(costVo.get("other").toString());
                 }
-               costAll=device+energy+labor+manage+other;
+                costAll=device+energy+labor+manage+other;
             }
 
             topAll.put("eTotal",eTotal);
             topAll.put("carbonTotal",carbonTotal);
-            topAll.put("yardage",yardage);
-            topAll.put("priceArea",priceArea);
+//            topAll.put("yardage",yardage);
+//            topAll.put("priceArea",priceArea);
             topAll.put("costAll",costAll);
         }
         catch(Exception e)
         {
-                e.printStackTrace();
+            e.printStackTrace();
+        }
+        jo.put("all", topAll);
+        jo.put("success", true);
+        jo.put("message", "查询数据成功！");
+
+        return jo.toJSONString();
+    }
+    @RequestMapping(value = "/all1", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllData1(ToolVO toolVO){
+        logger.info("查询首页顶部All的数据");
+        java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+        JSONObject jo = new JSONObject();
+        Map<String,String> params = new HashMap<String,String>();
+        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
+
+        params.put("comId",org.getComId());
+        params.put("orgId",toolVO.getToolOrgId());
+        params.put("feetType",toolVO.getToolFeedType());
+        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
+        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+        //String eTotal=null;
+        //String carbonTotal=null;
+        //Map<String,String> costMap = new HashMap<String,String>();
+        List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
+        Map<String,Object> topAll = new HashMap<String,Object>();
+        //CostVo costVo =new CostVo();
+        String yardage=null;
+        String priceArea=null;
+        Double device=0.00;
+        Double energy=0.00;
+        Double labor =0.00;
+        Double manage=0.00;
+        Double other= 0.00;
+        //Double costAll=0.00;
+        try{
+
+//            eTotal= frameService.selectTopEtotalByMap(params);
+//            carbonTotal = frameService.selectCarbonTotalByMap(params);
+            yardage = frameService.selectYardageByMap(params);
+            priceArea = frameService.selectPriceAreaByMap(params);
+//            Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
+//            if(costVo.isEmpty()||costVo==null) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//                costAll=device+energy+labor+manage+other;
+//            }
+
+//            topAll.put("eTotal",eTotal);
+//            topAll.put("carbonTotal",carbonTotal);
+            topAll.put("yardage",yardage);
+            topAll.put("priceArea",priceArea);
+//            topAll.put("costAll",costAll);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
         jo.put("all", topAll);
         jo.put("success", true);

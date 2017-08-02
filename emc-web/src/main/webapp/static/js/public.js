@@ -504,40 +504,5 @@ function loadDataFun(){
 
 }
 
-function typefun(these, code) {
-//    $(these).addClass("on").siblings().removeClass("on");
-    //$("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
-    if(faceKey == "dark") {
-        $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs0" + code + ".png");
-    } else {
-        $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
-    }
-    if (code == 6) {
-        $(".PeopleTabdiv").show();
-        $(".otherTabdiv").hide();
-        myChartQualified.resize();
-        myChartCarbon.resize();
-        setCookie('toolOrgType', 5, 3);
-        $("#toolOrgType").val(5);
-    } else if (code == 5) {
-        setCookie('toolOrgType', 4, 3);
-        $("#toolOrgType").val(4);
-    } else if (code == 4) {
-        setCookie('toolOrgType', 3, 3);
-        $("#toolOrgType").val(3);
-    } else if (code == 3) {
-        setCookie('toolOrgType', 2, 3);
-        $("#toolOrgType").val(2);
-    } else if (code == 2) {
-        setCookie('toolOrgType', 1, 3);
-        $("#toolOrgType").val(1);
-    } else if (code == 1) {
-        setCookie('toolOrgType', '', 3);
-        $("#toolOrgType").val("");
-    } else {
-        $(".PeopleTabdiv").hide();
-        $(".otherTabdiv").show();
-    }
-    loadDataFun();
-};
+
 

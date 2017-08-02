@@ -387,7 +387,6 @@
                 <div class="cb-header">
                     <span class="cb-title" id="nh-title">分公司成本 (单位: 万元)</span>
                     <span class="cb-title" id="qs-title" style="display: none;">成本 (单位: 万元)</span>
-
                     <div class="cb-title-right clearfix">
 												<span class="cb-cut-date">
 												<a href="javascript:selectYear(-1);"><img
@@ -473,7 +472,7 @@
 <div class=" col-xs-4 mb14  ">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>近日能耗明细
+            <div class="pull-left carbonTit energyTit"><i></i>近日单耗明细
                 <small class="font-sm">RECENT DETAILS</small>
             </div>
         </div>
@@ -503,7 +502,7 @@
                     <div class="clearfix">
                         <span id="checktitle">正在检测服务情况...</span>
 												<span id="totaltitle">
-												检测中
+												检测进度
 												<span id="totals">0%</span>
 												</span>
                     </div>
