@@ -486,18 +486,18 @@ function changeFace() {
     }
 
     if(faceKey == "dark") {
-        $("#website").attr("src", "imgdark/index/websitet_cs01.png");
+        $("#website").attr("src", path + "imgdark/index/websitet_cs01.png");
         $('html').addClass('facedark');
-        $(".energy_black img").eq(0).attr("src", "imgdark/images/btn01.png");
-        $(".energy_black img").eq(1).attr("src", "imgdark/images/btn02.png");
-        $(".energy_black img").eq(2).attr("src", "imgdark/images/btn03.png");
-        $(".bordertopnone img").eq(0).attr("src", "imgdark/tijian.png");
+        $(".energy_black img").eq(0).attr("src", path + "imgdark/images/btn01.png");
+        $(".energy_black img").eq(1).attr("src", path + "imgdark/images/btn02.png");
+        $(".energy_black img").eq(2).attr("src", path + "imgdark/images/btn03.png");
+        $(".bordertopnone img").eq(0).attr("src", path + "imgdark/tijian.png");
     }else{
-        $("#website").attr("src", "img/index/websitet_cs01.png");
-        $(".energy_black img").eq(0).attr("src", "img/images/btn01.png");
-        $(".energy_black img").eq(1).attr("src", "img/images/btn02.png");
-        $(".energy_black img").eq(2).attr("src", "img/images/btn03.png");
-        $(".bordertopnone img").eq(0).attr("src", "img/tijian.png");
+        $("#website").attr("src", path + "img/index/websitet_cs01.png");
+        $(".energy_black img").eq(0).attr("src", path + "img/images/btn01.png");
+        $(".energy_black img").eq(1).attr("src", path + "img/images/btn02.png");
+        $(".energy_black img").eq(2).attr("src", path + "img/images/btn03.png");
+        $(".bordertopnone img").eq(0).attr("src", path + "img/tijian.png");
     }
     loadDataFun();
 }
