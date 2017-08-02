@@ -74,7 +74,7 @@ public class Weather implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code == null ? "" : code.trim();
     }
 
     public String getreportDate() {
@@ -90,7 +90,7 @@ public class Weather implements Serializable {
     }
 
     public void setWeekDay(String weekDay) {
-        this.weekDay = weekDay == null ? null : weekDay.trim();
+        this.weekDay = weekDay == null ? "" : weekDay.trim();
     }
 
     public String getTemperatureCurr() {
@@ -106,7 +106,7 @@ public class Weather implements Serializable {
     }
 
     public void setCityName(String cityName) {
-        this.cityName = cityName == null ? null : cityName.trim();
+        this.cityName = cityName == null ? "" : cityName.trim();
     }
 
     public String getHumidity() {
@@ -114,7 +114,7 @@ public class Weather implements Serializable {
     }
 
     public void setHumidity(String humidity) {
-        this.humidity = humidity == null ? null : humidity.trim();
+        this.humidity = humidity == null ? "" : humidity.trim();
     }
 
     public String getWind() {
@@ -122,7 +122,7 @@ public class Weather implements Serializable {
     }
 
     public void setWind(String wind) {
-        this.wind = wind == null ? null : wind.trim();
+        this.wind = wind == null ? "" : wind.trim();
     }
 
     public String getWinp() {
@@ -130,7 +130,7 @@ public class Weather implements Serializable {
     }
 
     public void setWinp(String winp) {
-        this.winp = winp == null ? null : winp.trim();
+        this.winp = winp == null ? "" : winp.trim();
     }
 
     public BigDecimal getTempHigh() {
@@ -154,7 +154,7 @@ public class Weather implements Serializable {
     }
 
     public void setHumiHigh(String humiHigh) {
-        this.humiHigh = humiHigh == null ? null : humiHigh.trim();
+        this.humiHigh = humiHigh == null ? "" : humiHigh.trim();
     }
 
     public String getHumiLow() {
@@ -162,7 +162,7 @@ public class Weather implements Serializable {
     }
 
     public void setHumiLow(String humiLow) {
-        this.humiLow = humiLow == null ? null : humiLow.trim();
+        this.humiLow = humiLow == null ? "" : humiLow.trim();
     }
 
     public String getWeatherIcon() {
@@ -170,7 +170,7 @@ public class Weather implements Serializable {
     }
 
     public void setWeatherIcon(String weatherIcon) {
-        this.weatherIcon = weatherIcon == null ? null : weatherIcon.trim();
+        this.weatherIcon = weatherIcon == null ? "" : weatherIcon.trim();
     }
 
     public String getWeatherCurrent() {
@@ -178,7 +178,7 @@ public class Weather implements Serializable {
     }
 
     public void setWeatherCurrent(String weatherCurrent) {
-        this.weatherCurrent = weatherCurrent == null ? null : weatherCurrent.trim();
+        this.weatherCurrent = weatherCurrent == null ? "" : weatherCurrent.trim();
     }
 
     public Byte getStatus() {

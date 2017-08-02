@@ -57,7 +57,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code == null ? "" : code.trim();
     }
 
     public String getReportDate() {
@@ -73,7 +73,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setWeek(String week) {
-        this.week = week == null ? null : week.trim();
+        this.week = week == null ? "" : week.trim();
     }
 
     public String getWind() {
@@ -81,7 +81,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setWind(String wind) {
-        this.wind = wind == null ? null : wind.trim();
+        this.wind = wind == null ? "" : wind.trim();
     }
 
     public String getWinp() {
@@ -89,7 +89,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setWinp(String winp) {
-        this.winp = winp == null ? null : winp.trim();
+        this.winp = winp == null ? "" : winp.trim();
     }
 
     public String getTempHigh() {
@@ -97,7 +97,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setTempHigh(String tempHigh) {
-        this.tempHigh = tempHigh == null ? null : tempHigh.trim();
+        this.tempHigh = tempHigh == null ? "" : tempHigh.trim();
     }
 
     public String getTempLow() {
@@ -105,7 +105,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setTempLow(String tempLow) {
-        this.tempLow = tempLow == null ? null : tempLow.trim();
+        this.tempLow = tempLow == null ? "" : tempLow.trim();
     }
 
     public String getWeather() {
@@ -113,7 +113,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setWeather(String weather) {
-        this.weather = weather == null ? null : weather.trim();
+        this.weather = weather == null ? "" : weather.trim();
     }
 
     public String getWeatherIcon() {
@@ -121,7 +121,7 @@ public class Weekforcast implements Serializable{
     }
 
     public void setWeatherIcon(String weatherIcon) {
-        this.weatherIcon = weatherIcon == null ? null : weatherIcon.trim();
+        this.weatherIcon = weatherIcon == null ? "" : weatherIcon.trim();
     }
 
     public Byte getStatus() {
