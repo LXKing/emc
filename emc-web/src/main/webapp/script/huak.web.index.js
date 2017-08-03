@@ -86,7 +86,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.all.eTotal == null || data.all.eTotal == '') {
-                    $(".feTotal").html(0 + "TCE");
+                        $(".feTotal").html(0 + "TCE");
                 } else {
                     $(".feTotal").html(data.all.eTotal + "TCE");
                 }
