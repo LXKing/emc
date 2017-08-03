@@ -12,7 +12,7 @@
                 if (data.all.eTotal == null || data.all.eTotal == '') {
                     $(".eTotal").html(0 + "TCE");
                 } else {
-                    $(".eTotal").html(data.all.eTotal + "TCE");
+                    $(".eTotal").html(toFormatNum(data.all.eTotal) + "TCE");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
                     $(".carbonTotal").html(0 + "T");
@@ -88,12 +88,12 @@
                 if (data.all.eTotal == null || data.all.eTotal == '') {
                         $(".feTotal").html(0 + "TCE");
                 } else {
-                    $(".feTotal").html(data.all.eTotal + "TCE");
+                    $(".feTotal").html(toFormatNum(data.all.eTotal) + "TCE");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
                     $(".fCarbonTotal").html(0 + "T");
                 } else {
-                    $(".fCarbonTotal").html(data.all.carbonTotal + "T");
+                    $(".fCarbonTotal").html(toFormatNum(data.all.carbonTotal) + "T");
                 }
                 if (data.all.costAll == null || data.all.costAll == '') {
                     $(".fCostAll").html(0 + "万元");
@@ -135,7 +135,7 @@
                 if (data.all.eTotal == null || data.all.eTotal == '') {
                     $(".seTotal").html(0 + "TCE");
                 } else {
-                    $(".seTotal").html(data.all.eTotal + "TCE");
+                    $(".seTotal").html(toFormatNum(data.all.eTotal) + "TCE");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
                     $(".sCarbonTotal").html(0 + "T");
@@ -1254,7 +1254,7 @@ function chart07Fun() {
                 $("#pc_plan_percent").html("偏差度(" + pcd + "%)");
                 $("#pc_plan").html(pcdz);
                 /*总标煤展示*/
-                $("#bm_total").html(result.object.bm_total);
+                $("#bm_total").html(toFormatNum(result.object.bm_total));
                 var tb_flag = result.object.total_flag;
                 var total_tb = result.object.total_tb;
                 if (tb_flag == true) {
