@@ -16,6 +16,21 @@ Date.prototype.Format = function (fmt) { //author: meizz
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
+/**
+ * 公共方法
+ * 格式化数据
+ *
+ * */
+function toFormatNum(val){
+    var divisor = 10000;//倍率
+    var suffix = '万';//单位
+    var f = parseFloat(val);
+    if (isNaN(f)) {
+        return 0;
+    }
+    return toOneDecimal(f/divisor) + suffix;
+}
 function toolReplace() {
     var url = document.location.href;
     var reurl = url;
@@ -35,6 +50,20 @@ function toDecimal(x) {
         return;
     }
     f = Math.round(x*100)/100;
+    return f;
+}
+
+/**
+ * 保留1位小数
+ * @param x
+ * @returns {Number}
+ */
+function toOneDecimal(x) {
+    var f = parseFloat(x);
+    if (isNaN(f)) {
+        return;
+    }
+    f = Math.round(x*10)/10;
     return f;
 }
 
