@@ -1005,7 +1005,7 @@ input[type="text"].time-input {
 }
 
 .groupEnergy-info {
-    padding: 40px 0 0 60px;
+    padding: 40px 0 0 0px;
     /*width:25%;float:left;*/
 }
 
