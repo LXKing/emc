@@ -182,7 +182,7 @@
                 if (data.all.rTotal == null || data.all.rTotal == '') {
                     $(".rTotal").html(0 + "TCE");
                 } else {
-                    $(".rTotal").html(data.all.rTotal + "TCE");
+                    $(".rTotal").html(0 + "TCE");
                 }
                 if (data.all.hgl == null || data.all.hgl == '') {
                     $(".hgl").html(0 + "%");
