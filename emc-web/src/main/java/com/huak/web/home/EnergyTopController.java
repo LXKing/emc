@@ -219,7 +219,7 @@ public class EnergyTopController {
         Double costAll=0.00;
         try{
             eTotal= frameService.selectFeedTotalByMap(params);
-            carbonTotal = frameService.selectTopFeedCarbonTotalByMap(params);
+            //carbonTotal = frameService.selectTopFeedCarbonTotalByMap(params);
             Map<String, Object> costVo = frameService.selectFeedCostTotalByMap(params);
             if(costVo==null||costVo.isEmpty()) {
                 logger.info("----------------------该成本没有值--------------------------");
@@ -354,7 +354,7 @@ public class EnergyTopController {
         Double costAll=0.00;
         try{
             eTotal= frameService.selectTopStationTotalByMap(params);
-            carbonTotal = frameService.selectTopStationCarbonTotalByMap(params);
+            //carbonTotal = frameService.selectTopStationCarbonTotalByMap(params);
 //            Map<String, Object> costVo = frameService.selectStationCostTotalByMap(params);
 //            if(costVo==null||costVo.isEmpty()) {
 //                logger.info("----------------------该成本没有值--------------------------");
@@ -483,29 +483,29 @@ public class EnergyTopController {
         Double other= 0.00;
         Double costAll=0.00;
         try{
-            rTotal= frameService.selectTopRoomTotalByMap(params);
-            hgl = frameService.selectTopRoomHglByMap(params);
-            Map<String, Object> costVo = frameService.getTopRoomCostByMap(params);
-            if(costVo==null||costVo.isEmpty()) {
-                logger.info("----------------------该成本没有值--------------------------");
-            }else {
-                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
-                    device = Double.valueOf(costVo.get("device").toString());
-                }
-                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
-                    energy = Double.valueOf(costVo.get("energy").toString());
-                }
-                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
-                    labor = Double.valueOf(costVo.get("labor").toString());
-                }
-                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
-                    manage = Double.valueOf(costVo.get("manage").toString());
-                }
-                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
-                    other = Double.valueOf(costVo.get("other").toString());
-                }
-                costAll=device+energy+labor+manage+other;
-            }
+            //rTotal= frameService.selectTopRoomTotalByMap(params);
+           //hgl = frameService.selectTopRoomHglByMap(params);
+//            Map<String, Object> costVo = frameService.getTopRoomCostByMap(params);
+//            if(costVo==null||costVo.isEmpty()) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//                costAll=device+energy+labor+manage+other;
+//            }
             topAll.put("roomCost",costAll);
             topAll.put("rTotal",rTotal);
             topAll.put("hgl",hgl);
