@@ -157,11 +157,11 @@
         </if>
         LEFT JOIN  (
         SELECT d1.UNITID,SUM(d1.BM) BQBM,d1.DOSAGE_TIME FROM
-        (SELECT fdh.UNITID,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME
-        FROM t_emc_final_data_hour fdh ,t_emc_energy_type eet
+        (SELECT fdh.UNITID,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME
+        FROM t_emc_final_data_hour fdh ,(SELECT * from t_emc_energy_type where TYPE!=4) eet
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
-        AND fdh.TYPEID = eet.ID AND eet.TYPE!=4
-        GROUP BY fdh.UNITID,fdh.DOSAGE_TIME) d1 GROUP BY d1.UNITID,d1.DOSAGE_TIME ORDER BY DOSAGE_TIME
+        AND fdh.TYPEID = eet.ID
+        GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d')) d1 GROUP BY d1.UNITID,d1.DOSAGE_TIME ORDER BY DOSAGE_TIME
         ) hd ON hd.UNITID = vu.unitid AND hd.DOSAGE_TIME = dt.DOSAGE_TIME
         GROUP BY a.fgsid,a.ORG_NAME,dt.DOSAGE_TIME
         ORDER BY a.fgsid,dt.DOSAGE_TIME
