@@ -60,10 +60,10 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     public boolean checkName(Map<String,Object> map) {
-        boolean flag=false;
+        boolean flag=true;
         List<Season> list = seasonDao.checkName(map);
         if(list.size()>0){
-            flag=true;
+            flag=false;
         }
         return flag;
     }
@@ -76,10 +76,10 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     public boolean checkTime(Map<String, Object> paramsMap) {
-        boolean flag=false;
+        boolean flag=true;
         List<Season> list = seasonDao.checkTime(paramsMap);
         if(list.size()>0){
-            flag=true;
+            flag=false;
         }
         return flag;
     }
