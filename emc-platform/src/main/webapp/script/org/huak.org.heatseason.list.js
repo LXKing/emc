@@ -168,7 +168,7 @@ function treeNodeClick(e,treeId,treeNode){
 
 function params(params) {
     var ts = $(top.document).find("[name='searchComp']").val();
-    alert(ts);
+    //alert(ts);
     $("#comId").val(ts);
     return $("#season-form").serialize();
 }
