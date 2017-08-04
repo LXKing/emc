@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="index_mainbody  ">
-
+    <input id="type" value="${type}" type="hidden">
     <div class="index_content row no-margin">
         <div class="col-lg-12 no-padding index_contentList">
             <div class="col-lg-12 mb14  ">

@@ -233,6 +233,7 @@ function typefun(these, code) {
         setCookie('toolOrgType', 1, 3);
         $("#toolOrgType").val(1);
     } else if (code == 1) {
+        alert(code);
         setCookie('toolOrgType', '', 3);
         $("#toolOrgType").val("");
     } else {
