@@ -30,6 +30,12 @@
     <dubbo:service interface="com.huak.home.component.ComponentService" ref="componentService" timeout="300" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <!--三级页面service注册-->
+    <bean id="thiredpageEnergyService" class="com.huak.home.thiredpage.ThiredpageEnergyImpl"></bean>
+    <dubbo:service interface="com.huak.home.thiredpage.ThiredpageEnergyService" ref="thiredpageEnergyService" timeout="300" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
     <bean id="consAnalysisService" class="com.huak.home.ConsAnalysisServiceImpl"></bean>
     <dubbo:service interface="com.huak.home.ConsAnalysisService" ref="consAnalysisService" timeout="300" loadbalance="random"
                    executes="200"
