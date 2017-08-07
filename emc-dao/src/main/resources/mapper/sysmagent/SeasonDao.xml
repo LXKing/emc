@@ -60,9 +60,9 @@
       </if>
       <if test="sdate != null">
         #{sdate,jdbcType=DATE},
-      </if>
-      <if test="edate != null">
-        #{edate,jdbcType=DATE},
+          </if>
+          <if test="edate != null">
+            #{edate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
