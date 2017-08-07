@@ -394,7 +394,7 @@ function waterEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -484,7 +484,7 @@ function electricEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -575,7 +575,7 @@ function gasEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -587,7 +587,7 @@ function gasEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -666,7 +666,7 @@ function hotEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -708,7 +708,7 @@ function hotEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec2.facecolor1,
         series: []
@@ -757,7 +757,7 @@ function coalEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -769,7 +769,7 @@ function coalEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -1045,7 +1045,7 @@ function chart03Fun(data) {
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -1057,7 +1057,7 @@ function chart03Fun(data) {
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data:data.xaxis
@@ -1093,7 +1093,7 @@ function chart03Fun(data) {
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec4.facecolor3,
         series: [
@@ -1165,7 +1165,7 @@ function chart04Fun(data){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -1238,7 +1238,6 @@ function chart04Fun(data){
 function chart05Fun(data){
     var piechart_as = echarts.init(document.getElementById('piechart_as'));
     var option = {
-
         tooltip : {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)",
@@ -1387,7 +1386,7 @@ function chart06Fun(data){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
 
 
@@ -1447,7 +1446,7 @@ function chart07Fun(data){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -1459,7 +1458,7 @@ function chart07Fun(data){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data:data.xaxis
@@ -1495,7 +1494,7 @@ function chart07Fun(data){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec4.facecolor3,
         series: [

@@ -118,7 +118,7 @@
                 data: {sdate:start,edate:value,comId:comId},
                 dataType: 'json',
                 success: function (result) {
-                    if (result.flag) {
+                    if (!result.flag) {
                         deferred.reject();
                     } else {
                         deferred.resolve();

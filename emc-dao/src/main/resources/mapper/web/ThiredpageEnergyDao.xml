@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huak.home.dao.thiredpage.ThiredpageEnergyDao" >
+
+    <sql id="between_and">
+        BETWEEN
+        <choose>
+            <when test="toolStartDate!=null and toolStartDate!=''">
+                #{toolStartDate,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                SUBDATE(CURDATE(), INTERVAL 5 DAY)
+            </otherwise>
+        </choose>
+        AND
+        <choose>
+            <when test="toolEndDate!=null and toolEndDate!=''">
+                #{toolEndDate,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                CURDATE()
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 能耗子页面，能耗曲线，能源流相关数据查询开始 -->
+    <!-- 查询今年的集团能耗 -->
+    <!-- 查询条件map内容：{toolOrgId=38, toolFeedType=2, toolStartDate=2016-11-15, toolEndDate=2017-06-15, toolOrgType=} -->
+    <sql id="cur_last_time">
+        <choose>
+            <when test="toolStartDate!=null and toolStartDate!=''">
+                AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[>=]]> #{toolStartDate,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[>=]]> SUBDATE(CURDATE(), INTERVAL 5 DAY)
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="toolEndDate!=null and toolEndDate!=''">
+                AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[<=]]> #{toolEndDate,jdbcType=VARCHAR})
+            </when>
+            <otherwise>
+                AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[<=]]> CURDATE())
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="toolStartDate!=null and toolStartDate!=''">
+                OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[>=]]> SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR)
+            </when>
+            <otherwise>
+                OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[>=]]> SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="toolEndDate!=null and toolEndDate!=''">
+                AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[<=]]> SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
+            </when>
+            <otherwise>
+                AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <![CDATA[<=]]> SUBDATE(CURDATE(), INTERVAL 1 YEAR))
+            </otherwise>
+        </choose>
+    </sql>
+
+<!--三级页面-源、网、站、线、户的各个能源类型的能耗趋势图-->
+    <select id="getDatas" resultType="java.util.Map" parameterType="java.util.Map">
+
+        SELECT
+        sum( CASE C.UNITTYPE WHEN '1' THEN C.dosage ELSE 0 END) AS chart1,
+        sum( CASE C.UNITTYPE WHEN '2' THEN C.dosage ELSE 0 END ) AS chart2,
+        SUM( CASE C.UNITTYPE WHEN '3' THEN C.dosage ELSE 0 END ) AS chart3,
+        SUM( CASE C.UNITTYPE WHEN '4' THEN C.dosage ELSE 0 END ) AS chart4,
+        SUM( CASE C.UNITTYPE WHEN '5' THEN C.dosage ELSE 0 END ) AS chart5, C.yeardate,
+        sum( CASE C.UNITTYPE WHEN '1' THEN C.total ELSE 0 END ) AS chart1total,
+        SUM( CASE C.UNITTYPE WHEN '2' THEN C.total ELSE 0 END ) AS chart2total,
+        SUM( CASE C.UNITTYPE WHEN '3' THEN C.total ELSE 0 END ) AS chart3total,
+        SUM( CASE C.UNITTYPE WHEN '4' THEN C.total ELSE 0 END ) AS chart4total,
+        SUM( CASE C.UNITTYPE WHEN '5' THEN C.total ELSE 0 END ) AS chart5total,
+        ( CASE WHEN DATE_FORMAT(C.yeardate, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) curyear
+        FROM (
+        SELECT SUM(B.dosage) dosage,SUM(B.total) total, A.UNITTYPE, B.yeardate
+        FROM ( SELECT vu.UNITID,vu.UNITTYPE FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID
+        <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>
+        <if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>
+        )
+        WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A
+        LEFT JOIN (
+        SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype,
+        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
+        FROM ( t_emc_final_data_hour h LEFT JOIN (select id,type from t_emc_energy_type where 1=1 <if test="energytype!=null and energytype!=''">and type = #{energytype}</if>) et ON h.TYPEID = et.id )
+        WHERE 1 = 1 <include refid="cur_last_time" />
+        GROUP BY unitid, energytype, yeardate
+        ) B ON A.UNITID = B.unitid
+        GROUP BY A.UNITTYPE, B.yeardate
+        ) C where C.yeardate is not NULL
+        GROUP BY C.yeardate ORDER BY C.yearDate ASC
+    </select>
+
+
+     <select id="selectassessment" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT round(SUM(B.dosage),2) dosage, A.UNITID,A.unitname FROM (
+
+         <if test="toolOrgType!= null and toolOrgId !='' and  toolOrgType == 3">
+         SELECT vu.UNITID,b.STATION_NAME as unitname FROM v_emc_unit vu,
+         t_emc_unit_station b
+         </if>
+         <if test="toolOrgType!= null and toolOrgId !='' and  toolOrgType == 1">
+             SELECT vu.UNITID,b.FEED_NAME as unitname FROM v_emc_unit vu,
+             t_emc_unit_feed b
+         </if>
+        WHERE 1 = 1 and vu.UNITID = b.ID
+         <if test="toolOrgId != null and toolOrgId !=''">
+             and   vu.ORGID  in (select id from t_emc_org where
+             FIND_IN_SET(id,emc_func_org_getchilds(#{toolOrgId})))
+         </if>
+         <if test="toolFeedType != null and toolFeedType !=''">
+             and  vu.HEAT_TYPE =#{toolFeedType}
+         </if>
+         <if test="comId != null and comId !=''"> and  vu.COMID =#{comId} </if>
+         <if test="toolOrgType != null and toolOrgType !=''">
+             and  vu.UNITTYPE  = #{toolOrgType}
+         </if>
+        GROUP BY vu.UNITID , <if test="toolOrgType!= null and toolOrgId !='' and  toolOrgType == 3">b.STATION_NAME</if>
+         <if test="toolOrgType!= null and toolOrgId !='' and  toolOrgType == 1">b.FEED_NAME</if>) A,
+        (
+        SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage, et.type AS energytype,
+        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
+        FROM  (select UNITID,DOSAGE,DOSAGE_TIME,TYPEID from t_emc_final_data_hour where 1=1<if test="comId != null and comId !=''"> and  COMID =#{comId} </if>)h ,
+         (select id,type from t_emc_energy_type where 1=1 <if test="energytype != null and energytype !=''"> and  type =#{energytype} </if>) et where h.TYPEID = et.id
+        GROUP BY unitid, et.type, yeardate
+        ) B where A.UNITID = B.unitid
+        GROUP BY A.UNITID order by SUM(B.dosage) DESC
+     </select>
+
+
+
+</mapper>

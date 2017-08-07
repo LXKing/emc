@@ -79,16 +79,10 @@ public class SeasonController {
 
         JSONObject jo = new JSONObject();
         Map<String,Object> map = new HashMap<String,Object>();
-
         map.put("name",name);
         map.put("comId",comId);
         boolean  flag =   seasonService.checkName(map);
-
-        if(flag){
-            jo.put(Constants.FLAG,false);
-        }else{
-            jo.put(Constants.FLAG, true);
-        }
+        jo.put(Constants.FLAG,flag);
         return jo.toJSONString();
     }
 
