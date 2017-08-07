@@ -8,7 +8,6 @@ import com.huak.home.FrameService;
 import com.huak.home.model.EnergyDetail;
 import com.huak.home.type.ToolVO;
 import com.huak.org.OrgService;
-import com.huak.org.model.Org;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -37,7 +37,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/energy/secondary")
-public class EnergyDetailController {
+public class EnergyDetailController extends BaseController{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -51,23 +51,12 @@ public class EnergyDetailController {
      */
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
     @ResponseBody
-    public String getAllData(ToolVO toolVO){
+    public String getAllData(ToolVO toolVO, HttpServletRequest request){
         logger.info("能源流明细");
 
         JSONObject jo = new JSONObject();
         try {
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-            params.put("orgId",org.getId());
-
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageOrg(toolVO, request);
 
             jo.put(Constants.LIST, frameService.selectEnergyDetail(params));
         } catch (Exception e) {
@@ -77,21 +66,12 @@ public class EnergyDetailController {
     }
     @RequestMapping(value = "/proportion", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyRatio(ToolVO toolVO){
+    public String fgsEnergyRatio(ToolVO toolVO, HttpServletRequest request){
         logger.info("能源流能耗占比分布图");
 
         JSONObject jo = new JSONObject();
         try {
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-            params.put("orgId",org.getId());
-
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageOrg(toolVO, request);
 
             List<Map<String,Object>> list = frameService.selectEnergyProportion(params);
             jo.put(Constants.LIST, list);
@@ -104,22 +84,13 @@ public class EnergyDetailController {
 
     @RequestMapping(value = "/trend", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyTrend(ToolVO toolVO){
+    public String fgsEnergyTrend(ToolVO toolVO, HttpServletRequest request){
         logger.info("能源流单耗趋势对比图");
 
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-            params.put("orgId",org.getId());
-
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageOrg(toolVO, request);
 
             List<Map<String,Object>> trendList = frameService.selectEnergyTrend(params);
 
@@ -166,22 +137,12 @@ public class EnergyDetailController {
     }
     @RequestMapping(value = "/an", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyAn(ToolVO toolVO){
+    public String fgsEnergyAn(ToolVO toolVO, HttpServletRequest request){
         logger.info("能源流能耗同比");
 
         JSONObject jo = new JSONObject();
         try {
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-            params.put("orgId",org.getId());
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageOrg(toolVO, request);
 
             List<Map<String,Object>> energySecondList = frameService.selectEnergyTong(params);
             List<String> xAxis = new ArrayList<>();
@@ -203,7 +164,7 @@ public class EnergyDetailController {
     }
 
     @RequestMapping(value = "/export/detail", method = RequestMethod.GET)
-    public void export(ToolVO toolVO, HttpServletResponse response) {
+    public void export(ToolVO toolVO, HttpServletResponse response, HttpServletRequest request) {
         logger.info("导出能源明细列表EXCEL");
 
         String workBookName = "能源明细列表";//文件名
@@ -235,18 +196,7 @@ public class EnergyDetailController {
         OutputStream out = null;
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-            params.put("orgId",org.getId());
-
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageOrg(toolVO, request);
 
             List<EnergyDetail> cons = frameService.exportEnergyDetail(params);
             for(EnergyDetail second: cons){

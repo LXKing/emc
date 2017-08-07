@@ -9,8 +9,6 @@ import com.huak.home.model.ConsSecond;
 import com.huak.home.type.ToolVO;
 import com.huak.org.OrgService;
 import com.huak.org.model.Company;
-import com.huak.org.model.Org;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.*;
@@ -42,7 +38,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/cons/analysis")
-public class ConsAnalysisController {
+public class ConsAnalysisController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -53,40 +49,28 @@ public class ConsAnalysisController {
 
     /**
      * 跳转二级单耗页面
+     *
      * @param model
      * @return
      */
     @RequestMapping(value = "/tsec", method = RequestMethod.GET)
-    public String secondEconPage(Model model,HttpServletRequest request){
+    public String secondEconPage(Model model, HttpServletRequest request) {
         logger.info("跳转二级单耗页面");
-        Company company = (Company)request.getSession().getAttribute(Constants.SESSION_COM_KEY);
+        Company company = (Company) request.getSession().getAttribute(Constants.SESSION_COM_KEY);
 
-        model.addAttribute("company",company);
+        model.addAttribute("company", company);
         return "second/ucon";
     }
 
     @RequestMapping(value = "/fgs/list", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyList(ToolVO toolVO){
+    public String fgsEnergyList(ToolVO toolVO, HttpServletRequest request) {
         logger.info("分公司单耗详细");
 
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-            if(org.getpOrgId()==0){
-                params.put("pOrgId",org.getId());
-            }else{
-                params.put("orgId",org.getId());
-            }
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageFgs(toolVO, request);
 
             jo.put(Constants.LIST, consAnalysisService.findAssessmentIndicators(params));
         } catch (Exception e) {
@@ -98,28 +82,15 @@ public class ConsAnalysisController {
 
     @RequestMapping(value = "/fgs/ratio", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyRatio(ToolVO toolVO){
+    public String fgsEnergyRatio(ToolVO toolVO, HttpServletRequest request) {
         logger.info("分公司单耗占比分布图");
 
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-            if(org.getpOrgId()==0){
-                params.put("pOrgId",org.getId());
-            }else{
-                params.put("orgId",org.getId());
-            }
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageFgs(toolVO, request);
 
-            List<Map<String,Object>> energySecondList = consAnalysisService.fgsEnergyRatio(params);
+            List<Map<String, Object>> energySecondList = consAnalysisService.fgsEnergyRatio(params);
             jo.put(Constants.LIST, energySecondList);
         } catch (Exception e) {
             logger.error("分公司单耗占比分布图异常" + e.getMessage());
@@ -130,34 +101,21 @@ public class ConsAnalysisController {
 
     @RequestMapping(value = "/fgs/trend", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyTrend(ToolVO toolVO){
+    public String fgsEnergyTrend(ToolVO toolVO, HttpServletRequest request) {
         logger.info("分公司单耗趋势对比图");
 
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-            if(org.getpOrgId()==0){
-                params.put("pOrgId",org.getId());
-            }else{
-                params.put("orgId",org.getId());
-            }
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageFgs(toolVO, request);
 
-            List<Map<String,Object>> trendList = consAnalysisService.fgsEnergyTrend(params);
+            List<Map<String, Object>> trendList = consAnalysisService.fgsEnergyTrend(params);
 
             List<String> xAxis = new ArrayList<>();
-            List<Map<String,Object>> series = new LinkedList<>();
+            List<Map<String, Object>> series = new LinkedList<>();
             List<String> legends = new ArrayList<>();
             //先确定几条线和横坐标
-            for(Map<String,Object> map : trendList){
+            for (Map<String, Object> map : trendList) {
                 String fgsId = map.get("FGSID").toString();
                 String name = map.get("NAME").toString();
                 String date = map.get("DATE").toString();
@@ -169,25 +127,25 @@ public class ConsAnalysisController {
             xAxis = CollectionUtil.removeDuplicateWithOrder(xAxis);
             legends = CollectionUtil.removeDuplicateWithOrder(legends);
             //组装数据
-            for(String gsName:legends){
-                Map<String,Object> dataMap = new HashMap<>();
+            for (String gsName : legends) {
+                Map<String, Object> dataMap = new HashMap<>();
                 List<Double> dataList = new ArrayList<>();
-                for(Map<String,Object> map : trendList){
+                for (Map<String, Object> map : trendList) {
                     String name = map.get("NAME").toString();
-                    if(name.equals(gsName)){
+                    if (name.equals(gsName)) {
                         dataList.add(Double.valueOf(map.get("BQDH").toString()));
                     }
                 }
-                dataMap.put("name",gsName);
-                dataMap.put("type","line");
-                dataMap.put("symbol","circle");
-                dataMap.put("smooth",false);
-                dataMap.put("data",dataList);
+                dataMap.put("name", gsName);
+                dataMap.put("type", "line");
+                dataMap.put("symbol", "circle");
+                dataMap.put("smooth", false);
+                dataMap.put("data", dataList);
                 series.add(dataMap);
             }
 
-            jo.put(Constants.XAXIS,xAxis);
-            jo.put(Constants.LEGENDS,legends);
+            jo.put(Constants.XAXIS, xAxis);
+            jo.put(Constants.LEGENDS, legends);
             jo.put(Constants.LIST, series);
         } catch (Exception e) {
             logger.error("分公司单耗趋势对比图异常" + e.getMessage());
@@ -198,31 +156,18 @@ public class ConsAnalysisController {
 
     @RequestMapping(value = "/fgs/ranking", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyRanking(ToolVO toolVO){
+    public String fgsEnergyRanking(ToolVO toolVO, HttpServletRequest request) {
         logger.info("分公司单耗排名");
 
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-            if(org.getpOrgId()==0){
-                params.put("pOrgId",org.getId());
-            }else{
-                params.put("orgId",org.getId());
-            }
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageFgs(toolVO, request);
 
-            List<Map<String,Object>> energySecondList = consAnalysisService.fgsEnergyRanking(params);
+            List<Map<String, Object>> energySecondList = consAnalysisService.fgsEnergyRanking(params);
             List<String> xAxis = new ArrayList<>();
             List<String> datas = new ArrayList<>();
-            for(Map<String,Object> map:energySecondList){
+            for (Map<String, Object> map : energySecondList) {
                 xAxis.add(map.get("NAME").toString());
                 datas.add(map.get("VALUE").toString());
             }
@@ -237,32 +182,19 @@ public class ConsAnalysisController {
 
     @RequestMapping(value = "/fgs/an", method = RequestMethod.POST)
     @ResponseBody
-    public String fgsEnergyAn(ToolVO toolVO){
+    public String fgsEnergyAn(ToolVO toolVO, HttpServletRequest request) {
         logger.info("分公司单耗同比");
 
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-            if(org.getpOrgId()==0){
-                params.put("pOrgId",org.getId());
-            }else{
-                params.put("orgId",org.getId());
-            }
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageFgs(toolVO, request);
 
-            List<Map<String,Object>> energySecondList = consAnalysisService.fgsEnergyAn(params);
+            List<Map<String, Object>> energySecondList = consAnalysisService.fgsEnergyAn(params);
             List<String> xAxis = new ArrayList<>();
             List<String> bqs = new ArrayList<>();
             List<String> tqs = new ArrayList<>();
-            for(Map<String,Object> map:energySecondList){
+            for (Map<String, Object> map : energySecondList) {
                 bqs.add(map.get("BQDH").toString());
                 xAxis.add(map.get("ORGNAME").toString());
                 tqs.add(map.get("TQDH").toString());
@@ -278,7 +210,7 @@ public class ConsAnalysisController {
     }
 
     @RequestMapping(value = "/fgs/export", method = RequestMethod.GET)
-    public void export(ToolVO toolVO, HttpServletResponse response) {
+    public void export(ToolVO toolVO, HttpServletResponse response, HttpServletRequest request) {
         logger.info("导出分公司单耗列表EXCEL");
 
         String workBookName = "分公司单耗列表";//文件名
@@ -310,23 +242,10 @@ public class ConsAnalysisController {
         OutputStream out = null;
         try {
             /*封装条件*/
-            Map params = new HashMap<String, Object>();
-            Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-            if(org.getpOrgId()==0){
-                params.put("pOrgId",org.getId());
-            }else{
-                params.put("orgId",org.getId());
-            }
-            params.put("comId",org.getComId());
-            params.put("feedType",toolVO.getToolFeedType());
-            params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-            params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
-            params.put("startTimeTq",toolVO.getToolStartDateTq()+" 00:00:00");
-            params.put("endTimeTq",toolVO.getToolEndDateTq()+" 23:59:59");
-            params.put("orgType",toolVO.getToolOrgType());
+            Map params = paramsPackageFgs(toolVO, request);
 
             List<ConsSecond> cons = consAnalysisService.exportAssessmentIndicators(params);
-            for(ConsSecond second: cons){
+            for (ConsSecond second : cons) {
                 cellValues.add(CollectionUtil.Obj2Map(second));
             }
 
@@ -349,26 +268,30 @@ public class ConsAnalysisController {
 
     /**
      * 查询单耗
+     *
      * @param params
      * @return
      */
-    @RequestMapping(value="/groupDanHao",method=RequestMethod.GET)
+    @RequestMapping(value = "/groupDanHao", method = RequestMethod.GET)
     @ResponseBody
-    public String groupDanHao(@RequestParam Map<String,String> params){
-    	logger.info("查询单耗数据");
+    public String groupDanHao(ToolVO toolVO, HttpServletRequest request) {
+        logger.info("查询单耗数据");
         JSONObject jo = new JSONObject();
-        try{
-        	jo.put("success", true);
+        try {
+            jo.put("success", true);
             jo.put("message", "查询单耗数据成功！");
+             /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+
             //查询折线数据
-            Map<String,Object> retMap = consAnalysisService.groupDanHaoLine(params);
+            Map<String, Object> retMap = consAnalysisService.groupDanHaoLine(params);
             jo.put("data", retMap);
-        }catch(Exception e){
-        	logger.error("查询单耗数据异常" + e.getMessage());
-        	jo.put("success", false);
+        } catch (Exception e) {
+            logger.error("查询单耗数据异常" + e.getMessage());
+            jo.put("success", false);
             jo.put("message", "查询单耗数据异常！");
         }
         return jo.toJSONString();
     }
-    
+
 }

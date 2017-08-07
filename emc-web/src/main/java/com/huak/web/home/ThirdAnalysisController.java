@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/third/analysis")
-public class ThirdAnalysisController {
+public class ThirdAnalysisController extends BaseController{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**

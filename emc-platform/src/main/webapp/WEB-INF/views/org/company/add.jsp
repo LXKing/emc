@@ -30,6 +30,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">数据表名：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input name="tableName" class="form-control" type="text" maxlength="64" value="t_emc_final_data_hour_"
+                               placeholder="请输入数据表名">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">天气采集类型：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">

@@ -35,7 +35,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE   1=1
         <if test="startTime != null and startTime !=''">
             AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
@@ -54,7 +54,7 @@
         ROUND(sum(t.DOSAGE*t.C_COEF),1) AS CarbonTotal
 
         FROM
-        t_emc_final_data_hour t , v_emc_unit v,
+        ${tableName} t , v_emc_unit v,
         (SELECT id FROM t_emc_org where FIND_IN_SET(  id, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR}))) a
         WHERE
         v.COMID=t.COMID AND
@@ -85,7 +85,7 @@
         a.typeid,
         sum(a.DOSAGE*a.PRICE) ne
         FROM
-        t_emc_final_data_hour a
+        ${tableName} a
         ,
         (select v.COMID,v.UNITID from v_emc_unit v  where v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
         WHERE
@@ -149,7 +149,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE 1=1
         <if test="startTime != null and startTime !=''">
             AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
@@ -180,7 +180,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE 1=1
         <if test="startTime != null and startTime !=''">
             AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
@@ -221,7 +221,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  1=1
         <if test="startTime != null and startTime !=''">
         AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
@@ -249,7 +249,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
         and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
@@ -260,7 +260,7 @@
     <select id="selectTopFeedCarbonTotalByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
         SELECT ROUND(sum(b.fe),1) from (
-        select sum(a.DOSAGE*a.C_COEF) as fe,a.typeid  from t_emc_final_data_hour a ,
+        select sum(a.DOSAGE*a.C_COEF) as fe,a.typeid  from ${tableName} a ,
         (select * from v_emc_unit  where UNITTYPE='1' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
         where
@@ -292,7 +292,7 @@
         a.typeid,
         sum(a.DOSAGE*a.PRICE) ne
         FROM
-        t_emc_final_data_hour a
+        ${tableName} a
         ,
         (select * from v_emc_unit v  where UNITTYPE='1' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
         WHERE
@@ -399,7 +399,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
         and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
@@ -410,7 +410,7 @@
     <select id="selectTopStationCarbonTotalByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
         SELECT ROUND(sum(b.fe),1) from (
-        select sum(a.DOSAGE*a.C_COEF) as fe,a.typeid  from t_emc_final_data_hour a ,
+        select sum(a.DOSAGE*a.C_COEF) as fe,a.typeid  from ${tableName} a ,
         (select * from v_emc_unit  where UNITTYPE='3' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
         where
@@ -441,7 +441,7 @@
         a.typeid,
         sum(a.DOSAGE*a.PRICE) ne
         FROM
-        t_emc_final_data_hour a
+        ${tableName} a
         ,
         (select * from v_emc_unit v  where UNITTYPE='3' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
         WHERE
@@ -534,7 +534,7 @@
     <select id="selectTopRoomTotalByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
         SELECT ROUND(sum(b.fe),1) from (
-        select sum(a.DOSAGE*a.COAL_COEF) as fe,a.typeid  from t_emc_final_data_hour a ,
+        select sum(a.DOSAGE*a.COAL_COEF) as fe,a.typeid  from ${tableName} a ,
         (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
 
@@ -557,7 +557,7 @@
     <!--民户合格率（大于18摄氏度的民户）-->
     <select id="selectTopRoomNum1HglByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
-        select COUNT(a.ITEMP) num1 from t_emc_final_data_hour a ,
+        select COUNT(a.ITEMP) num1 from ${tableName} a ,
         (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_unit_room r
 
@@ -580,7 +580,7 @@
     <!--民户合格率 （所有民户）-->
     <select id="selectTopRoomTotalHglByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
-        select COUNT(a.ITEMP) total from t_emc_final_data_hour a ,
+        select COUNT(a.ITEMP) total from ${tableName} a ,
         (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_unit_room r
 

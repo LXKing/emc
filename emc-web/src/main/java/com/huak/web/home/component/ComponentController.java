@@ -3,13 +3,15 @@ package com.huak.web.home.component;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.home.component.ComponentService;
+import com.huak.home.type.RoomVO;
+import com.huak.home.type.ToolVO;
 import com.huak.org.model.Company;
+import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -24,7 +26,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/component")
-public class ComponentController {
+public class ComponentController extends BaseController{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -39,20 +41,14 @@ public class ComponentController {
      */
     @RequestMapping(value = "/energyDetail", method = RequestMethod.POST)
     @ResponseBody
-    public String energyDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String energyDetail(ToolVO toolVO, HttpServletRequest request) {
         logger.info("组件-能耗明细加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            HashMap<String,Object> params = new HashMap<>();
-            params.put("orgId",paramsMap.get("toolOrgId"));
-            params.put("feedType",paramsMap.get("toolFeedType"));
-            params.put("startTime",paramsMap.get("toolStartDate"));
-            params.put("endTime",paramsMap.get("toolEndDate"));
-            params.put("type",paramsMap.get("toolOrgType"));
-            params.put("comId",company.getId());
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+
             Map<String,Object> map =  componentService.energyDetail(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -77,20 +73,13 @@ public class ComponentController {
      */
     @RequestMapping(value = "/costDetail", method = RequestMethod.POST)
     @ResponseBody
-    public String costDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String costDetail(ToolVO toolVO,HttpServletRequest request) {
         logger.info("组件-成本明细加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            Map<String,Object> params = new HashMap<>();
-            params.put("orgId",paramsMap.get("toolOrgId"));
-            params.put("feedType",paramsMap.get("toolFeedType"));
-            params.put("startTime",paramsMap.get("toolStartDate"));
-            params.put("endTime",paramsMap.get("toolEndDate"));
-            params.put("type",paramsMap.get("toolOrgType"));
-            params.put("comId",company.getId());
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
             Map<String,Object> map =  componentService.costDetail(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -115,20 +104,13 @@ public class ComponentController {
      */
     @RequestMapping(value = "/energycomparison", method = RequestMethod.POST)
     @ResponseBody
-    public String energycomparison(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String energycomparison(ToolVO toolVO,HttpServletRequest request) {
         logger.info("组件-单耗趋势加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            Map<String,Object> params = new HashMap<>();
-            params.put("orgId",paramsMap.get("toolOrgId"));
-            params.put("feedType",paramsMap.get("toolFeedType"));
-            params.put("startTime",paramsMap.get("toolStartDate"));
-            params.put("endTime",paramsMap.get("toolEndDate"));
-            params.put("type",paramsMap.get("toolOrgType"));
-            params.put("comId",company.getId());
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
             Map<String,Object> map =  componentService.energycomparison(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -147,13 +129,13 @@ public class ComponentController {
 
     /**
      * 天气组件
-     * @param paramsMap
+     * @param
      * @param request
      * @return
      */
     @RequestMapping(value = "/weather", method = RequestMethod.POST)
     @ResponseBody
-    public String weather(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String weather(HttpServletRequest request) {
         logger.info("组件-天气预报加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
@@ -187,15 +169,18 @@ public class ComponentController {
      */
     @RequestMapping(value = "/roomtemperature", method = RequestMethod.POST)
     @ResponseBody
-    public String roomtemperature(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String roomtemperature(ToolVO toolVO,HttpServletRequest request,RoomVO roomVO) {
         logger.info("组件-室温散点加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
 
         try {
-            Map<String,Object> map =  componentService.roomTemperature(paramsMap);
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+            params.put("min",roomVO.getMin());
+            params.put("max",roomVO.getMax());
+
+            Map<String,Object> map =  componentService.roomTemperature(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);
@@ -217,18 +202,14 @@ public class ComponentController {
      */
     @RequestMapping(value = "/recentdetail", method = RequestMethod.POST)
     @ResponseBody
-    public String recentdetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String recentdetail(ToolVO toolVO,HttpServletRequest request) {
         logger.info("组件-近期单耗详情加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            Map<String,Object> params = new HashMap<>();
-            params.put("orgId",paramsMap.get("toolOrgId"));
-            params.put("feedType",paramsMap.get("toolFeedType"));
-            params.put("type",paramsMap.get("toolOrgType"));
-            params.put("comId",company.getId());
+             /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+
             List<Map<String,Object>> map =  componentService.selectrecentDetail(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -251,18 +232,15 @@ public class ComponentController {
      */
     @RequestMapping(value = "/healthcheck", method = RequestMethod.POST)
     @ResponseBody
-    public String healthcheck(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String healthcheck(ToolVO toolVO,HttpServletRequest request) {
         logger.info("组件-健康指数检测加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+
         try {
-            Map<String,Object> params = new HashMap<>();
-            params.put("orgId",paramsMap.get("toolOrgId"));
-            params.put("feedType",paramsMap.get("toolFeedType"));
-            params.put("type",paramsMap.get("toolOrgType"));
-            params.put("comId",company.getId());
+             /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+
             Map<String,Object> data = new HashMap<>();
             Map<String,Object> gkdata = new HashMap<>();
             gkdata.put("serious",135);

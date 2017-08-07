@@ -351,7 +351,7 @@
     <!--水的计算每小时能耗-->
     <select id="selectFinalDataHourById" parameterType="java.lang.String" resultMap="BaseResultMap">
 
-        INSERT INTO t_emc_final_data_hour (
+        INSERT INTO ${tableName} (
                                 ID,
                                 COMID,
                                 UNITID,
@@ -397,7 +397,7 @@
     <!--电的计算每小时能耗-->
     <select id="selectPowerById" parameterType="java.lang.String" resultMap="BaseResultMap">
 
-        INSERT INTO t_emc_final_data_hour (
+        INSERT INTO ${tableName} (
                             ID,
                             COMID,
                             UNITID,
@@ -443,7 +443,7 @@
     <!--热的计算每小时能耗-->
     <select id="selectHeatById" parameterType="java.lang.String" resultMap="BaseResultMap">
 
-        INSERT INTO t_emc_final_data_hour (
+        INSERT INTO ${tableName} (
                         ID,
                         COMID,
                         UNITID,
@@ -489,7 +489,7 @@
     <!--气的计算每小时能耗-->
     <select id="selectQiById" parameterType="java.lang.String" resultMap="BaseResultMap">
 
-        INSERT INTO t_emc_final_data_hour (
+        INSERT INTO ${tableName} (
                     ID,
                     COMID,
                     UNITID,

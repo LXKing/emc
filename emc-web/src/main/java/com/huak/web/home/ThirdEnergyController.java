@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/third/energy")
-public class ThirdEnergyController {
+public class ThirdEnergyController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * 跳转三级单耗页面

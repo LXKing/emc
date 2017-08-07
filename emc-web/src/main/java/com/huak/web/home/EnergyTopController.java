@@ -3,8 +3,6 @@ package com.huak.web.home;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.home.FrameService;
 import com.huak.home.type.ToolVO;
-import com.huak.org.OrgService;
-import com.huak.org.model.Org;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,13 +31,11 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/energy/top")
-public class EnergyTopController {
+public class EnergyTopController extends BaseController{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private  FrameService frameService;
-    @Autowired
-    private OrgService orgService;
     /**
      * 查询首页顶部All的数据
      * @param
@@ -46,18 +43,11 @@ public class EnergyTopController {
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
      @ResponseBody
-     public String getAllData(ToolVO toolVO){
+     public String getAllData(ToolVO toolVO, HttpServletRequest request){
         logger.info("查询首页顶部All的数据");
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         JSONObject jo = new JSONObject();
-        Map<String,String> params = new HashMap<String,String>();
-        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-        params.put("comId",org.getComId());
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+        Map params = paramsPackageOrg(toolVO, request);
         String eTotal=null;
         //String carbonTotal=null;
         //Map<String,String> costMap = new HashMap<String,String>();
@@ -118,18 +108,11 @@ public class EnergyTopController {
     }
     @RequestMapping(value = "/all1", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllData1(ToolVO toolVO){
+    public String getAllData1(ToolVO toolVO, HttpServletRequest request){
         logger.info("查询首页顶部All的数据");
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         JSONObject jo = new JSONObject();
-        Map<String,String> params = new HashMap<String,String>();
-        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-        params.put("comId",org.getComId());
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+        Map params = paramsPackageOrg(toolVO, request);
         //String eTotal=null;
         //String carbonTotal=null;
         //Map<String,String> costMap = new HashMap<String,String>();
@@ -195,18 +178,11 @@ public class EnergyTopController {
      */
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
     @ResponseBody
-    public String getFeedData(ToolVO toolVO){
+    public String getFeedData(ToolVO toolVO, HttpServletRequest request){
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         logger.info("查询首页顶部供热源的数据");
         JSONObject jo = new JSONObject();
-        Map<String,String> params = new HashMap<String,String>();
-        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-        params.put("comId",org.getComId());
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+        Map params = paramsPackageOrg(toolVO, request);
         String eTotal=null;
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
@@ -262,15 +238,11 @@ public class EnergyTopController {
      */
     @RequestMapping(value = "/net", method = RequestMethod.GET)
     @ResponseBody
-    public String getNetData(ToolVO toolVO){
+    public String getNetData(ToolVO toolVO, HttpServletRequest request){
         logger.info("查询首页顶部管网的数据");
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         JSONObject jo = new JSONObject();
-        Map<String,String> params = new HashMap<String,String>();
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate());
-        params.put("endTime",toolVO.getToolEndDate());
+        Map params = paramsPackageOrg(toolVO, request);
         String netlen=null;
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
@@ -330,18 +302,11 @@ public class EnergyTopController {
      */
     @RequestMapping(value = "/station", method = RequestMethod.GET)
     @ResponseBody
-    public String getStationData(ToolVO toolVO){
+    public String getStationData(ToolVO toolVO, HttpServletRequest request){
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         logger.info("查询首页顶部换热站的数据");
         JSONObject jo = new JSONObject();
-        Org org = orgService.selectByPrimaryKey(toolVO.getToolOrgId());
-
-        Map<String,String> params = new HashMap<String,String>();
-        params.put("comId",org.getComId());
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate()+" 00:00:00");
-        params.put("endTime",toolVO.getToolEndDate()+" 23:59:59");
+        Map params = paramsPackageOrg(toolVO, request);
         String eTotal=null;
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
@@ -399,15 +364,11 @@ public class EnergyTopController {
      */
     @RequestMapping(value = "/line", method = RequestMethod.GET)
     @ResponseBody
-    public String getLineData(ToolVO toolVO){
+    public String getLineData(ToolVO toolVO, HttpServletRequest request){
         logger.info("查询首页顶部管线的数据");
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         JSONObject jo = new JSONObject();
-        Map<String,String> params = new HashMap<String,String>();
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate());
-        params.put("endTime",toolVO.getToolEndDate());
+        Map params = paramsPackageOrg(toolVO, request);
         String linelen=null;
         String carbonTotal=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();
@@ -463,15 +424,11 @@ public class EnergyTopController {
      */
     @RequestMapping(value = "/room", method = RequestMethod.GET)
     @ResponseBody
-    public String getRoomData(ToolVO toolVO){
+    public String getRoomData(ToolVO toolVO, HttpServletRequest request){
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         logger.info("查询首页顶部民户的数据");
         JSONObject jo = new JSONObject();
-        Map<String,String> params = new HashMap<String,String>();
-        params.put("orgId",toolVO.getToolOrgId());
-        params.put("feetType",toolVO.getToolFeedType());
-        params.put("startTime",toolVO.getToolStartDate());
-        params.put("endTime",toolVO.getToolEndDate());
+        Map params = paramsPackageOrg(toolVO, request);
         String rTotal=null;
         String hgl=null;
         List<Map<String,String>> costList = new ArrayList<Map<String,String>>();

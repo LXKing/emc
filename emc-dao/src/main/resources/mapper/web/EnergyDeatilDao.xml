@@ -46,7 +46,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
@@ -74,7 +74,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTimeTq,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTimeTq,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
@@ -104,7 +104,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
@@ -128,7 +128,7 @@
         a.UNITID,
         sum(a.DOSAGE * a.COAL_COEF) as num
         FROM
-        t_emc_final_data_hour a
+        ${tableName} a
         where 1= 1
         and a.DOSAGE_TIME &gt;=#{startTime,jdbcType=VARCHAR}
         and a.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
@@ -180,7 +180,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
@@ -208,7 +208,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTimeTq,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTimeTq,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
@@ -250,7 +250,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTime,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
@@ -278,7 +278,7 @@
         ) ou
         LEFT JOIN
         (SELECT fd.UNITID,SUM(fd.DOSAGE) DOSAGE,SUM(fd.DOSAGE*fd.COAL_COEF) BM,et.TYPE,AVG(fd.AREA) AREA
-        FROM t_emc_final_data_hour fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
+        FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE  fd.DOSAGE_TIME &gt;=#{startTimeTq,jdbcType=VARCHAR} AND fd.DOSAGE_TIME &lt;= #{endTimeTq,jdbcType=VARCHAR}
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE

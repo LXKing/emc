@@ -13,6 +13,16 @@ public class Company implements Serializable{
 
     private String wname;
 
+    private String tableName;
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
     public String getWname() {
         return wname;
     }
@@ -37,12 +47,13 @@ public class Company implements Serializable{
         this.nextDes = nextDes;
     }
 
-    public Company(String id, String cname,String nextDes,String wcode,String wname) {
+    public Company(String id, String cname,String nextDes,String wcode,String wname,String tableName) {
         this.id = id;
         this.cname = cname;
         this.nextDes = nextDes;
         this.wcode = wcode;
         this.wname = wname;
+        this.tableName = tableName;
     }
     public Company() {
         super();

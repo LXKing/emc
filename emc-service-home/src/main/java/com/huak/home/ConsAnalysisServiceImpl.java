@@ -115,10 +115,10 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
 		Map<String, Object> result = new HashMap<String,Object>();
 		//所有的能源类型
 		String[] energyTypes = {"groupEnergy","waterEnergy","electricEnergy","gasEnergy","hotEnergy","coalEnergy"};
-		String sDate = params.get("toolStartDate");//查询条件的开始时间
-		String eDate = params.get("toolEndDate");//查询条件的结束时间
-		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate;//如果查询条件的开始时间为空，设置默认的开始时间
-		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate;//如果查询条件的结束时间为空，设置默认的结束时间
+		String sDate = params.get("startTime");//查询条件的开始时间
+		String eDate = params.get("endTime");//查询条件的结束时间
+		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
 		String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
 		String leDate = getYearDate(eDate,Calendar.YEAR, -1);
 		//查询时间list

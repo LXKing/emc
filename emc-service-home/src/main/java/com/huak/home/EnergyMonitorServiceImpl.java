@@ -24,6 +24,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     @Resource
     private EnergySecondDao energySecondDao;
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     @Override
     @Transactional(readOnly = false)
     public void insertByPrimaryKeySelective(EnergyMonitor energyMonitor) {
@@ -111,10 +113,10 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		Map<String, Object> result = new HashMap<String,Object>();
 		//所有的能源类型
 		String[] energyTypes = {"groupEnergy","waterEnergy","electricEnergy","gasEnergy","hotEnergy","coalEnergy"};
-		String sDate = params.get("toolStartDate");//查询条件的开始时间
-		String eDate = params.get("toolEndDate");//查询条件的结束时间
-		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate;//如果查询条件的开始时间为空，设置默认的开始时间
-		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate;//如果查询条件的结束时间为空，设置默认的结束时间
+		String sDate = params.get("startTime");//查询条件的开始时间
+		String eDate = params.get("endTime");//查询条件的结束时间
+		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
 		String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
 		String leDate = getYearDate(eDate,Calendar.YEAR, -1);
 		//查询时间list
@@ -222,7 +224,6 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	 * @return
 	 */
 	private String getYearDate(String curDate,int type,int num) throws Exception{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		curDate = (curDate==null||"".equals(curDate))?dateDao.getDate():curDate;
 		Date date = sdf.parse(curDate);
 		Calendar calendar = Calendar.getInstance();    
@@ -256,10 +257,10 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	@Override
 	public Map<String,Object> energyFlowLine(Map<String, String> params) throws Exception{
 		Map<String,Object> result = new HashMap<String,Object>();
-		String sDate = params.get("toolStartDate");//查询条件的开始时间
-		String eDate = params.get("toolEndDate");//查询条件的结束时间
-		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate;//如果查询条件的开始时间为空，设置默认的开始时间
-		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate;//如果查询条件的结束时间为空，设置默认的结束时间
+		String sDate = params.get("startTime");//查询条件的开始时间
+		String eDate = params.get("endTime");//查询条件的结束时间
+		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
 		//查询时间list
 		List<String> yearList = new ArrayList<String>();
 		//无查询结果时，设为默认值0
@@ -274,7 +275,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		//处理查询结果，为折线图做准备
 		List<Map<String, Object>> eflListMap = eaDao.energyFlowLine(params);
 		String[] unitType = null;
-		int toolorgtype = Integer.valueOf("".equals((params.get("toolOrgType")+""))?"-1":(params.get("toolOrgType")+""));
+		int toolorgtype = Integer.valueOf("".equals((params.get("orgType")+""))?"-1":(params.get("orgType")+""));
 		switch(toolorgtype){
 			case 1:unitType = new String[]{"供热源"};break;
 			case 2:unitType = new String[]{"一次网"};break;

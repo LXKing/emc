@@ -60,7 +60,7 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
@@ -90,7 +90,7 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh
         WHERE fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
@@ -125,7 +125,7 @@
             AND vu.UNITTYPE=#{orgType}
         </if>
         LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID
-        FROM t_emc_final_data_hour fdh,t_emc_energy_type eet
+        FROM ${tableName} fdh,t_emc_energy_type eet
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         AND fdh.TYPEID = eet.ID AND eet.TYPE!=4
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
@@ -150,7 +150,7 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        RIGHT JOIN (SELECT DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM t_emc_final_data_hour  WHERE DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND DOSAGE_TIME<![CDATA[ <= ]]> #{endTime} GROUP BY DATE_FORMAT(DOSAGE_TIME,'%y-%m-%d') ORDER BY DOSAGE_TIME) dt ON 1=1
+        RIGHT JOIN (SELECT DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM ${tableName}  WHERE DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND DOSAGE_TIME<![CDATA[ <= ]]> #{endTime} GROUP BY DATE_FORMAT(DOSAGE_TIME,'%y-%m-%d') ORDER BY DOSAGE_TIME) dt ON 1=1
         LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
@@ -158,7 +158,7 @@
         LEFT JOIN  (
         SELECT d1.UNITID,SUM(d1.BM) BQBM,d1.DOSAGE_TIME FROM
         (SELECT fdh.UNITID,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME
-        FROM t_emc_final_data_hour fdh ,(SELECT * from t_emc_energy_type where TYPE!=4) eet
+        FROM ${tableName} fdh ,(SELECT * from t_emc_energy_type where TYPE!=4) eet
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         AND fdh.TYPEID = eet.ID
         GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME,'%Y-%m-%d')) d1 GROUP BY d1.UNITID,d1.DOSAGE_TIME ORDER BY DOSAGE_TIME
@@ -195,7 +195,7 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
@@ -225,7 +225,7 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh
         WHERE fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
@@ -265,7 +265,7 @@
         </if>
         LEFT JOIN  (
         SELECT d1.UNITID,d1.TYPEID,d1.DOSAGE BQ,d1.BM BQBM FROM
-        (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
+        (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1
         ) hd ON hd.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = hd.TYPEID
@@ -317,7 +317,7 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh
         WHERE fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTime}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID
@@ -347,7 +347,7 @@
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM t_emc_final_data_hour fdh
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,fdh.TYPEID FROM ${tableName} fdh
         WHERE fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
         GROUP BY fdh.UNITID,fdh.TYPEID) d1 ON d1.UNITID = vu.unitid
         LEFT JOIN t_emc_energy_type eet ON eet.ID = d1.TYPEID

@@ -67,7 +67,7 @@
       sum(da.DOSAGE*da.COAL_COEF) AS num,
       sum(da.DOSAGE) as nums
       FROM
-      t_emc_final_data_hour da,( select unitid from v_emc_unit where 1=1
+      ${tableName} da,( select unitid from v_emc_unit where 1=1
       <if test="feedType != null and feedType !=''">
           and  HEAT_TYPE = #{feedType}
       </if>
@@ -112,7 +112,7 @@
       sum(da.DOSAGE*da.COAL_COEF) AS num,
       sum(da.DOSAGE) as nums
       FROM
-      t_emc_final_data_hour da,(
+      ${tableName} da,(
           select unitid from v_emc_unit where 1=1
           <if test="feedType != null and feedType !=''">
              and  HEAT_TYPE = #{feedType}
@@ -228,7 +228,7 @@
       max(case when cc.TYPEID = '3' then cc.cost else 0 end) device,
       max(case when cc.TYPEID = '4' then cc.cost else 0 end) labor,
       (select sum(bb.ne) from (SELECT a.typeid,sum(a.DOSAGE*a.PRICE) ne
-      FROM t_emc_final_data_hour a,
+      FROM ${tableName} a,
       (select UNITID from v_emc_unit  where 1=1
       <if test="orgId != null and orgId != ''">
           and  ORGID in (select id from t_emc_org where
@@ -278,7 +278,7 @@
       max(case when cc.TYPEID = '3' then cc.cost else 0 end) device,
       max(case when cc.TYPEID = '4' then cc.cost else 0 end) labor,
       (select sum(bb.ne) from (SELECT a.typeid,sum(a.DOSAGE*a.PRICE) ne
-      FROM t_emc_final_data_hour a,
+      FROM ${tableName} a,
       (select * from v_emc_unit  where 1=1
       <if test="orgId != null and orgId !=''">
           and   ORGID in (select id from t_emc_org where
@@ -352,7 +352,7 @@
         sum(a.DOSAGE * a.COAL_COEF) num,
         avg(a.AREA) area
         FROM
-        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
         WHERE 1 = 1
         <if test="orgId != null and orgId !=''">
@@ -451,7 +451,7 @@
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
-        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
         WHERE 1 = 1
         <if test="orgId != null and orgId !=''">
@@ -486,7 +486,7 @@
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
-        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
         WHERE 1 = 1
         <if test="orgId != null and orgId !=''">
@@ -520,7 +520,7 @@
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
-        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
         WHERE 1 = 1
         <if test="orgId != null and orgId !=''">
@@ -555,7 +555,7 @@
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
         bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
         FROM
-        t_emc_final_data_hour a,t_emc_energy_type bbb,
+        ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
         WHERE 1 = 1
         <if test="orgId != null and orgId !=''">

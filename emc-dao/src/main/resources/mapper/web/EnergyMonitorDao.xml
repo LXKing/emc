@@ -25,41 +25,41 @@
   <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from t_emc_final_data_hour
+    from ${tableName}
     where ID = #{id,jdbcType=VARCHAR}
   </select>
   
   <!-- 能耗子页面，能耗曲线，能源流相关数据查询开始 -->
   <!-- 查询今年的集团能耗 -->
-  <!-- 查询条件map内容：{toolOrgId=38, toolFeedType=2, toolStartDate=2016-11-15, toolEndDate=2017-06-15, toolOrgType=} -->
+  <!-- 查询条件map内容：{orgId=38, feedType=2, startTime=2016-11-15, endTime=2017-06-15, orgType=} -->
   <sql id="cur_last_time">
   	<choose>
-		<when test="toolStartDate!=null and toolStartDate!=''">
-			AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
+		<when test="startTime!=null and startTime!=''">
+			AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=VARCHAR},'%Y-%m-%d')
 		</when>
 		<otherwise>
 			AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
 		</otherwise>
 	</choose>
 	<choose>
-		<when test="toolEndDate!=null and toolEndDate!=''">
-			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
+		<when test="endTime!=null and endTime!=''">
+			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime,jdbcType=VARCHAR},'%Y-%m-%d'))
 		</when>
 		<otherwise>
 			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE())
 		</otherwise>
 	</choose>
 	<choose>
-		<when test="toolStartDate!=null and toolStartDate!=''">
-			OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(#{toolStartDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR) 
+		<when test="startTime!=null and startTime!=''">
+			OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(DATE_FORMAT(#{startTime,jdbcType=VARCHAR},'%Y-%m-%d'), INTERVAL 1 YEAR)
 		</when>
 		<otherwise>
 			OR (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(SUBDATE(CURDATE(), INTERVAL 5 DAY), INTERVAL 1 YEAR)
 		</otherwise>
 	</choose>
 	<choose>
-		<when test="toolEndDate!=null and toolEndDate!=''">
-			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(#{toolEndDate,jdbcType=VARCHAR}, INTERVAL 1 YEAR))
+		<when test="endTime!=null and endTime!=''">
+			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(DATE_FORMAT(#{endTime,jdbcType=VARCHAR},'%Y-%m-%d'), INTERVAL 1 YEAR))
 		</when>
 		<otherwise>
 			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(CURDATE(), INTERVAL 1 YEAR))
@@ -68,16 +68,16 @@
   </sql>
   <sql id="cur_time">
   	<choose>
-		<when test="toolStartDate!=null and toolStartDate!=''">
-			AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= #{toolStartDate,jdbcType=VARCHAR}
+		<when test="startTime!=null and startTime!=''">
+			AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=VARCHAR},'%Y-%m-%d')
 		</when>
 		<otherwise>
 			AND (DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') >= SUBDATE(CURDATE(), INTERVAL 5 DAY)
 		</otherwise>
 	</choose>
 	<choose>
-		<when test="toolEndDate!=null and toolEndDate!=''">
-			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= #{toolEndDate,jdbcType=VARCHAR})
+		<when test="endTime!=null and endTime!=''">
+			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime,jdbcType=VARCHAR},'%Y-%m-%d'))
 		</when>
 		<otherwise>
 			AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= CURDATE())
@@ -87,20 +87,20 @@
   <sql id="between_and">
   	BETWEEN 
 		<choose>
-		<when test="toolStartDate!=null and toolStartDate!=''">
-			#{toolStartDate,jdbcType=VARCHAR}
+		<when test="startTime!=null and startTime!=''">
+            DATE_FORMAT(#{startTime,jdbcType=VARCHAR}, '%Y-%m-%d')
 		</when>
 		<otherwise>
-			SUBDATE(CURDATE(), INTERVAL 5 DAY)
+            DATE_FORMAT(SUBDATE(CURDATE(), INTERVAL 5 DAY), '%Y-%m-%d')
 		</otherwise>
 	</choose>
 	AND 
 	<choose>
-		<when test="toolEndDate!=null and toolEndDate!=''">
-			#{toolEndDate,jdbcType=VARCHAR}
+		<when test="endTime!=null and endTime!=''">
+            DATE_FORMAT(#{endTime,jdbcType=VARCHAR}, '%Y-%m-%d')
 		</when>
 		<otherwise>
-			CURDATE()
+            DATE_FORMAT(CURDATE(), '%Y-%m-%d')
 		</otherwise>
 	</choose>
   </sql>
@@ -122,14 +122,14 @@
 		FROM ( 
 			SELECT SUM(B.dosage) dosage,SUM(B.total) total, B.energytype, B.yeardate 
 			FROM ( SELECT vu.UNITID FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-				   <if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> 
-				   <if test="toolOrgType!=null and toolOrgType!=''"> AND vu.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if> 
+				   <if test="feedType!=null and feedType!=''"> AND vu.heat_type = #{feedType,jdbcType=VARCHAR} </if> 
+				   <if test="orgType!=null and orgType!=''"> AND vu.UNITTYPE = #{orgType,jdbcType=VARCHAR} </if> 
 				 ) 
-			WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
+			WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="orgId!=null and orgId!=''">#{orgId,jdbcType=VARCHAR}</if>) ) AND P_ORG_ID != '0' ) A 
 			LEFT JOIN ( 
 				SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage, sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
-				DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate 
-				FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+				DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
+				FROM ( ${tableName} h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id )
 				WHERE 1 = 1 <include refid="cur_last_time" /> 
 				GROUP BY unitid, energytype, yeardate 
 			) B ON A.UNITID = B.unitid 
@@ -200,14 +200,14 @@
 		  				FROM ( 
 		  					SELECT vu.UNITID, vu.UNITTYPE 
 		  					FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if>  ) 
-		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
+		  					<if test="feedType!=null and feedType!=''"> AND vu.heat_type = #{feedType,jdbcType=VARCHAR} </if>  ) 
+		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="orgId!=null and orgId!=''">#{orgId,jdbcType=VARCHAR}</if>) ) 
 		  					AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 		  					LEFT JOIN ( 
 		  						SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage,   
 		  						sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
-		  						( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
-		  						FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+		  						( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season
+		  						FROM ( ${tableName} h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id )
 		  						WHERE 1 = 1 <include refid="cur_last_time" /> 
 		  						GROUP BY unitid, energytype,season 
 		  					) B ON A.UNITID = B.unitid 
@@ -218,7 +218,7 @@
 	  		) CC
 	 ) D ON D.UNITTYPE = type.unittype 
 	 where 1=1 
-	 <if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
+	 <if test="orgType!=null and orgType!=''"> AND type.unittype = #{orgType,jdbcType=VARCHAR} </if>
   </select>
   <!-- 导出 -->
   <select id="exportEnergyFlowDetail" resultType="java.util.Map" parameterType="java.util.Map">
@@ -281,14 +281,14 @@
 		  				FROM ( 
 		  					SELECT vu.UNITID, vu.UNITTYPE 
 		  					FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		  					<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
-		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
+		  					<if test="feedType!=null and feedType!=''"> AND vu.heat_type = #{feedType,jdbcType=VARCHAR} </if> ) 
+		  					WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="orgId!=null and orgId!=''">#{orgId,jdbcType=VARCHAR}</if>) ) 
 		  					AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 		  					LEFT JOIN ( 
 		  						SELECT h.UNITID AS unitid,sum(h.DOSAGE) dosage,   
 		  						sum(h.DOSAGE * h.COAL_COEF) AS total, et.type AS energytype, 
-		  						( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season 
-		  						FROM ( t_emc_final_data_hour h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id ) 
+		  						( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season
+		  						FROM ( ${tableName} h LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id )
 		  						WHERE 1 = 1 <include refid="cur_last_time" /> 
 		  						GROUP BY unitid, energytype,season 
 		  					) B ON A.UNITID = B.unitid 
@@ -299,7 +299,7 @@
 	  		) CC
 	 ) D ON D.UNITTYPE = type.unittype 
 	 where 1=1
-	 <if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
+	 <if test="orgType!=null and orgType!=''"> AND type.unittype = #{orgType,jdbcType=VARCHAR} </if>
   </select>
   <!-- 查询能源流占比分布图 -->
   <select id="energyFlowPie" resultType="java.util.Map" parameterType="java.util.Map">
@@ -312,8 +312,8 @@
 	  	FROM( 
 	  		SELECT vu.UNITID, vu.UNITTYPE 
 	  		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-			<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
-	  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
+			<if test="feedType!=null and feedType!=''"> AND vu.heat_type = #{feedType,jdbcType=VARCHAR} </if> ) 
+	  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="orgId!=null and orgId!=''">#{orgId,jdbcType=VARCHAR}</if>) ) 
 	  			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  		LEFT JOIN ( 
 	  			select BB.unitid,sum(BB.dosage*BB.cc) as total,BB.season from(
@@ -321,7 +321,7 @@
 		  			( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season,
 		  			et.TYPE type 
 		  			FROM (
-						t_emc_final_data_hour h
+						${tableName} h
 						LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
 					)
 		  			WHERE 1 = 1 <include refid="cur_time" /> 
@@ -332,7 +332,7 @@
 	  	GROUP BY A.UNITTYPE
 	) C on type.unittype = C.UNITTYPE 
 	where 1=1 
-	<if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
+	<if test="orgType!=null and orgType!=''"> AND type.unittype = #{orgType,jdbcType=VARCHAR} </if>
   </select>
   <!-- 查询能源流趋势对比图 -->
   <select id="energyFlowLine" resultType="java.util.Map" parameterType="java.util.Map">
@@ -341,21 +341,21 @@
   	FROM( 
   		SELECT vu.UNITID, vu.UNITTYPE 
   		FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
-  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
+		<if test="feedType!=null and feedType!=''"> AND vu.heat_type = #{feedType,jdbcType=VARCHAR} </if> ) 
+  		WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="orgId!=null and orgId!=''">#{orgId,jdbcType=VARCHAR}</if>) ) 
   			  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
   		LEFT JOIN (
   			select BB.unitid,sum(BB.dosage*BB.cc) as total,BB.yeardate from ( 
 	  			SELECT h.UNITID AS unitid,h.DOSAGE dosage,h.COAL_COEF cc,
 					   DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate,et.TYPE type
 	  			FROM (
-	  				t_emc_final_data_hour h 
+	  				${tableName} h
 					LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id 
 				) 
 	  			WHERE 1 = 1 <include refid="cur_time" /> ) BB where BB.type != '4'
   			GROUP BY unitid,yeardate 
   		) B ON A.UNITID = B.unitid 
-  	WHERE B.total IS NOT NULL <if test="toolOrgType!=null and toolOrgType!=''"> AND A.UNITTYPE = #{toolOrgType,jdbcType=VARCHAR} </if>
+  	WHERE B.total IS NOT NULL <if test="orgType!=null and orgType!=''"> AND A.UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
   	GROUP BY A.UNITTYPE,B.yeardate
   	ORDER BY B.yeardate asc
   </select>
@@ -367,17 +367,17 @@
   	LEFT JOIN (
 	  	SELECT A.UNITTYPE, IFNULL(sum(case B.season when '0' then B.total end),0) lastTotal, IFNULL(sum(case B.season when '1' then B.total end),0) curTotal 
 	  	FROM( SELECT vu.UNITID, vu.UNITTYPE FROM ( t_emc_org LEFT JOIN v_emc_unit vu ON ID = vu.ORGID 
-		<if test="toolFeedType!=null and toolFeedType!=''"> AND vu.heat_type = #{toolFeedType,jdbcType=VARCHAR} </if> ) 
-	  	WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="toolOrgId!=null and toolOrgId!=''">#{toolOrgId,jdbcType=VARCHAR}</if>) ) 
+		<if test="feedType!=null and feedType!=''"> AND vu.heat_type = #{feedType,jdbcType=VARCHAR} </if> ) 
+	  	WHERE FIND_IN_SET( ID, emc_func_org_getchilds (<if test="orgId!=null and orgId!=''">#{orgId,jdbcType=VARCHAR}</if>) ) 
 	  		  AND P_ORG_ID != '0' AND UNITID IS NOT NULL ) A 
 	  	LEFT JOIN ( 
 	  		select BB.unitid, sum(BB.dosage * BB.cc) AS total, BB.season
 			from (
 		  		SELECT h.UNITID AS unitid, h.DOSAGE dosage, h.COAL_COEF cc,
-		  		( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season, 
+		  		( CASE WHEN DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') <include refid="between_and" /> THEN '1' ELSE '0' END ) season,
 		  		et.TYPE type 
 		  		FROM (
-		  			t_emc_final_data_hour h 
+		  			${tableName} h
 					LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id 
 		  		) 
 		  		WHERE 1 = 1 <include refid="cur_last_time" /> ) BB where BB.type != '4'
@@ -386,17 +386,17 @@
 	  	WHERE B.total IS NOT NULL 
 	  	GROUP BY A.UNITTYPE
 	) C ON type.unittype = C.UNITTYPE 
-	where 1=1 <if test="toolOrgType!=null and toolOrgType!=''"> AND type.unittype = #{toolOrgType,jdbcType=VARCHAR} </if>
+	where 1=1 <if test="orgType!=null and orgType!=''"> AND type.unittype = #{orgType,jdbcType=VARCHAR} </if>
 	ORDER BY type.unittype
   </select>
   <!-- 能耗子页面，能耗曲线，能源流相关数据查询结束 -->
   
   <delete id="delete" parameterType="java.lang.String" >
-    delete from t_emc_final_data_hour
+    delete from ${tableName}
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insertByPrimaryKeySelective" parameterType="com.huak.home.model.EnergyMonitor" >
-    insert into t_emc_final_data_hour (ID, COMID, UNITID, 
+    insert into ${tableName} (ID, COMID, UNITID,
       NODEID, TYPEID, DOSAGE_TIME, 
       DOSAGE, AREA, PRICE, 
       WTEMP, CWTEMP, COAL_COEF, 
@@ -408,7 +408,7 @@
       #{cCoef,jdbcType=DOUBLE}, #{itemp,jdbcType=DOUBLE}, #{citemp,jdbcType=DOUBLE})
   </insert>
   <insert id="insert" parameterType="com.huak.home.model.EnergyMonitor" >
-    insert into t_emc_final_data_hour
+    insert into ${tableName}
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         ID,
@@ -505,7 +505,7 @@
     </trim>
   </insert>
   <update id="update" parameterType="com.huak.home.model.EnergyMonitor" >
-    update t_emc_final_data_hour
+    update ${tableName}
     <set >
       <if test="comid != null" >
         COMID = #{comid,jdbcType=VARCHAR},
@@ -553,7 +553,7 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huak.home.model.EnergyMonitor" >
-    update t_emc_final_data_hour
+    update ${tableName}
     set COMID = #{comid,jdbcType=VARCHAR},
       UNITID = #{unitid,jdbcType=VARCHAR},
       NODEID = #{nodeid,jdbcType=VARCHAR},

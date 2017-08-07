@@ -1521,7 +1521,7 @@ function chart08Fun() {
         url: _web + '/component/roomtemperature',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data: {min: 18, max: 22},
+        data: $("#searchTools").serialize()+"&"+$.param({min:18,max:22}),
         dataType: "json",
         success: function (result) {
             if (result.flag == true) {

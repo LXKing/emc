@@ -73,6 +73,11 @@ $(function () {
                 align: 'center'
             },
             {
+                title: '数据表名',
+                field: 'tableName',
+                align: 'center'
+            },
+            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,

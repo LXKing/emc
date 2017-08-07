@@ -1,5 +1,4 @@
 
-
 function loadDataFun(){
     //加载分公司能耗
     $.ajax({
