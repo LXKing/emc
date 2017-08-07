@@ -349,7 +349,7 @@
         where UNITID = #{unitid,jdbcType=VARCHAR}
     </select>
     <!--水的计算每小时能耗-->
-    <select id="selectFinalDataHourById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectFinalDataHourById" parameterType="java.util.Map" resultMap="BaseResultMap">
 
         INSERT INTO ${tableName} (
                                 ID,
@@ -383,7 +383,7 @@
                                 0 PRICE,
                                 t.AVGTEAIRMPERATURE WTEMP,
                                 0 CWTEMP,
-                                0 COAL_COEF,
+                                #{coef,jdbcType=DOUBLE} COAL_COEF,
                                 0 C_COEF,
                                 t.AVGROOMTEMPERATURE ITEMP,
                                 0 CITEMP
@@ -395,7 +395,7 @@
                                 t.id =#{id,jdbcType=VARCHAR}
     </select>
     <!--电的计算每小时能耗-->
-    <select id="selectPowerById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectPowerById" parameterType="java.util.Map" resultMap="BaseResultMap">
 
         INSERT INTO ${tableName} (
                             ID,
@@ -429,7 +429,7 @@
                             0 PRICE,
                             t.AVGTEAIRMPERATURE WTEMP,
                             0 CWTEMP,
-                            0 COAL_COEF,
+                            #{coef,jdbcType=DOUBLE} COAL_COEF,
                             0 C_COEF,
                             t.AVGROOMTEMPERATURE ITEMP,
                             0 CITEMP
@@ -441,7 +441,7 @@
                   t.id =#{id,jdbcType=VARCHAR}
     </select>
     <!--热的计算每小时能耗-->
-    <select id="selectHeatById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectHeatById" parameterType="java.util.Map" resultMap="BaseResultMap">
 
         INSERT INTO ${tableName} (
                         ID,
@@ -475,7 +475,7 @@
                         0 PRICE,
                         t.AVGTEAIRMPERATURE WTEMP,
                         0 CWTEMP,
-                        0 COAL_COEF,
+                        #{coef,jdbcType=DOUBLE} COAL_COEF,
                         0 C_COEF,
                         t.AVGROOMTEMPERATURE ITEMP,
                         0 CITEMP
@@ -487,7 +487,7 @@
                   t.id =#{id,jdbcType=VARCHAR}
     </select>
     <!--气的计算每小时能耗-->
-    <select id="selectQiById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectQiById" parameterType="java.util.Map" resultMap="BaseResultMap">
 
         INSERT INTO ${tableName} (
                     ID,
@@ -521,7 +521,7 @@
                     0 PRICE,
                     t.AVGTEAIRMPERATURE WTEMP,
                     0 CWTEMP,
-                    0 COAL_COEF,
+                    #{coef,jdbcType=DOUBLE} COAL_COEF,
                     0 C_COEF,
                     t.AVGROOMTEMPERATURE ITEMP,
                     0 CITEMP
@@ -531,5 +531,20 @@
                     LEFT JOIN t_emc_org_inter i ON t.unitid = i.ORG_ID
                     WHERE
                     t.id =#{id,jdbcType=VARCHAR}
+    </select>
+    <!--取标煤系数-->
+    <select id="selectCoal" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        t_emc_coal_coef tc
+        WHERE
+        tc.COMID = #{comId,jdbcType=VARCHAR}
+        AND tc.TYPEID = #{typeId,jdbcType=VARCHAR}
+        and #{sdate,jdbcType=VARCHAR} &gt;= tc.SDATE
+        and #{sdate,jdbcType=VARCHAR} &lt;= tc.SDATE
+
+        ORDER BY tc.SDATE asc
+
     </select>
 </mapper>

@@ -2,6 +2,9 @@ package com.huak.api;
 
 import com.huak.task.model.EnergyAnalySisdata;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -30,22 +33,26 @@ public interface EnergyAnalyService {
     /**
      * 计算水的每小时用量
      */
-    public void selectInsertIntoFinalDataHourById(String id);
+    public void selectInsertIntoFinalDataHourById(Map<String,Object> map);
 
     /**
      * 计算电的每小时用量
      * @param id
      */
-    public void selectPowerInsertFinalDataById(String id);
+    public void selectPowerInsertFinalDataById(Map<String,Object> map);
 
     /**
      * 计算每小时热的用量
      */
-    public void selectHeatInsertFinalDataById(String id);
+    public void selectHeatInsertFinalDataById(Map<String,Object> map);
 
     /**
      * 计算每小时气的热量
      */
-    public void selectQiInsertFinalDataById(String id);
+    public void selectQiInsertFinalDataById(Map<String,Object> map);
 
+    /**
+     * 查询标煤
+     */
+    public List<Map<String,Object>> selectCoal(Map<String,Object> map);
 }

@@ -16,6 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -88,18 +91,51 @@ public class EnergyDataApi {
         }else {
             //保存导入数据
             energyAnalyService.insetEnergyAnalySisdata(energyAnalySisdata);
-            //水的录入
-            energyAnalyService.selectInsertIntoFinalDataHourById(energyAnalySisdata.getId());
+
+            //水的录入 type=2
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("comId",energyAnalySisdata.getComId());
+            params.put("typeId","2");
+            params.put("sdate",energyAnalySisdata.getScadatime());
+            List<Map<String,Object>> list = energyAnalyService.selectCoal(params);
+            Map<String,Object> map =new HashMap<String,Object>();
+            map.put("id",energyAnalySisdata.getId());
+            map.put("coef",list.get(0).get("COEF"));
+            energyAnalyService.selectInsertIntoFinalDataHourById(map);
             //电量的录入
-            energyAnalyService.selectPowerInsertFinalDataById(energyAnalySisdata.getId());
+            Map<String,Object> params1 = new HashMap<String,Object>();
+            params1.put("comId",energyAnalySisdata.getComId());
+            params1.put("typeId","1");
+            params1.put("sdate",energyAnalySisdata.getScadatime());
+            List<Map<String,Object>> list1 = energyAnalyService.selectCoal(params);
+            Map<String,Object> map1 =new HashMap<String,Object>();
+            map1.put("id",energyAnalySisdata.getId());
+            map1.put("coef",list1.get(0).get("COEF"));
+            energyAnalyService.selectPowerInsertFinalDataById(map1);
             //Type=1热力站 =2热源
             if("1".equals(energyAnalySisdata.getType())){
                 //热量的录入
-                energyAnalyService.selectHeatInsertFinalDataById(energyAnalySisdata.getId());
+                Map<String,Object> params3 = new HashMap<String,Object>();
+                params3.put("comId",energyAnalySisdata.getComId());
+                params3.put("typeId","3");
+                params3.put("sdate",energyAnalySisdata.getScadatime());
+                List<Map<String,Object>> list3 = energyAnalyService.selectCoal(params);
+                Map<String,Object> map3 =new HashMap<String,Object>();
+                map3.put("id",energyAnalySisdata.getId());
+                map3.put("coef",list3.get(0).get("COEF"));
+                energyAnalyService.selectHeatInsertFinalDataById(map3);
             }
             if("2".equals(energyAnalySisdata.getType())){
                 //天燃气的录入
-                energyAnalyService.selectQiInsertFinalDataById(energyAnalySisdata.getId());
+                Map<String,Object> params4 = new HashMap<String,Object>();
+                params4.put("comId",energyAnalySisdata.getComId());
+                params4.put("typeId","4");
+                params4.put("sdate",energyAnalySisdata.getScadatime());
+                List<Map<String,Object>> list4 = energyAnalyService.selectCoal(params4);
+                Map<String,Object> map4 =new HashMap<String,Object>();
+                map4.put("id",energyAnalySisdata.getId());
+                map4.put("coef",list4.get(0).get("COEF"));
+                energyAnalyService.selectQiInsertFinalDataById(map4);
             }
             jsonObj.put("status","1");
             jsonObj.put("msg","组织机构数据导入成功");
