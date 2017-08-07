@@ -31,6 +31,23 @@ function toFormatNum(val){
     }
     return toOneDecimal(f/divisor) + suffix;
 }
+
+/**
+ * 公共方法
+ * 格式化数据
+ *
+ * */
+function toFormatNumber(val,num){
+    num = num == undefined ? 1:num;
+    var divisor = 10000;//倍率
+    var suffix = '万';//单位
+    var f = parseFloat(val);
+    if (isNaN(f)) {
+        return 0;
+    }
+    var result = parseFloat(f/divisor).toFixed(num)
+    return  result+ suffix;
+}
 function toolReplace() {
     var url = document.location.href;
     var reurl = url;

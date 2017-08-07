@@ -233,7 +233,6 @@ function typefun(these, code) {
         setCookie('toolOrgType', 1, 3);
         $("#toolOrgType").val(1);
     } else if (code == 1) {
-        alert(code);
         setCookie('toolOrgType', '', 3);
         $("#toolOrgType").val("");
     } else {
@@ -925,7 +924,6 @@ function chart04Fun() {
     chart04.setOption(option);
 }
 
-
 /*成本明细-饼图*/
 function chart05Fun() {
     $.ajax({
@@ -1249,13 +1247,13 @@ function chart07Fun() {
                 var pcdz = result.object.pcdz; //偏差值
                 var currentPlan = result.object.currentPlan;
                 var bm_total = result.object.bm_total;
-                initChart(kedu1, currentPlan, bm_total);
+                initChart(kedu1, currentPlan, bm_total/10000);
                 pcd = toDecimal(pcd);
                 pcdz = toDecimal(pcdz);
                 $("#pc_plan_percent").html("偏差度(" + pcd + "%)");
                 $("#pc_plan").html(pcdz);
                 /*总标煤展示*/
-                $("#bm_total").html(toFormatNum(result.object.bm_total));
+                $("#bm_total").html(toFormatNumber(bm_total,1));
                 var tb_flag = result.object.total_flag;
                 var total_tb = result.object.total_tb;
                 if (tb_flag == true) {
@@ -1270,7 +1268,7 @@ function chart07Fun() {
                     $("#total_tb").html("(" + total_tb + "→)");
                 }
                 /*水*/
-                $("#whater").html(result.object.whater + "T");
+                $("#whater").html(toFormatNumber(result.object.whater,0) + "T");
                 var tb_flag = result.object.whater_flag;
                 var total_tb = result.object.whater_tb;
                 if (tb_flag == true) {
@@ -1288,7 +1286,7 @@ function chart07Fun() {
                     $("#whater_tb").html("(" + total_tb + "→)");
                 }
                 /*电*/
-                $("#electric").html(result.object.electric + "Kw/h");
+                $("#electric").html(toFormatNumber(result.object.electric,0) + "Kw/h");
                 var tb_flag = result.object.electric_flag;
                 var total_tb = result.object.electric_tb;
                 if (tb_flag == true) {
@@ -1306,7 +1304,7 @@ function chart07Fun() {
                     $("#electric_tb").html("(" + total_tb + "→)");
                 }
                 /*气*/
-                $("#gas").html(result.object.gas + "M3");
+                $("#gas").html(toFormatNumber(result.object.gas,0) + "M3");
                 var tb_flag = result.object.gas_flag;
                 var total_tb = result.object.gas_tb;
                 if (tb_flag == true) {
@@ -1324,7 +1322,7 @@ function chart07Fun() {
                     $("#gas_tb").html("(" + total_tb + "→)");
                 }
                 /*热*/
-                $("#heat").html(result.object.heat + "GJ");
+                $("#heat").html(toFormatNumber(result.object.heat,0) + "GJ");
                 var tb_flag = result.object.heat_flag;
                 var total_tb = result.object.heat_tb;
                 if (tb_flag == true) {
@@ -1342,7 +1340,7 @@ function chart07Fun() {
                     $("#heat_tb").html("(" + total_tb + "→)");
                 }
                 /*煤*/
-                $("#coal").html(result.object.coal + "T");
+                $("#coal").html(toFormatNumber(result.object.coal,0) + "T");
                 var tb_flag = result.object.coal_flag;
                 var total_tb = result.object.coal_tb;
                 if (tb_flag == true) {
@@ -1370,13 +1368,21 @@ function chart07Fun() {
 
 }
 
+
+
 /*能耗明细图表初始化*/
 function initChart(kedu1, mx, bm_total) {
+    bm_total = toDecimal(bm_total);
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
-    var max = returnFloat(mx / 0.75)
-    if (max == undefined) {
-        max = 1;
+    var colorvalue = null;
+    var max = 0;
+    if (mx == 0) {
+        max = bm_total *3;
+        colorvalue = [ [kedu1, '#df5f4a'],[0.75, '#df5f4a'],[1, '#df5f4a'] ];
+    }else{
+        colorvalue = [ [kedu1, '#3b96db'],[0.75, '#32bbb6'],[1, '#df5f4a'] ];
     }
+
     var option1 = {
         tooltip: {
             formatter: "{a} <br/>{c} {b}"
@@ -1408,7 +1414,7 @@ function initChart(kedu1, mx, bm_total) {
                     }
                 },
                 detail: {
-                    show: true,
+                    show: false,
                     formatter: '{value}',
                     textStyle: {
                         fontSize: 15
@@ -1471,41 +1477,31 @@ function initChart(kedu1, mx, bm_total) {
                 },
                 data: [
                     {
-                        value: "1"
+                        value: bm_total, name: '万'
                     }
                 ]
             }
 
         ]
     }
-    var colorvalue = [
-        [kedu1, '#3b96db'],
-        [0.75, '#32bbb6'],
-        [1, '#df5f4a']
-    ];
+
     option1.series[0].axisLine.lineStyle.color = colorvalue;
     option1.series[0].data[0].value = bm_total;//这个值设大点
     myChartEnergy.setOption(option1);
 }
 
-/**
- * 保留小数位
- * @param x
- * @returns {Number}
- */
-function toDecimal(x) {
+/*保留小数位*/
+function toDecimal(x,num) {
+    num = num == undefined ?1:num;
     var f = parseFloat(x);
     if (isNaN(f)) {
         return;
     }
-    f = Math.round(x * 100, 2) / 100;
+    f = f.toFixed(num);
     return f;
 }
-/**
- * 返回float
- * @param value
- * @returns {number}
- */
+
+/* 返回float*/
 function returnFloat(value) {
     var value = Math.round(parseFloat(value) * 100) / 100;
     var xsd = value.toString().split(".");
@@ -1514,7 +1510,6 @@ function returnFloat(value) {
         return value;
     }
 }
-
 
 /*居民 合格率趋势*/
 function chart08Fun() {
@@ -1678,6 +1673,7 @@ function chart08Sd(data, times) {
     };
     myChartQualified.setOption(optionQualified);
 }
+
 /*居民室温合格率--chartCarbon*/
 function chart09Fun() {
     myChartCarbon = echarts.init(document.getElementById('chartCarbon'));
@@ -1852,7 +1848,6 @@ function chart10Fun() {
 
 }
 
-
 /*天气预报图表*/
 function initchart10(hours, temps) {
     $("#chart10").empty();
@@ -1974,7 +1969,6 @@ function chart13Fun() {
 
 
 }
-
 
 function chart11Fun() {
     $("#chart11").empty();
@@ -2174,8 +2168,6 @@ function initchart12(titledata){
     html += "</div>";
     $("#chart12").html(html);
 }
-
-
 
 /*组件-健康指数定时器改变样式*/
 function doCss(data){
