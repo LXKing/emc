@@ -1244,12 +1244,12 @@ function chart07Fun() {
                 /*仪表盘*/
                 var kedu1 = result.object.kedu1; //蓝色的刻度
                 var pcd = result.object.pcd; //偏差度
-                var pcdz = result.object.pcdz; //偏差值
+                var pcdz =result.object.pcdz; //偏差值
                 var currentPlan = result.object.currentPlan;
                 var bm_total = result.object.bm_total;
                 initChart(kedu1, currentPlan, bm_total/10000);
                 pcd = toDecimal(pcd);
-                pcdz = toDecimal(pcdz);
+                pcdz =  toFormatNumber(toDecimal(pcdz),1);
                 $("#pc_plan_percent").html("偏差度(" + pcd + "%)");
                 $("#pc_plan").html(pcdz);
                 /*总标煤展示*/
@@ -1372,6 +1372,7 @@ function chart07Fun() {
 
 /*能耗明细图表初始化*/
 function initChart(kedu1, mx, bm_total) {
+    debugger;
     bm_total = toDecimal(bm_total);
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
     var colorvalue = null;
@@ -1380,9 +1381,9 @@ function initChart(kedu1, mx, bm_total) {
         max = bm_total *3;
         colorvalue = [ [kedu1, '#df5f4a'],[0.75, '#df5f4a'],[1, '#df5f4a'] ];
     }else{
+        max = parseInt(mx/7500).toFixed(0);
         colorvalue = [ [kedu1, '#3b96db'],[0.75, '#32bbb6'],[1, '#df5f4a'] ];
     }
-
     var option1 = {
         tooltip: {
             formatter: "{a} <br/>{c} {b}"
@@ -1477,7 +1478,7 @@ function initChart(kedu1, mx, bm_total) {
                 },
                 data: [
                     {
-                        value: bm_total, name: '万'
+                        value: bm_total
                     }
                 ]
             }
