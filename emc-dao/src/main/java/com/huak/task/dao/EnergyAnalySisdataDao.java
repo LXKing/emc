@@ -3,6 +3,7 @@ package com.huak.task.dao;
 import com.huak.task.model.EnergyAnalySisdata;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EnergyAnalySisdataDao {
     int deleteByPrimaryKey(String id);
@@ -19,11 +20,13 @@ public interface EnergyAnalySisdataDao {
 
     List<EnergyAnalySisdata> selectEnergyAnalyByUnitid(String id);
 
-    void selectFinalDataHourById(String id);
+    void selectFinalDataHourById(Map<String,Object> map);
 
-    void selectPowerById(String id);
+    void selectPowerById(Map<String,Object> map);
 
-    void selectHeatById(String id);
+    void selectHeatById(Map<String,Object> map);
 
-    void selectQiById(String id);
+    void selectQiById(Map<String,Object> map);
+
+    List<Map<String,Object>> selectCoal(Map<String,Object> map);
 }

@@ -146,13 +146,13 @@
         FROM
         t_emc_heat_season s
         WHERE
-        ((s.SDATE &lt;= #{sdate,jdbcType=VARCHAR}
+        (((s.SDATE &lt;= #{sdate,jdbcType=VARCHAR}
         AND s.EDATE  &gt;=#{edate,jdbcType=VARCHAR})
         OR (s.SDATE  &gt;= #{sdate,jdbcType=VARCHAR}
         AND s.EDATE  &lt;= #{edate,jdbcType=VARCHAR})
         )
         or (s.EDATE &lt;= #{sdate,jdbcType=VARCHAR} and #{edate,jdbcType=VARCHAR} &lt;=s.SDATE)
-        or (s.EDATE &gt;= #{sdate,jdbcType=VARCHAR} and #{edate,jdbcType=VARCHAR} &gt;=s.SDATE)
+        or (s.EDATE &gt;= #{sdate,jdbcType=VARCHAR} and #{edate,jdbcType=VARCHAR} &gt;=s.SDATE))
         and s.COMID =#{comId,jdbcType=VARCHAR}
     </select>
     <select id="getNowTime" parameterType="java.util.HashMap" resultType="java.lang.String">

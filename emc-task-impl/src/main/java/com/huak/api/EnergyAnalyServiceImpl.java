@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -46,22 +47,26 @@ public class EnergyAnalyServiceImpl implements EnergyAnalyService {
     }
 
     @Override
-    public void selectInsertIntoFinalDataHourById(String id) {
-        energyAnalySisdataDao.selectFinalDataHourById(id);
+    public void selectInsertIntoFinalDataHourById(Map<String,Object> map) {
+        energyAnalySisdataDao.selectFinalDataHourById(map);
     }
 
     @Override
-    public void selectHeatInsertFinalDataById(String id) {
-        energyAnalySisdataDao.selectHeatById(id);
+    public void selectHeatInsertFinalDataById(Map<String,Object> map) {
+        energyAnalySisdataDao.selectHeatById(map);
     }
 
     @Override
-    public void selectPowerInsertFinalDataById(String id) {
-        energyAnalySisdataDao.selectPowerById(id);
+    public void selectPowerInsertFinalDataById(Map<String,Object> map) {
+        energyAnalySisdataDao.selectPowerById(map);
     }
     @Override
-    public void selectQiInsertFinalDataById(String id) {
-        energyAnalySisdataDao.selectQiById(id);
+    public void selectQiInsertFinalDataById(Map<String,Object> map) {
+        energyAnalySisdataDao.selectQiById(map);
+    }
+
+    @Override
+    public List<Map<String,Object>> selectCoal(Map<String,Object> map) {
+        return energyAnalySisdataDao.selectCoal(map);
     }
 }
-
