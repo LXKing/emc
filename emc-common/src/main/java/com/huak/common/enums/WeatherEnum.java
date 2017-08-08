@@ -11,27 +11,28 @@ public enum WeatherEnum {
     DOWNPOURRAINSTORM(24,23),RAINSTORMDOWNPOUR(25,24),DOWNPOURRAINSTORMS(26,25),FLURRYSNOW(27,26),SNOWHEAVYSNOW(28,27),
     HEAVYSNOWBLIZZARD(29,28),DUST(30,29),JANSA(31,30),HEAVYDUSTSTORM(32,31),HAZE(33,53);
     // 成员变量
-    private int weatherid;
-    private int weatheridIcon;
+    private int WEATHERID;
+    private int WEATHERICON;
     // 构造方法
     private WeatherEnum(int weatherid, int weatheridIcon) {
-        this.weatherid = weatherid;
-        this.weatheridIcon = weatheridIcon;
+        this.WEATHERID = weatherid;
+        this.WEATHERICON = weatheridIcon;
     }
     // 普通方法
     public static String getName(int weatherid) {
         for (WeatherEnum c : WeatherEnum.values()) {
-            if (c.getWeatherid() == weatherid) {
-                return c.weatheridIcon+"";
+            if (c.getWEATHERID() == weatherid) {
+                return c.WEATHERICON+"";
             }
         }
         return null;
     }
-    public int getWeatherid() {
-        return weatherid;
+
+    public int getWEATHERID() {
+        return WEATHERID;
     }
 
-    public int getWeatheridIcon() {
-        return weatheridIcon;
+    public int getWEATHERICON() {
+        return WEATHERICON;
     }
 }
