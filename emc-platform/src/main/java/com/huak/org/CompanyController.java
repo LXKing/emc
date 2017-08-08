@@ -233,4 +233,22 @@ public class CompanyController {
         return jo.toJSONString();
     }
 
+    @RequestMapping(value = "/check/table/name", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkTableName(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("数据表名称唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = companyService.checkTableName(paramsMap);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("数据表名称唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+
 }

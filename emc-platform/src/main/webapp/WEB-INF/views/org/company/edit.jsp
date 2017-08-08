@@ -34,7 +34,7 @@
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">数据表名：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="tableName" class="form-control" type="text" maxlength="64"  value="${company.tableName}"
+                        <input name="tableName" class="form-control" readonly type="text" maxlength="64"  value="${company.tableName}"
                                placeholder="请输入数据表名">
                     </div>
                 </div>

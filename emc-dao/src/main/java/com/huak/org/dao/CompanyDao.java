@@ -27,4 +27,6 @@ public interface CompanyDao {
     List<Map<String,Object>> selectWeatherCity(Map<String, Object> paramsMap);
 
     Map<String,Object> selectParentWeatherByCode(String code);
+
+    Long checkTableName(Map<String, Object> paramsMap);
 }

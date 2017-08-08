@@ -46,4 +46,6 @@ public interface CompanyService {
      * @return
      */
     public Map<String, Object> selectParentWeatherByCode(String code);
+
+    Long checkTableName(Map<String, Object> paramsMap);
 }

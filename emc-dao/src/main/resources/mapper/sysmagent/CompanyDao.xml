@@ -143,4 +143,13 @@
         where W_CODE = (SELECT W_P_CODE FROM t_emc_weather_city WHERE W_CODE=#{code})
     </select>
 
+    <select id="checkTableName" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id) num
+        from t_emc_company
+        where 1=1
+        <if test="tableName != null and tableName !=''">
+            and  TABLE_NAME = #{tableName}
+        </if>
+    </select>
+
 </mapper>

@@ -192,6 +192,26 @@
             }
         }, icon + "请选择气象县级");
 
+        $.validator.addMethod("checkTableName", function(value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url:_platform + '/company/check/table/name',
+                type:'POST',
+                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {tableName:value},
+                dataType: 'json',
+                success:function(result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, '该数据表名已存在');
+
         $form.validate({
             onsubmit: true,// 是否在提交是验证
             //移开光标:如果有内容,则进行验证
@@ -211,6 +231,9 @@
                 },
                 wcode:{
                     isCode:true
+                },
+                tableName:{
+                    checkTableName:true
                 }
             },
             messages: {

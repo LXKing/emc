@@ -104,4 +104,10 @@ public class CompanyServiceImpl implements CompanyService {
     public Map<String, Object> selectParentWeatherByCode(String code) {
         return companyDao.selectParentWeatherByCode(code);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkTableName(Map<String, Object> paramsMap) {
+        return companyDao.checkTableName(paramsMap);
+    }
 }
