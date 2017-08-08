@@ -12,10 +12,14 @@ public class HttpWeatherUtils {
     /**
      * 天气接口
      */
-    public static String url = "http://api.k780.com:88/";
-
-
-
+    public static String URL = "http://api.k780.com:88/";
+    private static  String ACCEPT = "accept";
+    private static  String CONNECT = "connection";
+    private static  String USER_AGENT = "user-agent";
+    private static  String ACCEPT_VALUE = "*/*";
+    private static  String CONNECT_VALUE = "Keep-Alive";
+    private static  String USER_AGENT_VALUE = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)";
+    private static  String DATA_FORMAT = "format";
     /**
      * 使用Get方式获取数据
      *
@@ -27,15 +31,16 @@ public class HttpWeatherUtils {
     public static String sendGet(String url, String charset) {
         String result = "";
         BufferedReader in = null;
+
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
             connection.setConnectTimeout(30000);
             // 设置通用的请求属性
-            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty(ACCEPT, ACCEPT_VALUE);
+            connection.setRequestProperty(CONNECT,CONNECT_VALUE);
+            connection.setRequestProperty(USER_AGENT, USER_AGENT_VALUE);
             // 建立实际的连接
             connection.connect();
             // 定义 BufferedReader输入流来读取URL的响应
@@ -79,23 +84,23 @@ public class HttpWeatherUtils {
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
-            URLConnection conn = realUrl.openConnection();
+            URLConnection connection = realUrl.openConnection();
             // 设置通用的请求属性
-            conn.setRequestProperty("accept", "*/*");
-            conn.setRequestProperty("connection", "Keep-Alive");
-            conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty(ACCEPT, ACCEPT_VALUE);
+            connection.setRequestProperty(CONNECT,CONNECT_VALUE);
+            connection.setRequestProperty(USER_AGENT, USER_AGENT_VALUE);
             // 发送POST请求必须设置如下两行
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setConnectTimeout(30000);
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setConnectTimeout(30000);
             // 获取URLConnection对象对应的输出流
-            out = new PrintWriter(conn.getOutputStream());
+            out = new PrintWriter(connection.getOutputStream());
             // 发送请求参数
             out.print(param);
             // flush输出流的缓冲
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -149,9 +154,9 @@ public class HttpWeatherUtils {
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
             // 设置通用的请求属性
-            conn.setRequestProperty("accept", "*/*");
-            conn.setRequestProperty("connection", "Keep-Alive");
-            conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty(ACCEPT, ACCEPT_VALUE);
+            conn.setRequestProperty(CONNECT,CONNECT_VALUE);
+            conn.setRequestProperty(USER_AGENT, USER_AGENT_VALUE);
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -200,15 +205,15 @@ public class HttpWeatherUtils {
             param.put("appkey", "10003");
             param.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
             if(format.equals("xml")){
-                param.put("format", format);
+                param.put(DATA_FORMAT, format);
             }else{
-                param.put("format", "json");
+                param.put(DATA_FORMAT, "json");
             }
 
         }else{
             return "城市名字为空  ！ " ;
         }
-        return sendPost(url, param, "utf-8") ;
+        return sendPost(URL, param, "utf-8") ;
     }
     /**
      *
@@ -224,15 +229,15 @@ public class HttpWeatherUtils {
             param.put("appkey", "10003");
             param.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
             if(format.equals("xml")){
-                param.put("format", format);
+                param.put(DATA_FORMAT, format);
             }else{
-                param.put("format", "json");
+                param.put(DATA_FORMAT, "json");
             }
 
         }else{
             return "城市名字为空  ！ " ;
         }
-        return sendPost(url, param, "utf-8") ;
+        return sendPost(URL, param, "utf-8") ;
     }
 
 
@@ -250,14 +255,14 @@ public class HttpWeatherUtils {
             param.put("appkey", "10003");
             param.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
             if(format.equals("xml")){
-                param.put("format", format);
+                param.put(DATA_FORMAT, format);
             }else{
-                param.put("format", "json");
+                param.put(DATA_FORMAT, "json");
             }
 
         }else{
             return "城市名字为空  ！ " ;
         }
-        return sendPost(url, param, "utf-8") ;
+        return sendPost(URL, param, "utf-8") ;
     }
 }
