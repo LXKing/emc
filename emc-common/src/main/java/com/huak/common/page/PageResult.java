@@ -39,4 +39,6 @@ public class PageResult<T> implements Serializable {
     public void setPage(Page page) {
         this.page = page;
     }
+
+
 }

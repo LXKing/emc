@@ -12,6 +12,8 @@ package com.huak.common;
  * Function List:  <BR>
  */
 public class Constants {
+    /* 统一登录url */
+    public final static String LOGIN_URL = "http://www.e-heating.org/login.html";
     /* 分页常量 */
     public final static String OFFSET = "offset";
     public final static String LIMIT = "limit";

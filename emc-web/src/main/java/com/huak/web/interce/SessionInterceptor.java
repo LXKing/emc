@@ -55,7 +55,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                 logger.info("session超时");
             } else {
                 logger.info("用户未登录");
-                response.sendRedirect(request.getContextPath() + "/login");
+                //response.sendRedirect(request.getContextPath() + "/login");
+                response.sendRedirect(Constants.LOGIN_URL);
             }
             return false;
         }

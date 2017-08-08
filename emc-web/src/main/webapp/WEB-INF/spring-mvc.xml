@@ -42,10 +42,10 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <!--<mvc:exclude-mapping path="/index"/>-->
-            <mvc:exclude-mapping path="/login"/>
-            <mvc:exclude-mapping path="/login-in"/>
-            <mvc:exclude-mapping path="/login-out"/>
-            <mvc:exclude-mapping path="/generateVc"/>
+            <!--<mvc:exclude-mapping path="/login"/>-->
+            <!--<mvc:exclude-mapping path="/login-in"/>-->
+            <!--<mvc:exclude-mapping path="/login-out"/>-->
+            <!--<mvc:exclude-mapping path="/generateVc"/>-->
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/script/**"/>
             <bean class="com.huak.easygo.LoginInterceptor"/>

@@ -81,7 +81,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                                 String userName = jedis.hget(cookie.getValue(), "username");
                                 User user = userService.getUserByName(userName);
                                 if(null == user){
-                                    response.sendRedirect(request.getContextPath() + "/login");
+                                    //response.sendRedirect(request.getContextPath() + "/login");
+                                    response.sendRedirect(Constants.LOGIN_URL);
                                     return false;
                                 }
                                 Org org = orgService.selectByPrimaryKey(user.getOrgId());
@@ -99,7 +100,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                                 }
                                 if(null == session.getAttribute(Constants.SESSION_ORG_KEY)){
                                     if(null == user || null == user.getOrgId()){
-                                        response.sendRedirect(request.getContextPath() + "/login");
+                                        //response.sendRedirect(request.getContextPath() + "/login");
+                                        response.sendRedirect(Constants.LOGIN_URL);
                                         return false;
                                     }else{
                                         org = orgService.selectByPrimaryKey(user.getOrgId());
@@ -108,7 +110,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                                 }
                                 if(null == session.getAttribute(Constants.SESSION_COM_KEY)){
                                     if(null == org || null == org.getComId()){
-                                        response.sendRedirect(request.getContextPath() + "/login");
+                                        //response.sendRedirect(request.getContextPath() + "/login");
+                                        response.sendRedirect(Constants.LOGIN_URL);
                                         return false;
                                     }else{
                                         company = companyService.selectByPrimaryKey(org.getComId());
@@ -123,7 +126,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                             jedis.expire(cookie.getValue(), EXPIRETIME);
                             return true;
                         } else { //没有,返回提醒
-                            response.sendRedirect(request.getContextPath() + "/login");
+                            //response.sendRedirect(request.getContextPath() + "/login");
+                            response.sendRedirect(Constants.LOGIN_URL);
                             return false;
                         }
                     }
@@ -138,7 +142,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         } finally {
             RedisTools.returnResource(RedisTools.getPool(), jedis);
         }
-        response.sendRedirect(request.getContextPath() + "/login");
+        //response.sendRedirect(request.getContextPath() + "/login");
+        response.sendRedirect(Constants.LOGIN_URL);
         return false;
     }
 
