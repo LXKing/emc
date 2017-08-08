@@ -33,7 +33,9 @@ import java.util.Map;
 @RequestMapping("/energy/top")
 public class EnergyTopController extends BaseController{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    private String suc="success";
+    private String msg="message";
+    private String info="查询数据成功";
     @Autowired
     private  FrameService frameService;
     /**
@@ -68,41 +70,41 @@ public class EnergyTopController extends BaseController{
             //carbonTotal = frameService.selectCarbonTotalByMap(params);
 //            yardage = frameService.selectYardageByMap(params);
 //            priceArea = frameService.selectPriceAreaByMap(params);
-            Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
-            if(costVo==null||costVo.isEmpty()) {
-                logger.info("----------------------该成本没有值--------------------------");
-            }else {
-                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
-                    device = Double.valueOf(costVo.get("device").toString());
-                }
-                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
-                    energy = Double.valueOf(costVo.get("energy").toString());
-                }
-                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
-                    labor = Double.valueOf(costVo.get("labor").toString());
-                }
-                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
-                    manage = Double.valueOf(costVo.get("manage").toString());
-                }
-                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
-                    other = Double.valueOf(costVo.get("other").toString());
-                }
-                costAll=device+energy+labor+manage+other;
-            }
+//            Map<String, Object>  costVo = frameService.selectCostTotalByMap(params);
+//            if(costVo==null||costVo.isEmpty()) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//                costAll=device+energy+labor+manage+other;
+//            }
 
             topAll.put("eTotal",eTotal);
             //topAll.put("carbonTotal",carbonTotal);
 //            topAll.put("yardage",yardage);
 //            topAll.put("priceArea",priceArea);
-            topAll.put("costAll",costAll);
+            topAll.put("costAll",null);
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
 
         return jo.toJSONString();
     }
@@ -166,8 +168,8 @@ public class EnergyTopController extends BaseController{
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
 
         return jo.toJSONString();
     }
@@ -196,38 +198,38 @@ public class EnergyTopController extends BaseController{
         try{
             eTotal= frameService.selectFeedTotalByMap(params);
             //carbonTotal = frameService.selectTopFeedCarbonTotalByMap(params);
-            Map<String, Object> costVo = frameService.selectFeedCostTotalByMap(params);
-            if(costVo==null||costVo.isEmpty()) {
-                logger.info("----------------------该成本没有值--------------------------");
-            }else {
-                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
-                    device = Double.valueOf(costVo.get("device").toString());
-                }
-                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
-                    energy = Double.valueOf(costVo.get("energy").toString());
-                }
-                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
-                    labor = Double.valueOf(costVo.get("labor").toString());
-                }
-                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
-                    manage = Double.valueOf(costVo.get("manage").toString());
-                }
-                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
-                    other = Double.valueOf(costVo.get("other").toString());
-                }
-               costAll=device+energy+labor+manage+other;
-            }
+//            Map<String, Object> costVo = frameService.selectFeedCostTotalByMap(params);
+//            if(costVo==null||costVo.isEmpty()) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//               costAll=device+energy+labor+manage+other;
+//            }
             topAll.put("eTotal",eTotal);
             topAll.put("carbonTotal",carbonTotal);
-            topAll.put("costAll",costAll);
+            topAll.put("costAll",null);
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
 
         return jo.toJSONString();
     }
@@ -257,40 +259,40 @@ public class EnergyTopController extends BaseController{
         Double costAll=0.00;
         try{
             netlen= frameService.selectGetNetLengh(params);
-            Map<String, Object> costVo = frameService.selectGetNetCost(params);
-            if(costVo==null||costVo.isEmpty()) {
-                logger.info("----------------------该成本没有值--------------------------");
-            }else {
-                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
-                    device = Double.valueOf(costVo.get("device").toString());
-                }
-                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
-                    energy = Double.valueOf(costVo.get("energy").toString());
-                }
-                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
-                    labor = Double.valueOf(costVo.get("labor").toString());
-                }
-                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
-                    manage = Double.valueOf(costVo.get("manage").toString());
-                }
-                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
-                    other = Double.valueOf(costVo.get("other").toString());
-                }
-                costAll=device+energy+labor+manage+other;
-            }
+//            Map<String, Object> costVo = frameService.selectGetNetCost(params);
+//            if(costVo==null||costVo.isEmpty()) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//                costAll=device+energy+labor+manage+other;
+//            }
 
             topAll.put("netLen",netlen);
 //            topAll.put("carbonTotal",Double.valueOf(carbonTotal));
 
-            topAll.put("netCost",costAll);
+            topAll.put("netCost",null);
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
 
         return jo.toJSONString();
     }
@@ -351,8 +353,8 @@ public class EnergyTopController extends BaseController{
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
 
         return jo.toJSONString();
     }
@@ -381,28 +383,28 @@ public class EnergyTopController extends BaseController{
         Double costAll=0.00;
         try{
             linelen= frameService.selectGetLineLengh(params);
-            Map<String, Object> costVo = frameService.selectGetLineCost(params);
-            if(costVo==null||costVo.isEmpty()) {
-                logger.info("----------------------该成本没有值--------------------------");
-            }else {
-                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
-                    device = Double.valueOf(costVo.get("device").toString());
-                }
-                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
-                    energy = Double.valueOf(costVo.get("energy").toString());
-                }
-                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
-                    labor = Double.valueOf(costVo.get("labor").toString());
-                }
-                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
-                    manage = Double.valueOf(costVo.get("manage").toString());
-                }
-                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
-                    other = Double.valueOf(costVo.get("other").toString());
-                }
-                costAll=device+energy+labor+manage+other;
-            }
-            topAll.put("lineCost",costAll);
+//            Map<String, Object> costVo = frameService.selectGetLineCost(params);
+//            if(costVo==null||costVo.isEmpty()) {
+//                logger.info("----------------------该成本没有值--------------------------");
+//            }else {
+//                if (costVo.get("device") != null && !"".equals(costVo.get("device"))) {
+//                    device = Double.valueOf(costVo.get("device").toString());
+//                }
+//                if (costVo.get("energy") != null && !"".equals(costVo.get("energy"))) {
+//                    energy = Double.valueOf(costVo.get("energy").toString());
+//                }
+//                if (costVo.get("labor") != null && !"".equals(costVo.get("labor"))) {
+//                    labor = Double.valueOf(costVo.get("labor").toString());
+//                }
+//                if (costVo.get("manage") != null && !"".equals(costVo.get("manage"))) {
+//                    manage = Double.valueOf(costVo.get("manage").toString());
+//                }
+//                if (costVo.get("other") != null && !"".equals(costVo.get("other"))) {
+//                    other = Double.valueOf(costVo.get("other").toString());
+//                }
+//                costAll=device+energy+labor+manage+other;
+//            }
+            topAll.put("lineCost",null);
             topAll.put("lineLen",linelen);
 //            topAll.put("carbonTotal",Double.valueOf(carbonTotal));
         }
@@ -411,8 +413,8 @@ public class EnergyTopController extends BaseController{
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
 
         return jo.toJSONString();
     }
@@ -472,29 +474,9 @@ public class EnergyTopController extends BaseController{
             e.printStackTrace();
         }
         jo.put("all", topAll);
-        jo.put("success", true);
-        jo.put("message", "查询数据成功！");
+        jo.put(suc, true);
+        jo.put(msg, info);
         return jo.toJSONString();
-    }
-
-    public static void  main (String[] args){
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("EEC","234");
-        map.put("MMN","");
-//        if(map.get("MMN")==null||"".equals(map.get("MMN"))){
-//            System.out.print("1为空");
-//        }
-//        if(map.get("EEC")==null||"".equals(map.get("EEC"))){
-//            System.out.print("2为空");
-//        }
-          if(map.isEmpty()){
-              System.out.print("是空的啊");
-          }else {
-              System.out.print("不是空的啊");
-          }
-//        System.out.print("是这个值吗---"+map.get("MMN"));
-//        System.out.print("是这个值吗---"+map.get("EEC"));
-
     }
 
 }
