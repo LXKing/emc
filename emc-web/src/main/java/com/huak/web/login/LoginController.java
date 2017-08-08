@@ -54,6 +54,7 @@ public class LoginController {
     @Resource
     private ReversibleEncryption reversibleEncryption;
 
+    private String IS_LOGIN = "isLogin";
     @RequestMapping(value = "/login")
     public String login() {
         return "login";
@@ -75,14 +76,14 @@ public class LoginController {
         logger.info("登录后台");
         HttpSession session = request.getSession();
         JSONObject jo = new JSONObject();
-        jo.put("isLogin", true);
+        jo.put(IS_LOGIN, true);
         try {
             String kpvc = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
             // 校验验证码
             if (kpvc.equals(vc)) {
-                jo.put("isLogin", true);
+                jo.put(IS_LOGIN, true);
             } else {
-                jo.put("isLogin", false);
+                jo.put(IS_LOGIN, false);
                 jo.put("msg", "验证码错误");
                 return jo.toJSONString();
             }
@@ -102,21 +103,21 @@ public class LoginController {
                     session.setAttribute(Constants.SESSION_ORG_KEY, org);
                     session.setAttribute(Constants.SESSION_COM_KEY, company);
                     userService.update2LoginSuccess(id);
-                    jo.put("isLogin", true);
+                    jo.put(IS_LOGIN, true);
                 } else {
-                    jo.put("isLogin", false);
+                    jo.put(IS_LOGIN, false);
                     jo.put("msg", "用户被禁用，请联系管理员");
                     return jo.toJSONString();
                 }
 
             } else {
                 // 登录失败，返回json信息到前端交互
-                jo.put("isLogin", false);
+                jo.put(IS_LOGIN, false);
                 jo.put("msg", "登录失败，账号密码不匹配");
                 return jo.toJSONString();
             }
         } catch (Exception e) {
-            jo.put("isLogin", false);
+            jo.put(IS_LOGIN, false);
             jo.put("msg", "登录异常");
             logger.error("登录异常" + e.getMessage());
         }

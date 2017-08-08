@@ -63,7 +63,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                     for(Map<String,Object> map : listMap){
                         String curyear = map.get("curyear").toString();
                         String yeardate = map.get("yeardate").toString();
-                        if(!yeardate.equals(yd))continue;
+                        if(!yeardate.equals(yd)){continue;}
                         isHas = true;
                         String value = String.valueOf(map.get(type));
                         if("0".equals(curyear)){
