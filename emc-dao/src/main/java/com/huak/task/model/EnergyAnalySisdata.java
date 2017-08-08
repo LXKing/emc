@@ -3,6 +3,7 @@ package com.huak.task.model;
 import java.io.Serializable;
 
 public class EnergyAnalySisdata implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String id;
 
     private String unitid;

@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
  */
 
 public class EnergyDetail implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String id;/* 主键 */
 

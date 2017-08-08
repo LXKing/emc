@@ -3,6 +3,7 @@ package com.huak.sys.model;
 import java.io.Serializable;
 
 public class Administrative implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String admCode;
 
     private String admName;

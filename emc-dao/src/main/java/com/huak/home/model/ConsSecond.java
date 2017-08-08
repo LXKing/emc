@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
  * Function List:  <BR>
  */
 public class ConsSecond implements Serializable{
+    private static final long serialVersionUID = 1L;
     /* 主键 */
     private String id;
     /* 主键 */
