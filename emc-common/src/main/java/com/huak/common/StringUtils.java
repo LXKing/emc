@@ -1,5 +1,7 @@
 package com.huak.common;
 
+import java.security.SecureRandom;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -25,13 +27,15 @@ public class StringUtils {
         StringBuffer sb = new StringBuffer();
         int len = KeyString.length();
         for (int i = 0; i < length; i++) {
-            sb.append(KeyString.charAt((int) Math.round(Math.random() * (len - 1))));
+            sb.append(KeyString.charAt((int) Math.round(new SecureRandom().nextDouble() * (len - 1))));
         }
         return sb.toString();
     }
 
     public static void main(String[] args) {
-        System.out.println(getRandomString(3));
+        System.out.println(getRandomString(8));
+        System.out.println(Math.random());
+        System.out.println(new SecureRandom().nextDouble());
     }
 
     public static boolean isEmpty(Object obj) {
