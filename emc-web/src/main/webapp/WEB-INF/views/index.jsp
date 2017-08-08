@@ -510,6 +510,15 @@
                         <div id="barjc" style="width: 0%"></div>
                     </div>
                 </div>
+                <div class="barwrap2 clearfix">
+                    <div>
+                        87
+                    </div>
+                    <div>
+                        <p>检测完毕！</p>
+                        <span>本次检测总分</span>
+                    </div>
+                </div>
                 <div id="chart12" class="quanquanwrap">
                 </div>
             </div>
