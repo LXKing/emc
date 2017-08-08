@@ -3,6 +3,7 @@ package com.huak.task.model;
 import java.io.Serializable;
 
 public class EmcOrgInter implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String comId;
 
     private String orgId;

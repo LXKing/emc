@@ -54,8 +54,9 @@ public class CommonController {
             List<Map<String,Object>> data= orgService.selectOrgByMap(paramsMap);
             if (data.size() == 0) {
                 jo.put(Constants.FLAG, true);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else {
+                jo.put(Constants.FLAG, false);
+            }
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("组织机构名称唯一性校验异常" + e.getMessage());

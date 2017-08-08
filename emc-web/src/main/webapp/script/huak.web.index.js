@@ -2111,6 +2111,8 @@ function chart11Fun() {
 
 /*组件-健康指数*/
 function chart12Fun() {
+    $(".barwrap").show();
+    $(".barwrap2").hide();
     var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
     initchart12(titledata);
     $.ajax({
@@ -2214,6 +2216,8 @@ function timerTask(i,data){
         if(i<=3){
             timerTask(parseInt(i)+1,data);
         }else{
+            $(".barwrap").hide();
+            $(".barwrap2").show();
             return;
         }
     },i*2000);

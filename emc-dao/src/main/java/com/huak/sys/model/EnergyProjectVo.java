@@ -3,6 +3,7 @@ package com.huak.sys.model;
 import java.io.Serializable;
 
 public class EnergyProjectVo implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      *主键
      * @preserve 声明此方法不被JOC混淆

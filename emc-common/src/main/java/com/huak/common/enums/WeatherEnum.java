@@ -4,12 +4,12 @@ package com.huak.common.enums;
  * Created by MR-BIN on 2017/7/11.
  */
 public enum WeatherEnum {
-    clear(1,0),cloudy(2,1),shade(3,2),shower(4,3),thundershower(5,4),thundershowerhail(6,5),
-    sleet(7,6),sprinkle(8,7),moderaterain(9,8),soaker(10,9),rainstorm(11,10),downpour(12,11),
-    rainstorms(13,12),snowshower(14,13),flurry(15,14),snow(16,15),heavysnow(17,16),blizzard(18,17),
-    fog(19,18),icerain(20,19),sandstorm(21,20),lightrainmoderaterain(22,21),moderaterainheavyrain(23,22),
-    downpourrainstorm(24,23),rainstormdownpour(25,24),downpourrainstorms(26,25),flurrysnow(27,26),snowheavysnow(28,27),
-    heavysnowblizzard(29,28),dust(30,29),jansa(31,30),heavyduststorm(32,31),haze(33,53);
+    CLEAR(1,0),CLOUDY(2,1),SHADE(3,2),SHOWER(4,3),THUNDERSHOWER(5,4),THUNDERSHOWERHAIL(6,5),
+    SLEET(7,6),SPRINKLE(8,7),MODERATERAIN(9,8),SOAKER(10,9),RAINSTORM(11,10),DOWNPOUR(12,11),
+    RAINSTORMS(13,12),SNOWSHOWER(14,13),FLURRY(15,14),SNOW(16,15),HEAVYSNOW(17,16),BLIZZARD(18,17),
+    FOG(19,18),ICERAIN(20,19),SANDSTORM(21,20),LIGHTRAINMODERATERAIN(22,21),MODERATERAINHEAVYRAIN(23,22),
+    DOWNPOURRAINSTORM(24,23),RAINSTORMDOWNPOUR(25,24),DOWNPOURRAINSTORMS(26,25),FLURRYSNOW(27,26),SNOWHEAVYSNOW(28,27),
+    HEAVYSNOWBLIZZARD(29,28),DUST(30,29),JANSA(31,30),HEAVYDUSTSTORM(32,31),HAZE(33,53);
     // 成员变量
     private int weatherid;
     private int weatheridIcon;

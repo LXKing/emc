@@ -243,8 +243,9 @@ public class EmployeeController {
             List<Employee> data= employeeService.selectByMap(paramsMap);
             if (data.size() == 0) {
                 jo.put(Constants.FLAG, true);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else {
+                jo.put(Constants.FLAG, false);
+            }
         } catch (Exception e) {
             jo.put(Constants.FLAG, false);
             logger.error("员工唯一性校验异常" + e.getMessage());

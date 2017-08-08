@@ -1,8 +1,10 @@
 package com.huak.home.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class EnergyMonitor {
+public class EnergyMonitor implements Serializable{
+    private static final long serialVersionUID = 1L;
     /**
      *主键
      * @preserve 声明此方法不被JOC混淆
