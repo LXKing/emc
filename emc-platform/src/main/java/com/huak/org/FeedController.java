@@ -252,8 +252,9 @@ public class FeedController {
             List<Map<String,Object>> data= feedService.selectFeedByMap(paramsMap);
             if (data.size() == 0) {
                 jo.put(Constants.FLAG, true);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else {
+                jo.put(Constants.FLAG, false);
+            }
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("热源唯一性校验异常" + e.getMessage());
