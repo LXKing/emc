@@ -165,7 +165,7 @@
 
     </div>
 </div>
-<div class=" col-xs-4 mb14">
+<div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left totalTit energyTit"><i></i>成本明细
@@ -222,7 +222,7 @@
 
     </div>
 </div>
-<div class=" col-xs-4 mb14">
+<div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left CarbonTit energyTit"><i></i>碳排放总量
@@ -375,7 +375,7 @@
     </div>
 </div>
 
-<div class=" col-xs-4 mb14">
+<div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>成本对比
@@ -413,7 +413,7 @@
 </div>
 
 
-<div class=" col-xs-4 mb14">
+<div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>碳排放趋势
@@ -525,7 +525,7 @@
         </div>
     </div>
 </div>
-<div class=" col-xs-4 mb14  ">
+<div class=" col-xs-4 mb14  " style="display: none">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>折算能耗
