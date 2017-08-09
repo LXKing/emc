@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿﻿$(function () {
     var myChartEnergy;
     var myChartQualified;
     var myChartCarbon;
