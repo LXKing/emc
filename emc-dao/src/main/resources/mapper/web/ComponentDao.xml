@@ -77,8 +77,8 @@
       <if test="comId != null and comId !=''">
           and  COMID  = #{comId}
       </if>
-      <if test="type != null and type !=''">
-          and  UNITTYPE  = #{type}
+      <if test="orgType != null and orgType !=''">
+          and  UNITTYPE  = #{orgType}
       </if>
       group by unitid
       ) oo where da.unitid = oo.unitid
@@ -123,8 +123,8 @@
           <if test="comId != null and comId !=''">
               and  COMID  = #{comId}
           </if>
-          <if test="type != null and type !=''">
-              and  UNITTYPE  = #{type}
+          <if test="orgType != null and orgType !=''">
+              and  UNITTYPE  = #{orgType}
           </if>
           group by unitid
       ) oo where da.unitid = oo.unitid
@@ -237,8 +237,8 @@
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
       </if>
-      <if test="type != null and type !=''">
-          and  UNITTYPE  = #{type}
+      <if test="orgType != null and orgType !=''">
+          and  UNITTYPE  = #{orgType}
       </if>
       group by UNITID) c
       WHERE a.UNITID = c.unitid
@@ -258,8 +258,8 @@
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
       </if>
-      <if test="type != null and type !=''">
-          and  UNITTYPE  = #{type}
+      <if test="orgType != null and orgType !=''">
+          and  UNITTYPE  = #{orgType}
       </if>
       GROUP BY UNITID )c
       where  b.UNITID = c.unitid
@@ -287,8 +287,8 @@
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
       </if>
-      <if test="type != null and type !=''">
-          and  UNITTYPE  = #{type}
+      <if test="orgType != null and orgType !=''">
+          and  UNITTYPE  = #{orgType}
       </if>
       GROUP BY UNITID) c
       WHERE  a.UNITID = c.unitid
@@ -308,8 +308,8 @@
       <if test="feedType != null and feedType != ''">
           and HEAT_TYPE = #{feedType}
       </if>
-      <if test="type != null and type !=''">
-          and  UNITTYPE  = #{type}
+      <if test="orgType != null and orgType!=''">
+          and  UNITTYPE  = #{orgType}
       </if>
       GROUP BY UNITID )c
       where  b.UNITID = c.unitid
@@ -365,8 +365,8 @@
         <if test="comId != null and comId !=''">
             and  COMID =#{comId}
         </if>
-        <if test="type != null and type !=''">
-            and  UNITTYPE  = #{type}
+        <if test="orgType != null and orgType !=''">
+            and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
         WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id and bbb.TYPE <![CDATA[ <> ]]>'4'
@@ -464,8 +464,8 @@
         <if test="comId != null and comId !=''">
             and  COMID =#{comId}
         </if>
-        <if test="type != null and type !=''">
-            and  UNITTYPE  = #{type}
+        <if test="orgType != null and orgType !=''">
+            and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
         WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
@@ -499,8 +499,8 @@
         <if test="comId != null and comId !=''">
             and  COMID =#{comId}
         </if>
-        <if test="type != null and type !=''">
-            and  UNITTYPE  = #{type}
+        <if test="orgType != null and orgType !=''">
+            and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
         WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
@@ -533,8 +533,8 @@
         <if test="comId != null and comId !=''">
             and  COMID =#{comId}
         </if>
-        <if test="type != null and type !=''">
-            and  UNITTYPE  = #{type}
+        <if test="orgType != null and orgType !=''">
+            and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
         WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
@@ -568,8 +568,8 @@
         <if test="comId != null and comId !=''">
             and  COMID =#{comId}
         </if>
-        <if test="type != null and type !=''">
-            and  UNITTYPE  = #{type}
+        <if test="orgType != null and orgType !=''">
+            and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
         WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
