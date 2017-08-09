@@ -40,6 +40,10 @@ public class MenuAware implements InitializingBean, ServletContextAware {
     @Resource
     private FuncService funcService;
 
+    private String  PMENUID = "pMenuId";
+    private String  MENUID = "menuId";
+    private String FUNCS = "funcs";
+    private String MENUS = "menus";
     /**
      * Invoked by a BeanFactory after it has set all bean properties supplied
      * (and satisfied BeanFactoryAware and ApplicationContextAware).
@@ -61,39 +65,39 @@ public class MenuAware implements InitializingBean, ServletContextAware {
 
         paramsMap.clear();
         paramsMap.put("menuType",0);
-        paramsMap.put("pMenuId",beforeMenu.get("id"));
+        paramsMap.put(PMENUID,beforeMenu.get("id"));
         List<Map<String,Object>> beforeMenuOnes =  menuService.selectAuthByMap(paramsMap);
         List<Map<String,Object>> beforeMenuOnesNew = new ArrayList<>();
         for(Map<String,Object> oneMap:beforeMenuOnes){
-            paramsMap.put("pMenuId",oneMap.get("id"));
+            paramsMap.put(PMENUID,oneMap.get("id"));
             List<Map<String,Object>> beforeMenuTwos =  menuService.selectAuthByMap(paramsMap);
             List<Map<String,Object>> beforeMenuTwosNew = new ArrayList<>();
             for(Map<String,Object> twoMap:beforeMenuTwos){
-                paramsMap.put("pMenuId",twoMap.get("id"));
+                paramsMap.put(PMENUID,twoMap.get("id"));
                 List<Map<String,Object>> beforeMenuThrs =  menuService.selectAuthByMap(paramsMap);
                 List<Map<String,Object>> beforeMenuThrsNew = new ArrayList<>();
                 for (Map<String,Object> thrMap:beforeMenuThrs){
                     Map<String, Object> funcMap = new HashMap<>();
-                    funcMap.put("menuId",thrMap.get("id"));
+                    funcMap.put(MENUID,thrMap.get("id"));
                     List<Func> funcs = funcService.selectAllByMap(funcMap);
-                    thrMap.put("funcs",funcs);
+                    thrMap.put(FUNCS,funcs);
                     beforeMenuThrsNew.add(thrMap);
                 }
                 Map<String, Object> funcMap = new HashMap<>();
-                funcMap.put("menuId",twoMap.get("id"));
+                funcMap.put(MENUID,twoMap.get("id"));
                 List<Func> funcs = funcService.selectAllByMap(funcMap);
-                twoMap.put("funcs",funcs);
-                twoMap.put("menus",beforeMenuThrsNew);
+                twoMap.put(FUNCS,funcs);
+                twoMap.put(MENUS,beforeMenuThrsNew);
                 beforeMenuTwosNew.add(twoMap);
             }
             Map<String, Object> funcMap = new HashMap<>();
-            funcMap.put("menuId",oneMap.get("id"));
+            funcMap.put(MENUID,oneMap.get("id"));
             List<Func> funcs = funcService.selectAllByMap(funcMap);
-            oneMap.put("funcs",funcs);
-            oneMap.put("menus",beforeMenuTwosNew);
+            oneMap.put(FUNCS,funcs);
+            oneMap.put(MENUS,beforeMenuTwosNew);
             beforeMenuOnesNew.add(oneMap);
         }
-        beforeMenu.put("menus",beforeMenuOnesNew);
+        beforeMenu.put(MENUS,beforeMenuOnesNew);
 
         //查询后台菜单
         paramsMap.clear();
@@ -103,39 +107,39 @@ public class MenuAware implements InitializingBean, ServletContextAware {
 
         paramsMap.clear();
         paramsMap.put("menuType",1);
-        paramsMap.put("pMenuId",afterMenu.get("id"));
+        paramsMap.put(PMENUID,afterMenu.get("id"));
         List<Map<String,Object>> afterMenuOnes =  menuService.selectAuthByMap(paramsMap);
         List<Map<String,Object>> afterMenuOnesNew = new ArrayList<>();
         for(Map<String,Object> oneMap:afterMenuOnes){
-            paramsMap.put("pMenuId",oneMap.get("id"));
+            paramsMap.put(PMENUID,oneMap.get("id"));
             List<Map<String,Object>> afterMenuTwos =  menuService.selectAuthByMap(paramsMap);
             List<Map<String,Object>> afterMenuTwosNew = new ArrayList<>();
             for(Map<String,Object> twoMap:afterMenuTwos){
-                paramsMap.put("pMenuId",twoMap.get("id"));
+                paramsMap.put(PMENUID,twoMap.get("id"));
                 List<Map<String,Object>> afterMenuThrs =  menuService.selectAuthByMap(paramsMap);
                 List<Map<String,Object>> afterMenuThrsNew = new ArrayList<>();
                 for (Map<String,Object> thrMap:afterMenuThrs){
                     Map<String, Object> funcMap = new HashMap<>();
-                    funcMap.put("menuId",thrMap.get("id"));
+                    funcMap.put(MENUID,thrMap.get("id"));
                     List<Func> funcs = funcService.selectAllByMap(funcMap);
-                    thrMap.put("funcs",funcs);
+                    thrMap.put(FUNCS,funcs);
                     afterMenuThrsNew.add(thrMap);
                 }
                 Map<String, Object> funcMap = new HashMap<>();
-                funcMap.put("menuId",twoMap.get("id"));
+                funcMap.put(MENUID,twoMap.get("id"));
                 List<Func> funcs = funcService.selectAllByMap(funcMap);
-                twoMap.put("funcs",funcs);
-                twoMap.put("menus",afterMenuThrsNew);
+                twoMap.put(FUNCS,funcs);
+                twoMap.put(MENUS,afterMenuThrsNew);
                 afterMenuTwosNew.add(twoMap);
             }
             Map<String, Object> funcMap = new HashMap<>();
-            funcMap.put("menuId",oneMap.get("id"));
+            funcMap.put(MENUID,oneMap.get("id"));
             List<Func> funcs = funcService.selectAllByMap(funcMap);
-            oneMap.put("funcs",funcs);
-            oneMap.put("menus",afterMenuTwosNew);
+            oneMap.put(FUNCS,funcs);
+            oneMap.put(MENUS,afterMenuTwosNew);
             afterMenuOnesNew.add(oneMap);
         }
-        afterMenu.put("menus",afterMenuOnesNew);
+        afterMenu.put(MENUS,afterMenuOnesNew);
 
         servletContext.setAttribute(Constants.GRANT_MENU_BEFORE, beforeMenu);
         servletContext.setAttribute(Constants.GRANT_MENU_AFTER, afterMenu);

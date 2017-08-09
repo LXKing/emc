@@ -20,6 +20,10 @@ public class HttpWeatherUtils {
     private static  String CONNECT_VALUE = "Keep-Alive";
     private static  String USER_AGENT_VALUE = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)";
     private static  String DATA_FORMAT = "format";
+    private static  String APP = "app";
+    private static  String WEAID = "weaid";
+    private static  String APPKEY = "appkey";
+    private static  String SIGN = "sign";
     /**
      * 使用Get方式获取数据
      *
@@ -224,10 +228,10 @@ public class HttpWeatherUtils {
     public static  String getCurrtentWeather(String weatherid , String format){
         Map<String , String > param = new HashMap<String , String>();
         if(null != weatherid && !weatherid.equals("") ){
-            param.put("app", "weather.today");
-            param.put("weaid", weatherid);
-            param.put("appkey", "10003");
-            param.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
+            param.put(APP, "weather.today");
+            param.put(WEAID, weatherid);
+            param.put(APPKEY, "10003");
+            param.put(SIGN, "b59bc3ef6191eb9f747dd4e83c99f2a4");
             if(format.equals("xml")){
                 param.put(DATA_FORMAT, format);
             }else{
@@ -250,10 +254,10 @@ public class HttpWeatherUtils {
     public static  String getCurrentAQI(String weatherid , String format){
         Map<String , String > param = new HashMap<String , String>();
         if(null != weatherid && !weatherid.equals("") ){
-            param.put("app", "weather.pm25");
-            param.put("weaid", weatherid);
-            param.put("appkey", "10003");
-            param.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
+            param.put(APP, "weather.pm25");
+            param.put(WEAID, weatherid);
+            param.put(APPKEY, "10003");
+            param.put(SIGN, "b59bc3ef6191eb9f747dd4e83c99f2a4");
             if(format.equals("xml")){
                 param.put(DATA_FORMAT, format);
             }else{
