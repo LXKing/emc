@@ -66,7 +66,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         try {
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
-                    logger.error("cookie----->getName:"+cookie.getName()+"getValue"+cookie.getValue());
+                    //logger.error("cookie----->getName:"+cookie.getName()+"getValue"+cookie.getValue());
 //					   if(cookie.getName().equals(RSESSIONID)){ 
                     if (RSESSIONID.equals(cookie.getName())) {
                         //是否有
@@ -78,11 +78,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                             if (null == orid || !rid.equals(orid) || "".equals(orid)) {
                                 isSession = true;
                             }
-                            logger.error("isSession----->"+isSession);
+                            //logger.error("isSession----->"+isSession);
                             if(isSession){ // EMC模拟登陆
                                 String userName = jedis.hget(cookie.getValue(), "username");
                                 User user = userService.getUserByName(userName);
-                                logger.error("user----->"+user);
+                                //logger.error("user----->"+user);
                                 if(null == user){
                                     //response.sendRedirect(request.getContextPath() + "/login");
                                     response.sendRedirect(Constants.LOGIN_URL);
@@ -138,7 +138,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 }
             }
 
-            logger.error("session------>:"+session.getAttribute(Constants.SESSION_KEY));
+            //logger.error("session------>:"+session.getAttribute(Constants.SESSION_KEY));
             if (null != session.getAttribute(Constants.SESSION_KEY)) {
                 return true;
             }
