@@ -1544,7 +1544,7 @@ function chart08Bar(data) {
     var barchartdiv = $("#barchart");
     var barcharthtml = "";
     for (var i = 0; i < databar.length; i++) {
-        barcharthtml += "<div style='width:" + databar[i].value + "%'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
+        barcharthtml += "<div style='width:" + parseInt( databar[i].value) <= 20?20:databar[i].value  + "%'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
     }
     barchartdiv.html(barcharthtml);
 }
