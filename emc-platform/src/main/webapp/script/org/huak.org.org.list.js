@@ -205,7 +205,7 @@ function ztreeValue(){
             $.fn.zTree.init($("#treeDemo"), setting, eval("(" + nodes + ")"));
         },
         error: function(data) {
-            alert("data is erro");
+            //alert("data is erro");
         }
     });
 }

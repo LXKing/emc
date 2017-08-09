@@ -202,7 +202,6 @@
         });
     }catch(error) {}
 
-
 });
 
 function typefun(these, code) {
@@ -214,30 +213,40 @@ function typefun(these, code) {
         $("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
     }
     if (code == 6) {
-        $(".PeopleTabdiv").show();
-        $(".otherTabdiv").hide();
+//        $(".PeopleTabdiv").show();
+//        $(".otherTabdiv").hide();
         myChartQualified.resize();
         myChartCarbon.resize();
         setCookie('toolOrgType', 5, 3);
         $("#toolOrgType").val(5);
     } else if (code == 5) {
+//        $(".PeopleTabdiv").show();
+        myChartQualified.resize();
         setCookie('toolOrgType', 4, 3);
         $("#toolOrgType").val(4);
     } else if (code == 4) {
+//        $(".PeopleTabdiv").show();
+        myChartQualified.resize();
         setCookie('toolOrgType', 3, 3);
         $("#toolOrgType").val(3);
     } else if (code == 3) {
+//        $(".PeopleTabdiv").show();
+        myChartQualified.resize();
         setCookie('toolOrgType', 2, 3);
         $("#toolOrgType").val(2);
     } else if (code == 2) {
+//        $(".PeopleTabdiv").show();
+        myChartQualified.resize();
         setCookie('toolOrgType', 1, 3);
         $("#toolOrgType").val(1);
     } else if (code == 1) {
+//        $(".PeopleTabdiv").show();
+        myChartQualified.resize();
         setCookie('toolOrgType', '', 3);
         $("#toolOrgType").val("");
     } else {
-        $(".PeopleTabdiv").hide();
-        $(".otherTabdiv").show();
+//        $(".PeopleTabdiv").show();
+        myChartQualified.resize();
     }
     loadDataFun();
 };
@@ -1544,7 +1553,7 @@ function chart08Bar(data) {
     var barchartdiv = $("#barchart");
     var barcharthtml = "";
     for (var i = 0; i < databar.length; i++) {
-        barcharthtml += "<div style='width:" + databar[i].value + "%'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
+        barcharthtml += "<div style='width:" + (parseInt(databar[i].value) <=20?20:databar[i].value) + "%'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
     }
     barchartdiv.html(barcharthtml);
 }

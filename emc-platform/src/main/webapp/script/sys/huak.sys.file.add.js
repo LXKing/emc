@@ -57,7 +57,7 @@ jQuery(document).ready(function($){
         var fullName = $("#hiddenInput"+ file.id).val();
         if (fullName!=null) {
             $.post(webuploaderoptions.deleteServer, { fullName: fullName }, function (data) {
-                alert(data.message);
+                //alert(data.message);
             })
         }
         $("#id"+file.id).remove();

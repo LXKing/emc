@@ -283,7 +283,7 @@
 
     </div>
 
-    <div class="index_contentBox PeopleTabdiv">
+    <div class="index_contentBox ">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left CarbonTit energyTit temperatureTit"><i></i>室温合格率
                 <small class="font-sm">temperature qualified rate</small>
@@ -413,8 +413,8 @@
 </div>
 
 
-<div class=" col-xs-4 mb14" style="display: none">
-    <div class="index_contentBox otherTabdiv">
+<div class=" col-xs-4 mb14">
+    <div class="index_contentBox otherTabdiv"  style="display: none">
         <div class="titbox clearfix no-padding no-margin">
             <div class="pull-left carbonTit energyTit"><i></i>碳排放趋势
                 <small class="font-sm">Comparison of carbon</small>
