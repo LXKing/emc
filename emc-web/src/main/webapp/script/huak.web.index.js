@@ -1357,12 +1357,10 @@ function chart07Fun() {
                 if (tb_flag == null) {
                     $("#coal_tb").html("(" + total_tb + "→)");
                 }
-            } else {
-                alert("系统错误！");
-            }
+            } else {}
         },
         error: function (e) {
-            alert("访问失败");
+
         }
     });
 
