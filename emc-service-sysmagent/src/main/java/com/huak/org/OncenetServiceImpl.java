@@ -48,6 +48,7 @@ public class OncenetServiceImpl implements OncenetService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public int insert(Oncenet record) {
         return oncenetDao.insert(record);
     }
@@ -72,18 +73,21 @@ public class OncenetServiceImpl implements OncenetService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public List<Map<String, Object>> exporNets(Map<String, Object> paramsMap) {
 
         return oncenetDao.selectNetByMap(paramsMap);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Oncenet> selectNetAll(Map<String, Object> paramsMap) {
         return oncenetDao.selectPageByMap(paramsMap);
     }
 
 
     @Override
+    @Transactional(readOnly = false)
     public boolean checkNetName(Map<String, Object> paramsMap) {
         boolean flag=false;
         List<Oncenet> list =  oncenetDao.selectPageByMap(paramsMap);
@@ -96,6 +100,7 @@ public class OncenetServiceImpl implements OncenetService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean checkNetCode(Map<String, Object> paramsMap) {
         boolean flag=false;
         List<Oncenet> list =  oncenetDao.selectPageByMap(paramsMap);

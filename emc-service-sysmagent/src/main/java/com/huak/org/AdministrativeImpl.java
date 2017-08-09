@@ -8,6 +8,7 @@ import com.huak.sys.model.Administrative;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class AdministrativeImpl implements AdministrativeService {
     private AdministrativeDao administrativeDao;
 
     @Override
+    @Transactional(readOnly = false)
     public boolean deleteByPrimaryKey(String admCode) {
         boolean flag=false;
         String[] ids = admCode.split(",");
@@ -45,6 +47,7 @@ public class AdministrativeImpl implements AdministrativeService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean insert(Administrative record) {
         boolean flag=false;
         int i = administrativeDao.insert(record);
@@ -55,16 +58,19 @@ public class AdministrativeImpl implements AdministrativeService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public int insertSelective(Administrative record) {
         return 0;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Administrative selectByPrimaryKey(String admCode) {
         return administrativeDao.selectByPrimaryKey(admCode);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean updateByPrimaryKeySelective(Administrative record) {
         boolean flag=false;
         int i =  administrativeDao.updateByPrimaryKeySelective(record);
@@ -75,26 +81,31 @@ public class AdministrativeImpl implements AdministrativeService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public int updateByPrimaryKey(Administrative record) {
         return 0;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> findAllByLevel(Map<String, String> paramsMap) {
         return administrativeDao.findAllByLevel(paramsMap);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Administrative> findAllAdministrative() {
         return administrativeDao.findAllAdministrative();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Administrative> getAdministrativeSize(String admCode) {
         return administrativeDao.getAdministrativeSize(admCode);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Administrative> getAdministrativeSizeCheckName(String admCode) {
         return administrativeDao.getAdministrativeSizeCheckName(admCode);
     }

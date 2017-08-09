@@ -1,13 +1,5 @@
 package com.huak.org;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.github.pagehelper.PageHelper;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Convert;
@@ -15,6 +7,12 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.org.dao.BanDao;
 import com.huak.org.model.Ban;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 楼座service实现
@@ -34,7 +32,7 @@ public class BanServiceImpl implements BanService {
 	 * 查询楼座列表信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public PageResult<Ban> list(Map<String, String> params,Page page) {
 		PageHelper.startPage(page.getPageNumber(), page.getPageSize());
 		return Convert.convert(banDao.selectByPage(params));
@@ -90,7 +88,7 @@ public class BanServiceImpl implements BanService {
 	 * 根据主键获取楼座信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public Ban get(String id) {
 		return banDao.get(id);
 	}
@@ -99,13 +97,13 @@ public class BanServiceImpl implements BanService {
 	 * 导出楼座信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = false)
 	public List<Map<String, Object>> exportBan(Map<String, String> param) {
 		return banDao.export(param);
 	}
 
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return communityService.getCompanySelectHtmlStr(selectedComId);
 	}
@@ -116,7 +114,7 @@ public class BanServiceImpl implements BanService {
 	 * @return
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCommunitySelectHtmlStr(Map<String, String> param,String selectedId) {
 		return communityService.getCommunitySelectHtmlStr(param,selectedId);
 	}
@@ -125,7 +123,7 @@ public class BanServiceImpl implements BanService {
 	 * 楼座名称唯一
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public Long checkBanName(Map<String,String> param) {
 		return banDao.selectBanCount(param);
 	}
