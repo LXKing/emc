@@ -55,7 +55,7 @@ function loadDataFun(){
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-            $("#groupTotal").html(toFormatNum(data.data.groupTotal.energy.value));
+            $("#groupTotal").html(data.data.groupTotal.energy.value);
         	if(data.data.groupTotal.energy.type == 1){
         		$("#groupTotal").addClass("energy_gray");
         	};
