@@ -477,9 +477,9 @@
         <div id="recentchart" class="recentwrap">
             <div id="recentall" class="clearfix"></div>
             <div class="recentchartT">
-                <div>昨日</div>
-                <div>今日</div>
-                <div>明日</div>
+                <div>前天</div>
+                <div>昨天</div>
+                <div>今天</div>
             </div>
             <div id="recenttitle" class="clearfix">
                 <div>水</div>
