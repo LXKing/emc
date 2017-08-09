@@ -1255,13 +1255,13 @@ function chart07Fun() {
                 var pcdz =result.object.pcdz; //偏差值
                 var currentPlan = result.object.currentPlan;
                 var bm_total = result.object.bm_total;
-                initChart(kedu1, currentPlan, bm_total/10000);
+                initChart(kedu1, currentPlan, bm_total);
                 pcd = toDecimal(pcd);
-                pcdz =  toFormatNumber(toDecimal(pcdz),1);
+                pcdz =  toDecimal(pcdz);
                 $("#pc_plan_percent").html("偏差度(" + pcd + "%)");
                 $("#pc_plan").html(pcdz);
                 /*总标煤展示*/
-                $("#bm_total").html(toFormatNumber(bm_total,1));
+                $("#bm_total").html(toDecimal(bm_total));
                 var tb_flag = result.object.total_flag;
                 var total_tb = result.object.total_tb;
                 if (tb_flag == true) {
@@ -1378,7 +1378,6 @@ function chart07Fun() {
 
 /*能耗明细图表初始化*/
 function initChart(kedu1, mx, bm_total) {
-    debugger;
     bm_total = toDecimal(bm_total);
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
     var colorvalue = null;
