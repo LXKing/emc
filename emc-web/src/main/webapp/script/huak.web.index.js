@@ -1,4 +1,4 @@
-﻿﻿$(function () {
+﻿$(function () {
     var myChartEnergy;
     var myChartQualified;
     var myChartCarbon;
@@ -39,7 +39,6 @@
 //                }
 
             }
-
         });
         $.ajax({
             url: _web + "/energy/top/all1",
