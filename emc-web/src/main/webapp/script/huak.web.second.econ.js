@@ -282,7 +282,7 @@ function groupEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -311,7 +311,7 @@ function groupEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec1.facecolor5,
         series: []
@@ -359,7 +359,7 @@ function waterEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -371,7 +371,7 @@ function waterEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -401,7 +401,7 @@ function waterEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec2.facecolor1,
         series: []
@@ -449,7 +449,7 @@ function electricEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -461,7 +461,7 @@ function electricEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -491,7 +491,7 @@ function electricEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec2.facecolor1,
         series: []
@@ -540,7 +540,7 @@ function gasEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -552,7 +552,7 @@ function gasEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -582,7 +582,7 @@ function gasEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec2.facecolor1,
         series: []
@@ -631,7 +631,7 @@ function hotEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -643,7 +643,7 @@ function hotEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -673,7 +673,7 @@ function hotEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec2.facecolor1,
         series: []
@@ -722,7 +722,7 @@ function coalEnergyChartFun(datalist, datelist){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -734,7 +734,7 @@ function coalEnergyChartFun(datalist, datelist){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data: datelist
@@ -764,7 +764,7 @@ function coalEnergyChartFun(datalist, datelist){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec2.facecolor1,
         series: []
@@ -951,7 +951,7 @@ function chart02Fun(data){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         series: data.list
     };
@@ -1019,7 +1019,7 @@ function chart03Fun(data) {
                 show:true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data:data.xaxis
@@ -1135,7 +1135,7 @@ function chart04Fun(data){
                 show:true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data:data.xaxis
@@ -1363,7 +1363,7 @@ function chart2EnergyLine(data){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
 
         series: data.series
@@ -1460,7 +1460,7 @@ function chart2EnergyBar(data){
                 show: false
             },
             splitLine: {
-                show: false,
+                show: false
             },
             axisLine: {
                 show: true,
@@ -1472,7 +1472,7 @@ function chart2EnergyBar(data){
                 show: true,
                 textStyle: {
                     color: chartsColor.linefontcolor,
-                    fontFamily: 'arial',
+                    fontFamily: 'arial'
                 }
             },
             data:['供热源','一次网','换热站','二次线','民户']
@@ -1508,7 +1508,7 @@ function chart2EnergyBar(data){
                     color: chartsColor.linefontcolor,
                     fontFamily: 'arial'
                 }
-            },
+            }
         },
         color: chartsColor.ec4.facecolor3,
         series: [
