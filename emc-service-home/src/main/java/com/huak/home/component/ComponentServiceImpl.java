@@ -64,6 +64,8 @@ public class ComponentServiceImpl implements ComponentService{
      * @param params
      * @return
      */
+    @Override
+    @Transactional(readOnly = true)
     public Map<String,Object> energyDetail(Map<String,Object> params){
         Map<String,Object> currentplan =new HashMap<>();
         Map<String,Object> previousplan = new HashMap<>();
@@ -290,6 +292,7 @@ public class ComponentServiceImpl implements ComponentService{
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Object> healthcheck(Map<String, Object> paramsMap) {
         Map<String,Object> data = new HashMap<>();
         Map<String,Object> gkdata = new HashMap<>();
@@ -613,6 +616,7 @@ public class ComponentServiceImpl implements ComponentService{
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Object> energycomparison(Map<String, Object> params) {
         String starttime =  params.get(STARTTIME).toString()+" 00:00:00";
         String endTime =  params.get(ENDTIME).toString()+" 23:59:59";
