@@ -1,4 +1,5 @@
 ﻿$(function () {
+    chart12Fun();
     var myChartEnergy;
     var myChartQualified;
     var myChartCarbon;
@@ -272,7 +273,7 @@ function loadDataFun(){
     chart10Fun();
 
     chart11Fun();
-    chart12Fun();
+
     chart13Fun();
 }
 var myChartEnergy;
@@ -1552,7 +1553,9 @@ function chart08Bar(data) {
     var barchartdiv = $("#barchart");
     var barcharthtml = "";
     for (var i = 0; i < databar.length; i++) {
-        barcharthtml += "<div style='width:" + (parseInt(databar[i].value) <=20?20:databar[i].value) + "%'><p style='color:" + databar[i].color + "'>" + databar[i].value + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
+        var width = 25;
+        if(parseInt(databar[i].value) >=50){ width = 50;};
+        barcharthtml += "<div style='width:" + width + "%'><p style='color:" + databar[i].color + "'>" + toDecimal(databar[i].value,1) + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
     }
     barchartdiv.html(barcharthtml);
 }
@@ -1653,7 +1656,7 @@ function chart08Sd(data, times) {
                 name: '室温',
                 type: 'scatter',
                 symbolSize: function (data) {
-                    return 6;
+                    return 2;
                 },
                 markLine: {
                     lineStyle: {
@@ -1952,6 +1955,7 @@ function chart13Fun() {
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (result) {
+            console.info(result);
             if (result.flag == true) {
                 var recentdata = result.object;
                 var recenthtml = "";

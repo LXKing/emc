@@ -472,12 +472,15 @@
 <div class=" col-xs-4 mb14  ">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>近日单耗明细
-                <small class="font-sm">RECENT DETAILS</small>
-            </div>
+            <div class="pull-left carbonTit energyTit"><i></i>近日能耗明细<small class="font-sm">RECENT DETAILS</small></div>
         </div>
         <div id="recentchart" class="recentwrap">
             <div id="recentall" class="clearfix"></div>
+            <div class="recentchartT">
+                <div>昨日</div>
+                <div>今日</div>
+                <div>明日</div>
+            </div>
             <div id="recenttitle" class="clearfix">
                 <div>水</div>
                 <div>电</div>
@@ -489,6 +492,8 @@
 
     </div>
 </div>
+
+
 <div class=" col-xs-4 mb14  ">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">

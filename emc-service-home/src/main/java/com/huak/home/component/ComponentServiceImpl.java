@@ -206,7 +206,7 @@ public class ComponentServiceImpl implements ComponentService{
     @Transactional(readOnly = true)
     public Map<String, Object> roomTemperature(Map<String, Object> params) {
         Map<String,Object> result = new HashMap<>();
-        String date = "2017-02-15";
+        String date = "2016-02-15";
         params.put("date",date);
         List<Map<String,Object>> datas = temperatureDao.selectByMap(params);
 
@@ -283,6 +283,7 @@ public class ComponentServiceImpl implements ComponentService{
         } catch (ParseException e) {
             logger.error("组件-近期单耗详情" + e);
         }
+
         return this.assemblyData(result);
     }
 
@@ -328,17 +329,15 @@ public class ComponentServiceImpl implements ComponentService{
      * @return
      */
     private List<Map<String, Object>> assemblyData(Map<String, Object> data) {
-        if(null == data){
-            return null;
-        }
+       boolean flag = (null == data);
         List<Map<String,Object>> results = new ArrayList<>();//昨天、今天、明天
         Map<String,Object> towdayagao = new HashMap<>();//前天map
         List<Map<String,Object>> temp = new ArrayList<>();//前天list
         /*水*/
         Map<String,Object> typewhater = new HashMap<>();
-        typewhater.put(DATA_VALUE,data.get("towwhater"));
-        typewhater.put(DATA_VALUE2,data.get("towwhaterzz"));
-        Double towwhaterzz = Double.parseDouble(data.get("towwhaterzz").toString());
+        typewhater.put(DATA_VALUE,flag ?0:(data.get("towwhater")== null?0:data.get("towwhater")));
+        typewhater.put(DATA_VALUE2,flag?0:(data.get("towwhaterzz")==null?0:data.get("towwhaterzz")));
+        Double towwhaterzz = Double.parseDouble(flag?"0":(data.get("towwhaterzz") == null ? "0":data.get("towwhaterzz").toString()));
         if(towwhaterzz>0){
             typewhater.put(TREND,1);
         }else if(towwhaterzz < 0){
@@ -348,9 +347,9 @@ public class ComponentServiceImpl implements ComponentService{
         }
         /*电*/
         Map<String,Object> typeelectric = new HashMap<>();
-        typeelectric.put(DATA_VALUE,data.get("towelectric"));
-        typeelectric.put(DATA_VALUE2,data.get("towelectriczz"));
-        Double towelectriczz = Double.parseDouble(data.get("towelectriczz").toString());
+        typeelectric.put(DATA_VALUE,flag?0:(data.get("towelectric")==null?0:data.get("towelectric")));
+        typeelectric.put(DATA_VALUE2,flag?0:(data.get("towelectriczz")==null?0:data.get("towelectriczz")));
+        Double towelectriczz = Double.parseDouble(flag?"0":(data.get("towelectriczz") == null ?"0":data.get("towelectriczz").toString()));
         if(towelectriczz > 0){
             typeelectric.put(TREND,1);
         }else if(towelectriczz < 0){
@@ -361,9 +360,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*气*/
         Map<String,Object> typegas = new HashMap<>();
-        typegas.put(DATA_VALUE,data.get("towgas"));
-        typegas.put(DATA_VALUE2,data.get("towgaszz"));
-        Double towgaszz = Double.parseDouble(data.get("towgaszz").toString());
+        typegas.put(DATA_VALUE,flag?0:(data.get("towgas") == null ? 0:data.get("towgas")));
+        typegas.put(DATA_VALUE2,flag?0:(data.get("towgaszz") == null?0:data.get("towgaszz")));
+        Double towgaszz = Double.parseDouble(flag?"0":(data.get("towgaszz") == null ?"0":data.get("towgaszz").toString()));
         if(towgaszz > 0){
             typegas.put(TREND,1);
         }else if(towgaszz < 0){
@@ -374,9 +373,9 @@ public class ComponentServiceImpl implements ComponentService{
 
          /*热*/
         Map<String,Object> typeheat = new HashMap<>();
-        typeheat.put(DATA_VALUE,data.get("towheat"));
-        typeheat.put(DATA_VALUE2,data.get("towheatzz"));
-        Double towheatzz = Double.parseDouble(data.get("towheatzz").toString());
+        typeheat.put(DATA_VALUE,flag?0:(data.get("towheat") == null ? 0:data.get("towheat")));
+        typeheat.put(DATA_VALUE2,flag?0:(data.get("towheatzz") == null ? 0 : data.get("towheatzz")));
+        Double towheatzz = Double.parseDouble(flag?"0":(data.get("towheatzz") == null ?"0":data.get("towheatzz").toString()));
         if(towheatzz > 0){
             typeheat.put(TREND,1);
         }else if(towheatzz < 0){
@@ -387,9 +386,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*煤*/
         Map<String,Object> typecoal = new HashMap<>();
-        typecoal.put(DATA_VALUE,data.get("towcoal"));
-        typecoal.put(DATA_VALUE2,data.get("towcoalzz"));
-        Double towcoalzz = Double.parseDouble(data.get("towcoalzz").toString());
+        typecoal.put(DATA_VALUE,flag?0:(data.get("towcoal") == null ? 0:data.get("towcoal")));
+        typecoal.put(DATA_VALUE2,flag?0:(data.get("towcoalzz")==null?0:data.get("towcoalzz")));
+        Double towcoalzz = Double.parseDouble(flag?"0":(data.get("towcoalzz") == null ? "0":data.get("towcoalzz").toString()));
         if(towcoalzz > 0){
             typecoal.put(TREND,1);
         }else if(towcoalzz < 0){
@@ -400,9 +399,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*天然气*/
         Map<String,Object> typesolar = new HashMap<>();
-        typesolar.put(DATA_VALUE,data.get("towsolar"));
-        typesolar.put(DATA_VALUE2,data.get("towsolarzz"));
-        Double towsolarzz = Double.parseDouble(data.get("towsolarzz").toString());
+        typesolar.put(DATA_VALUE,flag?0:(data.get("towsolar") == null ? 0 :data.get("towsolar")));
+        typesolar.put(DATA_VALUE2,flag?0:(data.get("towsolarzz") == null ? 0:data.get("towsolarzz")));
+        Double towsolarzz = Double.parseDouble(flag?"0":(data.get("towsolarzz") == null ? "0":data.get("towsolarzz").toString()));
         if(towsolarzz > 0){
             typesolar.put(TREND,1);
         }else if(towcoalzz < 0){
@@ -417,9 +416,9 @@ public class ComponentServiceImpl implements ComponentService{
         List<Map<String,Object>> yesterdaytemp = new ArrayList<>();//昨天list
         /*水*/
         Map<String,Object> typewhater1 = new HashMap<>();
-        typewhater1.put(DATA_VALUE,data.get("ywhater"));
-        typewhater1.put(DATA_VALUE2,data.get("ywhaterzz"));
-        Double ywhaterzz = Double.parseDouble(data.get("ywhaterzz").toString());
+        typewhater1.put(DATA_VALUE,flag?0:(data.get("ywhater") == null ? 0 :data.get("ywhater")));
+        typewhater1.put(DATA_VALUE2,flag?0:(data.get("ywhaterzz") == null ?0:data.get("ywhaterzz")));
+        Double ywhaterzz = Double.parseDouble(flag?"0":(data.get("ywhaterzz") == null ?"0":data.get("ywhaterzz").toString()));
         logger.info(ywhaterzz+"------------------------------------");
         if(ywhaterzz>0){
             typewhater1.put(TREND,1);
@@ -431,9 +430,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*电*/
         Map<String,Object> typeelectric1 = new HashMap<>();
-        typeelectric1.put(DATA_VALUE,data.get("yelectric"));
-        typeelectric1.put(DATA_VALUE2,data.get("yelectriczz"));
-        Double yelectriczz = Double.parseDouble(data.get("yelectriczz").toString());
+        typeelectric1.put(DATA_VALUE,flag?0:(data.get("yelectric") == null ? 0:data.get("yelectric")));
+        typeelectric1.put(DATA_VALUE2,flag?0:(data.get("yelectriczz") == null ? 0:data.get("yelectriczz")));
+        Double yelectriczz = Double.parseDouble(flag?"0":(data.get("yelectriczz") == null ? "0":data.get("yelectriczz").toString()));
         if(yelectriczz > 0){
             typeelectric1.put(TREND,1);
         }else if(yelectriczz < 0){
@@ -444,9 +443,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*气*/
         Map<String,Object> typegas1 = new HashMap<>();
-        typegas1.put(DATA_VALUE,data.get("ygas"));
-        typegas1.put(DATA_VALUE2,data.get("ygaszz"));
-        Double ygaszz = Double.parseDouble(data.get("ygaszz").toString());
+        typegas1.put(DATA_VALUE,flag?0:(null == data.get("ygas")?0:data.get("ygas")));
+        typegas1.put(DATA_VALUE2,flag?0:(null == data.get("ygaszz")? 0 :data.get("ygaszz")));
+        Double ygaszz = Double.parseDouble(flag?"0":(null == data.get("ygaszz")?"0":data.get("ygaszz").toString()));
         if(ygaszz > 0){
             typegas1.put(TREND,1);
         }else if(ygaszz < 0){
@@ -457,9 +456,9 @@ public class ComponentServiceImpl implements ComponentService{
 
              /*热*/
         Map<String,Object> typeheat1 = new HashMap<>();
-        typeheat1.put(DATA_VALUE,data.get("yheat"));
-        typeheat1.put(DATA_VALUE2,data.get("yheatzz"));
-        Double yheatzz = Double.parseDouble(data.get("yheatzz").toString());
+        typeheat1.put(DATA_VALUE,flag?0:(null ==data.get("yheat")?0: data.get("yheat")));
+        typeheat1.put(DATA_VALUE2,flag?0:(null ==data.get("yheatzz")?0: data.get("yheatzz")));
+        Double yheatzz = Double.parseDouble(flag?"0":(data.get("yheatzz") == null ? "0" : data.get("yheatzz").toString()));
         if(yheatzz > 0){
             typeheat1.put(TREND,1);
         }else if(yheatzz < 0){
@@ -471,9 +470,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*煤*/
         Map<String,Object> typecoal1 = new HashMap<>();
-        typecoal1.put(DATA_VALUE,data.get("ycoal"));
-        typecoal1.put(DATA_VALUE2,data.get("ycoalzz"));
-        Double ycoalzz = Double.parseDouble(data.get("ycoalzz").toString());
+        typecoal1.put(DATA_VALUE,flag?0:(null== data.get("ycoal")? 0:data.get("ycoal")));
+        typecoal1.put(DATA_VALUE2,flag?0:(null == data.get("ycoalzz")? 0 :data.get("ycoalzz")));
+        Double ycoalzz = Double.parseDouble(flag?"0":(null ==data.get("ycoalzz")?"0": data.get("ycoalzz").toString()));
         if(ycoalzz > 0){
             typecoal1.put(TREND,1);
         }else if(ycoalzz < 0){
@@ -484,9 +483,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*天然气*/
         Map<String,Object> typesolar1 = new HashMap<>();
-        typesolar1.put(DATA_VALUE,data.get("ysolar"));
-        typesolar1.put(DATA_VALUE2,data.get("ysolarzz"));
-        Double ysolarzz = Double.parseDouble(data.get("ysolarzz").toString());
+        typesolar1.put(DATA_VALUE,flag?0:(null == data.get("ysolar") ? 0:data.get("ysolar")));
+        typesolar1.put(DATA_VALUE2,flag?0:(null == data.get("ysolarzz")? 0 :data.get("ysolarzz")));
+        Double ysolarzz = Double.parseDouble(flag?"0":(data.get("ysolarzz") == null ? "0" :data.get("ysolarzz").toString()));
         if(ysolarzz > 0){
             typesolar1.put(TREND,1);
         }else if(ysolarzz < 0){
@@ -500,9 +499,9 @@ public class ComponentServiceImpl implements ComponentService{
         List<Map<String,Object>> todaytemp = new ArrayList<>();//今天list
         /*水*/
         Map<String,Object> typewhater2 = new HashMap<>();
-        typewhater2.put(DATA_VALUE,data.get("twhater"));
-        typewhater2.put(DATA_VALUE2,data.get("twhaterzz"));
-        Double twhaterzz = Double.parseDouble(data.get("twhaterzz").toString());
+        typewhater2.put(DATA_VALUE,flag?0:(null == data.get("twhater")?0:data.get("twhater")));
+        typewhater2.put(DATA_VALUE2,flag?0:(null == data.get("twhaterzz")?0:data.get("twhaterzz")));
+        Double twhaterzz = Double.parseDouble(flag?"0":(null == data.get("twhaterzz")?"0":data.get("twhaterzz").toString()));
         if(twhaterzz>0){
             typewhater2.put(TREND,1);
         }else if(twhaterzz < 0){
@@ -513,9 +512,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*电*/
         Map<String,Object> typeelectric2 = new HashMap<>();
-        typeelectric2.put(DATA_VALUE,data.get("telectric"));
-        typeelectric2.put(DATA_VALUE2,data.get("telectriczz"));
-        Double telectriczz = Double.parseDouble(data.get("telectriczz").toString());
+        typeelectric2.put(DATA_VALUE,flag?0:(null == data.get("telectric")?0:data.get("telectric")));
+        typeelectric2.put(DATA_VALUE2,flag?0:(null == data.get("telectriczz")?0:data.get("telectriczz")));
+        Double telectriczz = Double.parseDouble(flag?"0":(null == data.get("telectriczz")?"0":data.get("telectriczz").toString()));
         if(telectriczz > 0){
             typeelectric2.put(TREND,1);
         }else if(telectriczz < 0){
@@ -526,9 +525,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*气*/
         Map<String,Object> typegas2 = new HashMap<>();
-        typegas2.put(DATA_VALUE,data.get("tgas"));
-        typegas2.put(DATA_VALUE2,data.get("tgaszz"));
-        Double tgaszz = Double.parseDouble(data.get("tgaszz").toString());
+        typegas2.put(DATA_VALUE,flag?0:(null == data.get("tgas")?0:data.get("tgas")));
+        typegas2.put(DATA_VALUE2,flag?0:(null == data.get("tgaszz")?0:data.get("tgaszz")));
+        Double tgaszz = Double.parseDouble(flag?"0":(null == data.get("tgaszz")?"0":data.get("tgaszz").toString()));
         if(tgaszz > 0){
             typegas2.put(TREND,1);
         }else if(tgaszz < 0){
@@ -538,9 +537,9 @@ public class ComponentServiceImpl implements ComponentService{
         }
 
         Map<String,Object> typeheat2 = new HashMap<>();
-        typeheat2.put(DATA_VALUE,data.get("theat"));
-        typeheat2.put(DATA_VALUE2,data.get("theatzz"));
-        Double theatzz = Double.parseDouble(data.get("theatzz").toString());
+        typeheat2.put(DATA_VALUE,flag?0:(null == data.get("theat")?0:data.get("theat")));
+        typeheat2.put(DATA_VALUE2,flag?0:(null == data.get("theatzz")?0:data.get("theatzz")));
+        Double theatzz = Double.parseDouble(flag?"0":(data.get("theatzz") == null ? "0" :data.get("theatzz").toString()));
         if(theatzz > 0){
             typeheat2.put(TREND,1);
         }else if(theatzz < 0){
@@ -551,9 +550,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*煤*/
         Map<String,Object> typecoal2 = new HashMap<>();
-        typecoal2.put(DATA_VALUE,data.get("tcoal"));
-        typecoal2.put(DATA_VALUE2,data.get("tcoalzz"));
-        Double tcoalzz = Double.parseDouble(data.get("tcoalzz").toString());
+        typecoal2.put(DATA_VALUE,flag?0:(null == data.get("tcoal")?0:data.get("tcoal")));
+        typecoal2.put(DATA_VALUE2,flag?0:(null == data.get("tcoalzz")?0:data.get("tcoalzz")));
+        Double tcoalzz = Double.parseDouble(flag?"0":(null == data.get("tcoalzz") ? "0" :data.get("tcoalzz").toString()));
         if(tcoalzz > 0){
             typecoal2.put(TREND,1);
         }else if(tcoalzz < 0){
@@ -564,9 +563,9 @@ public class ComponentServiceImpl implements ComponentService{
 
         /*天然气*/
         Map<String,Object> typesolar2 = new HashMap<>();
-        typesolar2.put(DATA_VALUE,data.get("tsolar"));
-        typesolar2.put(DATA_VALUE2,data.get("tsolarzz"));
-        Double tsolarzz = Double.parseDouble(data.get("tsolarzz").toString());
+        typesolar2.put(DATA_VALUE,flag?0:(null == data.get("tsolar")? 0:data.get("tsolar")));
+        typesolar2.put(DATA_VALUE2,flag?0:(null == data.get("tsolarzz")?0:data.get("tsolarzz")));
+        Double tsolarzz = Double.parseDouble(flag?"0":(null == data.get("tsolarzz")?"0":data.get("tsolarzz").toString()));
         if(tsolarzz > 0){
             typesolar2.put(TREND,1);
         }else if(tsolarzz < 0){
@@ -582,7 +581,7 @@ public class ComponentServiceImpl implements ComponentService{
         temp.add(typegas);
         temp.add(typeheat);
 //        temp.add(typesolar);
-        towdayagao.put(DATA_VALUE,data.get("towtotal"));
+        towdayagao.put(DATA_VALUE,flag?0:data.get("towtotal"));
         towdayagao.put("list",temp);
 
         /*昨天map*/
@@ -592,7 +591,7 @@ public class ComponentServiceImpl implements ComponentService{
         yesterdaytemp.add(typeheat1);
 //        yesterdaytemp.add(typecoal1);
 //        yesterdaytemp.add(typesolar1);
-        yesterday.put(DATA_VALUE,data.get("ytotal"));
+        yesterday.put(DATA_VALUE,flag?0:data.get("ytotal"));
         yesterday.put("list",yesterdaytemp);
 
          /*今天map*/
@@ -602,7 +601,7 @@ public class ComponentServiceImpl implements ComponentService{
         todaytemp.add(typeheat2);
 //        todaytemp.add(typecoal2);
 //        todaytemp.add(typesolar2);
-        today.put(DATA_VALUE,data.get("ttotal"));
+        today.put(DATA_VALUE,flag?0:data.get("ttotal"));
         today.put("list",todaytemp);
         results.add(towdayagao);
         results.add(yesterday);
