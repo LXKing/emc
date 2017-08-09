@@ -23,14 +23,14 @@
         </constructor>
     </resultMap>
     <!--标煤总量-->
-    <select id="selectTopEtotalByMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+    <select id="selectTopEtotalByMap" parameterType="java.util.Map" resultType="java.lang.String">
         SELECT ROUND(SUM(a.BM),1) from (
         SELECT  sum(h.BM) BM,h.TYPE,ou.UNITTYPE  from (
         SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) c,v_emc_unit v
 
         WHERE c.ID=v.ORGID
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
         GROUP BY v.UNITID,v.UNITTYPE
         ) ou
         LEFT JOIN
@@ -38,10 +38,10 @@
         FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE   1=1
         <if test="startTime != null and startTime !=''">
-            AND fd.DOSAGE_TIME <![CDATA[>=]]>  #{startTime,jdbcType=VARCHAR}
+            AND fd.DOSAGE_TIME &gt;=  #{startTime,jdbcType=VARCHAR}
         </if>
         <if test="endTime != null and endTime !=''">
-            AND fd.DOSAGE_TIME  <![CDATA[<=]]> #{endTime,jdbcType=VARCHAR}
+            AND fd.DOSAGE_TIME  &lt;= #{endTime,jdbcType=VARCHAR}
         </if>
             and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
@@ -64,7 +64,7 @@
             and v.COMID=#{comId,jdbcType=VARCHAR}
         </if>
         <if test="feedType != null and feedType !=''">
-            and v.HEAT_TYPE = #{feetType,jdbcType=VARCHAR}
+            and v.HEAT_TYPE = #{feedType,jdbcType=VARCHAR}
         </if>
         <if test="startTime != null and startTime !=''">
             and t.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
@@ -87,7 +87,7 @@
         FROM
         ${tableName} a
         ,
-        (select v.COMID,v.UNITID from v_emc_unit v  where v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
+        (select v.COMID,v.UNITID from v_emc_unit v  where v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
         WHERE
         a.COMID = c.COMID
         AND a.UNITID = c.unitid
@@ -110,7 +110,7 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select v.COMID,v.UNITID from v_emc_unit v where v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c
+        (select v.COMID,v.UNITID from v_emc_unit v where v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c
         where b.COMID = c.comid and b.UNITID = c.unitid
 
         <if test="startTime != null and startTime !=''">
@@ -141,7 +141,7 @@
         ) c,v_emc_unit v
 
         WHERE c.ID=v.ORGID
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
         <if test="orgType != null and orgType !=''">
             and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
         </if>
@@ -172,7 +172,7 @@
 
         ) c,v_emc_unit v
         WHERE c.ID=v.ORGID
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
         <if test="orgType != null and orgType !=''">
             and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
         </if>
@@ -213,7 +213,7 @@
 
         ) c,v_emc_unit v
         WHERE c.ID=v.ORGID
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
         <if test="orgType != null and orgType !=''">
             and v.UNITTYPE = #{orgType,jdbcType=VARCHAR}
         </if>
@@ -243,7 +243,7 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) c,v_emc_unit v
 
         WHERE c.ID=v.ORGID
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
         and v.UNITTYPE='1'
         GROUP BY v.UNITID,v.UNITTYPE
         ) ou
@@ -261,7 +261,7 @@
 
         SELECT ROUND(sum(b.fe),1) from (
         select sum(a.DOSAGE*a.C_COEF) as fe,a.typeid  from ${tableName} a ,
-        (select * from v_emc_unit  where UNITTYPE='1' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
+        (select * from v_emc_unit  where UNITTYPE='1' and HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
         where
         a.COMID = c.COMID
@@ -294,7 +294,7 @@
         FROM
         ${tableName} a
         ,
-        (select * from v_emc_unit v  where UNITTYPE='1' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
+        (select * from v_emc_unit v  where UNITTYPE='1' and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
         WHERE
         a.COMID = c.COMID
         AND a.UNITID = c.unitid
@@ -316,7 +316,7 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select * from v_emc_unit v where UNITTYPE='1' and  v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c
+        (select * from v_emc_unit v where UNITTYPE='1' and  v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c
         where b.COMID = c.comid and b.UNITID = c.unitid
         <if test="comId != null and comId !=''">
             and c.COMID=#{comId,jdbcType=VARCHAR}
@@ -345,7 +345,7 @@
             <if test="comId != null and comId !=''">
                 and t.COM_ID=#{comId,jdbcType=VARCHAR}
             </if>
-                and t.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+                and t.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
     </select>
     <!--管网总成本-->
     <select id="selectGetNetCost" parameterType="java.util.Map" resultType="java.util.Map">
@@ -363,7 +363,7 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select * from v_emc_unit where UNITTYPE='2' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id
+        (select * from v_emc_unit where UNITTYPE='2' and HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id
         from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
         t_emc_unit_net n
         where
@@ -393,7 +393,7 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) c,v_emc_unit v
 
         WHERE c.ID=v.ORGID
-        and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+        and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
         and v.UNITTYPE='3'
         GROUP BY v.UNITID,v.UNITTYPE
         ) ou
@@ -411,7 +411,7 @@
 
         SELECT ROUND(sum(b.fe),1) from (
         select sum(a.DOSAGE*a.C_COEF) as fe,a.typeid  from ${tableName} a ,
-        (select * from v_emc_unit  where UNITTYPE='3' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
+        (select * from v_emc_unit  where UNITTYPE='3' and HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
         where
         a.COMID = c.COMID
@@ -443,7 +443,7 @@
         FROM
         ${tableName} a
         ,
-        (select * from v_emc_unit v  where UNITTYPE='3' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
+        (select * from v_emc_unit v  where UNITTYPE='3' and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c
         WHERE
         a.COMID = c.COMID
         AND a.UNITID = c.unitid
@@ -465,7 +465,7 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select * from v_emc_unit v where UNITTYPE='3' and  v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c
+        (select * from v_emc_unit v where UNITTYPE='3' and  v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and v.ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c
         where b.COMID = c.comid and b.UNITID = c.unitid
 
         <if test="startTime != null and startTime !=''">
@@ -491,7 +491,7 @@
             <if test="comId != null and comId !=''">
                 and n.COM_ID=#{comId,jdbcType=VARCHAR}
             </if>
-                and n.HEAT_TYPE=#{feetType,jdbcType=VARCHAR}
+                and n.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
 
 
     </select>
@@ -510,7 +510,7 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select * from v_emc_unit  where UNITTYPE='4' and HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
+        (select * from v_emc_unit  where UNITTYPE='4' and HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
         t_emc_unit_line n
         where
         b.COMID = c.comid
@@ -535,7 +535,7 @@
 
         SELECT ROUND(sum(b.fe),1) from (
         select sum(a.DOSAGE*a.COAL_COEF) as fe,a.typeid  from ${tableName} a ,
-        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
+        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_energy_type e
 
         where
@@ -558,7 +558,7 @@
     <select id="selectTopRoomNum1HglByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
         select COUNT(a.ITEMP) num1 from ${tableName} a ,
-        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
+        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_unit_room r
 
         where
@@ -581,7 +581,7 @@
     <select id="selectTopRoomTotalHglByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
         select COUNT(a.ITEMP) total from ${tableName} a ,
-        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
+        (select * from v_emc_unit v where v.UNITTYPE='5' and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) ) c,
         t_emc_unit_room r
 
         where
@@ -614,7 +614,7 @@
 
         FROM
         t_emc_final_cost_day b,
-        (select * from v_emc_unit v  where v.UNITTYPE='5' and v.HEAT_TYPE=#{feetType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
+        (select * from v_emc_unit v  where v.UNITTYPE='5' and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR} and ORGID in (select id from t_emc_org where FIND_IN_SET(id,emc_func_org_getchilds(#{orgId,jdbcType=VARCHAR}))) )c,
         t_emc_unit_room n
         where
         b.COMID = c.comid
