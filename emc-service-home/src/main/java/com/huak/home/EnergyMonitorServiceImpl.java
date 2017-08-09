@@ -108,7 +108,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	 * 获取折线数据
 	 */
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Map<String, Object> groupEnergyLine(Map<String, String> params) throws Exception{
 		Map<String, Object> result = new HashMap<String,Object>();
 		//所有的能源类型
@@ -236,7 +236,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	/**
 	 * 查询能源流明细
 	 */
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public List<Map<String, Object>> energyFlowTable(Map<String, String> params) {
 		List<Map<String, Object>> eftListMap = eaDao.energyFlowTable(params);
 		return eftListMap;
@@ -245,7 +246,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	/**
 	 * 查询能源流占比分布图
 	 */
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public List<Map<String, Object>> energyFlowPie(Map<String, String> params) {
 		List<Map<String, Object>> efpListMap = eaDao.energyFlowPie(params);
 		return efpListMap;
@@ -254,7 +256,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	/**
 	 * 查询能源流趋势对比图
 	 */
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public Map<String,Object> energyFlowLine(Map<String, String> params) throws Exception{
 		Map<String,Object> result = new HashMap<String,Object>();
 		String sDate = params.get("startTime");//查询条件的开始时间
@@ -320,7 +323,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	/**
 	 * 查询能源流同比
 	 */
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public Map<String, Object> energyFlowBar(Map<String, String> params) {
 		Map<String,Object> result = new HashMap<String,Object>();
 		List<String> last = new ArrayList<String>();
@@ -347,7 +351,8 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 	/**
 	 * 导出能源流明细
 	 */
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public List<Map<String, Object>> exportEnergyFlowDetail(
 			Map<String, String> params) {
 		return eaDao.exportEnergyFlowDetail(params);

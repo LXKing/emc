@@ -110,7 +110,8 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
     /**
      * 查询单耗
      */
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public Map<String, Object> groupDanHaoLine(Map<String, String> params) throws Exception{
 		Map<String, Object> result = new HashMap<String,Object>();
 		//所有的能源类型

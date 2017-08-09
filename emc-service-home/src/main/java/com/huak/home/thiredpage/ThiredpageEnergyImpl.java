@@ -3,6 +3,7 @@ package com.huak.home.thiredpage;
 import com.huak.base.dao.DateDao;
 import com.huak.home.dao.thiredpage.ThiredpageEnergyDao;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
      * @return map
      */
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Object> getDatas(Map<String, Object> params) throws Exception {
         Map<String,Object> result = new HashMap<>();
         List<Map<String,Object>> data = new ArrayList<>();
@@ -103,6 +105,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
      * @return string
      */
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Object> getassessment(Map<String, Object> paramsMap) throws Exception{
         Map<String,Object> data = new HashMap<>();
         paramsMap.put("toolOrgType","1");
