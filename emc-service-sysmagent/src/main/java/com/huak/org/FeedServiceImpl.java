@@ -94,7 +94,6 @@ public class FeedServiceImpl implements FeedService{
 
         return feedDao.insertSelective(record);
     }
-
     /**
      * 修改数据
      * @param record

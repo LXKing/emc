@@ -49,7 +49,6 @@ public class CompanyServiceImpl implements CompanyService {
         orgDao.insertSelective(org);
         return companyDao.insertSelective(record);
     }
-
     @Override
     @Transactional(readOnly = true)
     public Company selectByPrimaryKey(String id) {

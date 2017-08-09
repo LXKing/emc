@@ -156,7 +156,6 @@ public class CommunityServiceImpl implements CommunityService {
 	public String getHeatTypeSelectHtmlStr(String heatTypeSelected) {
 		return getSelectHtmlStr(communityDao.getHeatTypeSelectHtmlStr(),heatTypeSelected);
 	}
-	
 	/**
 	 * 查询结果List<Map<String,String>>转为String
 	 * @param list
