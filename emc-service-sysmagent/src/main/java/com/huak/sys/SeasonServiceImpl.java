@@ -31,6 +31,8 @@ public class SeasonServiceImpl implements SeasonService {
     private SeasonDao seasonDao;
     @Resource
     private DateDao dateDao;
+
+    @Transactional(readOnly = true)
     public Season selectByPrimaryKey(String id){
        return seasonDao.selectByPrimaryKey(id);
     }
@@ -59,6 +61,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean checkName(Map<String,Object> map) {
         boolean flag=true;
         List<Season> list = seasonDao.checkName(map);
@@ -75,6 +78,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean checkTime(Map<String, Object> paramsMap) {
         boolean flag=true;
         List<Season> list = seasonDao.checkTime(paramsMap);
@@ -85,11 +89,13 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public String getNowTime() {
         return seasonDao.getNowTime();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> exportSeason(Map<String, Object> paramsMap) {
         return seasonDao.exportSeason(paramsMap);
     }
