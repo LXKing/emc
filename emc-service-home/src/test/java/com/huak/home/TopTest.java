@@ -23,20 +23,18 @@ public class TopTest extends BaseTest{
 
     @Resource
     private  FrameService frameService;
-//    @Test
-//    @Rollback
-//    public void getCostTotal(){
-//        Map<String,String> params = new HashMap<String,String>();
-//        params.put("orgId","1");
-//        params.put("feetType","2");
-//        params.put("startTime","2017-05-05");
-//        params.put("endTime","2017-05-25");
-//        CostVo costVo = frameService.selectCostTotalByMap(params);
-//        Double costAll=Double.valueOf(costVo.getEnergy())
-//                +Double.valueOf(costVo.getDevice())
-//                +Double.valueOf(costVo.getLabor())+Double.valueOf(costVo.getManage())+Double.valueOf(costVo.getOther());
-//        System.out.print(costAll);
-//    }
+    @Test
+    @Rollback
+    public void getCostTotal(){
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("orgId","74");
+        params.put("feetType","2");
+        params.put("startTime","2016-11-15 00:00:00");
+        params.put("endTime","2017-03-15 23:59:59");
+        params.put("tableName","t_emc_final_data_hour_tj");
+        String  eTotal= frameService.selectTopEtotalByMap(params);
+        System.out.print(eTotal);
+    }
 
     @Test
     @Rollback
