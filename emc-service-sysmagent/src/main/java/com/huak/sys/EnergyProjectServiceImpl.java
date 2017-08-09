@@ -1,13 +1,5 @@
 package com.huak.sys;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.github.pagehelper.PageHelper;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
@@ -15,6 +7,12 @@ import com.huak.common.page.PageResult;
 import com.huak.sys.dao.EnergyProjectDao;
 import com.huak.sys.model.EnergyProject;
 import com.huak.sys.model.EnergyProjectVo;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class EnergyProjectServiceImpl implements EnergyProjectService {
@@ -26,6 +24,7 @@ public class EnergyProjectServiceImpl implements EnergyProjectService {
      * 分页查询
      */
 	@Override
+    @Transactional(readOnly = true)
 	public PageResult<EnergyProjectVo> list(
 			Map<String, Object> paramsMap, Page page) {
 		PageHelper.startPage(page.getPageNumber(), page.getPageSize());
@@ -36,7 +35,7 @@ public class EnergyProjectServiceImpl implements EnergyProjectService {
      * 新增
      */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int save(EnergyProject energyProject) {
 		int result = 0;
 		try {
@@ -60,7 +59,7 @@ public class EnergyProjectServiceImpl implements EnergyProjectService {
      * 修改
      */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int edit(EnergyProject energyProject) {
 		int result = 0;
 		try {
@@ -75,7 +74,7 @@ public class EnergyProjectServiceImpl implements EnergyProjectService {
      * 删除
      */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int remove(String id) {
 		int result = 0;
 		try {
@@ -109,6 +108,7 @@ public class EnergyProjectServiceImpl implements EnergyProjectService {
 	 * 采暖季下拉框html
 	 */
 	@Override
+    @Transactional(readOnly = true)
 	public String getSeasonSelectHtml(Map<String, Object> paramsMap, String selectedId) {
 		List<Map<String,String>> listMap = energyProjectDao.getSeasonSelectHtml(paramsMap);
 		StringBuilder sb = new StringBuilder();
