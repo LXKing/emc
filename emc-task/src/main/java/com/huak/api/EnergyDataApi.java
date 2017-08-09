@@ -142,4 +142,14 @@ public class EnergyDataApi {
             return jsonObj;
         }
     }
+
+    /**
+     * 测试方法
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test( HttpServletRequest request){
+        return "su";
+    }
 }
