@@ -82,6 +82,7 @@ public class OrgServiceImpl implements OrgService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Org> selectOrgAll(Map<String,Object> params) {
         System.out.print("----------------------service-------------------------");
         List<Org> lad = orgDao.selectOrgAll(params);
@@ -89,6 +90,7 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean insertOrg(Org org) {
         boolean flag=false;
         int i =orgDao.insert(org);
@@ -99,6 +101,7 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean checkOrgName(String orgName) {
 
         boolean flag=false;
@@ -110,12 +113,14 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Org selectByPrimaryKey(String id) {
         Org org = orgDao.selectByPrimaryKey(Long.valueOf(id));
         return org;
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean updateOrg(Org org) {
           boolean flag=false;
           int i =  orgDao.updateByPrimaryKeySelective(org);
@@ -130,6 +135,7 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectOrgByMap(Map<String, Object> params) {
         return orgDao.selectOrgByMap(params);
     }
@@ -150,12 +156,14 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectOrgTree(Map<String, Object> paramsMap) {
         List<Map<String, Object>> data = orgDao.selectOrgTree(paramsMap);
         return data;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectFeedByid(String orgId) {
         Map<String, Object> paramsMap = new HashMap<String, Object>();
         paramsMap.put("orgId",orgId);
@@ -163,6 +171,7 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectStationByid(String orgId) {
         Map<String, Object> paramsMap = new HashMap<String, Object>();
         paramsMap.put("orgId",orgId);

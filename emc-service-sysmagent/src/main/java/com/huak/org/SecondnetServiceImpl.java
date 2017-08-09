@@ -66,20 +66,24 @@ public class SecondnetServiceImpl implements SecondnetService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public List<Map<String, Object>> exportLines(Map<String, Object> paramsMap) {
         return secondnetDao.selectLineByMap(paramsMap);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public int insert(Secondnet record) {
         return secondnetDao.insert(record);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Secondnet> selectLineAll(Map<String, Object> paramsMap) {
         return secondnetDao.selectPageByMap(paramsMap);
     }
     @Override
+    @Transactional(readOnly = false)
     public boolean checkNetName(Map<String, Object> paramsMap) {
         boolean flag=false;
         List<Secondnet> list =  secondnetDao.selectPageByMap(paramsMap);
@@ -92,6 +96,7 @@ public class SecondnetServiceImpl implements SecondnetService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean checkNetCode(Map<String, Object> paramsMap) {
         boolean flag=false;
         List<Secondnet> list =  secondnetDao.selectPageByMap(paramsMap);
