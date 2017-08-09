@@ -1357,9 +1357,7 @@ function chart07Fun() {
                 if (tb_flag == null) {
                     $("#coal_tb").html("(" + total_tb + "→)");
                 }
-            } else {
-
-            }
+            } else {}
         },
         error: function (e) {
 
