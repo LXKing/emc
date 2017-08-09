@@ -23,7 +23,7 @@
         </constructor>
     </resultMap>
     <!--标煤总量-->
-    <select id="selectTopEtotalByMap" parameterType="java.util.Map" resultType="java.lang.String">
+    <select id="selectTopEtotalByMap" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT ROUND(SUM(a.BM),1) from (
         SELECT  sum(h.BM) BM,h.TYPE,ou.UNITTYPE  from (
         SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM
@@ -38,10 +38,10 @@
         FROM ${tableName} fd LEFT JOIN t_emc_energy_type et on fd.TYPEID=et.ID
         WHERE   1=1
         <if test="startTime != null and startTime !=''">
-            AND fd.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
+            AND fd.DOSAGE_TIME <![CDATA[>=]]>  #{startTime,jdbcType=VARCHAR}
         </if>
         <if test="endTime != null and endTime !=''">
-            AND fd.DOSAGE_TIME  &lt;= #{endTime,jdbcType=VARCHAR}
+            AND fd.DOSAGE_TIME  <![CDATA[<=]]> #{endTime,jdbcType=VARCHAR}
         </if>
             and et.TYPE!=4
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
