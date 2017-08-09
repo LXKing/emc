@@ -54,6 +54,7 @@ public class FeedServiceImpl implements FeedService{
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> exportFeeds(Map<String, Object> paramsMap) {
         return feedDao.selectFeedByMap(paramsMap);
     }
@@ -64,6 +65,7 @@ public class FeedServiceImpl implements FeedService{
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectFeedByMap(Map<String, Object> paramsMap) {
         return feedDao.selectFeedByMap(paramsMap);
     }
@@ -99,6 +101,7 @@ public class FeedServiceImpl implements FeedService{
      * @return
      */
     @Override
+    @Transactional(readOnly = false)
     public int updateByPrimaryKeySelective(Feed record) {
 
         return feedDao.updateByPrimaryKeySelective(record);
@@ -110,6 +113,7 @@ public class FeedServiceImpl implements FeedService{
      * @return
      */
     @Override
+    @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
         return feedDao.deleteByStatus(id);
     }

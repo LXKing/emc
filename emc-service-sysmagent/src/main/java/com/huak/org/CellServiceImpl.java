@@ -34,7 +34,7 @@ public class CellServiceImpl implements CellService {
 	 * 查询单元列表信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public PageResult<Cell> list(Map<String, String> params,Page page) {
 		PageHelper.startPage(page.getPageNumber(), page.getPageSize());
 		return Convert.convert(cellDao.selectByPage(params));
@@ -44,7 +44,7 @@ public class CellServiceImpl implements CellService {
 	 * 新增单元信息
 	 */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int save(Cell cell) {
 		int result = 0;
 		try {
@@ -60,7 +60,7 @@ public class CellServiceImpl implements CellService {
 	 * 修改单元信息
 	 */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int edit(Cell cell) {
 		int result = 0;
 		try {
@@ -75,7 +75,7 @@ public class CellServiceImpl implements CellService {
 	 * 删除单元信息
 	 */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int delete(String cellId) {
 		int result = 0;
 		try {
@@ -90,7 +90,7 @@ public class CellServiceImpl implements CellService {
 	 * 根据主键获取单元信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public Cell get(String id) {
 		return cellDao.get(id);
 	}
@@ -99,25 +99,25 @@ public class CellServiceImpl implements CellService {
 	 * 导出单元信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public List<Map<String, Object>> exportCell(Map<String, String> param) {
 		return cellDao.export(param);
 	}
 
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return communityService.getCompanySelectHtmlStr(selectedComId);
 	}
 
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCommunitySelectHtmlStr(Map<String, String> param, String selectedCommunityId) {
 		return communityService.getCommunitySelectHtmlStr(param, selectedCommunityId);
 	}
 	
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getBanSelectHtmlStr(Map<String, String> param, String selectBanId) {
 		return communityService.getBanSelectHtmlStr(param, selectBanId);
 	}
@@ -126,7 +126,7 @@ public class CellServiceImpl implements CellService {
 	 * 单元名称唯一
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public Long checkCellName(Map<String,String> param) {
 		return cellDao.selectCellCount(param);
 	}

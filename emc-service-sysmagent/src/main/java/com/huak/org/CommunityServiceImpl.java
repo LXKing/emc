@@ -34,7 +34,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 查询小区列表信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public PageResult<Community> list(Map<String, String> params,Page page) {
 		PageHelper.startPage(page.getPageNumber(), page.getPageSize());
 		return Convert.convert(communityDao.selectByPage(params));
@@ -44,7 +44,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 新增小区信息
 	 */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int save(Community community) {
 		int result = 0;
 		try {
@@ -60,7 +60,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 修改小区信息
 	 */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int edit(Community community) {
 		int result = 0;
 		try {
@@ -75,7 +75,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 删除小区信息
 	 */
 	@Override
-	@Transactional(rollbackFor=Exception.class)
+    @Transactional(readOnly = false)
 	public int delete(String communityId) {
 		int result = 0;
 		try {
@@ -90,7 +90,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 根据主键获取小区信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public Community get(String id) {
 		return communityDao.get(id);
 	}
@@ -99,7 +99,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 导出小区信息
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public List<Map<String, Object>> exportCommunity(Map<String, String> param) {
 		return communityDao.export(param);
 	}
@@ -111,7 +111,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 公司下拉框HTML文
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCompanySelectHtmlStr(String selectedComId) {
 		return getSelectHtmlStr(communityDao.selectCompanySelectHtmlStr(),selectedComId);
 	}
@@ -122,7 +122,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * @return
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCommunitySelectHtmlStr(Map<String,String> params,String selectedCommunityId) {
 		return getSelectHtmlStr(communityDao.selectCommunitySelectHtmlStr(params),selectedCommunityId);
 	}
@@ -131,7 +131,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 楼座下拉框HTML文
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getBanSelectHtmlStr(Map<String, String> params, String selectedBanId) {
 		return getSelectHtmlStr(communityDao.selectBanSelectHtmlStr(params),selectedBanId);
 	}
@@ -140,19 +140,19 @@ public class CommunityServiceImpl implements CommunityService {
 	 * 单元下拉框HTML文
 	 */
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getCellSelectHtmlStr(Map<String, String> params, String selectedCellId) {
 		return getSelectHtmlStr(communityDao.selectCellSelectHtmlStr(params),selectedCellId);
 	}
 	
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getLineSelectHtmlStr(Map<String, String> param,String selectedLineId) {
 		return getSelectHtmlStr(communityDao.selectLineSelectHtmlStr(param), selectedLineId);
 	}
 	
 	@Override
-	@Transactional
+    @Transactional(readOnly = true)
 	public String getHeatTypeSelectHtmlStr(String heatTypeSelected) {
 		return getSelectHtmlStr(communityDao.getHeatTypeSelectHtmlStr(),heatTypeSelected);
 	}
