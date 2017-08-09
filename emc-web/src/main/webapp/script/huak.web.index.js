@@ -1378,6 +1378,7 @@ function chart07Fun() {
 
 /*能耗明细图表初始化*/
 function initChart(kedu1, mx, bm_total) {
+    debugger;
     bm_total = toDecimal(bm_total);
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
     var colorvalue = null;
@@ -1386,7 +1387,7 @@ function initChart(kedu1, mx, bm_total) {
         max = bm_total *3;
         colorvalue = [ [kedu1, '#df5f4a'],[0.75, '#df5f4a'],[1, '#df5f4a'] ];
     }else{
-        max = parseInt(mx/7500).toFixed(0);
+        max = parseInt(mx/0.75).toFixed(0);
         colorvalue = [ [kedu1, '#3b96db'],[0.75, '#32bbb6'],[1, '#df5f4a'] ];
     }
     var option1 = {
