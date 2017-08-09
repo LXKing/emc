@@ -48,6 +48,10 @@ public class CollectionUtil {
         Map<String, Object> map = new HashMap<String, Object>();
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
+            //过滤序列化字段
+            if("serialVersionUID".equals(field.getName())){
+                continue;
+            }
             field.setAccessible(true);
             PropertyDescriptor pd = new PropertyDescriptor(field.getName(), obj.getClass());
             Method getMethod = pd.getReadMethod();
