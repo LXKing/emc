@@ -1358,11 +1358,11 @@ function chart07Fun() {
                     $("#coal_tb").html("(" + total_tb + "→)");
                 }
             } else {
-                alert("系统错误！");
+
             }
         },
         error: function (e) {
-            alert("访问失败");
+
         }
     });
 
