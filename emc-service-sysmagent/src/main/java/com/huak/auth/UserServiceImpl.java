@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 	 * 分页查询用户信息
 	 */
 	@Override
+    @Transactional(readOnly = true)
 	public PageResult<User> queryByPage(Map<String, String> paramsMap, Page page) {
 		PageHelper.startPage(page.getPageNumber(), page.getPageSize());
 		return Convert.convert(userDao.selectPageByMap(paramsMap));
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService {
 	 * 查询组织机构下的员工信息
 	 */
 	@Override
+    @Transactional(readOnly = true)
 	public List<OrgEmpVo> queryOrgEmpByOrgId(String orgId) {
 		return userDao.selectOrgEmpById(orgId);
 	}
@@ -57,6 +59,7 @@ public class UserServiceImpl implements UserService {
 	 * 添加用户信息
 	 */
 	@Override
+    @Transactional(readOnly = false)
 	public int addUser(User user) throws RuntimeException{
 		int ret = 0;
 		try {
@@ -113,6 +116,7 @@ public class UserServiceImpl implements UserService {
 	 * 更新用户信息，编辑
 	 */
 	@Override
+    @Transactional(readOnly = false)
 	public int editUser(User user) throws Exception{
 		int ret = 0;
 		try{
@@ -130,6 +134,7 @@ public class UserServiceImpl implements UserService {
 	 * 删除用户信息，可批量
 	 */
 	@Override
+    @Transactional(readOnly = false)
 	public int removeUsers(String[] ids) throws Exception{
 		int ret = 0;
 		try{
@@ -145,6 +150,7 @@ public class UserServiceImpl implements UserService {
 	 * 重置用户密码
 	 */
 	@Override
+    @Transactional(readOnly = false)
 	public String resetPwd(String[] ids) throws Exception {
 		String initPwd = null;
 		try{
@@ -168,6 +174,7 @@ public class UserServiceImpl implements UserService {
 	 * 禁用/启用用户
 	 */
 	@Override
+    @Transactional(readOnly = false)
 	public int editUseStatus(String status, String[] ids) throws Exception{
 		int ret = 0;
 		try{
@@ -189,6 +196,7 @@ public class UserServiceImpl implements UserService {
 	 * 校验登录名称是否唯一
 	 */
 	@Override
+    @Transactional(readOnly = true)
 	public Long checkLogin(String login) {
 		return userDao.selectUserCountByLogin(login);
 	}
@@ -197,6 +205,7 @@ public class UserServiceImpl implements UserService {
 	 * 导出符合条件的用户信息
 	 */
 	@Override
+    @Transactional(readOnly = true)
 	public List<Map<String, Object>> exportUser(Map<String, String> paramsMap) {
 		List<Map<String, Object>> userList = new ArrayList<Map<String,Object>>();
 		try {
@@ -255,6 +264,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public User findByLoginAndPwd(User user) {
         return userDao.findByLoginAndPwd(user);
     }
@@ -312,6 +322,7 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
+    @Transactional(readOnly = false)
 	public void update2LoginSuccess(String id) {
 		userDao.update2LoginSuccess(id);
 	}

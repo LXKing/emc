@@ -26,27 +26,32 @@ public class MenuServiceImpl implements MenuService{
     private DateDao dateDao;
 
     @Override
+    @Transactional(readOnly = false)
     public int deleteByPrimaryKey(String id) {
         return menuDao.deleteByPrimaryKey(id);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public int insert(Menu record) {
         record.setCreatTime(dateDao.getTime());
         return menuDao.insert(record);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Menu selectByPrimaryKey(String id) {
         return menuDao.selectByPrimaryKey(id);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public int updateByPrimaryKey(Menu record) {
         return menuDao.updateByPrimaryKey(record);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageResult<Menu> queryByPage(Map<String, String> params, Page page) {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         List<Menu> data = menuDao.selectPageByName(params);
@@ -54,17 +59,20 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectTree(Map<String, Object> params) {
         List<Map<String,Object>> resultMap =  menuDao.selectMenuTree(params);
         return resultMap;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int checkMenuName(Map<String, String> paramsMap) {
         return menuDao.selectCheck(paramsMap);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean delete(String id) {
          String[] ids =id.split(",");
          return menuDao.delete(ids)>0?true:false;

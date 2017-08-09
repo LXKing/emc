@@ -9,6 +9,7 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -28,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public PageResult<Employee> queryByPage(Map<String, Object> paramsMap, Page page) {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(employeeDao.selectPageByMap(paramsMap));
@@ -40,6 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @throws RuntimeException
      */
     @Override
+    @Transactional(readOnly = false)
     public int addEmployee(Employee employee) throws RuntimeException {
         employee.setCreateTime(dateDao.getTime());
         return employeeDao.insert(employee);
@@ -52,6 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @throws Exception
      */
     @Override
+    @Transactional(readOnly = true)
     public Employee getEmployeeById(Long id) throws Exception {
         return employeeDao.selectByPrimaryKey(id);
     }
@@ -63,6 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @throws Exception
      */
     @Override
+    @Transactional(readOnly = false)
     public int editEmployee(Employee employee) throws Exception {
         return employeeDao.updateByPrimaryKey(employee);
     }
@@ -74,6 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @throws Exception
      */
     @Override
+    @Transactional(readOnly = false)
     public int removeEmployee(String ids) throws Exception {
         return employeeDao.deleteByStatus(ids);
     }
@@ -84,6 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Employee> selectByMap(Map<String, Object> paramsMap) {
         return employeeDao.selectPageByMap(paramsMap);
     }
@@ -94,6 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> export(Map<String, Object> paramsMap) {
         return employeeDao.export(paramsMap);
     }
