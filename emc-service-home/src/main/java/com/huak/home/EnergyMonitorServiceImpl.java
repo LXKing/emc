@@ -103,7 +103,6 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     public List<EnergySecond> exportAssessmentIndicators(Map<String, Object> params) {
         return energySecondDao.exportAssessmentIndicators(params);
     }
-
     /**
 	 * 获取折线数据
 	 */

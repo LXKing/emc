@@ -106,7 +106,6 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
     public List<ConsSecond> exportAssessmentIndicators(Map<String, Object> params) {
         return consAnalysisDao.exportAssessmentIndicators(params);
     }
-
     /**
      * 查询单耗
      */
