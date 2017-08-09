@@ -149,7 +149,8 @@ public class EnergyDataApi {
      * @return
      */
     @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @ResponseBody
     public String test( HttpServletRequest request){
-        return "su";
+        return "true";
     }
 }

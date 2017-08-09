@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static String RSESSIONID = "RSESSIONID";
-    private static int EXPIRETIME = 1000;
+    private static int EXPIRETIME = 3600;
 
     //EMC service
     @Resource
@@ -60,11 +60,13 @@ public class LoginInterceptor implements HandlerInterceptor {
                              Object arg2) throws Exception {
         Cookie[] cookies = request.getCookies();
         Jedis jedis = RedisTools.getJedis();
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
+        logger.error("request------>getContextPath:"+request.getContextPath()+" getLocalAddr:"+request.getLocalAddr()+" getRemoteAddr:"+request.getRemoteAddr());
 
         try {
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
+                    logger.error("cookie----->getName:"+cookie.getName()+"getValue"+cookie.getValue());
 //					   if(cookie.getName().equals(RSESSIONID)){ 
                     if (RSESSIONID.equals(cookie.getName())) {
                         //是否有
@@ -76,10 +78,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                             if (null == orid || !rid.equals(orid) || "".equals(orid)) {
                                 isSession = true;
                             }
-
+                            logger.error("isSession----->"+isSession);
                             if(isSession){ // EMC模拟登陆
                                 String userName = jedis.hget(cookie.getValue(), "username");
                                 User user = userService.getUserByName(userName);
+                                logger.error("user----->"+user);
                                 if(null == user){
                                     //response.sendRedirect(request.getContextPath() + "/login");
                                     response.sendRedirect(Constants.LOGIN_URL);
@@ -97,6 +100,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                                 Company company = null;
                                 if(null == session.getAttribute(Constants.SESSION_KEY)){
                                     user = userService.getUserByName(userName);
+                                    session.setAttribute(Constants.SESSION_KEY, user);
                                 }
                                 if(null == session.getAttribute(Constants.SESSION_ORG_KEY)){
                                     if(null == user || null == user.getOrgId()){
@@ -105,6 +109,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                                         return false;
                                     }else{
                                         org = orgService.selectByPrimaryKey(user.getOrgId());
+                                        session.setAttribute(Constants.SESSION_ORG_KEY, org);
                                     }
 
                                 }
@@ -115,12 +120,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                                         return false;
                                     }else{
                                         company = companyService.selectByPrimaryKey(org.getComId());
+                                        session.setAttribute(Constants.SESSION_COM_KEY, company);
                                     }
 
                                 }
-                                session.setAttribute(Constants.SESSION_KEY, user);
-                                session.setAttribute(Constants.SESSION_ORG_KEY, org);
-                                session.setAttribute(Constants.SESSION_COM_KEY, company);
+
                             }
                             session.setAttribute("rid", rid);
                             jedis.expire(cookie.getValue(), EXPIRETIME);
@@ -134,6 +138,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 }
             }
 
+            logger.error("session------>:"+session.getAttribute(Constants.SESSION_KEY));
             if (null != session.getAttribute(Constants.SESSION_KEY)) {
                 return true;
             }

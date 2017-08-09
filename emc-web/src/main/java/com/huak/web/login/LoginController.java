@@ -162,7 +162,7 @@ public class LoginController {
      * 跳转首页
      * @return
      */
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value ={"","/index","/"}, method = RequestMethod.GET)
     public String indexPage(){
         logger.info("跳转首页");
         return "index";
