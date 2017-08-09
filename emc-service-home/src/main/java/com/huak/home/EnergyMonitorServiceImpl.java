@@ -91,7 +91,6 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params) {
         return energySecondDao.fgsEnergyRanking(params);
     }
-
     /**
      * 导出分公司列表
      *

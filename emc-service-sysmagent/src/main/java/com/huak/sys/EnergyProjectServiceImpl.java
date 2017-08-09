@@ -94,7 +94,6 @@ public class EnergyProjectServiceImpl implements EnergyProjectService {
 			Map<String, Object> paramsMap) {
 		return energyProjectDao.export(paramsMap);
 	}
-
 	/**
      * 校验唯一性
      */

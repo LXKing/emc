@@ -94,7 +94,6 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
     public List<Map<String, Object>> fgsEnergyRanking(Map<String, Object> params) {
         return consAnalysisDao.fgsEnergyRanking(params);
     }
-
     /**
      * 导出公司单耗列表
      *
