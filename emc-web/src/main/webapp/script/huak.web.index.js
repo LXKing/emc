@@ -1230,7 +1230,6 @@ function chart06Fun() {
     }());
     wave.start();
 }
-
 /*能耗明细*/
 function chart07Fun() {
     $.ajax({
