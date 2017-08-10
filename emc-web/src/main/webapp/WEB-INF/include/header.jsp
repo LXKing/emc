@@ -17,11 +17,11 @@
             </button>-->
             <div class="navbar-header pull-left">
                 <a href="index.html" class="navbar-brand">
-                    <c:if test="${sessionScope.company.logoImg eq null||sessionScope.company.logoImg eq ''}">
+                    <c:if test="${sessionScope.com_key.logoImg eq null||sessionScope.com_key.logoImg eq ''}">
                         <img src="${web}/static/img/logo.png" width="296" height="31" alt="华热能源管控" />
                     </c:if>
-                    <c:if test="${sessionScope.company.logoImg ne null&&sessionScope.company.logoImg ne ''}">
-                        <img src="${web}/static/img/${sessionScope.company.logoImg}" width="296" height="31" alt="${sessionScope.company.cname}" />
+                    <c:if test="${sessionScope.com_key.logoImg ne null&&sessionScope.com_key.logoImg ne ''}">
+                        <img src="${web}/static/img/${sessionScope.com_key.logoImg}" width="296" height="31" alt="${sessionScope.com_key.cname}" />
                     </c:if>
 
 
