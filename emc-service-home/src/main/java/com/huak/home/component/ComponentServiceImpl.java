@@ -727,123 +727,135 @@ public class ComponentServiceImpl implements ComponentService{
                 /*标煤同比增长*/
                 Double jn_total = (double) data.get("bm_total");
                 Double qn_total = (double) data.get("qn_bm_total");
-                if(jn_total>qn_total){
-                    data.put("total_flag",true);
-                }
-                if(jn_total == qn_total){
-                    data.put("total_flag",null);
-                }
-                if(jn_total < qn_total){
-                    data.put("total_flag",false);
-                }
+
                 if(qn_total!= 0){
+                    if(jn_total>qn_total){
+                        data.put("total_flag",true);
+                    }
+                    if(jn_total == qn_total){
+                        data.put("total_flag",null);
+                    }
+                    if(jn_total < qn_total){
+                        data.put("total_flag",false);
+                    }
                     DecimalFormat df = new DecimalFormat("0.00");
                     String total_tb =String.valueOf(df.format(Math.abs(jn_total-qn_total)/qn_total*100));
                     data.put("total_tb",total_tb+"%");
                 }else{
-                    data.put("total_tb","#%");
+                    data.put("total_flag",null);
+                    data.put("total_tb","0%");
                 }
 
                 /*水*/
 
                 double jn_whater = (double) data.get("whater");
                 double qn_whater = (double) data.get("qn_whater");
-                if(jn_whater>qn_whater){
-                    data.put("whater_flag",true);
-                }
-                if(jn_whater == qn_whater){
-                    data.put("whater_flag",null);
-                }
-                if(jn_whater < qn_whater){
-                    data.put("whater_flag",false);
-                }
+
                 if(qn_whater!= 0){
+                    if(jn_whater>qn_whater){
+                        data.put("whater_flag",true);
+                    }
+                    if(jn_whater == qn_whater){
+                        data.put("whater_flag",null);
+                    }
+                    if(jn_whater < qn_whater){
+                        data.put("whater_flag",false);
+                    }
                     DecimalFormat df = new DecimalFormat("0.00");
                     String total_tb =String.valueOf(df.format(Math.abs(jn_whater-qn_whater)/qn_whater*100));
                     data.put("whater_tb",total_tb+"%");
                 }else{
-                    data.put("whater_tb","#%");
+
+                    data.put("whater_flag",null);
+                    data.put("whater_tb","0%");
                 }
 
                 /*电*/
 
                 double jn_electric = (double) data.get("electric");
                 double qn_electric = (double) data.get("qn_electric");
-                if(jn_electric>qn_electric){
-                    data.put("electric_flag",true);
-                }
-                if(jn_electric == qn_electric){
-                    data.put("electric_flag",null);
-                }
-                if(jn_electric < qn_electric){
-                    data.put("electric_flag",false);
-                }
+
                 if(qn_electric!= 0){
+                    if(jn_electric>qn_electric){
+                        data.put("electric_flag",true);
+                    }
+                    if(jn_electric == qn_electric){
+                        data.put("electric_flag",null);
+                    }
+                    if(jn_electric < qn_electric){
+                        data.put("electric_flag",false);
+                    }
                     DecimalFormat df = new DecimalFormat("0.00");
                     String electric_tb =String.valueOf(df.format(Math.abs(jn_electric-qn_electric)/qn_electric*100));
                     data.put("electric_tb",electric_tb+"%");
                 }else{
-                    data.put("electric_tb","#%");
+                    data.put("electric_flag",null);
+                    data.put("electric_tb","0%");
                 }
                 /*气*/
 
                 double jn_gas = (double) data.get("gas");
                 double qn_gas = (double) data.get("qn_gas");
-                if(jn_gas>qn_gas){
-                    data.put("gas_flag",true);
-                }
-                if(jn_gas == qn_gas){
-                    data.put("gas_flag",null);
-                }
-                if(jn_gas < qn_gas){
-                    data.put("gas_flag",false);
-                }
+
                 if(qn_gas!= 0){
+                    if(jn_gas>qn_gas){
+                        data.put("gas_flag",true);
+                    }
+                    if(jn_gas == qn_gas){
+                        data.put("gas_flag",null);
+                    }
+                    if(jn_gas < qn_gas){
+                        data.put("gas_flag",false);
+                    }
                     DecimalFormat df = new DecimalFormat("0.00");
                     String gas_tb =String.valueOf(df.format(Math.abs(jn_gas-qn_gas)/qn_gas*100));
                     data.put("gas_tb",gas_tb+"%");
                 }else{
-                    data.put("gas_tb","#%");
+                    data.put("gas_flag",null);
+                    data.put("gas_tb","0%");
                 }
                 /*热*/
                 double jn_heat = (double) data.get("heat");
                 double qn_heat = (double) data.get("qn_heat");
-                if(jn_heat>qn_heat){
-                    data.put("heat_flag",true);
-                }
-                if(jn_heat == qn_heat){
-                    data.put("heat_flag",null);
-                }
-                if(jn_heat < qn_heat){
-                    data.put("heat_flag",false);
-                }
+
                 if(qn_heat!= 0){
+                    if(jn_heat>qn_heat){
+                        data.put("heat_flag",true);
+                    }
+                    if(jn_heat == qn_heat){
+                        data.put("heat_flag",null);
+                    }
+                    if(jn_heat < qn_heat){
+                        data.put("heat_flag",false);
+                    }
                     DecimalFormat df = new DecimalFormat("0.00");
                     String heat_tb =String.valueOf(df.format(Math.abs(jn_heat-qn_heat)/qn_heat*100));
                     data.put("heat_tb",heat_tb+"%");
                 }else{
-                    data.put("heat_tb","#%");
+                    data.put("heat_flag",null);
+                    data.put("heat_tb","0%");
                 }
 
 
                 /*煤*/
                 double jn_coal = (double) data.get("coal");
                 double qn_coal = (double) data.get("qn_coal");
-                if(jn_coal>qn_coal){
-                    data.put("coal_flag",true);
-                }
-                if(jn_coal == qn_coal){
-                    data.put("coal_flag",null);
-                }
-                if(jn_coal < qn_coal){
-                    data.put("coal_flag",false);
-                }
                 if(qn_coal!= 0){
+                    if(jn_coal>qn_coal){
+                        data.put("coal_flag",true);
+                    }
+                    if(jn_coal == qn_coal){
+                        data.put("coal_flag",null);
+                    }
+                    if(jn_coal < qn_coal){
+                        data.put("coal_flag",false);
+                    }
                     DecimalFormat df = new DecimalFormat("0.00");
                     String coal_tb =String.valueOf(df.format(Math.abs(jn_coal-qn_coal)/qn_coal*100));
                     data.put("coal_tb",coal_tb+"%");
                 }else{
-                    data.put("coal_tb","#%");
+                    data.put("coal_flag",null);
+                    data.put("coal_tb","0%");
                 }
 
                 double pcd = 0.0;
