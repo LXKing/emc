@@ -63,6 +63,16 @@
             return deferred.state() == "resolved" ? true : false;
         }, "机构名称已存在");
 
+        //校验排序值 正整数
+        $.validator.addMethod("isCellNum", function(value, element) {
+            var reg = new RegExp("^[0-9]*$");
+            if(!reg.test(value)){
+                //top.layer.msg("请输入数字!");
+                return false;
+            }else{
+                return true;
+            }
+        }, "请确认输入的数值为正整数");
         $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
             $(this).closest('.form-group').removeClass('has-error');
             $(this).siblings('.help-block').remove();
@@ -94,6 +104,10 @@
                 required: true,
                         minlength: 2,
                         checkUnique: true
+            },
+            sort:{
+                required:true,
+                isCellNum:true
             }
         },
         messages: {
@@ -152,6 +166,13 @@
                         <input id="orgName" name="orgName" class="form-control orgNameID" type="text" maxlength="8" placeholder="请输入机构名称">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="red">*</span>序号：</label>
+
+                    <div class="col-sm-8">
+                    <input name="sort" id="sort" class="form-control" type="text" maxlength="8" placeholder="请输入序号">
+                    </div>
+                </div>
                 <%--<div class="form-group">--%>
                     <%--<label class="col-sm-3 control-label"><span class="red">*</span>机构代码：</label>--%>
 
@@ -185,8 +206,8 @@
                         <%--<select id="typeId" name="typeId" class="chosen-select form-control">--%>
                             <%--<option value="">请选择类型</option>--%>
                             <%--<c:forEach items="${sysdic}" var="item" varStatus="status" >--%>
-                                <%--&lt;%&ndash;　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;　　var id = "${status.id}";//加引号&ndash;%&gt;--%>
+                                <%--<%--　　var value = ${item.cname}; //传递过来的是int或float类型，不需要加引号--%>
+                                <%--<%--　　var id = "${status.id}";//加引号--%>
                                 <%--<option value="${item.key}">${item.value}</option>--%>
                             <%--</c:forEach>--%>
                         <%--</select>--%>
