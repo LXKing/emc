@@ -20,31 +20,31 @@ public class ConsSecond implements Serializable{
     private String id;
     /* 主键 */
     private String orgName;
-    /* 总单耗（Tce/㎡） */
+    /* 总单耗（Tce/m²） */
     private Double totalBq;
     private Double totalTq;
     private Double totalAn;
-    /* 水单耗（t/㎡） */
+    /* 水单耗（t/m²） */
     private Double waterBq;
     private Double waterTq;
     private Double waterAn;
-    /* 电单耗(kW·h/㎡)*/
+    /* 电单耗(kW·h/m²)*/
     private Double electricBq;
     private Double electricTq;
     private Double electricAn;
-    /* 气单耗（m³/㎡） */
+    /* 气单耗（m³/m²） */
     private Double gasBq;
     private Double gasTq;
     private Double gasAn;
-    /* 热单耗（GJ/㎡） */
+    /* 热单耗（GJ/m²） */
     private Double heatBq;
     private Double heatTq;
     private Double heatAn;
-    /* 煤单耗（t/㎡） */
+    /* 煤单耗（t/m²） */
     private Double coalBq;
     private Double coalTq;
     private Double coalAn;
-    /* 油单耗（L/㎡） */
+    /* 油单耗（L/m²） */
     private Double oilBq;
     private Double oilTq;
     private Double oilAn;

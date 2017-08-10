@@ -371,7 +371,7 @@ $(function () {
                                 <div class="input-group">
                                     <input name="heatCapacity" class="form-control" type="text" maxlength="16" value="${object.heatCapacity}"
                                            placeholder="请输入供热能力">
-                                    <span class="input-group-addon">㎡</span>
+                                    <span class="input-group-addon">m²</span>
                                 </div>
                             </div>
                         </div>

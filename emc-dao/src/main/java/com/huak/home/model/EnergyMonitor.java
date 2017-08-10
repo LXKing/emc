@@ -48,7 +48,7 @@ public class EnergyMonitor implements Serializable{
     private Double dosage;
 
     /**
-     *能源面积(㎡)
+     *能源面积(m²)
      * @preserve 声明此方法不被JOC混淆
      */
     private Double area;

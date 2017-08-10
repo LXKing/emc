@@ -28,15 +28,15 @@
                     $(".costAll").html(data.all.costAll + "万元");
                 }
 //                if (data.all.yardage == null || data.all.yardage == '') {
-//                    $(".yardage").html(0 + " Tce/㎡");
+//                    $(".yardage").html(0 + " Tce/m²");
 //                } else {
-//                    $(".yardage").html(data.all.yardage + " Tce/㎡");
+//                    $(".yardage").html(data.all.yardage + " Tce/m²");
 //                }
-//                $(".zyardage").html(2358 + " GJ/㎡");
+//                $(".zyardage").html(2358 + " GJ/m²");
 //                if (data.all.priceArea == null || data.all.priceArea == '') {
-//                    $(".priceArea").html(0 + " 万㎡");
+//                    $(".priceArea").html(0 + " 万m²");
 //                } else {
-//                    $(".priceArea").html(data.all.priceArea + " 万㎡");
+//                    $(".priceArea").html(data.all.priceArea + " 万m²");
 //                }
 
             }
@@ -64,15 +64,15 @@
 //                    $(".costAll").html(data.all.costAll + " 万元");
 //                }
                 if (data.all.yardage == null || data.all.yardage == '') {
-                    $(".yardage").html(0 + "Tce/㎡");
+                    $(".yardage").html(0 + "Tce/m²");
                 } else {
-                    $(".yardage").html(data.all.yardage + "Tce/㎡");
+                    $(".yardage").html(data.all.yardage + "Tce/m²");
                 }
-                $(".zyardage").html(0 + "GJ/㎡");
+                $(".zyardage").html(0 + "GJ/m²");
                 if (data.all.priceArea == null || data.all.priceArea == '') {
-                    $(".priceArea").html(0 + "万㎡");
+                    $(".priceArea").html(0 + "万m²");
                 } else {
-                    $(".priceArea").html(data.all.priceArea + "万㎡");
+                    $(".priceArea").html(data.all.priceArea + "万m²");
                 }
 
             }
@@ -1313,7 +1313,7 @@ function chart07Fun() {
                     $("#electric_tb").html("(" + total_tb + "→)");
                 }
                 /*气*/
-                $("#gas").html(toFormatNumber(result.object.gas,0) + "M3");
+                $("#gas").html(toFormatNumber(result.object.gas,0) + "m³");
                 var tb_flag = result.object.gas_flag;
                 var total_tb = result.object.gas_tb;
                 if (tb_flag == true) {
@@ -1986,7 +1986,7 @@ function chart13Fun() {
                 var recentdata = result.object;
                 var recenthtml = "";
                 var recentlisthtml = "";
-                var unitlist = ['T/㎡', 'kwh/㎡', 'm3/㎡', 'GJ/㎡'];
+                var unitlist = ['T/m²', 'kW·h/m²', 'm³/m²', 'GJ/m²'];
                 for (var i = 0; i < recentdata.length; i++) {
                     recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
                     recentlisthtml += "<ul>";

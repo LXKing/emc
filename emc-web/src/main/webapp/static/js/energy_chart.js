@@ -936,7 +936,7 @@ function chart09Fun() {
 	var barchart01 = echarts.init(document.getElementById('barchart01'));
 	var option = {
 		title: {
-			subtext: '分公司能耗 (单位: GJ/㎡)',
+			subtext: '分公司能耗 (单位: GJ/m²)',
 			top: '-18px',
 			left: '35px',
 			subtextStyle: {
@@ -1054,7 +1054,7 @@ function chart10Fun() {
 	var barchart02 = echarts.init(document.getElementById('barchart02'));
 	var option = {
 		title: {
-			subtext: '分公司能耗 (单位: GJ/㎡)',
+			subtext: '分公司能耗 (单位: GJm²㎡)',
 			top: '-18px',
 			left: '35px',
 			subtextStyle: {
@@ -1398,7 +1398,7 @@ function chart12Fun() {
 	var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
 	var option = {
 		title: {
-			subtext: '能源流能耗 (单位: GJ/㎡)',
+			subtext: '能源流能耗 (单位: Gm²/㎡)',
 			top: '-18px',
 			left: '35px',
 			subtextStyle: {

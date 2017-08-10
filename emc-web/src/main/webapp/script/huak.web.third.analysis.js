@@ -1001,7 +1001,7 @@ function chart03Fun(data) {
     var barchart01 = echarts.init(document.getElementById('barchart01'));
     var option = {
         title:{
-            subtext:'单耗 (单位: Tce/㎡)',
+            subtext:'单耗 (单位: Tce/m²)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1121,7 +1121,7 @@ function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
-            subtext:'单耗 (单位: Tce/㎡)',
+            subtext:'单耗 (单位: Tcem²㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1403,7 +1403,7 @@ function chart07Fun(data){
     var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
     var option = {
         title:{
-            subtext:'能源流单耗 (单位: GJ/㎡)',
+            subtext:'能源流单耗 (单位: Gm²/㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{

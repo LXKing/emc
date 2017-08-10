@@ -213,7 +213,7 @@ public class FeedController {
         cellName.put("FEED_TYPE_NAME", "热源性质");
         cellName.put("HEAT_TYPE_NAME", "供热类型");
         cellName.put("INSTALL_CAPACITY", "装机容量(MW)");
-        cellName.put("HEAT_CAPACITY", "供热能力(㎡)");
+        cellName.put("HEAT_CAPACITY", "供热能力(m²)");
         cellName.put("STEAMTURBINE_NUM", "汽机数量");
         cellName.put("ADDR", "详细地址");
         cellName.put("BOILER_NUM", "锅炉数量");

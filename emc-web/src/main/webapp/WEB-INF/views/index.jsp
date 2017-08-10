@@ -31,9 +31,9 @@
                 <li class="tabicon01 eTotal">0Tce</li>
                 <li class="tabicon02 carbonTotal">0T</li>
                 <li class="tabicon03 costAll">0万元</li>
-                <li class="tabicon04 yardage">0Tce/㎡</li>
-                <li class="tabicon05 zyardage">0GJ/㎡</li>
-                <li class="tabicon06 priceArea">0万㎡</li>
+                <li class="tabicon04 yardage">0Tce/m²</li>
+                <li class="tabicon05 zyardage">0GJ/m²</li>
+                <li class="tabicon06 priceArea">0万m²</li>
             </ul>
         </div>
 
@@ -399,7 +399,7 @@
         <div class="energyBox ComparisonBox">
             <div class="chart-box">
                 <div class="cb-header">
-                    <span class="cb-title">单耗 (单位: Tce/㎡)</span>
+                    <span class="cb-title">单耗 (单位: Tce/m²)</span>
 
                     <div class="cb-title-right">
                         <label>
