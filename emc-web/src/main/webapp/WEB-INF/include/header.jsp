@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="header">
     <div class="changeface"></div>
     <!--顶部导航条-->
@@ -16,7 +17,14 @@
             </button>-->
             <div class="navbar-header pull-left">
                 <a href="index.html" class="navbar-brand">
-                    <img src="${web}/static/img/logo.png" width="296" height="31" alt="华热能源管控" />
+                    <c:if test="${sessionScope.company.logoImg eq null||sessionScope.company.logoImg eq ''}">
+                        <img src="${web}/static/img/logo.png" width="296" height="31" alt="华热能源管控" />
+                    </c:if>
+                    <c:if test="${sessionScope.company.logoImg ne null&&sessionScope.company.logoImg ne ''}">
+                        <img src="${web}/static/img/${sessionScope.company.logoImg}" width="296" height="31" alt="${sessionScope.company.cname}" />
+                    </c:if>
+
+
                 </a>
             </div>
             <div class="navbar-buttons navbar-header pull-right" role="navigation">

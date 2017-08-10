@@ -400,3 +400,13 @@
 .facedark .EnergyChartBg:before{
     background: none;
 }
+
+.facedark .energy_consumption .tablewrap table{
+    background: none;
+}
+.facedark .energy_consumption .tablewrap table .bg {
+    background: rgba(255,255,255,0.1);
+}
+.facedark .energy_consumption #right_table1 th,.facedark  .energy_consumption #right_table1 td{
+    color:#fff
+}
