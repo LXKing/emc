@@ -9,14 +9,15 @@
       <arg column="WCODE" javaType="java.lang.String" jdbcType="VARCHAR" />
         <arg column="WNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
         <arg column="TABLE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="LOGO_IMG" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, CNAME,NEXT_DES,WCODE,TABLE_NAME
+    ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,LOGO_IMG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-      ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,
+      ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,LOGO_IMG,
       case  when WCODE is null then NULL ELSE IFNULL(W_NAME,CNAME) END WNAME
       from t_emc_company t left join t_emc_weather_city c on t.WCODE=c.W_CODE
     where id = #{id,jdbcType=VARCHAR}
@@ -44,6 +45,9 @@
         <if test="tableName != null">
             TABLE_NAME,
         </if>
+        <if test="logoImg != null">
+            LOGO_IMG,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -60,6 +64,9 @@
         </if>
         <if test="tableName != null">
             #{tableName,jdbcType=VARCHAR},
+        </if>
+        <if test="logoImg != null">
+            #{logoImg,jdbcType=VARCHAR},
         </if>
     </trim>
   </insert>
@@ -78,12 +85,16 @@
         <if test="tableName != null">
             TABLE_NAME = #{tableName,jdbcType=VARCHAR},
         </if>
+        <if test="logoImg != null">
+            LOGO_IMG = #{logoImg,jdbcType=VARCHAR},
+        </if>
+
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
-        ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,
+        ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,LOGO_IMG,
         case  when WCODE is null then NULL ELSE IFNULL(W_NAME,CNAME) END WNAME
         from t_emc_company t left join t_emc_weather_city c on t.WCODE=c.W_CODE
         where 1=1
@@ -104,7 +115,7 @@
     </select>
     <select id="selectAllByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         select
-        ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,
+        ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,LOGO_IMG,
         case  when WCODE is null then NULL ELSE IFNULL(W_NAME,CNAME) END WNAME
         from t_emc_company t left join t_emc_weather_city c on t.WCODE=c.W_CODE
         where 1=1
@@ -115,7 +126,7 @@
     </select>
     <select id="selectCompanyAll" parameterType="java.lang.String" resultMap="BaseResultMap">
          select
-        ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,
+        ID, CNAME,NEXT_DES,WCODE,TABLE_NAME,LOGO_IMG,
         case  when WCODE is null then NULL ELSE IFNULL(W_NAME,CNAME) END WNAME
         from t_emc_company t left join t_emc_weather_city c on t.WCODE=c.W_CODE
 

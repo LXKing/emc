@@ -16,6 +16,16 @@ public class Company implements Serializable{
 
     private String tableName;
 
+    private String logoImg;
+
+    public String getLogoImg() {
+        return logoImg;
+    }
+
+    public void setLogoImg(String logoImg) {
+        this.logoImg = logoImg;
+    }
+
     public String getTableName() {
         return tableName;
     }
@@ -48,18 +58,6 @@ public class Company implements Serializable{
         this.nextDes = nextDes;
     }
 
-    public Company(String id, String cname,String nextDes,String wcode,String wname,String tableName) {
-        this.id = id;
-        this.cname = cname;
-        this.nextDes = nextDes;
-        this.wcode = wcode;
-        this.wname = wname;
-        this.tableName = tableName;
-    }
-    public Company() {
-        super();
-    }
-
     public String getId() {
         return id;
     }
@@ -74,5 +72,15 @@ public class Company implements Serializable{
 
     public void setCname(String cname) {
         this.cname = cname == null ? null : cname.trim();
+    }
+
+    public Company(String id, String cname, String nextDes, String wcode, String wname, String tableName, String logoImg) {
+        this.id = id;
+        this.cname = cname;
+        this.nextDes = nextDes;
+        this.wcode = wcode;
+        this.wname = wname;
+        this.tableName = tableName;
+        this.logoImg = logoImg;
     }
 }
