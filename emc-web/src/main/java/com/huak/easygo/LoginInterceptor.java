@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static String RSESSIONID = "RSESSIONID";
-    private static int EXPIRETIME = 3600;
+    private static int EXPIRETIME = 600000;
 
     //EMC service
     @Resource
@@ -61,7 +61,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         Cookie[] cookies = request.getCookies();
         Jedis jedis = RedisTools.getJedis();
         HttpSession session = request.getSession();
-        logger.error("request------>getContextPath:"+request.getContextPath()+" getLocalAddr:"+request.getLocalAddr()+" getRemoteAddr:"+request.getRemoteAddr());
+//        logger.error("request------>getContextPath:"+request.getContextPath()+" getLocalAddr:"+request.getLocalAddr()+" getRemoteAddr:"+request.getRemoteAddr());
 
         try {
             if (cookies != null) {
