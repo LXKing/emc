@@ -15,6 +15,8 @@
     <script src="${platform}/script/org/huak.org.secondnet.list.js"></script>
 </head>
 <body class="gray-bg">
+<input id="secondUpdateAuth" VALUE="${sessionScope._auth['secondUpdate']}"  type="hidden"/>
+<input id="secondDeleteAuth" VALUE="${sessionScope._auth['secondDelete']}"  type="hidden"/>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
 
@@ -90,11 +92,11 @@
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-
+                                <c:if test="${sessionScope._auth['secondAdd']}">
                                 <button type="button" onclick="addLine()" class="btn btn-sm btn-info ">
                                     <i class="fa fa-plus"></i>添加
                                 </button>
-
+                                </c:if>
                                 <!--<button type="button" class="btn btn-sm btn-info" onclick="editRole()">
                                     <i class="fa fa-edit"></i>编辑
                                 </button>

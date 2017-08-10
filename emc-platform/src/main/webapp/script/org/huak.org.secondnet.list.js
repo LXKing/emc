@@ -155,8 +155,14 @@ function initable(){
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="secondnetEditForm" layer-title="编辑管线" layer-url="'+_platform+'/secondnet/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteOncenet(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                    var html = "";
+                    if($("#secondUpdateAuth").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="secondnetEditForm" layer-title="编辑管线" layer-url="'+_platform+'/secondnet/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                    }
+                    if($("#secondDeleteAuth").val()){
+                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteOncenet(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                    }
+                    return html;
                 }
             }
 
