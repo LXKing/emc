@@ -89,7 +89,7 @@
                         <span class="energy-list-name">气能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="gasTotal"></span>
-                            <span class="energy-list-measure ">M³</span>
+                            <span class="energy-list-measure ">m³</span>
                             <span class="energy-list-proportion " id="gaschangeRate"></span>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         <td>能源总量（Tce）</td>
                         <td>水能总量（T）</td>
                         <td>电耗总量(kW·h)</td>
-                        <td>气能耗总量（M²）</td>
+                        <td>气能耗总量（m³）</td>
                         <td>热能耗总量（GJ）</td>
                         <td>煤能耗总量（T）</td>
                         <td>油能耗总量（L）</td>
@@ -243,7 +243,7 @@
                         <td>能源总量（Tce）</td>
                         <td>水能总量（T）</td>
                         <td>电耗总量(kW·h)</td>
-                        <td>气能耗总量（M²）</td>
+                        <td>气能耗总量（m³）</td>
                         <td>热能耗总量（GJ）</td>
                         <td>煤能耗总量（T）</td>
                         <td>油能耗总量（L）</td>

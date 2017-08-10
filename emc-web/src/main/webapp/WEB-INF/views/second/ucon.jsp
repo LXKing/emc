@@ -56,7 +56,7 @@
                         <span class="energy-list-name">水单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="waterTotal"></span>
-                            <span class="energy-list-measure ">t/m²</span>
+                            <span class="energy-list-measure ">T/m²</span>
                             <span class="energy-list-proportion " id="waterchangeRate"></span>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                         <span class="energy-list-name">煤单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="coalTotal"></span>
-                            <span class="energy-list-measure ">t/m²</span>
+                            <span class="energy-list-measure ">T/m²</span>
                             <span class="energy-list-proportion" id="coalchangeRate"></span>
                         </div>
                     </div>
@@ -150,11 +150,11 @@
                     <tr class="first_tr">
                         <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
                         <td>总单耗（Tce/m²）</td>
-                        <td>水单耗（t/m²）</td>
+                        <td>水单耗（T/m²）</td>
                         <td>电单耗(kW·h/m²)</td>
                         <td>气单耗（m³/m²）</td>
                         <td>热单耗（GJ/m²）</td>
-                        <td>煤单耗（t/m²）</td>
+                        <td>煤单耗（T/m²）</td>
                         <td>油单耗（L/m²）</td>
                     </tr>
                     </thead>
@@ -226,11 +226,11 @@
                     <tr class="first_tr">
                         <td>用能单位</td>
                         <td>总单耗（Tce/m²）</td>
-                        <td>水单耗（t/m²）</td>
+                        <td>水单耗（T/m²）</td>
                         <td>电单耗(kW·h/m²)</td>
                         <td>气单耗（m³/m²）</td>
                         <td>热单耗（GJ/m²）</td>
-                        <td>煤单耗（t/m²）</td>
+                        <td>煤单耗（T/m²）</td>
                         <td>油单耗（L/m²）</td>
                     </tr>
                     </thead>
