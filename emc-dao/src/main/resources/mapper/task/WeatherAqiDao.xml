@@ -16,7 +16,7 @@
      CODE, REPORT_DATE, AQI, AQI_LEVEL, AQI_SCOPE, AQI_REMARK, STATUS
   </sql>
 
-    <select id="selectAqis" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="selectAqis" parameterType="java.util.Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_weather_aqi
@@ -31,11 +31,11 @@
         <if test="reportDate != null and reportDate != ''">
             and REPORT_DATE = #{reportDate,jdbcType=VARCHAR}
         </if>
-    </select>
+  </select>
 
-    <delete id="deletebyParmas" parameterType="java.util.Map">
+  <delete id="deletebyParmas" parameterType="java.util.Map">
         delete from t_emc_weather_aqi where  STATUS = #{status,jdbcType=TINYINT} AND CODE = #{code,jdbcType=VARCHAR}
-    </delete>
+  </delete>
   <insert id="insert" parameterType="com.huak.weather.model.WeatherAQI">
     insert into t_emc_weather_aqi ( CODE, REPORT_DATE, AQI, AQI_LEVEL, AQI_SCOPE, AQI_REMARK, STATUS)
     values (#{code,jdbcType=VARCHAR}, #{reportDate,jdbcType=VARCHAR}, #{aqi,jdbcType=VARCHAR}, #{aqiLevel,jdbcType=VARCHAR},
@@ -55,7 +55,7 @@
 
   <select id="selectById" parameterType="java.util.Map" resultMap="BaseResultMap">
       select   <include refid="Base_Column_List" /> from t_emc_weather_aqi where (code,REPORT_DATE) = (
-      select code,max(report_date) from t_emc_weather_aqi where code =#{code,jdbcType=VARCHAR} group by code) LIMIT 1,1
+      select code,max(report_date) from t_emc_weather_aqi where code =#{code,jdbcType=VARCHAR} group by code) LIMIT 0,1
   </select>
 
 </mapper>
