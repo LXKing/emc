@@ -20,15 +20,15 @@
 <!--    <dubbo:protocol name="hessian" port="20882" threads="200"/>-->
 
     <bean id="weatherTaskService" class="com.huak.weather.WeatherServiceImpl"></bean>
-    <dubbo:service interface="com.huak.weather.WeatherTaskService" ref="weatherTaskService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.weather.WeatherTaskService" ref="weatherTaskService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="roomTempService" class="com.huak.api.RoomTempServiceImpl"></bean>
-    <dubbo:service interface="com.huak.api.RoomTempService" ref="roomTempService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.api.RoomTempService" ref="roomTempService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="energyAnalyService" class="com.huak.api.EnergyAnalyServiceImpl"></bean>
-    <dubbo:service interface="com.huak.api.EnergyAnalyService" ref="energyAnalyService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.api.EnergyAnalyService" ref="energyAnalyService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>

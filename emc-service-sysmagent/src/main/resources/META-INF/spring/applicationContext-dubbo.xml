@@ -22,109 +22,109 @@
     <!-- 声明需要暴露的服务接口 -->
     <!--demo-->
     <bean id="seasonService" class="com.huak.sys.SeasonServiceImpl"></bean>
-    <dubbo:service interface="com.huak.sys.SeasonService" ref="seasonService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.sys.SeasonService" ref="seasonService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!--权限-->
     <bean id="roleService" class="com.huak.auth.RoleServiceImpl"></bean>
-    <dubbo:service interface="com.huak.auth.RoleService" ref="roleService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.auth.RoleService" ref="roleService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="menuService" class="com.huak.auth.MenuServiceImpl"/>
-    <dubbo:service interface="com.huak.auth.MenuService" ref="menuService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.auth.MenuService" ref="menuService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="funcService" class="com.huak.auth.FuncServiceImpl"></bean>
-    <dubbo:service interface="com.huak.auth.FuncService" ref="funcService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.auth.FuncService" ref="funcService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!--组织机构接口-->
     <bean id="orgService" class="com.huak.org.OrgServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.OrgService" ref="orgService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.OrgService" ref="orgService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <!--组织机构接口-->
     <bean id="feedService" class="com.huak.org.FeedServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.FeedService" ref="feedService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.FeedService" ref="feedService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!--组织机构接口-->
     <bean id="onecenetService" class="com.huak.org.OncenetServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.OncenetService" ref="onecenetService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.OncenetService" ref="onecenetService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!--系统-->
     <bean id="sysDicService" class="com.huak.sys.SysDicServiceImpl"></bean>
-    <dubbo:service interface="com.huak.sys.SysDicService" ref="sysDicService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.sys.SysDicService" ref="sysDicService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="nodeService" class="com.huak.org.NodeServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.NodeService" ref="nodeService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.NodeService" ref="nodeService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!-- 用户 -->
     <bean id="userService" class="com.huak.auth.UserServiceImpl"></bean>
-    <dubbo:service interface="com.huak.auth.UserService" ref="userService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.auth.UserService" ref="userService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!-- 员工 -->
     <bean id="employeeService" class="com.huak.auth.EmployeeServiceImpl"></bean>
-    <dubbo:service interface="com.huak.auth.EmployeeService" ref="employeeService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.auth.EmployeeService" ref="employeeService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
 
     <!-- 日志 -->
     <bean id="loggerService" class="com.huak.log.OperateLogServiceImpl"></bean>
-    <dubbo:service interface="com.huak.log.OperateLogService" ref="loggerService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.log.OperateLogService" ref="loggerService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="communityService" class="com.huak.org.CommunityServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.CommunityService" ref="communityService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.CommunityService" ref="communityService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="banService" class="com.huak.org.BanServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.BanService" ref="banService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.BanService" ref="banService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="cellService" class="com.huak.org.CellServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.CellService" ref="cellService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.CellService" ref="cellService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="roomService" class="com.huak.org.RoomServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.RoomService" ref="roomService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.RoomService" ref="roomService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <bean id="administrativeService" class="com.huak.org.AdministrativeImpl"></bean>
-    <dubbo:service interface="com.huak.org.AdministrativeService" ref="administrativeService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.AdministrativeService" ref="administrativeService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <bean id="reversibleEncryption" class="com.huak.base.ReversibleEncryptionImpl"></bean>
-    <dubbo:service interface="com.huak.base.ReversibleEncryption" ref="reversibleEncryption" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.base.ReversibleEncryption" ref="reversibleEncryption" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <bean id="companyService" class="com.huak.org.CompanyServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.CompanyService" ref="companyService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.CompanyService" ref="companyService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="secondnetService" class="com.huak.org.SecondnetServiceImpl"></bean>
-    <dubbo:service interface="com.huak.org.SecondnetService" ref="secondnetService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.org.SecondnetService" ref="secondnetService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="energyTypeService" class="com.huak.sys.EnergyTypeServiceImpl"></bean>
-    <dubbo:service interface="com.huak.sys.EnergyTypeService" ref="energyTypeService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.sys.EnergyTypeService" ref="energyTypeService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="costTypeService" class="com.huak.sys.CostTypeServiceImpl"></bean>
-    <dubbo:service interface="com.huak.sys.CostTypeService" ref="costTypeService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.sys.CostTypeService" ref="costTypeService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="energyProjectService" class="com.huak.sys.EnergyProjectServiceImpl"></bean>
-    <dubbo:service interface="com.huak.sys.EnergyProjectService" ref="energyProjectService" timeout="300" loadbalance="random"
+    <dubbo:service interface="com.huak.sys.EnergyProjectService" ref="energyProjectService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>
