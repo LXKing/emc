@@ -54,5 +54,5 @@ public interface EnergyAnalyService {
     /**
      * 查询标煤
      */
-    public List<Map<String,Object>> selectCoal(Map<String,Object> map);
+    public String selectCoal(Map<String,Object> map);
 }

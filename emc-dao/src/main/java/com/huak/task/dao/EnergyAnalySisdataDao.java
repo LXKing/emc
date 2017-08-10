@@ -28,5 +28,5 @@ public interface EnergyAnalySisdataDao {
 
     void selectQiById(Map<String,Object> map);
 
-    List<Map<String,Object>> selectCoal(Map<String,Object> map);
+    String selectCoal(Map<String,Object> map);
 }
