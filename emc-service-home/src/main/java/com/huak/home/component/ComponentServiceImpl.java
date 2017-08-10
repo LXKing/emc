@@ -899,7 +899,7 @@ public class ComponentServiceImpl implements ComponentService{
                         logger.info(planDays+"--------------------------------------------pcdz");
                         logger.info(currentPlan+"--------------------------------------------pcdz");
                         logger.info(jn_total+"--------------------------------------------jn_total");
-                        pcdz =  currentPlan - jn_total;
+                        pcdz =   jn_total - currentPlan ;
                     }
 
                 }
