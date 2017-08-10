@@ -48,6 +48,17 @@ function toFormatNumber(val,num){
     var result = parseFloat(f/divisor).toFixed(num)
     return  result+ suffix;
 }
+
+function toFormatNumbers(val,num){
+    num = num == undefined ? 1:num;
+    var f = parseFloat(val);
+    if (isNaN(f)) {
+        return 0;
+    }
+    var result =f.toFixed(num);
+    return  result;
+}
+
 function toolReplace() {
     var url = document.location.href;
     var reurl = url;
