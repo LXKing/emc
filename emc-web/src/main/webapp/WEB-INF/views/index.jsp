@@ -28,10 +28,10 @@
                 <span>能源流</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 eTotal">0TCE</li>
+                <li class="tabicon01 eTotal">0Tce</li>
                 <li class="tabicon02 carbonTotal">0T</li>
                 <li class="tabicon03 costAll">0万元</li>
-                <li class="tabicon04 yardage">0TCE/㎡</li>
+                <li class="tabicon04 yardage">0Tce/㎡</li>
                 <li class="tabicon05 zyardage">0GJ/㎡</li>
                 <li class="tabicon06 priceArea">0万㎡</li>
             </ul>
@@ -42,7 +42,7 @@
                 <span>供热源</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 feTotal">0TCE</li>
+                <li class="tabicon01 feTotal">0Tce</li>
                 <li class="tabicon02 fCarbonTotal">0T</li>
                 <li class="tabicon03 fCostAll">0万元</li>
             </ul>
@@ -54,8 +54,8 @@
                 <span>管网</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07 netLen">0TCE</li>
-                <li class="tabicon09 tabicon09cb">0km</li>
+                <li class="tabicon07 netLen">0Tce</li>
+                <li class="tabicon09 ">0km</li>
                 <li class="tabicon03 netCost">0万元</li>
             </ul>
             <div class="tabicon10">0GJ</div>
@@ -66,8 +66,8 @@
                 <span>换热站</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon01 seTotal">0TCE</li>
-                <li class="tabicon02 sCarbonTotal tabicon02cb">0T</li>
+                <li class="tabicon01 seTotal">0Tce</li>
+                <li class="tabicon02 sCarbonTotal">0T</li>
                 <li class="tabicon03 sCostAll">0万元</li>
             </ul>
             <div class="tabicon10">0GJ</div>
@@ -90,7 +90,7 @@
                 <span>民户</span><span class="tipsindex">0</span>
             </div>
             <ul class="index_menuBoxList clearfix">
-                <li class="tabicon07 rTotal">0TCE</li>
+                <li class="tabicon07 rTotal">0Tce</li>
                 <li class="tabicon08 hgl">0%</li>
                 <li class="tabicon03 roomCost">0万元</li>
             </ul>
@@ -100,7 +100,7 @@
 </div>
 <div class="index_content row no-margin">
 <div class="col-xs-12 no-padding">
-
+<%--能耗明细--%>
 <div class="col-xs-4 mb14">
     <div class="index_contentBox energy_consumption">
 
@@ -165,6 +165,56 @@
 
     </div>
 </div>
+<%--近期单耗明细--%>
+<div class=" col-xs-4 mb14  ">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>近日单耗明细
+                <small class="font-sm">RECENT DETAILS</small>
+            </div>
+        </div>
+        <div id="recentchart" class="recentwrap">
+            <div id="recentall" class="clearfix"></div>
+            <div class="recentchartT">
+                <div>前天</div>
+                <div>昨天</div>
+                <div>今天</div>
+            </div>
+            <div id="recenttitle" class="clearfix">
+                <div>水</div>
+                <div>电</div>
+                <div>气</div>
+                <div>热</div>
+            </div>
+            <div id="recentlist" class="clearfix"></div>
+        </div>
+
+    </div>
+</div>
+<%--天气预报--%>
+<div class=" col-xs-4 mb14  weather">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>天气情况
+                <small class="font-sm">WEATHER CONDITIONS</small>
+            </div>
+        </div>
+        <div class="energyBox comparisonBox">
+            <div class="chart-box">
+
+                <div class="chart-content clearfix">
+
+                </div>
+
+                <div id="chart10" class="chart"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
@@ -222,6 +272,7 @@
 
     </div>
 </div>
+
 <div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
@@ -335,6 +386,7 @@
     </div>
 
 </div>
+<%--单耗趋势--%>
 <div class=" col-xs-4 mb14">
     <div class="index_contentBox">
         <div class="titbox clearfix no-padding no-margin">
@@ -412,7 +464,44 @@
     </div>
 </div>
 
-
+<%--健康指数--%>
+<div class=" col-xs-4 mb14  ">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>健康指数
+                <small class="font-sm">HEALTH INDEX</small>
+            </div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div class="chart-box">
+                <div class="barwrap">
+                    <div class="clearfix">
+                        <span id="checktitle">正在检测服务情况...</span>
+												<span id="totaltitle">
+												检测进度
+												<span id="totals">0%</span>
+												</span>
+                    </div>
+                    <div>
+                        <div id="barjc" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="barwrap2 clearfix">
+                    <div>
+                        87
+                    </div>
+                    <div>
+                        <p>检测完毕！</p>
+                        <span>本次检测总分</span>
+                    </div>
+                </div>
+                <div id="chart12" class="quanquanwrap">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%--室温散点--%>
 <div class=" col-xs-4 mb14">
     <div class="index_contentBox otherTabdiv"  style="display: none">
         <div class="titbox clearfix no-padding no-margin">
@@ -469,67 +558,6 @@
     </div>
 </div>
 
-<div class=" col-xs-4 mb14  ">
-    <div class="index_contentBox otherTabdiv">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>近日能耗明细<small class="font-sm">RECENT DETAILS</small></div>
-        </div>
-        <div id="recentchart" class="recentwrap">
-            <div id="recentall" class="clearfix"></div>
-            <div class="recentchartT">
-                <div>前天</div>
-                <div>昨天</div>
-                <div>今天</div>
-            </div>
-            <div id="recenttitle" class="clearfix">
-                <div>水</div>
-                <div>电</div>
-                <div>气</div>
-                <div>热</div>
-            </div>
-            <div id="recentlist" class="clearfix"></div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class=" col-xs-4 mb14  ">
-    <div class="index_contentBox otherTabdiv">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>健康指数
-                <small class="font-sm">HEALTH INDEX</small>
-            </div>
-        </div>
-        <div class="energyBox carbonBox">
-            <div class="chart-box">
-                <div class="barwrap">
-                    <div class="clearfix">
-                        <span id="checktitle">正在检测服务情况...</span>
-												<span id="totaltitle">
-												检测进度
-												<span id="totals">0%</span>
-												</span>
-                    </div>
-                    <div>
-                        <div id="barjc" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="barwrap2 clearfix">
-                    <div>
-                        87
-                    </div>
-                    <div>
-                        <p>检测完毕！</p>
-                        <span>本次检测总分</span>
-                    </div>
-                </div>
-                <div id="chart12" class="quanquanwrap">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class=" col-xs-4 mb14  " style="display: none">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
@@ -552,28 +580,7 @@
     </div>
 </div>
 
-<div class=" col-xs-4 mb14  weather">
-    <div class="index_contentBox otherTabdiv">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>天气情况
-                <small class="font-sm">WEATHER CONDITIONS</small>
-            </div>
-        </div>
-        <div class="energyBox comparisonBox">
-            <div class="chart-box">
 
-                <div class="chart-content clearfix">
-
-                </div>
-
-                <div id="chart10" class="chart"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
 
 </div>
 

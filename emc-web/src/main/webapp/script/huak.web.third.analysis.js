@@ -1001,7 +1001,7 @@ function chart03Fun(data) {
     var barchart01 = echarts.init(document.getElementById('barchart01'));
     var option = {
         title:{
-            subtext:'单耗 (单位: tce/㎡)',
+            subtext:'单耗 (单位: Tce/㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1121,7 +1121,7 @@ function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
-            subtext:'单耗 (单位: tce/㎡)',
+            subtext:'单耗 (单位: Tce/㎡)',
             top:'-18px',
             left:'35px',
             subtextStyle:{

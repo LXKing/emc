@@ -27,7 +27,7 @@
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
                     <div class="cb-header">
-                        <span class="cb-title">总能耗 (单位: tce)</span>
+                        <span class="cb-title">总能耗 (单位: Tce)</span>
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
                     <h3 id="groupTotal"><!--760.4--></h3>
-                    <div class="small">总能耗 (tce)</div>
+                    <div class="small">总能耗 (Tce)</div>
                     <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
@@ -73,7 +73,7 @@
                         <span class="energy-list-name">电能耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="electricTotal"></span>
-                            <span class="energy-list-measure ">KW·H</span>
+                            <span class="energy-list-measure ">kW·h</span>
                             <span class="energy-list-proportion" id="elechangeRate"></span>
                         </div>
                     </div>
@@ -150,9 +150,9 @@
                     <thead>
                     <tr class="first_tr">
                         <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
-                        <td>能源总量（TCE）</td>
+                        <td>能源总量（Tce）</td>
                         <td>水能总量（T）</td>
-                        <td>电耗总量(KW·H)</td>
+                        <td>电耗总量(kW·h)</td>
                         <td>气能耗总量（M²）</td>
                         <td>热能耗总量（GJ）</td>
                         <td>煤能耗总量（T）</td>
@@ -240,9 +240,9 @@
                     <thead>
                     <tr class="first_tr">
                         <td>能源站</td>
-                        <td>能源总量（TCE）</td>
+                        <td>能源总量（Tce）</td>
                         <td>水能总量（T）</td>
-                        <td>电耗总量(KW·H)</td>
+                        <td>电耗总量(kW·h)</td>
                         <td>气能耗总量（M²）</td>
                         <td>热能耗总量（GJ）</td>
                         <td>煤能耗总量（T）</td>

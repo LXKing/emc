@@ -27,7 +27,7 @@
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
                     <div class="cb-header">
-                        <span class="cb-title">总单耗 (单位: tce/㎡)</span>
+                        <span class="cb-title">总单耗 (单位: Tce/㎡)</span>
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
                     <h3 id="groupTotal"><!--760.4--></h3>
-                    <div class="small">总单耗 (tce/㎡)</div>
+                    <div class="small">总单耗 (Tce/㎡)</div>
                     <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
@@ -149,7 +149,7 @@
                     <thead>
                     <tr class="first_tr">
                         <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
-                        <td>总单耗（tce/㎡）</td>
+                        <td>总单耗（Tce/㎡）</td>
                         <td>水单耗（t/㎡）</td>
                         <td>电单耗(kW·h/㎡)</td>
                         <td>气单耗（m³/㎡）</td>
@@ -225,7 +225,7 @@
                     <thead>
                     <tr class="first_tr">
                         <td>用能单位</td>
-                        <td>总单耗（tce/㎡）</td>
+                        <td>总单耗（Tce/㎡）</td>
                         <td>水单耗（t/㎡）</td>
                         <td>电单耗(kW·h/㎡)</td>
                         <td>气单耗（m³/㎡）</td>

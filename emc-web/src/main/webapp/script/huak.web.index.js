@@ -11,9 +11,9 @@
             dataType: "json",
             success: function (data) {
                 if (data.all.eTotal == null || data.all.eTotal == '') {
-                    $(".eTotal").html(0 + "TCE");
+                    $(".eTotal").html(0 + "Tce");
                 } else {
-                    $(".eTotal").html(toFormatNum(data.all.eTotal) + "TCE");
+                    $(".eTotal").html(toFormatNum(data.all.eTotal) + "Tce");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
                     $(".carbonTotal").html(0 + "T");
@@ -28,9 +28,9 @@
                     $(".costAll").html(data.all.costAll + "万元");
                 }
 //                if (data.all.yardage == null || data.all.yardage == '') {
-//                    $(".yardage").html(0 + " TCE/㎡");
+//                    $(".yardage").html(0 + " Tce/㎡");
 //                } else {
-//                    $(".yardage").html(data.all.yardage + " TCE/㎡");
+//                    $(".yardage").html(data.all.yardage + " Tce/㎡");
 //                }
 //                $(".zyardage").html(2358 + " GJ/㎡");
 //                if (data.all.priceArea == null || data.all.priceArea == '') {
@@ -48,9 +48,9 @@
             dataType: "json",
             success: function (data) {
 //                if (data.all.eTotal == null || data.all.eTotal == '') {
-//                    $(".eTotal").html(0 + " TCE");
+//                    $(".eTotal").html(0 + " Tce");
 //                } else {
-//                    $(".eTotal").html(data.all.eTotal + " TCE");
+//                    $(".eTotal").html(data.all.eTotal + " Tce");
 //                }
 //                if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
 //                    $(".carbonTotal").html(0 + " T");
@@ -64,9 +64,9 @@
 //                    $(".costAll").html(data.all.costAll + " 万元");
 //                }
                 if (data.all.yardage == null || data.all.yardage == '') {
-                    $(".yardage").html(0 + "TCE/㎡");
+                    $(".yardage").html(0 + "Tce/㎡");
                 } else {
-                    $(".yardage").html(data.all.yardage + "TCE/㎡");
+                    $(".yardage").html(data.all.yardage + "Tce/㎡");
                 }
                 $(".zyardage").html(0 + "GJ/㎡");
                 if (data.all.priceArea == null || data.all.priceArea == '') {
@@ -86,9 +86,9 @@
             dataType: "json",
             success: function (data) {
                 if (data.all.eTotal == null || data.all.eTotal == '') {
-                        $(".feTotal").html(0 + "TCE");
+                        $(".feTotal").html(0 + "Tce");
                 } else {
-                    $(".feTotal").html(toFormatNum(data.all.eTotal) + "TCE");
+                    $(".feTotal").html(toFormatNum(data.all.eTotal) + "Tce");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
                     $(".fCarbonTotal").html(0 + "T");
@@ -133,9 +133,9 @@
             dataType: "json",
             success: function (data) {
                 if (data.all.eTotal == null || data.all.eTotal == '') {
-                    $(".seTotal").html(0 + "TCE");
+                    $(".seTotal").html(0 + "Tce");
                 } else {
-                    $(".seTotal").html(toFormatNum(data.all.eTotal) + "TCE");
+                    $(".seTotal").html(toFormatNum(data.all.eTotal) + "Tce");
                 }
                 if (data.all.carbonTotal == null || data.all.carbonTotal == '') {
                     $(".sCarbonTotal").html(0 + "T");
@@ -180,9 +180,9 @@
             dataType: "json",
             success: function (data) {
                 if (data.all.rTotal == null || data.all.rTotal == '') {
-                    $(".rTotal").html(0 + "TCE");
+                    $(".rTotal").html(0 + "Tce");
                 } else {
-                    $(".rTotal").html(0 + "TCE");
+                    $(".rTotal").html(0 + "Tce");
                 }
                 if (data.all.hgl == null || data.all.hgl == '') {
                     $(".hgl").html(0 + "%");
@@ -1266,14 +1266,15 @@ function chart07Fun() {
                 var total_tb = result.object.total_tb;
                 if (tb_flag == true) {
                     $("#total_tb").html("(" + total_tb + "↑)");
-                    $("#total_tb").attr("class", "energyBoxLegendListPara_cb");
+                    $("#total_tb").attr("class", "cb_color");//红
                 }
                 if (tb_flag == false) {
                     $("#total_tb").html("(" + total_tb + "↓)");
-                    $("#total_tb").attr("class", "energyBoxLegendListPara_cd");
+                    $("#total_tb").attr("class", "zc_color");//绿
                 }
                 if (tb_flag == null) {
                     $("#total_tb").html("(" + total_tb + "→)");
+                    $("#total_tb").attr("class", "");//白
                 }
                 /*水*/
                 $("#whater").html(toFormatNumber(result.object.whater,0) + "T");
@@ -1281,32 +1282,32 @@ function chart07Fun() {
                 var total_tb = result.object.whater_tb;
                 if (tb_flag == true) {
                     $("#whater_tb").html("(" + total_tb + "↑)");
-                    $("#whater_tb").attr("class", "energyBoxLegendListPara_cb");
-                    $("#whater").attr("class", "energyBoxLegendListPara_cb");
+                    $("#whater_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cb");
+                    $("#whater").attr("class", "energyBoxLegendListText energyBoxLegendListText_cb");
                     $("#w1").addClass("energyBoxLegendListIcon01_cb");
                 }
                 if (tb_flag == false) {
                     $("#whater_tb").html("(" + total_tb + "↓)");
-                    $("#whater_tb").attr("class", "energyBoxLegendListPara_cd");
-                    $("#whater").attr("class", "energyBoxLegendListPara_cd");
+                    $("#whater_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cd");
+                    $("#whater").attr("class", "energyBoxLegendListText energyBoxLegendListText_cd");
                 }
                 if (tb_flag == null) {
                     $("#whater_tb").html("(" + total_tb + "→)");
                 }
                 /*电*/
-                $("#electric").html(toFormatNumber(result.object.electric,0) + "Kw/h");
+                $("#electric").html(toFormatNumber(result.object.electric,0) + "kW·h");
                 var tb_flag = result.object.electric_flag;
                 var total_tb = result.object.electric_tb;
                 if (tb_flag == true) {
                     $("#electric_tb").html("(" + total_tb + "↑)");
-                    $("#electric_tb").attr("class", "energyBoxLegendListPara_cb");
-                    $("#electric").attr("class", "energyBoxLegendListPara_cb");
+                    $("#electric_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cb");
+                    $("#electric").attr("class", "energyBoxLegendListText energyBoxLegendListText_cb");
                     $("#e1").addClass("energyBoxLegendListIcon02_cb");
                 }
                 if (tb_flag == false) {
                     $("#electric_tb").html("(" + total_tb + "↓)");
-                    $("#electric_tb").attr("class", "energyBoxLegendListPara_cd");
-                    $("#electric").attr("class", "energyBoxLegendListPara_cd");
+                    $("#electric_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cd");
+                    $("#electric").attr("class", "energyBoxLegendListText energyBoxLegendListText_cd");
                 }
                 if (tb_flag == null) {
                     $("#electric_tb").html("(" + total_tb + "→)");
@@ -1317,14 +1318,14 @@ function chart07Fun() {
                 var total_tb = result.object.gas_tb;
                 if (tb_flag == true) {
                     $("#gas_tb").html("(" + total_tb + "↑)");
-                    $("#gas_tb").attr("class", "energyBoxLegendListPara_cb");
-                    $("#gas").attr("class", "energyBoxLegendListPara_cb");
+                    $("#gas_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cb");
+                    $("#gas").attr("class", "energyBoxLegendListText energyBoxLegendListText_cb");
                     $("#g1").addClass("energyBoxLegendListIcon03_cb");
                 }
                 if (tb_flag == false) {
                     $("#gas_tb").html("(" + total_tb + "↓)");
-                    $("#gas_tb").attr("class", "energyBoxLegendListPara_cd");
-                    $("#gas").attr("class", "energyBoxLegendListPara_cd");
+                    $("#gas_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cd");
+                    $("#gas").attr("class", "energyBoxLegendListText energyBoxLegendListText_cd");
                 }
                 if (tb_flag == null) {
                     $("#gas_tb").html("(" + total_tb + "→)");
@@ -1335,14 +1336,14 @@ function chart07Fun() {
                 var total_tb = result.object.heat_tb;
                 if (tb_flag == true) {
                     $("#heat_tb").html("(" + total_tb + "↑)");
-                    $("#heat_tb").attr("class", "energyBoxLegendListPara_cb");
-                    $("#heat").attr("class", "energyBoxLegendListPara_cb");
+                    $("#heat_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cb");
+                    $("#heat").attr("class", "energyBoxLegendListText energyBoxLegendListText_cb");
                     $("#h1").addClass("energyBoxLegendListIcon05_cb");
                 }
                 if (tb_flag == false) {
                     $("#heat_tb").html("(" + total_tb + "↓)");
-                    $("#heat_tb").attr("class", "energyBoxLegendListPara_cd");
-                    $("#heat").attr("class", "energyBoxLegendListPara_cd");
+                    $("#heat_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cd");
+                    $("#heat").attr("class", "energyBoxLegendListText energyBoxLegendListText_cd");
                 }
                 if (tb_flag == null) {
                     $("#heat_tb").html("(" + total_tb + "→)");
@@ -1353,14 +1354,14 @@ function chart07Fun() {
                 var total_tb = result.object.coal_tb;
                 if (tb_flag == true) {
                     $("#coal_tb").html("(" + total_tb + "↑)");
-                    $("#coal_tb").attr("class", "energyBoxLegendListPara_cb");
-                    $("#coal").attr("class", "energyBoxLegendListPara_cb");
+                    $("#coal_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cb");
+                    $("#coal").attr("class", "energyBoxLegendListText energyBoxLegendListText_cb");
                     $("#c1").addClass("energyBoxLegendListIcon04_cb");
                 }
                 if (tb_flag == false) {
                     $("#coal_tb").html("(" + total_tb + "↓)");
-                    $("#coal_tb").attr("class", "energyBoxLegendListPara_cd");
-                    $("#coal").attr("class", "energyBoxLegendListPara_cd");
+                    $("#coal_tb").attr("class", "energyBoxLegendListPara energyBoxLegendListPara_cd");
+                    $("#coal").attr("class", "energyBoxLegendListText energyBoxLegendListText_cd");
                 }
                 if (tb_flag == null) {
                     $("#coal_tb").html("(" + total_tb + "→)");

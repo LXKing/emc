@@ -965,7 +965,7 @@ function chart03Fun(data) {
     var barchart01 = echarts.init(document.getElementById('barchart01'));
     var option = {
         title:{
-            subtext:'能耗 (单位: tce)',
+            subtext:'能耗 (单位: Tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1081,7 +1081,7 @@ function chart04Fun(data){
     var	barchart02 = echarts.init(document.getElementById('barchart02'));
     var option = {
         title:{
-            subtext:'能耗 (单位: tce)',
+            subtext:'能耗 (单位: Tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
@@ -1416,7 +1416,7 @@ function chart2EnergyBar(data){
     var barchart01_as = echarts.init(document.getElementById('barchart01_as'));
     var option = {
         title:{
-            subtext:'能源流能耗 (单位: TCE)',
+            subtext:'能源流能耗 (单位: Tce)',
             top:'-18px',
             left:'35px',
             subtextStyle:{
