@@ -78,6 +78,11 @@ $(function () {
                 align: 'center'
             },
             {
+                title: 'logo图片',
+                field: 'logoImg',
+                align: 'center'
+            },
+            {
                 title: '操作',
                 field: 'opt',
                 align: 'center' ,
