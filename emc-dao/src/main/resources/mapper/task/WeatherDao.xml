@@ -28,7 +28,7 @@
 
   <select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap">
       select   <include refid="Base_Column_List" /> from t_emc_weather_actual where (code,REPORT_DATE) = (
-      select code,max(report_date) from t_emc_weather_actual where code =#{code,jdbcType=VARCHAR} group by code) LIMIT 1,1
+      select code,max(report_date) from t_emc_weather_actual where code =#{code,jdbcType=VARCHAR} group by code) LIMIT 0,1
   </select>
 
   <select id="getLatestWeathers" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -45,7 +45,6 @@
       LIMIT 0,
       23;
   </select>
-
   <select id="getParams" resultType="java.util.Map">
         select WCODE as code from t_emc_company ,t_emc_weather_city where WCODE = W_CODE;
   </select>

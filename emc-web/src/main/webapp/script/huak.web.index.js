@@ -1801,18 +1801,21 @@ function chart10Fun() {
         url: _web + '/component/weather',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-//        data:$("#searchTools").serialize(),
         dataType: "json",
         success: function (result) {
             $(".chart-content.clearfix").empty();
             if (result.flag == true) {
-                if (result.object.aqi != null && result.object.currentWeather != null) {
+                if ( result.object.currentWeather != undefined) {
+                    var flag =  result.object.aqi == undefined ;
+                    var aqi = 0;
+                    if(flag){ aqi= "无";}else{ aqi=result.object.aqi.aqiLevel;}
                     var dates = new Pdate();
-                    var date = dates.format(result.object.aqi.reportDate);
-                    var s = dates.showCal(result.object.aqi.reportDate);
+                    var d = getNowFormatDate();
+                    var date = dates.format(flag ? d:result.object.aqi.reportDate);
+                    var s = dates.showCal(flag ? d:result.object.aqi.reportDate);
                     var html = '<div class="cb-header clearfix" id="dates">' +
                         '<span class="cb-title" >' + date + ' ' + result.object.currentWeather.weekDay + ' 农历' + s + '</span>' +
-                        '<div class="cb-title-right ">空气质量：<span >' + result.object.aqi.aqiLevel + '</span></div></div>'
+                        '<div class="cb-title-right ">空气质量：<span >' + aqi + '</span></div></div>';
                     $(".chart-content.clearfix").append(html);
                     var html2 = "<ul>";
                     var weathericon = 'wather weather' + result.object.currentWeather.weatherIcon;
@@ -1832,7 +1835,7 @@ function chart10Fun() {
                         "<div class='detail clearfix'> <div>" + result.object.currentWeather.temperatureCurr + "</div>" +
                         "<div><p>℃</p><p title='"+ result.object.currentWeather.weatherCurrent+"'>" + tempcureent + "（实时）</p></div></div>" +
                         "<h3>" + result.object.currentForcast.tempLow + "~" + result.object.currentForcast.tempHigh + "℃<h4 title='"+result.object.currentForcast.weather+"'>" + forcastweather  +
-                        "</h4><h5>" + curentwindp + "</h5>" +
+                        "</h4><h5 title='"+curentwindp+"'>" + curentwindp + "</h5>" +
                         " </li>"
                     if (result.object.weekForcast.length > 0) {
                         result.object.weekForcast.forEach(function (value, index, array) {
@@ -1853,6 +1856,8 @@ function chart10Fun() {
                     }
                     html2 += "</ul>";
                     $(".chart-content.clearfix").append(html2);
+                }else{
+
                 }
                 initchart10(result.object.weathers.hour, result.object.weathers.temp);
             }
@@ -1862,7 +1867,21 @@ function chart10Fun() {
     });
 
 }
-
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}
 /*天气预报图表*/
 function initchart10(hours, temps) {
     $("#chart10").empty();

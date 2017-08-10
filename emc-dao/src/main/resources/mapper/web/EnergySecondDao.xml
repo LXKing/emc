@@ -21,7 +21,7 @@
     </resultMap>
 
     <select id="findAssessmentIndicators" parameterType="java.util.Map" resultMap="BaseResultMap">
-        SELECT v.fgsid id,v.ORG_NAME orgname,
+        SELECT v.SORT,v.fgsid id,v.ORG_NAME orgname,
         ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END),0),2) BQBM,
         ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END),0),2) TQBM,
         ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.BQ ELSE 0 END),2) bqwater,
@@ -38,12 +38,12 @@
         ROUND(MAX(CASE v1.TYPE WHEN '6' THEN v1.BQ ELSE 0 END),2) tqoil
         FROM
         (
-        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ,f.BQBM
+        SELECT f.SORT,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ,f.BQBM
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,eet.TYPE FROM (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        (SELECT a.SORT,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,eet.TYPE FROM (SELECT t.SORT,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
-        o.*
+        o.ORG_NAME,o.SORT,o.ID
         FROM
         t_emc_org o
         WHERE o.COM_ID = #{comId}) t,
@@ -97,7 +97,7 @@
         GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
-        GROUP BY v.fgsid,v.ORG_NAME
+        GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc
     </select>
 
     <select id="fgsEnergyRatio" parameterType="java.util.Map" resultType="java.util.Map">
@@ -168,17 +168,17 @@
     </select>
 
     <select  id="fgsEnergyAn" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT v.fgsid ID,v.ORG_NAME ORGNAME,
+        SELECT v.fgsid ID,v.ORG_NAME ORGNAME,v.sort,
         ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END),0),2) BQBM,
         ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END),0),2) TQBM
         FROM
         (
-        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ,f.BQBM
+        SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ,f.BQBM
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,eet.TYPE FROM (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,eet.TYPE FROM (SELECT t.sort,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
-        o.*
+        o.ORG_NAME,o.SORT,o.ID
         FROM
         t_emc_org o
         WHERE o.COM_ID = #{comId}) t,
@@ -232,7 +232,7 @@
         GROUP BY a.fgsid,a.ORG_NAME,eet.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
-        GROUP BY v.fgsid,v.ORG_NAME
+        GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc
 
     </select>
 
@@ -273,7 +273,7 @@
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v
         GROUP BY v.fgsid,v.ORG_NAME
-        ORDER BY IFNULL(SUM(v.BQBM),0) DESC
+        ORDER BY ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END),0),2) DESC
     </select>
 
 
