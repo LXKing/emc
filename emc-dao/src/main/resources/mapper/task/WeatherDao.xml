@@ -45,7 +45,6 @@
       LIMIT 0,
       23;
   </select>
-
   <select id="getParams" resultType="java.util.Map">
         select WCODE as code from t_emc_company ,t_emc_weather_city where WCODE = W_CODE;
   </select>
