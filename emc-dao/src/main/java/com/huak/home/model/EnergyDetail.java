@@ -16,11 +16,11 @@ import java.text.DecimalFormat;
  */
 
 public class EnergyDetail implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 7396936548669299782L;
     private String id;/* 主键 */
 
-    private Double totalBq;/* 总单耗（tce/㎡） */
+    private Double totalBq;/* 总单耗（Tce/㎡） */
     private Double totalTq;
     private Double totalAn;
 

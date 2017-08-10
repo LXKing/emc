@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class EnergyMonitor implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6831823693379694440L;
     /**
      *主键
      * @preserve 声明此方法不被JOC混淆

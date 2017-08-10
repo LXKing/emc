@@ -15,12 +15,13 @@ import java.text.DecimalFormat;
  * Function List:  <BR>
  */
 public class EnergySecond implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -4625330717270532174L;
     /* 主键 */
     private String id;
     /* 主键 */
     private String orgName;
-    /* 能耗总量（万tce） */
+    /* 能耗总量（万Tce） */
     private Double totalBq;
     private Double totalTq;
     private Double totalAn;
@@ -28,7 +29,7 @@ public class EnergySecond implements Serializable {
     private Double waterBq;
     private Double waterTq;
     private Double waterAn;
-    /* 电耗总量(Kw/h) */
+    /* 电耗总量(kW·h) */
     private Double electricBq;
     private Double electricTq;
     private Double electricAn;

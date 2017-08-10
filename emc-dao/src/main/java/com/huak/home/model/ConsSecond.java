@@ -15,12 +15,12 @@ import java.text.DecimalFormat;
  * Function List:  <BR>
  */
 public class ConsSecond implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6113968501690743316L;
     /* 主键 */
     private String id;
     /* 主键 */
     private String orgName;
-    /* 总单耗（tce/㎡） */
+    /* 总单耗（Tce/㎡） */
     private Double totalBq;
     private Double totalTq;
     private Double totalAn;
