@@ -20,11 +20,37 @@
     </resultMap>
 
     <select id="selectEnergyDetail" parameterType="java.util.Map" resultMap="BaseResultMap">
+
         SELECT
-        d1.UNITTYPE id,d1.dht bqdht,d1.bqwater bqwater,d1.bqe bqelectric,d1.bqg bqgas,d1.bqh bqheat,d1.bqc bqcoal,d1.bql bqoil,
-        d2.dht tqdht,d2.bqwater tqwater,d2.bqe tqelectric,d2.bqg tqgas,d2.bqh tqheat,d2.bqc tqcoal,d2.bql tqoil
+        d1.UNITTYPE id,
+        d1.dht bqdht,
+        d1.bqwater bqwater,
+        d1.bqe bqelectric,
+        d1.bqg bqgas,
+        d1.bqh bqheat,
+        d1.bqc bqcoal,
+        d1.bql bqoil,
+        d2.dht tqdht,
+        d2.bqwater tqwater,
+        d2.bqe tqelectric,
+        d2.bqg tqgas,
+        d2.bqh tqheat,
+        d2.bqc tqcoal,
+        d2.bql tqoil
         from
 
+        (SELECT type.unittype,type.typename,
+        IFNULL(c1.dht,0) dht,IFNULL(c1.bqwater,0)bqwater,IFNULL(c1.bqe,0)bqe,IFNULL(c1.bqg,0)bqg,IFNULL(c1.bqh,0)bqh,IFNULL(c1.bqc,0)bqc,IFNULL(c1.bql,0)bql
+        from (SELECT 1 unittype,'源' typename FROM DUAL
+        UNION
+        SELECT 2 unittype,'网' typename FROM DUAL
+        UNION
+        SELECT 3 unittype,'站' typename FROM DUAL
+        UNION
+        SELECT 4 unittype,'先' typename FROM DUAL
+        UNION
+        SELECT 5 unittype,'户' typename FROM DUAL) type
+        LEFT JOIN
         (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
@@ -51,7 +77,19 @@
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
         ) a
-        GROUP BY a.UNITTYPE)d1
+        GROUP BY a.UNITTYPE)c1 ON c1.UNITTYPE=type.unittype)d1
+        LEFT JOIN
+        (SELECT type.unittype,type.typename,
+        IFNULL(c1.dht,0) dht,IFNULL(c1.bqwater,0)bqwater,IFNULL(c1.bqe,0)bqe,IFNULL(c1.bqg,0)bqg,IFNULL(c1.bqh,0)bqh,IFNULL(c1.bqc,0)bqc,IFNULL(c1.bql,0)bql
+        from (SELECT 1 unittype,'源' typename FROM DUAL
+        UNION
+        SELECT 2 unittype,'网' typename FROM DUAL
+        UNION
+        SELECT 3 unittype,'站' typename FROM DUAL
+        UNION
+        SELECT 4 unittype,'先' typename FROM DUAL
+        UNION
+        SELECT 5 unittype,'户' typename FROM DUAL) type
         LEFT JOIN
         (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
@@ -79,7 +117,9 @@
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
         ) a
-        GROUP BY a.UNITTYPE)d2 on d1.UNITTYPE=d2.UNITTYPE
+        GROUP BY a.UNITTYPE)c1 ON c1.UNITTYPE=type.unittype)d2 on d1.UNITTYPE=d2.UNITTYPE
+        ORDER BY d1.UNITTYPE
+
     </select>
 
     <select id="selectEnergyProportion" parameterType="java.util.Map" resultType="java.util.Map">
@@ -219,16 +259,36 @@
 
     <select id="exportEnergyDetail" parameterType="java.util.Map" resultMap="BaseResultMap">
         SELECT
-        d1.UNITTYPE id,d1.dht bqdht,d1.bqwater bqwater,d1.bqe bqelectric,d1.bqg bqgas,d1.bqh bqheat,d1.bqc bqcoal,d1.bql bqoil,
-        d2.dht tqdht,d2.bqwater tqwater,d2.bqe tqelectric,d2.bqg tqgas,d2.bqh tqheat,d2.bqc tqcoal,d2.bql tqoil,
-        CASE d1.UNITTYPE WHEN '1' THEN '供热源'
-        WHEN '2' THEN '一次网'
-        WHEN '3' THEN '换热站'
-        WHEN '4' THEN '二次线'
-        WHEN '5' THEN '用户'
-        END AS NAME
+        d1.UNITTYPE id,
+        (case d1.unittype when '1' then '供热源' when '2' then '一次网' when '3' then '换热站' when '4' then '二次线' when '5' then '民户' end) unitname,
+        d1.dht bqdht,
+        d1.bqwater bqwater,
+        d1.bqe bqelectric,
+        d1.bqg bqgas,
+        d1.bqh bqheat,
+        d1.bqc bqcoal,
+        d1.bql bqoil,
+        d2.dht tqdht,
+        d2.bqwater tqwater,
+        d2.bqe tqelectric,
+        d2.bqg tqgas,
+        d2.bqh tqheat,
+        d2.bqc tqcoal,
+        d2.bql tqoil
         from
 
+        (SELECT type.unittype,type.typename,
+        IFNULL(c1.dht,0) dht,IFNULL(c1.bqwater,0)bqwater,IFNULL(c1.bqe,0)bqe,IFNULL(c1.bqg,0)bqg,IFNULL(c1.bqh,0)bqh,IFNULL(c1.bqc,0)bqc,IFNULL(c1.bql,0)bql
+        from (SELECT 1 unittype,'源' typename FROM DUAL
+        UNION
+        SELECT 2 unittype,'网' typename FROM DUAL
+        UNION
+        SELECT 3 unittype,'站' typename FROM DUAL
+        UNION
+        SELECT 4 unittype,'先' typename FROM DUAL
+        UNION
+        SELECT 5 unittype,'户' typename FROM DUAL) type
+        LEFT JOIN
         (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '2' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqe,
@@ -255,7 +315,19 @@
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
         ) a
-        GROUP BY a.UNITTYPE)d1
+        GROUP BY a.UNITTYPE)c1 ON c1.UNITTYPE=type.unittype)d1
+        LEFT JOIN
+        (SELECT type.unittype,type.typename,
+        IFNULL(c1.dht,0) dht,IFNULL(c1.bqwater,0)bqwater,IFNULL(c1.bqe,0)bqe,IFNULL(c1.bqg,0)bqg,IFNULL(c1.bqh,0)bqh,IFNULL(c1.bqc,0)bqc,IFNULL(c1.bql,0)bql
+        from (SELECT 1 unittype,'源' typename FROM DUAL
+        UNION
+        SELECT 2 unittype,'网' typename FROM DUAL
+        UNION
+        SELECT 3 unittype,'站' typename FROM DUAL
+        UNION
+        SELECT 4 unittype,'先' typename FROM DUAL
+        UNION
+        SELECT 5 unittype,'户' typename FROM DUAL) type
         LEFT JOIN
         (SELECT  ROUND(IFNULL(sum(CASE a.TYPE WHEN '4' THEN 0 ELSE a.BM END)/AVG(a.AREA),0),2) dht,a.UNITTYPE,
         ROUND(IFNULL(MAX(CASE a.TYPE WHEN '1' THEN a.DOSAGE ELSE 0 END)/AVG(a.AREA),0),2) bqwater,
@@ -283,6 +355,7 @@
         GROUP BY fd.UNITID,et.TYPE) h on ou.UNITID=h.UNITID
         GROUP BY h.TYPE,ou.UNITTYPE
         ) a
-        GROUP BY a.UNITTYPE)d2 on d1.UNITTYPE=d2.UNITTYPE
+        GROUP BY a.UNITTYPE)c1 ON c1.UNITTYPE=type.unittype)d2 on d1.UNITTYPE=d2.UNITTYPE
+        ORDER BY d1.UNITTYPE
     </select>
 </mapper>

@@ -169,8 +169,7 @@ public class EnergyDetailController extends BaseController{
 
         String workBookName = "能源明细列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
-        cellName.put("ID", "用能id");
-        cellName.put("Name", "用能单位名称");
+        cellName.put("unitname", "用能单位名称");
         cellName.put("totalBq", "总量本期");
         cellName.put("totalTq", "总量同期");
         cellName.put("totalAn", "总量同比");
