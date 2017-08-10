@@ -895,9 +895,11 @@ public class ComponentServiceImpl implements ComponentService{
                         }else{
                             pcd = 0;
                         }
-
-                        pcdz =  MathsUtil.sub(jn_coal,currentPlan);
-
+                        logger.info(currentDays+"--------------------------------------------pcdz");
+                        logger.info(planDays+"--------------------------------------------pcdz");
+                        logger.info(currentPlan+"--------------------------------------------pcdz");
+                        logger.info(jn_total+"--------------------------------------------jn_total");
+                        pcdz =   jn_total - currentPlan ;
                     }
 
                 }

@@ -66,7 +66,7 @@ public class EnergyAnalyServiceImpl implements EnergyAnalyService {
     }
 
     @Override
-    public List<Map<String,Object>> selectCoal(Map<String,Object> map) {
+    public String selectCoal(Map<String,Object> map) {
         return energyAnalySisdataDao.selectCoal(map);
     }
 }

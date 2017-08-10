@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,20 +96,20 @@ public class EnergyDataApi {
             params.put("comId",energyAnalySisdata.getComId());
             params.put("typeId","2");
             params.put("sdate",energyAnalySisdata.getScadatime());
-            List<Map<String,Object>> list = energyAnalyService.selectCoal(params);
+            String coef2 = energyAnalyService.selectCoal(params);
             Map<String,Object> map =new HashMap<String,Object>();
             map.put("id",energyAnalySisdata.getId());
-            map.put("coef",list.get(0).get("COEF"));
+            map.put("coef",coef2);
             energyAnalyService.selectInsertIntoFinalDataHourById(map);
             //电量的录入
             Map<String,Object> params1 = new HashMap<String,Object>();
             params1.put("comId",energyAnalySisdata.getComId());
             params1.put("typeId","1");
             params1.put("sdate",energyAnalySisdata.getScadatime());
-            List<Map<String,Object>> list1 = energyAnalyService.selectCoal(params);
+            String coef1 = energyAnalyService.selectCoal(params);
             Map<String,Object> map1 =new HashMap<String,Object>();
             map1.put("id",energyAnalySisdata.getId());
-            map1.put("coef",list1.get(0).get("COEF"));
+            map1.put("coef",coef1);
             energyAnalyService.selectPowerInsertFinalDataById(map1);
             //Type=1热力站 =2热源
             if("1".equals(energyAnalySisdata.getType())){
@@ -119,10 +118,10 @@ public class EnergyDataApi {
                 params3.put("comId",energyAnalySisdata.getComId());
                 params3.put("typeId","3");
                 params3.put("sdate",energyAnalySisdata.getScadatime());
-                List<Map<String,Object>> list3 = energyAnalyService.selectCoal(params);
+                String coef3 = energyAnalyService.selectCoal(params);
                 Map<String,Object> map3 =new HashMap<String,Object>();
                 map3.put("id",energyAnalySisdata.getId());
-                map3.put("coef",list3.get(0).get("COEF"));
+                map3.put("coef",coef3);
                 energyAnalyService.selectHeatInsertFinalDataById(map3);
             }
             if("2".equals(energyAnalySisdata.getType())){
@@ -131,10 +130,10 @@ public class EnergyDataApi {
                 params4.put("comId",energyAnalySisdata.getComId());
                 params4.put("typeId","4");
                 params4.put("sdate",energyAnalySisdata.getScadatime());
-                List<Map<String,Object>> list4 = energyAnalyService.selectCoal(params4);
+                String coef4 = energyAnalyService.selectCoal(params4);
                 Map<String,Object> map4 =new HashMap<String,Object>();
                 map4.put("id",energyAnalySisdata.getId());
-                map4.put("coef",list4.get(0).get("COEF"));
+                map4.put("coef",coef4);
                 energyAnalyService.selectQiInsertFinalDataById(map4);
             }
             jsonObj.put("status","1");

@@ -533,18 +533,20 @@
                     t.id =#{id,jdbcType=VARCHAR}
     </select>
     <!--取标煤系数-->
-    <select id="selectCoal" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT
-        *
+    <select id="selectCoal" parameterType="java.util.Map" resultType="java.lang.String">
+         SELECT
+        ef.COEF coef
         FROM
-        t_emc_coal_coef tc
+        t_emc_coal_coef ef
         WHERE
-        tc.COMID = #{comId,jdbcType=VARCHAR}
-        AND tc.TYPEID = #{typeId,jdbcType=VARCHAR}
-        and #{sdate,jdbcType=VARCHAR} &gt;= tc.SDATE
-        and #{sdate,jdbcType=VARCHAR} &lt;= tc.SDATE
-
-        ORDER BY tc.SDATE asc
+        ef.SDATE = (
+        SELECT
+        max(f.sdate)
+        FROM
+        t_emc_coal_coef f
+        WHERE f.sdate &lt;=#{sdate,jdbcType=VARCHAR}
+        AND f.TYPEID = #{typeId,jdbcType=VARCHAR}
+        and f.comid = #{comId,jdbcType=VARCHAR})
 
     </select>
 </mapper>

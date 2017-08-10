@@ -50,7 +50,7 @@
       AQI_SCOPE = #{aqiScope,jdbcType=VARCHAR},
       AQI_REMARK = #{aqiRemark,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=TINYINT}
-    where  CODE = #{code,jdbcType=VARCHAR} AND REPORT_DATE = #{reportDate,jdbcType=VARCHAR} AND  STATUS = #{status,jdbcType=TINYINT}
+    where  CODE = #{code,jdbcType=VARCHAR} AND REPORT_DATE = #{reportDate,jdbcType=VARCHAR}
   </update>
 
   <select id="selectById" parameterType="java.util.Map" resultMap="BaseResultMap">

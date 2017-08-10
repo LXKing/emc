@@ -1378,7 +1378,6 @@ function chart07Fun() {
 
 /*能耗明细图表初始化*/
 function initChart(kedu1, mx, bm_total) {
-    debugger;
     bm_total = toDecimal(bm_total);
     myChartEnergy = echarts.init(document.getElementById('EnergyChart'));
     var colorvalue = null;
@@ -1417,14 +1416,18 @@ function initChart(kedu1, mx, bm_total) {
                 },
                 itemStyle: {
                     normal: {
-                        color: '#d44243'
+                        color: '#d44243',
+                        label:{
+                            show: true,
+                            position:'inner'
+                        }
                     }
                 },
                 detail: {
                     show: false,
                     formatter: '{value}',
                     textStyle: {
-                        fontSize: 15
+                        fontSize: 5
                     }
                 },
                 data: [
@@ -1474,6 +1477,9 @@ function initChart(kedu1, mx, bm_total) {
                     }
                 },
                 axisLabel: {
+                    formatter:function(e){
+                        return toFormatNumbers(e,0);
+                    },
                     textStyle: {
                         color: chartsColor.chart07.facecolor1
                     }
