@@ -155,11 +155,12 @@ function clickNode(e,treeId,treeNode) {
         data: {id: treeNode.id},
         dataType: "json",
         success: function (data) {
+            console.log(data);
             $("#orgName").val(data.orgDetail.orgName);
             $("#orgCode").val(data.orgDetail.orgCode);
             $("#shortName").val(data.orgDetail.shortName);
             $("#memo").val(data.orgDetail.memo);
-            $("#seq").val(data.orgDetail.seq);
+            $("#sort").val(data.orgDetail.sort);
             var type = data.orgDetail.typeId;
 
             if (type == "1") {
