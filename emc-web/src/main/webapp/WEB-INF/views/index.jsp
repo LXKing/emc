@@ -46,7 +46,7 @@
                 <li class="tabicon02 fCarbonTotal">0T</li>
                 <li class="tabicon03 fCostAll">0万元</li>
             </ul>
-            <div class="tabicon10 tabicon10cb">0GJ</div>
+            <div class="tabicon10 ">0GJ</div>
         </div>
 
         <div class="index_menuBox index_menuBoxweb index_menuBoxre pull-left" onclick="typefun(this,3)">
@@ -213,6 +213,163 @@
 
     </div>
 
+</div>
+
+<%--单耗趋势--%>
+<div class=" col-xs-4 mb14">
+    <div class="index_contentBox">
+        <div class="titbox clearfix no-padding no-margin">
+            <a href="${web}/cons/analysis/tsec">
+                <div class="pull-left carbonTit energyTit"><i></i>单耗趋势
+                    <small class="font-sm">Comparison of Energy</small>
+                </div>
+            </a>
+        </div>
+        <div class="energyBox ComparisonBox">
+            <div class="chart-box">
+                <div class="cb-header">
+                    <span class="cb-title">单耗 (单位: Tce/m²)</span>
+
+                    <div class="cb-title-right">
+                        <label>
+                            <span class="cb-legend-blue"></span>
+                            今年
+                        </label>
+                        <label>
+                            <span class="cb-legend-gray"></span>
+                            去年
+                        </label>
+                        <label>
+                            <span class="cb-legend-green"></span>
+                            上限
+                        </label>
+                        <label>
+                            <span class="cb-legend-red"></span>
+                            下限
+                        </label>
+                    </div>
+                </div>
+                <div id="chart01" class="chart"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%--健康指数--%>
+<div class=" col-xs-4 mb14  ">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>健康指数
+                <small class="font-sm">HEALTH INDEX</small>
+            </div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div class="chart-box">
+                <div class="barwrap">
+                    <div class="clearfix">
+                        <span id="checktitle">正在检测服务情况...</span>
+												<span id="totaltitle">
+												检测进度
+												<span id="totals">0%</span>
+												</span>
+                    </div>
+                    <div>
+                        <div id="barjc" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="barwrap2 clearfix">
+                    <div>
+                        87
+                    </div>
+                    <div>
+                        <p>检测完毕！</p>
+                        <span>本次检测总分</span>
+                    </div>
+                </div>
+                <div id="chart12" class="quanquanwrap">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%--室温散点--%>
+<div class=" col-xs-4 mb14">
+    <div class="index_contentBox otherTabdiv"  style="display: none">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>碳排放趋势
+                <small class="font-sm">Comparison of carbon</small>
+            </div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div class="chart-box">
+                <div class="cb-header">
+                    <span class="cb-title">碳排放(单位: m³)</span>
+
+                    <div class="cb-title-right">
+                        <label>
+                            <span class="cb-legend-blue"></span>
+                            今年
+                        </label>
+                        <label>
+                            <span class="cb-legend-gray"></span>
+                            去年
+                        </label>
+                    </div>
+                </div>
+                <div id="chart03" class="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="index_contentBox PeopleTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>合格率趋势
+                <small class="font-sm">Qualified rate trend</small>
+            </div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div id="barchart" class="clearfix">
+            </div>
+            <div class="chart-box">
+                <div class="cb-header">
+                    <span class="cb-title">室温 (单位: ℃)</span>
+
+                    <div class="cb-title-right">
+                        <label>
+                            <span class="cb-legend-blue QualifiedLend"></span>
+                            民户室温
+                        </label>
+
+                    </div>
+                </div>
+                <div id="QualifiedChart" class="chart"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class=" col-xs-4 mb14  " style="display: none">
+    <div class="index_contentBox otherTabdiv">
+        <div class="titbox clearfix no-padding no-margin">
+            <div class="pull-left carbonTit energyTit"><i></i>折算能耗
+                <small class="font-sm">COST COMPARISON</small>
+            </div>
+        </div>
+        <div class="energyBox carbonBox">
+            <div class="chart-box">
+                <div class="cb-header">
+                    <span class="cb-title">能耗 (单位: GJ)</span>
+
+                    <div class="cb-title-right">
+                        温度 (单位: ℃)
+                    </div>
+                </div>
+                <div id="chart11" class="chart"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class=" col-xs-4 mb14" style="display: none">
@@ -386,46 +543,6 @@
     </div>
 
 </div>
-<%--单耗趋势--%>
-<div class=" col-xs-4 mb14">
-    <div class="index_contentBox">
-        <div class="titbox clearfix no-padding no-margin">
-            <a href="${web}/cons/analysis/tsec">
-                <div class="pull-left carbonTit energyTit"><i></i>单耗趋势
-                    <small class="font-sm">Comparison of Energy</small>
-                </div>
-            </a>
-        </div>
-        <div class="energyBox ComparisonBox">
-            <div class="chart-box">
-                <div class="cb-header">
-                    <span class="cb-title">单耗 (单位: Tce/m²)</span>
-
-                    <div class="cb-title-right">
-                        <label>
-                            <span class="cb-legend-blue"></span>
-                            今年
-                        </label>
-                        <label>
-                            <span class="cb-legend-gray"></span>
-                            去年
-                        </label>
-                        <label>
-                            <span class="cb-legend-green"></span>
-                            上限
-                        </label>
-                        <label>
-                            <span class="cb-legend-red"></span>
-                            下限
-                        </label>
-                    </div>
-                </div>
-                <div id="chart01" class="chart"></div>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 <div class=" col-xs-4 mb14" style="display: none">
     <div class="index_contentBox">
@@ -463,123 +580,6 @@
 
     </div>
 </div>
-
-<%--健康指数--%>
-<div class=" col-xs-4 mb14  ">
-    <div class="index_contentBox otherTabdiv">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>健康指数
-                <small class="font-sm">HEALTH INDEX</small>
-            </div>
-        </div>
-        <div class="energyBox carbonBox">
-            <div class="chart-box">
-                <div class="barwrap">
-                    <div class="clearfix">
-                        <span id="checktitle">正在检测服务情况...</span>
-												<span id="totaltitle">
-												检测进度
-												<span id="totals">0%</span>
-												</span>
-                    </div>
-                    <div>
-                        <div id="barjc" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="barwrap2 clearfix">
-                    <div>
-                        87
-                    </div>
-                    <div>
-                        <p>检测完毕！</p>
-                        <span>本次检测总分</span>
-                    </div>
-                </div>
-                <div id="chart12" class="quanquanwrap">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<%--室温散点--%>
-<div class=" col-xs-4 mb14">
-    <div class="index_contentBox otherTabdiv"  style="display: none">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>碳排放趋势
-                <small class="font-sm">Comparison of carbon</small>
-            </div>
-        </div>
-        <div class="energyBox carbonBox">
-            <div class="chart-box">
-                <div class="cb-header">
-                    <span class="cb-title">碳排放(单位: m³)</span>
-
-                    <div class="cb-title-right">
-                        <label>
-                            <span class="cb-legend-blue"></span>
-                            今年
-                        </label>
-                        <label>
-                            <span class="cb-legend-gray"></span>
-                            去年
-                        </label>
-                    </div>
-                </div>
-                <div id="chart03" class="chart"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="index_contentBox PeopleTabdiv">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>合格率趋势
-                <small class="font-sm">Qualified rate trend</small>
-            </div>
-        </div>
-        <div class="energyBox carbonBox">
-            <div id="barchart" class="clearfix">
-            </div>
-            <div class="chart-box">
-                <div class="cb-header">
-                    <span class="cb-title">室温 (单位: ℃)</span>
-
-                    <div class="cb-title-right">
-                        <label>
-                            <span class="cb-legend-blue QualifiedLend"></span>
-                            民户室温
-                        </label>
-
-                    </div>
-                </div>
-                <div id="QualifiedChart" class="chart"></div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class=" col-xs-4 mb14  " style="display: none">
-    <div class="index_contentBox otherTabdiv">
-        <div class="titbox clearfix no-padding no-margin">
-            <div class="pull-left carbonTit energyTit"><i></i>折算能耗
-                <small class="font-sm">COST COMPARISON</small>
-            </div>
-        </div>
-        <div class="energyBox carbonBox">
-            <div class="chart-box">
-                <div class="cb-header">
-                    <span class="cb-title">能耗 (单位: GJ)</span>
-
-                    <div class="cb-title-right">
-                        温度 (单位: ℃)
-                    </div>
-                </div>
-                <div id="chart11" class="chart"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 </div>
