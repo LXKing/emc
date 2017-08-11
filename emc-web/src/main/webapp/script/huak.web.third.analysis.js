@@ -109,7 +109,7 @@ function loadDataFun() {
 
 
 
-    $(".maintitle").html("水能耗"); //切换页后改这个可以改整体标题
+    //$(".maintitle").html("水能耗"); //切换页后改这个可以改整体标题
 
     createtable();
 

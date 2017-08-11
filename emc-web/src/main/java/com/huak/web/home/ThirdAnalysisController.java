@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,8 +32,9 @@ public class ThirdAnalysisController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/page/{type}", method = RequestMethod.GET)
-    public String secondEconPage(Model model,HttpServletRequest request){
+    public String secondEconPage(Model model,HttpServletRequest request,@PathVariable("type")String type){
         logger.info("跳转三级单耗页面");
+        model.addAttribute("type",type);
         return "third/analysis";
     }
 }

@@ -23,7 +23,7 @@
     <div class="col-lg-12 mb14  ">
         <div class=" index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class="pull-left groupEnergyTit energyTit"><i></i><span class="maintitle"></span>明细<small class="font-sm">ENERGY CONSUMPTION DETAILS</small></div>
+                <div class="pull-left groupEnergyTit energyTit"><i></i><span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗明细<small class="font-sm">ENERGY CONSUMPTION DETAILS</small></div>
             </div>
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
@@ -53,7 +53,7 @@
             <div class="clearfix energy-list col-lg-12 ">
                 <div class="energy-list-box energy-list-box-first">
                     <div class="energy-head energy-add">
-                        <span class="energy-list-name">供热源-<span class="maintitle"></span></span>
+                        <span class="energy-list-name">供热源-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num">111</span>
                             <span class="energy-list-measure ">GJ</span>
@@ -68,7 +68,7 @@
 
                 <div class="energy-list-box">
                     <div class="energy-head ">
-                        <span class="energy-list-name">管网-<span class="maintitle"></span></span>
+                        <span class="energy-list-name">管网-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num">111</span>
                             <span class="energy-list-measure ">GJ</span>
@@ -83,7 +83,7 @@
 
                 <div class="energy-list-box">
                     <div class="energy-head ">
-                        <span class="energy-list-name">换热站-<span class="maintitle"></span></span>
+                        <span class="energy-list-name">换热站-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num">111</span>
                             <span class="energy-list-measure ">GJ</span>
@@ -99,7 +99,7 @@
 
                 <div class="energy-list-box">
                     <div class="energy-head ">
-                        <span class="energy-list-name">管线-<span class="maintitle"></span></span>
+                        <span class="energy-list-name">管线-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num">111</span>
                             <span class="energy-list-measure ">GJ</span>
@@ -115,7 +115,7 @@
 
                 <div class="energy-list-box energy-list-box-last">
                     <div class="energy-head ">
-                        <span class="energy-list-name">民户-<span class="maintitle"></span></span>
+                        <span class="energy-list-name">民户-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num">111</span>
                             <span class="energy-list-measure ">GJ</span>
@@ -133,14 +133,14 @@
                 <div class="col-lg-12 no-padding mt30">
                     <div class="col-lg-6 no-padding analyBoxList">
                         <div class="ec_title">
-                            换热站<span class="maintitle"></span>排名
+                            换热站<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗排名
                         </div>
                         <div id="piechart_as" style="width: 100%;height:268px;"></div>
 
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                         <div class="ec_title">
-                            热源<span class="maintitle"></span>排名
+                            热源<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗排名
                         </div>
                         <div id="linechart_as" style="width: 100%;height:268px;"></div>
 
@@ -159,7 +159,7 @@
 <div class="col-lg-12 mb14">
 <div class="index_contentBox clearfix">
 <div class="titbox clearfix no-padding no-margin">
-<div class="pull-left energyTit analy_tit_as"><i></i>各站点<span class="maintitle"></span>明细<small class="font-sm">Energy consumption details</small></div>
+<div class="pull-left energyTit analy_tit_as"><i></i>各站点<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗明细<small class="font-sm">Energy consumption details</small></div>
 <a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
 <div class="clearfix  col-lg-12  tablewrap">
 <div class="">
