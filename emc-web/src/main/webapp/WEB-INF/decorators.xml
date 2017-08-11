@@ -12,6 +12,9 @@
     <decorator name="main" page="main.jsp"/>
     <!--带有回到顶部的装饰器-->
     <decorator name="main_top" page="main_top.jsp"/>
+    <!--三级页面装饰器-->
+    <decorator name="main_third" page="main_third.jsp"/>
+
 
 
 </decorators>

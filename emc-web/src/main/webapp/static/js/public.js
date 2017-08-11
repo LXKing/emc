@@ -570,5 +570,25 @@ function loadDataFun(){
 
 }
 
+function createtable() {
+    var right_div2 = document.getElementById("right_div2");
+    var gunwidth = document.getElementById("right_div2").offsetWidth - document.getElementById("right_div2").clientWidth;
+    $("#left_div2").css("padding-bottom", gunwidth + "px");
+    $("#right_divx").css("width",document.getElementById("right_div2").offsetWidth + "px");
+    right_div2.onscroll = function() {
+        var right_div2_top = this.scrollTop;
+        var right_div2_left = this.scrollLeft;
+
+        document.getElementById("left_div2").scrollTop = right_div2_top;
+        document.getElementById("right_div1").scrollLeft = right_div2_left;
+    }
+    //设置右边div宽度
+    document.getElementById("right_div").style.width = "" + document.documentElement.clientWidth - 230 + "px";
+    setInterval(function() {
+        document.getElementById("right_div").style.width = "" + document.documentElement.clientWidth - 230 + "px";
+    }, 0);
+
+}
+
 
 
