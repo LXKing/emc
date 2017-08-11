@@ -3,6 +3,7 @@
 <mapper namespace="com.huak.home.dao.EnergyDetailDao" >
     <resultMap id="BaseResultMap" type="com.huak.home.model.EnergyDetail" >
         <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="UNITNAME" property="unitName" jdbcType="VARCHAR" />
         <result column="BQDHT" property="totalBq" jdbcType="DOUBLE" />
         <result column="TQDHT" property="totalTq" jdbcType="DOUBLE" />
         <result column="BQWATER" property="waterBq" jdbcType="DOUBLE" />
