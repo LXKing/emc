@@ -19,7 +19,7 @@ public class EnergyDetail implements Serializable {
 
     private static final long serialVersionUID = 7396936548669299782L;
     private String id;/* 主键 */
-
+    private String unitName;
     private Double totalBq;/* 总单耗（Tce/m²） */
     private Double totalTq;
     private Double totalAn;
@@ -51,8 +51,9 @@ public class EnergyDetail implements Serializable {
     public EnergyDetail() {
     }
 
-    public EnergyDetail(String id, Double totalBq, Double totalTq, Double totalAn, Double waterBq, Double waterTq, Double waterAn, Double electricBq, Double electricTq, Double electricAn, Double gasBq, Double gasTq, Double gasAn, Double heatBq, Double heatTq, Double heatAn, Double coalBq, Double coalTq, Double coalAn, Double oilBq, Double oilTq, Double oilAn) {
+    public EnergyDetail(String id, String unitName,Double totalBq, Double totalTq, Double totalAn, Double waterBq, Double waterTq, Double waterAn, Double electricBq, Double electricTq, Double electricAn, Double gasBq, Double gasTq, Double gasAn, Double heatBq, Double heatTq, Double heatAn, Double coalBq, Double coalTq, Double coalAn, Double oilBq, Double oilTq, Double oilAn) {
         this.id = id;
+        this.unitName=unitName;
         this.totalBq = totalBq;
         this.totalTq = totalTq;
         this.totalAn = totalAn;
@@ -84,7 +85,13 @@ public class EnergyDetail implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+    public String getUnitName() {
+        return unitName;
+    }
 
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
     public Double getTotalBq() {
         return totalBq;
     }
