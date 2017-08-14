@@ -3,6 +3,7 @@ package com.huak.sys.model;
 import java.io.Serializable;
 
 public class SysDic implements Serializable{
+    private static final long serialVersionUID = 4298472155091013987L;
     private String id;
 
     private String des;

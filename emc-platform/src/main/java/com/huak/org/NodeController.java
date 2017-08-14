@@ -7,8 +7,6 @@ import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.org.model.Node;
-import com.huak.org.model.Oncenet;
-import com.huak.org.model.vo.NodeVo;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -223,8 +221,9 @@ public class NodeController {
             List<Map<String,Object>> data= nodeService.selectStationByMap(paramsMap);
             if (data.size() == 0) {
                 jo.put(Constants.FLAG, true);
-            }else
-                jo.put(Constants.FLAG,false);
+            }else {
+                jo.put(Constants.FLAG, false);
+            }
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("热源唯一性校验异常" + e.getMessage());

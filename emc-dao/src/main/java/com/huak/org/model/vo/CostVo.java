@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 public class CostVo implements Serializable{
 
+    private static final long serialVersionUID = 7218843060079240856L;
     public Double manage;//管理费
     public Double other;//其他费用
     public Double device;//设备费

@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class BanVo implements Serializable {
 
-	private String id;
+    private static final long serialVersionUID = 6493574723103426830L;
+    private String id;
 	private String banName;
 	private String communityId;
 	private String communityName;

@@ -3,6 +3,7 @@ package com.huak.org.model;
 import java.io.Serializable;
 
 public class Room implements Serializable {
+    private static final long serialVersionUID = -7491591467559807619L;
     /**
      *ID
      * @preserve 声明此方法不被JOC混淆

@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class RoomVo implements Serializable {
 
-	private String id;
+    private static final long serialVersionUID = -3220524613274420758L;
+    private String id;
 	private String roomName;
 	private String roomCode;
 	private String heatArea;

@@ -3,6 +3,7 @@ package com.huak.org.model;
 import java.io.Serializable;
 
 public class Oncenet implements Serializable{
+    private static final long serialVersionUID = -7307712060431464020L;
     private String id;
 
     private String netName;

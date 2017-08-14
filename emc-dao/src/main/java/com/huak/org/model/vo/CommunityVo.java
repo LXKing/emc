@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class CommunityVo implements Serializable {
 
-	private String id;
+    private static final long serialVersionUID = -1073341114149942263L;
+    private String id;
 	private String communityName;
 	private String comId;
 	private Long orgId;

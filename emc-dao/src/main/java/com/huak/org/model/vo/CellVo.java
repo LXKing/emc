@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class CellVo implements Serializable {
 
-	private String id;
+    private static final long serialVersionUID = 2163067241719998576L;
+    private String id;
 	private String cellName;
 	private String banId;
 	private String banName;

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class FinalDataHour {
-    private static final long serialVersionUID = 1L;
     private String id;
 
     private String comid;

@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 public class TopAllVo implements Serializable{
 
+    private static final long serialVersionUID = -4900160118433240964L;
     public String id;
     public String energyTotal;//能源总量
     public String carbonTotal;//总碳排放

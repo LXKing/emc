@@ -3,6 +3,7 @@ package com.huak.org.model;
 import java.io.Serializable;
 
 public class Org implements Serializable{
+    private static final long serialVersionUID = 1224499530675458738L;
     private Long id;
 
     private String orgName;

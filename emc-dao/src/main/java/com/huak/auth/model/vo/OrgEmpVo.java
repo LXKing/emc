@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class OrgEmpVo implements Serializable{
 
-	private String orgId;
+    private static final long serialVersionUID = 2382154610287694928L;
+    private String orgId;
 	private String empId;
 	private String empName;
 	public String getOrgId() {

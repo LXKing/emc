@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 public class Node implements Serializable{
+    private static final long serialVersionUID = -3117644947907530600L;
     private String id;
 
     private Byte manageTypeId;

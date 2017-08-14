@@ -1,13 +1,13 @@
 package com.huak.org.model.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by MR-BIN on 2017/5/19.
  */
 public class NodeVo implements Serializable{
 
+    private static final long serialVersionUID = 1864682359709825218L;
     private String id;
 
     private String comId;

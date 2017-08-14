@@ -3,6 +3,7 @@ package com.huak.org.model.vo;
 import java.io.Serializable;
 
 public class Secondnet implements Serializable{
+    private static final long serialVersionUID = 3906152256285135245L;
     private String id;
 
     private String lineName;

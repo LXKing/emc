@@ -4,6 +4,7 @@ package com.huak.auth.model;
 import java.io.Serializable;
 
 public class Menu implements Serializable{
+    private static final long serialVersionUID = -547854567887373381L;
     private String id;
 
     private String menuName;

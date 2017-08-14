@@ -14,6 +14,7 @@ import java.io.Serializable;
  * Function List:  <BR>
  */
 public class Page implements Serializable {
+    private static final long serialVersionUID = 6731271266202997438L;
     public int pageNumber = 1; // 当前页
     public int pageSize = 10; // 每页多少行
     public long total; // 共多少行

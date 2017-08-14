@@ -24,13 +24,13 @@ import java.security.SecureRandom;
 public class DESUtil {
     private final static String DES = "DES";
 
-    public static void main(String[] args) throws Exception {
+/*    public static void main(String[] args) throws Exception {
         String data = "1";
         String key = "huak@1234";
         System.err.println(encrypt(data, key));
         System.err.println(decrypt(encrypt(data, key), key));
 
-    }
+    }*/
 
     /**
      * Description 根据键值进行加密

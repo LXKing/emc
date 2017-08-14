@@ -3,6 +3,7 @@ package com.huak.auth.model;
 import java.io.Serializable;
 
 public class RoleFuncRel implements Serializable{
+    private static final long serialVersionUID = 4803165687931353533L;
     private String roleId;
 
     private String funcId;

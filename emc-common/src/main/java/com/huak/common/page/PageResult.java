@@ -40,5 +40,20 @@ public class PageResult<T> implements Serializable {
         this.page = page;
     }
 
+//    private void writeObject(java.io.ObjectOutputStream out)
+//            throws IOException {
+//        //将List转换成数组
+//        T[] obj = (T[]) list.toArray();
+//        //执行序列化存储
+//        out.writeObject(obj);
+//    }
+//
+//    private void readObject(java.io.ObjectInputStream in)
+//            throws IOException, ClassNotFoundException {
+//        //执行反序列化读取
+//        T[] obj = (T[]) in.readObject();
+//        //将数组转换成List
+//        list = Arrays.asList(obj);
+//    }
 
 }
