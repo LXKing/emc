@@ -43,9 +43,9 @@
                     <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
-                    <h3 id="groupTotal">760.4</h3>
+                    <h4 id="groupTotal">0</h4>
                     <div class="small">集团总能耗 (GJ/m3)</div>
-                    <h4 id="groupchangeRate">3.4<span class="arrow">↑</span></h4>
+                    <h4 id="groupchangeRate">0<span class="arrow"></span></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                     <div class="energy-head energy-add">
                         <span class="energy-list-name">供热源-<span class="maintitle"></span></span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
-                            <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-num">0</span>
+                            <span class="energy-list-measure">GJ</span>
+                            <span class="energy-list-proportion">(0)</span>
                         </div>
                     </div>
 
@@ -70,9 +70,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">管网-<span class="maintitle"></span></span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num">0</span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion ">(0)</span>
                         </div>
 
                     </div>
@@ -85,9 +85,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">换热站-<span class="maintitle"></span></span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num">0</span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion ">(0)</span>
                         </div>
 
                     </div>
@@ -101,9 +101,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">管线-<span class="maintitle"></span></span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num">0</span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion ">(0)</span>
                         </div>
 
                     </div>
@@ -117,9 +117,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">民户-<span class="maintitle"></span></span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num">0</span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion ">(0)</span>
                         </div>
                     </div>
 

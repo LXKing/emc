@@ -1836,13 +1836,17 @@ function chart10Fun() {
                         "<div class='detail clearfix'> <div>" + result.object.currentWeather.temperatureCurr + "</div>" +
                         "<div><p>℃</p><p title='"+ result.object.currentWeather.weatherCurrent+"'>" + tempcureent + "（实时）</p></div></div>" +
                         "<h3>" + result.object.currentForcast.tempLow + "~" + result.object.currentForcast.tempHigh + "℃<h4 title='"+result.object.currentForcast.weather+"'>" + forcastweather  +
-                        "</h4><h5 title='"+curentwindp+"'>" + curentwindp + "</h5>" +
+                        "</h4><h5 title='"+ result.object.currentForcast.wind+""+ result.object.currentForcast.winp+"'>" + curentwindp + "</h5>" +
                         " </li>"
                     if (result.object.weekForcast.length > 0) {
                         result.object.weekForcast.forEach(function (value, index, array) {
                             var tempwindp =   value.wind + "" + value.winp ;
+                            var forcustweather =   value.weather ;
                             if(curentwindp.length>4){
                                 tempwindp = tempwindp.substr(0,4)+"...";
+                            }
+                            if(forcustweather.length>4){
+                                forcustweather = forcustweather.substr(0,4)+"...";
                             }
                             var iconclass = 'wather weather' + value.weatherIcon;
                             html2 += " <li>" +
@@ -1850,7 +1854,7 @@ function chart10Fun() {
                                 "<h2>" + dates.format(value.reportDate) + "</h2>" +
                                 "<div class='" + iconclass + "'></div>" +
                                 "<h3>" + value.tempLow + "~" + value.tempHigh + "℃</h3>" +
-                                "<h4 title='" + value.weather + "'>" + value.weather + "</h4>" +
+                                "<h4 title='" + value.weather + "'>" +forcustweather + "</h4>" +
                                 "<h5 title='" + value.wind + "" + value.winp + "'>"+tempwindp+"</h5>" +
                                 "</li>";
                         });

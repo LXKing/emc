@@ -7,6 +7,13 @@ import java.util.Map;
  * Created by MR-BIN on 2017/8/2.
  */
 public interface ThiredpageEnergyService {
+
+    /**
+     *三级页面-集团能源类型的能耗趋势图
+     * sunbinbin
+     * @return map
+     */
+    Map<String, Object> getDatasAll(Map<String, Object> params) throws Exception;
     /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
      * sunbinbin

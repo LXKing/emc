@@ -11,6 +11,13 @@ import java.util.Map;
 @Repository
 public interface ThiredpageEnergyDao {
     /**
+     *三级页面-集团的各个能源类型的能耗趋势图
+     * sunbinbin
+     * @return map
+     */
+    List<Map<String,Object>> getDatasAll(Map<String, Object> params);
+
+    /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
      * sunbinbin
      * @return map
@@ -23,4 +30,6 @@ public interface ThiredpageEnergyDao {
      * @return string
      */
     List<Map<String,Object>> selectassessment(Map<String, Object> paramsMap);
+
+
 }

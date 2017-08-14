@@ -68,12 +68,13 @@
       sum(da.DOSAGE) as nums
       FROM
       ${tableName} da,( select unitid from v_emc_unit where 1=1
+      <if test="orgId != null and orgId !=''">
+          and  EXISTS (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})) AND id = ORGID)
+      </if>
       <if test="feedType != null and feedType !=''">
           and  HEAT_TYPE = #{feedType}
       </if>
-      <if test="orgId != null and orgId !=''">
-          and  ORGID in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
-      </if>
+
       <if test="comId != null and comId !=''">
           and  COMID  = #{comId}
       </if>
@@ -89,7 +90,7 @@
           and  da.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTime}
       </if>
       GROUP BY
-      da.typeid,da.DOSAGE_TIME,da.UNITID)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
+      da.typeid,da.DOSAGE_TIME,da.UNITID)QQ left join t_emc_energy_type ww  on QQ.type = ww.ID group by ww.TYPE)b
       union ALL
       (
       select 'qn' as type, max(case when b.tt ='1' then b.dnum else 0 end)as  qn_bm_whater,
@@ -118,7 +119,7 @@
              and  HEAT_TYPE = #{feedType}
           </if>
           <if test="orgId != null and orgId !=''">
-              and  ORGID in (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})))
+              and  EXISTS (SELECT id FROM t_emc_org where FIND_IN_SET( id,emc_func_org_getchilds (#{orgId})) AND id = ORGID)
           </if>
           <if test="comId != null and comId !=''">
               and  COMID  = #{comId}
@@ -136,7 +137,7 @@
           and  da.DOSAGE_TIME  <![CDATA[ <= ]]> #{pendTime}
       </if>
       GROUP BY
-      da.typeid,da.DOSAGE_TIME,da.UNITID)QQ ,t_emc_energy_type ww  where QQ.type = ww.ID group by ww.TYPE)b
+      da.typeid,da.DOSAGE_TIME,da.UNITID)QQ left join t_emc_energy_type ww  on QQ.type = ww.ID group by ww.TYPE)b
       ))mm
   </select>
 
