@@ -29,8 +29,9 @@ public class CollectionUtil {
         List newList = new ArrayList();
         for (Iterator iter = list.iterator(); iter.hasNext(); ) {
             Object element = iter.next();
-            if (set.add(element))
+            if (set.add(element)) {
                 newList.add(element);
+            }
         }
         list.clear();
         list.addAll(newList);

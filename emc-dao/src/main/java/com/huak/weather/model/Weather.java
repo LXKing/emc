@@ -2,9 +2,9 @@ package com.huak.weather.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.*;
 
 public class Weather implements Serializable {
+    private static final long serialVersionUID = -6654572227218222940L;
     private Long id;
 
     private String code;

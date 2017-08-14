@@ -1,9 +1,9 @@
 package com.huak.weather.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Weekforcast implements Serializable{
+    private static final long serialVersionUID = 2992253033864187342L;
     private Integer id;
 
     private String code;

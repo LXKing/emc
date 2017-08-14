@@ -74,8 +74,9 @@ public class CommonExcelExport {
             for (int j = 0; j < record.size(); j++) {                            //填充一条记录
                 Object value = record.get(j);
                 String cellValue = "";
-                if (value != null)
+                if (value != null) {
                     cellValue = value.toString();
+                }
                 row.createCell(j).setCellValue(cellValue);
             }
         }

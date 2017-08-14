@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Season implements Serializable{
 
+    private static final long serialVersionUID = -2590794570299749389L;
     private String id;
 
     private String comid;

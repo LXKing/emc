@@ -3,6 +3,7 @@ package com.huak.log.model;
 import java.io.Serializable;
 
 public class OperateLog implements Serializable{
+    private static final long serialVersionUID = 6534831654677190775L;
     /**
      *主键
      * @preserve 声明此方法不被JOC混淆

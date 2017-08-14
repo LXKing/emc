@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class WeatherAQI implements Serializable {
 
+    private static final long serialVersionUID = 8587469044931816275L;
     private String code;
 
     private String reportDate;

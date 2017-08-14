@@ -70,7 +70,9 @@ public class Page implements Serializable {
     }
 
     private static String a(int i, int j) {
-        if (j == 60) i += 1;
+        if (j == 60) {
+            i += 1;
+        }
         if (i > 9) {
             return String.valueOf(i);
         } else {
