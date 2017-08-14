@@ -34,7 +34,6 @@ public class StringUtils {
 
     public static void main(String[] args) {
         System.out.println(getRandomString(8));
-        System.out.println(Math.random());
         System.out.println(new SecureRandom().nextDouble());
     }
 
