@@ -161,7 +161,9 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
 					for(Map<String,Object> map : listMap){
 						String curyear = map.get("curyear").toString();
 						String yeardate = map.get("yeardate").toString();
-						if(!yeardate.equals(yd))continue;
+						if(!yeardate.equals(yd)){
+                            continue;
+                        }
 						isHas = true;
 						Double value = Double.parseDouble(String.valueOf(map.get(type)));
 						if("0".equals(curyear)){
@@ -213,8 +215,12 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
 			Double scale = Double.valueOf(lastYearTotal)==0.0?0.0:
 				(double)Math.round((Double.valueOf(curYearTotal)-Double.valueOf(lastYearTotal))/Double.valueOf(lastYearTotal)*10000)/100;//计算同比值
 			String rateType = "0";
-			if(lastYearTotal==0) rateType="-1";
-			if(lastYearTotal>curYearTotal)  rateType = "1";//设置同比数据后面的上下箭头
+			if(lastYearTotal==0) {
+                rateType="-1";
+            }
+			if(lastYearTotal>curYearTotal)  {
+                rateType = "1";//设置同比数据后面的上下箭头
+            }
 			rate.put("rate", lmEmpty?scale:"0");
 			rate.put("type", lmEmpty?rateType:"0");
 			rateMap.put("changeRate", rate);

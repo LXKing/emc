@@ -1,7 +1,5 @@
 package com.huak.main;
 
-import java.io.IOException;
-
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -14,7 +12,7 @@ import java.io.IOException;
  * Function List:  <BR>
  */
 public class Container {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         com.alibaba.dubbo.container.Main.main(args);
     }
 }
