@@ -114,7 +114,9 @@ public class RedisTools {
             value = jedis.get(key);
         } catch (Exception e) {
             // 释放redis对象
-            pool.returnBrokenResource(jedis);
+            if(null != pool){
+                pool.returnBrokenResource(jedis);
+            }
             e.printStackTrace();
         } finally {
             // 返还到连接池
@@ -127,7 +129,6 @@ public class RedisTools {
     /**
      * 获取连接
      *
-     * @param key
      * @return
      */
     public static Jedis getJedis() {
