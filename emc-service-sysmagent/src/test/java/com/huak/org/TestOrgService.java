@@ -3,18 +3,17 @@ package com.huak.org;
 
 import com.huak.base.BaseTest;
 import com.huak.base.dao.DateDao;
-
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.org.model.Node;
-import com.huak.org.model.vo.NodeVo;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -45,7 +44,7 @@ public class TestOrgService extends BaseTest {
     //@Test
     @Rollback
     public void testInsertSelective() {
-
+        // Do nothing because of temporary use.
     }
 
     @Test

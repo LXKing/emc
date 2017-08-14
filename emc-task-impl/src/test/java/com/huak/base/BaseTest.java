@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class BaseTest {
     @Before
     public void setUp() throws Exception {
-
+        // Do nothing because of temporary use.
 
     }
 }

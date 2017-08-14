@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class UUIDGenerator {
     public UUIDGenerator() {
+        // Do nothing because of public method.
     }
 
     /**

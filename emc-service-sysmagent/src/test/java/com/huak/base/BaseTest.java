@@ -14,6 +14,6 @@ public class BaseTest {
     @Before
     public void setUp() throws Exception {
 
-
+        // Do nothing because of temporary use.
     }
 }
