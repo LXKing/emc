@@ -869,13 +869,12 @@ public class ComponentServiceImpl implements ComponentService{
                 if(fla){
 
                     kedu1 =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(currentDays,planDays),0.75),2);
-                    logger.info(kedu1+"--------------------------------------------kedu1");
+
                     if(planDays == 0 ){
                         if(currentPlan == 0){
                             pcd = 0 ;
                         }else{
                             pcd =  MathsUtil.round(MathsUtil.mul(MathsUtil.div(jn_total,currentPlan),100),4);
-                            logger.info(pcd+"--------------------------------------------pcd");
                         }
                         pcdz = jn_total;
                     }else{
@@ -884,12 +883,9 @@ public class ComponentServiceImpl implements ComponentService{
                         }else{
                             pcd = 0;
                         }
-                        logger.info(currentDays+"--------------------------------------------pcdz");
-                        logger.info(planDays+"--------------------------------------------pcdz");
-                        logger.info(currentPlan+"--------------------------------------------pcdz");
-                        logger.info(jn_total+"--------------------------------------------jn_total");
+
                         pcdz =MathsUtil.round(MathsUtil.sub(jn_total,MathsUtil.mul(MathsUtil.div(currentDays,planDays),currentPlan)),2);
-                        logger.info(pcdz+"--------------------------------------------pcdz");
+
                     }
                 }else{
                     kedu1 = 0.75;
@@ -907,10 +903,7 @@ public class ComponentServiceImpl implements ComponentService{
                         }else{
                             pcd = 0;
                         }
-                        logger.info(currentDays+"--------------------------------------------pcdz");
-                        logger.info(planDays+"--------------------------------------------pcdz");
-                        logger.info(currentPlan+"--------------------------------------------pcdz");
-                        logger.info(jn_total+"--------------------------------------------jn_total");
+
                         pcdz =   jn_total - currentPlan ;
                     }
 

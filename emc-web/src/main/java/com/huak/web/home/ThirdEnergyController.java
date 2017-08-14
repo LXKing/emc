@@ -3,6 +3,7 @@ package com.huak.web.home;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThiredpageEnergyService;
+import com.huak.home.type.ToolVO;
 import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,39 @@ public class ThirdEnergyController extends BaseController {
         return "third/energy";
     }
 
+    /**
+     *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/energyTotalDetail", method = RequestMethod.POST)
+    @ResponseBody
+    public String energyTotalDetail(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
+        logger.info("三级页面-集团能源类型的能耗趋势图数据加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put("comId",company.getId());
+            paramsMap.put("energytype",type);
+            Map<String,Object> map =  thiredpageEnergyService.getDatasAll(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+
+            }
+
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-集团能源类型的能耗趋势图数据加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
 
     /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
@@ -54,15 +88,16 @@ public class ThirdEnergyController extends BaseController {
      */
     @RequestMapping(value = "/energyDetail", method = RequestMethod.POST)
     @ResponseBody
-    public String energyDetail(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String energyDetail(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
         logger.info("三级页面-源、网、站、线、户的各个能源类型的能耗趋势图数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
             paramsMap.put("comId",company.getId());
-            paramsMap.put("energytype",paramsMap.get("type"));
+            paramsMap.put("energytype",type);
             Map<String,Object> map =  thiredpageEnergyService.getDatas(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -87,15 +122,16 @@ public class ThirdEnergyController extends BaseController {
      */
     @RequestMapping(value = "/assessment", method = RequestMethod.POST)
     @ResponseBody
-    public String assessment(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request) {
+    public String assessment(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
         logger.info("三级页面-换热站排名趋势图数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
             paramsMap.put("comId",company.getId());
-            paramsMap.put("energytype",paramsMap.get("type"));
+            paramsMap.put("energytype",type);
             Map<String,Object> map =  thiredpageEnergyService.getassessment(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);

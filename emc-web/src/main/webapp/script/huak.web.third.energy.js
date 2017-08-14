@@ -1,8 +1,12 @@
-/*function loadDataFun() {
-   loadFun();
-   loadassessment();
+
+function loadDataFun(){
+    loadFun();
+    loadassessment();
+    loadEnergyTotalDetail();
+    loadTable();
 }
 
+/*三级页面-能耗分析-站的各种能源类型排名数据入口*/
 function loadassessment(){
     var data = $("#searchTools").serialize()+"&type="+$("#type").val();
     $.ajax({
@@ -12,20 +16,20 @@ function loadassessment(){
         data:data,
         dataType: "json",
         success: function (result) {
-            console.info(result);
             initassessment(result);
         }
     });
 
 }
 
-*//*三级页面-能耗分析-站的各种能源类型排名*//*
+/*三级页面-能耗分析-站的各种能源类型排名*/
 function initassessment(result){
     if(result.flag){
         echartsSelf({
             id: 'linechart_as',
             echartsConfig: {
                 xAxisBoundaryGap: true,
+                axisLabelRotate: '-30', //倾斜角度
                 dataZoom: true,
                 dataZoomstartValue: 1,
                 dataZoomendValue: 5,
@@ -42,6 +46,7 @@ function initassessment(result){
             id: 'piechart_as',
             echartsConfig: {
                 xAxisBoundaryGap: true,
+                axisLabelRotate: '-30', //倾斜角度
                 dataZoom: true,
                 dataZoomstartValue: 1,
                 dataZoomendValue: 5,
@@ -56,9 +61,22 @@ function initassessment(result){
     }
 }
 
-*//*三级页面-能耗分析-源、网、站、线、户的各种能源类型能耗*//*
+/*三级页面-能耗分析-源、网、站、线、户的各种能源类型能耗*/
 function loadFun(){
-    var data = $("#searchTools").serialize()+"&type="+$("#type").val();
+    var type = $("#type").val();
+    if(type == '1'){
+        $(".maintitle").html("用水量"); //切换页后改这个可以改整体标题
+    }else if(type == '2'){
+        $(".maintitle").html("用电量"); //切换页后改这个可以改整体标题
+    }else if(type == '3'){
+        $(".maintitle").html("用气量"); //切换页后改这个可以改整体标题
+    }else if(type == '4'){
+        $(".maintitle").html("用热量"); //切换页后改这个可以改整体标题
+    }else if(type == '5'){
+        $(".maintitle").html("用煤量"); //切换页后改这个可以改整体标题
+    }
+
+    var data = $("#searchTools").serialize()+"&type="+type;
     $.ajax({
         url: _web + '/third/energy/energyDetail',
         type: 'post',
@@ -66,16 +84,37 @@ function loadFun(){
         data:data,
         dataType: "json",
         success: function (result) {
-                initchart(result);
+            initchart(result);
         }
     });
 }
 
+/*三级页面-能耗分析-源、网、站、线、户的各种能源类型能耗图展示*/
 function initchart(result){
-
+        var type = $("#type").val();
         if(result.flag){
             var datelist = result.object.date;
             $.each(result.object.data,function(index,value){
+                debugger;
+                var tb = 0;
+                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-num").html(toFormatNum(value.totalcurrentyear));
+                if(type == '1'){
+                    $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("m³");
+                }else if(type == '2'){
+                    $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("kWh");
+                }else if(type == '3'){
+                    $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("m³");
+                }else if(type == '4'){
+                    $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("GJ");
+                }else if(type == '5'){
+                    $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("t");
+                }
+                if(value.totallastyear != 0){
+                    tb = toFormatNumbers((value.totalcurrentyear - value.totallastyear)/value.totallastyear,1);
+                }
+                var zz =tb>0?"↑":((tb == 0)?"→":"↓");
+                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-proportion").html("("+tb+''+zz+")");
+              $(value.type).parent;
                 var options = {
                     id: value.type,
                     echartsConfig: {
@@ -98,97 +137,77 @@ function initchart(result){
         }
 
 
-};*/
-$(function() {
+};
 
-    loadDataFun();
+/*三级页面-集团总能源类型能耗图展示*/
+function loadEnergyTotalDetail() {
+    var data = $("#searchTools").serialize()+"&type="+$("#type").val();
+    var tb = 0;
+    var type = $("#type").val();
+    var title = $($(".select-box")[0]).find(".x-sfleft1").find("input").val();
+    if(type == '1'){
+        $($("#groupEnergyChart").prev()).find(".cb-title").html(title+"（单位：m³）");
+        $($($("#groupEnergyChart").parent().next()).find(".small")[0]).html(title+"用水量"+"（m³）");
+    }else if(type == '2'){
+        $($("#groupEnergyChart").prev()).find(".cb-title").html(title+"（单位：kWh）");
+        $($($("#groupEnergyChart").parent().next()).find(".small")[0]).html(title+"用电量"+"（kWh）");
+    }else if(type == '3'){
+        $($("#groupEnergyChart").prev()).find(".cb-title").html(title+"（单位：m³）");
+        $($($("#groupEnergyChart").parent().next()).find(".small")[0]).html(title+"用气量"+"（m³）");
+    }else if(type == '4'){
+        $($("#groupEnergyChart").prev()).find(".cb-title").html(title+"（单位：GJ）");
+        $($($("#groupEnergyChart").parent().next()).find(".small")[0]).html(title+"用气量"+"（GJ）");
+    }else if(type == '5'){
+        $($("#groupEnergyChart").prev()).find(".cb-title").html(title+"（单位：t）");
+        $($($("#groupEnergyChart").parent().next()).find(".small")[0]).html(title+"用煤量"+"（t）");
+    }
 
-});
-
-function loadDataFun() {
-
-
-
-    $(".maintitle").html("水能耗"); //切换页后改这个可以改整体标题
-
-    createtable();
-
-    $.each($(".energy-list .energy-chart > div"), function(index, item) {
-        var options = {
-            id: item.id,
-            echartsConfig: {
-
-                xData: [1, 2, 3, 4, 5, 6, 7],
-                series: [{
-                    type: 'line',
-                    dataList: [1, 4, 5, 2, 3],
-                    typeLine: 'solid',
-
-                },
-                    {
-                        type: 'line',
-                        dataList: [2, 4, 7, 1, 4, 5],
-                        typeLine: 'dashed'
-                    }
-                ]
+    $.ajax({
+        url: _web + '/third/energy/energyTotalDetail',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:data,
+        dataType: "json",
+        success: function (result) {
+            var datelist = result.object.date;
+            var currentyear = result.object.data[0].currentYear;
+            var lastyear = result.object.data[0].lastyear;
+            var totalcurrent = result.object.data[0].totalcurrentyear;
+            var totallast = result.object.data[0].totallastyear;
+            if(totallast != 0){
+                tb = toFormatNumbers((totalcurrent- totallast)/totallast,1);
             }
-        };
-        echartsSelf(options);
-    });
+            var zz =tb>0?"↑":((tb == 0)?"→":"↓");
+            $("#groupTotal").html(toFormatNum(totalcurrent));
+            var html = tb+'<span class="arrow">'+zz+'</span>';
+            $("#groupchangeRate").html(html);
+            echartsSelf({
+                id: "groupEnergyChart",
+                echartsConfig: {
+                    xData: datelist,
+                    series: [{
+                        type: 'line',
+                        dataList:currentyear,
+                        typeLine: 'solid'
 
-    echartsSelf({
-        id: "groupEnergyChart",
-        echartsConfig: {
-            xData: [1, 2, 3, 4, 5, 6, 7],
-            series: [{
-                type: 'line',
-                dataList: [1, 4, 5, 2, 3],
-                typeLine: 'solid',
-
-            },
-                {
-                    type: 'line',
-                    dataList: [2, 4, 7, 1, 4, 5],
-                    typeLine: 'dashed'
+                    },
+                        {
+                            type: 'line',
+                            dataList: lastyear,
+                            typeLine: 'dashed'
+                        }
+                    ]
                 }
-            ]
+            });
         }
     });
 
-    echartsSelf({
-        id: 'piechart_as',
-        echartsConfig: {
-            axisLabelRotate: '-50', //倾斜角度
-            xAxisBoundaryGap: true,
-            dataZoom: true,
-            dataZoomstartValue: 0,
-            dataZoomendValue: 9,
-            bg: 'row',
-            xData: ['站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3', '站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3'],
-            series: [{
-                type: 'bar',
-                dataList: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3],
-                barWidth: 20
-            }]
-        }
-    });
+//    createtable();
 
-    echartsSelf({
-        id: 'linechart_as',
-        echartsConfig: {
-            axisLabelRotate: '-50', //倾斜角度
-            xAxisBoundaryGap: true,
-            dataZoom: true,
-            dataZoomstartValue: 0,
-            dataZoomendValue: 9,
-            bg: 'row',
-            xData: ['站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3', '站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3'],
-            series: [{
-                type: 'bar',
-                dataList: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3],
-                barWidth: 20
+}
 
-            }]
-        }
-    });
+
+/*三级页面-各站点能源类型用量明细*/
+function loadTable(){
+    createtable();
 }
