@@ -294,8 +294,9 @@ $(function () {
 
     //选择日期
     updateConfig();
-    var startDate = new Date();
-    var endDate = new Date();
+
+    var startDate = new Date($("#begin").val());
+    var endDate =  new Date($("#end").val());
 
     function updateConfig() {
         //					var options = {
