@@ -1,3 +1,5 @@
+//域
+//cookie.domain = "emc.e-heating.org;";
 /**
  * 存入cookie
  * @param c_name
@@ -5,9 +7,10 @@
  * @param expiredays 天数
  */
 function setCookie(c_name,value,expiredays){
+    clearCookie(c_name);
     var exdate=new Date();
     exdate.setDate(exdate.getDate()+expiredays);
-    document.cookie=c_name+ "=" +encodeURI(value)+ ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+    document.cookie=c_name+ "=" + encodeURI(value) + ";path=/" + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 }
 
 /**
@@ -29,4 +32,11 @@ function getCookie(c_name)
         }
     }
     return ""
+}
+
+//清除cookie
+function clearCookie(c_name) {
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate()-11);
+    document.cookie=c_name+ "=;path=/;expires="+exdate.toGMTString();
 }
