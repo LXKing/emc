@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -145,6 +146,39 @@ public class ThirdEnergyController extends BaseController {
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("三级页面-换热站排名趋势图数据加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+
+    /**
+     *三级页面-换热站排名趋势图
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/tablelist", method = RequestMethod.POST)
+    @ResponseBody
+    public String getTables(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
+        logger.info("三级页面-表单数据加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put("comId",company.getId());
+            paramsMap.put("energytype",type);
+            Map<String, Object> map =  thiredpageEnergyService.getTable(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-表单数据加载加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }

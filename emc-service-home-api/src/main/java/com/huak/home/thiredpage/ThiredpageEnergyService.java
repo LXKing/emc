@@ -27,4 +27,11 @@ public interface ThiredpageEnergyService {
      * @return string
      */
     Map<String,Object> getassessment(Map<String, Object> paramsMap) throws Exception;
+
+    /**
+     *三级页面-表单
+     * sunbinbin
+     * @return map
+     */
+    Map<String, Object> getTable(Map<String, Object> params) throws Exception;
 }

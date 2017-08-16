@@ -81,6 +81,17 @@ function toDecimal(x) {
     return f;
 }
 
+/*保留小数位*/
+function toDecimal(x,num) {
+    num = num == undefined ?1:num;
+    var f = parseFloat(x);
+    if (isNaN(f)) {
+        return;
+    }
+    f = f.toFixed(num);
+    return f;
+}
+
 /**
  * 保留1位小数
  * @param x

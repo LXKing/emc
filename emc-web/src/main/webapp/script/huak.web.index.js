@@ -1633,6 +1633,8 @@ function chart08Sd(data, times) {
         },
         yAxis: {
             type: 'value',
+            max: 30,
+            min: 10,
             axisTick: {
                 show: false
             },
