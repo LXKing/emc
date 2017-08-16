@@ -77,6 +77,7 @@ var echartsSelf = function(options) {
                         color: chartsColor.linefontcolor,
                         fontFamily: 'arial'
                     },
+
                     interval:(options.echartsConfig.axisLabelInterval=='undefined'||options.echartsConfig.axisLabelInterval==null)?'auto':options.echartsConfig.axisLabelInterval,
                     rotate: options.echartsConfig.axisLabelRotate || 0
                 },
