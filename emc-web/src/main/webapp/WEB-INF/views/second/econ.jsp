@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="energy-list-box">
-                    <a href="${web}/third/energy/page/2">
+                    <a href="${web}/third/energy/page/3">
                     <div class="energy-head ">
                         <span class="energy-list-name">气能耗</span>
                         <div class="energy-list-info">

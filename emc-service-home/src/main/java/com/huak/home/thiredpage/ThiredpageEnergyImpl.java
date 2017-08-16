@@ -21,7 +21,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
 
 
     /**
-     *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
+     *三级页面-集团总能源类型的能耗趋势图
      * sunbinbin
      * @return map
      */
@@ -49,6 +49,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
         clyearList.add(eDate);
+        lyearList.add(leDate);
         yearList.addAll(lyearList);
         yearList.addAll(clyearList);
         //根据查询条件，查询相应的数据
@@ -120,6 +121,74 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return result;
     }
 
+
+
+    /**
+     *三级页面-表格数据加载
+     * sunbinbin
+     * @return map
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> getTable(Map<String, Object> params) throws Exception {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> data = new ArrayList<>();
+        //所有的用能单位类型
+        String[] unittype = {"1","2","3","4","5"};
+        String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+        String  eDate = getYearDate(sDate,Calendar.DATE,6);
+        String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
+        String leDate = getYearDate(eDate,Calendar.YEAR, -1);
+        //查询时间list
+        List<String> clyearList = new ArrayList<String>();//今年日期列表
+        List<String> lyearList = new ArrayList<String>();//去年日期列表
+        List<String> yearList = new ArrayList<String>();//去年+今年日期列表
+        while(!sDate.equals(eDate)){
+            clyearList.add(sDate);
+            sDate = getYearDate(sDate,Calendar.DATE,1);
+        }
+        while(!lsDate.equals(leDate)){
+            lyearList.add(lsDate);
+            lsDate = getYearDate(lsDate,Calendar.DATE,1);
+        }
+        clyearList.add(eDate);
+        lyearList.add(leDate);
+        yearList.addAll(lyearList);
+        yearList.addAll(clyearList);
+        params.put("currentYear",clyearList);
+        params.put("lastYear",lyearList);
+        params.put("endTime",eDate+" 23:59:59");
+        params.put("endTimeTq",leDate+" 23:59:59");
+        //根据查询条件，查询相应的数据
+        List<Map<String,Object>> listMap = thiredpageEnergyDao.getTables(params);
+        List<Map<String,Object>> totalMap = thiredpageEnergyDao.getTotal(params);
+
+        //数据封装
+
+            for (Map data1 : totalMap) {
+                if ("1".equals(data1.get("unitType"))) {
+                    result.put("feedTotal", data1);
+                }
+                if ("2".equals(data1.get("unitType"))) {
+                    result.put("netTotal", data1);
+                }
+                if ("3".equals(data1.get("unitType"))) {
+                    result.put("stationTotal", data1);
+                }
+                if ("4".equals(data1.get("unitType"))) {
+                    result.put("lineTotal", data1);
+                }
+                if ("5".equals(data1.get("unitType"))) {
+                    result.put("roomTotal", data1);
+                }
+            }
+        result.put("list",listMap);
+        result.put("dates",clyearList);
+
+        return result;
+    }
+
+
     /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
      * sunbinbin
@@ -144,11 +213,12 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
             clyearList.add(sDate);
             sDate = getYearDate(sDate,Calendar.DATE,1);
         }
+        clyearList.add(eDate);
         while(!lsDate.equals(leDate)){
             lyearList.add(lsDate);
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
-        clyearList.add(eDate);
+        lyearList.add(leDate);
         yearList.addAll(lyearList);
         yearList.addAll(clyearList);
         //根据查询条件，查询相应的数据

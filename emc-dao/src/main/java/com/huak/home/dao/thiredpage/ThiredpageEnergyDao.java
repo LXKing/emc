@@ -31,5 +31,16 @@ public interface ThiredpageEnergyDao {
      */
     List<Map<String,Object>> selectassessment(Map<String, Object> paramsMap);
 
-
+    /**
+     *三级页面-表单数据
+     * sunbinbin
+     * @return string
+     */
+    List<Map<String,Object>> getTables(Map<String, Object> params);
+    /**
+     *三级页面-表单数据-用能单位7天的总量
+     * sunbinbin
+     * @return string
+     */
+    List<Map<String,Object>> getTotal(Map<String, Object> params);
 }
