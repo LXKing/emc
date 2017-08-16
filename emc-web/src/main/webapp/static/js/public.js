@@ -591,5 +591,86 @@ function createtable() {
 
 }
 
+/**
+ * 三级页面表格封装
+ * @param data
+ */
+function thirdTable(data){
+    //生成横向表头
+    thirdXTHead(data.dates);
+
+    var $leftTable = $("#left_table2");
+    var leftHtml = '';
+    var $rightTable = $("#right_table2");
+    var rightHtml = '';
+
+    var flag = 0;
+    $.each(data.list,function(idx,item){
+        //取第一个总量
+        if(idx==0){
+            var total = getTotalTable(data,item.unitType);
+            flag = item.unitType;
+            leftHtml += '<tr class="bg"><th>' + total.unitName + '</th></tr>';
+            rightHtml += '<tr class="bg">'+ getTrBody(total,data.dates.length) + '</tr>';
+        }else{
+            if(flag != item.unitType){
+                //判断取总量类型
+                var total = getTotalTable(data,item.unitType);
+                flag = item.unitType;
+                leftHtml += '<tr class="bg"><th>' + total.unitName + '</th></tr>';
+                rightHtml += '<tr class="bg">'+ getTrBody(total,data.dates.length) + '</tr>';
+            }
+        }
+        leftHtml += '<tr><th>' + item.unitName + '</th></tr>';
+        rightHtml += '<tr>'+ getTrBody(item,data.dates.length) + '</tr>';
+    });
+    $leftTable.html(leftHtml);
+    $rightTable.html(rightHtml);
+
+}
+
+/**
+ * 生成横向表头
+ * @param dates
+ */
+function thirdXTHead(dates){
+    var $table = $("#right_table1");
+    var tr1 = '<tr>';
+    var tr2 = '<tr>';
+    $.each(dates,function(idx,item){
+        tr1 += '<th colspan="3">' + item + '</th>';
+        tr2 += '<td>实际</td><td>计划</td><td>同期</td>';
+    });
+    tr1 += '</tr>';
+    tr2 += '</tr>';
+    $table.html(tr1 + tr2);
+}
+
+function getTotalTable(data,type){
+    if(type == 1){
+        return data.feedTotal;
+    }else if(type == 2){
+        return data.netTotal;
+    }else if(type == 3){
+        return data.stationTotal;
+    }else if(type == 4){
+        return data.lineTotal;
+    }else if(type == 5){
+        return data.roomTotal;
+    }
+}
+
+/**
+ *
+ */
+function getTrBody(data,size){
+    var bodyHtml = '';
+    for(var i=0;i<size;i++){
+        bodyHtml += '<td>' + data['c'+i] + '</td> <td>' + data['p'+i] + '</td> <td>' + data['l'+i] + '</td>';
+    }
+    return bodyHtml;
+}
+
+
 
 
