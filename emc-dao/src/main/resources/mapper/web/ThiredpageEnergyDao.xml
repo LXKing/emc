@@ -325,8 +325,8 @@
 
     <select id="getTables" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
-        ve.UNITNAME,
-        ve.UNITTYPE,
+        ve.UNITNAME as unitName,
+        ve.UNITTYPE as unitType,
         <foreach collection="currentYear" index="index" item="tag" open=""  separator="," close="">
             MAX((CASE d.DOSAGE_TIME WHEN #{tag} THEN d.DOSAGE ELSE 0 END)) c${index}
         </foreach>

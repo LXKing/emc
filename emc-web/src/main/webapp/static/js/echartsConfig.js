@@ -34,7 +34,7 @@ var echartsSelf = function(options) {
                 height: 20,
                 backgroundColor: '#fff',
                 showDetail: false,
-                showDataShadow: false,
+                showDataShadow: false
 
             },
             tooltip: {
@@ -75,7 +75,7 @@ var echartsSelf = function(options) {
                     show: true,
                     textStyle: {
                         color: chartsColor.linefontcolor,
-                        fontFamily: 'arial',
+                        fontFamily: 'arial'
                     },
                     interval:options.echartsConfig.axisLabelInterval || 'auto',
                     rotate: options.echartsConfig.axisLabelRotate || 0

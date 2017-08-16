@@ -63,7 +63,8 @@ function initassessment(result){
                 axisLabelRotate: '-30', //倾斜角度
                 dataZoom: true,
                 dataZoomstartValue: 1,
-                dataZoomendValue: 5,
+                dataZoomendValue: 10,
+                axisLabelInterval:0,
                 xData: result.object.heatnames,
                 series: [{
                     type: 'bar',
@@ -79,8 +80,9 @@ function initassessment(result){
                 xAxisBoundaryGap: true,
                 axisLabelRotate: '-50', //倾斜角度
                 dataZoom: true,
-                dataZoomstartValue: 2,
+                dataZoomstartValue: 1,
                 dataZoomendValue:10,
+                axisLabelInterval:0,
                 xData: result.object.stationnames,
                 series: [{
                     type: 'bar',
@@ -219,6 +221,7 @@ function loadEnergyTotalDetail() {
 
 /*三级页面-各站点能源类型用量明细*/
 function loadTable(){
+    createtable();
     var data = $("#searchTools").serialize()+"&type="+$("#type").val();
     $.ajax({
         url: _web + '/third/energy/tablelist',
@@ -227,8 +230,8 @@ function loadTable(){
         data:data,
         dataType: "json",
         success: function (result) {
-            debugger;
+            thirdTable(result.object);
         }
     });
-    createtable();
+
 }

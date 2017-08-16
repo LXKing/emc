@@ -18,8 +18,10 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
     private DateDao dateDao;
     @Resource
     private ThiredpageEnergyDao thiredpageEnergyDao;
-
-
+    private String START_TIME = "startTime";
+    private String END_TIME = "endTime";
+    private String CURRENT_YEAR = "currentYear";
+    private String UNIT_TYPE = "unitType";
     /**
      *三级页面-集团总能源类型的能耗趋势图
      * sunbinbin
@@ -32,8 +34,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<Map<String,Object>> data = new ArrayList<>();
         //所有的能源类型
 
-        String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
-        String  eDate = (null==params.get("endTime")||"".equals(params.get("endTime")))?getYearDate(null,Calendar.DATE, 0):params.get("endTime").toString().substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
+        String  sDate = (null== params.get(START_TIME)||"".equals( params.get(START_TIME)))?getYearDate(null, Calendar.DATE, -5): params.get(START_TIME).toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+        String  eDate = (null==params.get(END_TIME)||"".equals(params.get(END_TIME)))?getYearDate(null,Calendar.DATE, 0):params.get(END_TIME).toString().substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
         String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
         String leDate = getYearDate(eDate,Calendar.YEAR, -1);
         //查询时间list
@@ -95,7 +97,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 }
                 my.put("totalcurrentyear",curYearTotal);
                 my.put("totallastyear",lastYearTotal);
-                my.put("currentYear",curList);
+                my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
                 data.add(my);
             }else{
@@ -110,7 +112,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 }
                 my.put("totalcurrentyear",curYearTotal);
                 my.put("totallastyear",lastYearTotal);
-                my.put("currentYear",curList);
+                my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
                 data.add(my);
             }
@@ -135,7 +137,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<Map<String,Object>> data = new ArrayList<>();
         //所有的用能单位类型
         String[] unittype = {"1","2","3","4","5"};
-        String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+        String  sDate = (null== params.get(START_TIME)||"".equals( params.get(START_TIME)))?getYearDate(null, Calendar.DATE, -5): params.get(START_TIME).toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
         String  eDate = getYearDate(sDate,Calendar.DATE,6);
         String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
         String leDate = getYearDate(eDate,Calendar.YEAR, -1);
@@ -155,9 +157,9 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         lyearList.add(leDate);
         yearList.addAll(lyearList);
         yearList.addAll(clyearList);
-        params.put("currentYear",clyearList);
+        params.put(CURRENT_YEAR,clyearList);
         params.put("lastYear",lyearList);
-        params.put("endTime",eDate+" 23:59:59");
+        params.put(END_TIME,eDate+" 23:59:59");
         params.put("endTimeTq",leDate+" 23:59:59");
         //根据查询条件，查询相应的数据
         List<Map<String,Object>> listMap = thiredpageEnergyDao.getTables(params);
@@ -166,19 +168,19 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         //数据封装
 
             for (Map data1 : totalMap) {
-                if ("1".equals(data1.get("unitType"))) {
+                if ("1".equals(data1.get(UNIT_TYPE))) {
                     result.put("feedTotal", data1);
                 }
-                if ("2".equals(data1.get("unitType"))) {
+                if ("2".equals(data1.get(UNIT_TYPE))) {
                     result.put("netTotal", data1);
                 }
-                if ("3".equals(data1.get("unitType"))) {
+                if ("3".equals(data1.get(UNIT_TYPE))) {
                     result.put("stationTotal", data1);
                 }
-                if ("4".equals(data1.get("unitType"))) {
+                if ("4".equals(data1.get(UNIT_TYPE))) {
                     result.put("lineTotal", data1);
                 }
-                if ("5".equals(data1.get("unitType"))) {
+                if ("5".equals(data1.get(UNIT_TYPE))) {
                     result.put("roomTotal", data1);
                 }
             }
@@ -201,8 +203,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<Map<String,Object>> data = new ArrayList<>();
         //所有的能源类型
         String[] energyTypes = {"chart1","chart2","chart3","chart4","chart5"};
-        String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
-        String  eDate = (null==params.get("endTime")||"".equals(params.get("endTime")))?getYearDate(null,Calendar.DATE, 0):params.get("endTime").toString().substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
+        String  sDate = (null== params.get(START_TIME)||"".equals( params.get(START_TIME)))?getYearDate(null, Calendar.DATE, -5): params.get(START_TIME).toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+        String  eDate = (null==params.get(END_TIME)||"".equals(params.get(END_TIME)))?getYearDate(null,Calendar.DATE, 0):params.get(END_TIME).toString().substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
         String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
         String leDate = getYearDate(eDate,Calendar.YEAR, -1);
         //查询时间list
@@ -266,7 +268,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put("totalcurrentyear",curYearTotal);
                 my.put("totallastyear",lastYearTotal);
                 my.put("type",type);
-                my.put("currentYear",curList);
+                my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
                 data.add(my);
             }else{
@@ -282,7 +284,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put("totalcurrentyear",curYearTotal);
                 my.put("totallastyear",lastYearTotal);
                 my.put("type",type);
-                my.put("currentYear",curList);
+                my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
                 data.add(my);
             }
