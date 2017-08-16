@@ -218,7 +218,6 @@ function loadEnergyTotalDetail() {
 
 }
 
-
 /*三级页面-各站点能源类型用量明细*/
 function loadTable(){
     createtable();

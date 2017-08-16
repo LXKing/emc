@@ -133,29 +133,41 @@
                     <!--<div class="energyBoxLegendBtnLeft pull-left"></div>-->
                     <ul class="energyBoxLegendList clearfix pull-left">
                         <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 " id="w1"></div>
-                            <div class="energyBoxLegendListText " id="whater"></div>
-                            <div class="energyBoxLegendListPara" id="whater_tb"></div>
+                            <a href="${web}/third/energy/page/1">
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon01 " id="w1">
+
+                                </div>
+                                <div class="energyBoxLegendListText " id="whater"></div>
+                                <div class="energyBoxLegendListPara" id="whater_tb">  </div>
+                            </a>
                         </li>
                         <li>
-                            <div class="energyBoxLegendListIcon energyBoxLegendListIcon02" id="e1"></div>
-                            <div class="energyBoxLegendListText" id="electric"></div>
-                            <div class="energyBoxLegendListPara" id="electric_tb"></div>
+                            <a href="${web}/third/energy/page/2">
+                                <div class="energyBoxLegendListIcon energyBoxLegendListIcon02" id="e1"></div>
+                                <div class="energyBoxLegendListText" id="electric"></div>
+                                <div class="energyBoxLegendListPara" id="electric_tb"></div>
+                            </a>
                         </li>
                         <li>
+                            <a href="${web}/third/energy/page/3">
                             <div class="energyBoxLegendListIcon energyBoxLegendListIcon03" id="g1"></div>
                             <div class="energyBoxLegendListText" id="gas"></div>
                             <div class="energyBoxLegendListPara" id="gas_tb"></div>
+                            </a>
                         </li>
                         <li>
+                            <a href="${web}/third/energy/page/4">
                             <div class="energyBoxLegendListIcon energyBoxLegendListIcon05 " id="h1"></div>
                             <div class="energyBoxLegendListText" id="heat"></div>
                             <div class="energyBoxLegendListPara " id="heat_tb"></div>
+                            </a>
                         </li>
                         <li>
+                            <a href="${web}/third/energy/page/5">
                             <div class="energyBoxLegendListIcon energyBoxLegendListIcon04" id="c1"></div>
                             <div class="energyBoxLegendListText" id="coal"></div>
                             <div class="energyBoxLegendListPara" id="coal_tb"></div>
+                            </a>
                         </li>
                     </ul>
                     <!--<div class="energyBoxLegendBtnRight energyBoxLegendBtnRight_on pull-left"></div>-->

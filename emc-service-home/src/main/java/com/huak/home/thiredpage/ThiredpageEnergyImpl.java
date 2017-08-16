@@ -18,10 +18,11 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
     private DateDao dateDao;
     @Resource
     private ThiredpageEnergyDao thiredpageEnergyDao;
-    private String START_TIME = "startTime";
-    private String END_TIME = "endTime";
-    private String CURRENT_YEAR = "currentYear";
-    private String UNIT_TYPE = "unitType";
+
+    private static String START_TIME = "startTime";
+    private static String END_TIME = "endTime";
+    private static String CURRENT_YEAR = "currentYear";
+    private static String UNIT_TYPE = "unitType";
     /**
      *三级页面-集团总能源类型的能耗趋势图
      * sunbinbin
@@ -123,8 +124,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return result;
     }
 
-
-
     /**
      *三级页面-表格数据加载
      * sunbinbin
@@ -189,7 +188,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
 
         return result;
     }
-
 
     /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
@@ -331,7 +329,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         data.put("stationnums",stationNums);
         return data;
     }
-
 
     /**
      * 返回想要的日期
