@@ -60,7 +60,6 @@
       max(case when b.tt ='5' then b.num else 0 end) as coal,
       max(case when b.tt ='6' then b.num else 0 end) as solar
       from (
-
       SELECT
       b.TYPE tt,
       sum(a.DOSAGE) num,
