@@ -11,11 +11,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="decorator" content="main_third"/>
-    <title>华热能管系统-能耗分析</title>
+    <title>华热能管系统-单耗分析</title>
     <script src="${web}/script/huak.web.third.analysis.js"></script>
 </head>
 <body>
-<input id="type" value="${type}" type="hidden">
+<input id="thirdType" value="${type}" type="hidden">
 <div class="index_mainbody  ">
 
 <div class="index_content row no-margin">
@@ -28,7 +28,7 @@
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
                     <div class="cb-header">
-                        <span class="cb-title">集团总能耗 (单位: GJ)</span>
+                        <span class="cb-title">集团总单耗 (单位: Tce/m²)</span>
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
@@ -43,9 +43,9 @@
                     <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
-                    <h3 id="groupTotal">760.4</h3>
-                    <div class="small">集团总能耗 (GJ/m3)</div>
-                    <h4 id="groupchangeRate">3.4<span class="arrow">↑</span></h4>
+                    <h3 id="groupTotal" class="groupTotal"></h3>
+                    <div class="small">集团总单耗 (Tce/m²)</div>
+                    <h4 id="groupchangeRate" class="groupchangeRate"></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                     <div class="energy-head energy-add">
                         <span class="energy-list-name">供热源-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num feedTotal"></span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion feedTQ"></span>
                         </div>
                     </div>
 
@@ -70,9 +70,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">管网-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num netTotal"></span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion netTQ"></span>
                         </div>
 
                     </div>
@@ -85,9 +85,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">换热站-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num stationTotal"></span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion stationTQ"></span>
                         </div>
 
                     </div>
@@ -101,9 +101,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">管线-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num lineTotal"></span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion lineTQ"></span>
                         </div>
 
                     </div>
@@ -117,9 +117,9 @@
                     <div class="energy-head ">
                         <span class="energy-list-name">民户-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
-                            <span class="energy-list-num">111</span>
+                            <span class="energy-list-num roomTotal"></span>
                             <span class="energy-list-measure ">GJ</span>
-                            <span class="energy-list-proportion ">(4.6↑)</span>
+                            <span class="energy-list-proportion roomTQ"></span>
                         </div>
                     </div>
 
@@ -377,7 +377,6 @@
     </div>
 </div>
 </div>
-
 </div>
 </div>
 
