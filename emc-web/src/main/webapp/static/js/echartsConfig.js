@@ -11,16 +11,27 @@ var echartsSelf = function(options) {
         for(var i = 0; i < options.echartsConfig.series.length; i++) {
             var _item = options.echartsConfig.series[i];
             var seriesitem = {
+                name: _item.name,
                 type: _item.type,
                 symbol: 'circle',
                 smooth: false,
+                yAxisIndex: _item.yAxisIndex,
                 lineStyle: {
                     normal: {
-                        type: _item.typeLine || 'solid'
+                        type: _item.typeLine || 'solid',
+
                     }
                 },
+                itemStyle: {
+                    normal: {
+
+                        color: _item.barColor || null,
+                    }
+                },
+                barGap: 0,
                 data: _item.dataList,
-                barWidth: _item.barWidth || null
+                barWidth: _item.barWidth || null,
+
             };
             seriesData.push(seriesitem);
         }
@@ -32,10 +43,14 @@ var echartsSelf = function(options) {
                 endValue: options.echartsConfig.dataZoomendValue || null,
                 zoomLock: true,
                 height: 20,
-                backgroundColor: '#fff',
+                backgroundColor: '#dcdfe3',
                 showDetail: false,
-                showDataShadow: false
+                showDataShadow: false,
+                borderColor: '#dcdfe3',
+                fillerColor:'#ffffff',
+                handleSize:0,
 
+                dataBackground: {}
             },
             tooltip: {
                 trigger: 'axis'
@@ -75,7 +90,7 @@ var echartsSelf = function(options) {
                     show: true,
                     textStyle: {
                         color: chartsColor.linefontcolor,
-                        fontFamily: 'arial'
+                        fontFamily: 'arial',
                     },
 
                     interval:(options.echartsConfig.axisLabelInterval=='undefined'||options.echartsConfig.axisLabelInterval==null)?'auto':options.echartsConfig.axisLabelInterval,
@@ -84,7 +99,7 @@ var echartsSelf = function(options) {
                 data: options.echartsConfig.xData
 
             },
-            yAxis: {
+            yAxis: [{
                 type: 'value',
                 axisTick: {
                     show: false
@@ -115,7 +130,34 @@ var echartsSelf = function(options) {
                         color: chartsColor.areacolor
                     }
                 }
-            },
+            }, {
+                type: 'value',
+                name: 'right',
+                position: 'right',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#9a9a9b'
+                    }
+                },
+                splitLine: {
+                    show: false,
+                    lineStyle: {
+                        color: '#e8e8e8',
+                        type: 'dashed'
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: chartsColor.linefontcolor,
+                        fontFamily: 'arial'
+                    }
+                },
+            }],
             color: chartsColor.ec2.facecolor1,
             series: seriesData
         };
