@@ -22,6 +22,7 @@ public class NavigationConstant {
     public final static Navigation HOME = new Navigation(null,"首页","/index");
     public final static Navigation SECOND_ENERGY = new Navigation(HOME,"能耗分析","/energy/monitor/tsec");
     public final static Navigation SECOND_CONS = new Navigation(HOME,"单耗分析","/cons/analysis/tsec");
+    /*能源类型三级*/
     public final static Navigation THIRD_ENERGY_WATER = new Navigation(SECOND_ENERGY,"水能耗分析","/third/energy/page/1");
     public final static Navigation THIRD_ENERGY_ELECTRIC = new Navigation(SECOND_ENERGY,"电能耗分析","/third/energy/page/2");
     public final static Navigation THIRD_ENERGY_GAS = new Navigation(SECOND_ENERGY,"气能耗分析","/third/energy/page/3");
@@ -34,6 +35,20 @@ public class NavigationConstant {
     public final static Navigation THIRD_CONS_HEAT = new Navigation(SECOND_CONS,"热单耗分析","/third/analysis/page/4");
     public final static Navigation THIRD_CONS_COAL = new Navigation(SECOND_CONS,"煤单耗分析","/third/analysis/page/5");
     public final static Navigation THIRD_CONS_OIL = new Navigation(SECOND_CONS,"油单耗分析","/third/analysis/page/6");
+    /*分公司三级*/
+    public final static Navigation THIRD_ENERGY_FGS = new Navigation(SECOND_ENERGY,"供热源能耗分析","/third/energy/fgs/*");
+    public final static Navigation THIRD_CONS_FGS = new Navigation(SECOND_CONS,"供热源单耗分析","/third/analysis/fgs/*");
+    /*单位类型三级*/
+    public final static Navigation THIRD_ENERGY_FEED = new Navigation(SECOND_ENERGY,"供热源能耗分析","/third/energy/unit/1");
+    public final static Navigation THIRD_ENERGY_NET = new Navigation(SECOND_ENERGY,"一次网能耗分析","/third/energy/unit/2");
+    public final static Navigation THIRD_ENERGY_STATION = new Navigation(SECOND_ENERGY,"换热站能耗分析","/third/energy/unit/3");
+    public final static Navigation THIRD_ENERGY_LINE = new Navigation(SECOND_ENERGY,"二次线能耗分析","/third/energy/unit/4");
+    public final static Navigation THIRD_ENERGY_ROOM = new Navigation(SECOND_ENERGY,"民户能耗分析","/third/energy/unit/5");
+    public final static Navigation THIRD_CONS_FEED = new Navigation(SECOND_CONS,"供热源单耗分析","/third/analysis/unit/1");
+    public final static Navigation THIRD_CONS_NET = new Navigation(SECOND_CONS,"一次网单耗分析","/third/analysis/unit/2");
+    public final static Navigation THIRD_CONS_STATION = new Navigation(SECOND_CONS,"换热站单耗分析","/third/analysis/unit/3");
+    public final static Navigation THIRD_CONS_LINE = new Navigation(SECOND_CONS,"二次线单耗分析","/third/analysis/unit/4");
+    public final static Navigation THIRD_CONS_ROOM = new Navigation(SECOND_CONS,"民户单耗分析","/third/analysis/unit/5");
 
     /*能耗分析*/
 
@@ -68,6 +83,18 @@ public class NavigationConstant {
         NAVIGATIONS.add(THIRD_CONS_HEAT);
         NAVIGATIONS.add(THIRD_CONS_COAL);
         NAVIGATIONS.add(THIRD_CONS_OIL);
+        NAVIGATIONS.add(THIRD_ENERGY_FGS);
+        NAVIGATIONS.add(THIRD_CONS_FGS);
+        NAVIGATIONS.add(THIRD_ENERGY_FEED);
+        NAVIGATIONS.add(THIRD_ENERGY_NET);
+        NAVIGATIONS.add(THIRD_ENERGY_STATION);
+        NAVIGATIONS.add(THIRD_ENERGY_LINE);
+        NAVIGATIONS.add(THIRD_ENERGY_ROOM);
+        NAVIGATIONS.add(THIRD_CONS_FEED);
+        NAVIGATIONS.add(THIRD_CONS_NET);
+        NAVIGATIONS.add(THIRD_CONS_STATION);
+        NAVIGATIONS.add(THIRD_CONS_LINE);
+        NAVIGATIONS.add(THIRD_CONS_ROOM);
     }
 
 }

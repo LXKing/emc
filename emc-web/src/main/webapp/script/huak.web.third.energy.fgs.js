@@ -66,14 +66,266 @@ function loadDataFun() {
         }
     })
 
+    var data = {
+        "success": "true",
+        "message": "信息(包括错误信息)",
+        "data": {
+            "groupTotal": {
+                "energy": {
+                    "value": "760.4",
+                    "type": "0"
+                },
+                "changeRate": {
+                    "rate": "3.4",
+                    "type": "0"
+                }
+            },
+            "waterTotal": {
+                "energy": {
+                    "value": "400.8",
+                    "type": "0"
+                },
+                "changeRate": {
+                    "rate": "4.6",
+                    "type": "0"
+                }
+            },
+            "electricTotal": {
+                "energy": {
+                    "value": "176.4",
+                    "type": "1"
+                },
+                "changeRate": {
+                    "rate": "7.4",
+                    "type": "1"
+                }
+            },
+            "gasTotal": {
+                "energy": {
+                    "value": "428.4",
+                    "type": "0"
+                },
+                "changeRate": {
+                    "rate": "3.4",
+                    "type": "1"
+                }
+            },
+            "hotTotal": {
+                "energy": {
+                    "value": "560.2",
+                    "type": "1"
+                },
+                "changeRate": {
+                    "rate": "2.9",
+                    "type": "0"
+                }
+            },
+            "coalTotal": {
+                "energy": {
+                    "value": "269.4",
+                    "type": "1"
+                },
+                "changeRate": {
+                    "rate": "3.4",
+                    "type": "1"
+                }
+            },
+            "groupEnergy": {
+                "yearDate": [
+                    "2015-11-15",
+                    "2015-12-15",
+                    "2015-01-15",
+                    "2015-02-15",
+                    "2015-03-15"
+                ],
+                "data": [
+                    {
+                        "typeName": "今年",
+                        "dataList": [
+                            "450",
+                            "300",
+                            "560",
+                            "400",
+                            "660"
+                        ]
+                    },
+                    {
+                        "typeName": "去年",
+                        "dataList": [
+                            "810",
+                            "500",
+                            "700",
+                            "500",
+                            "420"
+                        ]
+                    }
+                ]
+            },
+            "waterEnergy": {
+                "yearDate": [
+                    "2015-11-15",
+                    "2015-12-15",
+                    "2015-01-15",
+                    "2015-02-15",
+                    "2015-03-15"
+                ],
+                "data": [
+                    {
+                        "typeName": "今年",
+                        "dataList": [
+                            "450",
+                            "300",
+                            "560",
+                            "400",
+                            "660"
+                        ]
+                    },
+                    {
+                        "typeName": "去年",
+                        "dataList": [
+                            "810",
+                            "500",
+                            "700",
+                            "500",
+                            "420"
+                        ]
+                    }
+                ]
+            },
+            "electricEnergy": {
+                "yearDate": [
+                    "2018-11-15",
+                    "2015-12-15",
+                    "2015-01-15",
+                    "2015-02-15",
+                    "2015-03-15"
+                ],
+                "data": [
+                    {
+                        "typeName": "今年",
+                        "dataList": [
+                            "450",
+                            "300",
+                            "560",
+                            "400",
+                            "660"
+                        ]
+                    },
+                    {
+                        "typeName": "去年",
+                        "dataList": [
+                            "810",
+                            "500",
+                            "700",
+                            "500",
+                            "420"
+                        ]
+                    }
+                ]
+            },
+            "gasEnergy": {
+                "yearDate": [
+                    "2015-11-15",
+                    "2015-12-15",
+                    "2015-01-15",
+                    "2015-02-15",
+                    "2015-03-15"
+                ],
+                "data": [
+                    {
+                        "typeName": "今年",
+                        "dataList": [
+                            "450",
+                            "300",
+                            "560",
+                            "400",
+                            "660"
+                        ]
+                    },
+                    {
+                        "typeName": "去年",
+                        "dataList": [
+                            "810",
+                            "500",
+                            "700",
+                            "500",
+                            "420"
+                        ]
+                    }
+                ]
+            },
+            "hotEnergy": {
+                "yearDate": [
+                    "2015-11-15",
+                    "2015-12-15",
+                    "2015-01-15",
+                    "2015-02-15",
+                    "2015-03-15"
+                ],
+                "data": [
+                    {
+                        "typeName": "今年",
+                        "dataList": [
+                            "450",
+                            "300",
+                            "560",
+                            "400",
+                            "660"
+                        ]
+                    },
+                    {
+                        "typeName": "去年",
+                        "dataList": [
+                            "810",
+                            "500",
+                            "700",
+                            "500",
+                            "420"
+                        ]
+                    }
+                ]
+            },
+            "coalEnergy": {
+                "yearDate": [
+                    "2015-11-15",
+                    "2015-12-15",
+                    "2015-01-15",
+                    "2015-02-15",
+                    "2015-03-15"
+                ],
+                "data": [
+                    {
+                        "typeName": "今年",
+                        "dataList": [
+                            "450",
+                            "300",
+                            "560",
+                            "400",
+                            "660"
+                        ]
+                    },
+                    {
+                        "typeName": "去年",
+                        "dataList": [
+                            "810",
+                            "500",
+                            "700",
+                            "500",
+                            "420"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
     $.ajax({
-        url: "json/6-1.json",
-        type: "GET",
+        url: _web + "/tools/search/year",
+        type: "POST",
         dataType: "json",
         error: function(request) {
             alert("Connection error");
         },
-        success: function(data) {
+        success: function(result) {
             $("#groupTotal").html(data.data.groupTotal.energy.value);
             if(data.data.groupTotal.energy.type == 1) {
                 $("#groupTotal").addClass("energy_gray");
