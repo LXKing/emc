@@ -74,7 +74,7 @@
         max(case when aa.UNITTYPE = '5' then aa.DOSAGE else 0 end ) chart5 from
         (select b.UNITTYPE,DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d') time,SUM(a.DOSAGE) DOSAGE
         FROM
-        t_emc_final_data_hour_tj  a ,
+        ${tableName}   a ,
         (
             select v.UNITID,v.UNITTYPE,v.COMID from (select UNITID,UNITTYPE,COMID,ORGID FROM v_emc_unit WHERE 1=1
                 <if test=" orgType != null and orgType != ''">
@@ -127,7 +127,7 @@
         max(case when aa.UNITTYPE = '5' then aa.DOSAGE else 0 end ) chart5 from
         (select b.UNITTYPE,DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d') time,SUM(a.DOSAGE) DOSAGE
         FROM
-        t_emc_final_data_hour_tj  a ,
+        ${tableName}   a ,
         (
         select v.UNITID,v.UNITTYPE,v.COMID from (select UNITID,UNITTYPE,COMID,ORGID FROM v_emc_unit WHERE 1=1
         <if test="orgType!= null and orgType != ''">
@@ -181,7 +181,7 @@
        sum(aa.DOSAGE) num from
         (select b.UNITTYPE,DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d') time,SUM(a.DOSAGE) DOSAGE
         FROM
-        t_emc_final_data_hour_tj  a ,
+        ${tableName}   a ,
         (
         select v.UNITID,v.UNITTYPE,v.COMID from (select UNITID,UNITTYPE,COMID,ORGID FROM v_emc_unit WHERE 1=1
         <if test=" orgType != null and orgType != ''">
@@ -232,7 +232,7 @@
         sum(aa.DOSAGE) num from
         (select b.UNITTYPE,DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d') time,SUM(a.DOSAGE) DOSAGE
         FROM
-        t_emc_final_data_hour_tj  a ,
+        ${tableName}   a ,
         (
         select v.UNITID,v.UNITTYPE,v.COMID from (select UNITID,UNITTYPE,COMID,ORGID FROM v_emc_unit WHERE 1=1
         <if test="orgType!= null and orgType != ''">
@@ -349,7 +349,7 @@
         </if>
         )a left join
         ( SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME
-        FROM t_emc_final_data_hour_tj fdh,t_emc_energy_type eet  WHERE 1=1
+        FROM ${tableName}  fdh,t_emc_energy_type eet  WHERE 1=1
         <if test="comId != null and comId !=''">
             AND fdh.COMID= #{comId}
         </if>
@@ -378,7 +378,7 @@
         )a left join
         (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d')
         DOSAGE_TIME
-        FROM t_emc_final_data_hour_tj fdh,t_emc_energy_type eet WHERE fdh.TYPEID = eet.ID
+        FROM ${tableName}  fdh,t_emc_energy_type eet WHERE fdh.TYPEID = eet.ID
             <if test="comId != null and comId !=''">AND fdh.COMID= #{comId} </if>
             <if test="energytype != null and energytype !=''">and eet.TYPE = #{energytype,jdbcType=VARCHAR}</if>
 
@@ -420,7 +420,7 @@
         SUM(fdh.DOSAGE * fdh.COAL_COEF) BM,
         DATE_FORMAT(DOSAGE_TIME, '%Y-%m-%d') DOSAGE_TIME
         FROM
-        t_emc_final_data_hour_tj   fdh,
+        ${tableName}    fdh,
         t_emc_energy_type eet,
         (select UNITID,UNITTYPE,COMID from v_emc_unit where 1=1
         <if test="orgId != null and orgId != ''">
@@ -456,7 +456,7 @@
         SUM(fdh.DOSAGE * fdh.COAL_COEF) BM,
         DATE_FORMAT(DOSAGE_TIME, '%Y-%m-%d') DOSAGE_TIME
         FROM
-        t_emc_final_data_hour_tj   fdh,
+        ${tableName}    fdh,
         t_emc_energy_type eet,
         (select UNITID,UNITTYPE,COMID from v_emc_unit where 1=1
         <if test="orgId != null and orgId != ''">
@@ -487,5 +487,9 @@
 
         group by M.UNITTYPE
 
+    </select>
+    <select id="getUnits"  resultType="java.util.Map" parameterType="java.util.Map">
+
+        
     </select>
 </mapper>
