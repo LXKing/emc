@@ -48,4 +48,8 @@
     <dubbo:service interface="com.huak.home.FrameService" ref="frameService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="thirdAnalysisService" class="com.huak.home.thiredpage.ThirdAnalysisServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.thiredpage.ThirdAnalysisService" ref="thirdAnalysisService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>
