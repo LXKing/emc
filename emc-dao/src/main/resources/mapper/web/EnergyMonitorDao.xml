@@ -142,6 +142,7 @@
   <!-- 查询能源流明细 -->
   <select id="energyFlowTable" resultType="java.util.Map" parameterType="java.util.Map">
 	  SELECT
+        type.unittype,
 		(case type.unittype when '1' then '供热源' when '2' then '一次网' when '3' then '换热站' when '4' then '二次线' when '5' then '民户' end) unitname,
 		IFNULL(D.curGroupEnergy,0) groupE,
 		round(IFNULL(if(D.lastGroupEnergy=0,0,(D.curGroupEnergy-D.lastGroupEnergy)/D.lastGroupEnergy*100),0),2) groupS,
