@@ -123,6 +123,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     public Map<String, Object> getTable(Map<String, Object> params) throws Exception {
         Map<String,Object> result = new HashMap<>();
         List<Map<String,Object>> data = new ArrayList<>();
+        String type = "unitType";
         //所有的用能单位类型
         String[] unittype = {"1","2","3","4","5"};
         String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
@@ -156,19 +157,19 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         //数据封装
 
         for (Map data1 : totalMap) {
-            if ("1".equals(data1.get("unitType"))) {
+            if ("1".equals(data1.get(type))) {
                 result.put("feedTotal", data1);
             }
-            if ("2".equals(data1.get("unitType"))) {
+            if ("2".equals(data1.get(type))) {
                 result.put("netTotal", data1);
             }
-            if ("3".equals(data1.get("unitType"))) {
+            if ("3".equals(data1.get(type))) {
                 result.put("stationTotal", data1);
             }
-            if ("4".equals(data1.get("unitType"))) {
+            if ("4".equals(data1.get(type))) {
                 result.put("lineTotal", data1);
             }
-            if ("5".equals(data1.get("unitType"))) {
+            if ("5".equals(data1.get(type))) {
                 result.put("roomTotal", data1);
             }
         }
