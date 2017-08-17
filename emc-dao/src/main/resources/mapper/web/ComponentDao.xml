@@ -63,7 +63,7 @@
       SELECT
       b.TYPE tt,
       sum(a.DOSAGE) num,
-      SUM(A.DOSAGE*A.COAL_COEF) dnum
+      SUM(a.DOSAGE*a.COAL_COEF) dnum
       FROM
       ${tableName} a,
       t_emc_energy_type b,
@@ -84,7 +84,7 @@
       <if test="comId != null and comId !=''">
           and  a.COMID  = #{comId}
       </if>
-      and	A.TYPEID = b.id
+      and	a.TYPEID = b.id
       AND a.COMID = c.COMID
       AND a.UNITID = c.UNITID
       GROUP BY
@@ -108,7 +108,7 @@
       SELECT
       b.TYPE tt,
       sum(a.DOSAGE) num,
-      SUM(A.DOSAGE*A.COAL_COEF) dnum
+      SUM(a.DOSAGE*a.COAL_COEF) dnum
       FROM
       ${tableName} a,
       t_emc_energy_type b,
@@ -129,7 +129,7 @@
       <if test="comId != null and comId !=''">
           and  a.COMID  = #{comId}
       </if>
-      and	A.TYPEID = b.id
+      and	a.TYPEID = b.id
       AND a.COMID = c.COMID
       AND a.UNITID = c.UNITID
       GROUP BY
