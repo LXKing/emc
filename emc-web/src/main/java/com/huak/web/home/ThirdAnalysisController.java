@@ -50,12 +50,36 @@ public class ThirdAnalysisController extends BaseController{
     }
 
     /**
-     * 水能耗明细
+     * 跳转分公司三级单耗页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/fgs/{id}", method = RequestMethod.GET)
+    public String fgsPage(Model model,HttpServletRequest request,@PathVariable("id")String id){
+        logger.info("跳转分公司三级单耗页面");
+        model.addAttribute("id",id);
+        return "third/analysis-fgs";
+    }
+
+    /**
+     * 跳转用能单位类型三级单耗页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/unit/{type}", method = RequestMethod.GET)
+    public String unitPage(Model model,HttpServletRequest request,@PathVariable("type")String type){
+        logger.info("跳转用能单位类型三级单耗页面");
+        model.addAttribute("type",type);
+        return "third/analysis-unit";
+    }
+
+    /**
+     * 水单耗明细
      */
     @RequestMapping(value = "/water/detail/{type}", method = RequestMethod.GET)
     @ResponseBody
     public String getAllData1(ToolVO toolVO, HttpServletRequest request,@PathVariable("type")String type){
-        logger.info("计算水能耗");
+        logger.info("计算水单耗");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         params.put("type",type);
@@ -81,18 +105,18 @@ public class ThirdAnalysisController extends BaseController{
             jo.put("oldDate", oldDate);
             jo.put("reMap",reMap);
         }catch (Exception e){
-            logger.error("水能耗分析" + e.getMessage());
+            logger.error("水单耗分析" + e.getMessage());
         }
         return jo.toJSONString();
     }
 
     /**
-     * 水能耗 (源，网，站，线，户)
+     * 水单耗 (源，网，站，线，户)
      */
     @RequestMapping(value = "/water/org/{type}", method = RequestMethod.GET)
     @ResponseBody
     public String getOrgAll(ToolVO toolVO, HttpServletRequest request,@PathVariable("type")String type){
-        logger.info("计算源网站线户的水能耗");
+        logger.info("计算源网站线户的水单耗");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         params.put("type",type);
@@ -102,17 +126,17 @@ public class ThirdAnalysisController extends BaseController{
             jo.put("resultData", reMap1);
             jo.put("TotalTq", reMap2);
         }catch (Exception e){
-            logger.error("组织机构的水能耗" + e.getMessage());
+            logger.error("组织机构的水单耗" + e.getMessage());
         }
         return jo.toJSONString();
     }
     /**
-     * 热源的水能耗排名
+     * 热源的水单耗排名
      */
     @RequestMapping(value = "/water/feeddh", method = RequestMethod.GET)
     @ResponseBody
     public String getFeedDh(ToolVO toolVO, HttpServletRequest request){
-        logger.info("计算换热站的水能耗排名");
+        logger.info("计算换热站的水单耗排名");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         List<String> mapName = new ArrayList<String>();
@@ -127,18 +151,18 @@ public class ThirdAnalysisController extends BaseController{
             jo.put("mapName", mapName);
             jo.put("mapValue", mapValue);
         }catch (Exception e){
-            logger.error("换热站的水能耗排名catch" + e.getMessage());
+            logger.error("换热站的水单耗排名catch" + e.getMessage());
         }
         return jo.toJSONString();
     }
 
     /**
-     * 换热站的水能耗排名
+     * 换热站的水单耗排名
      */
     @RequestMapping(value = "/water/stationdh", method = RequestMethod.GET)
     @ResponseBody
     public String getStationDh(ToolVO toolVO, HttpServletRequest request){
-        logger.info("计算换热站的水能耗排名");
+        logger.info("计算换热站的水单耗排名");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         List<String> mapName = new ArrayList<String>();
@@ -153,7 +177,7 @@ public class ThirdAnalysisController extends BaseController{
             jo.put("mapName", mapName);
             jo.put("mapValue", mapValue);
         }catch (Exception e){
-            logger.error("换热站的水能耗排名catch" + e.getMessage());
+            logger.error("换热站的水单耗排名catch" + e.getMessage());
         }
         return jo.toJSONString();
     }

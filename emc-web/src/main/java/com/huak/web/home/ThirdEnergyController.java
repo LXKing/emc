@@ -12,11 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,9 +41,33 @@ public class ThirdEnergyController extends BaseController {
      */
     @RequestMapping(value = "/page/{type}", method = RequestMethod.GET)
     public String secondEconPage(Model model,HttpServletRequest request,@PathVariable("type")String type){
-        logger.info("跳转三级能耗页面");
+        logger.info("跳转能源类型三级能耗页面");
         model.addAttribute("type",type);
         return "third/energy";
+    }
+
+    /**
+     * 跳转分公司三级能耗页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/fgs/{id}", method = RequestMethod.GET)
+    public String fgsPage(Model model,HttpServletRequest request,@PathVariable("id")String id){
+        logger.info("跳转分公司三级能耗页面");
+        model.addAttribute("id",id);
+        return "third/energy-fgs";
+    }
+
+    /**
+     * 跳转用能单位类型三级能耗页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/unit/{type}", method = RequestMethod.GET)
+    public String unitPage(Model model,HttpServletRequest request,@PathVariable("type")String type){
+        logger.info("跳转用能单位类型三级能耗页面");
+        model.addAttribute("type",type);
+        return "third/energy-unit";
     }
 
     /**

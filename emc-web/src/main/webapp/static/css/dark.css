@@ -410,3 +410,32 @@
 .facedark .energy_consumption #right_table1 th,.facedark  .energy_consumption #right_table1 td{
     color:#fff
 }
+
+.facedark .navlh>ul{
+    background: #071d2a;
+    border:1px solid #285768;
+}
+.facedark .navlh>ul li{
+    border-bottom: 1px solid #285768;
+}
+.facedark .navlh>ul li:last-child{
+    border-bottom: none;
+}
+.facedark .navlh>ul li a{
+    color: #618292;
+}
+.facedark .navlh>ul li:hover{
+    background: #08303f;
+}
+.facedark .navlh>ul li:hover a{
+    color: #ffffff;
+}
+.facedark .x-sfoption1{
+    background: #071d2a;
+    border:1px solid #265062;
+}
+.facedark .x-sfoption1 p:hover{
+    background:#08303f;
+    color: #fff;
+}
+

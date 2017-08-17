@@ -1915,6 +1915,7 @@ input {
 
 .tablewrap #left_table1 th {
     text-align: center;
+    background: url(../img/xiexian.png) no-repeat ;
 }
 
 .tablewrap #left_table2 th,
@@ -1947,7 +1948,7 @@ input {
 .tablewrap #right_div2 {
     margin-top: -20px;
     width: 100%;
-    height: 100px;
+    height: 720px;
     overflow: hidden;
 }
 
@@ -2048,6 +2049,7 @@ input {
 .tablewrap {
     margin: 20px;
     padding: 0;
+    height:780px;
     position: relative;
 }
 
@@ -2077,3 +2079,57 @@ input {
 .ec_title .button-group .bg-left:nth-child(4) {
     border-right-width: 1px;
 }
+
+.energy_resources .chart-box .cb-header .cb-title-right label:nth-child(1) span{
+    background-color: rgba(59,150,219,0.4);
+}
+.energy_resources .chart-box .cb-header .cb-title-right label:nth-child(2) span{
+    background-color: #3b96db;
+}
+.energy_resources .chart-box .cb-header .cb-title-right label:nth-child(3) span{
+    background-color: #32bbb6;
+}
+.energy_resources .chart-box .cb-header .cb-title-right label:nth-child(4) span{
+    border-radius: 50%;
+    width:12px;
+    height:12px;
+    background: #fff;
+    border: 1px solid #dfe0e1;
+    position: relative;
+}
+.energy_resources .chart-box .cb-header .cb-title-right label:nth-child(4) span:before{
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #3b96db;
+    border-radius: 50%;
+    content: '';
+    left:2px;
+    top:2px;
+    display: block;
+
+}
+.energy_resources .chart-box .cb-header .cb-title-right label:nth-child(5) span{
+    background: transparent;
+}
+
+.resources-bar{
+    height:35px;
+    text-align: center;
+}
+.resources-bar .button-group {
+    margin-left: 15px;
+}
+
+.resources-bar .button-group .bg-left:nth-child(2),
+.resources-bar .button-group .bg-left:nth-child(3),
+.resources-bar .button-group .bg-left:nth-child(4),
+.facedark .resources-bar .button-group .bg-left:nth-child(4) {
+    border-left-width: 1px;
+    border-right-width: 0px;
+}
+
+.resources-bar .button-group .bg-left:nth-child(4) {
+    border-right-width: 1px;
+}
+ 

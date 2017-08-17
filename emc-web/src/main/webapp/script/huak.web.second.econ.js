@@ -224,7 +224,7 @@ function fgsEnergyList(data){
     var html = "";
     $.each(data.list,function(idx,item){
         html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
-        html +='<td><a href="javascript:;" class="need_a">'+item.orgName+'</a></td>';
+        html +='<td><a href="'+_web+'/third/energy/fgs/'+item.id+'" class="need_a">'+item.orgName+'</a></td>';
         html +=getHtmlTd(item.totalBq,item.totalAn);
         html +=getHtmlTd(item.waterBq,item.waterAn);
         html +=getHtmlTd(item.electricBq,item.electricAn);
@@ -1198,7 +1198,7 @@ function renderEnergyFlowDetail(data){
 	for(var i=0;i<data.length;i++){
 		html+="<tr class=\""+(i%2==0?"":"bgc")+"\">";
         html+="<td>";
-        html+="    <a href='javascript:;' class='need_a'>"+data[i].unitname+"</a>";
+        html+="    <a href='"+_web+"/third/energy/unit/"+data[i].unittype+"' class='need_a'>"+data[i].unitname+"</a>";
         html+="</td>";
         html+="<td class='need_title'>"+data[i].groupE+"（同<span class='"+(data[i].groupS==0?"":(data[i].groupR==1?"bluecolor":"redcolor"))+"'>"+data[i].groupS+"%"+(data[i].groupS==0?"→":(data[i].groupR==1?"↓":"↑"))+"</span>）</td>";
         html+="<td class='need_title'>"+data[i].waterE+"（同<span class='"+(data[i].waterS==0?"":(data[i].waterR==1?"bluecolor":"redcolor"))+"'>"+data[i].waterS+"%"+(data[i].waterS==0?"→":(data[i].waterR==1?"↓":"↑"))+"</span>）</td>";

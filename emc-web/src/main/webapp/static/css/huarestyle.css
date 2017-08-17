@@ -22,6 +22,46 @@ a:hover {
     line-height: 64px;
     border: none;
     border-top: 3px solid transparent;
+    position: relative;
+}
+.ace-nav>li:hover ul{
+    display: block;
+}
+.navlh>ul{
+    display: none;
+    list-style: none;
+    position: absolute;
+    top:61px;
+    left:0px;
+    width: 100%;
+    padding:0;
+    margin:0;
+    background: #fff;
+    z-index: 99999;
+    border:1px solid #fff;
+    border-radius: 0px 0px 5px 5px;
+}
+.navlh>ul li{
+    height:31px;
+    line-height: 31px;
+    text-align: center;
+    padding:0;
+    margin:0;
+}
+.navlh>ul li a{
+    color: #9397a7;
+}
+.navlh>ul li:hover{
+    background: #2c8bd4;
+}
+.navlh>ul li:hover a{
+    color: #fff;
+}
+.navlh>ul li{
+    border-bottom: 1px solid #dbdcdf;
+}
+.navlh>ul li:last-child{
+    border-bottom: none;
 }
 
 .ace-nav>li>a {
@@ -69,7 +109,7 @@ a:hover {
 }
 
 .ace-nav>li>a>.ace-icon {
-    color: #a3abb8;
+    color:transparent;
 }
 
 .tianqi {
@@ -402,8 +442,8 @@ input[type="text"].time-input {
 }
 
 .table tbody tr {
-    min-height: 42px;
-    height: 42px
+    height: 42px;
+    min-height:26px;
 }
 
 .main-table .table td {
