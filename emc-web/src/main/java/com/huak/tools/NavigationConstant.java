@@ -36,8 +36,8 @@ public class NavigationConstant {
     public final static Navigation THIRD_CONS_COAL = new Navigation(SECOND_CONS,"煤单耗分析","/third/analysis/page/5");
     public final static Navigation THIRD_CONS_OIL = new Navigation(SECOND_CONS,"油单耗分析","/third/analysis/page/6");
     /*分公司三级*/
-    public final static Navigation THIRD_ENERGY_FGS = new Navigation(SECOND_ENERGY,"供热源能耗分析","/third/energy/fgs/*");
-    public final static Navigation THIRD_CONS_FGS = new Navigation(SECOND_CONS,"供热源单耗分析","/third/analysis/fgs/*");
+    public final static Navigation THIRD_ENERGY_FGS = new Navigation(SECOND_ENERGY,"单位能耗分析","/third/energy/fgs/*");
+    public final static Navigation THIRD_CONS_FGS = new Navigation(SECOND_CONS,"单位单耗分析","/third/analysis/fgs/*");
     /*单位类型三级*/
     public final static Navigation THIRD_ENERGY_FEED = new Navigation(SECOND_ENERGY,"供热源能耗分析","/third/energy/unit/1");
     public final static Navigation THIRD_ENERGY_NET = new Navigation(SECOND_ENERGY,"一次网能耗分析","/third/energy/unit/2");

@@ -71,6 +71,7 @@
 </div>
 <script>
     $(function () {
+        debugger
         //console.info("重置面包屑");
         var mbhtml = "";
         var mbxdh =  ${navigations};
@@ -87,18 +88,30 @@
              console.info(document.location.href==_web + item.url)*/
 
             var hturl = _web + item.url;
-            if (prefix == hturl) {
-                mbhtml = getMbHtml(item, mbhtml);
+            if(hturl.indexOf('*')>=0){
+                hturl = hturl.replace('*','');
+                if (prefix.indexOf(hturl)>=0 ) {
+                    mbhtml = getMbHtml(item, mbhtml,prefix);
+                }
+            }else{
+                if (prefix == hturl) {
+                    mbhtml = getMbHtml(item, mbhtml,prefix);
+                }
             }
+
         });
         $('.bread-crumb.pull-left').html("当前位置：" + mbhtml);
     });
-    function getMbHtml(navigation, html) {
+    function getMbHtml(navigation, html,prefix) {
         if (navigation.navigation == "undefined" || navigation.navigation == null || navigation.navigation == "") {
             html += '<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
             return html;
         } else {
-            html = getMbHtml(navigation.navigation, html) + '&gt;<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+            if(navigation.url.indexOf('*')>=1){
+                html = getMbHtml(navigation.navigation, html,navigation.navigation.url) + '&gt;<a href="' + _web + prefix + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+            }else{
+                html = getMbHtml(navigation.navigation, html,navigation.navigation.url) + '&gt;<a href="' + _web + navigation.url + '">[<var class="xmhpg">' + navigation.title + '</var>]</a>';
+            }
             return html;
         }
     }
