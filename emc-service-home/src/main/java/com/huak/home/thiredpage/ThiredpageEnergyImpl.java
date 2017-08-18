@@ -184,11 +184,45 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 }
             }
         }else{
-            result.put("feedTotal", 0);
-            result.put("netTotal", 0);
-            result.put("stationTotal", 0);
-            result.put("lineTotal", 0);
-            result.put("roomTotal", 0);
+            for (String type :unittype) {
+                Map<String, Object> temap = new HashMap<>();
+
+                for (int k = 0; k < clyearList.size(); k++) {
+                    String key1 = "c" + k;
+                    String key2 = "l" + k;
+                    String key3 = "p" + k;
+                    temap.put(key1,0);
+                    temap.put(key2,0);
+                    temap.put(key3,0);
+                }
+                if(type.equals("1")){
+                    temap.put("unitName","源");
+                    temap.put("unitType",type);
+                    result.put("feedTotal", temap);
+                }
+                if(type.equals("2")){
+                    temap.put("unitName","网");
+                    temap.put("unitType",type);
+                    result.put("netTotal", temap);
+                }
+                if(type.equals("3")){
+                    temap.put("unitName","站");
+                    temap.put("unitType",type);
+                    result.put("stationTotal", temap);
+                }
+                if(type.equals("4")){
+                    temap.put("unitName","线");
+                    temap.put("unitType",type);
+                    result.put("lineTotal", temap);
+                }
+                if(type.equals("5")){
+                    temap.put("unitName","户");
+                    temap.put("unitType",type);
+                    result.put("roomTotal", temap);
+                }
+
+            }
+
         }
         result.put("list",listMap);
         result.put("dates",clyearList);
@@ -348,6 +382,17 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
      * @param num 操作数
      * @return
      */
+    private String getYearDate(String curDate,int type,int num) throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        curDate = (null == curDate||"".equals(curDate))?dateDao.getDate():curDate;
+        Date date = sdf.parse(curDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(type, num);
+        date = calendar.getTime();
+        return sdf.format(date);
+    }
+
 
     /**
      *三级页面-用能单位类型-个能源能耗趋势图数据加载
@@ -378,18 +423,25 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return result;
     }
 
-
-
-
-
-    private String getYearDate(String curDate,int type,int num) throws Exception{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        curDate = (null == curDate||"".equals(curDate))?dateDao.getDate():curDate;
-        Date date = sdf.parse(curDate);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(type, num);
-        date = calendar.getTime();
-        return sdf.format(date);
+    /**
+     *三级页面-用能单位类型-个能源能耗趋势图数据加载
+     * sunbinbin
+     * @return Map
+     */
+    @Override
+    public Map<String, Object> getUnitAssessments(Map paramsMap) {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> data = thiredpageEnergyDao.getUnitsEnergyDetail(paramsMap);
+        List<Object> name =  new ArrayList<>();
+        List<Object> cur =  new ArrayList<>();
+        for (Map da:data){
+            name.add(da.get("unitname"));
+            cur.add(da.get("jn_num"));
+        }
+        result.put("name",name);
+        result.put("cur",cur);
+        return result;
     }
+
+
 }
