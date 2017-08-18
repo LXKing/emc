@@ -49,4 +49,16 @@ public interface ThirdAnalysisService {
      * @return map
      */
     Map<String, Object> getTable(Map<String, Object> params) throws Exception;
+
+    /**
+     * 三级页面分公司耗明细查询
+     */
+    public List<Map<String,Object>> getFgsDhDetail(Map<String,Object> map);
+
+    /**
+     * 三级页面分公司能耗明细查询 总值和同比
+     */
+    public Map<String,Object> getFgsDhAndTQ(Map<String,Object> map);
+
+
 }
