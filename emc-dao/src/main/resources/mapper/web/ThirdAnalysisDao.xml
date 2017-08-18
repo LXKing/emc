@@ -39,7 +39,7 @@
     emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
     )
     AND P_ORG_ID != '0'
-    ) A
+    ) a
     LEFT JOIN (
     SELECT
     h.UNITID AS unitid,
@@ -76,7 +76,7 @@
     unitid,
     energytype,
     yeardate
-    ) B ON A.UNITID = B.unitid
+    ) B ON a.UNITID = B.unitid
     GROUP BY
     B.energytype,
     B.yeardate
@@ -113,7 +113,7 @@
     emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
     )
     AND P_ORG_ID != '0'
-    ) A
+    ) a
     LEFT JOIN (
     SELECT
     h.UNITID AS unitid,
@@ -150,7 +150,7 @@
     unitid,
     energytype,
     yeardate
-    ) B ON A.UNITID = B.unitid
+    ) B ON a.UNITID = B.unitid
     GROUP BY
     B.energytype,
     B.yeardate
@@ -197,7 +197,7 @@
         emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
         )
         AND P_ORG_ID != '0'
-        ) A
+        ) a
         LEFT JOIN (
         SELECT
         h.UNITID AS unitid,
@@ -234,7 +234,7 @@
         unitid,
         energytype,
         yeardate
-        ) B ON A.UNITID = B.unitid
+        ) B ON a.UNITID = B.unitid
         GROUP BY
         B.energytype,
         B.yeardate
@@ -271,7 +271,7 @@
         emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
         )
         AND P_ORG_ID != '0'
-        ) A
+        ) a
         LEFT JOIN (
         SELECT
         h.UNITID AS unitid,
@@ -308,7 +308,7 @@
         unitid,
         energytype,
         yeardate
-        ) B ON A.UNITID = B.unitid
+        ) B ON a.UNITID = B.unitid
         GROUP BY
         B.energytype,
         B.yeardate
@@ -337,11 +337,11 @@
         from (
 
         SELECT
-        SUM( CASE a.UNITTYPE WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
-        SUM( CASE a.UNITTYPE WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
-        SUM( CASE a.UNITTYPE WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
-        SUM( CASE a.UNITTYPE WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
-        SUM( CASE a.UNITTYPE WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
+        SUM( CASE a.unittype WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
+        SUM( CASE a.unittype WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
+        SUM( CASE a.unittype WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
+        SUM( CASE a.unittype WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
+        SUM( CASE a.unittype WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
         sum(a.dosage)/sum(a.area) dh,
         a.energytype,
         a.yeardate,
@@ -352,7 +352,7 @@
         sum(B.dosage) dosage,
         SUM(B.total) total,
         B.energytype,
-        a.UNITTYPE,
+        a.unittype,
         B.yeardate
         FROM
         ( SELECT vu.UNITID,vu.UNITTYPE FROM
@@ -371,7 +371,7 @@
         emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
         )
         AND P_ORG_ID != '0'
-        ) A
+        ) a
         LEFT JOIN (
         SELECT
         h.UNITID AS unitid,
@@ -408,7 +408,7 @@
         unitid,
         energytype,
         yeardate
-        ) B ON A.UNITID = B.unitid
+        ) B ON a.UNITID = B.unitid
         GROUP BY
         B.energytype,
         B.yeardate
@@ -420,11 +420,11 @@
         )d1 LEFT JOIN
         (
         SELECT
-        SUM( CASE a.UNITTYPE WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
-        SUM( CASE a.UNITTYPE WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
-        SUM( CASE a.UNITTYPE WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
-        SUM( CASE a.UNITTYPE WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
-        SUM( CASE a.UNITTYPE WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
+        SUM( CASE a.unittype WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
+        SUM( CASE a.unittype WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
+        SUM( CASE a.unittype WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
+        SUM( CASE a.unittype WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
+        SUM( CASE a.unittype WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
         sum(a.dosage)/sum(a.area) dh,
         a.energytype,
         a.yeardate,
@@ -435,7 +435,7 @@
         sum(B.dosage) dosage,
         SUM(B.total) total,
         B.energytype,
-        a.UNITTYPE,
+        a.unittype,
         B.yeardate
         FROM
         ( SELECT vu.UNITID,vu.UNITTYPE FROM
@@ -454,7 +454,7 @@
         emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
         )
         AND P_ORG_ID != '0'
-        ) A
+        ) a
         LEFT JOIN (
         SELECT
         h.UNITID AS unitid,
@@ -492,7 +492,7 @@
         unitid,
         energytype,
         yeardate
-        ) B ON A.UNITID = B.unitid
+        ) B ON a.UNITID = B.unitid
         GROUP BY
         B.energytype,
         B.yeardate
@@ -520,11 +520,11 @@
         from (
 
         SELECT
-        SUM( CASE a.UNITTYPE WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
-        SUM( CASE a.UNITTYPE WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
-        SUM( CASE a.UNITTYPE WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
-        SUM( CASE a.UNITTYPE WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
-        SUM( CASE a.UNITTYPE WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
+        SUM( CASE a.unittype WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
+        SUM( CASE a.unittype WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
+        SUM( CASE a.unittype WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
+        SUM( CASE a.unittype WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
+        SUM( CASE a.unittype WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
         sum(a.dosage)/sum(a.area) dh,
         a.energytype,
         a.yeardate,
@@ -535,7 +535,7 @@
         sum(B.dosage) dosage,
         SUM(B.total) total,
         B.energytype,
-        a.UNITTYPE,
+        a.unittype,
         B.yeardate
         FROM
         ( SELECT vu.UNITID,vu.UNITTYPE FROM
@@ -554,7 +554,7 @@
         emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
         )
         AND P_ORG_ID != '0'
-        ) A
+        ) a
         LEFT JOIN (
         SELECT
         h.UNITID AS unitid,
@@ -591,7 +591,7 @@
         unitid,
         energytype,
         yeardate
-        ) B ON A.UNITID = B.unitid
+        ) B ON a.UNITID = B.unitid
         GROUP BY
         B.energytype,
         B.yeardate
@@ -603,11 +603,11 @@
         )d1 LEFT JOIN
         (
         SELECT
-        SUM( CASE a.UNITTYPE WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
-        SUM( CASE a.UNITTYPE WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
-        SUM( CASE a.UNITTYPE WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
-        SUM( CASE a.UNITTYPE WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
-        SUM( CASE a.UNITTYPE WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
+        SUM( CASE a.unittype WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyY,
+        SUM( CASE a.unittype WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyW,
+        SUM( CASE a.unittype WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyZ,
+        SUM( CASE a.unittype WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyX,
+        SUM( CASE a.unittype WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergyH,
         sum(a.dosage)/sum(a.area) dh,
         a.energytype,
         a.yeardate,
@@ -618,7 +618,7 @@
         sum(B.dosage) dosage,
         SUM(B.total) total,
         B.energytype,
-        a.UNITTYPE,
+        a.unittype,
         B.yeardate
         FROM
         ( SELECT vu.UNITID,vu.UNITTYPE FROM
@@ -637,7 +637,7 @@
         emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
         )
         AND P_ORG_ID != '0'
-        ) A
+        ) a
         LEFT JOIN (
         SELECT
         h.UNITID AS unitid,
@@ -675,7 +675,7 @@
         unitid,
         energytype,
         yeardate
-        ) B ON A.UNITID = B.unitid
+        ) B ON a.UNITID = B.unitid
         GROUP BY
         B.energytype,
         B.yeardate
@@ -834,11 +834,11 @@
         WHEN M.UNITTYPE = '5' THEN '户' else '' end) as unitName,
         M.UNITTYPE as unitType,
         <foreach collection="currentYear" index="index" item="tag" open=""  separator="," close="">
-            ROUND(MAX((CASE M.DOSAGE_TIME WHEN #{tag} THEN M.DOSAGE/M.area ELSE 0 END)),2) c${index}
+            ROUND(IFNULL(MAX((CASE M.DOSAGE_TIME WHEN #{tag} THEN M.DOSAGE/M.area ELSE 0 END)),0),2) c${index}
         </foreach>
         ,
         <foreach collection="lastYear" index="i" item="val" open=""  separator="," close="">
-            ROUND(MAX((CASE M.DOSAGE_TIME WHEN #{val} THEN M.DOSAGE/M.area ELSE 0 END)),2) l${i}
+            ROUND(IFNULL(MAX((CASE M.DOSAGE_TIME WHEN #{val} THEN M.DOSAGE/M.area ELSE 0 END)),0),2) l${i}
         </foreach>
         ,
         <foreach collection="lastYear" index="i" item="val" open=""  separator="," close="">
@@ -920,4 +920,126 @@
         group by M.UNITTYPE
 
     </select>
+    <select id="getFgsDh"  resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT v.fgsid id,v.DOSAGE_TIME TIME,
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
+        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH
+        FROM
+        (
+        SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
+        FROM
+        (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
+        (SELECT t.sort,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        SELECT
+        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
+        o.ORG_NAME,o.SORT,o.ID
+        FROM
+        t_emc_org o
+        WHERE o.COM_ID = #{comId}) t,
+        (SELECT * FROM t_emc_org WHERE 1=1
+        <if test="orgId != null and orgId !=''">
+            AND ID = #{orgId}
+        </if>
+        ) tmo
+        WHERE tmo.ID = t.fgsid) a
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+
+        AND vu.HEAT_TYPE=#{feedType}
+
+        LEFT JOIN  (SELECT fdh.UNITID, fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d'),eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY d1.TYPE,DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d')) f
+        GROUP BY f.TYPE,DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d')
+        ) v LEFT JOIN
+        (
+        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
+        FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
+        (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        SELECT
+        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
+        o.*
+        FROM
+        t_emc_org o
+        WHERE o.COM_ID = #{comId}) t,
+        (SELECT * FROM t_emc_org WHERE 1=1
+        <if test="orgId != null and orgId !=''">
+            AND ID = #{orgId}
+        </if>
+        ) tmo
+        WHERE tmo.ID = t.fgsid) a
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+
+        LEFT JOIN  (SELECT fdh.UNITID,fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
+        GROUP BY fdh.UNITID,eet.TYPE,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d')) d1 ON d1.UNITID = vu.unitid
+        GROUP BY DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d'),d1.TYPE) f
+        GROUP BY DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d'),f.TYPE
+        ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
+        GROUP BY v.fgsid,DATE_FORMAT(v.DOSAGE_TIME, '%Y-%m-%d') ORDER BY v.SORT asc
+    </select>
+
+    <select id="getFgsZdhAndTq" resultType="java.util.Map" parameterType="java.util.Map">
+
+        SELECT e.BQDH ZDH,e.TQDH tqdh, ROUND(IFNULL((e.BQDH-e.TQDH)/e.TQDH,0),2) TQ
+        from (
+        SELECT v.fgsid id,v.ORG_NAME orgname,
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
+        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH
+        FROM
+        (
+        SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
+        FROM
+        (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
+        (SELECT t.sort,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        SELECT
+        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
+        o.ORG_NAME,o.SORT,o.ID
+        FROM
+        t_emc_org o
+        WHERE o.COM_ID =  #{comId}) t,
+        (SELECT * FROM t_emc_org WHERE 1=1
+        and id=#{orgId}
+        ) tmo
+        WHERE tmo.ID = t.fgsid) a
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+
+        LEFT JOIN  (SELECT fdh.UNITID, fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d'),eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY d1.TYPE,DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d')) f
+        GROUP BY f.TYPE,DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d')
+        ) v LEFT JOIN
+        (
+        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
+        FROM
+        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
+        (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        SELECT
+        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
+        o.*
+        FROM
+        t_emc_org o
+        WHERE o.COM_ID =#{comId}) t,
+        (SELECT * FROM t_emc_org WHERE 1=1
+        AND ID = #{orgId}
+        ) tmo
+        WHERE tmo.ID = t.fgsid) a
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+
+        LEFT JOIN  (SELECT fdh.UNITID,fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
+        GROUP BY fdh.UNITID,eet.TYPE,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d')) d1 ON d1.UNITID = vu.unitid
+        GROUP BY DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d'),d1.TYPE) f
+        GROUP BY DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d'),f.TYPE
+        ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
+        GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc
+        )e
+    </select>
+
 </mapper>

@@ -123,7 +123,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     public Map<String, Object> getTable(Map<String, Object> params) throws Exception {
         Map<String,Object> result = new HashMap<>();
         List<Map<String,Object>> data = new ArrayList<>();
-        String type = "unitType";
+        String type1 = "unitType";
         //所有的用能单位类型
         String[] unittype = {"1","2","3","4","5"};
         String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
@@ -155,23 +155,64 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         List<Map<String,Object>> totalMap = thirdAnalysisDao.getTotal(params);
 
         //数据封装
+        if(null !=totalMap && !totalMap.isEmpty()) {
+            for (Map data1 : totalMap) {
+                if ("1".equals(data1.get(type1))) {
+                    result.put("feedTotal", data1);
+                }
+                if ("2".equals(data1.get(type1))) {
+                    result.put("netTotal", data1);
+                }
+                if ("3".equals(data1.get(type1))) {
+                    result.put("stationTotal", data1);
+                }
+                if ("4".equals(data1.get(type1))) {
+                    result.put("lineTotal", data1);
+                }
+                if ("5".equals(data1.get(type1))) {
+                    result.put("roomTotal", data1);
+                }
+            }
+        }else{
+            for (String type :unittype) {
+                Map<String, Object> temap = new HashMap<>();
 
-        for (Map data1 : totalMap) {
-            if ("1".equals(data1.get(type))) {
-                result.put("feedTotal", data1);
+                for (int k = 0; k < clyearList.size(); k++) {
+                    String key1 = "c" + k;
+                    String key2 = "l" + k;
+                    String key3 = "p" + k;
+                    temap.put(key1,0);
+                    temap.put(key2,0);
+                    temap.put(key3,0);
+                }
+                if(type.equals("1")){
+                    temap.put("unitName","源");
+                    temap.put("unitType",type);
+                    result.put("feedTotal", temap);
+                }
+                if(type.equals("2")){
+                    temap.put("unitName","网");
+                    temap.put("unitType",type);
+                    result.put("netTotal", temap);
+                }
+                if(type.equals("3")){
+                    temap.put("unitName","站");
+                    temap.put("unitType",type);
+                    result.put("stationTotal", temap);
+                }
+                if(type.equals("4")){
+                    temap.put("unitName","线");
+                    temap.put("unitType",type);
+                    result.put("lineTotal", temap);
+                }
+                if(type.equals("5")){
+                    temap.put("unitName","户");
+                    temap.put("unitType",type);
+                    result.put("roomTotal", temap);
+                }
+
             }
-            if ("2".equals(data1.get(type))) {
-                result.put("netTotal", data1);
-            }
-            if ("3".equals(data1.get(type))) {
-                result.put("stationTotal", data1);
-            }
-            if ("4".equals(data1.get(type))) {
-                result.put("lineTotal", data1);
-            }
-            if ("5".equals(data1.get(type))) {
-                result.put("roomTotal", data1);
-            }
+
         }
         result.put("list",listMap);
         result.put("dates",clyearList);
@@ -196,5 +237,15 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         calendar.add(type, num);
         date = calendar.getTime();
         return sdf.format(date);
+    }
+
+    @Override
+    public List<Map<String, Object>> getFgsDhDetail(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsDh(map);
+    }
+
+    @Override
+    public Map<String, Object> getFgsDhAndTQ(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsZdhAndTq(map);
     }
 }
