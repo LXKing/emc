@@ -165,7 +165,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<Map<String,Object>> totalMap = thiredpageEnergyDao.getTotal(params);
 
         //数据封装
-
+        if(null !=totalMap && !totalMap.isEmpty()) {
             for (Map data1 : totalMap) {
                 if ("1".equals(data1.get(UNIT_TYPE))) {
                     result.put("feedTotal", data1);
@@ -183,11 +183,20 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                     result.put("roomTotal", data1);
                 }
             }
+        }else{
+            result.put("feedTotal", 0);
+            result.put("netTotal", 0);
+            result.put("stationTotal", 0);
+            result.put("lineTotal", 0);
+            result.put("roomTotal", 0);
+        }
         result.put("list",listMap);
         result.put("dates",clyearList);
 
         return result;
     }
+
+
 
     /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
@@ -339,6 +348,40 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
      * @param num 操作数
      * @return
      */
+
+    /**
+     *三级页面-用能单位类型-个能源能耗趋势图数据加载
+     * sunbinbin
+     * @return Map
+     */
+    @Override
+    public Map<String, Object> getUnitEnergyDetail(Map paramsMap) {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> data = thiredpageEnergyDao.getUnitsEnergyDetail(paramsMap);
+        List<Object> tq =  new ArrayList<>();
+        List<Object> name =  new ArrayList<>();
+        List<Object> tqb =  new ArrayList<>();
+        List<Object> plan =  new ArrayList<>();
+        List<Object> cur =  new ArrayList<>();
+        for (Map da:data){
+            tq.add(da.get("qn_num"));
+            name.add(da.get("unitname"));
+            tqb.add(da.get("tqb"));
+            plan.add(da.get("jn_plan"));
+            cur.add(da.get("jn_num"));
+        }
+        result.put("tq",tq);
+        result.put("name",name);
+        result.put("tqb",tqb);
+        result.put("plan",plan);
+        result.put("cur",cur);
+        return result;
+    }
+
+
+
+
+
     private String getYearDate(String curDate,int type,int num) throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         curDate = (null == curDate||"".equals(curDate))?dateDao.getDate():curDate;
