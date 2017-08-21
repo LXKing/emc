@@ -15,7 +15,7 @@
     <script src="${web}/script/huak.web.third.energy.fgs.js"></script>
 </head>
 <body>
-<input id="type" value="${type}" type="hidden">
+<input id="orgId" value="${id}" type="hidden">
 <div class="index_mainbody  ">
 
 <div class="index_content row no-margin">

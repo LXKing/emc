@@ -25,6 +25,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
     private static String UNIT_TYPE = "unitType";
     private static String UNIT_NAME = "unitName";
     private static String[] UNITTYPE = {"1","2","3","4","5","6"};
+    private static String TOTAL_CURRENT_YEAR = "totalcurrentyear";
+    private static String TOTAL_LAST_YEAR = "totallastyear";
     private static String[] TYPE_NAME = {"水","电","气","热","煤","油"};
     /**
      *三级页面-集团总能源类型的能耗趋势图
@@ -99,8 +101,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                         }
                     }
                 }
-                my.put("totalcurrentyear",curYearTotal);
-                my.put("totallastyear",lastYearTotal);
+                my.put(TOTAL_CURRENT_YEAR,curYearTotal);
+                my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
                 data.add(my);
@@ -114,8 +116,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                         curYearTotal += 0;//拿到今天的能耗
                     }
                 }
-                my.put("totalcurrentyear",curYearTotal);
-                my.put("totallastyear",lastYearTotal);
+                my.put(TOTAL_CURRENT_YEAR,curYearTotal);
+                my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
                 data.add(my);
@@ -308,8 +310,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                         }
                     }
                 }
-                my.put("totalcurrentyear",curYearTotal);
-                my.put("totallastyear",lastYearTotal);
+                my.put(TOTAL_CURRENT_YEAR,curYearTotal);
+                my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put("type",type);
                 my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
@@ -324,8 +326,8 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                         curYearTotal += 0;//拿到今天的能耗
                     }
                 }
-                my.put("totalcurrentyear",curYearTotal);
-                my.put("totallastyear",lastYearTotal);
+                my.put(TOTAL_CURRENT_YEAR,curYearTotal);
+                my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put("type",type);
                 my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
@@ -509,7 +511,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                     }
                 }
             }
-            my.put("totalcurrentyear",curYearTotal);
+            my.put(TOTAL_CURRENT_YEAR,curYearTotal);
             my.put(CURRENT_YEAR,curList);
             data.add(my);
         }else{
@@ -517,7 +519,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                     curList.add("0");
                     curYearTotal += 0;//拿到今天的能耗
             }
-            my.put("totalcurrentyear",curYearTotal);
+            my.put(TOTAL_CURRENT_YEAR,curYearTotal);
             my.put(CURRENT_YEAR,curList);
             data.add(my);
         }
