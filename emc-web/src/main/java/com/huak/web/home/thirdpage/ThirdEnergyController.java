@@ -50,18 +50,6 @@ public class ThirdEnergyController extends BaseController {
     }
 
     /**
-     * 跳转分公司三级能耗页面
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/fgs/{id}", method = RequestMethod.GET)
-    public String fgsPage(Model model,HttpServletRequest request,@PathVariable("id")String id){
-        logger.info("跳转分公司三级能耗页面");
-        model.addAttribute("id",id);
-        return "third/energy-fgs";
-    }
-
-    /**
      * 跳转用能单位类型三级能耗页面
      * @param model
      * @return
