@@ -37,7 +37,6 @@ public class ThirdEnergyController extends BaseController {
     private ThiredpageEnergyService thiredpageEnergyService;
     
     private static  String ENERGY_TYPE = "energytype";
-    private static  String COMPANY_ID = "comId";
     /**
      * 跳转三级单耗页面
      * @param model
@@ -85,11 +84,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-集团能源类型的能耗趋势图数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put(ENERGY_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getDatasAll(paramsMap);
             if (map!= null) {
@@ -119,11 +115,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-源、网、站、线、户的各个能源类型的能耗趋势图数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put(ENERGY_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getDatas(paramsMap);
             if (map!= null) {
@@ -153,11 +146,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-换热站排名趋势图数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put(ENERGY_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getassessment(paramsMap);
             if (map!= null) {
@@ -188,11 +178,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-表单数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put(ENERGY_TYPE,type);
             Map<String, Object> map =  thiredpageEnergyService.getTable(paramsMap);
             if (map!= null) {
@@ -222,11 +209,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-用能单位类型-能源对比数据加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put("orgType",type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thiredpageEnergyService.getUnitEnergyDetail(paramsMap);
@@ -257,11 +241,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-用能单位类型-能源能耗排名加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put("orgType",type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thiredpageEnergyService.getUnitAssessments(paramsMap);
@@ -291,11 +272,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-用能单位类型-个能源能耗趋势加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put("orgType",type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thiredpageEnergyService.getUnitAllAssessment(paramsMap);
@@ -324,11 +302,8 @@ public class ThirdEnergyController extends BaseController {
         logger.info("三级页面-用能单位类型-能源类型表格加载");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
-        HttpSession session = request.getSession();
         Map paramsMap = paramsPackageOrg(toolVO, request);
-        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put("orgType",type);
             Map<String,Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
             if (map!= null) {
