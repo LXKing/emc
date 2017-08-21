@@ -60,5 +60,29 @@ public interface ThirdAnalysisService {
      */
     public Map<String,Object> getFgsDhAndTQ(Map<String,Object> map);
 
+    /**
+     * 三级页面分公司排名
+     */
+   public List<Map<String,Object>> getFgsFeedDh(Map<String,Object> map);
 
+    /**
+     * 三级页面分公司排名
+     */
+    public List<Map<String,Object>> getFgsStationDh(Map<String,Object> map);
+
+    /**
+     *三级页面-表单
+     * sunbinbin
+     * @return map
+     */
+    Map<String, Object> getFgsTable(Map<String, Object> params) throws Exception;
+
+    /**
+     * 三级页面水能耗 (源，网，站，线，户)
+     */
+    public Map<String,Object> getFgsOrgDh(Map<String,Object> map);
+    /**
+     * 三级页面水能耗 (源，网，站，线，户) 的总单耗和同比
+     */
+    public Map<String,Object> getFgsOrgDhAndTQ(Map<String,Object> map);
 }

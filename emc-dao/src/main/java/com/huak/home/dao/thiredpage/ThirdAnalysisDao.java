@@ -39,4 +39,12 @@ public interface ThirdAnalysisDao {
     List<Map<String,Object>> getFgsDh(Map<String,Object> map);
 
     Map<String,Object> getFgsZdhAndTq(Map<String,Object> map);
+
+    List<Map<String,Object>> getFgsFeedDh(Map<String,Object> map);
+
+    List<Map<String,Object>> getFgsStationDh(Map<String,Object> map);
+
+    List<Map<String,Object>> getFgsOrgDh(Map<String,Object> map);
+
+    Map<String,Object> getFgsOrgAndTq(Map<String,Object> map);
 }

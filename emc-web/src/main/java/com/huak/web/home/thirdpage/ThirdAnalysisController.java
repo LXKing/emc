@@ -134,10 +134,10 @@ public class ThirdAnalysisController extends BaseController {
     /**
      * 热源的水单耗排名
      */
-    @RequestMapping(value = "/water/feeddh", method = RequestMethod.GET)
+    @RequestMapping(value = "/water/feed-dh", method = RequestMethod.GET)
     @ResponseBody
     public String getFeedDh(ToolVO toolVO, HttpServletRequest request){
-        logger.info("计算换热站的水单耗排名");
+        logger.info("计算热源的水单耗排名");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         List<String> mapName = new ArrayList<String>();
@@ -152,7 +152,7 @@ public class ThirdAnalysisController extends BaseController {
             jo.put("mapName", mapName);
             jo.put("mapValue", mapValue);
         }catch (Exception e){
-            logger.error("换热站的水单耗排名catch" + e.getMessage());
+            logger.error("热源的水单耗排名catch" + e.getMessage());
         }
         return jo.toJSONString();
     }
@@ -160,7 +160,7 @@ public class ThirdAnalysisController extends BaseController {
     /**
      * 换热站的水单耗排名
      */
-    @RequestMapping(value = "/water/stationdh", method = RequestMethod.GET)
+    @RequestMapping(value = "/water/station-dh", method = RequestMethod.GET)
     @ResponseBody
     public String getStationDh(ToolVO toolVO, HttpServletRequest request){
         logger.info("计算换热站的水单耗排名");
@@ -187,7 +187,7 @@ public class ThirdAnalysisController extends BaseController {
      * sunbinbin
      * @return string
      */
-    @RequestMapping(value = "/tablelist", method = RequestMethod.POST)
+    @RequestMapping(value = "/table-list", method = RequestMethod.POST)
     @ResponseBody
     public String getTables(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
         logger.info("三级页面-表单数据加载");
@@ -210,6 +210,164 @@ public class ThirdAnalysisController extends BaseController {
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("三级页面-表单数据加载加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+    /**
+     * 水单耗明细
+     */
+    @RequestMapping(value = "/fgs/detail/{orgId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFgsData(ToolVO toolVO, HttpServletRequest request,@PathVariable("orgId")String orgId){
+        logger.info("计算分公司能耗折线图和同比");
+        JSONObject jo = new JSONObject();
+        Map params = paramsPackageOrg(toolVO, request);
+        params.put("orgId",orgId);
+        try {
+            List<Map<String, Object>> list = thirdAnalysisService.getFgsDhDetail(params);
+            Map<String, Object> reMap =thirdAnalysisService.getFgsDhAndTQ(params);
+            //时间数据
+            List<String> dateLine = new ArrayList<>();
+            List<String> newDate = new ArrayList<>();
+            List<String> oldDate = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                Map<String, Object> map =list.get(i);
+                String dh = map.get("BQDH").toString();
+                newDate.add(dh);
+                String dhTq = map.get("TQDH").toString();
+                oldDate.add(dhTq);
+                String date = map.get("TIME").toString();
+                dateLine.add(date);
+            }
+
+            jo.put(Constants.XAXIS, dateLine);
+            jo.put("newDate", newDate);
+            jo.put("oldDate", oldDate);
+            jo.put("reMap",reMap);
+        }catch (Exception e){
+            logger.error("计算分公司能耗折线图和同比" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *热源的水单耗排名
+     */
+    @RequestMapping(value = "/fgs/feed-dh/{type}/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFgsFeedDhPm(ToolVO toolVO, HttpServletRequest request,
+                                    @PathVariable("type")String type,
+                                    @PathVariable("id")String id){
+        logger.info("热源的水单耗排名");
+        JSONObject jo = new JSONObject();
+        Map params = paramsPackageOrg(toolVO, request);
+        List<String> mapName = new ArrayList<String>();
+        List<String> mapValue = new ArrayList<String>();
+
+        if(type==null||"".equals(type)){
+            type="1";
+            params.put("eType",type);
+        }else {
+            params.put("eType",type);
+        }
+        params.put("id",id);
+        try {
+            List<Map<String,Object>>  list = thirdAnalysisService.getFgsFeedDh(params);
+            for (int i = 0; i <list.size() ; i++) {
+                mapName.add(list.get(i).get("NAME").toString());
+                mapValue.add(list.get(i).get("VALUE").toString());
+            }
+            jo.put("mapName", mapName);
+            jo.put("mapValue", mapValue);
+        }catch (Exception e){
+            logger.error("热源的水单耗排名catch" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+    /**
+     *换热站的水单耗排名
+     */
+    @RequestMapping(value = "/fgs/station-dh/{type}/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFgsStationDhPm(ToolVO toolVO, HttpServletRequest request,
+                                    @PathVariable("type")String type,
+                                    @PathVariable("id")String id){
+        logger.info("换热站的水单耗排名");
+        JSONObject jo = new JSONObject();
+        Map params = paramsPackageOrg(toolVO, request);
+        List<String> mapName = new ArrayList<String>();
+        List<String> mapValue = new ArrayList<String>();
+
+        if(type==null||"".equals(type)){
+            type="1";
+            params.put("eType",type);
+        }else {
+            params.put("eType",type);
+        }
+        params.put("id",id);
+        try {
+            List<Map<String,Object>>  list = thirdAnalysisService.getFgsStationDh(params);
+            for (int i = 0; i <list.size() ; i++) {
+                mapName.add(list.get(i).get("NAME").toString());
+                mapValue.add(list.get(i).get("VALUE").toString());
+            }
+            jo.put("mapName", mapName);
+            jo.put("mapValue", mapValue);
+        }catch (Exception e){
+            logger.error("换热站的水单耗排名catch" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *三级页面-分公司 表单
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/fgs/table-list", method = RequestMethod.POST)
+    @ResponseBody
+    public String getFgsTables(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
+        logger.info("三级页面-表单数据加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put("comId",company.getId());
+            paramsMap.put("type",type);
+            Map<String, Object> map =  thirdAnalysisService.getTable(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-表单数据加载加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     * 水单耗 (源，网，站，线，户)
+     */
+    @RequestMapping(value = "/fgs/org/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFgsOrgAll(ToolVO toolVO, HttpServletRequest request,@PathVariable("id")String id){
+        logger.info("计算源网站线户的单耗同比");
+        JSONObject jo = new JSONObject();
+        Map params = paramsPackageOrg(toolVO, request);
+        params.put("id",id);
+        try {
+            Map<String,Object>  reMap1 = thirdAnalysisService.getFgsOrgDh(params);
+            Map<String,Object> reMap2=thirdAnalysisService.getFgsOrgDhAndTQ(params);
+            jo.put("resultData", reMap1);
+            jo.put("TotalTq", reMap2);
+        }catch (Exception e){
+            logger.error("计算源网站线户的单耗同比" + e.getMessage());
         }
         return jo.toJSONString();
     }

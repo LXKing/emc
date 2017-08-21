@@ -248,4 +248,189 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     public Map<String, Object> getFgsDhAndTQ(Map<String, Object> map) {
         return thirdAnalysisDao.getFgsZdhAndTq(map);
     }
+
+    @Override
+    public List<Map<String, Object>> getFgsFeedDh(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsFeedDh(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getFgsStationDh(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsStationDh(map);
+    }
+    /**
+     *三级页面-表格数据加载
+     * sunbinbin
+     * @return map
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> getFgsTable(Map<String, Object> params) throws Exception {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> data = new ArrayList<>();
+        String type1 = "unitType";
+        //所有的用能单位类型
+        String[] unittype = {"1","2","3","4","5"};
+        String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+        String  eDate = getYearDate(sDate,Calendar.DATE,6);
+        String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
+        String leDate = getYearDate(eDate,Calendar.YEAR, -1);
+        //查询时间list
+        List<String> clyearList = new ArrayList<String>();//今年日期列表
+        List<String> lyearList = new ArrayList<String>();//去年日期列表
+        List<String> yearList = new ArrayList<String>();//去年+今年日期列表
+        while(!sDate.equals(eDate)){
+            clyearList.add(sDate);
+            sDate = getYearDate(sDate,Calendar.DATE,1);
+        }
+        while(!lsDate.equals(leDate)){
+            lyearList.add(lsDate);
+            lsDate = getYearDate(lsDate,Calendar.DATE,1);
+        }
+        clyearList.add(eDate);
+        lyearList.add(leDate);
+        yearList.addAll(lyearList);
+        yearList.addAll(clyearList);
+        params.put("currentYear",clyearList);
+        params.put("lastYear",lyearList);
+        params.put("endTime",eDate+" 23:59:59");
+        params.put("endTimeTq",leDate+" 23:59:59");
+        //根据查询条件，查询相应的数据
+        List<Map<String,Object>> listMap = thirdAnalysisDao.getTables(params);
+        List<Map<String,Object>> totalMap = thirdAnalysisDao.getTotal(params);
+
+        //数据封装
+        if(null !=totalMap && !totalMap.isEmpty()) {
+            for (Map data1 : totalMap) {
+                if ("1".equals(data1.get(type1))) {
+                    result.put("feedTotal", data1);
+                }
+                if ("2".equals(data1.get(type1))) {
+                    result.put("netTotal", data1);
+                }
+                if ("3".equals(data1.get(type1))) {
+                    result.put("stationTotal", data1);
+                }
+                if ("4".equals(data1.get(type1))) {
+                    result.put("lineTotal", data1);
+                }
+                if ("5".equals(data1.get(type1))) {
+                    result.put("roomTotal", data1);
+                }
+            }
+        }else{
+            for (String type :unittype) {
+                Map<String, Object> temap = new HashMap<>();
+
+                for (int k = 0; k < clyearList.size(); k++) {
+                    String key1 = "c" + k;
+                    String key2 = "l" + k;
+                    String key3 = "p" + k;
+                    temap.put(key1,0);
+                    temap.put(key2,0);
+                    temap.put(key3,0);
+                }
+                if(type.equals("1")){
+                    temap.put("unitName","源");
+                    temap.put("unitType",type);
+                    result.put("feedTotal", temap);
+                }
+                if(type.equals("2")){
+                    temap.put("unitName","网");
+                    temap.put("unitType",type);
+                    result.put("netTotal", temap);
+                }
+                if(type.equals("3")){
+                    temap.put("unitName","站");
+                    temap.put("unitType",type);
+                    result.put("stationTotal", temap);
+                }
+                if(type.equals("4")){
+                    temap.put("unitName","线");
+                    temap.put("unitType",type);
+                    result.put("lineTotal", temap);
+                }
+                if(type.equals("5")){
+                    temap.put("unitName","户");
+                    temap.put("unitType",type);
+                    result.put("roomTotal", temap);
+                }
+
+            }
+
+        }
+        result.put("list",listMap);
+        result.put("dates",clyearList);
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getFgsOrgDh(Map<String, Object> map) {
+        List<Map<String, Object>> list = thirdAnalysisDao.getFgsOrgDh(map);
+        //时间数据
+        List<String> dateLine = new ArrayList<>();
+        //水电气热煤的  封装数据
+
+        List<String> waterBq = new ArrayList<>();
+        List<String> waterTq = new ArrayList<>();
+        List<String> electricBq = new ArrayList<>();
+        List<String> electricTq = new ArrayList<>();
+        List<String> gasBq = new ArrayList<>();
+        List<String> gasTq = new ArrayList<>();
+        List<String> hotBq = new ArrayList<>();
+        List<String> hotTq = new ArrayList<>();
+        List<String> coalBq = new ArrayList<>();
+        List<String> coalTq = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Map<String, Object> mapData =list.get(i);
+            //水的数据
+            String newWater = mapData.get("waterBq").toString();
+            waterBq.add(newWater);
+            String oldWater = mapData.get("waterTq").toString();
+            waterTq.add(oldWater);
+            //电的数据
+            String newElectric = mapData.get("electricBq").toString();
+            electricBq.add(newElectric);
+            String oldElectric = mapData.get("electricTq").toString();
+            electricTq.add(oldElectric);
+            //气的数据
+            String newGas = mapData.get("gasBq").toString();
+            gasBq.add(newGas);
+            String oldGas = mapData.get("gasTq").toString();
+            gasTq.add(oldGas);
+            //热的数据
+            String newLineWater = mapData.get("hotBq").toString();
+            hotBq.add(newLineWater);
+            String oldLineWater = mapData.get("hotTq").toString();
+            hotTq.add(oldLineWater);
+            //煤的数据
+            String newCoal = mapData.get("coalBq").toString();
+            coalBq.add(newCoal);
+            String oldCoal = mapData.get("coalTq").toString();
+            coalTq.add(oldCoal);
+
+            String date = mapData.get("TIME").toString();
+            dateLine.add(date);
+        }
+
+        Map<String,Object> resulMap=new  HashMap<String,Object>();
+        resulMap.put("waterBq",waterBq);
+        resulMap.put("waterTq",waterTq);
+        resulMap.put("electricBq",electricBq);
+        resulMap.put("electricTq",electricTq);
+        resulMap.put("gasBq",gasBq);
+        resulMap.put("gasTq",gasTq);
+        resulMap.put("hotBq",hotBq);
+        resulMap.put("hotTq",hotTq);
+        resulMap.put("coalBq",coalBq);
+        resulMap.put("coalTq",coalTq);
+        resulMap.put("dateLine",dateLine);
+        return resulMap;
+    }
+
+    @Override
+    public Map<String, Object> getFgsOrgDhAndTQ(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsOrgAndTq(map);
+    }
 }

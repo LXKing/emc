@@ -12,10 +12,10 @@
     <meta name="renderer" content="webkit">
     <meta name="decorator" content="main_third"/>
     <title>华热能管系统-单耗分析</title>
-    <script src="${web}/script/huak.web.third.analysis.js"></script>
+    <script src="${web}/script/huak.web.third.analysis.fgs.js"></script>
 </head>
 <body>
-<input id="thirdType" value="${type}" type="hidden">
+<input id="id" value="${id}" type="hidden">
 <div class="index_mainbody  ">
 
 <div class="index_content row no-margin">
@@ -43,9 +43,9 @@
                         <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                     </div>
                     <div class="groupEnergy-info col-lg-2 ">
-                        <h3 id="groupTotal"><!--760.4--></h3>
-                        <div class="small">集团总能耗 (GJ/m3)</div>
-                        <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
+                        <h3 id="groupTotal" class="groupTotal"><!--760.4--></h3>
+                        <div class="small">集团总单耗 (Tce/m²)</div>
+                        <h4 id="groupchangeRate" class="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                         <div class="small">同比去年 (%)</div>
                     </div>
                 </div>
@@ -56,9 +56,9 @@
                             <div class="energy-head ">
                                 <span class="energy-list-name">水能耗</span>
                                 <div class="energy-list-info">
-                                    <span class="energy-list-num " id="waterTotal"></span>
-                                    <span class="energy-list-measure ">GJ</span>
-                                    <span class="energy-list-proportion " id="waterchangeRate"></span>
+                                    <span class="energy-list-num waterTotal" id="waterTotal"></span>
+                                    <span class="energy-list-measure ">Tce/m²</span>
+                                    <span class="energy-list-proportion waterchangeRate" id="waterchangeRate"></span>
                                 </div>
                             </div>
 
@@ -73,9 +73,9 @@
                             <div class="energy-head ">
                                 <span class="energy-list-name">电能耗</span>
                                 <div class="energy-list-info">
-                                    <span class="energy-list-num" id="electricTotal"></span>
+                                    <span class="energy-list-num electricTotal" id="electricTotal"></span>
                                     <span class="energy-list-measure ">GJ</span>
-                                    <span class="energy-list-proportion" id="elechangeRate"></span>
+                                    <span class="energy-list-proportion elechangeRate" id="elechangeRate"></span>
                                 </div>
                             </div>
                             <div class="energy-chart">
@@ -89,9 +89,9 @@
                             <div class="energy-head ">
                                 <span class="energy-list-name">气能耗</span>
                                 <div class="energy-list-info">
-                                    <span class="energy-list-num " id="gasTotal"></span>
+                                    <span class="energy-list-num gasTotal" id="gasTotal"></span>
                                     <span class="energy-list-measure ">GJ</span>
-                                    <span class="energy-list-proportion " id="gaschangeRate"></span>
+                                    <span class="energy-list-proportion gaschangeRate" id="gaschangeRate"></span>
                                 </div>
                             </div>
 
@@ -106,9 +106,9 @@
                             <div class="energy-head ">
                                 <span class="energy-list-name">热能耗</span>
                                 <div class="energy-list-info">
-                                    <span class="energy-list-num" id="hotTotal"></span>
+                                    <span class="energy-list-num hotTotal"  id="hotTotal"></span>
                                     <span class="energy-list-measure">GJ</span>
-                                    <span class="energy-list-proportion" id="hotchangeRate"></span>
+                                    <span class="energy-list-proportion hotchangeRate" id="hotchangeRate"></span>
                                 </div>
                             </div>
 
@@ -123,9 +123,9 @@
                             <div class="energy-head ">
                                 <span class="energy-list-name">煤能耗</span>
                                 <div class="energy-list-info">
-                                    <span class="energy-list-num" id="coalTotal"></span>
+                                    <span class="energy-list-num coalTotal" id="coalTotal"></span>
                                     <span class="energy-list-measure ">GJ</span>
-                                    <span class="energy-list-proportion" id="coalchangeRate"></span>
+                                    <span class="energy-list-proportion coalchangeRate" id="coalchangeRate"></span>
                                 </div>
                             </div>
 
@@ -140,10 +140,10 @@
                     <div class="col-lg-12 no-padding mt30">
                         <div class="col-lg-6 no-padding analyBoxList">
                             <div class="ec_title">
-                                换热站能耗排名(GJ)
-
+                                换热站能耗排名(Tce/m²)
+                                <%--http://192.168.155.196:8081/emc/js/energy_company.js--%>
 												<span class="button-group">
-												<a href="javascript:;" class="bg-left button-group-act">水</a><a href="javascript:;"  class="bg-left">电</a><a href="javascript:;"  class="bg-left">气</a><a href="javascript:;"  class="bg-left">热</a><a href="javascript:;"  class="bg-right">煤</a>
+												<a href="javascript:;" onclick="loadStationDH(1)" class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadStationDH(2)" class="bg-left">电</a><a href="javascript:;" onclick="loadStationDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadStationDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadStationDH(5)"  class="bg-right">煤</a>
 											</span>
                             </div>
                             <div id="piechart_as" style="width: 100%;height:268px;"></div>
@@ -151,8 +151,8 @@
                         </div>
                         <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                             <div class="ec_title">
-                                供热源能耗排名(GJ)	<span class="button-group">
-												<a href="javascript:;" class="bg-left button-group-act">水</a><a href="javascript:;"  class="bg-left">电</a><a href="javascript:;"  class="bg-left">气</a><a href="javascript:;"  class="bg-left">热</a><a href="javascript:;"  class="bg-right">煤</a>
+                                供热源能耗排名(Tce/m²)	<span class="button-group">
+												<a href="javascript:;" onclick="loadFeedDH(1)"  class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadFeedDH(2)"  class="bg-left">电</a><a href="javascript:;" onclick="loadFeedDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadFeedDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadFeedDH(5)" class="bg-right">煤</a>
 											</span>
                             </div>
                             <div id="linechart_as" style="width: 100%;height:268px;"></div>
