@@ -16,6 +16,7 @@
 </head>
 <body>
 <input id="type" value="${type}" type="hidden">
+<input id="energytype" value="1" type="hidden">
 <div class="index_mainbody  ">
 
 <div class="index_content row no-margin">

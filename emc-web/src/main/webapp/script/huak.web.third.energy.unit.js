@@ -5,120 +5,148 @@
  * Version: v 1.0      <BR>
  * Date: 2017/8/17<BR>
  */
-$(function() {
-
-    loadDataFun();
-
-});
 
 function loadDataFun() {
-
-    createtable();
-
-    var data = [{
-        line1: [2, 4, 7, 1, 4, 5],
-        bar2: [2, 4, 5, 1, 4, 5],
-        bar3: [2, 4, 6, 1, 4, 5],
-        bar4: [2, 4, 7, 1, 4, 5],
-    },
-        {
-            line1: [2, 4, 7, 1, 4, 5],
-            bar2: [2, 4, 7, 1, 4, 5],
-            bar3: [2, 4, 7, 1, 4, 5],
-            bar4: [2, 4, 7, 1, 4, 5],
-        }, {
-            line1: [1, 4, 5, 2, 3],
-            bar2: [2, 4, 5, 1, 4, 5],
-            bar3: [2, 4, 6, 1, 4, 5],
-            bar4: [2, 4, 7, 1, 4, 5],
-        }, {
-            line1: [1, 4, 5, 2, 3],
-            bar2: [2, 4, 7, 1, 4, 5],
-            bar3: [2, 4, 7, 1, 4, 5],
-            bar4: [2, 4, 7, 1, 4, 5],
-        }, {
-            line1: [1, 4, 5, 2, 3],
-            bar2: [2, 4, 5, 1, 4, 5],
-            bar3: [2, 4, 6, 1, 4, 5],
-            bar4: [2, 4, 7, 1, 4, 5],
-        }
-    ]
-
-    chart01Fun(data[0]);
-
+    initAssessment();
+    initTable();
+    initChart01(0);
     $.each($(".button-group").find("a"), function(sindex, sitem) {
         $(this).click(function() {
             $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
-            chart01Fun(data[sindex]);
+            var type = parseInt(sindex)+1;
+            $("#energytype").val(type);
+            initChart01(sindex);
+            initAssessment();
         });
 
     });
+}
 
-    echartsSelf({
-        id: 'piechart_as',
-        echartsConfig: {
-            axisLabelRotate: '-50', //倾斜角度
-            xAxisBoundaryGap: true,
-            dataZoom: true,
-            dataZoomstartValue: 0,
-            dataZoomendValue: 9,
-            bg: 'row',
-            xData: ['站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3', '站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3'],
-            series: [{
-                type: 'bar',
-                dataList: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3],
-                barWidth: 20
-            }]
-        }
-    });
-
-    echartsSelf({
-        id: 'linechart_as',
-        echartsConfig: {
-            axisLabelRotate: '-50', //倾斜角度
-            xAxisBoundaryGap: true,
-            dataZoom: true,
-            dataZoomstartValue: 0,
-            dataZoomendValue: 9,
-            xData: ['站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3', '站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3'],
-            series: [{
-                type: 'line',
-                dataList: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3],
-                barWidth: 20
-
-            }]
+/*三级页面-用能单位-能源用量数据查询*/
+function initChart01(index){
+    var data = $("#searchTools").serialize()+"&type="+$("#type").val()+"&energyType="+$("#energytype").val();
+    $.ajax({
+        url: _web + '/third/energy/unit/energyDetail',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:data,
+        dataType: "json",
+        success: function (result) {
+            chart01Fun(result.object);
         }
     });
 }
 
+/*三级页面-用能单位-表单数据查询*/
+function initTable(){
+    createtable();
+    var data = $("#searchTools").serialize()+"&type="+$("#type").val();
+    $.ajax({
+        url: _web + '/third/energy/unit/unitTableList',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data: data,
+        dataType: "json",
+        success: function (result) {
+
+            thirdTable(result.object);
+        }
+    });
+
+}
+
+/*三级页面-用能单位-能源用量排名*/
+function initAssessment(){
+    var data = $("#searchTools").serialize()+"&type="+$("#type").val()+"&energyType="+$("#energytype").val();
+    $.ajax({
+        url: _web + '/third/energy/unit/unitAssessment',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:  data,
+        dataType: "json",
+        success: function (result) {
+            echartsSelf({
+                id: 'piechart_as',
+                echartsConfig: {
+                    axisLabelRotate: '-50', //倾斜角度
+                    xAxisBoundaryGap: true,
+                    dataZoom: true,
+                    dataZoomstartValue: 0,
+                    axisLabelInterval:0,
+                    dataZoomendValue: 9,
+                    bg: 'row',
+                    xData: result.object.name,
+                    series: [
+                        {
+                            type: 'bar',
+                            dataList: result.object.cur,
+                            barWidth: 20
+                        }
+                    ]
+                }
+            });
+        }
+    });
+    $.ajax({
+        url: _web + '/third/energy/unit/unitAllAssessment',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:  data,
+        dataType: "json",
+        success: function (result) {
+            echartsSelf({
+                id: 'linechart_as',
+                echartsConfig: {
+                    axisLabelRotate: '0', //倾斜角度
+                    xAxisBoundaryGap: true,
+                    dataZoom: true,
+
+                    xData: result.object.date,
+                    series: [
+                        {
+                            type: 'line',
+                            dataList: result.object.data[0].currentYear,
+                            barWidth: 20
+
+                        }
+                    ]
+                }
+            });
+        }
+    });
+}
+
+/*三级页面-用能单位-能源用量对比*/
 function chart01Fun(data) {
     echartsSelf({
         id: "groupEnergyChart",
         echartsConfig: {
             dataZoom: true,
             xAxisBoundaryGap: true,
-            xData: [1, 2, 3, 4, 5, 6, 7],
+            axisLabelRotate: '-50', //倾斜角度
+            axisLabelInterval:0,
+            xData: data.name,
             series: [{
                 type: 'line',
-                dataList: data.line1,
+                dataList: data.tqb,
                 typeLine: 'solid',
-                yAxisIndex: 1,
+                yAxisIndex: 1
             },
                 {
                     type: 'bar',
-                    dataList: data.bar2,
+                    dataList: data.plan,
                     barWidth: 20,
-                    barColor: 'rgba(59,150,219,0.4)',
+                    barColor: 'rgba(59,150,219,0.4)'
                 },
                 {
                     type: 'bar',
-                    dataList: data.bar3,
+                    dataList: data.cur,
                     barWidth: 20,
                     barColor: 'rgba(59,150,219,1)'
                 },
                 {
                     type: 'bar',
-                    dataList: data.bar4,
+                    dataList: data.tq,
                     barWidth: 20,
                     barColor: 'rgba(50,187,182,1)'
                 }
