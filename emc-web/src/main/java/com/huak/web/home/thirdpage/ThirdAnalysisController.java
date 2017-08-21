@@ -35,7 +35,7 @@ import java.util.Map;
 @RequestMapping("/third/analysis")
 public class ThirdAnalysisController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    private static  String COMPANY_ID = "comId";
     @Autowired
     private ThirdAnalysisService thirdAnalysisService;
     /**
@@ -48,6 +48,12 @@ public class ThirdAnalysisController extends BaseController {
         logger.info("跳转三级单耗页面");
         model.addAttribute("type", type);
         return "third/analysis";
+    }
+    @RequestMapping(value = "/fgs-unit/{type}", method = RequestMethod.GET)
+    public String secondToPage(Model model,HttpServletRequest request,@PathVariable("type")String type){
+        logger.info("跳转三级单耗页面");
+        model.addAttribute("type", type);
+        return "third/analysis-unit";
     }
 
     /**
@@ -368,6 +374,38 @@ public class ThirdAnalysisController extends BaseController {
             jo.put("TotalTq", reMap2);
         }catch (Exception e){
             logger.error("计算源网站线户的单耗同比" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *三级页面-用能单位类型-能源类型表格加载
+     *
+     * @return string
+     */
+    @RequestMapping(value = "/unit/unitTableList", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitTableList(ToolVO toolVO,@RequestParam String id,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-能源类型表格加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put("id",id);
+            Map<String,Object> map =  thirdAnalysisService.getThirdTables(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-能源类型表格加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }

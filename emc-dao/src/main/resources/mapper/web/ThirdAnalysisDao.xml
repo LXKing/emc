@@ -1127,11 +1127,11 @@
         d.UNITNAME as unitName,
         d.UNITTYPE as unitType,
         <foreach collection="currentYear" index="index" item="tag" open=""  separator="," close="">
-            MAX((CASE d.DOSAGE_TIME WHEN #{tag} THEN d.DOSAGE/d.AREA ELSE 0 END)) c${index}
+            ROUND(IFNULL(MAX((CASE d.DOSAGE_TIME WHEN #{tag} THEN d.DOSAGE/d.AREA ELSE 0 END)),0),2) c${index}
         </foreach>
         ,
         <foreach collection="lastYear" index="i" item="val" open=""  separator="," close="">
-            MAX((CASE d.DOSAGE_TIME WHEN #{val} THEN d.DOSAGE/d.AREA ELSE 0 END)) l${i}
+            ROUND(IFNULL(MAX((CASE d.DOSAGE_TIME WHEN #{val} THEN d.DOSAGE/d.AREA ELSE 0 END)),0),2) l${i}
         </foreach>
         ,
         <foreach collection="currentYear" index="i" item="val" open=""  separator="," close="">
@@ -1553,5 +1553,207 @@
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
         GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc ) t
+    </select>
+
+    <!--三级页面-用能单位-表格数据展示-->
+    <select id="getThirdTables" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+        v.UNITNAME as unitName,
+        v.UNITTYPE as unitType,
+        IFNULL(bb.coal,0) as c4,
+        IFNULL(bb.whater,0) as c0,
+        IFNULL(bb.electric,0) as c1,
+        IFNULL(bb.gas,0) as c2,
+        IFNULL(bb.heat,0) as c3,
+        IFNULL(bb.loy,0) as c5,
+        IFNULL(bb.whater_plan,0) as p0,
+        IFNULL(bb.electric_plan,0) as p1,
+        IFNULL(bb.gas_plan,0) as p2,
+        IFNULL(bb.heat_plan,0) as p3,
+        IFNULL(bb.coal_plan,0) as p4,
+        IFNULL(bb.loy_plan,0) as p5,
+        IFNULL(cc.coal,0) as l4,
+        IFNULL(cc.whater,0) as l0,
+        IFNULL(cc.electric,0) as l1,
+        IFNULL(cc.gas,0) as l2,
+        IFNULL(cc.heat,0) as l3,
+        IFNULL(cc.loy,0) as l5
+        FROM
+        v_emc_unit v
+        LEFT JOIN(
+        select m.UNITID,
+        ROUND(max(case m.TYPE when 1 then m.DOSAGE/m.area else 0 end),2) whater,
+        ROUND(max(case m.TYPE when 2 then m.DOSAGE/m.area else 0 end),2) electric,
+        ROUND(max(case m.TYPE when 3 then m.DOSAGE/m.area else 0 end),2) gas,
+        ROUND(max(case m.TYPE when 4 then m.DOSAGE/m.area else 0 end),2) heat,
+        ROUND(max(case m.TYPE when 5 then m.DOSAGE/m.area else 0 end),2) coal,
+        ROUND(max(case m.TYPE when 6 then m.DOSAGE/m.area else 0 end),2) loy,
+        ROUND(max(case m.TYPE when 1 then m.plan else 0 end),2) whater_plan,
+        ROUND(max(case m.TYPE when 2 then m.plan else 0 end),2) electric_plan,
+        ROUND(max(case m.TYPE when 3 then m.plan else 0 end),2) gas_plan,
+        ROUND(max(case m.TYPE when 4 then m.plan else 0 end),2) heat_plan,
+        ROUND(max(case m.TYPE when 5 then m.plan else 0 end),2) coal_plan,
+        ROUND(max(case m.TYPE when 6 then m.plan else 0 end),2) loy_plan
+        from (SELECT
+        a.UNITID,
+        b.TYPE,
+        avg(a.area) area,
+        sum(DOSAGE) as DOSAGE,
+        sum(0) as plan
+        FROM
+        t_emc_final_data_hour_tj a,
+        t_emc_energy_type b
+        where a.TYPEID = b.id
+        <if test="startTime!=null and startTime!=''">
+            and a.DOSAGE_TIME <![CDATA[>=]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and a.DOSAGE_TIME <![CDATA[<=]]> #{endTime,jdbcType=VARCHAR}
+        </if>
+        <if test="comId != null and comId !=''">
+            and a.COMID= #{comId}
+        </if>
+        GROUP BY
+        a.UNITID,
+        b.TYPE)m group by m.UNITID
+        )bb on v.UNITID = bb.UNITID
+        LEFT JOIN(
+        select m.UNITID,
+        ROUND(max(case m.TYPE when 1 then m.DOSAGE/m.area else 0 end),2) whater,
+        ROUND(max(case m.TYPE when 2 then m.DOSAGE/m.area else 0 end),2) electric,
+        ROUND(max(case m.TYPE when 3 then m.DOSAGE/m.area else 0 end),2) gas,
+        ROUND(max(case m.TYPE when 4 then m.DOSAGE/m.area else 0 end),2) heat,
+        ROUND(max(case m.TYPE when 5 then m.DOSAGE/m.area else 0 end),2) coal,
+        ROUND(max(case m.TYPE when 6 then m.DOSAGE/m.area else 0 end),2) loy,
+        ROUND(max(case m.TYPE when 1 then m.plan else 0 end),2) whater_plan,
+        ROUND( max(case m.TYPE when 2 then m.plan else 0 end),2) electric_plan,
+        ROUND(max(case m.TYPE when 3 then m.plan else 0 end),2) gas_plan,
+        ROUND(max(case m.TYPE when 4 then m.plan else 0 end),2) heat_plan,
+        ROUND(max(case m.TYPE when 5 then m.plan else 0 end),2) coal_plan,
+        ROUND(max(case m.TYPE when 6 then m.plan else 0 end),2) loy_plan
+        from (SELECT
+        a.UNITID,
+        b.TYPE,
+        avg(a.area) area,
+        sum(DOSAGE) as DOSAGE,
+        sum(0) as plan
+        FROM
+        t_emc_final_data_hour_tj a,
+        t_emc_energy_type b
+        where a.TYPEID = b.id
+        <if test="startTimeTq!=null and startTimeTq!=''">
+            and a.DOSAGE_TIME <![CDATA[>=]]> #{startTimeTq,jdbcType=VARCHAR}
+        </if>
+        <if test="endTimeTq!=null and endTimeTq!=''">
+            and a.DOSAGE_TIME <![CDATA[<=]]> #{endTimeTq,jdbcType=VARCHAR}
+        </if>
+        <if test="comId != null and comId !=''">
+            and a.COMID= #{comId}
+        </if>
+        GROUP BY
+        a.UNITID,
+        b.TYPE)m group by m.UNITID
+        )cc on v.UNITID =cc.UNITID
+        where 1=1
+        <if test="feedType != null and feedType !=''">
+            and  v.HEAT_TYPE =#{feedType}
+        </if>
+        <if test="orgType != null and orgType !=''">
+            and  v.UNITTYPE =#{orgType}
+        </if>
+        <if test="orgId != null and orgId != ''">
+            AND FIND_IN_SET(v.ORGID, emc_func_org_getchilds (#{orgId}))
+        </if>
+    </select>
+    <!--三级页面-用能单位-能源单耗-->
+    <select id="getThirdTotals" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        aa.unitType as unitType ,
+        (CASE WHEN aa.UNITTYPE = '1' THEN '源'
+        WHEN aa.UNITTYPE = '2' THEN '网'
+        WHEN aa.UNITTYPE = '3' THEN '站'
+        WHEN aa.UNITTYPE = '4' THEN '线'
+        WHEN aa.UNITTYPE = '5' THEN '户' else '' end) as unitName,
+        aa.w as c0,aa.e as c1,aa.g as c2,aa.h as c3,aa.c as c4,aa.l as c5,
+        IFNULL(b.w1,0) as l0,
+        IFNULL(b.e1,0) as l1,
+        IFNULL(b.g1,0) as l2,
+        IFNULL(b.h1,0) as l3,
+        IFNULL(b.c1,0) as l4,
+        IFNULL(b.l1,0) as l5,
+        aa.w_plan as p0,aa.e_plan as p1,aa.g_plan as p2,aa.h_plan as p3,aa.c_plan p4,aa.l_plan p5
+        from (SELECT m.unitType,
+        ROUND(max(case m.TYPE when 1 then m.num/m.area else 0 end ),2)w,
+        ROUND(max(case m.TYPE when 2 then m.num/m.area else 0 end ),2)e,
+        ROUND(max(case m.TYPE when 3 then m.num/m.area else 0 end ),2)g,
+        ROUND(max(case m.TYPE when 4 then m.num/m.area else 0 end ),2)h,
+        ROUND(max(case m.TYPE when 5 then m.num/m.area else 0 end ),2)c,
+        ROUND(max(case m.TYPE when 6 then m.num/m.area else 0 end ),2)l,
+        ROUND(max(case m.TYPE when 1 then m.plan else 0 end ),2)w_plan,
+        ROUND(max(case m.TYPE when 2 then m.plan else 0 end ),2)e_plan,
+        ROUND(max(case m.TYPE when 3 then m.plan else 0 end ),2)g_plan,
+        ROUND(max(case m.TYPE when 4 then m.plan else 0 end ),2)h_plan,
+        ROUND(max(case m.TYPE when 5 then m.plan else 0 end ),2)c_plan,
+        ROUND(max(case m.TYPE when 6 then m.plan else 0 end ),2) l_plan
+        from (SELECT
+        b.TYPE,c.UNITTYPE as unitType,sum(a.DOSAGE) as num,sum(0) as plan,avg(a.area) area
+        FROM
+        t_emc_final_data_hour_tj a,
+        t_emc_energy_type b,
+        (select UNITID,COMID,UNITTYPE FROM   v_emc_unit
+        WHERE 1=1
+        <if test="id != null and id !=''">
+            and  FIND_IN_SET(ORGID,emc_func_org_getchilds (#{id,jdbcType=VARCHAR}))
+        </if>
+        ) c
+        WHERE
+        a.TYPEID = b.id
+        and a.UNITID = c.UNITID
+        <if test="comId != null and comId !=''">
+            AND a.COMID= #{comId}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and a.DOSAGE_TIME <![CDATA[>=]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and a.DOSAGE_TIME <![CDATA[<=]]> #{endTime,jdbcType=VARCHAR}
+        </if>
+        GROUP BY b.TYPE,c.UNITTYPE)m GROUP BY m.UNITTYPE) aa
+        left JOIN(
+        SELECT m.UNITTYPE,
+        ROUND(max(case m.TYPE when 1 then m.num/m.area else 0 end ),2) w1,
+        ROUND(max(case m.TYPE when 2 then m.num/m.area else 0 end ),2) e1,
+        ROUND(max(case m.TYPE when 3 then m.num/m.area else 0 end ),2) g1,
+        ROUND(max(case m.TYPE when 4 then m.num/m.area else 0 end ),2) h1,
+        ROUND(max(case m.TYPE when 5 then m.num/m.area else 0 end ),2) c1,
+        ROUND(max(case m.TYPE when 6 then m.num/m.area else 0 end ),2) l1
+        from (SELECT
+        b.TYPE,c.UNITTYPE,sum(a.DOSAGE) as num,avg(a.area) area
+        FROM
+        t_emc_final_data_hour_tj a,
+        t_emc_energy_type b,
+        (select UNITID,COMID,UNITTYPE FROM   v_emc_unit
+        WHERE 1=1
+        <if test="id != null and id !=''">
+            and  FIND_IN_SET(ORGID,emc_func_org_getchilds (#{id,jdbcType=VARCHAR}))
+        </if>
+        ) c
+        WHERE
+        a.TYPEID = b.id
+        and a.UNITID = c.UNITID
+        and a.COMID = c.COMID
+        <if test="comId != null and comId !=''">
+            AND a.COMID= #{comId}
+        </if>
+
+        <if test="startTimeTq!=null and startTimeTq!=''">
+            and a.DOSAGE_TIME <![CDATA[>=]]> #{startTimeTq,jdbcType=VARCHAR}
+        </if>
+        <if test="endTimeTq!=null and endTimeTq!=''">
+            and a.DOSAGE_TIME <![CDATA[<=]]> #{endTimeTq,jdbcType=VARCHAR}
+        </if>
+
+        GROUP BY b.TYPE,c.UNITTYPE)m GROUP BY m.UNITTYPE
+        )b on aa.UNITTYPE = b.UNITTYPE
     </select>
 </mapper>

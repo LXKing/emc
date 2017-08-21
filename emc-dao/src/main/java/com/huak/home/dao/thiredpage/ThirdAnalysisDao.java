@@ -47,4 +47,8 @@ public interface ThirdAnalysisDao {
     List<Map<String,Object>> getFgsOrgDh(Map<String,Object> map);
 
     Map<String,Object> getFgsOrgAndTq(Map<String,Object> map);
+
+    List<Map<String,Object>> getThirdTables(Map paramsMap);
+
+    List<Map<String,Object>> getThirdTotals(Map paramsMap);
 }
