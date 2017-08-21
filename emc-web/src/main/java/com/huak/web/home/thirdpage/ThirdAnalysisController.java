@@ -1,10 +1,11 @@
-package com.huak.web.home;
+package com.huak.web.home.thirdpage;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThirdAnalysisService;
 import com.huak.home.type.ToolVO;
 import com.huak.org.model.Company;
+import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/third/analysis")
-public class ThirdAnalysisController extends BaseController{
+public class ThirdAnalysisController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
