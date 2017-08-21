@@ -34,6 +34,9 @@ public class ThirdEnergyController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ThiredpageEnergyService thiredpageEnergyService;
+    
+    private static  String ENERGY_TYPE = "energytype";
+    private static  String COMPANY_ID = "comId";
     /**
      * 跳转三级单耗页面
      * @param model
@@ -71,7 +74,7 @@ public class ThirdEnergyController extends BaseController {
     }
 
     /**
-     *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
+     *三级页面-集团能源类型的能耗趋势图数据加载
      * sunbinbin
      * @return string
      */
@@ -85,8 +88,8 @@ public class ThirdEnergyController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put("comId",company.getId());
-            paramsMap.put("energytype",type);
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put(ENERGY_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getDatasAll(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -119,8 +122,8 @@ public class ThirdEnergyController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put("comId",company.getId());
-            paramsMap.put("energytype",type);
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put(ENERGY_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getDatas(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -153,8 +156,8 @@ public class ThirdEnergyController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put("comId",company.getId());
-            paramsMap.put("energytype",type);
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put(ENERGY_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getassessment(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -174,7 +177,7 @@ public class ThirdEnergyController extends BaseController {
 
 
     /**
-     *三级页面-换热站排名趋势图
+     *三级页面-表单数据加载
      * sunbinbin
      * @return string
      */
@@ -188,8 +191,8 @@ public class ThirdEnergyController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         try {
-            paramsMap.put("comId",company.getId());
-            paramsMap.put("energytype",type);
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put(ENERGY_TYPE,type);
             Map<String, Object> map =  thiredpageEnergyService.getTable(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -201,6 +204,142 @@ public class ThirdEnergyController extends BaseController {
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
             logger.error("三级页面-表单数据加载加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+
+
+    /**
+     *三级页面-用能单位类型-能源对比数据加载
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/unit/energyDetail", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitEnergyDetail(ToolVO toolVO,@RequestParam String type,@RequestParam String energyType,HttpServletRequest request){
+        logger.info("三级页面-用能单位类型-能源对比数据加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put("orgType",type);
+            paramsMap.put(ENERGY_TYPE,energyType);
+            Map<String,Object> map =  thiredpageEnergyService.getUnitEnergyDetail(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+
+            }
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-能源对比数据加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+
+    /**
+     *三级页面-用能单位类型-能源能耗排名加载
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/unit/unitAssessment", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitAssessment(ToolVO toolVO,@RequestParam String type,@RequestParam String energyType,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-能源能耗排名加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put("orgType",type);
+            paramsMap.put(ENERGY_TYPE,energyType);
+            Map<String,Object> map =  thiredpageEnergyService.getUnitAssessments(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-个能源能耗排名加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+
+    /**
+     *三级页面-用能单位类型-个能源能耗趋势加载
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/unit/unitAllAssessment", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitAllAssessment(ToolVO toolVO,@RequestParam String type,@RequestParam String energyType,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-个能源能耗趋势加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put("orgType",type);
+            paramsMap.put(ENERGY_TYPE,energyType);
+            Map<String,Object> map =  thiredpageEnergyService.getUnitAllAssessment(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-个能源能耗趋势加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *三级页面-用能单位类型-能源类型表格加载
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/unit/unitTableList", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitTableList(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-能源类型表格加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        HttpSession session = request.getSession();
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        try {
+            paramsMap.put(COMPANY_ID,company.getId());
+            paramsMap.put("orgType",type);
+            Map<String,Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-能源类型表格加载异常" + e.getMessage());
         }
         return jo.toJSONString();
     }
