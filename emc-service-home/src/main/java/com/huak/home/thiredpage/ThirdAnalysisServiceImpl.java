@@ -23,6 +23,10 @@ import java.util.*;
 @Service
 public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
 
+    private static String UNIT_TYPE = "unitType";
+    private static String UNIT_NAME = "unitName";
+    private static String[] TYPE_NAME = {"水","电","气","热","煤","油"};
+    private static String[] UNITTYPE = {"1","2","3","4","5","6"};
     @Resource
     private ThirdAnalysisDao thirdAnalysisDao;
     @Resource
@@ -258,112 +262,6 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     public List<Map<String, Object>> getFgsStationDh(Map<String, Object> map) {
         return thirdAnalysisDao.getFgsStationDh(map);
     }
-    /**
-     *三级页面-表格数据加载
-     * sunbinbin
-     * @return map
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Map<String, Object> getFgsTable(Map<String, Object> params) throws Exception {
-        Map<String,Object> result = new HashMap<>();
-        List<Map<String,Object>> data = new ArrayList<>();
-        String type1 = "unitType";
-        //所有的用能单位类型
-        String[] unittype = {"1","2","3","4","5"};
-        String  sDate = (null== params.get("startTime")||"".equals( params.get("startTime")))?getYearDate(null, Calendar.DATE, -5): params.get("startTime").toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
-        String  eDate = getYearDate(sDate,Calendar.DATE,6);
-        String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
-        String leDate = getYearDate(eDate,Calendar.YEAR, -1);
-        //查询时间list
-        List<String> clyearList = new ArrayList<String>();//今年日期列表
-        List<String> lyearList = new ArrayList<String>();//去年日期列表
-        List<String> yearList = new ArrayList<String>();//去年+今年日期列表
-        while(!sDate.equals(eDate)){
-            clyearList.add(sDate);
-            sDate = getYearDate(sDate,Calendar.DATE,1);
-        }
-        while(!lsDate.equals(leDate)){
-            lyearList.add(lsDate);
-            lsDate = getYearDate(lsDate,Calendar.DATE,1);
-        }
-        clyearList.add(eDate);
-        lyearList.add(leDate);
-        yearList.addAll(lyearList);
-        yearList.addAll(clyearList);
-        params.put("currentYear",clyearList);
-        params.put("lastYear",lyearList);
-        params.put("endTime",eDate+" 23:59:59");
-        params.put("endTimeTq",leDate+" 23:59:59");
-        //根据查询条件，查询相应的数据
-        List<Map<String,Object>> listMap = thirdAnalysisDao.getTables(params);
-        List<Map<String,Object>> totalMap = thirdAnalysisDao.getTotal(params);
-
-        //数据封装
-        if(null !=totalMap && !totalMap.isEmpty()) {
-            for (Map data1 : totalMap) {
-                if ("1".equals(data1.get(type1))) {
-                    result.put("feedTotal", data1);
-                }
-                if ("2".equals(data1.get(type1))) {
-                    result.put("netTotal", data1);
-                }
-                if ("3".equals(data1.get(type1))) {
-                    result.put("stationTotal", data1);
-                }
-                if ("4".equals(data1.get(type1))) {
-                    result.put("lineTotal", data1);
-                }
-                if ("5".equals(data1.get(type1))) {
-                    result.put("roomTotal", data1);
-                }
-            }
-        }else{
-            for (String type :unittype) {
-                Map<String, Object> temap = new HashMap<>();
-
-                for (int k = 0; k < clyearList.size(); k++) {
-                    String key1 = "c" + k;
-                    String key2 = "l" + k;
-                    String key3 = "p" + k;
-                    temap.put(key1,0);
-                    temap.put(key2,0);
-                    temap.put(key3,0);
-                }
-                if(type.equals("1")){
-                    temap.put("unitName","源");
-                    temap.put("unitType",type);
-                    result.put("feedTotal", temap);
-                }
-                if(type.equals("2")){
-                    temap.put("unitName","网");
-                    temap.put("unitType",type);
-                    result.put("netTotal", temap);
-                }
-                if(type.equals("3")){
-                    temap.put("unitName","站");
-                    temap.put("unitType",type);
-                    result.put("stationTotal", temap);
-                }
-                if(type.equals("4")){
-                    temap.put("unitName","线");
-                    temap.put("unitType",type);
-                    result.put("lineTotal", temap);
-                }
-                if(type.equals("5")){
-                    temap.put("unitName","户");
-                    temap.put("unitType",type);
-                    result.put("roomTotal", temap);
-                }
-
-            }
-
-        }
-        result.put("list",listMap);
-        result.put("dates",clyearList);
-
-        return result;
-    }
 
     @Override
     public Map<String, Object> getFgsOrgDh(Map<String, Object> map) {
@@ -432,5 +330,91 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     @Override
     public Map<String, Object> getFgsOrgDhAndTQ(Map<String, Object> map) {
         return thirdAnalysisDao.getFgsOrgAndTq(map);
+    }
+
+
+    /**
+     *三级页面-用能单位类型-同期计划数据表格加载
+     * sunbinbin
+     * @return List
+     */
+    @Override
+    public Map<String,Object> getThirdTables(Map paramsMap) {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> data = thirdAnalysisDao.getThirdTables(paramsMap);
+        List<Map<String,Object>> totalMap = thirdAnalysisDao.getThirdTotals(paramsMap);
+        //数据封装
+        if(null !=totalMap && !totalMap.isEmpty()) {
+            for (Map data1 : totalMap) {
+                if ("1".equals(data1.get(UNIT_TYPE))) {
+                    result.put("feedTotal", data1);
+                }
+                if ("2".equals(data1.get(UNIT_TYPE))) {
+                    result.put("netTotal", data1);
+                }
+                if ("3".equals(data1.get(UNIT_TYPE))) {
+                    result.put("stationTotal", data1);
+                }
+                if ("4".equals(data1.get(UNIT_TYPE))) {
+                    result.put("lineTotal", data1);
+                }
+                if ("5".equals(data1.get(UNIT_TYPE))) {
+                    result.put("roomTotal", data1);
+                }
+            }
+        }else{
+            Map<String, Object> temap = new HashMap<>();
+
+            temap.put("w",0);
+            temap.put("w1",0);
+            temap.put("w_plan",0);
+            temap.put("e",0);
+            temap.put("e1",0);
+            temap.put("e_plan",0);
+            temap.put("g",0);
+            temap.put("g1",0);
+            temap.put("g_plan",0);
+            temap.put("h",0);
+            temap.put("h1",0);
+            temap.put("h_plan",0);
+            temap.put("c",0);
+            temap.put("c1",0);
+            temap.put("c_plan",0);
+            temap.put("l",0);
+            temap.put("l1",0);
+            temap.put("l_plan",0);
+            for (String type :UNITTYPE) {
+                if(type.equals("1")){
+                    temap.put(UNIT_NAME,"源");
+                    temap.put(UNIT_TYPE,type);
+                    result.put("feedTotal", temap);
+                }
+                if(type.equals("2")){
+                    temap.put(UNIT_NAME,"网");
+                    temap.put(UNIT_TYPE,type);
+                    result.put("netTotal", temap);
+                }
+                if(type.equals("3")){
+                    temap.put(UNIT_NAME,"站");
+                    temap.put(UNIT_TYPE,type);
+                    result.put("stationTotal", temap);
+                }
+                if(type.equals("4")){
+                    temap.put(UNIT_NAME,"线");
+                    temap.put(UNIT_TYPE,type);
+                    result.put("lineTotal", temap);
+                }
+                if(type.equals("5")){
+                    temap.put(UNIT_NAME,"户");
+                    temap.put(UNIT_TYPE,type);
+                    result.put("roomTotal", temap);
+                }
+
+            }
+
+        }
+        result.put("dates",TYPE_NAME);
+        result.put("list", null==data?new ArrayList<Map<String, Object>>():data);
+        return result;
     }
 }

@@ -71,13 +71,6 @@ public interface ThirdAnalysisService {
     public List<Map<String,Object>> getFgsStationDh(Map<String,Object> map);
 
     /**
-     *三级页面-表单
-     * sunbinbin
-     * @return map
-     */
-    Map<String, Object> getFgsTable(Map<String, Object> params) throws Exception;
-
-    /**
      * 三级页面水能耗 (源，网，站，线，户)
      */
     public Map<String,Object> getFgsOrgDh(Map<String,Object> map);
@@ -85,4 +78,11 @@ public interface ThirdAnalysisService {
      * 三级页面水能耗 (源，网，站，线，户) 的总单耗和同比
      */
     public Map<String,Object> getFgsOrgDhAndTQ(Map<String,Object> map);
+
+    /**
+     *三级页面-用能单位类型-同期计划数据表格加载
+     * sunbinbin
+     * @return List
+     */
+    Map<String,Object> getThirdTables(Map paramsMap) throws Exception;
 }
