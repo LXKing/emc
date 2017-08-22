@@ -12,10 +12,11 @@
     <meta name="renderer" content="webkit">
     <meta name="decorator" content="main_third"/>
     <title>华热能管系统-单耗分析</title>
-    <script src="${web}/script/huak.web.third.analysis.js"></script>
+    <script src="${web}/script/huak.web.third.analysis.unit.js"></script>
 </head>
 <body>
-<input id="thirdType" value="${type}" type="hidden">
+<input id="type" value="${type}" type="hidden">
+<input id="energytype" value="1" type="hidden">
 <div class="index_mainbody  ">
 
 <div class="index_content row no-margin">

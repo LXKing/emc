@@ -1,13 +1,11 @@
 package com.huak.web.home.thirdpage;
 
 import com.alibaba.fastjson.JSONObject;
-import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThirdAnalysisService;
 import com.huak.home.type.ToolVO;
 import com.huak.org.model.Company;
 import com.huak.web.home.BaseController;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -40,6 +38,7 @@ public class ThirdAnalysisController extends BaseController {
     private static  String COMPANY_ID = "comId";
     @Autowired
     private ThirdAnalysisService thirdAnalysisService;
+    private static  String ENERGY_TYPE = "energytype";
     /**
      * 跳转三级单耗页面
      * @param model
@@ -50,12 +49,6 @@ public class ThirdAnalysisController extends BaseController {
         logger.info("跳转三级单耗页面");
         model.addAttribute("type", type);
         return "third/analysis";
-    }
-    @RequestMapping(value = "/fgs-unit/{type}", method = RequestMethod.GET)
-    public String secondToPage(Model model,HttpServletRequest request,@PathVariable("type")String type){
-        logger.info("跳转三级单耗页面");
-        model.addAttribute("type", type);
-        return "third/analysis-unit";
     }
 
     /**
@@ -329,7 +322,7 @@ public class ThirdAnalysisController extends BaseController {
 
     /**
      *三级页面-分公司 表单
-     * sunbinbin
+     *
      * @return string
      */
     @RequestMapping(value = "/fgs/table-list", method = RequestMethod.POST)
@@ -385,7 +378,7 @@ public class ThirdAnalysisController extends BaseController {
      *
      * @return string
      */
-    @RequestMapping(value = "/unit/unitTableList", method = RequestMethod.POST)
+    @RequestMapping(value = "/fgs/unitTableList", method = RequestMethod.POST)
     @ResponseBody
     public String unitTableList(ToolVO toolVO,@RequestParam String id,HttpServletRequest request) {
         logger.info("三级页面-用能单位类型-能源类型表格加载");
@@ -412,32 +405,125 @@ public class ThirdAnalysisController extends BaseController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/energy/export/{type}", method = RequestMethod.GET)
-    public void exportEnergy(ToolVO toolVO, HttpServletResponse response, HttpServletRequest request,@PathVariable("type")String type) {
-        logger.info("导出能源类型单耗明细列表EXCEL");
 
-        String workBookName = "能源类型单耗明细列表";//文件名
-        OutputStream out = null;
+
+    /**     三级页面 unit 分割
+     *三级页面-用能单位类型-能源对比数据加载
+     *
+     * @return string
+     */
+    @RequestMapping(value = "/unit/energyDetail", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitEnergyDetail(ToolVO toolVO,@RequestParam String type,@RequestParam String energyType,HttpServletRequest request){
+        logger.info("三级页面-用能单位类型-能源对比数据加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            /*封装条件*/
-            Map params = paramsPackageOrg(toolVO, request);
-            params.put("type",type);
+            paramsMap.put("orgType",type);
+            paramsMap.put(ENERGY_TYPE,energyType);
+            Map<String,Object> map =  thirdAnalysisService.getUnitEnergyDetail(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
 
-            Map<String, Object> map =  thirdAnalysisService.getTable(params);
-
-            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
-            //response输出流导出excel
-            String mimetype = "application/vnd.ms-excel";
-            response.setContentType(mimetype);
-            response.setCharacterEncoding("UTF-8");
-            String fileName = workBookName + ".xls";
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
-            out = response.getOutputStream();
-            wb.write(out);
-            out.flush();
-            out.close();
+            }
         } catch (Exception e) {
-            logger.error("导出能源类型单耗明细列表EXCEL异常" + e.getMessage());
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-能源对比数据加载异常" + e.getMessage());
         }
+        return jo.toJSONString();
+    }
+
+
+    /**
+     *三级页面-用能单位类型-能源能耗排名加载
+     *
+     */
+    @RequestMapping(value = "/unit/unitAssessment", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitAssessment(ToolVO toolVO,@RequestParam String type,@RequestParam String energyType,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-能源能耗排名加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        try {
+            paramsMap.put("orgType",type);
+            paramsMap.put(ENERGY_TYPE,energyType);
+            Map<String,Object> map =  thirdAnalysisService.getUnitAssessments(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-个能源能耗排名加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+
+    /**
+     *三级页面-用能单位类型-个能源能耗趋势加载
+     *
+     * @return string
+     */
+    @RequestMapping(value = "/unit/unitAllAssessment", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitAllAssessment(ToolVO toolVO,@RequestParam String type,@RequestParam String energyType,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-个能源能耗趋势加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        try {
+            paramsMap.put("orgType",type);
+            paramsMap.put(ENERGY_TYPE,energyType);
+            Map<String,Object> map =  thirdAnalysisService.getUnitAllAssessment(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-个能源能耗趋势加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *三级页面-用能单位类型-能源类型表格加载
+     *
+     */
+    @RequestMapping(value = "/unit/unitTableList", method = RequestMethod.POST)
+    @ResponseBody
+    public String unitTable(ToolVO toolVO,@RequestParam String type,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-能源类型表格加载");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        try {
+            paramsMap.put("orgType",type);
+            Map<String,Object> map =  thirdAnalysisService.getThirdTableList(paramsMap);
+            if (map!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, map);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        }catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-用能单位类型-能源类型表格加载异常" + e.getMessage());
+        }
+        return jo.toJSONString();
     }
 }

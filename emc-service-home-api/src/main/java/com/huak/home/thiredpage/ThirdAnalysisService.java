@@ -85,4 +85,33 @@ public interface ThirdAnalysisService {
      * @return List
      */
     Map<String,Object> getThirdTables(Map paramsMap) throws Exception;
+
+    /**
+     *三级页面-用能单位类型-个能源能耗趋势图数据加载
+     * sunbinbin
+     * @return Map
+     */
+    Map<String,Object> getUnitEnergyDetail(Map paramsMap);
+
+    /**
+     *三级页面-用能单位类型-个能源能耗排名加载
+     * sunbinbin
+     * @return Map
+     */
+    Map<String,Object> getUnitAssessments(Map paramsMap);
+
+    /**
+     *三级页面-用能单位类型-个能源能耗趋势加载
+     * sunbinbin
+     * @return Map
+     */
+    Map<String,Object> getUnitAllAssessment(Map paramsMap) throws Exception;
+
+
+    /**
+     *三级页面-用能单位类型-同期计划数据表格加载
+     * sunbinbin
+     * @return List
+     */
+    Map<String,Object> getThirdTableList(Map paramsMap) throws Exception;
 }

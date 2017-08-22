@@ -51,4 +51,15 @@ public interface ThirdAnalysisDao {
     List<Map<String,Object>> getThirdTables(Map paramsMap);
 
     List<Map<String,Object>> getThirdTotals(Map paramsMap);
+
+
+    List<Map<String,Object>> getUnitsEnergyDetail(Map paramsMap);
+
+    List<Map<String,Object>> getUnitAllAssessment(Map params);
+
+    List<Map<String,Object>> getUnitsAssessment(Map paramsMap);
+
+    List<Map<String,Object>> getThirdUnitTables(Map paramsMap);
+
+    List<Map<String,Object>> getThirdUnitTotals(Map paramsMap);
 }

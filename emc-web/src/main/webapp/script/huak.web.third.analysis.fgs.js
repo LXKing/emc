@@ -152,7 +152,7 @@ function loadTable(){
     createtable();
     var data = $("#searchTools").serialize()+"&id="+$("#id").val();
     $.ajax({
-        url: _web + '/third/analysis/unit/unitTableList',
+        url: _web + '/third/analysis/fgs/unitTableList',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: data,

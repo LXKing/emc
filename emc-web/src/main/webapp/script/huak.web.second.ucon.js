@@ -16,7 +16,7 @@ function loadDataFun(){
         var html = "";
         $.each(data.list,function(idx,item){
             html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
-            html +='<td><a href="'+_web+'/third/analysis/fgs-unit/'+item.id+'" class="need_a">';
+            html +='<td><a href="'+_web+'/third/analysis/unit/'+item.id+'" class="need_a">';
             if(item.id=="1"){
                 html+="供热源"+'</a></td>';
             }else if(item.id=="2"){
