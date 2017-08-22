@@ -125,6 +125,13 @@ public class CommonExcelExport {
 
     }
 
+    private static int imod(int i, int j) {
+        int temp = i % j;
+        return (temp < 0) ? -temp : temp;
+        // Unary minus will succeed without overflow
+        // because temp cannot be Integer.MIN_VALUE
+    }
+
     /**
      * 公共方法
      *
@@ -153,9 +160,9 @@ public class CommonExcelExport {
 
     private static String getModValue(int m) {
         int i = ((m - 1) / 3);
-        if (m % 3 == 1) {
+        if (imod(m,3) == 1) {
             return c + i;
-        } else if (m % 3 == 2) {
+        } else if (imod(m,3) == 2) {
             return p + i;
         } else {
             return l + i;
@@ -163,9 +170,9 @@ public class CommonExcelExport {
     }
 
     private static String getModTitle(int j) {
-        if (j % 3 == 1) {
+        if (imod(j,3) == 1) {
             return "实际";
-        } else if (j % 3 == 2) {
+        } else if (imod(j,3) == 2) {
             return "计划";
         } else {
             return "同期";
