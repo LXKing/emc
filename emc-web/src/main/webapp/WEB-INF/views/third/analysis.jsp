@@ -159,9 +159,9 @@
 <div class="col-lg-12 mb14">
 <div class="index_contentBox clearfix">
 <div class="titbox clearfix no-padding no-margin">
-<div class="pull-left energyTit analy_tit_as"><i></i>各站点<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗明细<small class="font-sm">Energy consumption details</small></div>
+<div class="clearfix pull-left energyTit analy_tit_as"><i></i>各站点<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗明细<small class="font-sm">Energy consumption details</small></div>
 <a export-url="${web}/third/analysis/energy/export/${type}" class="pull-right exportlist mr15">导出列表</a>
-<div class="clearfix  col-lg-12  tablewrap">
+<div class="  col-lg-12  tablewrap">
 <div class="">
 <div id="left_div">
     <div id="left_div1">
@@ -175,16 +175,7 @@
     <div id="left_div2">
         <table id="left_table2" class="table table-bordered">
             <tr class="bg">
-                <th>源</th>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-            <tr>
-                <td>源1</td>
+
             </tr>
         </table>
     </div>
@@ -246,132 +237,7 @@
         <table id="right_table2" class="table table-bordered">
 
             <tr class="bg">
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
+
             </tr>
         </table>
     </div>

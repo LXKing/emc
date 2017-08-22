@@ -615,26 +615,32 @@ function thirdTable(data){
     var $rightTable = $("#right_table2");
     var rightHtml = '';
 
-    var flag = 0;
-    $.each(data.list,function(idx,item){
-        //取第一个总量
-        if(idx==0){
-            var total = getTotalTable(data,item.unitType);
-            flag = item.unitType;
-            leftHtml += '<tr class="bg"><th>' + total.unitName + '</th></tr>';
-            rightHtml += '<tr class="bg">'+ getTrBody(total,data.dates.length) + '</tr>';
-        }else{
-            if(flag != item.unitType){
-                //判断取总量类型
+    if(data.list==null||data.list.length==0){
+        leftHtml = '<tr><th> </th></tr>';
+        rightHtml = '<tr>当前条件下未查询到对应数据！</tr>';
+    }else{
+        var flag = 0;
+        $.each(data.list,function(idx,item){
+            //取第一个总量
+            if(idx==0){
                 var total = getTotalTable(data,item.unitType);
                 flag = item.unitType;
                 leftHtml += '<tr class="bg"><th>' + total.unitName + '</th></tr>';
                 rightHtml += '<tr class="bg">'+ getTrBody(total,data.dates.length) + '</tr>';
+            }else{
+                if(flag != item.unitType){
+                    //判断取总量类型
+                    var total = getTotalTable(data,item.unitType);
+                    flag = item.unitType;
+                    leftHtml += '<tr class="bg"><th>' + total.unitName + '</th></tr>';
+                    rightHtml += '<tr class="bg">'+ getTrBody(total,data.dates.length) + '</tr>';
+                }
             }
-        }
-        leftHtml += '<tr><th>' + item.unitName + '</th></tr>';
-        rightHtml += '<tr>'+ getTrBody(item,data.dates.length) + '</tr>';
-    });
+            leftHtml += '<tr><th>' + item.unitName + '</th></tr>';
+            rightHtml += '<tr>'+ getTrBody(item,data.dates.length) + '</tr>';
+        });
+    }
+
     $leftTable.html(leftHtml);
     $rightTable.html(rightHtml);
 

@@ -272,9 +272,11 @@
 <div class=" col-xs-4 mb14  ">
     <div class="index_contentBox otherTabdiv">
         <div class="titbox clearfix no-padding no-margin">
+            <a href="${web}/health">
             <div class="pull-left carbonTit energyTit"><i></i>健康指数
                 <small class="font-sm">HEALTH INDEX</small>
             </div>
+            </a>
         </div>
         <div class="energyBox carbonBox">
             <div class="chart-box">

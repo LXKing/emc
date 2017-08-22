@@ -195,8 +195,8 @@
 .facedark .mainShanchu{background:url(../imgdark/picture/shanchu.png) no-repeat center}
 .facedark .select-boxWdate .time-input-disable{background:#fff url(../imgdark/picture/datePicker.png) no-repeat 82px}
 
-
-
+ 
+ 
 .facedark .index_menuBox .tabicon01{background-image:url(../imgdark/index/tabicon01.png)}
 .facedark .index_menuBox .tabicon02{background-image:url(../imgdark/index/tabicon02.png)}
 .facedark .index_menuBox .tabicon03{background-image:url(../imgdark/index/tabicon03.png)}
@@ -327,9 +327,9 @@
 .facedark .x-sfleft1{background-color: transparent!important;}
 .facedark  .select-boxbtnAlarm{background: none;}
 
-
+ 
 .facedark .recentchartT > div{
-    color: #000000;
+	color: #000000;
 }
 
 
@@ -349,93 +349,98 @@
 }
 
 .facedark .EnergyChartTextnumb ,.facedark  .cb_color,.facedark .EnergyChartTextnumbolb{
-    color:#00aca6 ;
+	color:#00aca6 ;
 }
 .facedark #header .changeface{
-    background: url(../imgdark/index/changeface.png) no-repeat;
+	background: url(../imgdark/index/changeface.png) no-repeat;
 }
 .facedark .index_menuBoxCon>span{
-    color: #fff;
+	color: #fff;
 }
 .facedark #recentall>div>p{
-    color: #fff;
+	color: #fff;
 }
 .facedark .weather .chart-content ul li{
-    border-right: 1px solid #1d2f3a;
+	border-right: 1px solid #1d2f3a;
 }
 .facedark .quanquanwrap>div:nth-child(1)>div>div>div>div{
-    background:none;
-    border:none;
+	background:none;
+	border:none;
 }
 .facedark .quanquanwrap>div:nth-child(1)>div>div>div>div:after{
-    border:none;
+	border:none;
 }
 
 .facedark .quanquanwrap>div:nth-child(1)>div.runb>div>div{
-    background: url(../imgdark/qiansedong.gif) no-repeat;
+	background: url(../imgdark/qiansedong.gif) no-repeat;
 }
 
-.facedark .quanquanwrap>div:nth-child(1)>div>div>div ,
-.facedark  .quanquanwrap>div:nth-child(1)>div>div:after{
-    background: #1d465b;
-}
+ .facedark .quanquanwrap>div:nth-child(1)>div>div>div ,
+ .facedark  .quanquanwrap>div:nth-child(1)>div>div:after{
+ 	background: #1d465b;
+ }
 
 
-.facedark .main-box{
-    background: rgba(4,23,36,.75);
+ .facedark .main-box{
+ 	background: rgba(4,23,36,.75);
     box-shadow: 0 0 3px rgba(4,23,36,.75);
-}
+ }
 
 .facedark .barwrap2 {
-    background: url(../imgdark/pic1.png) no-repeat left top ;
-    border: 1px solid #2e4957;
+	background: url(../imgdark/pic1.png) no-repeat left top ;
+	border: 1px solid #2e4957;
 }
 .facedark .barwrap2 > div:nth-child(2) p{
-    color:#33fff8;
+	color:#33fff8;
 }
 
 .facedark .barwrap2 > div:nth-child(1){
-    color: #33fff8;
-}
+	 color: #33fff8;
+	 }
 .facedark .EnergyChartBg:before{
-    background: none;
+	background: none;
 }
 
 .facedark .energy_consumption .tablewrap table{
-    background: none;
+	background: none;
 }
 .facedark .energy_consumption .tablewrap table .bg {
-    background: rgba(255,255,255,0.1);
+	background: rgba(255,255,255,0.1);	
 }
 .facedark .energy_consumption #right_table1 th,.facedark  .energy_consumption #right_table1 td{
-    color:#fff
+	color:#fff
 }
 
 .facedark .navlh>ul{
-    background: #071d2a;
-    border:1px solid #285768;
+	background: #071d2a;
+	border:1px solid #285768;
 }
 .facedark .navlh>ul li{
-    border-bottom: 1px solid #285768;
+	border-bottom: 1px solid #285768;
 }
 .facedark .navlh>ul li:last-child{
-    border-bottom: none;
+	border-bottom: none;
 }
 .facedark .navlh>ul li a{
-    color: #618292;
+	color: #618292;
 }
 .facedark .navlh>ul li:hover{
-    background: #08303f;
+	background: #08303f;
 }
 .facedark .navlh>ul li:hover a{
-    color: #ffffff;
+	color: #ffffff;
 }
 .facedark .x-sfoption1{
-    background: #071d2a;
-    border:1px solid #265062;
+	background: #071d2a;
+	border:1px solid #265062;
 }
 .facedark .x-sfoption1 p:hover{
-    background:#08303f;
-    color: #fff;
+	background:#08303f;
+	color: #fff;
 }
 
+.facedark .tablewrap ::-webkit-scrollbar-track{background-color:rgba(57,220,214,.07);}
+.facedark .tablewrap ::-webkit-scrollbar-thumb{background-color:rgba(51,255,248,.2);border-left:2px solid rgba(51,255,248,1);border-right:2px solid rgba(51,255,248,1)}
+.facedark .tablewrap ::-webkit-scrollbar-thumb:active {background-color:rgba(51,255,248,.2)}
+.facedark .tablewrap ::-webkit-scrollbar-corner{background-color:rgba(57,220,214,.07);}
+.facedark .tablewrap ::-webkit-scrollbar-thumb:vertical{border:none;border-top:2px solid rgba(51,255,248,1);border-bottom:2px solid rgba(51,255,248,1);}

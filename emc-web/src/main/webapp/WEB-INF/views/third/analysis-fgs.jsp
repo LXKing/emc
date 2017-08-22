@@ -173,10 +173,10 @@
 <div class="col-lg-12 mb14">
 <div class="index_contentBox clearfix">
 <div class="titbox clearfix no-padding no-margin">
-<div class="pull-left energyTit analy_tit_as"><i></i>各站点能耗明细<small class="font-sm">Energy consumption details</small></div>
+<div class="clearfix pull-left energyTit analy_tit_as"><i></i>各站点能耗明细<small class="font-sm">Energy consumption details</small></div>
 <a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
 
-<div class="clearfix  col-lg-12  tablewrap">
+<div class="  col-lg-12  tablewrap">
 <div class="">
 <div id="left_div">
     <div id="left_div1">

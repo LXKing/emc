@@ -41,15 +41,18 @@ var echartsSelf = function(options) {
                 show: options.echartsConfig.dataZoom || false,
                 startValue: options.echartsConfig.dataZoomstartValue || null,
                 endValue: options.echartsConfig.dataZoomendValue || null,
-                zoomLock: true,
-                height: 20,
-                backgroundColor: '#dcdfe3',
+//				zoomLock: true,
+                height: 18,
+                backgroundColor:faceKey == 'dark' ? 'rgba(57,220,214,.07)' :  '#dcdfe3',
                 showDetail: false,
                 showDataShadow: false,
-                borderColor: '#dcdfe3',
-                fillerColor:'#ffffff',
-                handleSize:0,
-
+                borderColor: faceKey == 'dark' ? 'transparent' : '#dcdfe3',
+                fillerColor: faceKey == 'dark' ? 'rgba(51,255,248,.2)' : '#ffffff',
+                //				handleSize:1,
+                handleIcon: 'M0,0 v9.7h1 v-9.7h-1 Z',
+                handleStyle: {
+                    color: faceKey == 'dark' ? 'rgba(51,255,248,1)' : '#277aba',
+                },
                 dataBackground: {}
             },
             tooltip: {
