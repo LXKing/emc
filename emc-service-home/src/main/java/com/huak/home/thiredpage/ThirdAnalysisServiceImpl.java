@@ -24,6 +24,8 @@ import java.util.*;
 public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
 
     private static String UNIT_TYPE = "unitType";
+    private static String unitType = "unitType";
+    private static String unitName = "unitName";
     private static String UNIT_NAME = "unitName";
     private static String[] TYPE_NAME = {"水","电","气","热","煤","油"};
     private static String[] UNITTYPE = {"1","2","3","4","5","6"};
@@ -190,28 +192,28 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
                     temap.put(key3,0);
                 }
                 if(type.equals("1")){
-                    temap.put("unitName","源");
-                    temap.put("unitType",type);
+                    temap.put(unitName,"源");
+                    temap.put(unitType,type);
                     result.put("feedTotal", temap);
                 }
                 if(type.equals("2")){
-                    temap.put("unitName","网");
-                    temap.put("unitType",type);
+                    temap.put(unitName,"网");
+                    temap.put(unitType,type);
                     result.put("netTotal", temap);
                 }
                 if(type.equals("3")){
-                    temap.put("unitName","站");
-                    temap.put("unitType",type);
+                    temap.put(unitName,"站");
+                    temap.put(unitType,type);
                     result.put("stationTotal", temap);
                 }
                 if(type.equals("4")){
-                    temap.put("unitName","线");
-                    temap.put("unitType",type);
+                    temap.put(unitName,"线");
+                    temap.put(unitType,type);
                     result.put("lineTotal", temap);
                 }
                 if(type.equals("5")){
-                    temap.put("unitName","户");
-                    temap.put("unitType",type);
+                    temap.put(unitName,"户");
+                    temap.put(unitType,type);
                     result.put("roomTotal", temap);
                 }
 
