@@ -65,5 +65,17 @@ public interface ThiredpageEnergyService {
      */
     Map<String,Object> getThirdTables(Map paramsMap) throws Exception;
 
+    /**
+     *三级页面-分公司-能源类型数据加载
+     * sunbinbin
+     * @return Map
+     */
+    Map<String,Object> getFgsEnergyTypes(Map paramsMap)  throws Exception;
 
+    /**
+     *三级页面-分公司-换热站排名趋势图
+     * sunbinbin
+     * @return Map
+     */
+    Map<String, Object> assessments(Map<String, Object> paramsMap) throws Exception;
 }

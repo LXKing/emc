@@ -66,8 +66,11 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         boolean lmEmpty = null!=listMap && listMap.size()>0;
             List<String> curList = new ArrayList<String>();//今年某一时间段（查询条件中的时间段）的值
             List<String> lastList = new ArrayList<String>();//去年某一时间段（查询条件中的时间段）的值
+            List<String> bm_curList = new ArrayList<String>();//今年某一时间段（查询条件中的时间段）的值
+            List<String> bm_lastList = new ArrayList<String>();//去年某一时间段（查询条件中的时间段）的值
             Map<String,Object> my = new HashMap<>();
             Double curYearTotal = 0.0,lastYearTotal = 0.0;//今年和去年能耗数据
+             Double curYearBm = 0.0,lastYearBm = 0.0;//今年和去年能耗数据
             if(lmEmpty){
                 //如果查询结果存在，需要设置上面所定义的变量，方便下面封装chartJson
                 for(String yd:yearList){
@@ -80,46 +83,63 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                         }
                         isHas = true;
                         String value = String.valueOf(map.get("num"));
+                        String value1 = String.valueOf(map.get("bm_num"));
                         if (yd.equals(yeardate) && "0".equals(curyear)) {
                             curList.add(value);//添加 今年的用能单位类型数据添加
+                            bm_curList.add(value1);
                             curYearTotal += Double.parseDouble(value);//拿到本期的能耗
-
+                            curYearBm += Double.parseDouble(value1);//拿到本期的标煤
                         }
                         if (yd.equals(yeardate) && "1".equals(curyear)) {
 
                             lastList.add(value);//添加 去年的用能单位类型数据添加
+                            bm_lastList.add(value1);//添加 去年的用能单位类型数据添加
                             lastYearTotal += Double.parseDouble(value);//拿到去年今天的能耗
-
+                            lastYearBm +=  Double.parseDouble(value1);
                         }
 
                     }
                     if (!isHas) {
                         if (lyearList.contains(yd)) {
                             lastList.add("0");
+                            bm_lastList.add("0");
                         } else {
                             curList.add("0");
+                            bm_curList.add("0");
                         }
                     }
                 }
                 my.put(TOTAL_CURRENT_YEAR,curYearTotal);
                 my.put(TOTAL_LAST_YEAR,lastYearTotal);
+                my.put("bm_current",curYearBm);
+                my.put("bm_last",lastYearBm);
                 my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
+                my.put("bm_cdata",bm_curList);
+                my.put("bm_ldata",bm_lastList);
                 data.add(my);
             }else{
                 for(String yd:yearList){
                     if(lyearList.contains(yd)){
                         lastList.add("0");
+                        bm_lastList.add("0");
                         lastYearTotal += 0;//拿到去年今天的能耗
+                        lastYearBm += 0;
                     }else{
+                        bm_curList.add("0");
                         curList.add("0");
                         curYearTotal += 0;//拿到今天的能耗
+                        curYearBm += 0;
                     }
                 }
                 my.put(TOTAL_CURRENT_YEAR,curYearTotal);
                 my.put(TOTAL_LAST_YEAR,lastYearTotal);
+                my.put("bm_current",curYearBm);
+                my.put("bm_last",lastYearBm);
                 my.put(CURRENT_YEAR,curList);
                 my.put("lastyear",lastList);
+                my.put("bm_cdata",bm_curList);
+                my.put("bm_ldata",bm_lastList);
                 data.add(my);
             }
 
@@ -617,4 +637,130 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return result;
     }
 
+    /**
+     *三级页面-分公司-源、网、站、线、户的各个能源类型的能耗趋势图
+     * sunbinbin
+     * @return map
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> getFgsEnergyTypes(Map params) throws Exception {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> data = new ArrayList<>();
+        //所有的能源类型
+        String[] energyTypes = {"chart1","chart2","chart3","chart4","chart5"};
+        String  sDate = (null== params.get(START_TIME)||"".equals( params.get(START_TIME)))?getYearDate(null, Calendar.DATE, -5): params.get(START_TIME).toString().substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+        String  eDate = (null==params.get(END_TIME)||"".equals(params.get(END_TIME)))?getYearDate(null,Calendar.DATE, 0):params.get(END_TIME).toString().substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
+        String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
+        String leDate = getYearDate(eDate,Calendar.YEAR, -1);
+        //查询时间list
+        List<String> clyearList = new ArrayList<String>();//今年日期列表
+        List<String> lyearList = new ArrayList<String>();//去年日期列表
+        List<String> yearList = new ArrayList<String>();//去年+今年日期列表
+        while(!sDate.equals(eDate)){
+            clyearList.add(sDate);
+            sDate = getYearDate(sDate,Calendar.DATE,1);
+        }
+        clyearList.add(eDate);
+        while(!lsDate.equals(leDate)){
+            lyearList.add(lsDate);
+            lsDate = getYearDate(lsDate,Calendar.DATE,1);
+        }
+        lyearList.add(leDate);
+        yearList.addAll(lyearList);
+        yearList.addAll(clyearList);
+        //根据查询条件，查询相应的数据
+        List<Map<String,Object>> listMap = thiredpageEnergyDao.getFgsDatas(params);
+        //组装chartJson格式开始
+        boolean lmEmpty = null!=listMap && listMap.size()>0;
+        for(String type:energyTypes){//源、网、站、线、户
+            List<String> curList = new ArrayList<String>();//今年某一时间段（查询条件中的时间段）的值
+            List<String> lastList = new ArrayList<String>();//去年某一时间段（查询条件中的时间段）的值
+            Map<String,Object> my = new HashMap<>();
+            Double curYearTotal = 0.0,lastYearTotal = 0.0;//今年和去年能耗数据
+            if(lmEmpty){
+                //如果查询结果存在，需要设置上面所定义的变量，方便下面封装chartJson
+                for(String yd:yearList){
+                    boolean isHas = false;
+                    for(Map<String,Object> map : listMap) {
+                        String curyear = map.get("curyear").toString();
+                        String yeardate = map.get("time").toString();
+                        if (!yeardate.equals(yd)) {
+                            continue;
+                        }
+                        isHas = true;
+                        String value = String.valueOf(map.get(type));
+                        if (yd.equals(yeardate) && "0".equals(curyear)) {
+                            curList.add(value);//添加 今年的用能单位类型数据添加
+                            curYearTotal += Double.parseDouble(value);//拿到本期的能耗
+
+                        }
+                        if (yd.equals(yeardate) && "1".equals(curyear)) {
+                            {
+                                lastList.add(value);//添加 去年的用能单位类型数据添加
+                                lastYearTotal += Double.parseDouble(value);//拿到去年今天的能耗
+                            }
+                        }
+                    }
+                    if (!isHas) {
+                        if (lyearList.contains(yd)) {
+                            lastList.add("0");
+                        } else {
+                            curList.add("0");
+                        }
+                    }
+                }
+                my.put(TOTAL_CURRENT_YEAR,curYearTotal);
+                my.put(TOTAL_LAST_YEAR,lastYearTotal);
+                my.put("type",type);
+                my.put(CURRENT_YEAR,curList);
+                my.put("lastyear",lastList);
+                data.add(my);
+            }else{
+                for(String yd:yearList){
+                    if(lyearList.contains(yd)){
+                        lastList.add("0");
+                        lastYearTotal += 0;//拿到去年今天的能耗
+                    }else{
+                        curList.add("0");
+                        curYearTotal += 0;//拿到今天的能耗
+                    }
+                }
+                my.put(TOTAL_CURRENT_YEAR,curYearTotal);
+                my.put(TOTAL_LAST_YEAR,lastYearTotal);
+                my.put("type",type);
+                my.put(CURRENT_YEAR,curList);
+                my.put("lastyear",lastList);
+                data.add(my);
+            }
+        }
+        //组装chartJson格式结束
+        result.put("date",clyearList);
+        result.put("data",data);
+        return result;
+    }
+
+
+    /**
+     *三级页面-分公司-换热站排名趋势图
+     * sunbinbin
+     * @return string
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> assessments(Map<String, Object> paramsMap) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        List<Map<String,Object>> heats = thiredpageEnergyDao.selectassessment(paramsMap);//热源能源类型的排名
+        List<String> unitnames = new ArrayList<>();
+        List<String> unitnumbers = new ArrayList<>();
+        for(Map<String,Object> heat:heats){
+            if(null != heat){
+                unitnames.add(heat.get("unitname").toString());
+                unitnumbers.add(heat.get("dosage").toString());
+            }
+        }
+        data.put("unitnames",unitnames);
+        data.put("unitnumber",unitnumbers);
+        return data;
+    }
 }

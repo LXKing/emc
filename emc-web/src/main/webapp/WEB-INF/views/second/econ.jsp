@@ -161,9 +161,10 @@
                     </thead>
                     <tbody id="fgsEnergyTbody">
                     <c:forEach var="fgs" items="${fgsList}" varStatus="state">
+
                         <tr class="${state.index%2 eq 0?'':'bgc'}">
                             <td>
-                                <a href="${web}/third/energy/fgs/${fgs.orgId}" class="need_a">${fgs.orgName}</a>
+                                <a href="${web}/third/fgs/energys/${fgs.orgId}/${fgs.orgName}" class="need_a">${fgs.orgName}</a>
                             </td>
                             <td class="need_title">${fgs.totalBq}（同<span class="${fgs.totalAn eq 0?'':(fgs.totalAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.totalAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.totalAn eq 0?'':(fgs.totalAn gt 0?'↑':'↓')}</span>）</td>
                             <td class="need_title">${fgs.waterBq}（同<span class="${fgs.waterAn eq 0?'':(fgs.waterAn gt 0?'redcolor':'bluecolor')}"><fmt:formatNumber type="number" value="${fgs.waterAn}" pattern="0.00" maxFractionDigits="2"/>%${fgs.waterAn eq 0?'':(fgs.waterAn gt 0?'↑':'↓')}</span>）</td>

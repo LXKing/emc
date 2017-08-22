@@ -77,4 +77,11 @@ public interface ThiredpageEnergyDao {
      * @return Map
      */
     List<Map<String,Object>> getThirdTotals(Map paramsMap);
+
+    /**
+     *三级页面-分公司-各个能源类型加载
+     * sunbinbin
+     * @return Map
+     */
+    List<Map<String,Object>> getFgsDatas(Map params);
 }

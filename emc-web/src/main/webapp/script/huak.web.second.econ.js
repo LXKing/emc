@@ -220,11 +220,10 @@ function loadDataFun(){
 }
 
 function fgsEnergyList(data){
-
     var html = "";
     $.each(data.list,function(idx,item){
         html +='<tr class="'+(idx%2 == 0?"":"bgc")+'">';
-        html +='<td><a href="'+_web+'/third/energy/fgs/'+item.id+'" class="need_a">'+item.orgName+'</a></td>';
+        html +='<td><a href="'+_web+'/third/fgs/energys/'+item.id+'/'+item.orgName+'" class="need_a">'+item.orgName+'</a></td>';
         html +=getHtmlTd(item.totalBq,item.totalAn);
         html +=getHtmlTd(item.waterBq,item.waterAn);
         html +=getHtmlTd(item.electricBq,item.electricAn);

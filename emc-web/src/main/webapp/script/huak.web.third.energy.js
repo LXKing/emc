@@ -62,8 +62,8 @@ function initassessment(result){
                 xAxisBoundaryGap: true,
                 axisLabelRotate: '-30', //倾斜角度
                 dataZoom: true,
-                dataZoomstartValue: 1,
-                dataZoomendValue: 10,
+                dataZoomstartValue: 0,
+                dataZoomendValue: 9,
                 axisLabelInterval:0,
                 xData: result.object.heatnames,
                 series: [{
@@ -80,8 +80,8 @@ function initassessment(result){
                 xAxisBoundaryGap: true,
                 axisLabelRotate: '-50', //倾斜角度
                 dataZoom: true,
-                dataZoomstartValue: 1,
-                dataZoomendValue:10,
+                dataZoomstartValue: 0,
+                dataZoomendValue:9,
                 axisLabelInterval:0,
                 xData: result.object.stationnames,
                 series: [{

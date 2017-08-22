@@ -1,210 +1,904 @@
+/**
+ * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
+ * Author:  lichao  <BR>
+ * Project:emc    <BR>
+ * Version: v 1.0      <BR>
+ * Date: 2017/8/17<BR>
+ */
 
-function loadDataFun(){
-    initCss();
-    loadFun();
-    loadassessment();
-    loadEnergyTotalDetail();
-    loadTable();
-}
-
-function initCss(){
-    var type = $("#type").val();
-}
-
-/*三级页面-能耗分析-站的各种能源类型排名数据入口*/
-function loadassessment(){
-    var data = $("#searchTools").serialize()+"&type="+$("#type").val();
-    $.ajax({
-        url: _web + '/third/energy/assessment',
-        type: 'post',
-        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data:data,
-        dataType: "json",
-        success: function (result) {
-            initassessment(result);
-        }
-    });
-
-}
-
-/*三级页面-能耗分析-站的各种能源类型排名*/
-function initassessment(result){
-    if(result.flag){
-        echartsSelf({
-            id: 'linechart_as',
-            echartsConfig: {
-                xAxisBoundaryGap: true,
-                axisLabelRotate: '-30', //倾斜角度
-                dataZoom: true,
-                dataZoomstartValue: 1,
-                dataZoomendValue: 10,
-                axisLabelInterval:0,
-                xData: result.object.heatnames,
-                series: [{
-                    type: 'bar',
-                    dataList:  result.object.heatnum
-
-                }]
-            }
-        });
-
-        echartsSelf({
-            id: 'piechart_as',
-            echartsConfig: {
-                xAxisBoundaryGap: true,
-                axisLabelRotate: '-50', //倾斜角度
-                dataZoom: true,
-                dataZoomstartValue: 1,
-                dataZoomendValue:10,
-                axisLabelInterval:0,
-                xData: result.object.stationnames,
-                series: [{
-                    type: 'bar',
-                    barWidth:30,
-                    dataList: result.object.stationnums
-
-                }]
-            }
-        });
-    }
-}
-
-/*三级页面-能耗分析-源、网、站、线、户的各种能源类型能耗*/
-function loadFun(){
-    var type = $("#type").val();
-
-
-    var data = $("#searchTools").serialize()+"&type="+type;
-    $.ajax({
-        url: _web + '/third/energy/energyDetail',
-        type: 'post',
-        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data:data,
-        dataType: "json",
-        success: function (result) {
-            initchart(result);
-        }
-    });
-}
-
-/*三级页面-能耗分析-源、网、站、线、户的各种能源类型能耗图展示*/
-function initchart(result){
-    var type = $("#type").val();
-    if(result.flag){
-        var datelist = result.object.date;
-        $.each(result.object.data,function(index,value){
-            var tb = 0;
-            $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-num").html(toFormatNum(value.totalcurrentyear));
-            if(type == '1'){
-                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("T");
-            }else if(type == '2'){
-                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("kWh");
-            }else if(type == '3'){
-                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("m³");
-            }else if(type == '4'){
-                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("GJ");
-            }else if(type == '5'){
-                $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-measure").html("T");
-            }
-
-            if(value.totallastyear != 0){
-                tb = toDecimal((value.totalcurrentyear - value.totallastyear)/value.totallastyear,4)*10000/100;
-            }
-
-            if(tb>0){
-                $("#"+value.type).parent().prev().addClass('energy-add')
-            }else{
-                $("#"+value.type).parent().prev().removeClass('energy-add');
-            }
-            var zz =tb>0?"↑":((tb == 0)?"→":"↓");
-            $($("#"+value.type).parent().prev()).find('.energy-list-info').find(".energy-list-proportion").html("("+tb+'%'+zz+")");
-            var options = {
-                id: value.type,
-                echartsConfig: {
-                    xData: datelist,
-                    series: [{
-                        type: 'line',
-                        dataList: value.currentYear,
-                        typeLine: 'solid'
-                    },
-                        {
-                            type: 'line',
-                            dataList:value.lastyear,
-                            typeLine: 'dashed'
-                        }
-                    ]
-                }
-            };
-            echartsSelf(options);
-        })
-    }
-
-
-};
-
-/*三级页面-集团总能源类型能耗图展示*/
-function loadEnergyTotalDetail() {
-    var data = $("#searchTools").serialize()+"&type="+$("#type").val();
-    var tb = 0;
-
-    $.ajax({
-        url: _web + '/third/energy/energyTotalDetail',
-        type: 'post',
-        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data:data,
-        dataType: "json",
-        success: function (result) {
-            var datelist = result.object.date;
-            var currentyear = result.object.data[0].currentYear;
-            var lastyear = result.object.data[0].lastyear;
-            var totalcurrent = result.object.data[0].totalcurrentyear;
-            var totallast = result.object.data[0].totallastyear;
-            if(totallast != 0){
-
-                tb = parseFloat(toDecimal((totalcurrent- totallast)/totallast,4))*10000/100;
-            }
-            var zz =tb>0?"↑":((tb == 0)?"→":"↓");
-            $("#groupTotal").html(toFormatNum(totalcurrent));
-            var html = tb+'<span class="arrow">'+zz+'</span>';
-            $("#groupchangeRate").html(html);
-            echartsSelf({
-                id: "groupEnergyChart",
-                echartsConfig: {
-                    xData: datelist,
-                    series: [{
-                        type: 'line',
-                        dataList:currentyear,
-                        typeLine: 'solid'
-
-                    },
-                        {
-                            type: 'line',
-                            dataList: lastyear,
-                            typeLine: 'dashed'
-                        }
-                    ]
-                }
-            });
-        }
-    });
-
-//    createtable();
-
-}
-
-/*三级页面-各站点能源类型用量明细*/
-function loadTable(){
+function loadDataFun() {
+    initCssFunc();
+    initEnergyRank01(1);
+    initEnergyRank02(1);
     createtable();
-    var data = $("#searchTools").serialize()+"&type="+$("#type").val();
+    initTable();
+    initJTenergyData();
+    initEnergyTypeData();
+}
+
+/*表格数据加载*/
+function initTable(){
+    var data = $("#searchTools").serialize()+"&orgId="+$("#orgId").val();
     $.ajax({
-        url: _web + '/third/energy/tablelist',
+        url: _web + '/third/fgs/tablelist',
         type: 'post',
-        async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data:data,
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data: data,
         dataType: "json",
         success: function (result) {
             thirdTable(result.object);
         }
     });
+};
 
+/*按钮切换事件和样式绑定*/
+function initCssFunc(){
+    $.each($(".ec_title"), function(index, item) {
+        if(index == 0) {
+            $.each($(this).find("a"), function(sindex, sitem) {
+                $(this).click(function() {
+                    $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
+                    var type = $(sitem).html();
+                    if(type == "水"){
+                        initEnergyRank01(1);
+                    }
+                    if(type == "电"){
+                        initEnergyRank01(2);
+                    }
+                    if(type == "气"){
+                        initEnergyRank01(3);
+                    }
+                    if(type == "热"){
+                        initEnergyRank01(4);
+                    }
+                    if(type == "煤"){
+                        initEnergyRank01(5);
+                    }
+                });
+
+            });
+        } else {
+            $.each($(this).find("a"), function(sindex, sitem) {
+                $(this).click(function() {
+                    $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
+                    var type = $(sitem).html();
+                    if(type == "水"){
+                        initEnergyRank02(1);
+                    }
+                    if(type == "电"){
+                        initEnergyRank02(2);
+                    }
+                    if(type == "气"){
+                        initEnergyRank02(3);
+                    }
+                    if(type == "热"){
+                        initEnergyRank02(4);
+                    }
+                    if(type == "煤"){
+                        initEnergyRank02(5);
+                    }
+                });
+            });
+        }
+    })
+}
+/*站能耗排名*/
+function initEnergyRank01(type){
+    var data = $("#searchTools").serialize()+"&orgId="+$("#orgId").val()+"&type="+type+"&orgType=3";
+    $.ajax({
+        url: _web + '/third/fgs/assessment',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data: data,
+        dataType: "json",
+        success: function (result) {
+            chart01Fun(result.object);
+        }
+    });
+
+}
+/*源能耗排名*/
+function initEnergyRank02(type){
+    var data = $("#searchTools").serialize()+"&orgId="+$("#orgId").val()+"&type="+type+"&orgType=1";
+    $.ajax({
+        url: _web + '/third/fgs/assessment',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data: data,
+        dataType: "json",
+        success: function (result) {
+            chart02Fun(result.object);
+        }
+    });
+}
+/*集团总能耗数据查询封装*/
+function initJTenergyData(){
+    var data = $("#searchTools").serialize()+"&orgId="+$("#orgId").val();
+    $.ajax({
+        url: _web + '/third/fgs/total/energyTotalDetail',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:data,
+        dataType: "json",
+        success: function(result) {
+            var _DATA = result.object;
+            var _DATE_LIST = result.object.date;
+            var _DATA_CURRENT = _DATA.data[0].bm_current;
+            var _DATA_LAST = _DATA.data[0].bm_last;
+            var _TB = 0;
+            $("#groupTotal").html(toDecimal(_DATA_CURRENT,2));
+            if(_DATA_LAST != 0){
+                _TB = parseFloat(toDecimal((_DATA_CURRENT- _DATA_LAST)/_DATA_LAST,4))*10000/100;
+            }
+            var _ZZ =_TB>0?"↑":((_TB == 0)?"→":"↓");
+            $("#groupchangeRate").addClass("energy_gray2");
+            $("#groupchangeRate").html(_TB + "<span class='arrow'>"+_ZZ+"</span>");
+            groupEnergyChartFun(_DATA, _DATE_LIST);
+
+        }
+    });
+}
+/*能源类型-用量折线图-数据加载*/
+function initEnergyTypeData(){
+    var data = $("#searchTools").serialize()+"&orgId="+$("#orgId").val();
+    $.ajax({
+        url: _web + '/third/fgs/energyDetail',
+        type: 'post',
+        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        data:data,
+        dataType: "json",
+        success: function(result) {
+            if(result.flag){
+                var _DATA = result.object.data;
+                var _DATE = result.object.date;
+                $.each(_DATA,function(_INDEX,_ITEM){
+                    if(_ITEM.type =="chart1"){
+                        waterEnergyChartFun(_ITEM, _DATE);
+                    }
+                    if(_ITEM.type =="chart2"){
+                        electricEnergyChartFun(_ITEM, _DATE);
+                    }
+                    if(_ITEM.type =="chart3"){
+                        gasEnergyChartFun(_ITEM, _DATE);
+                    }
+                    if(_ITEM.type =="chart4"){
+                        hotEnergyChartFun(_ITEM, _DATE);
+                    }
+                    if(_ITEM.type =="chart5"){
+                        coalEnergyChartFun(_ITEM, _DATE);
+                    }
+
+                })
+            }
+        }
+    });
+}
+/*集团总能耗-折线图*/
+function groupEnergyChartFun(datalist, datelist) {
+    $("#groupEnergyChart").empty();
+    groupEnergyChart = echarts.init(document.getElementById('groupEnergyChart'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '15',
+            top: '10',
+            right: '40',
+            bottom: '10',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitArea: {
+                show: true,
+                areaStyle: {
+                    color: chartsColor.areacolor
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: chartsColor.ec1.facecolor1
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: chartsColor.ec1.facecolor2
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            },
+            data: datelist
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: chartsColor.ec1.facecolor3
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: chartsColor.ec1.facecolor4
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: chartsColor.ec1.facecolor5,
+        series: []
+    }
+
+    var _ITEM_CURRENT = {
+        name: "今年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "solid"
+            }
+        },
+        data: datalist.data[0].bm_cdata
+    };
+    var _ITEM_LAST = {
+        name: "去年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "dashed"
+            }
+        },
+        data: datalist.data[0].bm_ldata
+    };
+    option.series.push(_ITEM_CURRENT);
+    option.series.push(_ITEM_LAST);
+    groupEnergyChart.setOption(option);
+}
+/*水能耗-折线图*/
+function waterEnergyChartFun(_DATA, _YEAR_LIST) {
+    var _TB = 0;
+    var _DATA_CURRENT = _DATA.totalcurrentyear;
+    var _DATA_LAST = _DATA.totallastyear;
+    $("#waterTotal").html(toFormatNum(_DATA_CURRENT));
+    if(_DATA_LAST != 0){
+        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+    }
+    if(_TB >0){
+        $("#waterTotal").next("span").addClass("energy-remind");
+        $("#waterTotal").addClass("energy-remind");
+        $("#waterTotal").closest(".energy-head").addClass("energy-snh-remind");
+        $("#waterchangeRate").html("(" + _TB + "↑)");
+    }else{
+        if(_TB == 0){
+            $("#waterchangeRate").html("(" + 0 + "→)");
+        }else{
+            $("#waterchangeRate").html("(" + data.data.waterTotal.changeRate.rate + "↓)");
+        }
+    }
+    $("#waterEnergyChart").empty();
+    waterEnergyChart = echarts.init(document.getElementById('waterEnergyChart'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '0',
+            top: '10',
+            right: '35',
+            bottom: '0',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            },
+            data: _YEAR_LIST
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: chartsColor.ec2.facecolor1,
+        series: []
+    }
+    var _ITEM_CURRENT = {
+        name: "今年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "solid"
+            }
+        },
+        data: _DATA.currentYear
+    };
+    var _ITEM_LAST = {
+        name: "去年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "dashed"
+            }
+        },
+        data: _DATA.lastyear
+    };
+    option.series.push(_ITEM_CURRENT);
+    option.series.push(_ITEM_LAST);
+    waterEnergyChart.setOption(option);
+}
+/*电能耗-折线图*/
+function electricEnergyChartFun(_DATA, _YEAR_LIST) {
+    var _TB = 0;
+    var _DATA_CURRENT = _DATA.totalcurrentyear;
+    var _DATA_LAST = _DATA.totallastyear;
+    $("#electricTotal").html(toFormatNum(_DATA_CURRENT));
+    if(_DATA_LAST != 0){
+        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+    }
+    if(_TB >0){
+        $("#electricTotal").next("span").addClass("energy-remind");
+        $("#electricTotal").addClass("energy-remind");
+        $("#electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
+        $("#elechangeRate").html("(" + _TB + "↑)");
+    }else{
+        if(_TB == 0){
+            $("#elechangeRate").html("(" + 0 + "→)");
+        }else{
+            $("#elechangeRate").html("(" + _TB + "↓)");
+        }
+    }
+    $("#electricEnergyChart").empty();
+    electricEnergyChart = echarts.init(document.getElementById('electricEnergyChart'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '0',
+            top: '10',
+            right: '35',
+            bottom: '0',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            },
+            data: _YEAR_LIST
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: chartsColor.ec2.facecolor1,
+        series: []
+    }
+    var _ITEM_CURRENT = {
+        name: "今年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "solid"
+            }
+        },
+        data: _DATA.currentYear
+    };
+    var _ITEM_LAST = {
+        name: "去年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "dashed"
+            }
+        },
+        data: _DATA.lastyear
+    };
+    option.series.push(_ITEM_CURRENT);
+    option.series.push(_ITEM_LAST);
+    electricEnergyChart.setOption(option);
+}
+/*气能耗-折线图*/
+function gasEnergyChartFun(_DATA, _YEAR_LIST) {
+    var _TB = 0;
+    var _DATA_CURRENT = _DATA.totalcurrentyear;
+    var _DATA_LAST = _DATA.totallastyear;
+    $("#gasTotal").html(toFormatNum(_DATA_CURRENT));
+    if(_DATA_LAST != 0){
+        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+    }
+    if(_TB >0){
+        $("#gasTotal").next("span").addClass("energy-remind");
+        $("#gasTotal").addClass("energy-remind");
+        $("#gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
+        $("#gaschangeRate").html("(" + _TB + "↑)");
+    }else{
+        if(_TB == 0){
+            $("#gaschangeRate").html("(" + 0 + "→)");
+        }else{
+            $("#gaschangeRate").html("(" + _TB + "↓)");
+        }
+    }
+    $("#gasEnergyChart").empty();
+    gasEnergyChart = echarts.init(document.getElementById('gasEnergyChart'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '0',
+            top: '10',
+            right: '35',
+            bottom: '0',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            },
+            data: _YEAR_LIST
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: chartsColor.ec2.facecolor1,
+        series: []
+    }
+    var _ITEM_CURRENT = {
+        name: "今年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "solid"
+            }
+        },
+        data: _DATA.currentYear
+    };
+    var _ITEM_LAST = {
+        name: "去年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "dashed"
+            }
+        },
+        data: _DATA.lastyear
+    };
+    option.series.push(_ITEM_CURRENT);
+    option.series.push(_ITEM_LAST);
+    gasEnergyChart.setOption(option);
+}
+/*热能耗-折线图*/
+function hotEnergyChartFun(_DATA, _YEAR_LIST) {
+    var _TB = 0;
+    var _DATA_CURRENT = _DATA.totalcurrentyear;
+    var _DATA_LAST = _DATA.totallastyear;
+    $("#hotTotal").html(toFormatNum(_DATA_CURRENT));
+    if(_DATA_LAST != 0){
+        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+    }
+    if(_TB >0){
+        $("#hotTotal").next("span").addClass("energy-remind");
+        $("#hotTotal").addClass("energy-remind");
+        $("#hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
+        $("#hotchangeRate").html("(" + _TB + "↑)");
+    }else{
+        if(_TB == 0){
+            $("#hotchangeRate").html("(" + 0 + "→)");
+        }else{
+            $("#hotchangeRate").html("(" + _TB + "↓)");
+        }
+    }
+    $("#hotEnergyChart").empty();
+    hotEnergyChart = echarts.init(document.getElementById('hotEnergyChart'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '0',
+            top: '10',
+            right: '35',
+            bottom: '0',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            },
+            data: _YEAR_LIST
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: chartsColor.ec2.facecolor1,
+        series: []
+    }
+    var _ITEM_CURRENT = {
+        name: "今年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "solid"
+            }
+        },
+        data: _DATA.currentYear
+    };
+    var _ITEM_LAST = {
+        name: "去年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "dashed"
+            }
+        },
+        data: _DATA.lastyear
+    };
+    option.series.push(_ITEM_CURRENT);
+    option.series.push(_ITEM_LAST);
+    hotEnergyChart.setOption(option);
+}
+/*煤能耗-折线图*/
+function coalEnergyChartFun(_DATA, _YEAR_LIST) {
+    var _TB = 0;
+    var _DATA_CURRENT = _DATA.totalcurrentyear;
+    var _DATA_LAST = _DATA.totallastyear;
+    $("#coalTotal").html(toFormatNum(_DATA_CURRENT));
+    if(_DATA_LAST != 0){
+        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+    }
+    if(_TB >0){
+        $("#coalTotal").next("span").addClass("energy-remind");
+        $("#coalTotal").addClass("energy-remind");
+        $("#coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
+        $("#coalchangeRate").html("(" + _TB + "↑)");
+    }else{
+        if(_TB == 0){
+            $("#coalchangeRate").html("(" + 0 + "→)");
+        }else{
+            $("#coalchangeRate").html("(" + _TB + "↓)");
+        }
+    }
+    $("#coalEnergyChart").empty();
+    coalEnergyChart = echarts.init(document.getElementById('coalEnergyChart'));
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '0',
+            top: '10',
+            right: '35',
+            bottom: '0',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            },
+            data: _YEAR_LIST
+
+        },
+        yAxis: {
+            type: 'value',
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#9a9a9b'
+                }
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#e8e8e8',
+                    type: 'dashed'
+                }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: chartsColor.linefontcolor,
+                    fontFamily: 'arial'
+                }
+            }
+        },
+        color: chartsColor.ec2.facecolor1,
+        series: []
+    }
+    var _ITEM_CURRENT = {
+        name: "今年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "solid"
+            }
+        },
+        data: _DATA.currentYear
+    };
+    var _ITEM_LAST = {
+        name: "去年",
+        type: 'line',
+        symbol: 'circle',
+        smooth: false,
+        lineStyle: {
+            normal: {
+                type: "dashed"
+            }
+        },
+        data: _DATA.lastyear
+    };
+    option.series.push(_ITEM_CURRENT);
+    option.series.push(_ITEM_LAST);
+    coalEnergyChart.setOption(option);
+}
+/*热力站排名*/
+function chart01Fun(data) {
+    echartsSelf({
+        id: 'piechart_as',
+        echartsConfig: {
+            axisLabelRotate: '-50', //倾斜角度
+            xAxisBoundaryGap: true,
+            dataZoom: true,
+            dataZoomstartValue: 0,
+            dataZoomendValue: 9,
+            axisLabelInterval:0,
+            bg: 'row',
+            xData: data.unitnames,
+            series: [{
+                type: 'bar',
+                dataList: data.unitnumber,
+                barWidth: 20
+            }]
+        }
+    });
+}
+/*热源排名*/
+function chart02Fun(data) {
+    echartsSelf({
+        id: 'linechart_as',
+        echartsConfig: {
+            axisLabelRotate: '-50', //倾斜角度
+            xAxisBoundaryGap: true,
+            dataZoom: true,
+            dataZoomstartValue: 0,
+            dataZoomendValue: 9,
+            axisLabelInterval:0,
+            bg: 'row',
+            xData: data.unitnames,
+            series: [{
+                type: 'bar',
+                dataList: data.unitnumber,
+                barWidth: 20
+
+            }]
+        }
+    });
 }
