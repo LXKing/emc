@@ -28,7 +28,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     private static String unitName = "unitName";
     private static String UNIT_NAME = "unitName";
     private static String[] TYPE_NAME = {"水","电","气","热","煤","油"};
-    private static String[] UNITTYPE = {"1","2","3","4","5","6"};
+    private static String[] UNITTYPEARR = {"1","2","3","4","5","6"};
     @Resource
     private ThirdAnalysisDao thirdAnalysisDao;
     @Resource
@@ -385,7 +385,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
             temap.put("l",0);
             temap.put("l1",0);
             temap.put("l_plan",0);
-            for (String type :UNITTYPE) {
+            for (String type :UNITTYPEARR) {
                 if(type.equals("1")){
                     temap.put(UNIT_NAME,"源");
                     temap.put(UNIT_TYPE,type);
