@@ -22,8 +22,10 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
     private static String START_TIME = "startTime";
     private static String END_TIME = "endTime";
     private static String CURRENT_YEAR = "currentYear";
+    private static String LAST_YEAR = "lastyear";
     private static String UNIT_TYPE = "unitType";
     private static String UNIT_NAME = "unitName";
+    private static String UNIT_NAME1 = "unitname";
     private static String[] UNITTYPE = {"1","2","3","4","5","6"};
     private static String TOTAL_CURRENT_YEAR = "totalcurrentyear";
     private static String TOTAL_LAST_YEAR = "totallastyear";
@@ -114,7 +116,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put("bm_current",curYearBm);
                 my.put("bm_last",lastYearBm);
                 my.put(CURRENT_YEAR,curList);
-                my.put("lastyear",lastList);
+                my.put(LAST_YEAR,lastList);
                 my.put("bm_cdata",bm_curList);
                 my.put("bm_ldata",bm_lastList);
                 data.add(my);
@@ -137,7 +139,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put("bm_current",curYearBm);
                 my.put("bm_last",lastYearBm);
                 my.put(CURRENT_YEAR,curList);
-                my.put("lastyear",lastList);
+                my.put(LAST_YEAR,lastList);
                 my.put("bm_cdata",bm_curList);
                 my.put("bm_ldata",bm_lastList);
                 data.add(my);
@@ -255,8 +257,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return result;
     }
 
-
-
     /**
      *三级页面-源、网、站、线、户的各个能源类型的能耗趋势图
      * sunbinbin
@@ -334,7 +334,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put("type",type);
                 my.put(CURRENT_YEAR,curList);
-                my.put("lastyear",lastList);
+                my.put(LAST_YEAR,lastList);
                 data.add(my);
             }else{
                 for(String yd:yearList){
@@ -350,7 +350,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put("type",type);
                 my.put(CURRENT_YEAR,curList);
-                my.put("lastyear",lastList);
+                my.put(LAST_YEAR,lastList);
                 data.add(my);
             }
         }
@@ -379,14 +379,14 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> stationNums = new ArrayList<>();
         for(Map<String,Object> heat:heats){
             if(null != heat){
-                heatNames.add(heat.get("unitname").toString());
+                heatNames.add(heat.get(UNIT_NAME1).toString());
                 heatnums.add(heat.get("dosage").toString());
             }
 
         }
         for(Map<String,Object> station:stations){
             if(null != station){
-                stationNames.add(station.get("unitname").toString());
+                stationNames.add(station.get(UNIT_NAME1).toString());
                 stationNums.add(station.get("dosage").toString());
             }
         }
@@ -417,7 +417,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return sdf.format(date);
     }
 
-
     /**
      *三级页面-用能单位类型-个能源能耗趋势图数据加载
      * sunbinbin
@@ -434,7 +433,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<Object> cur =  new ArrayList<>();
         for (Map da:data){
             tq.add(da.get("qn_num"));
-            name.add(da.get("unitname"));
+            name.add(da.get(UNIT_NAME1));
             tqb.add(da.get("tqb"));
             plan.add(da.get("jn_plan"));
             cur.add(da.get("jn_num"));
@@ -459,14 +458,13 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<Object> name =  new ArrayList<>();
         List<Object> cur =  new ArrayList<>();
         for (Map da:data){
-            name.add(da.get("unitname"));
+            name.add(da.get(UNIT_NAME1));
             cur.add(da.get("jn_num"));
         }
         result.put("name",name);
         result.put("cur",cur);
         return result;
     }
-
 
     /**
      *三级页面-用能单位类型-各个能源类型用量趋势图加载
@@ -550,7 +548,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         return result;
 
     }
-
 
     /**
      *三级页面-用能单位类型-同期计划数据表格加载
@@ -714,7 +711,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put("type",type);
                 my.put(CURRENT_YEAR,curList);
-                my.put("lastyear",lastList);
+                my.put(LAST_YEAR,lastList);
                 data.add(my);
             }else{
                 for(String yd:yearList){
@@ -730,7 +727,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
                 my.put(TOTAL_LAST_YEAR,lastYearTotal);
                 my.put("type",type);
                 my.put(CURRENT_YEAR,curList);
-                my.put("lastyear",lastList);
+                my.put(LAST_YEAR,lastList);
                 data.add(my);
             }
         }
@@ -739,7 +736,6 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         result.put("data",data);
         return result;
     }
-
 
     /**
      *三级页面-分公司-换热站排名趋势图
@@ -755,7 +751,7 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> unitnumbers = new ArrayList<>();
         for(Map<String,Object> heat:heats){
             if(null != heat){
-                unitnames.add(heat.get("unitname").toString());
+                unitnames.add(heat.get(UNIT_NAME1).toString());
                 unitnumbers.add(heat.get("dosage").toString());
             }
         }
