@@ -179,38 +179,7 @@
                             </div>
                             <div id="right_div2">
                                 <table id="right_table2" class="table table-bordered">
-
                                     <tr class="bg">
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
                                     </tr>
 
 
