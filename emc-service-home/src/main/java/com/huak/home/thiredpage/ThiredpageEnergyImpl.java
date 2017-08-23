@@ -1,6 +1,7 @@
 package com.huak.home.thiredpage;
 
 import com.huak.base.dao.DateDao;
+import com.huak.common.utils.DateUtils;
 import com.huak.home.dao.thiredpage.ThiredpageEnergyDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,10 +53,12 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> yearList = new ArrayList<String>();//去年+今年日期列表
         while(!sDate.equals(eDate)){
             clyearList.add(sDate);
+            DateUtils.isAddDate(sDate, clyearList);
             sDate = getYearDate(sDate,Calendar.DATE,1);
         }
         while(!lsDate.equals(leDate)){
             lyearList.add(lsDate);
+            DateUtils.isAddDate(lsDate, lyearList);
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
         clyearList.add(eDate);
@@ -173,10 +176,12 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> yearList = new ArrayList<String>();//去年+今年日期列表
         while(!sDate.equals(eDate)){
             clyearList.add(sDate);
+            DateUtils.isAddDate(sDate, clyearList);
             sDate = getYearDate(sDate,Calendar.DATE,1);
         }
         while(!lsDate.equals(leDate)){
             lyearList.add(lsDate);
+            DateUtils.isAddDate(lsDate, lyearList);
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
         clyearList.add(eDate);
@@ -279,11 +284,13 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> yearList = new ArrayList<String>();//去年+今年日期列表
         while(!sDate.equals(eDate)){
             clyearList.add(sDate);
+            DateUtils.isAddDate(sDate, clyearList);
             sDate = getYearDate(sDate,Calendar.DATE,1);
         }
         clyearList.add(eDate);
         while(!lsDate.equals(leDate)){
             lyearList.add(lsDate);
+            DateUtils.isAddDate(lsDate, lyearList);
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
         lyearList.add(leDate);
@@ -485,12 +492,15 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> clyearList = new ArrayList<String>();//今年日期列表
         List<String> lyearList = new ArrayList<String>();//去年日期列表
         List<String> yearList = new ArrayList<String>();//去年+今年日期列表
+
         while(!sDate.equals(eDate)){
             clyearList.add(sDate);
+            DateUtils.isAddDate(sDate, clyearList);
             sDate = getYearDate(sDate,Calendar.DATE,1);
         }
         while(!lsDate.equals(leDate)){
             lyearList.add(lsDate);
+            DateUtils.isAddDate(lsDate, lyearList);
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
         clyearList.add(eDate);
@@ -656,11 +666,13 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
         List<String> yearList = new ArrayList<String>();//去年+今年日期列表
         while(!sDate.equals(eDate)){
             clyearList.add(sDate);
+            DateUtils.isAddDate(sDate, clyearList);
             sDate = getYearDate(sDate,Calendar.DATE,1);
         }
         clyearList.add(eDate);
         while(!lsDate.equals(leDate)){
             lyearList.add(lsDate);
+            DateUtils.isAddDate(lsDate, lyearList);
             lsDate = getYearDate(lsDate,Calendar.DATE,1);
         }
         lyearList.add(leDate);
