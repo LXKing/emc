@@ -37,7 +37,6 @@ public class NavigationConstant {
     public final static Navigation THIRD_CONS_OIL = new Navigation(SECOND_CONS,"油单耗分析","/third/analysis/page/6");
     /*分公司三级*/
     public final static Navigation THIRD_ENERGY_FGS = new Navigation(SECOND_ENERGY,"单位能耗分析","/third/energy/fgs/*");
-    public final static Navigation THIRD_ENERGY_FGS_1 = new Navigation(SECOND_ENERGY,"分公司能耗分析","/third/fgs/*");
     public final static Navigation THIRD_CONS_FGS = new Navigation(SECOND_CONS,"单位单耗分析","/third/analysis/fgs/*");
     /*单位类型三级*/
     public final static Navigation THIRD_ENERGY_FEED = new Navigation(SECOND_ENERGY,"供热源能耗分析","/third/energy/unit/1");
@@ -96,7 +95,6 @@ public class NavigationConstant {
         NAVIGATIONS.add(THIRD_CONS_STATION);
         NAVIGATIONS.add(THIRD_CONS_LINE);
         NAVIGATIONS.add(THIRD_CONS_ROOM);
-        NAVIGATIONS.add(THIRD_ENERGY_FGS_1);
     }
 
 }

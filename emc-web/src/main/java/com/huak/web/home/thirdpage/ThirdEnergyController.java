@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThiredpageEnergyService;
 import com.huak.home.type.ToolVO;
+import com.huak.org.OrgService;
+import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,9 @@ public class ThirdEnergyController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ThiredpageEnergyService thiredpageEnergyService;
+
+    @Resource
+    private OrgService orgService;
     
     private static  String ENERGY_TYPE = "energytype";
     /**
@@ -57,6 +63,20 @@ public class ThirdEnergyController extends BaseController {
         logger.info("跳转用能单位类型三级能耗页面");
         model.addAttribute("type",type);
         return "third/energy-unit";
+    }
+
+    /**
+     * 跳转分公司三级能耗页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/fgs/{id}", method = RequestMethod.GET)
+    public String fgsPage(Model model,HttpServletRequest request,@PathVariable("id")String id){
+        logger.info("跳转分公司三级能耗页面");
+        model.addAttribute("id", id);
+        Org org  = orgService.selectByPrimaryKey(id);
+        model.addAttribute("orgName",org.getOrgName());
+        return "third/energy-fgs";
     }
 
     /**

@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -33,22 +35,9 @@ public class ThirdEnergyFgsController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ThiredpageEnergyService thiredpageEnergyService;
-    
+
     private static  String ENERGY_TYPE = "energytype";
 
-
-    /**
-     * 跳转分公司三级能耗页面
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/energys/{id}/{orgName}", method = RequestMethod.GET)
-    public String fgsPage(Model model,HttpServletRequest request,@PathVariable("id")String id,@PathVariable("orgName")String orgName){
-        logger.info("跳转分公司三级能耗页面");
-        model.addAttribute("id",id);
-        model.addAttribute("orgName",orgName);
-        return "third/energy-fgs";
-    }
 
     /**
      *三级页面-分公司-集团能源类型的能耗趋势图数据加载

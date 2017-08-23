@@ -71,7 +71,6 @@
 </div>
 <script>
     $(function () {
-        debugger
         //console.info("重置面包屑");
         var mbhtml = "";
         var mbxdh =  ${navigations};
