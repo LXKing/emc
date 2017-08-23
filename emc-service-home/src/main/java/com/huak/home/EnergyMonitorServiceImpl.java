@@ -1,17 +1,15 @@
 package com.huak.home;
 
 import com.huak.base.dao.DateDao;
+import com.huak.common.utils.DateUtils;
 import com.huak.home.dao.EnergyMonitorDao;
 import com.huak.home.dao.EnergySecondDao;
 import com.huak.home.model.EnergyMonitor;
 import com.huak.home.model.EnergySecond;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -24,7 +22,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
     @Resource
     private EnergySecondDao energySecondDao;
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 
     @Override
     @Transactional(readOnly = false)
@@ -113,23 +111,28 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		String[] energyTypes = {"groupEnergy","waterEnergy","electricEnergy","gasEnergy","hotEnergy","coalEnergy"};
 		String sDate = params.get("startTime");//查询条件的开始时间
 		String eDate = params.get("endTime");//查询条件的结束时间
-		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
-		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
-//		String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
-//		String leDate = getYearDate(eDate,Calendar.YEAR, -1);
+		sDate = (null==sDate||"".equals(sDate))? DateUtils.getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?DateUtils.getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
+		String lsDate = DateUtils.getYearDate(sDate,Calendar.YEAR, -1);
+		String leDate = DateUtils.getYearDate(eDate,Calendar.YEAR, -1);
 		//查询时间list
 		List<String> clyearList = new ArrayList<String>();
 		List<String> lyearList = new ArrayList<String>();
 		List<String> yearList = new ArrayList<String>();
 		while(!sDate.equals(eDate)){
 			yearList.add(sDate);
-            lyearList.add(getYearDate(sDate,Calendar.YEAR, -1));
+            DateUtils.isAddDate(sDate, yearList);
+            sDate = DateUtils.getYearDate(sDate,Calendar.DATE,1);
 
-			sDate = getYearDate(sDate,Calendar.DATE,1);
 		}
 		yearList.add(eDate);
-        lyearList.add(getYearDate(eDate,Calendar.YEAR, -1));
+		while(!lsDate.equals(leDate)){
+			lyearList.add(lsDate);
+            DateUtils.isAddDate(lsDate, lyearList);
+            lsDate = DateUtils.getYearDate(lsDate,Calendar.DATE,1);
 
+		}
+		lyearList.add(leDate);
 		clyearList.addAll(lyearList);
 		clyearList.addAll(yearList);
 		//根据查询条件，查询相应的数据
@@ -217,24 +220,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		return result;
 	}
 
-	/**
-	 * 返回想要的日期
-	 * 例如：getYearDate（2017-01-01，Calendar.YEAR，-1），返回值为 2016-01-01
-	 *     getYearDate（2017-01-11，Calendar.DATE，-1），返回值为 2017-01-10
-	 * @param curDate 元数据，在curDate的基础上获取想要的具体日期str
-	 * @param type 类型，Calendar.YEAR,Calendar.MONTH...
-	 * @param num 操作数
-	 * @return
-	 */
-	private String getYearDate(String curDate,int type,int num) throws Exception{
-		curDate = (curDate==null||"".equals(curDate))?dateDao.getDate():curDate;
-		Date date = sdf.parse(curDate);
-		Calendar calendar = Calendar.getInstance();    
-		calendar.setTime(date);    
-		calendar.add(type, num);
-		date = calendar.getTime();
-		return sdf.format(date);
-	}
+
 	
 	/**
 	 * 查询能源流明细
@@ -265,15 +251,15 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String sDate = params.get("startTime");//查询条件的开始时间
 		String eDate = params.get("endTime");//查询条件的结束时间
-		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
-		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
+		sDate = (null==sDate||"".equals(sDate))?DateUtils.getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
+		eDate = (null==eDate||"".equals(eDate))?DateUtils.getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
 		//查询时间list
 		List<String> yearList = new ArrayList<String>();
 		//无查询结果时，设为默认值0
 		List<String> defaultValue = new ArrayList<String>();
 		while(!sDate.equals(eDate)){
 			yearList.add(sDate);
-			sDate = getYearDate(sDate,Calendar.DATE,1);
+			sDate = DateUtils.getYearDate(sDate,Calendar.DATE,1);
 			defaultValue.add("0");
 		}
 		yearList.add(eDate);

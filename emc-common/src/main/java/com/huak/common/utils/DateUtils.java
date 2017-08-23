@@ -19,6 +19,9 @@ import java.util.List;
  * Function List:  <BR>
  */
 public class DateUtils {
+
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     public static List<String> getDates(String year, String month) throws ParseException {
         List<String> dates = new ArrayList<>();
         SimpleDateFormat tempdate = new SimpleDateFormat("YYYY-MM");
@@ -125,5 +128,36 @@ public class DateUtils {
         long between_days=(time2-time1)/(1000*3600*24);
 
         return Integer.parseInt(String.valueOf(between_days));
+    }
+
+    /**
+     * 是否添加2月29
+     * @param sDate
+     * @param yearList
+     * @throws Exception
+     */
+    public static void isAddDate(String sDate, List<String> yearList) throws Exception {
+        if(sDate.indexOf("-02-28")>=1&&getYearDate(sDate, Calendar.DATE,1).indexOf("-02-29")<1){
+            yearList.add(sDate.substring(0,5)+"02-29");
+        }
+    }
+
+    /**
+     * 返回想要的日期
+     * 例如：getYearDate（2017-01-01，Calendar.YEAR，-1），返回值为 2016-01-01
+     *     getYearDate（2017-01-11，Calendar.DATE，-1），返回值为 2017-01-10
+     * @param curDate 元数据，在curDate的基础上获取想要的具体日期str
+     * @param type 类型，Calendar.YEAR,Calendar.MONTH...
+     * @param num 操作数
+     * @return
+     */
+    public static String getYearDate(String curDate, int type, int num) throws Exception{
+        curDate = (curDate==null||"".equals(curDate))?sdf.format(new Date()):curDate;
+        Date date = sdf.parse(curDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(type, num);
+        date = calendar.getTime();
+        return sdf.format(date);
     }
 }
