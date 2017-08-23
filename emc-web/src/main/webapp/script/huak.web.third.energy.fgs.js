@@ -297,7 +297,7 @@ function waterEnergyChartFun(_DATA, _YEAR_LIST) {
         if(_TB == 0){
             $("#waterchangeRate").html("(" + 0 + "→)");
         }else{
-            $("#waterchangeRate").html("(" + data.data.waterTotal.changeRate.rate + "↓)");
+            $("#waterchangeRate").html("(" + _TB + "↓)");
         }
     }
     $("#waterEnergyChart").empty();

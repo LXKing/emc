@@ -513,13 +513,13 @@
         ( CASE WHEN q.DOSAGE IS NULL THEN 0 ELSE q.DOSAGE END) AS qn_num,
         ( CASE WHEN b.plan IS NULL THEN 0 ELSE b.plan END ) AS jn_plan,
         ( CASE WHEN q.plan IS NULL THEN 0 ELSE q.plan END ) AS qn_plan,
-        (case when q.DOSAGE is null then 0 else ROUND((b.DOSAGE -q.DOSAGE)/q.DOSAGE) end) as tqb
+        (case q.DOSAGE when null then 0 when 0 then 0 else (b.DOSAGE -q.DOSAGE)/q.DOSAGE end) as tqb
         FROM
         (
         SELECT
         a.UNITID,
         a.unitname,
-        m.DOSAGE AS DOSAGE,
+        IFNULL(m.DOSAGE,0)  AS DOSAGE,
         m.BM,
         m.plan
         FROM
@@ -573,7 +573,7 @@
         SELECT
         a.UNITID,
         a.unitname,
-        m.DOSAGE AS DOSAGE,
+        IFNULL(m.DOSAGE,0) AS DOSAGE,
         m.BM,
         m.plan
         FROM
