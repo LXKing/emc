@@ -2095,18 +2095,18 @@
         v_emc_unit v
         LEFT JOIN(
         select m.UNITID,
-        max(case m.TYPE when 1 then m.DOSAGE/m.area else 0 end) whater,
-        max(case m.TYPE when 2 then m.DOSAGE/m.area else 0 end) electric,
-        max(case m.TYPE when 3 then m.DOSAGE/m.area else 0 end) gas,
-        max(case m.TYPE when 4 then m.DOSAGE/m.area else 0 end) heat,
-        max(case m.TYPE when 5 then m.DOSAGE/m.area else 0 end) coal,
-        max(case m.TYPE when 6 then m.DOSAGE/m.area else 0 end) loy,
-        max(case m.TYPE when 1 then m.plan else 0 end) whater_plan,
-        max(case m.TYPE when 2 then m.plan else 0 end) electric_plan,
-        max(case m.TYPE when 3 then m.plan else 0 end) gas_plan,
-        max(case m.TYPE when 4 then m.plan else 0 end) heat_plan,
-        max(case m.TYPE when 5 then m.plan else 0 end) coal_plan,
-        max(case m.TYPE when 6 then m.plan else 0 end) loy_plan
+        ROUND(max(case m.TYPE when 1 then m.DOSAGE/m.area else 0 end),2) whater,
+        ROUND(max(case m.TYPE when 2 then m.DOSAGE/m.area else 0 end),2) electric,
+        ROUND(max(case m.TYPE when 3 then m.DOSAGE/m.area else 0 end),2) gas,
+        ROUND(max(case m.TYPE when 4 then m.DOSAGE/m.area else 0 end),2) heat,
+        ROUND(max(case m.TYPE when 5 then m.DOSAGE/m.area else 0 end),2) coal,
+        ROUND(max(case m.TYPE when 6 then m.DOSAGE/m.area else 0 end),2) loy,
+        ROUND(max(case m.TYPE when 1 then m.plan else 0 end),2) whater_plan,
+        ROUND(max(case m.TYPE when 2 then m.plan else 0 end),2) electric_plan,
+        ROUND(max(case m.TYPE when 3 then m.plan else 0 end),2) gas_plan,
+        ROUND(max(case m.TYPE when 4 then m.plan else 0 end),2) heat_plan,
+        ROUND(max(case m.TYPE when 5 then m.plan else 0 end),2) coal_plan,
+        ROUND(max(case m.TYPE when 6 then m.plan else 0 end),2) loy_plan
         from (SELECT
         a.UNITID,
         b.TYPE,
@@ -2135,18 +2135,18 @@
         )bb on v.UNITID = bb.UNITID
         LEFT JOIN(
         select m.UNITID,
-        max(case m.TYPE when 1 then m.DOSAGE/m.area else 0 end) whater,
-        max(case m.TYPE when 2 then m.DOSAGE/m.area else 0 end) electric,
-        max(case m.TYPE when 3 then m.DOSAGE/m.area else 0 end) gas,
-        max(case m.TYPE when 4 then m.DOSAGE/m.area else 0 end) heat,
-        max(case m.TYPE when 5 then m.DOSAGE/m.area else 0 end) coal,
-        max(case m.TYPE when 6 then m.DOSAGE/m.area else 0 end) loy,
-        max(case m.TYPE when 1 then m.plan else 0 end) whater_plan,
-        max(case m.TYPE when 2 then m.plan else 0 end) electric_plan,
-        max(case m.TYPE when 3 then m.plan else 0 end) gas_plan,
-        max(case m.TYPE when 4 then m.plan else 0 end) heat_plan,
-        max(case m.TYPE when 5 then m.plan else 0 end) coal_plan,
-        max(case m.TYPE when 6 then m.plan else 0 end) loy_plan
+        ROUND(max(case m.TYPE when 1 then m.DOSAGE/m.area else 0 end),2) whater,
+        ROUND(max(case m.TYPE when 2 then m.DOSAGE/m.area else 0 end),2) electric,
+        ROUND(max(case m.TYPE when 3 then m.DOSAGE/m.area else 0 end),2) gas,
+        ROUND(max(case m.TYPE when 4 then m.DOSAGE/m.area else 0 end),2) heat,
+        ROUND(max(case m.TYPE when 5 then m.DOSAGE/m.area else 0 end),2) coal,
+        ROUND(max(case m.TYPE when 6 then m.DOSAGE/m.area else 0 end),2) loy,
+        ROUND(max(case m.TYPE when 1 then m.plan else 0 end),2) whater_plan,
+        ROUND(max(case m.TYPE when 2 then m.plan else 0 end),2) electric_plan,
+        ROUND(max(case m.TYPE when 3 then m.plan else 0 end),2) gas_plan,
+        ROUND(max(case m.TYPE when 4 then m.plan else 0 end),2) heat_plan,
+        ROUND(max(case m.TYPE when 5 then m.plan else 0 end),2) coal_plan,
+        ROUND(max(case m.TYPE when 6 then m.plan else 0 end),2) loy_plan
         from (SELECT
         a.UNITID,
         b.TYPE,
@@ -2203,20 +2203,20 @@
         IFNULL(b.l1,0) as l5,
         aa.w_plan as p0,aa.e_plan as p1,aa.g_plan as p2,aa.h_plan as p3,aa.c_plan p4,aa.l_plan p5
         from (SELECT m.unitType,
-        max(case m.TYPE when 1 then m.num/m.area else 0 end )w,
-        max(case m.TYPE when 2 then m.num/m.area else 0 end )e,
-        max(case m.TYPE when 3 then m.num/m.area else 0 end )g,
-        max(case m.TYPE when 4 then m.num/m.area else 0 end )h,
-        max(case m.TYPE when 5 then m.num/m.area else 0 end )c,
-        max(case m.TYPE when 6 then m.num/m.area else 0 end )l,
-        max(case m.TYPE when 1 then m.plan else 0 end )w_plan,
-        max(case m.TYPE when 2 then m.plan else 0 end )e_plan,
-        max(case m.TYPE when 3 then m.plan else 0 end )g_plan,
-        max(case m.TYPE when 4 then m.plan else 0 end )h_plan,
-        max(case m.TYPE when 5 then m.plan else 0 end )c_plan,
-        max(case m.TYPE when 6 then m.plan else 0 end ) l_plan
+        ROUND(max(case m.TYPE when 1 then m.num/m.area else 0 end ),2)w,
+        ROUND(max(case m.TYPE when 2 then m.num/m.area else 0 end ),2)e,
+        ROUND(max(case m.TYPE when 3 then m.num/m.area else 0 end ),2)g,
+        ROUND(max(case m.TYPE when 4 then m.num/m.area else 0 end ),2)h,
+        ROUND(max(case m.TYPE when 5 then m.num/m.area else 0 end ),2)c,
+        ROUND(max(case m.TYPE when 6 then m.num/m.area else 0 end ),2)l,
+        ROUND(max(case m.TYPE when 1 then m.plan else 0 end ),2)w_plan,
+        ROUND(max(case m.TYPE when 2 then m.plan else 0 end ),2)e_plan,
+        ROUND(max(case m.TYPE when 3 then m.plan else 0 end ),2)g_plan,
+        ROUND(max(case m.TYPE when 4 then m.plan else 0 end ),2)h_plan,
+        ROUND(max(case m.TYPE when 5 then m.plan else 0 end ),2)c_plan,
+        ROUND(max(case m.TYPE when 6 then m.plan else 0 end ),2) l_plan
         from (SELECT
-        b.TYPE,c.UNITTYPE as unitType,sum(a.DOSAGE) as num,sum(0) as plan,sum(a.area) area
+        b.TYPE,c.UNITTYPE as unitType,sum(a.DOSAGE) as num,sum(0) as plan,avg(a.area) area
         FROM
         t_emc_final_data_hour_tj a,
         t_emc_energy_type b,
@@ -2245,14 +2245,14 @@
         GROUP BY b.TYPE,c.UNITTYPE)m GROUP BY m.UNITTYPE) aa
         left JOIN(
         SELECT m.UNITTYPE,
-        max(case m.TYPE when 1 then m.num/m.area else 0 end ) w1,
-        max(case m.TYPE when 2 then m.num/m.area else 0 end ) e1,
-        max(case m.TYPE when 3 then m.num/m.area else 0 end ) g1,
-        max(case m.TYPE when 4 then m.num/m.area else 0 end ) h1,
-        max(case m.TYPE when 5 then m.num/m.area else 0 end ) c1,
-        max(case m.TYPE when 6 then m.num/m.area else 0 end ) l1
+        ROUND(max(case m.TYPE when 1 then m.num/m.area else 0 end ),2) w1,
+        ROUND(max(case m.TYPE when 2 then m.num/m.area else 0 end ),2) e1,
+        ROUND(max(case m.TYPE when 3 then m.num/m.area else 0 end ),2) g1,
+        ROUND(max(case m.TYPE when 4 then m.num/m.area else 0 end ),2) h1,
+        ROUND(max(case m.TYPE when 5 then m.num/m.area else 0 end ),2) c1,
+        ROUND(max(case m.TYPE when 6 then m.num/m.area else 0 end ),2) l1
         from (SELECT
-        b.TYPE,c.UNITTYPE,sum(a.DOSAGE) as num,sum(a.area) area
+        b.TYPE,c.UNITTYPE,sum(a.DOSAGE) as num,avg(a.area) area
         FROM
         t_emc_final_data_hour_tj a,
         t_emc_energy_type b,

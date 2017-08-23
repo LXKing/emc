@@ -8,7 +8,7 @@
 
 function loadDataFun() {
     initAssessment();
-    //initTable();
+    initTable();
     initChart01(0);
     $.each($(".button-group").find("a"), function(sindex, sitem) {
         $(this).click(function() {
