@@ -1,11 +1,13 @@
 package com.huak.web.home.thirdpage;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThirdAnalysisService;
 import com.huak.home.type.ToolVO;
 import com.huak.org.model.Company;
 import com.huak.web.home.BaseController;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -525,5 +530,34 @@ public class ThirdAnalysisController extends BaseController {
             logger.error("三级页面-用能单位类型-能源类型表格加载异常" + e.getMessage());
         }
         return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/energy/export/{type}", method = RequestMethod.GET)
+    public void exportEnergy(ToolVO toolVO, HttpServletResponse response, HttpServletRequest request,@PathVariable("type")String type) {
+        logger.info("导出能源类型单耗明细列表EXCEL");
+
+        String workBookName = "能源类型单耗明细列表";//文件名
+        OutputStream out = null;
+        try {
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+            params.put("type",type);
+
+            Map<String, Object> map =  thirdAnalysisService.getTable(params);
+
+            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            logger.error("导出能源类型单耗明细列表EXCEL异常" + e.getMessage());
+        }
     }
 }
