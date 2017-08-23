@@ -1,20 +1,23 @@
 package com.huak.web.home.thirdpage;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThiredpageEnergyService;
 import com.huak.home.type.ToolVO;
 import com.huak.web.home.BaseController;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -163,6 +166,43 @@ public class ThirdEnergyFgsController extends BaseController {
         return jo.toJSONString();
     }
 
-
+    /**
+     *三级页面-分公司-表单数据导出
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/export/{id}", method = RequestMethod.GET)
+    public void export(ToolVO toolVO,@PathVariable("id") String id,HttpServletResponse response,HttpServletRequest request) {
+        logger.info("三级页面-分公司-表单数据导出");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        OutputStream out = null;
+        try {
+            paramsMap.put("orgId",id);
+            Map<String, Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
+            out = response.getOutputStream();
+            //输出Excel文件
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = "分公司能耗列表.xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            wb.write(out);
+            out.flush();
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("三级页面-分公司-表单数据导出异常" + e.getMessage());
+        }finally {
+            if(null != out){
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    logger.error("三级页面-分公司-表单数据导出异常" + e.getMessage());
+                }
+            }
+        }
+    }
 
 }

@@ -1,12 +1,14 @@
 package com.huak.web.home.thirdpage;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.home.thiredpage.ThiredpageEnergyService;
 import com.huak.home.type.ToolVO;
 import com.huak.org.OrgService;
 import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -325,4 +332,83 @@ public class ThirdEnergyController extends BaseController {
         }
         return jo.toJSONString();
     }
+
+
+    /**
+     *三级页面-能源类型表格导出
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/export/{type}", method = RequestMethod.GET)
+    public void export(ToolVO toolVO,@PathVariable("type") String type,HttpServletResponse response,HttpServletRequest request) {
+        logger.info("三级页面--能源类型表格导出");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        OutputStream out = null;
+        try {
+            paramsMap.put(ENERGY_TYPE,type);
+            Map<String,Object> map =  thiredpageEnergyService.getTable(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
+            out = response.getOutputStream();
+            //输出Excel文件
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = "各站点能耗列表.xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            wb.write(out);
+            out.flush();
+        }catch (Exception e) {
+            logger.error("三级页面--能源类型表格导出异常" + e.getMessage());
+        }finally {
+            if(null != out){
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    logger.error("三级页面--能源类型表格导出异常" + e.getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     *三级页面-用能单位类型-能源类型表格导出
+     * sunbinbin
+     * @return string
+     */
+    @RequestMapping(value = "/unit/unitExport/{type}", method = RequestMethod.GET)
+    public void unitExport(ToolVO toolVO,@PathVariable("type") String type,HttpServletResponse response,HttpServletRequest request) {
+        logger.info("三级页面-用能单位类型-能源类型表格导出");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        Map paramsMap = paramsPackageOrg(toolVO, request);
+        OutputStream out = null;
+        try {
+            paramsMap.put("orgType",type);
+            Map<String,Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
+            out = response.getOutputStream();
+            //输出Excel文件
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = "用能单位能耗列表.xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            wb.write(out);
+            out.flush();
+        } catch (Exception e) {
+            logger.error("三级页面-用能单位-能源类型表格导出异常" + e.getMessage());
+        } finally {
+            if(null != out){
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    logger.error("三级页面--能源类型表格导出异常" + e.getMessage());
+                }
+            }
+        }
+    }
+
+
 }

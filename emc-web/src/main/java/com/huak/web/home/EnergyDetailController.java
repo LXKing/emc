@@ -196,7 +196,6 @@ public class EnergyDetailController extends BaseController{
         try {
             /*封装条件*/
             Map params = paramsPackageOrg(toolVO, request);
-
             List<EnergyDetail> cons = frameService.exportEnergyDetail(params);
             for(EnergyDetail second: cons){
                 cellValues.add(CollectionUtil.Obj2Map(second));

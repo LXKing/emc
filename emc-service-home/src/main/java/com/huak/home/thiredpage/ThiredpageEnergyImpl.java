@@ -30,7 +30,19 @@ public class ThiredpageEnergyImpl implements ThiredpageEnergyService{
     private static String[] UNITTYPE = {"1","2","3","4","5","6"};
     private static String TOTAL_CURRENT_YEAR = "totalcurrentyear";
     private static String TOTAL_LAST_YEAR = "totallastyear";
-    private static String[] TYPE_NAME = {"水(T)","电(kW·h)","气(m³)","热(GJ)","煤(T)","油(L)"};
+    private static  List<Object> TYPE_NAME = new ArrayList<Object>(){
+        {
+            add("水(T)");
+            add("电(kWh)");
+            add("气(m³)");
+            add("热(GJ)");
+            add("煤(T)");
+            add("油(L)");
+        }
+    };
+
+
+
     /**
      *三级页面-集团总能源类型的能耗趋势图
      * sunbinbin

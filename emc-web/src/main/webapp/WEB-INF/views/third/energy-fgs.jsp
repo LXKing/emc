@@ -175,7 +175,7 @@
 <div class="index_contentBox clearfix">
 <div class="titbox clearfix no-padding no-margin">
 <div class="clearfix pull-left energyTit analy_tit_as"><i></i>各站点能耗明细<small class="font-sm">Energy consumption details</small></div>
-<a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
+<a export-url="${web}/third/fgs/export/${id}" class="pull-right exportlist mr15">导出列表</a>
 
 <div class="  col-lg-12  tablewrap">
 <div class="">
