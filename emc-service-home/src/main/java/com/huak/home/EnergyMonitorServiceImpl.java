@@ -115,22 +115,21 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
 		String eDate = params.get("endTime");//查询条件的结束时间
 		sDate = (null==sDate||"".equals(sDate))?getYearDate(null,Calendar.DATE, -5):sDate.substring(0,10);//如果查询条件的开始时间为空，设置默认的开始时间
 		eDate = (null==eDate||"".equals(eDate))?getYearDate(null,Calendar.DATE, 0):eDate.substring(0,10);//如果查询条件的结束时间为空，设置默认的结束时间
-		String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
-		String leDate = getYearDate(eDate,Calendar.YEAR, -1);
+//		String lsDate = getYearDate(sDate,Calendar.YEAR, -1);
+//		String leDate = getYearDate(eDate,Calendar.YEAR, -1);
 		//查询时间list
 		List<String> clyearList = new ArrayList<String>();
 		List<String> lyearList = new ArrayList<String>();
 		List<String> yearList = new ArrayList<String>();
 		while(!sDate.equals(eDate)){
 			yearList.add(sDate);
+            lyearList.add(getYearDate(sDate,Calendar.YEAR, -1));
+
 			sDate = getYearDate(sDate,Calendar.DATE,1);
 		}
 		yearList.add(eDate);
-		while(!lsDate.equals(leDate)){
-			lyearList.add(lsDate);
-			lsDate = getYearDate(lsDate,Calendar.DATE,1);
-		}
-		lyearList.add(leDate);
+        lyearList.add(getYearDate(eDate,Calendar.YEAR, -1));
+
 		clyearList.addAll(lyearList);
 		clyearList.addAll(yearList);
 		//根据查询条件，查询相应的数据
