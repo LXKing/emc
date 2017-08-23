@@ -27,7 +27,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     private static String unitType = "unitType";
     private static String unitName = "unitName";
     private static String UNIT_NAME = "unitName";
-    private static String[] TYPE_NAME = {"水","电","气","热","煤","油"};
+    private static String[] TYPE_NAME = {"水(T/m²)","电(kW·h/m²)","气(m³/m²)","热(GJ/m²)","煤(T/m²)","油(L/m²)"};
     private static String[] UNITTYPEARR = {"1","2","3","4","5","6"};
     private static String TOTAL_CURRENT_YEAR = "totalcurrentyear";
     private static String CURRENT_YEAR = "currentYear";
