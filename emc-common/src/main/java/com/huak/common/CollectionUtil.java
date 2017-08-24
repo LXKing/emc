@@ -1,5 +1,6 @@
 package com.huak.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huak.common.utils.DateUtils;
 
 import java.beans.PropertyDescriptor;
@@ -74,13 +75,13 @@ public class CollectionUtil {
      * @param end      结束时间
      * @param thisList 本期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
      * @param sameList 同期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
-     * @return Map<String,Object>
+     * @return JSONObject
      * key = xdatas value = List<String>{}   横坐标
      * key = aline value = List<String>{}    第一条线，本期
      * key = bline value = List<String>{}    第二条线，同期
      */
-    public static Map<String, Object> packageDataLine(String start, String end, List<Map<String, Object>> thisList, List<Map<String, Object>> sameList) throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public static JSONObject packageDataLine(String start, String end, List<Map<String, Object>> thisList, List<Map<String, Object>> sameList) throws Exception {
+        JSONObject json = new JSONObject();
         List<String> aList = new ArrayList<>();
         List<String> bList = new ArrayList<>();
         //格式化时间 返回时间list 确定2月29号
@@ -104,10 +105,10 @@ public class CollectionUtil {
             }
         }
         //返回数据map
-        map.put("xdatas", dates);
-        map.put("aline", aList);
-        map.put("bline", bList);
-        return map;
+        json.put("xdatas", dates);
+        json.put("aline", aList);
+        json.put("bline", bList);
+        return json;
     }
 
     /**
