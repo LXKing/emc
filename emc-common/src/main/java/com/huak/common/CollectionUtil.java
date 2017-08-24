@@ -1,8 +1,12 @@
 package com.huak.common;
 
+import com.huak.common.utils.DateUtils;
+
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -50,7 +54,7 @@ public class CollectionUtil {
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
             //过滤序列化字段
-            if("serialVersionUID".equals(field.getName())){
+            if ("serialVersionUID".equals(field.getName())) {
                 continue;
             }
             field.setAccessible(true);
@@ -65,19 +69,116 @@ public class CollectionUtil {
      * 封装数据方法
      * 由于emc系统有大量的本期和同期的折线图，故有此公共方法
      * 限制：横坐标每天时间、本期折线、同期折线
-     * @param start 开始时间
-     * @param end 结束时间
+     *
+     * @param start    开始时间
+     * @param end      结束时间
      * @param thisList 本期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
      * @param sameList 同期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
      * @return Map<String,Object>
-     *     key = xdatas value = List<String>{}   横坐标
-     *     key = aline value = List<String>{}    第一条线，本期
-     *     key = bline value = List<String>{}    第二条线，同期
+     * key = xdatas value = List<String>{}   横坐标
+     * key = aline value = List<String>{}    第一条线，本期
+     * key = bline value = List<String>{}    第二条线，同期
      */
-    public static Map<String,Object> packageDataLine(String start,String end,List<Map<String,Object>> thisList,List<Map<String,Object>> sameList){
+    public static Map<String, Object> packageDataLine(String start, String end, List<Map<String, Object>> thisList, List<Map<String, Object>> sameList) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-
+        List<String> aList = new ArrayList<>();
+        List<String> bList = new ArrayList<>();
+        //格式化时间 返回时间list 确定2月29号
+        List<String> dates = getDatesList(start, end);
+        //list转map
+        Map<String, Object> aMap = listToMap(thisList);
+        Map<String, Object> bMap = listToMap(sameList);
+        //循环时间list 从map取数据封装成list 没有补0
+        for (String key : dates) {
+            Object a = aMap.get(key);
+            Object b = bMap.get(key);
+            if (StringUtils.isEmpty(a)) {
+                aList.add("0");
+            } else {
+                aList.add(a.toString());
+            }
+            if (StringUtils.isEmpty(b)) {
+                bList.add("0");
+            } else {
+                bList.add(b.toString());
+            }
+        }
+        //返回数据map
+        map.put("xdatas", dates);
+        map.put("aline", aList);
+        map.put("bline", bList);
         return map;
     }
+
+    /**
+     * @param start 开始时间 格式必须存在年月日
+     * @param end   结束时间 格式必须存在年月日
+     * @return List<String> yyyy-MM-dd
+     */
+    private static List<String> getDatesList(String start, String end) throws Exception {
+        List<String> dates = new ArrayList<>();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date sDate = format.parse(start);
+        Date eDate = format.parse(end);
+        start = format.format(sDate);
+        end = format.format(eDate);
+        if (end.compareTo(start) < 0) {
+            return null;
+        }
+        while (!start.equals(end)) {
+            dates.add(start);
+            DateUtils.isAddDate(start, dates);
+            start = DateUtils.getYearDate(start, Calendar.DATE, 1);
+        }
+        return dates;
+    }
+
+    /**
+     * list转map
+     *
+     * @param list
+     * @return
+     */
+    private static Map<String, Object> listToMap(List<Map<String, Object>> list) {
+        Map<String, Object> map = new HashMap<>();
+        for (Map<String, Object> listMap : list) {
+            map.put(listMap.get("dayDate").toString(), listMap.get("dayValue"));
+        }
+        return map;
+    }
+
+//    public static void main(String[] args) {
+//        String start = "2017-01-02 33";
+//        String end = "2017-03-04 33";
+//        List<Map<String, Object>> thisList = new ArrayList<>();
+//        List<Map<String, Object>> sameList = new ArrayList<>();
+//        for(int i=0;i<13;i+=2){
+//            Map<String, Object> map = new HashMap<>();
+//            try {
+//                map.put("dayDate",DateUtils.getYearDate(start, Calendar.DATE, i));
+//                map.put("dayValue",i);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            thisList.add(map);
+//        }
+//        for(int i=0;i<21;i+=3){
+//            Map<String, Object> map = new HashMap<>();
+//            try {
+//                map.put("dayDate",DateUtils.getYearDate(start, Calendar.DATE, i));
+//                map.put("dayValue",i);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            sameList.add(map);
+//        }
+//        Map<String,Object> packageMap = new HashMap<>();
+//        try {
+//            packageMap = packageDataLine(start,end,thisList,sameList);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.err.println("------------------");
+//    }
 
 }
