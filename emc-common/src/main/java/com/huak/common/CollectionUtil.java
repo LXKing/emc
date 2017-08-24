@@ -111,8 +111,8 @@ public class CollectionUtil {
         bqMap.put(TYPE_NAME,"本期");
         bqMap.put(DATA_LIST,aList);
         Map<String,Object> tqMap = new HashMap<>();
-        bqMap.put(TYPE_NAME,"同期");
-        bqMap.put(DATA_LIST,bList);
+        tqMap.put(TYPE_NAME,"同期");
+        tqMap.put(DATA_LIST,bList);
         List<Map<String,Object>> list = new ArrayList<>();
         list.add(bqMap);
         list.add(tqMap);
