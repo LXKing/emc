@@ -22,6 +22,8 @@ import java.util.*;
  * Function List:  <BR>
  */
 public class CollectionUtil {
+    private static final String TYPE_NAME = "typeName";
+    private static final String DATA_LIST = "dataList";
 
     /**
      * 删除ArrayList中重复元素，保持顺序
@@ -77,8 +79,7 @@ public class CollectionUtil {
      * @param sameList 同期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
      * @return JSONObject
      * key = xdatas value = List<String>{}   横坐标
-     * key = aline value = List<String>{}    第一条线，本期
-     * key = bline value = List<String>{}    第二条线，同期
+     * key = datas value = List<String>{}    两条线，本期同期
      */
     public static JSONObject packageDataLine(String start, String end, List<Map<String, Object>> thisList, List<Map<String, Object>> sameList) throws Exception {
         JSONObject json = new JSONObject();
@@ -106,8 +107,16 @@ public class CollectionUtil {
         }
         //返回数据map
         json.put("xdatas", dates);
-        json.put("aline", aList);
-        json.put("bline", bList);
+        Map<String,Object> bqMap = new HashMap<>();
+        bqMap.put(TYPE_NAME,"本期");
+        bqMap.put(DATA_LIST,aList);
+        Map<String,Object> tqMap = new HashMap<>();
+        bqMap.put(TYPE_NAME,"同期");
+        bqMap.put(DATA_LIST,bList);
+        List<Map<String,Object>> list = new ArrayList<>();
+        list.add(bqMap);
+        list.add(tqMap);
+        json.put("datas", list);
         return json;
     }
 
