@@ -8,12 +8,63 @@ import java.util.Map;
 
 public interface EnergyMonitorService {
 
+    /**
+     * 查询本期标煤时间折线
+     * @param params
+     * @return
+     */
+    List<Map<String, Object>> selectBmBqLine(Map<String, String> params);
+    /**
+     * 查询同期标煤时间折线
+     * @param params
+     * @return
+     */
+    List<Map<String, Object>> selectBmTqLine(Map<String, String> params);
+    /**
+     * 查询本期标煤总量
+     * @param params
+     * @return
+     */
+    Double selectBmBqTotal(Map<String, String> params);
+    /**
+     * 查询同期标煤总量
+     * @param params
+     * @return
+     */
+    Double selectBmTqTotal(Map<String, String> params);
+
+
+    /**
+     * 查询本期用量时间折线
+     * @param params
+     * @return
+     */
+    List<Map<String, Object>> selectYlBqLine(Map<String, String> params);
+    /**
+     * 查询同期用量时间折线
+     * @param params
+     * @return
+     */
+    List<Map<String, Object>> selectYlTqLine(Map<String, String> params);
+    /**
+     * 查询本期用量总量
+     * @param params
+     * @return
+     */
+    Double selectYlBqTotal(Map<String, String> params);
+    /**
+     * 查询同期用量总量
+     * @param params
+     * @return
+     */
+    Double selectYlTqTotal(Map<String, String> params);
+
 	/**
 	 * 查询折线数据
 	 * @param params
 	 * @return
 	 */
-	Map<String, Object> groupEnergyLine(Map<String, String> params) throws Exception;
+//	Map<String, Object> groupEnergyLine(Map<String, String> params) throws Exception;
 
     /**
      * 添加测试数据

@@ -28,6 +28,202 @@
     from ${tableName}
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+
+    <select id="selectBmBqLine" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.BM),2) dayValue,b.DOSAGE_TIME dayDate FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.BM) BM,d.UNITID,d.DOSAGE_TIME FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE*dh.COAL_COEF) BM,DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTime} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTime}
+        GROUP BY DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d'),dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID,d.DOSAGE_TIME) b
+        WHERE a.UNITID = b.UNITID
+        GROUP BY b.DOSAGE_TIME
+        ORDER BY b.DOSAGE_TIME
+    </select>
+    <select id="selectBmTqLine" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.BM),2) dayValue,b.DOSAGE_TIME dayDate FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.BM) BM,d.UNITID,d.DOSAGE_TIME FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE*dh.COAL_COEF) BM,DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTimeTq} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTimeTq}
+        GROUP BY DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d'),dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID,d.DOSAGE_TIME) b
+        WHERE a.UNITID = b.UNITID
+        GROUP BY b.DOSAGE_TIME
+        ORDER BY b.DOSAGE_TIME
+    </select>
+    <select id="selectBmBqTotal" resultType="java.lang.Double" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.BM),2) BM FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.BM) BM,d.UNITID FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE*dh.COAL_COEF) BM,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTime} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTime}
+        GROUP BY dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID) b
+        WHERE a.UNITID = b.UNITID
+    </select>
+    <select id="selectBmTqTotal" resultType="java.lang.Double" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.BM),2) BM FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.BM) BM,d.UNITID FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE*dh.COAL_COEF) BM,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTimeTq} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTimeTq}
+        GROUP BY dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID) b
+        WHERE a.UNITID = b.UNITID
+    </select>
+
+
+
+    <select id="selectYlBqLine" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.DOSAGE),2) dayValue,b.DOSAGE_TIME dayDate FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE) DOSAGE,DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime} AND dh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTime}
+        GROUP BY DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d'),dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID,d.DOSAGE_TIME) b
+        WHERE a.UNITID = b.UNITID
+        GROUP BY b.DOSAGE_TIME
+        ORDER BY b.DOSAGE_TIME
+    </select>
+    <select id="selectYlTqLine" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.DOSAGE),2) dayValue,b.DOSAGE_TIME dayDate FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE) DOSAGE,DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND dh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTimeTq}
+        GROUP BY DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d'),dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID,d.DOSAGE_TIME) b
+        WHERE a.UNITID = b.UNITID
+        GROUP BY b.DOSAGE_TIME
+        ORDER BY b.DOSAGE_TIME
+    </select>
+    <select id="selectYlBqTotal" resultType="java.lang.Double" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.DOSAGE),2) DOSAGE FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE) DOSAGE,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTime} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTime}
+        GROUP BY dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID) b
+        WHERE a.UNITID = b.UNITID
+    </select>
+    <select id="selectYlTqTotal" resultType="java.lang.Double" parameterType="java.util.Map">
+        SELECT ROUND(SUM(b.DOSAGE),2) DOSAGE FROM (
+        SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a,
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID FROM
+        (SELECT et.ID FROM t_emc_energy_type et
+        <if test="type!=null and type!=''">
+            WHERE  et.TYPE=#{type}
+        </if>
+        <if test="type==null or type==''">
+            WHERE et.TYPE<![CDATA[ <> ]]>'4'
+        </if>
+        ) t ,
+        (SELECT SUM(dh.DOSAGE) DOSAGE,dh.UNITID,dh.TYPEID FROM ${tableName} dh
+        WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTimeTq} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTimeTq}
+        GROUP BY dh.UNITID,dh.TYPEID) d
+        WHERE t.ID = d.TYPEID
+        GROUP BY d.UNITID) b
+        WHERE a.UNITID = b.UNITID
+    </select>
   
   <!-- 能耗子页面，能耗曲线，能源流相关数据查询开始 -->
   <!-- 查询今年的集团能耗 -->

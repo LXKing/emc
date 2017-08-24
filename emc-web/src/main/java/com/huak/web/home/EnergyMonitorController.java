@@ -4,11 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.CollectionUtil;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.utils.DoubleUtils;
 import com.huak.home.EnergyMonitorService;
 import com.huak.home.model.EnergySecond;
 import com.huak.home.type.ToolVO;
-import com.huak.org.CompanyService;
-import com.huak.org.OrgService;
 import com.huak.org.model.Company;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
@@ -46,10 +44,6 @@ public class EnergyMonitorController extends BaseController {
 
     @Autowired
     private EnergyMonitorService eaService;
-    @Resource
-    private OrgService orgService;
-    @Resource
-    private CompanyService companyService;
 
     /**
      * 跳转二级能耗页面
@@ -274,30 +268,88 @@ public class EnergyMonitorController extends BaseController {
     }
 
     /**
-     * 查询集团能耗数据
+     * 标煤查询折线入口
      *
      * @param toolVO
      * @return
      */
-    @RequestMapping(value = "/groupEnergy", method = RequestMethod.GET)
+    @RequestMapping(value = "/line/bm", method = RequestMethod.POST)
     @ResponseBody
-    public String groupEnergy(ToolVO toolVO, HttpServletRequest request) {
-        logger.info("查询集团能耗数据");
+    public String lineBm(ToolVO toolVO, HttpServletRequest request) {
+        logger.info("查询能耗标煤时间折线图统一接口");
         JSONObject jo = new JSONObject();
         try {
-            jo.put("success", true);
-            jo.put("message", "查询集团能耗数据成功！");
-
             /*封装条件*/
             Map params = paramsPackageOrg(toolVO, request);
 
+            String start = params.get("startTime").toString();
+            String end = params.get("endTime").toString();
             //查询折线数据
-            Map<String, Object> retMap = eaService.groupEnergyLine(params);
-            jo.put("data", retMap);
+            List<Map<String, Object>> bqLine = eaService.selectBmBqLine(params);
+            List<Map<String, Object>> tqLine = eaService.selectBmTqLine(params);
+            Double bq = eaService.selectBmBqTotal(params);
+            Double tq = eaService.selectBmTqTotal(params);
+            if(null == bq){
+                bq = 0d;
+            }
+            if(null == tq){
+                tq = 0d;
+            }
+            Double tb = DoubleUtils.div(DoubleUtils.sub(bq,tq),bq,4)*100;
+            jo = CollectionUtil.packageDataLine(start,end,bqLine,tqLine);
+            jo.put("bq",bq);
+            jo.put("tq",tq);
+            jo.put("tb",tb);
+            jo.put("success", true);
+            jo.put("message", "查询集团能耗数据成功！");
         } catch (Exception e) {
-            logger.error("查询集团能耗数据异常" + e.getMessage());
+            logger.error("查询能耗标煤时间折线图统一接口异常" + e.getMessage());
             jo.put("success", false);
-            jo.put("message", "查询能耗数据异常！");
+            jo.put("message", "查询能耗标煤时间折线图统一接口异常！");
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     * 用量查询折线入口
+     *
+     * @param toolVO
+     * @return
+     */
+    @RequestMapping(value = "/line/yl", method = RequestMethod.POST)
+    @ResponseBody
+    public String lineYl(ToolVO toolVO, HttpServletRequest request,String type) {
+        logger.info("查询能耗用量时间折线图统一接口");
+        JSONObject jo = new JSONObject();
+        try {
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+            params.put("type",type);
+
+            String start = params.get("startTime").toString();
+            String end = params.get("endTime").toString();
+            //查询折线数据
+            List<Map<String, Object>> bqLine = eaService.selectYlBqLine(params);
+            List<Map<String, Object>> tqLine = eaService.selectYlTqLine(params);
+            Double bq = eaService.selectYlBqTotal(params);
+            Double tq = eaService.selectYlTqTotal(params);
+            if(null == bq){
+                bq = 0d;
+            }
+            if(null == tq){
+                tq = 0d;
+            }
+            Double tb = DoubleUtils.div(DoubleUtils.sub(bq,tq),bq,4)*100;
+            jo = CollectionUtil.packageDataLine(start,end,bqLine,tqLine);
+            jo.put("bq",bq);
+            jo.put("tq",tq);
+            jo.put("tb",tb);
+            jo.put("success", true);
+            jo.put("message", "查询集团能耗数据成功！");
+        } catch (Exception e) {
+            logger.error("查询能耗用量时间折线图统一接口异常" + e.getMessage());
+            jo.put("success", false);
+            jo.put("message", "查询能耗用量时间折线图统一接口异常！");
         }
         return jo.toJSONString();
     }
