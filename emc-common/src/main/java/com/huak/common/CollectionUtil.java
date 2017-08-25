@@ -93,7 +93,7 @@ public class CollectionUtil {
         //循环时间list 从map取数据封装成list 没有补0
         for (String key : dates) {
             Object a = aMap.get(key);
-            Object b = bMap.get(key);
+            Object b = bMap.get(getYestYear(key));
             if (StringUtils.isEmpty(a)) {
                 aList.add("0");
             } else {
@@ -107,17 +107,23 @@ public class CollectionUtil {
         }
         //返回数据map
         json.put("xdatas", dates);
-        Map<String,Object> bqMap = new HashMap<>();
-        bqMap.put(TYPE_NAME,"本期");
-        bqMap.put(DATA_LIST,aList);
-        Map<String,Object> tqMap = new HashMap<>();
-        tqMap.put(TYPE_NAME,"同期");
-        tqMap.put(DATA_LIST,bList);
-        List<Map<String,Object>> list = new ArrayList<>();
+        Map<String, Object> bqMap = new HashMap<>();
+        bqMap.put(TYPE_NAME, "本期");
+        bqMap.put(DATA_LIST, aList);
+        Map<String, Object> tqMap = new HashMap<>();
+        tqMap.put(TYPE_NAME, "同期");
+        tqMap.put(DATA_LIST, bList);
+        List<Map<String, Object>> list = new ArrayList<>();
         list.add(bqMap);
         list.add(tqMap);
         json.put("datas", list);
         return json;
+    }
+
+    private static String getYestYear(String key) {
+        Integer year = Integer.valueOf(key.substring(0, 4));
+        String suffix = key.substring(4, key.length());
+        return (year - 1) + suffix;
     }
 
     /**
@@ -140,6 +146,7 @@ public class CollectionUtil {
             DateUtils.isAddDate(start, dates);
             start = DateUtils.getYearDate(start, Calendar.DATE, 1);
         }
+        dates.add(end);
         return dates;
     }
 
