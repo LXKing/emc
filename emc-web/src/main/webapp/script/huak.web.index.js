@@ -1,5 +1,6 @@
 ﻿$(function () {
     chart12Fun();
+    chart10Fun();
     var myChartEnergy;
     var myChartQualified;
     var myChartCarbon;
@@ -269,8 +270,6 @@ function loadDataFun(){
     chart08Fun();
 
     chart09Fun();
-
-    chart10Fun();
 
     chart11Fun();
 
