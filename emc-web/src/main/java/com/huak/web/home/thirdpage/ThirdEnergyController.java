@@ -48,6 +48,7 @@ public class ThirdEnergyController extends BaseController {
     private OrgService orgService;
     
     private static  String ENERGY_TYPE = "energytype";
+    private static  String ORG_TYPE = "orgType";
     /**
      * 跳转三级单耗页面
      * @param model
@@ -138,7 +139,6 @@ public class ThirdEnergyController extends BaseController {
             }else{
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT,  new HashMap<>());
-
             }
 
         } catch (Exception e) {
@@ -224,7 +224,7 @@ public class ThirdEnergyController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thiredpageEnergyService.getUnitEnergyDetail(paramsMap);
             if (map!= null) {
@@ -256,7 +256,7 @@ public class ThirdEnergyController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thiredpageEnergyService.getUnitAssessments(paramsMap);
             if (map!= null) {
@@ -273,7 +273,6 @@ public class ThirdEnergyController extends BaseController {
         return jo.toJSONString();
     }
 
-
     /**
      *三级页面-用能单位类型-个能源能耗趋势加载
      * sunbinbin
@@ -287,7 +286,7 @@ public class ThirdEnergyController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thiredpageEnergyService.getUnitAllAssessment(paramsMap);
             if (map!= null) {
@@ -317,7 +316,7 @@ public class ThirdEnergyController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -385,7 +384,7 @@ public class ThirdEnergyController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         OutputStream out = null;
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             Map<String,Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
             HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
             out = response.getOutputStream();

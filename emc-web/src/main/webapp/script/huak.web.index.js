@@ -1,5 +1,6 @@
 ﻿$(function () {
     chart12Fun();
+    chart10Fun();
     var myChartEnergy;
     var myChartQualified;
     var myChartCarbon;
@@ -76,7 +77,6 @@
                 }
 
             }
-
         });
         //供热源数据去取
         $.ajax({
@@ -104,7 +104,7 @@
             }
 
         });
-//管网数据去取
+        //管网数据去取
         $.ajax({
             url: _web + "/energy/top/net",
             type: "GET",
@@ -269,8 +269,6 @@ function loadDataFun(){
     chart08Fun();
 
     chart09Fun();
-
-    chart10Fun();
 
     chart11Fun();
 
