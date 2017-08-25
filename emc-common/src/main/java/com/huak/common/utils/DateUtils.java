@@ -33,8 +33,8 @@ public class DateUtils {
         cal.set(Calendar.DAY_OF_MONTH, 1);// 从一号开始
         for (int i = 0; i < dayNumOfMonth; i++, cal.add(Calendar.DATE, 1)) {
             Date d = cal.getTime();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String df = simpleDateFormat.format(d);
+
+            String df = sdf.format(d);
             dates.add(df);
         }
 
@@ -67,9 +67,9 @@ public class DateUtils {
      */
     public static String getDay(String date,int i) throws ParseException {
         Calendar calendar=Calendar.getInstance();
-        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        calendar.setTime(sdf.parse(date));
         calendar.add(Calendar.DATE,  i);
-        return new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+        return sdf.format(calendar.getTime());
     }
 
     /**
@@ -119,7 +119,7 @@ public class DateUtils {
      * @throws ParseException
      */
     public static int daysBetween(String smdate,String bdate) throws ParseException{
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(sdf.parse(smdate));
         long time1 = cal.getTimeInMillis();
