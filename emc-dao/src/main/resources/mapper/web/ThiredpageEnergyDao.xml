@@ -407,11 +407,11 @@
 
     <select id="getTotal" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
-        (CASE WHEN M.UNITTYPE = '1' THEN '源'
-        WHEN M.UNITTYPE = '2' THEN '网'
-        WHEN M.UNITTYPE = '3' THEN '站'
-        WHEN M.UNITTYPE = '4' THEN '线'
-        WHEN M.UNITTYPE = '5' THEN '户' else '' end) as unitName,
+        (CASE WHEN M.UNITTYPE = '1' THEN '热源'
+        WHEN M.UNITTYPE = '2' THEN '管网'
+        WHEN M.UNITTYPE = '3' THEN '换热站'
+        WHEN M.UNITTYPE = '4' THEN '管线'
+        WHEN M.UNITTYPE = '5' THEN '民户' else '' end) as unitName,
         M.UNITTYPE as unitType,
         <foreach collection="currentYear" index="index" item="tag" open=""  separator="," close="">
             MAX((CASE M.DOSAGE_TIME WHEN #{tag} THEN M.DOSAGE ELSE 0 END)) c${index}
@@ -907,11 +907,11 @@
     <select id="getThirdTotals" resultType="java.util.Map" parameterType="java.util.Map">
         select
         aa.unitType as unitType ,
-        (CASE WHEN aa.UNITTYPE = '1' THEN '源'
-        WHEN aa.UNITTYPE = '2' THEN '网'
-        WHEN aa.UNITTYPE = '3' THEN '站'
-        WHEN aa.UNITTYPE = '4' THEN '线'
-        WHEN aa.UNITTYPE = '5' THEN '户' else '' end) as unitName,
+        (CASE WHEN aa.UNITTYPE = '1' THEN '热源'
+        WHEN aa.UNITTYPE = '2' THEN '管网'
+        WHEN aa.UNITTYPE = '3' THEN '换热站'
+        WHEN aa.UNITTYPE = '4' THEN '管线'
+        WHEN aa.UNITTYPE = '5' THEN '民户' else '' end) as unitName,
         aa.w as c0,aa.e as c1,aa.g as c2,aa.h as c3,aa.c as c4,aa.l as c5,
         IFNULL(b.w1,0) as l0,
         IFNULL(b.e1,0) as l1,

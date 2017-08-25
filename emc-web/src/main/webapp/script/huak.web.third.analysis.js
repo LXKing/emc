@@ -162,14 +162,27 @@ function loadDHdetail(){
 }
 //加载热源的单耗排名
 function loadFeedDH() {
-
+    var  type=$("#thirdType").val();
     $.ajax({
-        url: _web + "/third/analysis/water/feed-dh",
+        url: _web + "/third/analysis/water/feed-dh/"+type,
         type: "GET",
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (data) {
             feedDh(data);
+        }
+    });
+}
+//加载换热站的单耗排名
+function loadStationDH() {
+    var  type=$("#thirdType").val();
+    $.ajax({
+        url: _web + "/third/analysis/water/station-dh/"+type,
+        type: "GET",
+        data: $("#searchTools").serialize(),
+        dataType: "json",
+        success: function (data) {
+            stationDh(data);
         }
     });
 }
@@ -190,19 +203,7 @@ function loadTable(){
     });
 
 }
-//加载换热站的单耗排名
-function loadStationDH() {
 
-    $.ajax({
-        url: _web + "/third/analysis/water/station-dh",
-        type: "GET",
-        data: $("#searchTools").serialize(),
-        dataType: "json",
-        success: function (data) {
-            stationDh(data);
-        }
-    });
-}
 //1 -- 热源水单耗
 function loadOrgFeedDH() {
     var type = $("#thirdType").val();

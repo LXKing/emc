@@ -134,39 +134,21 @@ public class ThirdAnalysisController extends BaseController {
         }
         return jo.toString();
     }
-
-    /**
-     * 水单耗 (源，网，站，线，户)
-     */
-    @RequestMapping(value = "/water/org/{type}", method = RequestMethod.GET)
-    @ResponseBody
-    public String getOrgAll(ToolVO toolVO, HttpServletRequest request,@PathVariable("type")String type){
-        logger.info("计算源网站线户的水单耗");
-        JSONObject jo = new JSONObject();
-        Map params = paramsPackageOrg(toolVO, request);
-        params.put("type",type);
-        try {
-            Map<String,Object>  reMap1 = thirdAnalysisService.getWaterDhOrg(params);
-            Map<String,Object> reMap2=thirdAnalysisService.getWaterOrgDhAndTQ(params);
-            jo.put("resultData", reMap1);
-            jo.put("TotalTq", reMap2);
-        }catch (Exception e){
-            logger.error("组织机构的水单耗" + e.getMessage());
-        }
-        return jo.toJSONString();
-    }
     /**
      * 热源的水单耗排名
      */
-    @RequestMapping(value = "/water/feed-dh", method = RequestMethod.GET)
+    @RequestMapping(value = "/water/feed-dh/{type}", method = RequestMethod.GET)
     @ResponseBody
-    public String getFeedDh(ToolVO toolVO, HttpServletRequest request){
+    public String getFeedDh(ToolVO toolVO, HttpServletRequest request,
+                            @PathVariable("type")String type){
         logger.info("计算热源的水单耗排名");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         List<String> mapName = new ArrayList<String>();
         List<String> mapValue = new ArrayList<String>();
-
+        if(type!=null&&!"".equals(type)){
+            params.put("type",type);
+        }
         try {
             List<Map<String,Object>>  list = thirdAnalysisService.getFeedDh(params);
             for (int i = 0; i <list.size() ; i++) {
@@ -184,15 +166,17 @@ public class ThirdAnalysisController extends BaseController {
     /**
      * 换热站的水单耗排名
      */
-    @RequestMapping(value = "/water/station-dh", method = RequestMethod.GET)
+    @RequestMapping(value = "/water/station-dh/{type}", method = RequestMethod.GET)
     @ResponseBody
-    public String getStationDh(ToolVO toolVO, HttpServletRequest request){
+    public String getStationDh(ToolVO toolVO, HttpServletRequest request,@PathVariable("type")String type){
         logger.info("计算换热站的水单耗排名");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         List<String> mapName = new ArrayList<String>();
         List<String> mapValue = new ArrayList<String>();
-
+        if(type!=null&&!"".equals(type)){
+            params.put("type",type);
+        }
         try {
             List<Map<String,Object>>  list = thirdAnalysisService.getStationDh(params);
             for (int i = 0; i <list.size() ; i++) {
