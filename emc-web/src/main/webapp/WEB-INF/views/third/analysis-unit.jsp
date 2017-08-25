@@ -24,7 +24,7 @@
     <div class="col-lg-12 mb14  ">
         <div class=" index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class="pull-left groupEnergyTit energyTit"><i></i>源网站能耗明细<small class="font-sm">ENERGY CONSUMPTION DETAILS</small></div>
+                <div class="pull-left groupEnergyTit energyTit"><i></i>源网站单耗明细<small class="font-sm">ENERGY CONSUMPTION DETAILS</small></div>
             </div>
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-12 ">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                         <div class="ec_title">
-                            天然气总能耗趋势(GJ)
+                            天然气总单耗趋势(GJ)
                         </div>
                         <div id="linechart_as" style="width: 100%;height:268px;"></div>
 
@@ -97,7 +97,7 @@
     <div class="col-lg-12 mb14">
         <div class="index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
-                <div class=" clearfix pull-left energyTit analy_tit_as"><i></i>各站点能耗明细<small class="font-sm">Energy consumption details</small></div>
+                <div class=" clearfix pull-left energyTit analy_tit_as"><i></i>各站点单耗明细<small class="font-sm">Energy consumption details</small></div>
                 <a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
                 <div class="   col-lg-12  tablewrap">
                     <div  >

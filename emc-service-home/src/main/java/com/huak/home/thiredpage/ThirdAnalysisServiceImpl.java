@@ -2,6 +2,8 @@ package com.huak.home.thiredpage;
 
 import com.huak.base.dao.DateDao;
 import com.huak.home.dao.thiredpage.ThirdAnalysisDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,7 @@ import java.util.*;
  */
 @Service
 public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static String UNIT_TYPE = "unitType";
     private static String unitType = "unitType";
     private static String unitName = "unitName";
@@ -39,10 +41,15 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     @Resource
     private DateDao dateDao;
     @Override
-    public List<Map<String, Object>> getWaterDhDetail(Map<String, Object> map) {
+    public List<Map<String,Object>> getWaterDhDetail(Map<String, Object> map) {
+
         return thirdAnalysisDao.getWaterDhDetail(map);
     }
+    @Override
+    public List<Map<String,Object>> getWaterDhDetailTq(Map<String, Object> map) {
 
+        return thirdAnalysisDao.getWaterDhDetailTq(map);
+    }
     @Override
     public Map<String, Object> getWaterDhOrg(Map<String, Object> map) {
         List<Map<String, Object>> list = thirdAnalysisDao.getWaterDhOrg(map);
@@ -108,6 +115,11 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     @Override
     public Map<String, Object> getWaterDhAndTQ(Map<String, Object> map) {
         return thirdAnalysisDao.getTotalAndTq(map);
+    }
+
+    @Override
+    public Map<String, Object> getWaterDhAndBQ(Map<String, Object> map) {
+        return thirdAnalysisDao.getTotalAndBq(map);
     }
 
     @Override

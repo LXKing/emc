@@ -23,12 +23,12 @@
         <div class="col-lg-12 mb14  ">
             <div class=" index_contentBox clearfix">
                 <div class="titbox clearfix no-padding no-margin">
-                    <div class="pull-left groupEnergyTit energyTit"><i></i>集团总能耗<small class="font-sm">Energy Monitoring</small></div>
+                    <div class="pull-left groupEnergyTit energyTit"><i></i>集团总单耗<small class="font-sm">Energy Monitoring</small></div>
                 </div>
                 <div class="groupEnergy-box col-lg-12  clearfix">
                     <div class="chart-box groupEnergy-chart col-lg-10 ">
                         <div class="cb-header">
-                            <span class="cb-title">集团总能耗 (单位: GJ)</span>
+                            <span class="cb-title">集团总单耗 (单位: GJ)</span>
                             <div class="cb-title-right" style="margin-right: 36px;">
                                 <label>
                                     <span class="cb-legend-blue"></span>
@@ -54,7 +54,7 @@
                     <div class="energy-list-box energy-list-box-first">
                         <a href="energy_consumption.html">
                             <div class="energy-head ">
-                                <span class="energy-list-name">水能耗</span>
+                                <span class="energy-list-name">水单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num waterTotal" id="waterTotal"></span>
                                     <span class="energy-list-measure ">Tce/m²</span>
@@ -71,7 +71,7 @@
                     <div class="energy-list-box">
                         <a href="energy_consumption.html">
                             <div class="energy-head ">
-                                <span class="energy-list-name">电能耗</span>
+                                <span class="energy-list-name">电单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num electricTotal" id="electricTotal"></span>
                                     <span class="energy-list-measure ">GJ</span>
@@ -87,7 +87,7 @@
                     <div class="energy-list-box">
                         <a href="energy_consumption.html">
                             <div class="energy-head ">
-                                <span class="energy-list-name">气能耗</span>
+                                <span class="energy-list-name">气单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num gasTotal" id="gasTotal"></span>
                                     <span class="energy-list-measure ">GJ</span>
@@ -104,7 +104,7 @@
                     <div class="energy-list-box">
                         <a href="energy_consumption.html">
                             <div class="energy-head ">
-                                <span class="energy-list-name">热能耗</span>
+                                <span class="energy-list-name">热单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num hotTotal"  id="hotTotal"></span>
                                     <span class="energy-list-measure">GJ</span>
@@ -121,7 +121,7 @@
                     <div class="energy-list-box energy-list-box-last">
                         <a href="energy_consumption.html">
                             <div class="energy-head ">
-                                <span class="energy-list-name">煤能耗</span>
+                                <span class="energy-list-name">煤单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num coalTotal" id="coalTotal"></span>
                                     <span class="energy-list-measure ">GJ</span>
@@ -140,7 +140,7 @@
                     <div class="col-lg-12 no-padding mt30">
                         <div class="col-lg-6 no-padding analyBoxList">
                             <div class="ec_title">
-                                换热站能耗排名(Tce/m²)
+                                换热站单耗排名(Tce/m²)
                                 <%--http://192.168.155.196:8081/emc/js/energy_company.js--%>
 												<span class="button-group">
 												<a href="javascript:;" onclick="loadStationDH(1)" class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadStationDH(2)" class="bg-left">电</a><a href="javascript:;" onclick="loadStationDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadStationDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadStationDH(5)"  class="bg-right">煤</a>
@@ -151,7 +151,7 @@
                         </div>
                         <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                             <div class="ec_title">
-                                供热源能耗排名(Tce/m²)	<span class="button-group">
+                                供热源单耗排名(Tce/m²)	<span class="button-group">
 												<a href="javascript:;" onclick="loadFeedDH(1)"  class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadFeedDH(2)"  class="bg-left">电</a><a href="javascript:;" onclick="loadFeedDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadFeedDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadFeedDH(5)" class="bg-right">煤</a>
 											</span>
                             </div>

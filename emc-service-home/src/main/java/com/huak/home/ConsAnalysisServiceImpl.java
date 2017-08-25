@@ -249,5 +249,14 @@ public class ConsAnalysisServiceImpl implements ConsAnalysisService {
 		date = calendar.getTime();
 		return sdf.format(date);
 	}
-	
+
+    @Override
+    public List<Map<String, Object>> getDhDetailBq(Map<String, Object> map) {
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> getDhDetailTq(Map<String, Object> map) {
+        return null;
+    }
 }

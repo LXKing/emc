@@ -1,8 +1,10 @@
 package com.huak.web.home.thirdpage;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.CollectionUtil;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.utils.DoubleUtils;
 import com.huak.home.thiredpage.ThirdAnalysisService;
 import com.huak.home.type.ToolVO;
 import com.huak.org.model.Company;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,38 +86,53 @@ public class ThirdAnalysisController extends BaseController {
     /**
      * 水单耗明细
      */
-    @RequestMapping(value = "/water/detail/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/water/detail/{type}/{unittype}", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllData1(ToolVO toolVO, HttpServletRequest request,@PathVariable("type")String type){
+    public String getAllData1(ToolVO toolVO, HttpServletRequest request,
+                              @PathVariable("type")String type,
+                              @PathVariable("unittype")String unittype){
         logger.info("计算水单耗");
+        DecimalFormat  df   = new DecimalFormat("######0.00");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
-        params.put("type",type);
-        try {
-            List<Map<String, Object>> list = thirdAnalysisService.getWaterDhDetail(params);
-            Map<String, Object> reMap =thirdAnalysisService.getWaterDhAndTQ(params);
-            //时间数据
-            List<String> dateLine = new ArrayList<>();
-            List<String> newDate = new ArrayList<>();
-            List<String> oldDate = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                Map<String, Object> map =list.get(i);
-                String dh = map.get("DH").toString();
-                newDate.add(dh);
-                String dhTq = map.get("DHTQ").toString();
-                oldDate.add(dhTq);
-                String date = map.get("TIME").toString();
-                dateLine.add(date);
-            }
-
-            jo.put(Constants.XAXIS, dateLine);
-            jo.put("newDate", newDate);
-            jo.put("oldDate", oldDate);
-            jo.put("reMap",reMap);
-        }catch (Exception e){
-            logger.error("水单耗分析" + e.getMessage());
+        if(type!=null&&!"".equals(type)){
+            params.put("type",type);
         }
-        return jo.toJSONString();
+        if(unittype!=null&&!"".equals(unittype)&&!"0".equals(unittype)){
+            params.put("orgType",unittype);
+        }
+        String start = params.get("startTime").toString();
+        String end = params.get("endTime").toString();
+        List<Map<String,Object>> listBq = thirdAnalysisService.getWaterDhDetail(params);
+        List<Map<String,Object>> listTq = thirdAnalysisService.getWaterDhDetailTq(params);
+        Map<String, Object> bqMap =thirdAnalysisService.getWaterDhAndBQ(params);
+        Map<String, Object> tqMap =thirdAnalysisService.getWaterDhAndTQ(params);
+        double dhbq;
+        double dhtq;
+        if(bqMap==null){
+            dhbq=0;
+        }else {
+            dhbq=Double.valueOf(bqMap.get("DHBQ").toString());
+        }
+        if(tqMap==null){
+            dhtq=0;
+        }else {
+            dhtq=Double.valueOf(tqMap.get("DHTQ").toString());
+        }
+        double tb;
+        if(dhbq==0||dhtq==0){
+            tb=0.0;
+        }else {
+            tb = DoubleUtils.div(DoubleUtils.sub(dhbq, dhtq),dhtq,4)*100;
+        }
+        try {
+            jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
+            jo.put("ZDH",dhbq);
+            jo.put("TB", df.format(tb));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jo.toString();
     }
 
     /**
@@ -190,7 +208,7 @@ public class ThirdAnalysisController extends BaseController {
     }
     /**
      *三级页面-换热站列表显示图
-     * sunbinbin
+     *
      * @return string
      */
     @RequestMapping(value = "/table-list", method = RequestMethod.POST)

@@ -56,13 +56,13 @@
                         <span class="energy-list-name">供热源-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num feedTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure feedDw">GJ</span>
                             <span class="energy-list-proportion feedTQ"></span>
                         </div>
                     </div>
 
                     <div class="energy-chart">
-                        <div id="chart1"></div>
+                        <div id="chart1" class="FeedChart" ></div>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         <span class="energy-list-name">管网-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num netTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure netDw">GJ</span>
                             <span class="energy-list-proportion netTQ"></span>
                         </div>
 
@@ -86,7 +86,7 @@
                         <span class="energy-list-name">换热站-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num stationTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure stationDw">GJ</span>
                             <span class="energy-list-proportion stationTQ"></span>
                         </div>
 
@@ -102,7 +102,7 @@
                         <span class="energy-list-name">管线-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num lineTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure lineDw">GJ</span>
                             <span class="energy-list-proportion lineTQ"></span>
                         </div>
 
@@ -118,7 +118,7 @@
                         <span class="energy-list-name">民户-<span class="maintitle">${sysDic['energyType'][type-1].des}</span>单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num roomTotal"></span>
-                            <span class="energy-list-measure ">GJ</span>
+                            <span class="energy-list-measure roomDw">GJ</span>
                             <span class="energy-list-proportion roomTQ"></span>
                         </div>
                     </div>

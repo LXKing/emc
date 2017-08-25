@@ -101,44 +101,57 @@
  };*/
 $(function() {
     loadDHdetail();
-    loadOrgDH();
+
+    loadOrgFeedDH();
+    loadOrgNetDH();
+    loadOrgStationDH();
+    loadOrgLineDH();
+    loadOrgRoomDH();
+
+
     loadFeedDH();
     loadStationDH();
     loadTable();
 });
+
 //加载水单耗明细
 function loadDHdetail(){
-    var type = $("#thirdType").val();
+
+    var  type=$("#thirdType").val();
+    var  unittype="0";
+    var data = $("#searchTools").serialize();
     $.ajax({
-        url: _web + "/third/analysis/water/detail/"+type,
+        url: _web + "/third/analysis/water/detail/"+type+"/"+unittype,
         type: "GET",
-        data: $("#searchTools").serialize(),
+        data: data,
         dataType: "json",
         success: function (data) {
-            $(".groupTotal").text(data.reMap.ZDH);
-            if(data.reMap.TQ>0){
-                var TQ = data.reMap.TQ+"<span class='arrow'>↑</span>";
-                $(".groupchangeRate").html(TQ);
-            }else if(data.reMap.TQ==0){
-                var TQ = data.reMap.TQ+"<span class='arrow'>→</span>";
-                $(".groupchangeRate").html(TQ)
-            }else if(data.reMap.TQ<0){
-                var TQ = data.reMap.TQ+"<span class='arrow'>↓</span>";
-                $(".groupchangeRate").html(TQ)
+            $(".groupTotal").text(data.ZDH);
+            if(data.TB>0){
+                var TB = data.TB+"<span class='arrow'>↑</span>";
+                $(".groupchangeRate").html(TB);
+            }else if(data.TB==0){
+                var TB = data.TB+"<span class='arrow'>→</span>";
+                $(".groupchangeRate").html(TB)
+            }else if(data.TB<0){
+                var TB = data.TB+"<span class='arrow'>↓</span>";
+                $(".groupchangeRate").html(TB)
             }
+
             echartsSelf({
                 id: "groupEnergyChart",
                 echartsConfig: {
-                    xData: data.xaxis,
+                    xData: data.xdatas,
                     series: [{
                         type: 'line',
-                        dataList: data.newDate,
+                        name:data.datas[0].typeName,
+                        dataList: data.datas[0].dataList,
                         typeLine: 'solid'
-
                     },
                         {
                             type: 'line',
-                            dataList: data.oldDate,
+                            name:data.datas[1].typeName,
+                            dataList: data.datas["1"].dataList,
                             typeLine: 'dashed'
                         }
                     ]
@@ -147,7 +160,6 @@ function loadDHdetail(){
         }
     });
 }
-
 //加载热源的单耗排名
 function loadFeedDH() {
 
@@ -157,7 +169,6 @@ function loadFeedDH() {
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (data) {
-            console.log(data);
             feedDh(data);
         }
     });
@@ -188,186 +199,320 @@ function loadStationDH() {
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (data) {
-            console.log(data);
             stationDh(data);
         }
     });
 }
-
-//加载源、网、站、线、户  的水单耗
-
-function loadOrgDH() {
-
+//1 -- 热源水单耗
+function loadOrgFeedDH() {
     var type = $("#thirdType").val();
+    var unittype = "1";
+    var data = $("#searchTools").serialize();
     $.ajax({
-        url: _web + "/third/analysis/water/org/"+type,
+        url: _web + "/third/analysis/water/detail/" + type + "/" + unittype,
         type: "GET",
-        data: $("#searchTools").serialize(),
+        data: data,
         dataType: "json",
         success: function (data) {
-            getFeedEc(data);
-            getNetEc(data);
-            getStationEc(data);
-            getLine(data);
-            getRoomEc(data);
+            getFeedEc(data,type);
+
         }
     });
+}
+//2 -- 管网水单耗
+function loadOrgNetDH() {
+    var type = $("#thirdType").val();
+    var unittype = "2";
+    var data = $("#searchTools").serialize();
+    $.ajax({
+        url: _web + "/third/analysis/water/detail/" + type + "/" + unittype,
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            getNetEc(data,type);
 
-    function getFeedEc(data){
-
-        $(".feedTotal").html(data.TotalTq.YTotal);
-        if(data.TotalTq.YTB>0){
-            var tb = "("+data.TotalTq.YTB+"↑)";
-            $(".feedTQ").html(tb);
-        }else if(data.TotalTq.YTB==0){
-            var tb = "("+data.TotalTq.YTB+"→)";
-            $(".feedTQ").html(tb);
-        }else if(data.TotalTq.YTB<0){
-            var tb = "("+data.TotalTq.YTB+"↓)";
-            $(".feedTQ").html(tb);
         }
-        echartsSelf({
-            id: "chart1",
-            echartsConfig: {
-                xData: data.resultData.dateLine,
-                series: [{
-                    type: 'line',
-                    dataList: data.resultData.newFeed,
-                    typeLine: 'solid'
-                },
-                    {
-                        type: 'line',
-                        dataList: data.resultData.oldFeed,
-                        typeLine: 'dashed'
-                    }
-                ]
-            }
-        });
-    }
-    function getNetEc(data){
-        $(".netTotal").html(data.TotalTq.WTotal);
-        if(data.TotalTq.WTB>0){
-            var tb = "("+data.TotalTq.WTB+"↑)";
-            $(".netTQ").html(tb);
-        }else if(data.TotalTq.WTB==0){
-            var tb = "("+data.TotalTq.WTB+"→)";
-            $(".netTQ").html(tb);
-        }else if(data.TotalTq.WTB<0){
-            var tb = "("+data.TotalTq.WTB+"↓)";
-            $(".netTQ").html(tb);
-        }
-        echartsSelf({
-            id: "chart2",
-            echartsConfig: {
-                xData: data.resultData.dateLine,
-                series: [{
-                    type: 'line',
-                    dataList: data.resultData.newNet,
-                    typeLine: 'solid'
+    });
+}
+//3 --加载换热站站单耗
+function loadOrgStationDH() {
+    var type = $("#thirdType").val();
+    var unittype = "3";
+    var data = $("#searchTools").serialize();
+    $.ajax({
+        url: _web + "/third/analysis/water/detail/" + type + "/" + unittype,
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            getStationEc(data,type);
 
-                },
-                    {
-                        type: 'line',
-                        dataList: data.resultData.oldNet,
-                        typeLine: 'dashed'
-                    }
-                ]
-            }
-        });
-    }
-    function getStationEc(data){
-        $(".stationTotal").html(data.TotalTq.ZTotal);
-        if(data.TotalTq.ZTB>0){
-            var tb = "("+data.TotalTq.ZTB+"↑)";
-            $(".stationTQ").html(tb);
-        }else if(data.TotalTq.ZTB==0){
-            var tb = "("+data.TotalTq.ZTB+"→)";
-            $(".stationTQ").html(tb);
-        }else if(data.TotalTq.ZTB<0){
-            var tb = "("+data.TotalTq.ZTB+"↓)";
-            $(".stationTQ").html(tb);
+        }
+    });
+}
+
+//4 -- 管线水单耗
+function loadOrgLineDH() {
+    var type = $("#thirdType").val();
+    var unittype = "4";
+    var data = $("#searchTools").serialize();
+    $.ajax({
+        url: _web + "/third/analysis/water/detail/" + type + "/" + unittype,
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            getLine(data,type);
+
+        }
+    });
+}
+//5 -- 民户水单耗
+function loadOrgRoomDH() {
+    var type = $("#thirdType").val();
+    var unittype = "5";
+    var data = $("#searchTools").serialize();
+    $.ajax({
+        url: _web + "/third/analysis/water/detail/" + type + "/" + unittype,
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            getRoomEc(data,type);
+
+        }
+    });
+}
+function getStationEc(data,type){
+        $("#chart3").empty();
+        chart3  =echarts.init(document.getElementById('chart3'));
+        $(".stationTotal").html(data.ZDH);
+        if(type=="1"){
+            $(".stationDw").html("T/m²");
+        }else if(type=="2"){
+            $(".stationDw").html("kW·h/m²");
+        }else if(type=="3"){
+            $(".stationDw").html("m³/m²");
+        }else if(type=="4"){
+            $(".stationDw").html("GJ/m²");
+        }else if(type=="5"){
+            $(".stationDw").html("T/m²");
+        }
+        if(data.TB>0){
+            var TB = data.TB+"<span class='arrow'>↑</span>";
+            $(".stationTQ").html(TB);
+        }else if(data.TB==0){
+            var TB = data.TB+"<span class='arrow'>→</span>";
+            $(".stationTQ").html(TB)
+        }else if(data.TB<0){
+            var TB = data.TB+"<span class='arrow'>↓</span>";
+            $(".stationTQ").html(TB)
         }
         echartsSelf({
             id: "chart3",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.newStation,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
 
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.oldStation,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
     }
-    function getLine(data){
-        $(".lineTotal").html(data.TotalTq.XTotal);
-        if(data.TotalTq.XTB>0){
-            var tb = "("+data.TotalTq.XTB+"↑)";
-            $(".lineTQ").html(tb);
-        }else if(data.TotalTq.XTB==0){
-            var tb = "("+data.TotalTq.XTB+"→)";
-            $(".lineTQ").html(tb);
-        }else if(data.TotalTq.XTB<0){
-            var tb = "("+data.TotalTq.XTB+"↓)";
-            $(".lineTQ").html(tb);
+function getFeedEc(data,type){
+        $("#chart1").empty();
+        chart1  =echarts.init(document.getElementById('chart1'));
+            $(".feedTotal").html(data.ZDH);
+        if(type=="1"){
+            $(".feedDw").html("T/m²");
+        }else if(type=="2"){
+            $(".feedDw").html("kW·h/m²");
+        }else if(type=="3"){
+            $(".feedDw").html("m³/m²");
+        }else if(type=="4"){
+            $(".feedDw").html("GJ/m²");
+        }else if(type=="5"){
+            $(".feedDw").html("T/m²");
+        }
+        if(data.TB>0){
+            var TB = data.TB+"<span class='arrow'>↑</span>";
+            $(".feedTQ").html(TB);
+        }else if(data.TB==0){
+            var TB = data.TB+"<span class='arrow'>→</span>";
+            $(".feedTQ").html(TB)
+        }else if(data.TB<0){
+            var TB = data.TB+"<span class='arrow'>↓</span>";
+            $(".feedTQ").html(TB)
+        }
+        echartsSelf({
+            id: "chart1",
+            echartsConfig: {
+                xData: data.xdatas,
+                series: [{
+                    type: 'line',
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
+                    typeLine: 'solid'
+                },
+                    {
+                        type: 'line',
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
+                        typeLine: 'dashed'
+                    }
+                ]
+            }
+        });
+    }
+    function getNetEc(data,type){
+        $("#chart2").empty();
+        chart2  =echarts.init(document.getElementById('chart2'));
+        $(".netTotal").html(data.ZDH)
+        if(type=="1"){
+            $(".netDw").html("T/m²");
+        }else if(type=="2"){
+            $(".netDw").html("kW·h/m²");
+        }else if(type=="3"){
+            $(".netDw").html("m³/m²");
+        }else if(type=="4"){
+            $(".netDw").html("GJ/m²");
+        }else if(type=="5"){
+            $(".netDw").html("T/m²");
+        }
+        if(data.TB>0){
+            var TB = data.TB+"<span class='arrow'>↑</span>";
+            $(".netTQ").html(TB);
+        }else if(data.TB==0){
+            var TB = data.TB+"<span class='arrow'>→</span>";
+            $(".netTQ").html(TB)
+        }else if(data.TB<0){
+            var TB = data.TB+"<span class='arrow'>↓</span>";
+            $(".netTQ").html(TB)
+        }
+        echartsSelf({
+            id: "chart2",
+            echartsConfig: {
+                xData: data.xdatas,
+                series: [{
+                    type: 'line',
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
+                    typeLine: 'solid'
+
+                },
+                    {
+                        type: 'line',
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
+                        typeLine: 'dashed'
+                    }
+                ]
+            }
+        });
+    }
+    function getLine(data,type){
+        $("#chart4").empty();
+        chart4  =echarts.init(document.getElementById('chart4'));
+        $(".lineTotal").html(data.ZDH);
+            if(type=="1"){
+                $(".lineDw").html("T/m²");
+            }else if(type=="2"){
+                $(".lineDw").html("kW·h/m²");
+            }else if(type=="3"){
+                $(".lineDw").html("m³/m²");
+            }else if(type=="4"){
+                $(".lineDw").html("GJ/m²");
+            }else if(type=="5") {
+                $(".lineDw").html("T/m²");
+            }
+        if(data.TB>0){
+        var TB = data.TB+"<span class='arrow'>↑</span>";
+        $(".lineTQ").html(TB);
+        }else if(data.TB==0){
+            var TB = data.TB+"<span class='arrow'>→</span>";
+            $(".lineTQ").html(TB)
+        }else if(data.TB<0){
+            var TB = data.TB+"<span class='arrow'>↓</span>";
+            $(".lineTQ").html(TB)
         }
         echartsSelf({
             id: "chart4",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.newLine,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
 
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.oldLine,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
     }
-    function getRoomEc(data){
-        $(".roomTotal").html(data.TotalTq.HTotal);
-        if(data.TotalTq.HTB>0){
-            var tb = "("+data.TotalTq.HTB+"↑)";
-            $(".roomTQ").html(tb);
-        }else if(data.TotalTq.HTB==0){
-            var tb = "("+data.TotalTq.HTB+"→)";
-            $(".roomTQ").html(tb);
-        }else if(data.TotalTq.HTB<0){
-            var tb = "("+data.TotalTq.HTB+"↓)";
-            $(".roomTQ").html(tb);
+    function getRoomEc(data,type){
+        $("#chart5").empty();
+        chart5  =echarts.init(document.getElementById('chart5'));
+        $(".roomTotal").html(data.ZDH);
+        if(type=="1"){
+            $(".roomDw").html("T/m²");
+        }else if(type=="2"){
+            $(".roomDw").html("kW·h/m²");
+        }else if(type=="3"){
+            $(".roomDw").html("m³/m²");
+        }else if(type=="4"){
+            $(".roomDw").html("GJ/m²");
+        }else if(type=="5") {
+            $(".roomDw").html("T/m²");
+        }
+        if(data.TB>0){
+            var TB = data.TB+"<span class='arrow'>↑</span>";
+            $(".roomTQ").html(TB);
+        }else if(data.TB==0){
+            var TB = data.TB+"<span class='arrow'>→</span>";
+            $(".roomTQ").html(TB)
+        }else if(data.TB<0){
+            var TB = data.TB+"<span class='arrow'>↓</span>";
+            $(".roomTQ").html(TB)
         }
         echartsSelf({
             id: "chart5",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.newRoom,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
 
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.oldRoom,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
-    }
+
 }
 //加载热源的单耗排名
 function feedDh(data){
@@ -415,82 +560,17 @@ function stationDh(data){
 }
 function loadDataFun() {
     createtable();
-//    $.each($(".energy-list .energy-chart > div"), function(index, item) {
-//        var options = {
-//            id: item.id,
-//            echartsConfig: {
-//
-//                xData: [1, 2, 3, 4, 5, 6, 7],
-//                series: [{
-//                    type: 'line',
-//                    dataList: [1, 4, 5, 2, 3],
-//                    typeLine: 'solid'
-//
-//                },
-//                    {
-//                        type: 'line',
-//                        dataList: [2, 4, 7, 1, 4, 5],
-//                        typeLine: 'dashed'
-//                    }
-//                ]
-//            }
-//        };
-//        echartsSelf(options);
-    // });
-//
-//    echartsSelf({
-//        id: "groupEnergyChart",
-//        echartsConfig: {
-//            xData: [1, 2, 3, 4, 5, 6, 7, 8],
-//            series: [{
-//                type: 'line',
-//                dataList: [1, 4, 5, 2, 3, 6],
-//                typeLine: 'solid'
-//
-//            },
-//                {
-//                    type: 'line',
-//                    dataList: [2, 4, 7, 1, 4, 5],
-//                    typeLine: 'dashed'
-//                }
-//            ]
-//        }
-//    });
 
-//    echartsSelf({
-//        id: 'piechart_as',
-//        echartsConfig: {
-//            axisLabelRotate: '-50', //倾斜角度
-//            xAxisBoundaryGap: true,
-//            dataZoom: true,
-//            dataZoomstartValue: 0,
-//            dataZoomendValue: 9,
-//            bg: 'row',
-//            xData: ['站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3', '站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3'],
-//            series: [{
-//                type: 'bar',
-//                dataList: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3],
-//                barWidth: 20
-//            }]
-//        }
-//    });
-//
-//    echartsSelf({
-//        id: 'linechart_as',
-//        echartsConfig: {
-//            axisLabelRotate: '-50', //倾斜角度
-//            xAxisBoundaryGap: true,
-//            dataZoom: true,
-//            dataZoomstartValue: 0,
-//            dataZoomendValue: 9,
-//            bg: 'row',
-//            xData: ['站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3', '站1', '站2', '站3', '站4', '站5', '站6', '站7', '站1', '站2', '站3'],
-//            series: [{
-//                type: 'bar',
-//                dataList: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3],
-//                barWidth: 20
-//
-//            }]
-//        }
-//    });
 }
+window.onresize = function(){
+    $(".energy-chart").resize();
+    chart1.resize();
+    chart2.resize();
+    chart3.resize();
+    chart4.resize();
+    chart5.resize();
+
+    piechart_as.resize();
+    linechart_as.resize();
+}
+

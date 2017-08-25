@@ -141,6 +141,7 @@ function loadDataFun(){
             	$("#groupchangeRate").html("0" + "<span class='arrow'>→</span>");
             }
             //水单耗
+            console.log(data.data.waterTotal.energy.value);
             $("#waterTotal").html(data.data.waterTotal.energy.value);
             if(data.data.waterTotal.energy.type == 1){
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh");

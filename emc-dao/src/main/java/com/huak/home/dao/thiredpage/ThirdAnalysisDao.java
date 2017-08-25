@@ -20,11 +20,25 @@ import java.util.Map;
 @Repository
 public interface ThirdAnalysisDao {
 
+    /**
+     * 计算折线图本期和同期数据
+     * @param map
+     * @return
+     */
     List<Map<String,Object>> getWaterDhDetail(Map<String,Object> map);
+    List<Map<String,Object>> getWaterDhDetailTq(Map<String,Object> map);
+
+    /**
+     *同期总值和同期比的计算
+     * @param map
+     * @return
+     */
+    Map<String,Object> getTotalAndBq(Map<String,Object> map);
+    Map<String,Object> getTotalAndTq(Map<String,Object> map);
 
     List<Map<String,Object>> getWaterDhOrg(Map<String,Object> map);
 
-    Map<String,Object> getTotalAndTq(Map<String,Object> map);
+
 
     Map<String,Object> getTotalOrgAndTq(Map<String,Object> map);
 

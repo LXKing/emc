@@ -17,6 +17,7 @@ import java.util.Map;
  * Function List:  <BR>
  */
 public interface ConsAnalysisService {
+
     /**
      * 查询分公司列表
      * @param params
@@ -65,5 +66,15 @@ public interface ConsAnalysisService {
      * @return
      */
 	public Map<String, Object> groupDanHaoLine(Map<String, String> params) throws Exception;
-	
+
+
+    /**
+     * 折线图本期数据查询，（3级页面和2级页面通用的）
+     */
+    public List<Map<String,Object>> getDhDetailBq(Map<String,Object> map);
+
+    /**
+     * 折线图同期数据查询，（3级页面和2级页面通用的）
+     */
+    public List<Map<String,Object>> getDhDetailTq(Map<String,Object> map);
 }

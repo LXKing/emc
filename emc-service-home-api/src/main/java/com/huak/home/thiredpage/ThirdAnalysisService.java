@@ -21,9 +21,18 @@ public interface ThirdAnalysisService {
      */
     public List<Map<String,Object>> getWaterDhDetail(Map<String,Object> map);
     /**
-     * 三级页面水能耗明细查询 总值和同比
+     * 三级页面水能耗明细查询同期
+     */
+    public List<Map<String,Object>> getWaterDhDetailTq(Map<String,Object> map);
+
+    /**
+     * 三级页面水能耗明细查询 总值和同比(TQ)
      */
     public Map<String,Object> getWaterDhAndTQ(Map<String,Object> map);
+    /**
+     * 三级页面水能耗明细查询 总值和同比(BQ)
+     */
+    public Map<String,Object> getWaterDhAndBQ(Map<String,Object> map);
 
     /**
      * 三级页面水能耗 (源，网，站，线，户)
