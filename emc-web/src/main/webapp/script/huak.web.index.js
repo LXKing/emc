@@ -104,7 +104,7 @@
             }
 
         });
-//管网数据去取
+        //管网数据去取
         $.ajax({
             url: _web + "/energy/top/net",
             type: "GET",
