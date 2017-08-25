@@ -59,9 +59,9 @@ var echartsSelf = function(options) {
                 trigger: 'axis'
             },
             grid: {
-                left: '15',
+                left: '0',
                 top: '10',
-                right: '40',
+                right: '0',
                 bottom: options.echartsConfig.dataZoom ? '80' : '10',
                 containLabel: true
             },
