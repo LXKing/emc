@@ -48,7 +48,6 @@ function initTable(){
         data: data,
         dataType: "json",
         success: function (result) {
-
             thirdTable(result.object);
         }
     });
