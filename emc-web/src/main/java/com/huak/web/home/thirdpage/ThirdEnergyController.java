@@ -273,7 +273,6 @@ public class ThirdEnergyController extends BaseController {
         return jo.toJSONString();
     }
 
-
     /**
      *三级页面-用能单位类型-个能源能耗趋势加载
      * sunbinbin
