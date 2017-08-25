@@ -576,7 +576,9 @@
         WHERE
         fdh.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
         AND fdh.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
-        and eet.TYPE='1'
+        <if test="type!=null and type!=''">
+            and eet.TYPE=#{type,jdbcType=VARCHAR}
+        </if>
         GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
         GROUP BY vu.UNITID,vu.UNITNAME,d1.TYPE) f
         GROUP BY f.UNITID,f.UNITNAME,f.TYPE
@@ -608,7 +610,9 @@
         WHERE
         fdh.DOSAGE_TIME &gt;= #{startTime,jdbcType=VARCHAR}
         AND fdh.DOSAGE_TIME &lt;= #{endTime,jdbcType=VARCHAR}
-        and eet.TYPE='1'
+        <if test="type!=null and type!=''">
+            and eet.TYPE=#{type,jdbcType=VARCHAR}
+        </if>
         GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
         GROUP BY vu.UNITID,vu.UNITNAME,d1.TYPE) f
         GROUP BY f.UNITID,f.UNITNAME,f.TYPE
@@ -647,7 +651,7 @@
         <if test="comId != null and comId !=''">
             AND fdh.COMID= #{comId}
         </if>
-        <if test="energytype != null and energytype !=''">
+        <if test="type != null and type !=''">
             and eet.TYPE = #{type,jdbcType=VARCHAR}
         </if>
 
@@ -674,7 +678,7 @@
         DOSAGE_TIME
         FROM t_emc_final_data_hour_tj fdh,t_emc_energy_type eet WHERE fdh.TYPEID = eet.ID
         <if test="comId != null and comId !=''">AND fdh.COMID= #{comId} </if>
-        <if test="energytype != null and energytype !=''">and eet.TYPE = #{energytype,jdbcType=VARCHAR}</if>
+        <if test="type != null and type !=''">and eet.TYPE = #{type,jdbcType=VARCHAR}</if>
 
         <if test="startTimeTq!=null and startTimeTq!=''">
             and fdh.DOSAGE_TIME <![CDATA[>=]]> #{startTimeTq,jdbcType=VARCHAR}
@@ -767,7 +771,7 @@
         <if test="comId != null and comId !=''">
             AND fdh.COMID= #{comId}
         </if>
-        <if test="energytype != null and energytype !=''">
+        <if test="type != null and type !=''">
             and eet.TYPE = #{type,jdbcType=VARCHAR}
         </if>
 
