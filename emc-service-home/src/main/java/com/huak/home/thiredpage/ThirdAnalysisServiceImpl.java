@@ -29,13 +29,26 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     private static String unitType = "unitType";
     private static String unitName = "unitName";
     private static String UNIT_NAME = "unitName";
-    private static String[] TYPE_NAME = {"水(T/m²)","电(kW·h/m²)","气(m³/m²)","热(GJ/m²)","煤(T/m²)","油(L/m²)"};
+    private static  List<Object> TYPE_NAME = new ArrayList<Object>(){
+        {
+            add("水(T)");
+            add("电(kWh)");
+            add("气(m³)");
+            add("热(GJ)");
+            add("煤(T)");
+            add("油(L)");
+        }
+    };
     private static String[] UNITTYPEARR = {"1","2","3","4","5","6"};
     private static String TOTAL_CURRENT_YEAR = "totalcurrentyear";
     private static String CURRENT_YEAR = "currentYear";
     private static String START_TIME = "startTime";
     private static String END_TIME = "endTime";
-
+    private static String feedTotal="feedTotal";
+    private static String stationTotal="stationTotal";
+    private static String netTotal="netTotal";
+    private static String lineTotal="lineTotal";
+    private static String roomTotal="roomTotal";
     @Resource
     private ThirdAnalysisDao thirdAnalysisDao;
     @Resource
@@ -181,19 +194,19 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         if(null !=totalMap && !totalMap.isEmpty()) {
             for (Map data1 : totalMap) {
                 if ("1".equals(data1.get(type1))) {
-                    result.put("feedTotal", data1);
+                    result.put(feedTotal, data1);
                 }
                 if ("2".equals(data1.get(type1))) {
-                    result.put("netTotal", data1);
+                    result.put(netTotal, data1);
                 }
                 if ("3".equals(data1.get(type1))) {
-                    result.put("stationTotal", data1);
+                    result.put(stationTotal, data1);
                 }
                 if ("4".equals(data1.get(type1))) {
-                    result.put("lineTotal", data1);
+                    result.put(lineTotal, data1);
                 }
                 if ("5".equals(data1.get(type1))) {
-                    result.put("roomTotal", data1);
+                    result.put(roomTotal, data1);
                 }
             }
         }else{
@@ -211,22 +224,22 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
                 if(type.equals("1")){
                     temap.put(unitName,"源");
                     temap.put(unitType,type);
-                    result.put("feedTotal", temap);
+                    result.put(feedTotal, temap);
                 }
                 if(type.equals("2")){
                     temap.put(unitName,"网");
                     temap.put(unitType,type);
-                    result.put("netTotal", temap);
+                    result.put(netTotal, temap);
                 }
                 if(type.equals("3")){
                     temap.put(unitName,"站");
                     temap.put(unitType,type);
-                    result.put("stationTotal", temap);
+                    result.put(stationTotal, temap);
                 }
                 if(type.equals("4")){
                     temap.put(unitName,"线");
                     temap.put(unitType,type);
-                    result.put("lineTotal", temap);
+                    result.put(lineTotal, temap);
                 }
                 if(type.equals("5")){
                     temap.put(unitName,"户");
@@ -366,21 +379,22 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         if(null !=totalMap && !totalMap.isEmpty()) {
             for (Map data1 : totalMap) {
                 if ("1".equals(data1.get(UNIT_TYPE))) {
-                    result.put("feedTotal", data1);
+                    result.put(feedTotal, data1);
                 }
                 if ("2".equals(data1.get(UNIT_TYPE))) {
-                    result.put("netTotal", data1);
+                    result.put(netTotal, data1);
                 }
                 if ("3".equals(data1.get(UNIT_TYPE))) {
-                    result.put("stationTotal", data1);
+                    result.put(stationTotal, data1);
                 }
                 if ("4".equals(data1.get(UNIT_TYPE))) {
-                    result.put("lineTotal", data1);
+                    result.put(lineTotal, data1);
                 }
                 if ("5".equals(data1.get(UNIT_TYPE))) {
-                    result.put("roomTotal", data1);
+                    result.put(roomTotal, data1);
                 }
             }
+
         }else{
             Map<String, Object> temap = new HashMap<>();
 
