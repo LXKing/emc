@@ -11,5 +11,5 @@ package com.huak.mdc;
  * Description:     <BR>
  * Function List:  <BR>
  */
-public interface MeterCollectServiceImpl {
+public class MeterCollectServiceImpl implements MeterCollectService {
 }
