@@ -110,4 +110,18 @@ public class EnergyDataHis implements Serializable {
     public void setPrestoreNum(Double prestoreNum) {
         this.prestoreNum = prestoreNum;
     }
+
+    @Override
+    public String toString() {
+        return "EnergyDataHis{" +
+                "id='" + id + '\'' +
+                ", collectId='" + collectId + '\'' +
+                ", collectNum=" + collectNum +
+                ", collectTime='" + collectTime + '\'' +
+                ", ischange=" + ischange +
+                ", changeNum=" + changeNum +
+                ", isprestore=" + isprestore +
+                ", prestoreNum=" + prestoreNum +
+                '}';
+    }
 }

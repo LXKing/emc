@@ -2,6 +2,8 @@ package com.huak.mdc;
 
 import com.huak.mdc.model.EnergyDataHis;
 
+import java.util.List;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -15,8 +17,8 @@ import com.huak.mdc.model.EnergyDataHis;
  */
 public interface EnergyDataHisService {
     /**
-     * 保存能耗数据
-     * @param energyDataHis
+     * 批量保存能耗数据
+     * @param dataHisList
      */
-    public void saveEnergyData(EnergyDataHis energyDataHis);
+    public boolean saveEnergyDatas(List<EnergyDataHis> dataHisList);
 }
