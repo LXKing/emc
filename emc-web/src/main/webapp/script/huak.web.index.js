@@ -1373,8 +1373,6 @@ function chart07Fun() {
 
 }
 
-
-
 /*能耗明细图表初始化*/
 function initChart(kedu1, mx, bm_total) {
     bm_total = toDecimal(bm_total);
