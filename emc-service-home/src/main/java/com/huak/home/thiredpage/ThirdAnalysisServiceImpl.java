@@ -394,6 +394,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
                     result.put(roomTotal, data1);
                 }
             }
+
         }else{
             Map<String, Object> temap = new HashMap<>();
 
