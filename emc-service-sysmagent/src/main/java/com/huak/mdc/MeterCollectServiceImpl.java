@@ -1,5 +1,7 @@
 package com.huak.mdc;
 
+import javax.annotation.Resource;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -11,5 +13,6 @@ package com.huak.mdc;
  * Description:     <BR>
  * Function List:  <BR>
  */
+@Resource
 public class MeterCollectServiceImpl implements MeterCollectService {
 }

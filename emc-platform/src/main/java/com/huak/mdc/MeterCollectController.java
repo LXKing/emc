@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MeterCollectController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicLong counter = new AtomicLong(0L);
-    private  String finalDirPath = "C:\\Users\\Bin\\Desktop\\data0\\uploads";
+    private  String finalDirPath = "/upload";
     @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String add(HttpServletRequest request,HttpServletResponse response) {
