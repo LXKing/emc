@@ -5,10 +5,10 @@
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COLLECT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="PRESTORE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="PRESTORE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="USED_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="PRESTORE_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CRESTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>

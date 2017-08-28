@@ -1,7 +1,6 @@
 package com.huak.mdc.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -23,7 +22,7 @@ public class EnergyDataHis implements Serializable {
 
     private Double collectNum;
 
-    private Date collectTime;
+    private String collectTime;
 
     private Byte ischange;
 
@@ -33,7 +32,7 @@ public class EnergyDataHis implements Serializable {
 
     private Double prestoreNum;
 
-    public EnergyDataHis(String id, String collectId, Double collectNum, Date collectTime, Byte ischange, Double changeNum, Byte isprestore, Double prestoreNum) {
+    public EnergyDataHis(String id, String collectId, Double collectNum, String collectTime, Byte ischange, Double changeNum, Byte isprestore, Double prestoreNum) {
         this.id = id;
         this.collectId = collectId;
         this.collectNum = collectNum;
@@ -72,11 +71,11 @@ public class EnergyDataHis implements Serializable {
         this.collectNum = collectNum;
     }
 
-    public Date getCollectTime() {
+    public String getCollectTime() {
         return collectTime;
     }
 
-    public void setCollectTime(Date collectTime) {
+    public void setCollectTime(String collectTime) {
         this.collectTime = collectTime;
     }
 

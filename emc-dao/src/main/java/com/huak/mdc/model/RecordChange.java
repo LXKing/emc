@@ -1,7 +1,6 @@
 package com.huak.mdc.model;
 
 import java.io.Serializable;
-import java.util.Date;
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -19,7 +18,7 @@ public class RecordChange  implements Serializable {
 
     private String collectId;
 
-    private Date changeTime;
+    private String changeTime;
 
     private Double usedNum;
 
@@ -29,11 +28,11 @@ public class RecordChange  implements Serializable {
 
     private Double newCoef;
 
-    private Date createTime;
+    private String createTime;
 
     private String crestor;
 
-    public RecordChange(String id, String collectId, Date changeTime, Double usedNum, Double newNum, Double usedCoef, Double newCoef, Date createTime, String crestor) {
+    public RecordChange(String id, String collectId, String changeTime, Double usedNum, Double newNum, Double usedCoef, Double newCoef, String createTime, String crestor) {
         this.id = id;
         this.collectId = collectId;
         this.changeTime = changeTime;
@@ -65,11 +64,11 @@ public class RecordChange  implements Serializable {
         this.collectId = collectId == null ? null : collectId.trim();
     }
 
-    public Date getChangeTime() {
+    public String getChangeTime() {
         return changeTime;
     }
 
-    public void setChangeTime(Date changeTime) {
+    public void setChangeTime(String changeTime) {
         this.changeTime = changeTime;
     }
 
@@ -105,11 +104,11 @@ public class RecordChange  implements Serializable {
         this.newCoef = newCoef;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

@@ -6,7 +6,7 @@
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COLLECT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COLLECT_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="COLLECT_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="COLLECT_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ISCHANGE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="CHANGE_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="ISPRESTORE" javaType="java.lang.Byte" jdbcType="TINYINT" />
