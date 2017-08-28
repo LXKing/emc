@@ -11,5 +11,10 @@ package com.huak.mdc;
  * Description:     <BR>
  * Function List:  <BR>
  */
+
 public interface MeterCollectService {
+    /**
+     * 计量器具管理查询
+     */
+
 }
