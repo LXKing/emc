@@ -127,4 +127,9 @@
     <dubbo:service interface="com.huak.sys.EnergyProjectService" ref="energyProjectService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="meterCollectService" class="com.huak.mdc.MeterCollectServiceImpl"></bean>
+    <dubbo:service interface="com.huak.mdc.MeterCollectService" ref="meterCollectService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
 </beans>

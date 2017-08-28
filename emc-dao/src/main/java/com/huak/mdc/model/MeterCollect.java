@@ -1,6 +1,8 @@
 package com.huak.mdc.model;
 
-public class MeterCollect {
+import java.io.Serializable;
+
+public class MeterCollect implements Serializable{
     private String id;
 
     private String code;
