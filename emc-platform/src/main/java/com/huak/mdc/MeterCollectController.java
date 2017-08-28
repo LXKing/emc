@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.utils.MultipartFileParam;
 import com.huak.common.utils.MultipartFileUploadUtil;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,16 +18,19 @@ import java.io.RandomAccessFile;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * 计量仪器管理
  * Created by MR-BIN on 2017/8/28.
  */
 @RequestMapping("/meterCollect")
 @Controller
 public class MeterCollectController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicLong counter = new AtomicLong(0L);
     private  String finalDirPath = "C:\\Users\\Bin\\Desktop\\data0\\uploads";
     @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String add(HttpServletRequest request,HttpServletResponse response) {
+        logger.info("后台-计量器具导入开始");
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
         System.out.println(prefix + "start !!!");
         JSONObject jo = new JSONObject();
@@ -54,7 +59,7 @@ public class MeterCollectController {
                 jo.put("flag",1);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info("后台-计量器具导入出错"+ e);
             jo.put("flag",2);
         }
         return jo.toJSONString();
