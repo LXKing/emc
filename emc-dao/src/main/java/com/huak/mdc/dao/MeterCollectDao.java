@@ -2,6 +2,10 @@ package com.huak.mdc.dao;
 
 import com.huak.mdc.model.MeterCollect;
 
+
+import java.util.List;
+import java.util.Map;
+
 public interface MeterCollectDao {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +18,8 @@ public interface MeterCollectDao {
     int updateByPrimaryKeySelective(MeterCollect record);
 
     int updateByPrimaryKey(MeterCollect record);
+
+    List<MeterCollect> selectPageByMap(Map<String,Object> paramsMap);
+
+    List<Map<String,Object>> selectAllByMap(Map<String, Object> paramsMap);
 }

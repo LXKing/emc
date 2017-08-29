@@ -47,6 +47,8 @@ public class ThirdAnalysisController extends BaseController {
     @Autowired
     private ThirdAnalysisService thirdAnalysisService;
     private static  String ENERGY_TYPE = "energytype";
+    private static  String ORG_TYPE = "orgType";
+    private static String coding="UTF-8";
     /**
      * 跳转三级单耗页面
      * @param model
@@ -92,14 +94,14 @@ public class ThirdAnalysisController extends BaseController {
                               @PathVariable("type")String type,
                               @PathVariable("unittype")String unittype){
         logger.info("计算水单耗");
-        DecimalFormat  df   = new DecimalFormat("######0.00");
+        DecimalFormat  df   = new DecimalFormat("######0.0");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
         if(type!=null&&!"".equals(type)){
             params.put("type",type);
         }
         if(unittype!=null&&!"".equals(unittype)&&!"0".equals(unittype)){
-            params.put("orgType",unittype);
+            params.put(ORG_TYPE,unittype);
         }
         String start = params.get("startTime").toString();
         String end = params.get("endTime").toString();
@@ -221,8 +223,9 @@ public class ThirdAnalysisController extends BaseController {
         }
         return jo.toJSONString();
     }
+
     /**
-     * 水单耗明细
+     * 分公司单耗明细
      */
     @RequestMapping(value = "/fgs/detail/{orgId}", method = RequestMethod.GET)
     @ResponseBody
@@ -427,7 +430,7 @@ public class ThirdAnalysisController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thirdAnalysisService.getUnitEnergyDetail(paramsMap);
             if (map!= null) {
@@ -458,7 +461,7 @@ public class ThirdAnalysisController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thirdAnalysisService.getUnitAssessments(paramsMap);
             if (map!= null) {
@@ -489,7 +492,7 @@ public class ThirdAnalysisController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             paramsMap.put(ENERGY_TYPE,energyType);
             Map<String,Object> map =  thirdAnalysisService.getUnitAllAssessment(paramsMap);
             if (map!= null) {
@@ -518,7 +521,7 @@ public class ThirdAnalysisController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgType",type);
+            paramsMap.put(ORG_TYPE,type);
             Map<String,Object> map =  thirdAnalysisService.getThirdTableList(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -551,15 +554,72 @@ public class ThirdAnalysisController extends BaseController {
             //response输出流导出excel
             String mimetype = "application/vnd.ms-excel";
             response.setContentType(mimetype);
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding(coding);
             String fileName = workBookName + ".xls";
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, coding));
             out = response.getOutputStream();
             wb.write(out);
             out.flush();
             out.close();
         } catch (Exception e) {
             logger.error("导出能源类型单耗明细列表EXCEL异常" + e.getMessage());
+        }
+    }
+    @RequestMapping(value = "/fgs/export/{id}", method = RequestMethod.GET)
+    public void exportFgsEngsergy(ToolVO toolVO, HttpServletResponse response, HttpServletRequest request,@PathVariable("id")String id) {
+        logger.info("导出分公司单耗明细列表EXCEL");
+
+        String workBookName = "分公司单耗明细列表";//文件名
+        OutputStream out = null;
+        try {
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+            params.put("id",id);
+
+            Map<String, Object> map =  thirdAnalysisService.getThirdTables(params);
+
+            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding(coding);
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, coding));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            logger.error("导出分公司单耗明细列表EXCEL异常" + e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/unit/export/{type}", method = RequestMethod.GET)
+    public void exportUnitEngsergy(ToolVO toolVO, HttpServletResponse response, HttpServletRequest request,@PathVariable("type")String type) {
+        logger.info("导出能源单位单耗明细列表EXCEL");
+
+        String workBookName = "能源单位单耗明细列表";//文件名
+        OutputStream out = null;
+        try {
+            /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+            params.put("type",type);
+
+            Map<String, Object> map =  thirdAnalysisService.getThirdTableList(params);
+
+            HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding(coding);
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, coding));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            logger.error("导出能源单位单耗明细列表EXCEL异常" + e.getMessage());
         }
     }
 }

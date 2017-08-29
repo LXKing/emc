@@ -1,6 +1,10 @@
 package com.huak.mdc.model;
 
-public class MeterCollect {
+import java.io.Serializable;
+
+public class MeterCollect implements Serializable{
+
+    private static final long serialVersionUID = -2047226685880359589L;
     private String id;
 
     private String code;
@@ -16,6 +20,8 @@ public class MeterCollect {
     private Byte istotal;
 
     private String unitId;
+
+    private String unitname;
 
     private Byte unitType;
 
@@ -35,7 +41,7 @@ public class MeterCollect {
 
     private String comId;
 
-    public MeterCollect(String id, String code, String name, String serialNo, String energyTypeId, Byte isreal, Byte istotal, String unitId, Byte unitType, Byte isauto, String depict, String tag, Byte coef, String formula, Byte isprestore, Byte isdelete, String comId) {
+    public MeterCollect(String id, String code, String name, String serialNo, String energyTypeId, Byte isreal, Byte istotal, String unitId, String unitname, Byte unitType, Byte isauto, String depict, String tag, Byte coef, String formula, Byte isprestore, Byte isdelete, String comId) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -44,6 +50,7 @@ public class MeterCollect {
         this.isreal = isreal;
         this.istotal = istotal;
         this.unitId = unitId;
+        this.unitname=unitname;
         this.unitType = unitType;
         this.isauto = isauto;
         this.depict = depict;
@@ -121,6 +128,14 @@ public class MeterCollect {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId == null ? null : unitId.trim();
+    }
+
+    public String getUnitname() {
+        return unitname;
+    }
+
+    public void setUnitname(String unitname) {
+        this.unitname = unitname;
     }
 
     public Byte getUnitType() {

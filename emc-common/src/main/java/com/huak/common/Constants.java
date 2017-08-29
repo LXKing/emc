@@ -1,5 +1,8 @@
 package com.huak.common;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:eccp<BR>
@@ -109,4 +112,22 @@ public class Constants {
     public final static String SESSION_COM_KEY = "com_key";
     public static final String XAXIS = "xaxis";
     public static final String LEGENDS = "legends";
+    public static Map<String,String> CELL_NAME = new LinkedHashMap<>();
+    static {
+        CELL_NAME.put("CODE", "代码");
+        CELL_NAME.put("NAME", "名称");
+        CELL_NAME.put("ENERGY_TYPE_ID", "能源类型");
+        CELL_NAME.put("ISREAL", "实虚表");
+        CELL_NAME.put("ISTOTAL", "是否总表");
+        CELL_NAME.put("COEF", "系数");
+        CELL_NAME.put("UNIT_ID", "用能单位");
+        CELL_NAME.put("UNIT_TYPE", "单位类型");
+        CELL_NAME.put("ISAUTO", "自动采集");
+        CELL_NAME.put("TAG", "点表");
+        CELL_NAME.put("FORMULA", "公式");
+        CELL_NAME.put("ISPRESTORE", "预存");
+        CELL_NAME.put("ISDELETE", "删除标识");
+        CELL_NAME.put("DEPICT", "描述");
+        CELL_NAME.put("SERIAL_NO", "出厂编号");
+    }
 }

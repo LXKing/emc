@@ -233,4 +233,151 @@
       COM_ID = #{comId,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_meter_collect
+        where 1=1
+
+        <if test="code != null and code!=''">
+           and CODE = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null and name!=''">
+           and NAME = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="serialNo != null and serialNo!=''">
+            and SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
+        </if>
+        <if test="energyTypeId != null and energyTypeId!=''">
+            and ENERGY_TYPE_ID = #{energyTypeId,jdbcType=VARCHAR}
+        </if>
+        <if test="isreal != null and isreal !=''">
+            and ISREAL = #{isreal,jdbcType=TINYINT}
+        </if>
+        <if test="istotal != null and istotal!=''">
+            and ISTOTAL = #{istotal,jdbcType=TINYINT}
+        </if>
+        <if test="unitId != null and unitId!=''">
+            and UNIT_ID = #{unitId,jdbcType=VARCHAR}
+        </if>
+        <if test="unitType != null and unitType!=''">
+            and  UNIT_TYPE = #{unitType,jdbcType=TINYINT}
+        </if>
+        <if test="isauto != null and isauto!=''">
+            and ISAUTO = #{isauto,jdbcType=TINYINT}
+        </if>
+        <if test="depict != null and depict!=''">
+            and  DEPICT = #{depict,jdbcType=VARCHAR}
+        </if>
+        <if test="tag != null and tag!=''">
+            and TAG = #{tag,jdbcType=VARCHAR}
+        </if>
+        <if test="coef != null and coef!=''">
+            and COEF = #{coef,jdbcType=TINYINT}
+        </if>
+        <if test="formula != null and formula!=''">
+            and FORMULA = #{formula,jdbcType=VARCHAR}
+        </if>
+        <if test="isprestore != null and isprestore!=''">
+            and ISPRESTORE = #{isprestore,jdbcType=TINYINT}
+        </if>
+        <if test="isdelete != null and isdelete!=''">
+            and ISDELETE = #{isdelete,jdbcType=TINYINT}
+        </if>
+        <if test="comId != null and comId!=''">
+            and COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        order by id
+    </select>
+
+    <select id="selectAllByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        a.ID,
+        a. CODE,
+        a. NAME,
+        a.SERIAL_NO,
+        d.NAME_ZH AS ENERGY_TYPE_ID,
+        (CASE a.ISREAL WHEN 0 THEN '实表' WHEN 1 THEN '虚表'  ELSE '' END )  ISREAL,
+        (CASE a.ISTOTAL WHEN 0 THEN '否' WHEN 1 THEN '单位总表' WHEN 2 THEN '系统总表' ELSE '' END ) ISTOTAL,
+        b.UNITNAME AS UNIT_ID,
+        (
+        CASE b.UNITTYPE
+        WHEN 1 THEN
+        '热源'
+        WHEN 2 THEN
+        '一次网'
+        WHEN 3 THEN
+        '换热站'
+        WHEN 4 THEN
+        '二次线'
+        WHEN 5 THEN
+        '用户'
+        ELSE
+        ''
+        END
+        ) AS UNIT_TYPE,
+        (CASE a.ISAUTO WHEN 0 THEN '自动采集' WHEN 1 THEN '手工' ELSE '' END ) ISAUTO,
+        a.DEPICT,
+        a.TAG,
+        a.COEF,
+        a.FORMULA,
+        (CASE a.ISPRESTORE WHEN 0 THEN '不是' WHEN 1 THEN '是'  ELSE '' END ) ISPRESTORE,
+        (CASE a.ISDELETE WHEN 0 THEN '软删除标识' WHEN 1 THEN '未删除' ELSE '' END ) ISDELETE,
+        c.CNAME AS COM_ID
+        from t_emc_meter_collect a left  join  v_emc_unit b on a.UNIT_ID = b.UNITID AND a.COM_ID = b.COMID
+        left  join t_emc_company c on a.COM_ID = c.ID
+        left  join t_emc_energy_type d on a.ENERGY_TYPE_ID = d.ID
+        where 1=1
+
+        <if test="code != null and code!=''">
+            and CODE = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null and name!=''">
+            and NAME = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="serialNo != null and serialNo!=''">
+            and SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
+        </if>
+        <if test="energyTypeId != null and energyTypeId!=''">
+            and ENERGY_TYPE_ID = #{energyTypeId,jdbcType=VARCHAR}
+        </if>
+        <if test="isreal != null and isreal !=''">
+            and ISREAL = #{isreal,jdbcType=TINYINT}
+        </if>
+        <if test="istotal != null and istotal!=''">
+            and ISTOTAL = #{istotal,jdbcType=TINYINT}
+        </if>
+        <if test="unitId != null and unitId!=''">
+            and UNIT_ID = #{unitId,jdbcType=VARCHAR}
+        </if>
+        <if test="unitType != null and unitType!=''">
+            and  UNIT_TYPE = #{unitType,jdbcType=TINYINT}
+        </if>
+        <if test="isauto != null and isauto!=''">
+            and ISAUTO = #{isauto,jdbcType=TINYINT}
+        </if>
+        <if test="depict != null and depict!=''">
+            and  DEPICT = #{depict,jdbcType=VARCHAR}
+        </if>
+        <if test="tag != null and tag!=''">
+            and TAG = #{tag,jdbcType=VARCHAR}
+        </if>
+        <if test="coef != null and coef!=''">
+            and COEF = #{coef,jdbcType=TINYINT}
+        </if>
+        <if test="formula != null and formula!=''">
+            and FORMULA = #{formula,jdbcType=VARCHAR}
+        </if>
+        <if test="isprestore != null and isprestore!=''">
+            and ISPRESTORE = #{isprestore,jdbcType=TINYINT}
+        </if>
+        <if test="isdelete != null and isdelete!=''">
+            and ISDELETE = #{isdelete,jdbcType=TINYINT}
+        </if>
+        <if test="comId != null and comId!=''">
+            and COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        order by id
+    </select>
+
 </mapper>

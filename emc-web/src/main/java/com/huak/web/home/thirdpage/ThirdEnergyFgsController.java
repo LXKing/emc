@@ -38,9 +38,8 @@ public class ThirdEnergyFgsController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ThiredpageEnergyService thiredpageEnergyService;
-
     private static  String ENERGY_TYPE = "energytype";
-
+    private static  String ORG = "orgId";
 
     /**
      *三级页面-分公司-集团能源类型的能耗趋势图数据加载
@@ -55,7 +54,7 @@ public class ThirdEnergyFgsController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         paramsMap.put("energytype","");
-        paramsMap.put("orgId",orgId);
+        paramsMap.put(ORG,orgId);
         try {
             Map<String,Object> map =  thiredpageEnergyService.getDatasAll(paramsMap);
             if (map!= null) {
@@ -87,7 +86,7 @@ public class ThirdEnergyFgsController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgId",orgId);
+            paramsMap.put(ORG,orgId);
             Map<String,Object> map =  thiredpageEnergyService.getFgsEnergyTypes(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -119,7 +118,7 @@ public class ThirdEnergyFgsController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
             paramsMap.put(ENERGY_TYPE,type);
-            paramsMap.put("orgId",orgId);
+            paramsMap.put(ORG,orgId);
             paramsMap.put("orgType",orgType);
             Map<String,Object> map =  thiredpageEnergyService.assessments(paramsMap);
             if (map!= null) {
@@ -150,7 +149,7 @@ public class ThirdEnergyFgsController extends BaseController {
         jo.put(Constants.FLAG, false);
         Map paramsMap = paramsPackageOrg(toolVO, request);
         try {
-            paramsMap.put("orgId",orgId);
+            paramsMap.put(ORG,orgId);
             Map<String, Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -179,7 +178,7 @@ public class ThirdEnergyFgsController extends BaseController {
         Map paramsMap = paramsPackageOrg(toolVO, request);
         OutputStream out = null;
         try {
-            paramsMap.put("orgId",id);
+            paramsMap.put(ORG,id);
             Map<String, Object> map =  thiredpageEnergyService.getThirdTables(paramsMap);
             HSSFWorkbook wb = CommonExcelExport.excelExportThird(map);
             out = response.getOutputStream();

@@ -244,7 +244,7 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
                 if(type.equals("5")){
                     temap.put(unitName,"户");
                     temap.put(unitType,type);
-                    result.put("roomTotal", temap);
+                    result.put(roomTotal, temap);
                 }
 
             }
@@ -420,27 +420,27 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
                 if(type.equals("1")){
                     temap.put(UNIT_NAME,"源");
                     temap.put(UNIT_TYPE,type);
-                    result.put("feedTotal", temap);
+                    result.put(feedTotal, temap);
                 }
                 if(type.equals("2")){
                     temap.put(UNIT_NAME,"网");
                     temap.put(UNIT_TYPE,type);
-                    result.put("netTotal", temap);
+                    result.put(netTotal, temap);
                 }
                 if(type.equals("3")){
                     temap.put(UNIT_NAME,"站");
                     temap.put(UNIT_TYPE,type);
-                    result.put("stationTotal", temap);
+                    result.put(stationTotal, temap);
                 }
                 if(type.equals("4")){
                     temap.put(UNIT_NAME,"线");
                     temap.put(UNIT_TYPE,type);
-                    result.put("lineTotal", temap);
+                    result.put(lineTotal, temap);
                 }
                 if(type.equals("5")){
                     temap.put(UNIT_NAME,"户");
                     temap.put(UNIT_TYPE,type);
-                    result.put("roomTotal", temap);
+                    result.put(roomTotal, temap);
                 }
 
             }
@@ -577,19 +577,19 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         if(null !=totalMap && !totalMap.isEmpty()) {
             for (Map data1 : totalMap) {
                 if ("1".equals(data1.get(UNIT_TYPE))) {
-                    result.put("feedTotal", data1);
+                    result.put(feedTotal, data1);
                 }
                 if ("2".equals(data1.get(UNIT_TYPE))) {
-                    result.put("netTotal", data1);
+                    result.put(netTotal, data1);
                 }
                 if ("3".equals(data1.get(UNIT_TYPE))) {
-                    result.put("stationTotal", data1);
+                    result.put(stationTotal, data1);
                 }
                 if ("4".equals(data1.get(UNIT_TYPE))) {
-                    result.put("lineTotal", data1);
+                    result.put(lineTotal, data1);
                 }
                 if ("5".equals(data1.get(UNIT_TYPE))) {
-                    result.put("roomTotal", data1);
+                    result.put(roomTotal, data1);
                 }
             }
         }else{
@@ -617,22 +617,22 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
                 if(type.equals("1")){
                     temap.put(UNIT_NAME,"源");
                     temap.put(UNIT_TYPE,type);
-                    result.put("feedTotal", temap);
+                    result.put(feedTotal, temap);
                 }
                 if(type.equals("2")){
                     temap.put(UNIT_NAME,"网");
                     temap.put(UNIT_TYPE,type);
-                    result.put("netTotal", temap);
+                    result.put(netTotal, temap);
                 }
                 if(type.equals("3")){
                     temap.put(UNIT_NAME,"站");
                     temap.put(UNIT_TYPE,type);
-                    result.put("stationTotal", temap);
+                    result.put(stationTotal, temap);
                 }
                 if(type.equals("4")){
                     temap.put(UNIT_NAME,"线");
                     temap.put(UNIT_TYPE,type);
-                    result.put("lineTotal", temap);
+                    result.put(lineTotal, temap);
                 }
                 if(type.equals("5")){
                     temap.put(UNIT_NAME,"户");
