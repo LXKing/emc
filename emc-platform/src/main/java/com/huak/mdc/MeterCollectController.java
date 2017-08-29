@@ -50,37 +50,8 @@ public class MeterCollectController {
     @ResponseBody
     public String add(HttpServletRequest request,HttpServletResponse response) {
         logger.info("后台-计量器具导入开始");
-        String prefix = "req_count:" + counter.incrementAndGet() + ":";
-        System.out.println(prefix + "start !!!");
         JSONObject jo = new JSONObject();
-        MultipartFileParam param = null;
-        try {
-            param = MultipartFileUploadUtil.parse(request);
-            if (param.isMultipart()) {
-                File confFile = new File(finalDirPath, param.getFileName());
-                File tmpDir = new File(finalDirPath);
-                if (!tmpDir.exists()) {
-                    tmpDir.mkdirs();
-                }
-                RandomAccessFile accessConfFile = new RandomAccessFile(confFile, "rw");
-                accessConfFile.write(param.getFileItem().get());
-                //completeList 检查是否全部完成,如果数组里是否全部都是(全部分片都成功上传)
-                byte[] completeList = FileUtils.readFileToByteArray(confFile);
-                byte isComplete = Byte.MAX_VALUE;
-                for (int i = 0; i < completeList.length && isComplete==Byte.MAX_VALUE; i++) {
-                    //与运算, 如果有部分没有完成则 isComplete 不是 Byte.MAX_VALUE
-                    isComplete = (byte)(isComplete & completeList[i]);
-                }
-                if (isComplete == Byte.MAX_VALUE) {
-                    System.out.println(prefix + "upload complete !!");
-                }
-                accessConfFile.close();
-                jo.put("flag",1);
-            }
-        } catch (Exception e) {
-            logger.info("后台-计量器具导入出错"+ e);
-            jo.put("flag",2);
-        }
+        meterCollectService.excelupload(request);
         return jo.toJSONString();
     }
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
