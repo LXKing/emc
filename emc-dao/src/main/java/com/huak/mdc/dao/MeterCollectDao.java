@@ -21,4 +21,5 @@ public interface MeterCollectDao {
 
     List<MeterCollect> selectPageByMap(Map<String,Object> paramsMap);
 
+    List<Map<String,Object>> selectAllByMap(Map<String, Object> paramsMap);
 }

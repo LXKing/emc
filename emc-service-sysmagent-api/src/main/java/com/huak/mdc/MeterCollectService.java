@@ -1,9 +1,14 @@
 package com.huak.mdc;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.mdc.model.MeterCollect;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -42,10 +47,14 @@ public interface MeterCollectService {
     public int updateByPrimaryKeySelective(MeterCollect record);
 
     /**
+     * 计量器具导入
+     */
+    public String excelUpload(HttpServletRequest request);
+    /**
      * 计量器具管理查询
      */
     public PageResult<MeterCollect> queryByPage(Map<String,Object> paramsMap, Page page);
 
-
+    java.util.List<Map<String, Object>> exportExcel(Map<String, Object> paramsMap) throws IOException;
 
 }

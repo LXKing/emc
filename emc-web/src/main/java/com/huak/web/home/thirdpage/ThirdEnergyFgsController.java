@@ -38,7 +38,6 @@ public class ThirdEnergyFgsController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ThiredpageEnergyService thiredpageEnergyService;
-
     private static  String ENERGY_TYPE = "energytype";
     private static  String ORG = "orgId";
 
