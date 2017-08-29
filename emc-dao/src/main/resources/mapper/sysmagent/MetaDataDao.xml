@@ -44,7 +44,7 @@
         #{tag,jdbcType=VARCHAR},
       </if>
       <if test="collectTime != null">
-        #{collectTime,jdbcType=TIMESTAMP},
+        #{collectTime,jdbcType=VARCHAR},
       </if>
       <if test="collectType != null">
         #{collectType,jdbcType=VARCHAR},
@@ -58,7 +58,7 @@
     update t_emc_meta_data
     <set>
       <if test="collectTime != null">
-        COLLECT_TIME = #{collectTime,jdbcType=TIMESTAMP},
+        COLLECT_TIME = #{collectTime,jdbcType=VARCHAR},
       </if>
       <if test="collectType != null">
         COLLECT_TYPE = #{collectType,jdbcType=VARCHAR},

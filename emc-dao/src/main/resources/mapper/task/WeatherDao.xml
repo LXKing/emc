@@ -269,4 +269,10 @@
         AND  STATUS = #{status,jdbcType=TINYINT}
     </update>
 
+    <select id="getWeatherByTime" parameterType="java.util.Map" resultType="java.lang.Double">
+        SELECT REPLACE(TEMPERATURE_CURR,'℃','') TEMPERATURE_CURR FROM t_emc_weather_actual
+        WHERE CODE = #{wcode}
+        AND  DATE_FORMAT(REPORT_DATE,'%Y-%m-%d %H:00:00') = #{time}
+    </select>
+
 </mapper>

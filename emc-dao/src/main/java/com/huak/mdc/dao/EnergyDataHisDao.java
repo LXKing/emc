@@ -12,4 +12,10 @@ public interface EnergyDataHisDao {
     EnergyDataHis selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(EnergyDataHis record);
+
+    EnergyDataHis findBqHis(EnergyDataHis energyDataHis);
+
+    EnergyDataHis findQqHis(EnergyDataHis energyDataHis);
+
+    EnergyDataHis findHqHis(EnergyDataHis energyDataHis);
 }

@@ -68,7 +68,7 @@
         #{collectId,jdbcType=VARCHAR},
       </if>
       <if test="changeTime != null">
-        #{changeTime,jdbcType=TIMESTAMP},
+        #{changeTime,jdbcType=VARCHAR},
       </if>
       <if test="usedNum != null">
         #{usedNum,jdbcType=DOUBLE},
@@ -83,7 +83,7 @@
         #{newCoef,jdbcType=DOUBLE},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=VARCHAR},
       </if>
       <if test="crestor != null">
         #{crestor,jdbcType=VARCHAR},
@@ -97,7 +97,7 @@
         COLLECT_ID = #{collectId,jdbcType=VARCHAR},
       </if>
       <if test="changeTime != null">
-        CHANGE_TIME = #{changeTime,jdbcType=TIMESTAMP},
+        CHANGE_TIME = #{changeTime,jdbcType=VARCHAR},
       </if>
       <if test="usedNum != null">
         USED_NUM = #{usedNum,jdbcType=DOUBLE},
@@ -112,7 +112,7 @@
         NEW_COEF = #{newCoef,jdbcType=DOUBLE},
       </if>
       <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       </if>
       <if test="crestor != null">
         CRESTOR = #{crestor,jdbcType=VARCHAR},

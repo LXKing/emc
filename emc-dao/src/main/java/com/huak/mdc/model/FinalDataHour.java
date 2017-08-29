@@ -1,9 +1,21 @@
-package com.huak.org.model;
+package com.huak.mdc.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class FinalDataHour {
+/**
+ * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
+ * ProjectName:emc<BR>
+ * File name:  com.huak.mdc.model<BR>
+ * Author:  lichao  <BR>
+ * Project:emc    <BR>
+ * Version: v 1.0      <BR>
+ * Date: 2017/8/28<BR>
+ * Description: 最终能耗数据    <BR>
+ * Function List:  <BR>
+ */
+public class FinalDataHour  implements Serializable {
+    private static final long serialVersionUID = 8037885069097094955L;
     private String id;
 
     private String comid;
@@ -14,7 +26,7 @@ public class FinalDataHour {
 
     private String typeid;
 
-    private Date dosageTime;
+    private String dosageTime;
 
     private Double dosage;
 
@@ -34,7 +46,9 @@ public class FinalDataHour {
 
     private Double citemp;
 
-    public FinalDataHour(String id, String comid, String unitid, String nodeid, String typeid, Date dosageTime, Double dosage, Double area, BigDecimal price, Double wtemp, Double cwtemp, Double coalCoef, Double cCoef, Double itemp, Double citemp) {
+    private String tableName;//表名称
+
+    public FinalDataHour(String id, String comid, String unitid, String nodeid, String typeid, String dosageTime, Double dosage, Double area, BigDecimal price, Double wtemp, Double cwtemp, Double coalCoef, Double cCoef, Double itemp, Double citemp) {
         this.id = id;
         this.comid = comid;
         this.unitid = unitid;
@@ -96,11 +110,11 @@ public class FinalDataHour {
         this.typeid = typeid == null ? null : typeid.trim();
     }
 
-    public Date getDosageTime() {
+    public String getDosageTime() {
         return dosageTime;
     }
 
-    public void setDosageTime(Date dosageTime) {
+    public void setDosageTime(String dosageTime) {
         this.dosageTime = dosageTime;
     }
 
@@ -174,5 +188,13 @@ public class FinalDataHour {
 
     public void setCitemp(Double citemp) {
         this.citemp = citemp;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 }

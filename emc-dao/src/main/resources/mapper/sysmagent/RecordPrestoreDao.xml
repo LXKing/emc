@@ -59,7 +59,7 @@
         #{collectId,jdbcType=VARCHAR},
       </if>
       <if test="prestoreTime != null">
-        #{prestoreTime,jdbcType=TIMESTAMP},
+        #{prestoreTime,jdbcType=VARCHAR},
       </if>
       <if test="usedNum != null">
         #{usedNum,jdbcType=DOUBLE},
@@ -68,7 +68,7 @@
         #{prestoreNum,jdbcType=DOUBLE},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=VARCHAR},
       </if>
       <if test="crestor != null">
         #{crestor,jdbcType=VARCHAR},
@@ -82,7 +82,7 @@
         COLLECT_ID = #{collectId,jdbcType=VARCHAR},
       </if>
       <if test="prestoreTime != null">
-        PRESTORE_TIME = #{prestoreTime,jdbcType=TIMESTAMP},
+        PRESTORE_TIME = #{prestoreTime,jdbcType=VARCHAR},
       </if>
       <if test="usedNum != null">
         USED_NUM = #{usedNum,jdbcType=DOUBLE},
@@ -91,7 +91,7 @@
         PRESTORE_NUM = #{prestoreNum,jdbcType=DOUBLE},
       </if>
       <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       </if>
       <if test="crestor != null">
         CRESTOR = #{crestor,jdbcType=VARCHAR},

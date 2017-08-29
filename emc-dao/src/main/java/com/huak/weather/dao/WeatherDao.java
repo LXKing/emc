@@ -32,4 +32,5 @@ public interface WeatherDao {
 
     List<Map<String,Object>> getParams();
 
+    Double getWeatherByTime(Map<String, Object> params);
 }
