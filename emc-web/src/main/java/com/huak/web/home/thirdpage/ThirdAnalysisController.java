@@ -48,6 +48,7 @@ public class ThirdAnalysisController extends BaseController {
     private ThirdAnalysisService thirdAnalysisService;
     private static  String ENERGY_TYPE = "energytype";
     private static  String ORG_TYPE = "orgType";
+    private static String coding="UTF-8";
     /**
      * 跳转三级单耗页面
      * @param model
@@ -553,9 +554,9 @@ public class ThirdAnalysisController extends BaseController {
             //response输出流导出excel
             String mimetype = "application/vnd.ms-excel";
             response.setContentType(mimetype);
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding(coding);
             String fileName = workBookName + ".xls";
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, coding));
             out = response.getOutputStream();
             wb.write(out);
             out.flush();
@@ -581,9 +582,9 @@ public class ThirdAnalysisController extends BaseController {
             //response输出流导出excel
             String mimetype = "application/vnd.ms-excel";
             response.setContentType(mimetype);
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding(coding);
             String fileName = workBookName + ".xls";
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, coding));
             out = response.getOutputStream();
             wb.write(out);
             out.flush();
@@ -610,9 +611,9 @@ public class ThirdAnalysisController extends BaseController {
             //response输出流导出excel
             String mimetype = "application/vnd.ms-excel";
             response.setContentType(mimetype);
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding(coding);
             String fileName = workBookName + ".xls";
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, coding));
             out = response.getOutputStream();
             wb.write(out);
             out.flush();
