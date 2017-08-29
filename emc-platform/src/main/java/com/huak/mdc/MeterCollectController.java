@@ -31,9 +31,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @Controller
 public class MeterCollectController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static AtomicLong counter = new AtomicLong(0L);
-    private  String finalDirPath = "/upload";
-
     @Resource
     private MeterCollectService meterCollectService;
 
