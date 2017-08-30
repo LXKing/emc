@@ -22,7 +22,7 @@
       <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
-    <resultMap id="BaseResultMapA" type="com.huak.mdc.model.MeterCollectA">
+    <resultMap id="BaseResultMapA" type="com.huak.mdc.vo.MeterCollectA">
         <constructor>
             <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
