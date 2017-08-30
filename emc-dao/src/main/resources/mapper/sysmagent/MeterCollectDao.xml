@@ -235,16 +235,34 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
     <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from t_emc_meter_collect
-        where 1=1
+        SELECT
+        mc.ID,
+        mc.CODE,
+        mc.NAME,
+        mc.SERIAL_NO,
+        vu.UNITNAME,
+        mc.ENERGY_TYPE_ID,
+        mc.ISREAL,
+        mc.ISTOTAL,
+        mc.UNIT_ID,
+        mc.UNIT_TYPE,
+        mc.ISAUTO,
+        mc.DEPICT,
+        mc.TAG,
+        mc.COEF,
+        mc.FORMULA,
+        mc.ISPRESTORE,
+        mc.ISDELETE,
+        mc.COM_ID
+        FROM
+        t_emc_meter_collect mc
+        LEFT JOIN v_emc_unit vu ON mc.UNIT_ID = vu.UNITID
 
         <if test="code != null and code!=''">
-           and CODE = #{code,jdbcType=VARCHAR}
+            and CODE = #{code,jdbcType=VARCHAR}
         </if>
         <if test="name != null and name!=''">
-           and NAME = #{name,jdbcType=VARCHAR}
+            and NAME = #{name,jdbcType=VARCHAR}
         </if>
         <if test="serialNo != null and serialNo!=''">
             and SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
@@ -290,7 +308,6 @@
         </if>
         order by id
     </select>
-
     <select id="selectAllByMap" parameterType="java.util.Map" resultType="java.util.Map">
         select
         a.ID,
@@ -380,5 +397,52 @@
         </if>
         order by id
     </select>
+    <select id="checkCode" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT
+        mc.ID,
+        mc.CODE,
+        mc.NAME,
+        mc.SERIAL_NO,
+        mc.ENERGY_TYPE_ID,
+        mc.ISREAL,
+        mc.ISTOTAL,
+        mc.UNIT_ID,
+        mc.UNIT_TYPE,
+        mc.ISAUTO,
+        mc.DEPICT,
+        mc.TAG,
+        mc.COEF,
+        mc.FORMULA,
+        mc.ISPRESTORE,
+        mc.ISDELETE,
+        mc.COM_ID
+        FROM
+        t_emc_meter_collect mc
+        where  CODE = #{code,jdbcType=VARCHAR}
+        and COM_ID = #{comId,jdbcType=VARCHAR}
+    </select>
+    <select id="checkSerialNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        mc.ID,
+        mc.CODE,
+        mc.NAME,
+        mc.SERIAL_NO,
+        mc.ENERGY_TYPE_ID,
+        mc.ISREAL,
+        mc.ISTOTAL,
+        mc.UNIT_ID,
+        mc.UNIT_TYPE,
+        mc.ISAUTO,
+        mc.DEPICT,
+        mc.TAG,
+        mc.COEF,
+        mc.FORMULA,
+        mc.ISPRESTORE,
+        mc.ISDELETE,
+        mc.COM_ID
+        FROM
+        t_emc_meter_collect mc
+        where  SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
 
+    </select>
 </mapper>
