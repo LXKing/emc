@@ -11,7 +11,6 @@
       <arg column="ISREAL" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="ISTOTAL" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="UNIT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="UNIT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="ISAUTO" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="DEPICT" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -23,6 +22,28 @@
       <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+    <resultMap id="BaseResultMapA" type="com.huak.mdc.model.MeterCollectA">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="SERIAL_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ENERGY_TYPE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ISREAL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="ISTOTAL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="UNIT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNIT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="ISAUTO" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="DEPICT" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="COEF" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="FORMULA" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ISPRESTORE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="ISDELETE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
     ID, CODE, NAME, SERIAL_NO, ENERGY_TYPE_ID, ISREAL, ISTOTAL, UNIT_ID, UNIT_TYPE, ISAUTO, 
     DEPICT, TAG, COEF, FORMULA, ISPRESTORE, ISDELETE, COM_ID
@@ -234,7 +255,7 @@
       COM_ID = #{comId,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMapA">
         SELECT
         mc.ID,
         mc.CODE,
@@ -444,5 +465,8 @@
         t_emc_meter_collect mc
         where  SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
 
+    </select>
+    <select id="getUnitInfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT vu.UNITID unitId,vu.UNITNAME unitName from v_emc_unit vu where vu.UNITTYPE=#{unitType,jdbcType=VARCHAR}
     </select>
 </mapper>
