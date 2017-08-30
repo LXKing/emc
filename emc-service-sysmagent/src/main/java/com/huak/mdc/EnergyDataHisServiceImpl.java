@@ -1,5 +1,6 @@
 package com.huak.mdc;
 
+import com.huak.common.UUIDGenerator;
 import com.huak.mdc.dao.EnergyDataHisDao;
 import com.huak.mdc.model.EnergyDataHis;
 import com.huak.org.model.Company;
@@ -65,14 +66,16 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         // 如果本期存在，则修改，否则添加
         int addOrUpdate = 0;
         if (null != bqData && null != bqData.getId()) {
+            energyDataHis.setId(bqData.getId());
             addOrUpdate = energyDataHisDao.updateByPrimaryKeySelective(energyDataHis);
         } else {
+            energyDataHis.setId(UUIDGenerator.getUUID());
             addOrUpdate = energyDataHisDao.insertSelective(energyDataHis);
         }
         if (addOrUpdate <= 0) {
             return false;
         }
-        //todo 如果后期历史存在，则修改本期到后期时间段的能耗数据
+        // 如果后期历史存在，则修改本期到后期时间段的能耗数据
         if (null != hqData && null != hqData.getId()) {
             boolean isSave = finalDataHourService.saveDataHour(energyDataHis,hqData,company);
             if(!isSave){
@@ -80,7 +83,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
             }
         }
 
-        //todo 如果前期历史存在，则修改本期到前期时间段的能耗数据
+        // 如果前期历史存在，则修改本期到前期时间段的能耗数据
         if (null != qqData && null != qqData.getId()) {
             boolean isSave = finalDataHourService.saveDataHour(energyDataHis,qqData,company);
             if(!isSave){
@@ -125,7 +128,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
 
         } catch (Exception e) {
             logger.error("批量保存能耗数据失败:" + e.getMessage());
-            return false;
+            throw new UniformityException("批量数据保存部分异常 " + e.getMessage());
         }
         return true;
 

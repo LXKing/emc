@@ -48,6 +48,8 @@ public class FinalDataHour  implements Serializable {
 
     private String tableName;//表名称
 
+    private Long count;//计数
+
     public FinalDataHour(String id, String comid, String unitid, String nodeid, String typeid, String dosageTime, Double dosage, Double area, BigDecimal price, Double wtemp, Double cwtemp, Double coalCoef, Double cCoef, Double itemp, Double citemp) {
         this.id = id;
         this.comid = comid;
@@ -196,5 +198,13 @@ public class FinalDataHour  implements Serializable {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 }

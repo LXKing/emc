@@ -1,6 +1,10 @@
 package com.huak.mdc.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -71,7 +75,10 @@ public class EnergyDataHis implements Serializable {
         this.collectNum = collectNum;
     }
 
-    public String getCollectTime() {
+    public String getCollectTime() throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+        Date date = format.parse(collectTime);
+        collectTime = format.format(date);
         return collectTime;
     }
 

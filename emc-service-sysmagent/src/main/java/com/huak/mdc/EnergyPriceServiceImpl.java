@@ -8,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,13 +37,12 @@ public class EnergyPriceServiceImpl implements EnergyPriceService{
      */
     @Override
     @Transactional(readOnly = true)
-    public BigDecimal getEnergyPriceByTime(String id, String energyTypeId, String time) {
-        DateFormat format = new SimpleDateFormat("HH:00:00");
+    public BigDecimal getEnergyPriceByTime(String id, String energyTypeId, String time) throws ParseException {
         Map<String, Object> params = new HashMap();
         params.put("id",id);
         params.put("energyTypeId",energyTypeId);
         params.put("time",time);
-        params.put("hour",format.format(time));
+        params.put("hour",time.substring(time.length()-8,time.length()));
         return energyPriceDao.getEnergyPriceByTime(params);
     }
 }

@@ -16,4 +16,5 @@ public interface FinalDataHourDao {
 
     int updateByPrimaryKeySelective(FinalDataHour record);
 
+    int insertOrUpdate(FinalDataHour dataHour);
 }

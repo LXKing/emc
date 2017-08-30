@@ -21,6 +21,7 @@ import java.util.List;
 public class DateUtils {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
 
     public static List<String> getDates(String year, String month) throws ParseException {
         List<String> dates = new ArrayList<>();
@@ -159,5 +160,15 @@ public class DateUtils {
         calendar.add(type, num);
         date = calendar.getTime();
         return sdf.format(date);
+    }
+
+    public static String getTimeDate(String curDate, int type, int num) throws Exception{
+        curDate = (curDate==null||"".equals(curDate))?format.format(new Date()):curDate;
+        Date date = format.parse(curDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(type, num);
+        date = calendar.getTime();
+        return format.format(date);
     }
 }

@@ -77,9 +77,39 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
         //查询计量采集表
         MeterCollect meterCollect = meterCollectDao.selectByPrimaryKey(energyDataHis.getCollectId());
 
-        Double dosageTotal = DoubleUtils.sub(energyDataHis.getCollectNum(), data.getCollectNum());
-        dosageTotal = Math.abs(dosageTotal);//绝对值，忽略预存负值
-        Double dosage = DoubleUtils.div(dosageTotal, dateTimes.size(), 2);//每小时平均能耗
+        // 判断特殊的换表和预存
+        Double dosage;
+        if(energyDataHis.getCollectTime().compareTo(data.getCollectTime())>0){//判断前期是否换表预存
+            Double dosageTotal;
+            if(1 == data.getIschange()&&1 == data.getIsprestore()){//换表且预存，新表表底+预存值
+                Double num = DoubleUtils.add(data.getChangeNum(),data.getPrestoreNum());
+                dosageTotal = DoubleUtils.sub(energyDataHis.getCollectNum(), num);
+            }else if(1 == data.getIschange()&&0 == data.getIsprestore()){//只换表，新表表底
+                dosageTotal = DoubleUtils.sub(energyDataHis.getCollectNum(), data.getChangeNum());
+            }else if(0 == data.getIschange()&&1 == data.getIsprestore()){//只预存，旧表表底+预存值
+                Double num = DoubleUtils.add(data.getCollectNum(),data.getPrestoreNum());
+                dosageTotal = DoubleUtils.sub(energyDataHis.getCollectNum(), num);
+            }else{
+                dosageTotal = DoubleUtils.sub(data.getCollectNum(), energyDataHis.getCollectNum());
+            }
+            dosageTotal = Math.abs(dosageTotal);//绝对值，忽略预存负值
+            dosage = DoubleUtils.div(dosageTotal, dateTimes.size(), 2);//每小时平均能耗
+        }else{//判断本期是否换表预存
+            Double dosageTotal;
+            if(1 == energyDataHis.getIschange()&&1 == energyDataHis.getIsprestore()){//换表且预存，新表表底+预存值
+                Double num = DoubleUtils.add(energyDataHis.getChangeNum(),energyDataHis.getPrestoreNum());
+                dosageTotal = DoubleUtils.sub(data.getCollectNum(), num);
+            }else if(1 == energyDataHis.getIschange()&&0 == energyDataHis.getIsprestore()){//只换表，新表表底
+                dosageTotal = DoubleUtils.sub(data.getCollectNum(), energyDataHis.getChangeNum());
+            }else if(0 == energyDataHis.getIschange()&&1 == energyDataHis.getIsprestore()){//只预存，旧表表底+预存值
+                Double num = DoubleUtils.add(energyDataHis.getCollectNum(),energyDataHis.getPrestoreNum());
+                dosageTotal = DoubleUtils.sub(data.getCollectNum(), num);
+            }else{
+                dosageTotal = DoubleUtils.sub(data.getCollectNum(), energyDataHis.getCollectNum());
+            }
+            dosageTotal = Math.abs(dosageTotal);//绝对值，忽略预存负值
+            dosage = DoubleUtils.div(dosageTotal, dateTimes.size(), 2);//每小时平均能耗
+        }
 
         //time %Y-%m-%d %H:00:00
         for (String time : dateTimes) {
@@ -114,7 +144,7 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             dataHour.setCwtemp(cWeather);
             dataHour.setCoalCoef(coalCoef);
             dataHour.setcCoef(carbonFormula);
-            int i = finalDataHourDao.insertSelective(dataHour);
+            int i = finalDataHourDao.insertOrUpdate(dataHour);
             if (1 != i) {
                 return false;
             }
@@ -134,7 +164,7 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
         List<String> list = new ArrayList<>();
         while (!time1.equals(time2)) {
             list.add(time1);
-            time1 = DateUtils.getYearDate(time1, Calendar.HOUR, 1);
+            time1 = DateUtils.getTimeDate(time1, Calendar.HOUR, 1);
         }
         list.add(time2);
         return list;

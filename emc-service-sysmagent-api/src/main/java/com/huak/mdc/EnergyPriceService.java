@@ -1,6 +1,7 @@
 package com.huak.mdc;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -21,5 +22,5 @@ public interface EnergyPriceService {
      * @param time %Y-%m-%d %H:00:00
      * @return
      */
-    BigDecimal getEnergyPriceByTime(String id, String energyTypeId, String time);
+    BigDecimal getEnergyPriceByTime(String id, String energyTypeId, String time) throws ParseException;
 }
