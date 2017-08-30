@@ -1,6 +1,7 @@
 package com.huak.mdc.dao;
 
 import com.huak.mdc.model.MeterCollect;
+import com.huak.mdc.vo.MeterCollectA;
 import org.springframework.stereotype.Repository;
 
 
@@ -21,9 +22,11 @@ public interface MeterCollectDao {
 
     int updateByPrimaryKey(MeterCollect record);
 
-    List<MeterCollect> selectPageByMap(Map<String,Object> paramsMap);
+    List<MeterCollectA> selectPageByMap(Map<String,Object> paramsMap);
 
     List<Map<String,Object>> selectAllByMap(Map<String, Object> paramsMap);
+
+    List<MeterCollect>  checkName(Map<String,Object> paramsMap);
 
     List<MeterCollect>  checkCode(Map<String,Object> paramsMap);
 

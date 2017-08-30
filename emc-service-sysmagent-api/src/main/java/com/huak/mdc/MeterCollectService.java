@@ -1,14 +1,13 @@
 package com.huak.mdc;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.mdc.model.MeterCollect;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import com.huak.mdc.vo.MeterCollectA;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,8 +52,26 @@ public interface MeterCollectService {
     /**
      * 计量器具管理查询
      */
-    public PageResult<MeterCollect> queryByPage(Map<String,Object> paramsMap, Page page);
+    public PageResult<MeterCollectA> queryByPage(Map<String,Object> paramsMap, Page page);
 
     java.util.List<Map<String, Object>> exportExcel(Map<String, Object> paramsMap) throws IOException;
+
+    /**
+     * 校验计量代码
+     */
+    public boolean checkName(Map<String,Object> paramsMap);
+    /**
+     * 校验计量代码
+     */
+    public boolean checkCode(Map<String,Object> paramsMap);
+    /**
+     * 校验计量代码
+     */
+    public boolean checkNo(String serialNo);
+
+    /**
+     * 获取相关类型的用能单位
+     */
+    public List<Map<String,Object>> getUnitInfo(String unitType);
 
 }

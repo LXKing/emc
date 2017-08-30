@@ -67,8 +67,18 @@ function initable() {
                 align: 'center'
             },
             {
+                title: '出厂编号',
+                field: 'serialNo',
+                align: 'center'
+            },
+            {
                 title: '名称',
                 field: 'name',
+                align: 'center'
+            },
+            {
+                title: '单位名称',
+                field: 'unitname',
                 align: 'center'
             },
             {
@@ -97,20 +107,30 @@ function initable() {
             {
                 title: '实虚表',
                 field: 'isreal',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '0'){
+                        return '实表';
+                    }
+                    if(value == '1'){
+                        return '虚表 ';
+                    }
+                    return '';
+                }
             },
             {
-                title: '是否总表',
+                title: '总表',
                 field: 'istotal',
-                align: 'center',formatter:function(value,row,index){
-                if(value == '1'){
-                    return '单位总表';
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '1'){
+                        return '单位总表';
+                    }
+                    if(value == '2'){
+                        return '系统总表 ';
+                    }
+                    return '';
                 }
-                if(value == '2'){
-                    return '系统总表 ';
-                }
-                return '';
-            }
             },
             {
                 title: '系数',
@@ -141,12 +161,21 @@ function initable() {
                 }
             },
             {
-                title: '自动采集',
+                title: '采集',
                 field: 'isauto',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '0'){
+                        return '自动采集';
+                    }
+                    if(value == '1'){
+                        return '手工 ';
+                    }
+                    return '';
+                }
             },
             {
-                title: '电表',
+                title: '点表',
                 field: 'tag',
                 align: 'center'
             },
@@ -158,12 +187,30 @@ function initable() {
             {
                 title: '预存',
                 field: 'isprestore',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '0'){
+                        return '不是';
+                    }
+                    if(value == '1'){
+                        return '是 ';
+                    }
+                    return '';
+                }
             },
             {
                 title: '删除标识',
                 field: 'isdelete',
-                align: 'center'
+                align: 'center',
+                formatter:function(value,row,index){
+                    if(value == '0'){
+                        return '未删除';
+                    }
+                    if(value == '1'){
+                        return '软删除标识 ';
+                    }
+                    return '';
+                }
             },
             {
                 title: '描述',
@@ -183,11 +230,11 @@ function initable() {
                 formatter:function(value,row,index){
 
                     var html = "";
-                    if($("#onenetUpdateAuth").val()){
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="oncenetEditForm" layer-title="编辑管网" layer-url="'+_platform+'/oncenet/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                    if($("#meterCollectUpdate").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="MeterCollectEditForm" layer-title="编辑计量器具" layer-url="'+_platform+'/meterCollect/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
                     }
-                    if($("#onenetDeleteAuth").val()){
-                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteOncenet(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                    if($("#meterCollectDelete").val()){
+                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteMeter(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
                     }
                     return html;
                 }
@@ -238,25 +285,25 @@ function initable() {
 }
 
 function search(){
-    $('#oncenet-table-list').bootstrapTable('refresh');
+    $('#meter-table-list').bootstrapTable('refresh');
 }
 //layer
-function deleteOncenet(id) {
-    top.layer.confirm('您是否确定删除管网吗？', {
+function deleteMeter(id) {
+    top.layer.confirm('您是否确定删除吗？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var index = top.layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: _platform + '/oncenet/delete/' + id,
+            url: _platform + '/meterCollect/delete/' + id,
             type: 'DELETE',
             dataType: 'json',
             success: function (result) {
                 if (result.flag) {
                     top.layer.closeAll();
                     top.layer.msg(result.msg);
-                    $('#oncenet-table-list').bootstrapTable("refresh");
+                    $('#meter-table-list').bootstrapTable("refresh");
                 } else {
                     top.layer.close(index);
                     top.layer.msg(result.msg);
@@ -266,28 +313,9 @@ function deleteOncenet(id) {
     });
 }
 
+function addMeterCollect(){
 
-function treeNodeClick(e,treeId,treeNode){
-    top.orgId = treeNode.id;
-    //alert(top.orgId);
-    $("#orgId").val(treeNode.id);
-    search();
-}
-
-function addNet(){
-    //alert(123);
-    var treeNode = orgTree.getSelectedNodes();
-
-    //alert(treeNode[0].id);
-    if(treeNode.length<1){
-        layer.msg("请先选择一个组织机构！");
-        return;
-    }
-    if(treeNode.length>1){
-        layer.warn("只能选择一个上级组织！");
-        return;
-    }
-    openLayer(_platform+"/oncenet/add/"+treeNode[0].id,"添加管网","oncenetAddForm",null,null);
+    openLayer(_platform+"/meterCollect/add","添加计量器具表","addMeterCollectAddForm",null,null);
 }
 function params(params) {
     var ts = $(top.document).find("[name='searchComp']").val();

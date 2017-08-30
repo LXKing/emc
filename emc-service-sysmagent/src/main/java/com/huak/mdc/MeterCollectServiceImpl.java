@@ -4,6 +4,7 @@ import com.huak.common.Constants;
 import com.huak.common.utils.ColumUtil;
 import com.huak.common.utils.MultipartFileParam;
 import com.huak.common.utils.MultipartFileUploadUtil;
+import com.huak.mdc.vo.MeterCollectA;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -175,7 +176,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     MeterCollectDao meterCollectDao;
     @Override
     public int deleteByPrimaryKey(String id) {
-        return 0;
+        return meterCollectDao.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -190,16 +191,16 @@ public class MeterCollectServiceImpl implements MeterCollectService {
 
     @Override
     public MeterCollect selectByPrimaryKey(String id) {
-        return null;
+        return meterCollectDao.selectByPrimaryKey(id);
     }
 
     @Override
     public int updateByPrimaryKeySelective(MeterCollect record) {
-        return 0;
+        return meterCollectDao.updateByPrimaryKeySelective(record);
     }
 
     @Override
-    public PageResult<MeterCollect> queryByPage(Map<String, Object> paramsMap, Page page) {
+    public PageResult<MeterCollectA> queryByPage(Map<String, Object> paramsMap, Page page) {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(meterCollectDao.selectPageByMap(paramsMap));
     }
@@ -207,5 +208,46 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     @Override
     public List<Map<String, Object>> exportExcel(Map<String, Object> paramsMap) throws IOException {
         return  meterCollectDao.selectAllByMap(paramsMap);
+    }
+
+    @Override
+    public boolean checkName(Map<String, Object> paramsMap) {
+        boolean flag=false;
+        List<MeterCollect> list =  meterCollectDao.checkName(paramsMap);
+        if(list.size()>0){
+            flag=true;
+        }else {
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean checkCode(Map<String, Object> paramsMap) {
+        boolean flag=false;
+        List<MeterCollect> list =  meterCollectDao.checkCode(paramsMap);
+        if(list.size()>0){
+            flag=true;
+        }else {
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean checkNo(String serialNo) {
+        boolean flag=false;
+        List<MeterCollect> list =  meterCollectDao.checkSerialNo(serialNo);
+        if(list.size()>0){
+            flag=true;
+        }else {
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public List<Map<String, Object>> getUnitInfo(String unitType) {
+        return meterCollectDao.getUnitInfo(unitType);
     }
 }

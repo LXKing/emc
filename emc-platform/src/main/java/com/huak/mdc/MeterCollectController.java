@@ -3,32 +3,25 @@ package com.huak.mdc;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
-import com.huak.common.utils.MultipartFileParam;
-import com.huak.common.utils.MultipartFileUploadUtil;
-import org.apache.commons.io.FileUtils;
+import com.huak.mdc.model.MeterCollect;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.net.URLEncoder;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 计量仪器管理
@@ -119,5 +112,139 @@ public class MeterCollectController {
                 out.close();
             }
         }
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addPage(Model model) {
+        logger.info("计量器具新增页面");
+        return "/sys/mdc/add";
+    }
+    @RequestMapping(value = "/addvalue", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(MeterCollect meterCollect, HttpServletRequest request) {
+        logger.info("添加计量采集信息日志");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            if(meterCollect.getIsreal()==Byte.valueOf("1")){
+                meterCollect.setIsprestore(Byte.valueOf("0"));
+            }
+            meterCollect.setId(UUIDGenerator.getUUID());
+            meterCollectService.insert(meterCollect);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "添加计量采集成功");
+        } catch (Exception e) {
+            logger.error("添加计量采集异常" + e.getMessage());
+            jo.put(Constants.MSG, "添加计量采集失败");
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/check/code", method = RequestMethod.POST)
+    public String checkNodeCode(@RequestParam  String code,
+                                @RequestParam  String comId ){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("code",code);
+        map.put("comId",comId);
+        JSONObject jo = new JSONObject();
+        boolean  flag =   meterCollectService.checkCode(map);
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/check/name", method = RequestMethod.POST)
+    public String checkName(@RequestParam  String name,
+                                @RequestParam  String unitId ){
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("name",name);
+        map.put("unitId",unitId);
+        JSONObject jo = new JSONObject();
+        boolean  flag =   meterCollectService.checkName(map);
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/check/serialno", method = RequestMethod.POST)
+    public String checkSerialSo(@RequestParam  String serialNo
+    ){
+
+        JSONObject jo = new JSONObject();
+        boolean  flag =   meterCollectService.checkNo(serialNo);
+        if(flag){
+            jo.put(Constants.FLAG,false);
+        }else{
+            jo.put(Constants.FLAG, true);
+        }
+        return jo.toJSONString();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/unit", method = RequestMethod.POST)
+    public String getUnitList(@RequestParam  String unitType
+    ){
+
+        JSONObject jo = new JSONObject();
+        List<Map<String,Object>> list =   meterCollectService.getUnitInfo(unitType);
+        jo.put(Constants.LIST,list);
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit(Model model, @PathVariable("id") String id) {
+        logger.info("跳转修改热源页");
+        try {
+
+            MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
+            List<Map<String,Object>> list=meterCollectService.getUnitInfo(mec.getUnitType().toString());
+            model.addAttribute("mec", mec);
+            model.addAttribute("uList",list);
+        } catch (Exception e) {
+            logger.error("跳转修改页异常" + e.getMessage());
+        }
+        return "/sys/mdc/edit";
+    }
+    @RequestMapping(value = "/editvalue", method = RequestMethod.POST)
+    @ResponseBody
+    public String editValue(MeterCollect meterCollect,HttpServletRequest request) {
+        logger.info("修改计量器具");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            int i = meterCollectService.updateByPrimaryKeySelective(meterCollect);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "修改计量器具成功");
+        } catch (Exception e) {
+            logger.error("修改计量器具异常" + e.getMessage());
+            jo.put(Constants.MSG, "修改计量器具失败");
+        }
+        return jo.toJSONString();
+    }
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteMeter(@PathVariable("id") String id) {
+        logger.info("删除计量器具");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            meterCollectService.deleteByPrimaryKey(id);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "删除成功");
+        } catch (Exception e) {
+            logger.error("删除异常" + e.getMessage());
+            jo.put(Constants.MSG, "删除失败");
+        }
+        return jo.toJSONString();
     }
 }
