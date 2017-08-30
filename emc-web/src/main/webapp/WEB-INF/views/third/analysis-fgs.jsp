@@ -28,7 +28,7 @@
                 <div class="groupEnergy-box col-lg-12  clearfix">
                     <div class="chart-box groupEnergy-chart col-lg-10 ">
                         <div class="cb-header">
-                            <span class="cb-title">集团总单耗 (单位: GJ)</span>
+                            <span class="cb-title">集团总单耗 (单位: Tce/m²)</span>
                             <div class="cb-title-right" style="margin-right: 36px;">
                                 <label>
                                     <span class="cb-legend-blue"></span>
@@ -57,7 +57,7 @@
                                 <span class="energy-list-name">水单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num waterTotal" id="waterTotal"></span>
-                                    <span class="energy-list-measure ">Tce/m²</span>
+                                    <span class="energy-list-measure waterDw">Tce/m²</span>
                                     <span class="energy-list-proportion waterchangeRate" id="waterchangeRate"></span>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                 <span class="energy-list-name">电单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num electricTotal" id="electricTotal"></span>
-                                    <span class="energy-list-measure ">GJ</span>
+                                    <span class="energy-list-measure electricDw">GJ</span>
                                     <span class="energy-list-proportion elechangeRate" id="elechangeRate"></span>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                 <span class="energy-list-name">气单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num gasTotal" id="gasTotal"></span>
-                                    <span class="energy-list-measure ">GJ</span>
+                                    <span class="energy-list-measure gasDw">GJ</span>
                                     <span class="energy-list-proportion gaschangeRate" id="gaschangeRate"></span>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                 <span class="energy-list-name">热单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num hotTotal"  id="hotTotal"></span>
-                                    <span class="energy-list-measure">GJ</span>
+                                    <span class="energy-list-measure hotDw">GJ</span>
                                     <span class="energy-list-proportion hotchangeRate" id="hotchangeRate"></span>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                                 <span class="energy-list-name">煤单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num coalTotal" id="coalTotal"></span>
-                                    <span class="energy-list-measure ">GJ</span>
+                                    <span class="energy-list-measure coalDw">GJ</span>
                                     <span class="energy-list-proportion coalchangeRate" id="coalchangeRate"></span>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
 <div class="index_contentBox clearfix">
 <div class="titbox clearfix no-padding no-margin">
 <div class="pull-left energyTit analy_tit_as"><i></i>各站点单耗明细<small class="font-sm">Energy consumption details</small></div>
-<a href="javascript:;" class="pull-right exportlist mr15">导出列表</a>
+<a export-url="${web}/third/analysis/fgs/export/${id}" class="pull-right exportlist mr15">导出列表</a>
 
 <div class="  col-lg-12  tablewrap">
 <div class="">
