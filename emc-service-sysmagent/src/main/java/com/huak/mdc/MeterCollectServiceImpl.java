@@ -84,6 +84,60 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                 }
                 for (int m = 0; m<list.size();m++){
                     MeterCollect data = list.get(m);
+                    if(null != data.getIsauto() ){
+                        if(data.getIsauto().equals("自动采集")){
+                            data.setIsauto((byte)0);
+                        }
+                        if(data.getIsauto().equals("手工")){
+                            data.setIsauto((byte)1);
+                        }
+                    }
+                    if(null != data.getIsprestore() ){
+                        if(data.getIsprestore().equals("不是")){
+                            data.setIsprestore((byte)0);
+                        }
+                        if(data.getIsprestore().equals("是")){
+                            data.setIsprestore((byte)1);
+                        }
+                    }
+                    if(null != data.getIsreal() ){
+                        if(data.getIsreal().equals("否")){
+                            data.setIsreal((byte)0);
+                        }
+                        if(data.getIsreal().equals("单位总表")){
+                            data.setIsreal((byte)1);
+                        }
+                        if(data.getIsreal().equals("系统总表")){
+                            data.setIsreal((byte)2);
+                        }
+                    }
+                    if(null != data.getIsdelete() ){
+                        if(data.getIsdelete().equals("软删除标识")){
+                            data.setIsdelete((byte)0);
+                        }
+                        if(data.getIsdelete().equals("未删除")){
+                            data.setIsdelete((byte)1);
+                        }
+                    }
+                    if(null != data.getUnitType() ){
+                        if(data.getUnitType().equals("热源")){
+                            data.setUnitType((byte)1);
+                        }
+                        if(data.getUnitType().equals("一次网")){
+                            data.setUnitType((byte)2);
+                        }
+                        if(data.getUnitType().equals("换热站")){
+                            data.setUnitType((byte)3);
+                        }
+                        if(data.getUnitType().equals("二次线")){
+                            data.setUnitType((byte)4);
+                        }
+                        if(data.getUnitType().equals("用户")){
+                            data.setUnitType((byte)5);
+                        }
+
+                    }
+
                     boolean flag = false;
                     String codeFlag = data.getCode()+"-"+data.getComId();
                     for (Map f :tempdata){
