@@ -14,6 +14,8 @@
     <decorator name="main_top" page="main_top.jsp"/>
     <!--三级页面装饰器-->
     <decorator name="main_third" page="main_third.jsp"/>
+    <!--后台-->
+    <decorator name="system" page="system.jsp"/>
 
 
 

@@ -29,15 +29,17 @@
             <div class="col-lg-12 mb14  ">
                 <div class=" index_contentBox clearfix">
                     <div class="titbox clearfix no-padding no-margin">
-                        <div class="pull-left groupEnergyTit energyTit"><i></i>健康指数<small class="font-sm">ENERGY CONSUMPTION DETAILS</small></div>
+                        <div class="pull-left groupEnergyTit energyTit"><i></i>健康指数<small class="font-sm">Health index</small></div>
                     </div>
                     <div class=" col-lg-12  clearfix healthwrap">
                         <div class="left">
                             <div class="charts">
-                                <div  id="chart01"  >
-                                    <div class="value">	<h1>79.8</h1>
+                                <div id="chart01">
+                                    <div class="value">
+                                        <h1>79.8</h1>
                                         <h2>上次检测分数</h2>
-                                        <h3>2018-01-02</h3></div>
+                                        <h3>2018-01-02</h3>
+                                    </div>
 
                                 </div>
                             </div>
@@ -48,7 +50,7 @@
                                 </div>
                             </div>
                             <a id="runbtn"></a>
-                            <div >
+                            <div>
                                 <p>...</p>
                                 <p>朝阳一区温度100℃</p>
                                 <p>朝阳一区温度100℃</p>

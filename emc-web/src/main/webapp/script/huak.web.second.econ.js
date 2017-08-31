@@ -935,9 +935,12 @@ function chart02Fun(data){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:data.legends
+            data:data.legends,
+            textStyle:{
+                color:chartsColor.ec4.facecolor5
+            }
         },
-        color:color,
+        color:chartsColor.ec4.facecolor5,
         xAxis: {
             type: 'category',
             boundaryGap: false,

@@ -12,6 +12,8 @@
 <!-- ace styles -->
 <link rel="stylesheet" href="${web}/static/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 
+<link rel="stylesheet" href="${web}/static/js/ztree/zTreeStyle.css" />
+
 <!-- page specific plugin styles -->
 <link rel="stylesheet" href="${web}/static/css/huarestyle.css" />
 <link rel="stylesheet" href="${web}/static/css/homemian.css" />
@@ -54,6 +56,8 @@
 <script type="text/javascript" src="${web}/static/js/datetimepicker/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="${web}/static/js/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="${web}/static/js/layer/layer.min.js"></script>
+<script type="text/javascript" src="${web}/static/js/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="${web}/static/js/jquery.page.js"></script>
 <script>
     var _web = '${web}';
     layer.config({

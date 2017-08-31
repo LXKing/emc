@@ -506,7 +506,7 @@ input[type="text"].time-input {
 	background: url(../img/icons/icon-sort-up.png) no-repeat
 }
 
-.icon-lookup {
+.operationbtn.icon-lookup {
 	display: inline-block;
 	width: 20px;
 	height: 21px;
@@ -1224,4 +1224,12 @@ input[type="text"].time-input {
 	line-height: 15px;
 	padding: 0px;
 	margin: 0px;
+}
+.icon-edit{
+    display: inline-block; 
+    background: url(../img/backstage-edit.png) no-repeat;
+}
+.icon-delete{
+    display: inline-block; 
+    background: url(../img/backstage-delete.png) no-repeat;
 }

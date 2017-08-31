@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     <li class="navlh">
-                        <a href="${web}/back/manage/index">
+                        <a href="${web}/system/index">
                             <div class="icon-aq"></div>
                             <p>安全与后台</p>
                         </a>

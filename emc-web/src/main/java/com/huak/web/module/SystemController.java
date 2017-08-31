@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Function List:  <BR>
  */
 @Controller
-@RequestMapping("/back/manage")
-public class BackManageController {
+@RequestMapping("/system")
+public class SystemController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String indexPage(){
         logger.info("跳转后台管理首页");
-        return "back/manage/index";
+        return "system/demo/index";
     }
 }

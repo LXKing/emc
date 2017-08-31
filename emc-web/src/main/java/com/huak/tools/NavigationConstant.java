@@ -62,6 +62,7 @@ public class NavigationConstant {
     /*项目后评估*/
 
     /*后台*/
+    public final static Navigation SYSTEM = new Navigation(null,"安全与后台","/system/index");
 
     /*全部*/
     public final static List<Navigation> NAVIGATIONS = new ArrayList<>();
@@ -95,6 +96,8 @@ public class NavigationConstant {
         NAVIGATIONS.add(THIRD_CONS_STATION);
         NAVIGATIONS.add(THIRD_CONS_LINE);
         NAVIGATIONS.add(THIRD_CONS_ROOM);
+
+        NAVIGATIONS.add(SYSTEM);
     }
 
 }
