@@ -72,7 +72,6 @@ public class MeterCollectController {
     @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String add(HttpServletRequest request,HttpServletResponse response) {
-        HttpSession session = request.getSession();
         JSONObject jo = new JSONObject();
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
         System.out.println(prefix + "start !!!");
@@ -139,12 +138,21 @@ public class MeterCollectController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                File file = new File(UPLOAD_TEMP_DIR1);
+                if(file.exists()){
+                    System.out.println("删除excel");
+                    File[] files = file.listFiles();
+                    for (File files1 : files){
+                        files1.delete();
+                    }
+                }
         }
         jo.put("message",obj);
         return jo.toJSONString();
 
     }
+
+
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap, Page page) {

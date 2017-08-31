@@ -125,16 +125,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             }
         }
         result.put("message",message);
-        File file = new File(path);
-        File fileTemp = new File(path+".conf");
-        if(file.exists()){
-            System.out.println("删除excel");
-            file.delete();
-        }
-        if(fileTemp.exists()){
-            System.out.println("删除excel.config");
-            fileTemp.delete();
-        }
+
         return  result;
     }
 
