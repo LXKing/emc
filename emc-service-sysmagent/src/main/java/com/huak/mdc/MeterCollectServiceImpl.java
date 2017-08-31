@@ -96,6 +96,9 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                         data.setId(UUIDGenerator.getUUID());
                         try{
                             meterCollectDao.insert(data);
+                            Map<String,Object> meter = new HashMap<>();
+                            meter.put("code",codeFlag);
+                            tempdata.add(meter);
                         }catch (Exception e){
                             message.append("第"+(m+1)+"行数据有问题：新增失败");
                             message.append(",");
@@ -110,14 +113,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
 
                     }
                 }
-                File file = new File(path);
-                File filet = new File(path+".conf");
-                if(!file.exists()){
-                    file.delete();
-                }
-                if(!filet.exists()){
-                    filet.delete();
-                }
+
                 io.close();
                 result.put("flag","1");
         } catch (Exception e) {
@@ -129,6 +125,16 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             }
         }
         result.put("message",message);
+        File file = new File(path);
+        File fileTemp = new File(path+".conf");
+        if(file.exists()){
+            System.out.println("删除excel");
+            file.delete();
+        }
+        if(fileTemp.exists()){
+            System.out.println("删除excel.config");
+            fileTemp.delete();
+        }
         return  result;
     }
 

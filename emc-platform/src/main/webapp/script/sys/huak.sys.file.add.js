@@ -27,7 +27,6 @@ jQuery(document).ready(function($){
                uploader.upload();
     });
     uploader.on( 'fileQueued', function( file ) {
-        debugger;
         if(checkfile(file)) {
             var $li = '<div id="' + file.id + '" class="item" >' +
                 '<div class="info" style="width:160px;float: left;margin: 5px;font-size:12px;font-weight:bolder;height: 15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;">' + file.name + '</div>' +
@@ -106,19 +105,7 @@ jQuery(document).ready(function($){
     uploader.on( 'uploadSuccess', function( file ) {
         $t.find( '#'+file.id ).find('.webuploadDelbtn').remove();
         $t.find( '#'+file.id ).find('p.state').text('已上传');
-        uploader.destroy();
-        });
-    uploader.on("error", function (type) {
-        debugger;
-        if (type == "Q_TYPE_DENIED") {
-            layer.msg("请上传JPG、PNG、GIF、BMP格式文件");
-        } else if (type == "Q_EXCEED_SIZE_LIMIT") {
-            layer.msg("文件大小不能超过2M");
-        }else {
-            layer.msg("上传出错！请检查后重新上传！错误代码"+type);
-        }
-    });
-
+     });
     uploader.on( 'uploadError', function( file ) {
         $t.find( '#'+file.id ).find('p.state').text('上传出错');
         });

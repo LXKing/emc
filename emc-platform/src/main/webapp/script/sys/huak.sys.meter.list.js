@@ -37,6 +37,7 @@ function uploaderExcel(){
             cancel: function(index, layero){
                 top.uploader.destroy();
                 top.layer.closeAll();
+                $('#meter-table-list').bootstrapTable('refresh');
                 return false;
             },
             content: $top.find("#layer-div")

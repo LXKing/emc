@@ -78,6 +78,8 @@ public class MeterCollectController {
         System.out.println(prefix + "start !!!");
         MultipartFileParam param = null;
         Map<String, Object> obj = null;
+        RandomAccessFile accessTmpFile = null;
+        RandomAccessFile accessConfFile = null;
         //使用 工具类解析相关参数，工具类代码见下面
         try {
             param = MultipartFileUploadUtil.parse(request);
@@ -94,8 +96,8 @@ public class MeterCollectController {
                 if (!tmpDir.exists()) {
                     tmpDir.mkdirs();
                 }
-                RandomAccessFile accessTmpFile = new RandomAccessFile(tmpFile, "rw");
-                RandomAccessFile accessConfFile = new RandomAccessFile(confFile, "rw");
+                accessTmpFile = new RandomAccessFile(tmpFile, "rw");
+                accessConfFile = new RandomAccessFile(confFile, "rw");
                 long offset = chunkSize * param.getChunk();
                 //定位到该分片的偏移量
                 accessTmpFile.seek(offset);
@@ -126,6 +128,18 @@ public class MeterCollectController {
             }
         }catch(Exception e){
             logger.error("后台-计量器具导入异常:"+e);
+        }finally {
+                try {
+                    if(null !=accessTmpFile){
+                      accessTmpFile.close();
+                    }
+                    if(null !=accessConfFile){
+                        accessConfFile.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
         }
         jo.put("message",obj);
         return jo.toJSONString();
