@@ -13,7 +13,34 @@ $(function () {
 });
 
 
+/**
+ *  计量仪器管理-批量导入-excel
+ */
 
+
+
+function uploaderExcel(){
+    $.get(_platform+ '/meterCollect/uploadPage', function (result) {
+        var $top = $(top.document);
+        var layerDiv = '<div id="layer-div"></div>';
+        $top.find('body').append(layerDiv);
+        $top.find("#layer-div").html(result);
+        top.layer.open({
+            area: ['550px', '500px'],
+            type: 1,
+            title: "文件上传",
+            maxmin:true,
+            yes: function () {
+                $top.find("#fileAddForm").submit();
+            },
+            skin: 'layer-ext-moon', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            shift: 2,//出场动画
+            shadeClose: true, //开启遮罩关闭
+            content: $top.find("#layer-div")
+        });
+    });
+}
 function initable() {
 
     bTable = $('#meter-table-list').bootstrapTable({

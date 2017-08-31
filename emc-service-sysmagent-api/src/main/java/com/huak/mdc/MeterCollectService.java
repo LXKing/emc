@@ -48,7 +48,7 @@ public interface MeterCollectService {
     /**
      * 计量器具导入
      */
-    public String excelUpload(HttpServletRequest request);
+    public Map<String, Object> excelUpload(String s, String path) throws IOException;
     /**
      * 计量器具管理查询
      */

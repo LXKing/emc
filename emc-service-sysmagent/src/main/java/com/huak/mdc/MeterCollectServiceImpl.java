@@ -1,7 +1,9 @@
 package com.huak.mdc;
 
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.common.utils.ColumUtil;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import com.huak.common.utils.MultipartFileParam;
 import com.huak.common.utils.MultipartFileUploadUtil;
 import com.huak.mdc.vo.MeterCollectA;
@@ -18,12 +20,11 @@ import com.huak.common.page.PageResult;
 import com.huak.mdc.dao.MeterCollectDao;
 import com.huak.mdc.model.MeterCollect;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -43,137 +44,220 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Service
 public class MeterCollectServiceImpl implements MeterCollectService {
+    @Resource
+    MeterCollectDao meterCollectDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicLong counter = new AtomicLong(0L);
 
+    /**
+     * 上传入库
+     *
+     * @param path
+     * @param s
+     * @return
+     */
     @Override
-    public String excelUpload(HttpServletRequest request) {
+    @Transactional(readOnly = false)
+    public Map<String, Object> excelUpload(String path, String s) throws IOException {
+        List<Map<String,Object>> tempdata = meterCollectDao.selectByMaps(new HashMap<String, Object>());
+        System.out.println("-------------------------path:"+path+"-------------------------------");
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
         System.out.println(prefix + "start !!!");
-        MultipartFileParam param = null;
+        FileInputStream io = null;
+        Map<String,Object> result = new HashMap<>();
+        StringBuffer message = new StringBuffer();
         try {
-            param = MultipartFileUploadUtil.parse(request);
-            if (param.isMultipart()) {
-                File file = new File(param.getFileName());
                 XSSFSheet hssFSheet = null;
                 XSSFWorkbook hssFWorkBook = null;
                 XSSFRow xssfRow = null;
                 MeterCollect meterCollect = null;
                 List<MeterCollect> list = new ArrayList<>();
-                try {
-                    hssFWorkBook = new XSSFWorkbook(new FileInputStream(file));
-                    for(int i = 0; i<= hssFWorkBook.getNumberOfSheets();i++){
-                        hssFSheet = hssFWorkBook.getSheetAt(i);
-                        for(int k = 1; k<=hssFSheet.getPhysicalNumberOfRows();k++){
-                            xssfRow = hssFSheet.getRow(k);
-                            meterCollect = (MeterCollect) digitData(xssfRow,MeterCollect.class);
-                            list.add(meterCollect);
+                io = new FileInputStream(path);
+                hssFWorkBook = new XSSFWorkbook(io);
+                for(int i = 0; i< hssFWorkBook.getNumberOfSheets();i++){
+                    hssFSheet = hssFWorkBook.getSheetAt(i);
+                    for(int k = 1; k<hssFSheet.getPhysicalNumberOfRows();k++){
+                        xssfRow = hssFSheet.getRow(k);
+                        meterCollect = (MeterCollect) digitData(xssfRow,MeterCollect.class);
+                        list.add(meterCollect);
+                    }
+                }
+                for (int m = 0; m<list.size();m++){
+                    MeterCollect data = list.get(m);
+                    boolean flag = false;
+                    String codeFlag = data.getCode()+"-"+data.getComId();
+                    for (Map f :tempdata){
+                        if(f.containsValue(codeFlag)){
+                            flag = true;
+                            break;
                         }
                     }
-                    return "1";
-                } catch (Exception e) {
-                    logger.info("后台-计量器具导入出错"+ e);
-                    return  "2";
-                }
-            }
-        } catch (Exception e) {
-            logger.info("后台-计量器具导入出错"+ e);
-           return  "2";
-        }
-        return "";
-    }
-    private Object digitData(XSSFRow xssfRow , Class<?> classz) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-       Object obj = classz.newInstance();
-        Method[] methods = classz.getMethods();
-        Field[] fields = classz.getClass().getDeclaredFields();
-        Map<String,Object> data = new HashMap<>();
-        List<String> cells = new ArrayList<>();
-        for (Field field : fields){
-            if(!Constants.CELL_NAME.containsKey(ColumUtil.getColumn(field.getName()))){
-                Constants.CELL_NAME.put( ColumUtil.getColumn(field.getName()),field.getName());
-            }
-        }
-        Iterator iter = Constants.CELL_NAME.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            String key =  entry.getKey().toString();
-            cells.add(key);
-        }
-        for(int i = 0; i < cells.size();i++){
-            String tag = (null ==  xssfRow.getCell(i))?"":xssfRow.getCell(i).toString();
-            if(tag.endsWith(".0")){
-                tag =  tag.substring(0,tag.length() - 2);
-            }
-            String cellname = cells.get(i);
-            for (Method method : methods) {
-                    String methodName = method.getName();
-                    // 如果对象的方法以set开头
-                    if (methodName.startsWith("set")) {
-                        // 根据方法名字得到数据表格中字段的名字
-                        String columnName = methodName.substring(3, methodName.length());
-                        columnName = ColumUtil.getColumn(columnName);
-                    if(cellname.equals(columnName)){
-                        // 得到方法的参数类型
-                        Class[] parmts = method.getParameterTypes();
-                        if (parmts[0] == String.class) {
-                            if(tag != null ){
-                                method.invoke(obj,tag.toString());
-                            }else{
-                                method.invoke(obj,"");
-                            }
+                    if(!flag){
+                        data.setId(UUIDGenerator.getUUID());
+                        try{
+                            meterCollectDao.insert(data);
+                        }catch (Exception e){
+                            message.append("第"+(m+1)+"行数据有问题：新增失败");
+                            message.append(",");
                         }
-                        if (parmts[0] == int.class || parmts[0] == Integer.class) {
-                            if(tag != null ){
-                                method.invoke(obj, Integer.parseInt(data.get(columnName).toString()));
-                            }else{
-                                method.invoke(obj,0);
-                            }
-                        }
-                        if ( parmts[0] == BigInteger.class) {
-                            if(tag != null ){
-                                method.invoke(obj, new BigInteger(data.get(columnName).toString()));
-                            }else{
-                                method.invoke(obj,0);
-                            }
-                        }
-                        if (parmts[0] == Double.class ) {
-                            if(tag != null ){
-                                method.invoke(obj, Double.parseDouble(tag.toString()));
-                            }else{
-                                method.invoke(obj,0.0);
-                            }
-                        }
-                        if (parmts[0] == Float.class ) {
-                            if(tag != null ){
-                                method.invoke(obj, Float.parseFloat(tag.toString()));
-                            }else{
-                                method.invoke(obj,0.0);
-                            }
-                        }
-                        if (parmts[0] == BigDecimal.class ) {
-                            if(tag != null ){
-                                BigDecimal bigDecimal = new BigDecimal(tag.toString());
-                                method.invoke(obj, bigDecimal.intValue());
-                            }else{
-                                method.invoke(obj,0.0);
-                            }
-                        }
-                        if (parmts[0] == Date.class) {
-                            method.invoke(obj,tag);
+                    }else{
+                        try{
+                            meterCollectDao.updateByPrimaryKey(data);
+                        }catch (Exception e){
+                            message.append("第"+(m+1)+"行数据有问题：更新失败");
+                            message.append(",");
                         }
 
                     }
                 }
+                File file = new File(path);
+                File filet = new File(path+".conf");
+                if(!file.exists()){
+                    file.delete();
+                }
+                if(!filet.exists()){
+                    filet.delete();
+                }
+                io.close();
+                result.put("flag","1");
+        } catch (Exception e) {
+            result.put("flag","2");
+            logger.info("后台-计量器具导入出错"+ e);
+        }finally {
+            if(null != io){
+                io.close();
             }
         }
+        result.put("message",message);
+        return  result;
+    }
+
+
+
+    private Object digitData(XSSFRow xssfRow , Class<?> classz){
+        Object obj = null;
+       try {
+           obj =Class.forName(classz.getName()).newInstance();
+           Method[] methods = classz.getMethods();
+           Field[] fields = classz.getClass().getDeclaredFields();
+           Map<String,Object> data = new HashMap<>();
+           List<String> cells = new ArrayList<>();
+           /*自动化匹配*/
+//           for (Field field : fields){
+//               if(!Constants.CELL_NAME.containsKey(ColumUtil.getColumn(field.getName()))){
+//                   Constants.CELL_NAME.put( ColumUtil.getColumn(field.getName()),field.getName());
+//               }
+//           }
+           Iterator iter = Constants.CELL_NAME.entrySet().iterator();
+           while (iter.hasNext()) {
+               Map.Entry entry = (Map.Entry) iter.next();
+               String key =  entry.getKey().toString();
+               cells.add(key);
+           }
+           for(int i = 0; i < cells.size();i++){
+               Object tag = getValue(xssfRow.getCell(i));
+
+               String cellname = cells.get(i);
+               for (Method method : methods) {
+                   String methodName = method.getName();
+                   // 如果对象的方法以set开头
+                   if (methodName.startsWith("set")) {
+                       // 根据方法名字得到数据表格中字段的名字
+                       String columnName = methodName.substring(3, methodName.length());
+                       columnName = ColumUtil.getColumn(columnName);
+
+                       if(cellname.equals(columnName)){
+
+                           // 得到方法的参数类型
+                           Class[] parmts = method.getParameterTypes();
+
+                           if (parmts[0] == String.class) {
+                               if(tag.toString().endsWith(".0")){
+                                   tag =  tag.toString().substring(0, tag.toString().length() - 2);
+                               }
+                               if(tag != null ){
+                                   method.invoke(obj,tag.toString());
+                               }else{
+                                   method.invoke(obj,"");
+                               }
+                           }
+                           if (parmts[0] == byte.class || parmts[0] == Byte.class) {
+                               System.out.println(columnName+"----type:"+parmts[0]+"-----------value:"+tag);
+                               if(tag.toString().endsWith(".0")){
+                                   tag =  new Byte(tag.toString().substring(0, tag.toString().length() - 2));
+                               }
+                               if(tag != null ){
+                                   method.invoke(obj, (byte)tag);
+                               }else{
+                                   method.invoke(obj,0);
+                               }
+                           }
+                           if (parmts[0] == int.class || parmts[0] == Integer.class) {
+                               if(tag != null ){
+                                   method.invoke(obj, Integer.parseInt(tag.toString()));
+                               }else{
+                                   method.invoke(obj,0);
+                               }
+                           }
+                           if ( parmts[0] == BigInteger.class) {
+                               if(tag != null ){
+                                   method.invoke(obj, new BigInteger(tag.toString()));
+                               }else{
+                                   method.invoke(obj,0);
+                               }
+                           }
+                           if (parmts[0] == Double.class ) {
+                               if(tag != null ){
+                                   method.invoke(obj, Double.parseDouble(tag.toString()));
+                               }else{
+                                   method.invoke(obj,0.0);
+                               }
+                           }
+                           if (parmts[0] == Float.class ) {
+                               if(tag != null ){
+                                   method.invoke(obj, Float.parseFloat(tag.toString()));
+                               }else{
+                                   method.invoke(obj,0.0);
+                               }
+                           }
+                           if (parmts[0] == BigDecimal.class ) {
+                               if(tag != null ){
+                                   BigDecimal bigDecimal = new BigDecimal(tag.toString());
+                                   method.invoke(obj, bigDecimal.intValue());
+                               }else{
+                                   method.invoke(obj,0.0);
+                               }
+                           }
+                           if (parmts[0] == Date.class) {
+                               method.invoke(obj,tag);
+                           }
+
+                       }
+                   }
+               }
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+
         return obj;
     }
 
 
+    private Object getValue(XSSFCell hssfCell){
+        if(hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN){
+            return String.valueOf( hssfCell.getBooleanCellValue());
+        }else if(hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC){
+            return String.valueOf( hssfCell.getNumericCellValue());
+        }else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_STRING){
+            return String.valueOf( hssfCell.getStringCellValue());
+        }else{
+            return String.valueOf( hssfCell.getStringCellValue());
+        }
+
+    }
 
 
-    @Resource
-    MeterCollectDao meterCollectDao;
     @Override
     public int deleteByPrimaryKey(String id) {
         return meterCollectDao.deleteByPrimaryKey(id);

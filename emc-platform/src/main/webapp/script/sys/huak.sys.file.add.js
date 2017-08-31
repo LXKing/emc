@@ -1,19 +1,20 @@
 jQuery(document).ready(function($){
-    $btn = $("#ctlBtn");
-    $wrap = $('#uploader'),
-    $queue = $('#thelist').appendTo( $wrap.find('.uploader-list') );
+    var $t = $(top.document);
+    $btn = $t.find("#ctlBtn");
+    $wrap = $t.find('#uploader'),
+    $queue = $t.find('#thelist').appendTo( $wrap.find('.uploader-list') );
     var uploader = WebUploader.create({
-        pick:'#picker',
+        pick:$t.find('#picker'),
         formData: {
             uid: 123
         },
-        swf:  ctx + '/static/Hplus/js/plugins/webuploader/Uploader.swf',
+        swf:  _platform + '/static/Hplus/js/plugins/webuploader/Uploader.swf',
         chunked: false,
-        server: ctx+'/file/upload',
+        server: _platform+'/meterCollect/upload',
         // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
         disableGlobalDnd: true,
         threads:3,
-        fileNumLimit: 20,
+        fileNumLimit: 5,
         fileSizeLimit: 2000 * 1024 * 1024,    // 200 M
         fileSingleSizeLimit: 100 * 1024 * 1024    // 50 M
     });
@@ -24,13 +25,13 @@ jQuery(document).ready(function($){
         if(checkfile(file)) {
             var $li = '<div id="' + file.id + '" class="item" >' +
                 '<div class="info" style="width:160px;float: left;margin: 5px;font-size:12px;font-weight:bolder;height: 15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;">' + file.name + '</div>' +
-                '<p class="state" style="float: left;margin: 5px;color: #a9a9a9;height: 15px;">等待上传...</p>&nbsp;<button class="webuploadDelbtn button red">删除</button></div>' +
+                '<p class="state" style="float: left;margin: 5px;color: #a9a9a9;height: 15px;">等待上传...</p></div>' +
                 '<HR  style="FILTER: alpha(opacity=100,finishopacity=0,style=1);margin: 1px;" class="c' + file.id + '" width="100%" color=#987cb9 SIZE=3><br id="id' + file.id + '">';
             $queue.append($li);
         }
-        });
+     });
     //删除
-    $(document).on("click",'.webuploadDelbtn',function () {
+    $(document).on("click",$t.find('.webuploadDelbtn'),function () {
         var $ele = $(this);
         var id = $ele.parent().attr("id");
         var file = uploader.getFile(id);
@@ -38,7 +39,7 @@ jQuery(document).ready(function($){
     });
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadProgress', function( file, percentage ) {
-        var $li = $( '#'+file.id ),
+        var $li = $t.find( '#'+file.id ),
         $percent = $li.find('.progress .progress-bar');
         $percent.css("float","left");
         // 避免重复创建
@@ -54,16 +55,16 @@ jQuery(document).ready(function($){
         });
 
     uploader.on('fileDequeued', function (file) {
-        var fullName = $("#hiddenInput"+ file.id).val();
+        var fullName = $t.find("#hiddenInput"+ file.id).val();
         if (fullName!=null) {
             $.post(webuploaderoptions.deleteServer, { fullName: fullName }, function (data) {
                 //alert(data.message);
             })
         }
-        $("#id"+file.id).remove();
-        $(".c"+file.id).remove();
-        $("#"+file.id).remove();
-        $("#hiddenInput"+ file.id).remove();
+        $t.find("#id"+file.id).remove();
+        $t.find(".c"+file.id).remove();
+        $t.find("#"+file.id).remove();
+        $t.find("#hiddenInput"+ file.id).remove();
 
     })
 
@@ -74,14 +75,14 @@ jQuery(document).ready(function($){
         }else{
             return true;
         }
-
     }
 
     //当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。
     uploader.on("uploadAccept",function(object,ret){
         //服务器响应了
         //ret._raw  类似于 data
-        var data =JSON.parse(ret._raw);
+        var data =ret.message;
+
         if(data.resultCode != "1" && data.resultCode != "3"){
             if(data.resultCode == "9"){
                 uploader.reset();
@@ -89,23 +90,22 @@ jQuery(document).ready(function($){
                 return false;
             }
         }else{
-            //E05017
             uploader.reset();
             layer.msg("error");
             return false;
         }
+
     })
     uploader.on( 'uploadSuccess', function( file ) {
-        $( '#'+file.id ).find('.webuploadDelbtn').remove();
-        $( '#'+file.id ).find('p.state').text('已上传');
+        $t.find( '#'+file.id ).find('.webuploadDelbtn').remove();
+        $t.find( '#'+file.id ).find('p.state').text('已上传');
         });
 
     uploader.on( 'uploadError', function( file ) {
-        $( '#'+file.id ).find('p.state').text('上传出错');
+        $t.find( '#'+file.id ).find('p.state').text('上传出错');
         });
 
     uploader.on( 'uploadComplete', function( file ) {
-        $( '#'+file.id ).find('.progress').fadeOut();
+        $t.find( '#'+file.id ).find('.progress').fadeOut();
      });
-
 });

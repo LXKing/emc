@@ -5,6 +5,7 @@ import com.huak.mdc.vo.MeterCollectA;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,4 +34,6 @@ public interface MeterCollectDao {
     List<MeterCollect>  checkSerialNo(String serialNo);
 
     List<Map<String,Object>> getUnitInfo(String unitType);
+
+    List<Map<String,Object>> selectByMaps(Map<String, Object> paramsMap);
 }

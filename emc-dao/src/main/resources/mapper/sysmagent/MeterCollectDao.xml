@@ -445,4 +445,11 @@
     <select id="getUnitInfo" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT vu.UNITID unitId,vu.UNITNAME unitName from v_emc_unit vu where vu.UNITTYPE=#{unitType,jdbcType=VARCHAR}
     </select>
+
+
+    <select id="selectByMaps" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        CONCAT(a.CODE,"-",a.COM_ID) as code
+        from t_emc_meter_collect a
+    </select>
 </mapper>
