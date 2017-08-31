@@ -1,6 +1,6 @@
 package com.huak.prst;
 
-import com.huak.mdc.model.Change;
+import com.huak.mdc.model.RecordChange;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -16,13 +16,13 @@ import com.huak.mdc.model.Change;
 public interface ChangeService {
     int deleteByPrimaryKey(String id);
 
-    int insert(Change record);
+    int insert(RecordChange record);
 
-    int insertSelective(Change record);
+    int insertSelective(RecordChange record);
 
-    Change selectByPrimaryKey(String id);
+    RecordChange selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Change record);
+    int updateByPrimaryKeySelective(RecordChange record);
 
-    int updateByPrimaryKey(Change record);
+    int updateByPrimaryKey(RecordChange record);
 }

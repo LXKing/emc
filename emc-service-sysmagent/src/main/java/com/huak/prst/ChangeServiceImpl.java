@@ -1,7 +1,10 @@
 package com.huak.prst;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.huak.mdc.model.Change;
+import com.huak.mdc.dao.RecordChangeDao;
+import com.huak.mdc.model.RecordChange;
+
+import javax.annotation.Resource;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -17,6 +20,8 @@ import com.huak.mdc.model.Change;
 
 @Service
 public class ChangeServiceImpl implements ChangeService {
+    @Resource
+    RecordChangeDao recordChangeDao;
 
     @Override
     public int deleteByPrimaryKey(String id) {
@@ -24,27 +29,27 @@ public class ChangeServiceImpl implements ChangeService {
     }
 
     @Override
-    public int insert(Change record) {
+    public int insert(RecordChange record) {
+        return recordChangeDao.insertSelective(record);
+    }
+
+    @Override
+    public int insertSelective(RecordChange record) {
         return 0;
     }
 
     @Override
-    public int insertSelective(Change record) {
-        return 0;
-    }
-
-    @Override
-    public Change selectByPrimaryKey(String id) {
+    public RecordChange selectByPrimaryKey(String id) {
         return null;
     }
 
     @Override
-    public int updateByPrimaryKeySelective(Change record) {
+    public int updateByPrimaryKeySelective(RecordChange record) {
         return 0;
     }
 
     @Override
-    public int updateByPrimaryKey(Change record) {
+    public int updateByPrimaryKey(RecordChange record) {
         return 0;
     }
 }
