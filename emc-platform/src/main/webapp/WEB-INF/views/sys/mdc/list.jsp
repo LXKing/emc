@@ -31,7 +31,7 @@
                             <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">计量代码</label>
-                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                                         <input type="text" class="form-control" id="code" name="code" placeholder="请输入计量代码">
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                                 <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                     <div class="form-group">
                                         <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">名称</label>
-                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                        <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                                             <input type="text" class="form-control" id="name" name="name" placeholder="请输入名称">
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">能源类型</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select name="type" class="chosen-select form-control">
+                                        <select name="energyTypeId" id="energyTypeId" class="chosen-select form-control">
                                             <option value="">请选择类型</option>
                                             <c:forEach items="${sysDic['energyType']}" var="type">
                                                 <option value="${type.seq}">${type.des}</option>
@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">单位类型</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select name="type" class="chosen-select form-control">
+                                        <select name="unitType" id="unitType" class="chosen-select form-control">
                                             <option value="">请选择类型</option>
                                             <c:forEach items="${sysDic['orgType']}" var="type">
                                                 <option value="${type.seq}">${type.des}</option>
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">实虚表</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select name="type" class="chosen-select form-control">
+                                        <select name="isreal" id="isreal" class="chosen-select form-control">
                                             <option value="">请选择类型</option>
                                             <option value="0">实表</option>
                                             <option value="1">虚表</option>
@@ -88,7 +88,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">总表</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select name="type" class="chosen-select form-control">
+                                        <select name="istotal" id="istotal" class="chosen-select form-control">
                                             <option value="">请选择类型</option>
                                             <option value="0">总表</option>
                                             <option value="1">单位总表</option>
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">自动采集</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select name="type" class="chosen-select form-control">
+                                        <select name="isauto" id="isauto" class="chosen-select form-control">
                                             <option value="">请选择类型</option>
                                             <option value="0">自动采集</option>
                                             <option value="1">手工</option>
@@ -113,7 +113,7 @@
                                 <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                     <div class="form-group">
                                         <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">点表</label>
-                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                        <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                                             <input type="text" class="form-control" id="tag" name="tag" placeholder="请输入点表">
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">预存</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <select name="type" class="chosen-select form-control">
+                                        <select name="isprestore" id="isprestore" class="chosen-select form-control">
                                             <option value="">请选择类型</option>
                                             <option value="0">不是</option>
                                             <option value="1">是</option>
@@ -159,6 +159,7 @@
                                     <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/meterCollect/export"> 导出Excel </button>
                                     <button type="button" class="btn btn-sm btn-primary" onclick="uploaderExcel()"> 批量导入</button>
 
+                                </div>
                                 </div>
                             </div>
 

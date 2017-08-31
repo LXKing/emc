@@ -159,6 +159,9 @@ function initable() {
                     if(value == '2'){
                         return '系统总表 ';
                     }
+                    if(value == '0'){
+                        return '总表 ';
+                    }
                     return '';
                 }
             },
@@ -247,8 +250,8 @@ function initable() {
                 field: 'depict',
                 align: 'center',
                 formatter:function(value,row,index){
-                    if(value.length>20){
-                        return '<span title="'+value+'">'+value.substr(0,20)+'</span>';
+                    if(value.length>6){
+                        return '<span title="'+value+'">'+value.substr(0,6)+'</span>';
                     }
                     return value;
                 }

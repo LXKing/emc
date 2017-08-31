@@ -278,7 +278,7 @@
         FROM
         t_emc_meter_collect mc
         LEFT JOIN v_emc_unit vu ON mc.UNIT_ID = vu.UNITID
-
+        where 1=1
         <if test="code != null and code!=''">
             and CODE = #{code,jdbcType=VARCHAR}
         </if>

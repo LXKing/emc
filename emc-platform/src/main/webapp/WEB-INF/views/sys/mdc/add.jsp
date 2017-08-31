@@ -84,10 +84,14 @@
                         </select>
                     </div>
                 </div>
+                <div id="gongshi" class="form-group">
+                </div>
+                <div id="yucun" class="form-group">
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>是否总表：</label>
                     <div class="col-sm-8">
-                        <select name="istotal" class="chosen-select form-control">
+                        <select name="istotal" id="istotal" class="chosen-select form-control">
                             <option value="">请选择类型</option>
                             <option value="0">总表</option>
                             <option value="1">单位总表</option>
@@ -98,7 +102,7 @@
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>自动采集：</label>
                     <div class="col-sm-8">
-                        <select name="isauto" class="chosen-select form-control">
+                        <select name="isauto" id="isauto" class="chosen-select form-control">
                             <option value="">请选择类型</option>
                             <option value="0">自动采集</option>
                             <option value="1">手工</option>
@@ -119,13 +123,13 @@
                             class="red">*</span>点表：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="tag" class="form-control" type="text" maxlength="16" placeholder="请输入点表">
+                        <input name="tag" id="tag" class="form-control" type="text" maxlength="16" placeholder="请输入点表">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  control-label"><span class="red">*</span>删除标识：</label>
                     <div class="col-sm-8">
-                        <select name="isdelete" class="chosen-select form-control">
+                        <select name="isdelete" id="isdelete" class="chosen-select form-control">
                             <option value="">请选择类型</option>
                             <option value="0">未删除</option>
                             <option value="1">软删除标识</option>
@@ -137,7 +141,7 @@
                             class="red"></span>描述：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="depict" class="form-control" type="text" maxlength="16" placeholder="请输入计量器具描述">
+                        <input name="depict" id="depict" class="form-control" type="text" maxlength="16" placeholder="请输入计量器具描述">
                     </div>
                 </div>
 
@@ -186,28 +190,29 @@ $(function () {
     });
     $(top.document).find("#isreal").on('change', function () {
         var real = $(this).val();
-        if(real==0){
+        if(real==1){
             //0-实表-预存  1-虚表-公式
             var html='<div  class="form-group">'+
                      '<label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">'+
                      '<span class="red"></span>公式：</label>'+
                      '<div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">'+
-                    '<input name="formula" class="form-control" type="text" maxlength="16" placeholder="请输入公式">'+
+                    '<input name="formula" id="formula" class="form-control" type="text" maxlength="16" placeholder="请输入公式">'+
                     '</div>'+'</div>';
-
-            //$(top.document).find("#isReal").html(html);
+            $(top.document).find("#yucun").html("");
+            $(top.document).find("#gongshi").html(html);
         }
-        if(real==1){
+        if(real==0){
             var html='<div  class="form-group">'+
                     '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
                     '<div class="col-sm-8">'+
-                    '<select name="isprestore" class="chosen-select form-control">'+
+                    '<select name="isprestore" id="isprestore" class="chosen-select form-control">'+
                     '<option value="">请选择类型</option>'+
                     '<option value="0">不是</option>'+
                     '<option value="1">是</option>'+
                     '</select>'+
                     '</div>'+'</div>';
-            //$(top.document).find("#isReal").html(html);
+            $(top.document).find("#gongshi").html("");
+            $(top.document).find("#yucun").html(html);
         }
     });
 
@@ -383,7 +388,7 @@ $(function () {
             var index = top.layer.load(1, {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
-            alert($form.serialize());
+           // alert($form.serialize());
             $.ajax({
                 url: _platform + '/meterCollect/addvalue',
                 data: $form.serialize(),

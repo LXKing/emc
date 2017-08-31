@@ -214,6 +214,7 @@ public class MeterCollectController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
+            //虚表时 给预存字段设置  默认值
             if(meterCollect.getIsreal()==Byte.valueOf("1")){
                 meterCollect.setIsprestore(Byte.valueOf("0"));
             }
