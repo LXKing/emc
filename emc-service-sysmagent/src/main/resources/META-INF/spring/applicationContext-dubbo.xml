@@ -132,4 +132,9 @@
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
+    <bean id="prestoreService" class="com.huak.mdc.MeterCollectServiceImpl"></bean>
+    <dubbo:service interface="com.huak.prst.PrestoreService" ref="prestoreService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
 </beans>

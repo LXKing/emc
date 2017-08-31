@@ -7,7 +7,6 @@
  */
 $(function () {
     $(document).ready(function () {
-
         $('.file-box').each(function () {
             animationHover(this, 'pulse');
         });
@@ -86,21 +85,6 @@ function editfile() {
     $.get(ctx + '/file/edit/' + id, function (result) {
         $('#layer-div').html(result);
     });
-//    layer.open({
-//        area: ['600px', '500px'],
-//        type: 2,
-//        title: '编辑文件',
-//        btn: ['保存', '取消'],
-//        yes: function () {
-//            $("#fileEditForm").submit();
-//        },
-//        skin: 'layer-ext-moon', //样式类名
-//        closeBtn: 1, //不显示关闭按钮
-//        shift: 2,
-//        shadeClose: true, //开启遮罩关闭
-//        content: $('#layer-div')
-//    });
-
 }
 
 function uploadFile() {

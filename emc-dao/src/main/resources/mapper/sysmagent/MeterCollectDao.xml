@@ -278,7 +278,7 @@
         FROM
         t_emc_meter_collect mc
         LEFT JOIN v_emc_unit vu ON mc.UNIT_ID = vu.UNITID
-
+        where 1=1
         <if test="code != null and code!=''">
             and CODE = #{code,jdbcType=VARCHAR}
         </if>
@@ -418,25 +418,17 @@
         </if>
         order by id
     </select>
+    <select id="checkName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_emc_meter_collect mc
+        where  NAME = #{name,jdbcType=VARCHAR}
+        and UNIT_ID = #{unitId,jdbcType=VARCHAR}
+    </select>
     <select id="checkCode" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         SELECT
-        mc.ID,
-        mc.CODE,
-        mc.NAME,
-        mc.SERIAL_NO,
-        mc.ENERGY_TYPE_ID,
-        mc.ISREAL,
-        mc.ISTOTAL,
-        mc.UNIT_ID,
-        mc.UNIT_TYPE,
-        mc.ISAUTO,
-        mc.DEPICT,
-        mc.TAG,
-        mc.COEF,
-        mc.FORMULA,
-        mc.ISPRESTORE,
-        mc.ISDELETE,
-        mc.COM_ID
+        <include refid="Base_Column_List" />
         FROM
         t_emc_meter_collect mc
         where  CODE = #{code,jdbcType=VARCHAR}
@@ -444,23 +436,7 @@
     </select>
     <select id="checkSerialNo" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
-        mc.ID,
-        mc.CODE,
-        mc.NAME,
-        mc.SERIAL_NO,
-        mc.ENERGY_TYPE_ID,
-        mc.ISREAL,
-        mc.ISTOTAL,
-        mc.UNIT_ID,
-        mc.UNIT_TYPE,
-        mc.ISAUTO,
-        mc.DEPICT,
-        mc.TAG,
-        mc.COEF,
-        mc.FORMULA,
-        mc.ISPRESTORE,
-        mc.ISDELETE,
-        mc.COM_ID
+        <include refid="Base_Column_List" />
         FROM
         t_emc_meter_collect mc
         where  SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
@@ -468,5 +444,12 @@
     </select>
     <select id="getUnitInfo" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT vu.UNITID unitId,vu.UNITNAME unitName from v_emc_unit vu where vu.UNITTYPE=#{unitType,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByMaps" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        CONCAT(a.CODE,"-",a.COM_ID) as code
+        from t_emc_meter_collect a
     </select>
 </mapper>
