@@ -1,10 +1,15 @@
 package com.huak.prst;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.huak.mdc.model.Prestore;
+import com.github.pagehelper.PageHelper;
+import com.huak.common.page.Convert;
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
+import com.huak.mdc.dao.RecordPrestoreDao;
+import com.huak.mdc.model.RecordPrestore;
 import com.huak.mdc.vo.PrestoreA;
 
-import java.util.List;
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -21,38 +26,44 @@ import java.util.Map;
 
 @Service
 public class PrestoreServiceImpl implements PrestoreService {
+
+    @Resource
+    private RecordPrestoreDao prestoreDao;
     @Override
     public int deleteByPrimaryKey(String id) {
         return 0;
     }
 
     @Override
-    public int insert(Prestore record) {
+    public int insert(RecordPrestore record) {
         return 0;
     }
 
     @Override
-    public int insertSelective(Prestore record) {
+    public int insertSelective(RecordPrestore record) {
         return 0;
     }
 
     @Override
-    public Prestore selectByPrimaryKey(String id) {
+    public RecordPrestore selectByPrimaryKey(String id) {
         return null;
     }
 
     @Override
-    public int updateByPrimaryKeySelective(Prestore record) {
+    public int updateByPrimaryKeySelective(RecordPrestore record) {
         return 0;
     }
 
     @Override
-    public int updateByPrimaryKey(Prestore record) {
+    public int updateByPrimaryKey(RecordPrestore record) {
         return 0;
     }
 
     @Override
-    public List<PrestoreA> selectPageByMap(Map<String, Object> paramsMap) {
-        return null;
+    public PageResult<PrestoreA> queryByPage(Map<String, Object> paramsMap,Page page) {
+
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert(prestoreDao.selectPageByMap(paramsMap));
     }
+
 }

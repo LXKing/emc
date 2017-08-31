@@ -1,9 +1,10 @@
 package com.huak.prst;
 
-import com.huak.mdc.model.Prestore;
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
+import com.huak.mdc.model.RecordPrestore;
 import com.huak.mdc.vo.PrestoreA;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,16 +21,19 @@ import java.util.Map;
 public interface PrestoreService {
     int deleteByPrimaryKey(String id);
 
-    int insert(Prestore record);
+    int insert(RecordPrestore record);
 
-    int insertSelective(Prestore record);
+    int insertSelective(RecordPrestore record);
 
-    Prestore selectByPrimaryKey(String id);
+    RecordPrestore selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Prestore record);
+    int updateByPrimaryKeySelective(RecordPrestore record);
 
-    int updateByPrimaryKey(Prestore record);
+    int updateByPrimaryKey(RecordPrestore record);
 
-    List<PrestoreA> selectPageByMap(Map<String,Object> paramsMap);
+    /**
+     * 预存记录分页查询
+     */
+    public PageResult<PrestoreA> queryByPage(Map<String,Object> paramsMap, Page page);
 
 }

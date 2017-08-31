@@ -12,6 +12,18 @@
       <arg column="CRESTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+    <resultMap id="BaseResultMapA" type="com.huak.mdc.vo.PrestoreA">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="COLLECT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="PRESTORE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="USED_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="PRESTORE_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="CRESTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
     ID, COLLECT_ID, PRESTORE_TIME, USED_NUM, PRESTORE_NUM, CREATE_TIME, CRESTOR
   </sql>
@@ -100,4 +112,38 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
+    <select id="selectPageByMap"  parameterMap="java.util.Map" resultMap="BaseResultMapA">
+        SELECT
+        rp.ID, rp.COLLECT_ID, rp.PRESTORE_TIME, rp.USED_NUM, rp.PRESTORE_NUM, rp.CREATE_TIME,
+        au.USER_NAME CRESTOR,vu.UNITNAME
+
+        from t_emc_record_prestore rp
+
+        LEFT JOIN t_emc_auth_user au on rp.CRESTOR=au.ID
+
+        LEFT JOIN t_emc_meter_collect mc on rp.COLLECT_ID=mc.ID
+
+        LEFT JOIN v_emc_unit vu on mc.UNIT_ID=vu.UNITID
+
+        where 1=1
+
+        <if test="collectId != null and collectId!=''">
+            and COLLECT_ID
+        </if>
+        <if test="prestoreTime != null and prestoreTime!=''">
+            and PRESTORE_TIME
+        </if>
+        <if test="usedNum != null and usedNum!=''">
+            and USED_NUM
+        </if>
+        <if test="prestoreNum != null and prestoreNum!=''">
+            and PRESTORE_NUM
+        </if>
+        <if test="createTime != null and createTime!=''">
+            and CREATE_TIME
+        </if>
+        <if test="crestor != null and crestor!=''">
+            and CRESTOR
+        </if>
+    </select>
 </mapper>
