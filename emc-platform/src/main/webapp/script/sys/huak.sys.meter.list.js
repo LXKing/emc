@@ -30,13 +30,15 @@ function uploaderExcel(){
             type: 1,
             title: "文件上传",
             maxmin:true,
-            yes: function () {
-                $top.find("#fileAddForm").submit();
-            },
             skin: 'layer-ext-moon', //样式类名
             closeBtn: 1, //不显示关闭按钮
             shift: 2,//出场动画
             shadeClose: true, //开启遮罩关闭
+            cancel: function(index, layero){
+                top.uploader.destroy();
+                top.layer.closeAll();
+                return false;
+            },
             content: $top.find("#layer-div")
         });
     });

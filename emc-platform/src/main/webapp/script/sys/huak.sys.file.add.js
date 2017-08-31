@@ -1,27 +1,33 @@
 jQuery(document).ready(function($){
+    top.uploader = null;
     var $t = $(top.document);
     $btn = $t.find("#ctlBtn");
     $wrap = $t.find('#uploader'),
     $queue = $t.find('#thelist').appendTo( $wrap.find('.uploader-list') );
+
     var uploader = WebUploader.create({
-        pick:$t.find('#picker'),
-        formData: {
-            uid: 123
-        },
+        pick:{id:$t.find('#picker')},
         swf:  _platform + '/static/Hplus/js/plugins/webuploader/Uploader.swf',
         chunked: false,
         server: _platform+'/meterCollect/upload',
         // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
         disableGlobalDnd: true,
-        threads:3,
+        threads:1,
         fileNumLimit: 5,
+        accept : {
+            title : 'Applications',
+            extensions : 'xls,xlsx',
+            mimeTypes : 'application/xls,application/xlsx'
+        },
         fileSizeLimit: 2000 * 1024 * 1024,    // 200 M
         fileSingleSizeLimit: 100 * 1024 * 1024    // 50 M
     });
+    top.uploader = uploader;
     $btn.on('click', function () {
                uploader.upload();
     });
     uploader.on( 'fileQueued', function( file ) {
+        debugger;
         if(checkfile(file)) {
             var $li = '<div id="' + file.id + '" class="item" >' +
                 '<div class="info" style="width:160px;float: left;margin: 5px;font-size:12px;font-weight:bolder;height: 15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;">' + file.name + '</div>' +
@@ -55,6 +61,7 @@ jQuery(document).ready(function($){
         });
 
     uploader.on('fileDequeued', function (file) {
+        debugger;
         var fullName = $t.find("#hiddenInput"+ file.id).val();
         if (fullName!=null) {
             $.post(webuploaderoptions.deleteServer, { fullName: fullName }, function (data) {
@@ -99,7 +106,18 @@ jQuery(document).ready(function($){
     uploader.on( 'uploadSuccess', function( file ) {
         $t.find( '#'+file.id ).find('.webuploadDelbtn').remove();
         $t.find( '#'+file.id ).find('p.state').text('已上传');
+        uploader.destroy();
         });
+    uploader.on("error", function (type) {
+        debugger;
+        if (type == "Q_TYPE_DENIED") {
+            layer.msg("请上传JPG、PNG、GIF、BMP格式文件");
+        } else if (type == "Q_EXCEED_SIZE_LIMIT") {
+            layer.msg("文件大小不能超过2M");
+        }else {
+            layer.msg("上传出错！请检查后重新上传！错误代码"+type);
+        }
+    });
 
     uploader.on( 'uploadError', function( file ) {
         $t.find( '#'+file.id ).find('p.state').text('上传出错');
@@ -108,4 +126,5 @@ jQuery(document).ready(function($){
     uploader.on( 'uploadComplete', function( file ) {
         $t.find( '#'+file.id ).find('.progress').fadeOut();
      });
+
 });

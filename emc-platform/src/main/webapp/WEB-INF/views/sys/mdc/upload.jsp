@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="${platform}/static/Hplus/css/plugins/webuploader/webuploader.css">
     <link rel="stylesheet" type="text/css" href="${platform}/static/Hplus/css/demo/webuploader-demo.css">
     <link rel="stylesheet" type="text/css" href="${platform}/static/Hplus/css/mystyle.css">
+    <link href="${platform}/static/Hplus/js/plugins/layer/laydate/need/laydate.css"  type="text/css"  rel="stylesheet">
+    <link href="${platform}/static/Hplus/js/plugins/layer/laydate/skins/default/laydate.css"   type="text/css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H+ 后台主题UI框架 - 百度Web Uploader</title>

@@ -156,20 +156,12 @@
                                     <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
                                     </button>
                                     <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
-                                    <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/oncenet/export"> 导出Excel
-                                    </button>
+                                    <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/meterCollect/export"> 导出Excel </button>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="uploaderExcel()"> 批量导入</button>
 
                                 </div>
                             </div>
-                            <div class="btn-tools col-sm-4 col-xs-4 col-md-4 col-lg-4">
 
-                                <button type="button" class="btn btn-sm btn-primary" onclick="search()"> 搜索
-                                </button>
-                                <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
-                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/meterCollect/export"> 导出Excel </button>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="uploaderExcel()"> 批量导入</button>
-
-                            </div>
                         </div>
                     </form>
                     <div class="example">

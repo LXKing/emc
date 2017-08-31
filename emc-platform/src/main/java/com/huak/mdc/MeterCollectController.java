@@ -255,8 +255,7 @@ public class MeterCollectController {
     }
     @ResponseBody
     @RequestMapping(value = "/unit", method = RequestMethod.POST)
-    public String getUnitList(@RequestParam  String unitType
-    ){
+    public String getUnitList(@RequestParam  String unitType){
 
         JSONObject jo = new JSONObject();
         List<Map<String,Object>> list =   meterCollectService.getUnitInfo(unitType);
