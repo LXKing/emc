@@ -26,7 +26,7 @@ public class RecordPrestoreController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String page(){
-        logger.info("跳转到换表页");
+        logger.info("打开预存记录页");
         return "system/prestore/list";
     }
 }

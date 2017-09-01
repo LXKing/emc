@@ -58,6 +58,7 @@
 <script type="text/javascript" src="${web}/static/js/layer/layer.min.js"></script>
 <script type="text/javascript" src="${web}/static/js/ztree/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="${web}/static/js/jquery.page.js"></script>
+<script type="text/javascript" src="${web}/static/js/jquery-jtemplates.js"></script>
 <script>
     var _web = '${web}';
     layer.config({
