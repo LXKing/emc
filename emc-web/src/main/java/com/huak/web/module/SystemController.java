@@ -55,7 +55,7 @@ public class SystemController {
             treeMap.put("pId",map.get("pMenuId"));//父节点
             treeMap.put("href",map.get("menuUrl"));//url
             treeMap.put("name",map.get("menuName"));//名称
-
+            treeMap.put("open",true);//展开
             //treeMap.put("icon",map.get("menuName"));//图标
             treeMenus.add(treeMap);
         }
