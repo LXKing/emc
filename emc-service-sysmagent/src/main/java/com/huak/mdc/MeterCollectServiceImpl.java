@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -65,6 +66,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
         System.out.println(prefix + "start !!!");
         FileInputStream io = null;
         Map<String,Object> result = new HashMap<>();
+        result.put(Constants.FLAG,"1");
         StringBuffer message = new StringBuffer();
         try {
                 XSSFSheet hssFSheet = null;
@@ -78,8 +80,16 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                     hssFSheet = hssFWorkBook.getSheetAt(i);
                     for(int k = 1; k<hssFSheet.getPhysicalNumberOfRows();k++){
                         xssfRow = hssFSheet.getRow(k);
-                        meterCollect = (MeterCollect) digitData(xssfRow,MeterCollect.class);
-                        list.add(meterCollect);
+                        try {
+                            meterCollect = (MeterCollect) digitData(xssfRow,MeterCollect.class);
+                            list.add(meterCollect);
+                        }catch (Exception e){
+                            message.append("第"+(k)+"行数据有问题：新增失败");
+                            message.append(",");
+                            result.put("flag","2");
+                            break;
+                        }
+
                     }
                 }
                 for (int m = 0; m<list.size();m++){
@@ -138,24 +148,26 @@ public class MeterCollectServiceImpl implements MeterCollectService {
 
                     }
 
-                    boolean flag = false;
+                    boolean index = false;
                     String codeFlag = data.getCode()+"-"+data.getComId();
                     for (Map f :tempdata){
                         if(f.containsValue(codeFlag)){
-                            flag = true;
+                            index = true;
                             break;
                         }
                     }
-                    if(!flag){
+                    if(!index){
                         data.setId(UUIDGenerator.getUUID());
                         try{
                             meterCollectDao.insert(data);
                             Map<String,Object> meter = new HashMap<>();
                             meter.put("code",codeFlag);
                             tempdata.add(meter);
+
                         }catch (Exception e){
                             message.append("第"+(m+1)+"行数据有问题：新增失败");
                             message.append(",");
+                            result.put("flag","2");
                         }
                     }else{
                         try{
@@ -163,13 +175,13 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                         }catch (Exception e){
                             message.append("第"+(m+1)+"行数据有问题：更新失败");
                             message.append(",");
+                            result.put("flag","2");
                         }
 
                     }
                 }
 
                 io.close();
-                result.put("flag","1");
         } catch (Exception e) {
             result.put("flag","2");
             logger.info("后台-计量器具导入出错"+ e);
@@ -179,15 +191,14 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             }
         }
         result.put("message",message);
-
+         System.out.println(message);
         return  result;
     }
 
 
 
-    private Object digitData(XSSFRow xssfRow , Class<?> classz){
+    private Object digitData(XSSFRow xssfRow , Class<?> classz) throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         Object obj = null;
-       try {
            obj =Class.forName(classz.getName()).newInstance();
            Method[] methods = classz.getMethods();
            Field[] fields = classz.getClass().getDeclaredFields();
@@ -287,10 +298,6 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                    }
                }
            }
-       }catch (Exception e){
-           e.printStackTrace();
-       }
-
         return obj;
     }
 

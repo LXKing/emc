@@ -129,5 +129,6 @@ public class Constants {
         CELL_NAME.put("ISDELETE", "删除标识");
         CELL_NAME.put("DEPICT", "描述");
         CELL_NAME.put("SERIAL_NO", "出厂编号");
+        CELL_NAME.put("COM_ID", "所属公司");
     }
 }

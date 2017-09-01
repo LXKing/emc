@@ -13,7 +13,7 @@ jQuery(document).ready(function($){
         // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
         disableGlobalDnd: true,
         threads:1,
-        fileNumLimit: 5,
+        fileNumLimit :5,
         accept : {
             title : 'Applications',
             extensions : 'xls,xlsx',
@@ -26,22 +26,16 @@ jQuery(document).ready(function($){
     $btn.on('click', function () {
                uploader.upload();
     });
-    uploader.on( 'fileQueued', function( file ) {
+    uploader.on( 'fileQueued', function( file ){
+        var debug =$wrap.find('.uploader-list');
         if(checkfile(file)) {
             var $li = '<div id="' + file.id + '" class="item" >' +
                 '<div class="info" style="width:160px;float: left;margin: 5px;font-size:12px;font-weight:bolder;height: 15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;">' + file.name + '</div>' +
-                '<p class="state" style="float: left;margin: 5px;color: #a9a9a9;height: 15px;">等待上传...</p></div>' +
+                '<p class="state" style="float: left;margin: 5px;color: #a9a9a9;height: 15px;">等待上传...</p>&nbsp;<button class="webuploadDelbtn">删除</button></div>' +
                 '<HR  style="FILTER: alpha(opacity=100,finishopacity=0,style=1);margin: 1px;" class="c' + file.id + '" width="100%" color=#987cb9 SIZE=3><br id="id' + file.id + '">';
             $queue.append($li);
         }
      });
-    //删除
-    $(document).on("click",$t.find('.webuploadDelbtn'),function () {
-        var $ele = $(this);
-        var id = $ele.parent().attr("id");
-        var file = uploader.getFile(id);
-        uploader.removeFile(file);
-    });
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadProgress', function( file, percentage ) {
         var $li = $t.find( '#'+file.id ),
@@ -58,13 +52,19 @@ jQuery(document).ready(function($){
         $li.find(".progress-bar").text(Math.round(percentage * 100) + '%');
         $percent.css( 'width', percentage * 100 + '%' );
         });
+    //删除
+    $t.on("click",'.webuploadDelbtn',function () {
+        var $ele = $(this);
+        var id = $ele.parent().attr("id");
+        var file = uploader.getFile(id);
+        uploader.removeFile(file);
+    });
 
     uploader.on('fileDequeued', function (file) {
-        debugger;
         var fullName = $t.find("#hiddenInput"+ file.id).val();
         if (fullName!=null) {
             $.post(webuploaderoptions.deleteServer, { fullName: fullName }, function (data) {
-                //alert(data.message);
+                alert(data.message);
             })
         }
         $t.find("#id"+file.id).remove();
@@ -88,17 +88,15 @@ jQuery(document).ready(function($){
         //服务器响应了
         //ret._raw  类似于 data
         var data =ret.message;
-
-        if(data.resultCode != "1" && data.resultCode != "3"){
-            if(data.resultCode == "9"){
+        debugger;
+        if(data.flag != "1"){
                 uploader.reset();
-                layer.msg("error");
+                top.layer.msg(data.message);
                 return false;
-            }
+
         }else{
-            uploader.reset();
-            layer.msg("error");
-            return false;
+            top.layer.msg("保存成功！");
+            return true;
         }
 
     })
@@ -108,7 +106,7 @@ jQuery(document).ready(function($){
      });
     uploader.on( 'uploadError', function( file ) {
         $t.find( '#'+file.id ).find('p.state').text('上传出错');
-        });
+    });
 
     uploader.on( 'uploadComplete', function( file ) {
         $t.find( '#'+file.id ).find('.progress').fadeOut();
