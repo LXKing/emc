@@ -8,7 +8,11 @@ import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.common.utils.MultipartFileParam;
 import com.huak.common.utils.MultipartFileUploadUtil;
+import com.huak.mdc.model.RecordChange;
+import com.huak.mdc.model.RecordPrestore;
 import com.huak.org.model.Company;
+import com.huak.prst.ChangeService;
+import com.huak.prst.PrestoreService;
 import org.apache.commons.io.FileUtils;
 import com.huak.mdc.model.MeterCollect;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -42,15 +46,17 @@ public class MeterCollectController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private MeterCollectService meterCollectService;
+
+    @Resource
+    private ChangeService changeService;
+    @Resource
+    private PrestoreService prestoreService;
     private static AtomicLong counter = new AtomicLong(0L);
-    private static String UPLOAD_TEMP_DIR = "/usr/software/logs/sysmagent";
+    private static String UPLOAD_TEMP_DIR = "/usr/software/upload/sysmagent";
     private static String UPLOAD_TEMP_DIR1 = "D:\\workSp\\code\\upload";
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public String listPage(Model model) {
         logger.info("转至系统计量器具列表页");
-//        String code = "pipeType";
-//        List<SysDic> dic = orgService.selectSysDicAll(code);
-//        model.addAttribute("sysdic",dic);
         return "/sys/mdc/list";
     }
 
@@ -300,6 +306,95 @@ public class MeterCollectController {
         }
         return "/sys/mdc/edit";
     }
+
+    /**
+     *计量仪器-预存
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/prestore/{id}", method = RequestMethod.GET)
+    public String prestore(Model model, @PathVariable("id") String id) {
+        logger.info("跳转计量仪器-预存页");
+        try {
+            MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
+            List<Map<String,Object>> list=meterCollectService.getUnitInfo(mec.getUnitType().toString());
+            model.addAttribute("mec", mec);
+            model.addAttribute("uList",list);
+        } catch (Exception e) {
+            logger.error("跳转计量仪器-预存页异常" + e.getMessage());
+        }
+        return "/sys/mdc/prestore";
+    }
+
+    /**
+     *计量仪器-换表
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/change/{id}", method = RequestMethod.GET)
+    public String change(Model model, @PathVariable("id") String id) {
+        logger.info("跳转计量仪器-换表页");
+        try {
+            MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
+            List<Map<String,Object>> list=meterCollectService.getUnitInfo(mec.getUnitType().toString());
+            model.addAttribute("mec", mec);
+            model.addAttribute("uList",list);
+        } catch (Exception e) {
+            logger.error("跳转计量仪器-换表页异常" + e.getMessage());
+        }
+        return "/sys/mdc/change";
+    }
+
+    /**
+     *计量仪器-换表-计算能耗
+     * @return
+     */
+    @RequestMapping(value = "/change", method = RequestMethod.POST)
+    @ResponseBody
+    public String change(RecordChange recordChange,HttpServletRequest request) {
+        logger.info("计量仪器-换表-计算能耗开始");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Constants.SESSION_KEY);
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            recordChange.setCrestor(user.getId());
+            int i = changeService.insert(recordChange);
+            jo.put(Constants.FLAG, i>0);
+            jo.put(Constants.MSG, "换表成功");
+        } catch (Exception e) {
+            logger.error("计量仪器-换表-计算能耗异常" + e.getMessage());
+            jo.put(Constants.MSG, "换表失败");
+        }
+        return jo.toJSONString();
+    }
+
+    /**
+     *计量仪器-预存-计算能耗
+     * @return
+     */
+    @RequestMapping(value = "/presotre", method = RequestMethod.POST)
+    @ResponseBody
+    public String presotre(RecordPrestore recordChange,HttpServletRequest request) {
+        logger.info("计量仪器-预存-计算能耗开始");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Constants.SESSION_KEY);
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            recordChange.setCrestor(user.getId());
+            int i = prestoreService.insert(recordChange);
+            jo.put(Constants.FLAG, i>0);
+            jo.put(Constants.MSG, "预存成功");
+        } catch (Exception e) {
+            logger.error("计量仪器-预存-计算能耗异常" + e.getMessage());
+            jo.put(Constants.MSG, "预存失败");
+        }
+        return jo.toJSONString();
+    }
+
     @RequestMapping(value = "/editvalue", method = RequestMethod.POST)
     @ResponseBody
     public String editValue(MeterCollect meterCollect,HttpServletRequest request) {

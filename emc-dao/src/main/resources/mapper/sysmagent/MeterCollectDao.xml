@@ -15,7 +15,7 @@
       <arg column="ISAUTO" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="DEPICT" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="COEF" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="COEF" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="FORMULA" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ISPRESTORE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="ISDELETE" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -37,7 +37,7 @@
             <arg column="ISAUTO" javaType="java.lang.Byte" jdbcType="TINYINT" />
             <arg column="DEPICT" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="COEF" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="COEF" javaType="java.lang.Double" jdbcType="DOUBLE" />
             <arg column="FORMULA" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="ISPRESTORE" javaType="java.lang.Byte" jdbcType="TINYINT" />
             <arg column="ISDELETE" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -69,7 +69,7 @@
       #{serialNo,jdbcType=VARCHAR}, #{energyTypeId,jdbcType=VARCHAR}, #{isreal,jdbcType=TINYINT}, 
       #{istotal,jdbcType=TINYINT}, #{unitId,jdbcType=VARCHAR}, #{unitType,jdbcType=TINYINT}, 
       #{isauto,jdbcType=TINYINT}, #{depict,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, 
-      #{coef,jdbcType=TINYINT}, #{formula,jdbcType=VARCHAR}, #{isprestore,jdbcType=TINYINT}, 
+      #{coef,jdbcType=DOUBLE}, #{formula,jdbcType=VARCHAR}, #{isprestore,jdbcType=TINYINT},
       #{isdelete,jdbcType=TINYINT}, #{comId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.mdc.model.MeterCollect">
@@ -165,7 +165,7 @@
         #{tag,jdbcType=VARCHAR},
       </if>
       <if test="coef != null">
-        #{coef,jdbcType=TINYINT},
+        #{coef,jdbcType=DOUBLE},
       </if>
       <if test="formula != null">
         #{formula,jdbcType=VARCHAR},
@@ -218,7 +218,7 @@
         TAG = #{tag,jdbcType=VARCHAR},
       </if>
       <if test="coef != null">
-        COEF = #{coef,jdbcType=TINYINT},
+        COEF = #{coef,jdbcType=DOUBLE},
       </if>
       <if test="formula != null">
         FORMULA = #{formula,jdbcType=VARCHAR},
@@ -248,7 +248,7 @@
       ISAUTO = #{isauto,jdbcType=TINYINT},
       DEPICT = #{depict,jdbcType=VARCHAR},
       TAG = #{tag,jdbcType=VARCHAR},
-      COEF = #{coef,jdbcType=TINYINT},
+      COEF = #{coef,jdbcType=DOUBLE},
       FORMULA = #{formula,jdbcType=VARCHAR},
       ISPRESTORE = #{isprestore,jdbcType=TINYINT},
       ISDELETE = #{isdelete,jdbcType=TINYINT},
@@ -313,7 +313,7 @@
             and TAG = #{tag,jdbcType=VARCHAR}
         </if>
         <if test="coef != null and coef!=''">
-            and COEF = #{coef,jdbcType=TINYINT}
+            and COEF = #{coef,jdbcType=DOUBLE}
         </if>
         <if test="formula != null and formula!=''">
             and FORMULA = #{formula,jdbcType=VARCHAR}
@@ -367,7 +367,6 @@
         left  join t_emc_company c on a.COM_ID = c.ID
         left  join t_emc_energy_type d on a.ENERGY_TYPE_ID = d.ID
         where 1=1
-
         <if test="code != null and code!=''">
             and CODE = #{code,jdbcType=VARCHAR}
         </if>
@@ -402,7 +401,7 @@
             and TAG = #{tag,jdbcType=VARCHAR}
         </if>
         <if test="coef != null and coef!=''">
-            and COEF = #{coef,jdbcType=TINYINT}
+            and COEF = #{coef,jdbcType=DOUBLE}
         </if>
         <if test="formula != null and formula!=''">
             and FORMULA = #{formula,jdbcType=VARCHAR}

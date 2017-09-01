@@ -29,7 +29,7 @@ public class MeterCollect implements Serializable{
 
     private String tag;
 
-    private Byte coef;
+    private Double coef;
 
     private String formula;
 
@@ -39,7 +39,7 @@ public class MeterCollect implements Serializable{
 
     private String comId;
 
-    public MeterCollect(String id, String code, String name, String serialNo, String energyTypeId, Byte isreal, Byte istotal, String unitId, Byte unitType, Byte isauto, String depict, String tag, Byte coef, String formula, Byte isprestore, Byte isdelete, String comId) {
+    public MeterCollect(String id, String code, String name, String serialNo, String energyTypeId, Byte isreal, Byte istotal, String unitId, Byte unitType, Byte isauto, String depict, String tag, Double coef, String formula, Byte isprestore, Byte isdelete, String comId) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -159,11 +159,11 @@ public class MeterCollect implements Serializable{
         this.tag = tag == null ? null : tag.trim();
     }
 
-    public Byte getCoef() {
+    public Double getCoef() {
         return coef;
     }
 
-    public void setCoef(Byte coef) {
+    public void setCoef(Double coef) {
         this.coef = coef;
     }
 

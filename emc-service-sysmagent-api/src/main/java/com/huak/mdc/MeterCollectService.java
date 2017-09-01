@@ -54,7 +54,13 @@ public interface MeterCollectService {
      */
     public PageResult<MeterCollectA> queryByPage(Map<String,Object> paramsMap, Page page);
 
-    java.util.List<Map<String, Object>> exportExcel(Map<String, Object> paramsMap) throws IOException;
+    /**
+     * 计量器具-导出
+     * @param paramsMap
+     * @return
+     * @throws IOException
+     */
+    List<Map<String, Object>> exportExcel(Map<String, Object> paramsMap) throws IOException;
 
     /**
      * 校验计量代码

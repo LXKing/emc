@@ -136,4 +136,9 @@
     <dubbo:service interface="com.huak.prst.PrestoreService" ref="prestoreService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="changeService" class="com.huak.prst.ChangeServiceImpl"></bean>
+    <dubbo:service interface="com.huak.prst.ChangeService" ref="changeService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
 </beans>

@@ -60,7 +60,6 @@ jQuery(document).ready(function($){
         });
 
     uploader.on('fileDequeued', function (file) {
-        debugger;
         var fullName = $t.find("#hiddenInput"+ file.id).val();
         if (fullName!=null) {
             $.post(webuploaderoptions.deleteServer, { fullName: fullName }, function (data) {
