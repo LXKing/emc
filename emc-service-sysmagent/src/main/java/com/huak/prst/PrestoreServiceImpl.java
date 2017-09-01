@@ -115,10 +115,15 @@ public class PrestoreServiceImpl implements PrestoreService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageResult<PrestoreA> queryByPage(Map<String, Object> paramsMap,Page page) {
 
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(prestoreDao.selectPageByMap(paramsMap));
     }
-
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> exporPrestore(Map<String, Object> paramsMap) {
+        return prestoreDao.selectAllByMap(paramsMap);
+    }
 }
