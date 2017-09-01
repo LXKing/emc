@@ -5,6 +5,7 @@ import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.sys.type.MenuModel;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -136,4 +137,6 @@ public interface UserService {
      * 登录成功后修改用户参数
      */
 	void update2LoginSuccess(String id);
+
+    List<Map<String,Object>> getSystemMenusByUser(MenuModel model, User user);
 }

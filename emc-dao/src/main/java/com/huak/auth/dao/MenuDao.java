@@ -30,4 +30,6 @@ public interface MenuDao {
     int delete(String[] ids);
 
     List<Map<String,Object>> selectAuthByMap(Map<String, Object> params);
+
+    Menu getMenuModel(Map<String, Object> paramsMap);
 }

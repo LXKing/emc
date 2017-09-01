@@ -104,10 +104,10 @@
                                                                 <div class="col-sm-12">
                                                                     <div class="ibox float-e-margins">
                                                                         <div class="col-sm-6">
-                                                                            <h5>&nbsp;${twoMenu.menuName}<span style="color: rgb(77, 255, 33)">（前台）</span></h5>
+                                                                            <h5>&nbsp;${thrMenu.menuName}<span style="color: rgb(77, 255, 33)">（前台）</span></h5>
                                                                         </div>
                                                                         <div class="col-sm-6 btn-text-align">
-                                                                            <c:forEach  var="func" items="${twoMenu.funcs}" varStatus="status">
+                                                                            <c:forEach  var="func" items="${thrMenu.funcs}" varStatus="status">
                                                                                 <input name="funcId"   class="i-checks <c:if test="${func.issearch eq 0}">search-checks</c:if>"
                                                                                 <c:forEach var="ra" items="${auth}">
                                                                                 <c:if test="${ra.funcId eq func.id}">
@@ -178,10 +178,10 @@
                                                                 <div class="col-sm-12">
                                                                     <div class="ibox float-e-margins">
                                                                         <div class="col-sm-6">
-                                                                            <h5>&nbsp;${twoMenu.menuName}<span style="color: rgb(255, 156, 29)">（后台）</span></h5>
+                                                                            <h5>&nbsp;${thrMenu.menuName}<span style="color: rgb(255, 156, 29)">（后台）</span></h5>
                                                                         </div>
                                                                         <div class="col-sm-6 btn-text-align">
-                                                                            <c:forEach  var="func" items="${twoMenu.funcs}" varStatus="status">
+                                                                            <c:forEach  var="func" items="${thrMenu.funcs}" varStatus="status">
                                                                                 <input name="funcId"   class="i-checks <c:if test="${func.issearch eq 0}">search-checks</c:if>"
                                                                                 <c:forEach var="ra" items="${auth}">
                                                                                 <c:if test="${ra.funcId eq func.id}">

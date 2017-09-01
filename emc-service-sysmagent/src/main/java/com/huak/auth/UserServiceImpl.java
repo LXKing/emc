@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.huak.auth.dao.MenuDao;
 import com.huak.auth.dao.RoleDao;
 import com.huak.auth.dao.UserDao;
+import com.huak.auth.model.Menu;
 import com.huak.auth.model.Role;
 import com.huak.auth.model.User;
 import com.huak.auth.model.vo.OrgEmpVo;
@@ -11,6 +12,7 @@ import com.huak.common.des.DESUtil;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.sys.type.MenuModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -326,4 +328,42 @@ public class UserServiceImpl implements UserService {
 	public void update2LoginSuccess(String id) {
 		userDao.update2LoginSuccess(id);
 	}
+
+    /**
+     * 根据用户取后台每个模块下的菜单
+     * @param model
+     * @param user
+     * @return json
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> getSystemMenusByUser(MenuModel model, User user) {
+        List<Map<String, Object>> menus = new LinkedList<>();
+
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("menuName",model.getValue());
+        paramsMap.put("menuType",model.getMenuType());
+        paramsMap.put("type",model.getType());
+        Menu menu = menuDao.getMenuModel(paramsMap);
+        //查询后台一级菜单
+        paramsMap.clear();
+        paramsMap.put("menuType",model.getMenuType());
+        paramsMap.put("id",user.getId());
+        paramsMap.put("pMenuId",menu.getId());
+        List<Map<String, Object>> afterMenus = userDao.selectMenusByUser(paramsMap);
+        menus.addAll(afterMenus);
+        //查询二级菜单
+        for (Map<String, Object> oneMap:afterMenus){
+            paramsMap.put("pMenuId",oneMap.get("id"));
+            List<Map<String, Object>> oneMenus = userDao.selectMenusByUser(paramsMap);
+            menus.addAll(oneMenus);
+            for(Map<String, Object> twoMap:oneMenus){
+                paramsMap.put("pMenuId",twoMap.get("id"));
+                List<Map<String, Object>> twoMenus = userDao.selectMenusByUser(paramsMap);
+                menus.addAll(twoMenus);
+            }
+        }
+
+        return menus;
+    }
 }

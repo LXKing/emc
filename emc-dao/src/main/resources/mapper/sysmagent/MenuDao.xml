@@ -238,4 +238,21 @@
         </if>
         order by SEQ ASC
     </select>
+
+    <select id="getMenuModel" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_menu
+        where 1=1
+        <if test="menuName != null and menuName !=''">
+            and  MENU_NAME=#{menuName}
+        </if>
+        <if test="menuType != null and menuType !=''">
+            and  MENU_TYPE=#{menuType}
+        </if>
+        <if test="type != null and type !=''">
+            and  TYPE=#{type}
+        </if>
+        limit 1
+    </select>
 </mapper>

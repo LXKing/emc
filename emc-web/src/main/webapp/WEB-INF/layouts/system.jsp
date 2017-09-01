@@ -22,6 +22,7 @@
     <script>
         $(function () {
             //console.info("重置面包屑");
+            var nodes = ${menus};
             var setting = {
                 view: {
                     dblClickExpand: false,//屏蔽掉双击事件
@@ -29,6 +30,7 @@
                     //fontCss:{'color':'black','font-weight':'bold'},//字体样式函数
                     selectedMulti: false //设置是否允许同时选中多个节点
                 },
+
                 data: {
                     simpleData: {
                         enable: true
@@ -46,17 +48,16 @@
             if (treeNode.isParent) {
                 zTree.expandNode(treeNode);//如果是父节点，则展开该节点
             }else{
-                openPage(treeNode.href);//ajax
+                $(".pull-left.yuce-tit").html(treeNode.name);
+                openPage(_web + treeNode.href);//ajax
             }
         }
 
 
-        var nodes = [
-            { id: 1, pId: 0, name: "计量采集管理" },
-            { id: 11, pId: 1, name: "换表记录",href :_web+"/record/change" },
-            { id: 12, pId: 1, name: "预存记录",href :_web+"/record/prestore" }
-        ];
-
+        /**
+        * ajax打开页面
+        * @param url
+         */
         function openPage(url){
             $("#panelright").empty().load(url);
         }
@@ -76,7 +77,7 @@
 
     <!--标题-->
     <div class="titbox clearfix">
-        <div class="pull-left yuce-tit">安全与后台 <small class="font-sm">Security and Backstage</small></div>
+        <div class="pull-left yuce-tit">安全与后台 <%--<small class="font-sm">Security and Backstage</small>--%></div>
 
     </div>
     <div class="main-two-panel">
