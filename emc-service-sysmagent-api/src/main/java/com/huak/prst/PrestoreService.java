@@ -5,6 +5,7 @@ import com.huak.common.page.PageResult;
 import com.huak.mdc.model.RecordPrestore;
 import com.huak.mdc.vo.PrestoreA;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,5 +36,10 @@ public interface PrestoreService {
      * 预存记录分页查询
      */
     public PageResult<PrestoreA> queryByPage(Map<String,Object> paramsMap, Page page);
+
+    /**
+     * 导出数据信息
+     */
+    public List<Map<String,Object>> exporPrestore(Map<String, Object> paramsMap);
 
 }

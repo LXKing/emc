@@ -1,6 +1,12 @@
 package com.huak.prst;
 
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import com.huak.mdc.model.RecordChange;
+import com.huak.mdc.vo.RecordChangeA;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -25,4 +31,15 @@ public interface ChangeService {
     int updateByPrimaryKeySelective(RecordChange record);
 
     int updateByPrimaryKey(RecordChange record);
+
+    /**
+     * 换表记录分页查询
+     */
+    public PageResult<RecordChangeA> queryByPage(Map<String,Object> paramsMap, Page page);
+
+    /**
+     * 导出数据信息
+     */
+    public List<Map<String,Object>> exportChange(Map<String, Object> paramsMap);
+
 }

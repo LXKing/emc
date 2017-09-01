@@ -181,9 +181,8 @@ $(function () {
 
     var $form = $(top.document).find("#MeterCollectEditForm");
 
-    var unittype = $(top.document).find("#unitTypeOld").val();
-        getType(unittype);
     $(top.document).find(".chosen-select").on('change', function () {
+        alert($(this).val());
         getType($(this).val());
     });
 
@@ -454,7 +453,7 @@ $(function () {
 
 function getType(type){
 
-
+    alert(type);
     $.ajax({
         url: _platform + '/meterCollect/unit',
         type: 'POST',
@@ -466,28 +465,9 @@ function getType(type){
             for(var i =0;i<data.length;i++){
                 optionHtml+='<option  value="'+data[i].unitId+'">'+data[i].unitName+'</option>'
             }
-            $(top.document).find(".chosen-select-unit").append(optionHtml);
+            $(top.document).find("#unitId").append(optionHtml);
             //下拉框js
-            $(top.document).find(".chosen-select-unit").chosen();
-        }
-    });
-}
-function getType(type){
-    $.ajax({
-        url: _platform + '/meterCollect/unit',
-        type: 'POST',
-        dataType: 'json',
-        data:{unitType:type},
-        success: function (result) {
-            var data = result.list;
-            var optionHtml='';
-            for(var i =0;i<data.length;i++){
-                <c:if test="${mec.unitType eq type.seq}">selected="selected" </c:if>
-                optionHtml+='<option  value="'+data[i].unitId+'">'+data[i].unitName+'</option>'
-            }
-            $(top.document).find(".chosen-select-unit").append(optionHtml);
-            //下拉框js
-            $(top.document).find(".chosen-select-unit").chosen();
+            $(top.document).find("#unitId").chosen();
         }
     });
 }

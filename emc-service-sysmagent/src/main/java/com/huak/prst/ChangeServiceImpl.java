@@ -1,26 +1,32 @@
 package com.huak.prst;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.huak.base.dao.DateDao;
 import com.huak.common.UUIDGenerator;
 import com.huak.mdc.EnergyDataHisService;
 import com.huak.mdc.UniformityException;
 import com.huak.mdc.dao.MeterCollectDao;
+
+import com.github.pagehelper.PageHelper;
+import com.huak.common.page.Convert;
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import com.huak.mdc.dao.RecordChangeDao;
 import com.huak.mdc.dao.RecordPrestoreDao;
 import com.huak.mdc.model.EnergyDataHis;
 import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.model.RecordChange;
-import com.huak.mdc.model.RecordPrestore;
 import com.huak.org.dao.CompanyDao;
 import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+import com.huak.mdc.vo.RecordChangeA;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -35,8 +41,7 @@ import java.util.List;
  */
 
 @Service
-public class ChangeServiceImpl implements ChangeService{
-
+public class ChangeServiceImpl implements ChangeService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private  RecordChangeDao recordChangeDao;
@@ -112,5 +117,16 @@ public class ChangeServiceImpl implements ChangeService{
     @Override
     public int updateByPrimaryKey(RecordChange record) {
         return 0;
+    }
+
+    @Override
+    public PageResult<RecordChangeA> queryByPage(Map<String, Object> paramsMap, Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert(recordChangeDao.selectPageByMap(paramsMap));
+    }
+
+    @Override
+    public List<Map<String, Object>> exportChange(Map<String, Object> paramsMap) {
+        return recordChangeDao.selectAllByMap(paramsMap);
     }
 }

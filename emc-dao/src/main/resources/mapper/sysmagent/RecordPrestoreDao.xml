@@ -16,10 +16,10 @@
         <constructor>
             <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="COLLECT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="PRESTORE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="PRESTORE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="USED_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
             <arg column="PRESTORE_NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
-            <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CRESTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -129,22 +129,76 @@
         where 1=1
 
         <if test="collectId != null and collectId!=''">
-            and COLLECT_ID
+            and COLLECT_ID=#{collectId,jdbcType=VARCHAR}
         </if>
-        <if test="prestoreTime != null and prestoreTime!=''">
-            and PRESTORE_TIME
+        <if test="startTime != null and startTime!=''">
+            and PRESTORE_TIME <![CDATA[ >= ]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime!=''">
+            and PRESTORE_TIME <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
         </if>
         <if test="usedNum != null and usedNum!=''">
-            and USED_NUM
+            and USED_NUM = #{usedNum,jdbcType=DOUBLE}
         </if>
         <if test="prestoreNum != null and prestoreNum!=''">
-            and PRESTORE_NUM
+            and PRESTORE_NUM = #{prestoreNum,jdbcType=DOUBLE}
         </if>
         <if test="createTime != null and createTime!=''">
-            and CREATE_TIME
+            and CREATE_TIME = #{createTime,jdbcType=VARCHAR}
         </if>
         <if test="crestor != null and crestor!=''">
-            and CRESTOR
+            and CRESTOR = #{crestor,jdbcType=VARCHAR}
         </if>
+        <if test="name != null and name!=''">
+            and mc.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="unitName != null and unitName!=''">
+            and vu.UNITNAME = #{unitName,jdbcType=VARCHAR}
+        </if>
+        order by rp.PRESTORE_TIME,rp.CREATE_TIME desc
+    </select>
+    <select id="selectAllByMap"  parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        rp.ID, rp.COLLECT_ID, rp.PRESTORE_TIME, rp.USED_NUM, rp.PRESTORE_NUM, rp.CREATE_TIME,
+        au.USER_NAME CRESTOR,vu.UNITNAME,mc.name NAME
+
+        from t_emc_record_prestore rp
+
+        LEFT JOIN t_emc_auth_user au on rp.CRESTOR=au.ID
+
+        LEFT JOIN t_emc_meter_collect mc on rp.COLLECT_ID=mc.ID
+
+        LEFT JOIN v_emc_unit vu on mc.UNIT_ID=vu.UNITID
+
+        where 1=1
+
+        <if test="collectId != null and collectId!=''">
+            and COLLECT_ID=#{collectId,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null and startTime!=''">
+            and PRESTORE_TIME <![CDATA[ >= ]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime!=''">
+            and PRESTORE_TIME <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+        </if>
+        <if test="usedNum != null and usedNum!=''">
+            and USED_NUM = #{usedNum,jdbcType=DOUBLE}
+        </if>
+        <if test="prestoreNum != null and prestoreNum!=''">
+            and PRESTORE_NUM = #{prestoreNum,jdbcType=DOUBLE}
+        </if>
+        <if test="createTime != null and createTime!=''">
+            and CREATE_TIME = #{createTime,jdbcType=VARCHAR}
+        </if>
+        <if test="crestor != null and crestor!=''">
+            and CRESTOR = #{crestor,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null and name!=''">
+            and mc.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="unitName != null and unitName!=''">
+            and vu.UNITNAME = #{unitName,jdbcType=VARCHAR}
+        </if>
+        order by rp.PRESTORE_TIME,rp.CREATE_TIME desc
     </select>
 </mapper>

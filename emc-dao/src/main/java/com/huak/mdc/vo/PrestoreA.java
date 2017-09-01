@@ -1,7 +1,6 @@
 package com.huak.mdc.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class PrestoreA implements Serializable{
 
@@ -10,18 +9,20 @@ public class PrestoreA implements Serializable{
 
     private String collectId;
 
-    private Date prestoreTime;
+    private String prestoreTime;
 
     private Double usedNum;
 
     private Double prestoreNum;
 
-    private Date createTime;
+    private String createTime;
 
     private String crestor;
 
+    private String name;
+
     private String unitName;
-    public PrestoreA(String id, String collectId, Date prestoreTime, Double usedNum, Double prestoreNum, Date createTime, String crestor,String unitName) {
+    public PrestoreA(String id, String collectId, String prestoreTime, Double usedNum, Double prestoreNum, String createTime, String crestor,String unitName,String name) {
         this.id = id;
         this.collectId = collectId;
         this.prestoreTime = prestoreTime;
@@ -30,6 +31,7 @@ public class PrestoreA implements Serializable{
         this.createTime = createTime;
         this.crestor = crestor;
         this.unitName=unitName;
+        this.name=name;
     }
 
     public PrestoreA() {
@@ -52,11 +54,11 @@ public class PrestoreA implements Serializable{
         this.collectId = collectId == null ? null : collectId.trim();
     }
 
-    public Date getPrestoreTime() {
+    public String getPrestoreTime() {
         return prestoreTime;
     }
 
-    public void setPrestoreTime(Date prestoreTime) {
+    public void setPrestoreTime(String prestoreTime) {
         this.prestoreTime = prestoreTime;
     }
 
@@ -76,11 +78,11 @@ public class PrestoreA implements Serializable{
         this.prestoreNum = prestoreNum;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -98,5 +100,13 @@ public class PrestoreA implements Serializable{
 
     public void setUnitName(String unitName) {
         this.unitName = unitName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

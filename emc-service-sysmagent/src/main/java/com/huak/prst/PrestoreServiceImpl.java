@@ -1,6 +1,6 @@
 package com.huak.prst;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.huak.base.dao.DateDao;
 import com.huak.common.UUIDGenerator;
@@ -116,10 +116,16 @@ public class PrestoreServiceImpl implements PrestoreService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageResult<PrestoreA> queryByPage(Map<String, Object> paramsMap,Page page) {
 
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(prestoreDao.selectPageByMap(paramsMap));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> exporPrestore(Map<String, Object> paramsMap) {
+        return prestoreDao.selectAllByMap(paramsMap);
+    }
 }

@@ -20,4 +20,6 @@ public interface RecordPrestoreDao {
 
     List<PrestoreA> selectPageByMap(Map<String,Object> paramsMap);
 
+    List<Map<String,Object>> selectAllByMap(Map<String,Object> paramsMap);
+
 }
