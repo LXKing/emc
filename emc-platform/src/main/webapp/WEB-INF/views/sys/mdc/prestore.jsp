@@ -88,7 +88,7 @@ $.validator.setDefaults({
 $(function () {
     var start = {
         elem: '#start',
-        format: 'YYYY-MM-DD hh',
+        format: 'YYYY-MM-DD hh:mm:ss',
         //min: laydate.now(), //设定最小日期为当前日期
         max: '2099-06-16 ', //最大日期
         istime: true,

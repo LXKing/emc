@@ -66,8 +66,8 @@ public class MeterCollectServiceImpl implements MeterCollectService {
         System.out.println(prefix + "start !!!");
         FileInputStream io = null;
         Map<String,Object> result = new HashMap<>();
+        result.put(Constants.FLAG,"1");
         StringBuffer message = new StringBuffer();
-        boolean flag = false;
         try {
                 XSSFSheet hssFSheet = null;
                 XSSFWorkbook hssFWorkBook = null;
@@ -182,7 +182,6 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                 }
 
                 io.close();
-                result.put("flag",flag);
         } catch (Exception e) {
             result.put("flag","2");
             logger.info("后台-计量器具导入出错"+ e);

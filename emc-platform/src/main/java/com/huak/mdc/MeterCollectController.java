@@ -79,6 +79,7 @@ public class MeterCollectController {
     @ResponseBody
     public String add(HttpServletRequest request,HttpServletResponse response) {
         JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, true);
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
         System.out.println(prefix + "start !!!");
         MultipartFileParam param = null;
@@ -132,6 +133,7 @@ public class MeterCollectController {
                 accessConfFile.close();
             }
         }catch(Exception e){
+            jo.put(Constants.FLAG, false);
             logger.error("后台-计量器具导入异常:"+e);
         }finally {
                 try {
@@ -375,7 +377,7 @@ public class MeterCollectController {
      *计量仪器-预存-计算能耗
      * @return
      */
-    @RequestMapping(value = "/presotre", method = RequestMethod.POST)
+    @RequestMapping(value = "/prestore", method = RequestMethod.POST)
     @ResponseBody
     public String presotre(RecordPrestore recordChange,HttpServletRequest request) {
         logger.info("计量仪器-预存-计算能耗开始");

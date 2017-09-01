@@ -83,7 +83,7 @@ public class PrestoreServiceImpl implements PrestoreService {
                 data.setCollectId(record.getCollectId());
                 data.setCollectTime(record.getPrestoreTime());
                 data.setIsprestore((byte) 1);
-                data.setChangeNum(record.getPrestoreNum());
+                data.setPrestoreNum(record.getPrestoreNum());
                 data.setCollectNum(record.getUsedNum());
                 datalist.add(data);
                 energyDataHisService.saveEnergyDatas(datalist,company);
