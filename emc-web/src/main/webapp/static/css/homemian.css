@@ -2520,9 +2520,9 @@ input {
 .ztree li span.button.ico_docu{
     background:url(../img/backstage-file.png) no-repeat center center;
 }
-.ztree li a{ 
-    height: 27px;
-}
+/*.ztree li a{ */
+    /*height: 27px;*/
+/*}*/
 .ztree li span.button.center_docu,.ztree li span.button.bottom_docu{
     background:none;
 }
