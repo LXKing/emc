@@ -22,7 +22,7 @@ import java.util.Map;
 public interface PrestoreService {
     int deleteByPrimaryKey(String id);
 
-    int insert(RecordPrestore record);
+    int insert(RecordPrestore record) throws Exception;
 
     int insertSelective(RecordPrestore record);
 

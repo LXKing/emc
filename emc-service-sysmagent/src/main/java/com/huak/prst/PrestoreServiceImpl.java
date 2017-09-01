@@ -1,6 +1,5 @@
 package com.huak.prst;
 
-import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.huak.base.dao.DateDao;
 import com.huak.common.UUIDGenerator;
@@ -20,7 +19,7 @@ import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,16 +115,10 @@ public class PrestoreServiceImpl implements PrestoreService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public PageResult<PrestoreA> queryByPage(Map<String, Object> paramsMap,Page page) {
 
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(prestoreDao.selectPageByMap(paramsMap));
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Map<String, Object>> exporPrestore(Map<String, Object> paramsMap) {
-        return prestoreDao.selectAllByMap(paramsMap);
-    }
 }
