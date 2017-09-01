@@ -1,6 +1,13 @@
 $(function(){
     loadDataFun();
 })
+
+/*导出列表*/
+$(document).on("click", ".exportlist", function () {
+    var $from = $("#formForExport");
+    var url = $(this).attr('export-url') + '?' + $from.serialize();
+    window.open(url);
+});
 function loadDataFun() {
 
     // http://www.treejs.cn/v3/main.php#_zTreeInfo
@@ -80,15 +87,4 @@ function query(num){
             });
         }
     });
-}
-
-function exportPre(){
-    var unitName=$("#unitName").val();
-    var name=$("#name").val();
-    var sTime=$("#startTime").val();
-    var eTime=$("#endTime").val();
-    console.log(unitName);
-
-    window.location.href=_web + '/record/change/export'
-
 }

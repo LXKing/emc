@@ -81,22 +81,10 @@ function query(num){
         }
     });
 }
+/*导出列表*/
+$(document).on("click", ".exportlist", function () {
+    var $from = $("#formForExport");
+    var url = $(this).attr('export-url') + '?' + $from.serialize();
+    window.open(url);
+});
 
-function exportPre(){
-    var unitName=$("#unitName").val();
-    var name=$("#name").val();
-    var sTime=$("#startTime").val();
-    var eTime=$("#endTime").val();
-    console.log(unitName);
-    $.ajax({
-        url: _web + '/record/prestore/export',
-        type: 'get',
-        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data: {unitName:unitName,name:name,startTime:sTime,endTime:eTime},
-        dataType: "json",
-        success: function (data) {
-            console.log(data.list);
-
-        }
-    });
-}

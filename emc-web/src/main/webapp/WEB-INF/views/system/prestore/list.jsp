@@ -41,7 +41,7 @@
     </div>
 
     <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl exportlist btns-green"  onclick="exportPre()" >导出列表</a>
+        <a class="btns btnsfl exportlist btns-green" export-url="${web}/record/prestore/export" >导出列表</a>
         <a class="btns btnsfl btns-lookin" href="javascipt:;">修改日期</a>
     </div>
 
