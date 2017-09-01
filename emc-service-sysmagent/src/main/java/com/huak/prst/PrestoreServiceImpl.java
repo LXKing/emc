@@ -65,32 +65,33 @@ public class PrestoreServiceImpl implements PrestoreService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int insert(RecordPrestore record) {
-        int flag = 0 ;
-        try {
-            record.setId(UUIDGenerator.getUUID());
+    public int insert(RecordPrestore record) throws  Exception {
+            int flag = 0 ;
+            String uuid = UUIDGenerator.getUUID();
+            record.setId(uuid);
             String date = dateDao.getTime();
             record.setCreateTime(date);
             MeterCollect meterCollect = meterCollectDao.selectByPrimaryKey(record.getCollectId());
             Company company = companyDao.selectByPrimaryKey(meterCollect.getComId());
-            if(meterCollectDao.updateByPrimaryKey(meterCollect)>0){
-                flag = prestoreDao.insertSelective(record);
-            }
+            flag = prestoreDao.insertSelective(record);
             if(flag >0){
                 List<EnergyDataHis> datalist = new ArrayList<>();
                 EnergyDataHis data = new EnergyDataHis();
                 data.setCollectId(record.getCollectId());
                 data.setCollectTime(record.getPrestoreTime());
                 data.setIsprestore((byte) 1);
+                data.setIschange((byte) 0);
                 data.setPrestoreNum(record.getPrestoreNum());
                 data.setCollectNum(record.getUsedNum());
                 datalist.add(data);
-                energyDataHisService.saveEnergyDatas(datalist,company);
-            }
-        }catch (Exception e){
-            logger.error("预存出错："+e);
-            throw new UniformityException("预存出错： " + e.getMessage());
-        }
+                try {
+                   energyDataHisService.saveEnergyDatas(datalist, company);
+
+                }catch (Exception e){
+                  prestoreDao.deleteByPrimaryKey(uuid);
+                  logger.error("预存能耗计算异常："+ e);
+                }
+    }
         return flag;
     }
 
