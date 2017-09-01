@@ -102,8 +102,6 @@ public class ChangeServiceImpl implements ChangeService {
         return flag;
     }
 
-
-
     @Override
     public int insertSelective(RecordChange record) {
         return 0;
