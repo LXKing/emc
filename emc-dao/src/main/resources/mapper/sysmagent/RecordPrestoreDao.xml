@@ -22,6 +22,7 @@
             <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="CRESTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
   <sql id="Base_Column_List">
@@ -112,10 +113,10 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectPageByMap"  parameterMap="java.util.Map" resultMap="BaseResultMapA">
+    <select id="selectPageByMap"  parameterType="java.util.Map" resultMap="BaseResultMapA">
         SELECT
         rp.ID, rp.COLLECT_ID, rp.PRESTORE_TIME, rp.USED_NUM, rp.PRESTORE_NUM, rp.CREATE_TIME,
-        au.USER_NAME CRESTOR,vu.UNITNAME
+        au.USER_NAME CRESTOR,vu.UNITNAME,mc.name NAME
 
         from t_emc_record_prestore rp
 
