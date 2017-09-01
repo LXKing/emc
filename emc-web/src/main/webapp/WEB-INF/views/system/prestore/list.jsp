@@ -9,20 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="s" uri="http://www.opensymphony.com/sitemesh/decorator" %>
-<!doctype html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="decorator" content="system"/>
-    <title>华热能管系统-安全与后台-预存</title>
-    <script src="${web}/script/huak.web.system.prestore.js"></script>
-</head>
-<body>
-<div class="panelright">
+
+<script src="${web}/script/huak.web.system.prestore.js"></script>
     <div class="main-box">
         <div class="selectbg clearfix">
             <div class="sele-row clearfix row">
@@ -121,7 +109,3 @@
         </div>
 
     </div>
-</div>
-
-</body>
-</html>

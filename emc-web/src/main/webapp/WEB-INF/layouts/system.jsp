@@ -19,11 +19,61 @@
     <title><sitemesh:title/></title>
     <%@include file="/WEB-INF/include/include.jsp" %>
     <sitemesh:head/>
+    <script>
+        $(function () {
+            //console.info("重置面包屑");
+            var setting = {
+                view: {
+                    dblClickExpand: false,//屏蔽掉双击事件
+                    showLine: true,//是否显示节点之间的连线
+                    //fontCss:{'color':'black','font-weight':'bold'},//字体样式函数
+                    selectedMulti: false //设置是否允许同时选中多个节点
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    onClick: onClick
+                }
+            };
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+        });
+
+        function onClick(event,treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            if (treeNode.isParent) {
+                zTree.expandNode(treeNode);//如果是父节点，则展开该节点
+            }else{
+                openPage(treeNode.href);//ajax
+            }
+        }
+
+
+        var nodes = [
+            { id: 1, pId: 0, name: "计量采集管理" },
+            { id: 11, pId: 1, name: "换表记录",href :_web+"/record/change" },
+            { id: 12, pId: 1, name: "预存记录",href :_web+"/record/prestore" }
+        ];
+
+        function openPage(url){
+            $("#panelright").empty().load(url);
+        }
+    </script>
 </head>
 <body>
 <%@include file="/WEB-INF/include/header.jsp" %>
 <div class="main-container">
-    <%@include file="/WEB-INF/include/system_tools.jsp" %>
+    <div class="clearfix row no-margin index_header">
+
+        <!--面包屑导航-->
+        <div class="bread-crumb row no-margin">
+            当前位置：
+            <a href="${web}/system/index">[<var class="xmhpg">安全与后台 </var>]</a>
+        </div>
+    </div>
+
     <!--标题-->
     <div class="titbox clearfix">
         <div class="pull-left yuce-tit">安全与后台 <small class="font-sm">Security and Backstage</small></div>
@@ -33,7 +83,10 @@
         <div class="panelleft">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
-    <sitemesh:body/>
+        <div class="panelright" id="panelright">
+            <sitemesh:body/>
+        </div>
+
     </div>
 </div>
 <%@include file="/WEB-INF/include/footer.jsp" %>

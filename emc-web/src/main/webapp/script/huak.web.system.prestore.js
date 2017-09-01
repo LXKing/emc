@@ -1,18 +1,7 @@
-
+$(function(){
+    loadDataFun();
+})
 function loadDataFun() {
-
-    // http://www.treejs.cn/v3/main.php#_zTreeInfo
-
-    var setting = {
-        data: {
-            simpleData: {
-                enable: true
-            }
-        }
-    };
-    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
-
-
 
     var pageSize;
     var tbodyHtml = "";
@@ -46,11 +35,6 @@ function loadDataFun() {
 
 }
 
-var nodes = [
-    { id: 1, pId: 0, name: "计量采集管理" },
-    { id: 11, pId: 1, name: "换表记录",url :_web+"/record/change",target:"_self" },
-    { id: 12, pId: 1, name: "预存记录",url :_web+"/record/prestore",target:"_self" }
-];
 
 var data = {
     "success": "true",
