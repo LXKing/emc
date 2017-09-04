@@ -363,7 +363,7 @@ public class MeterCollectController {
         jo.put(Constants.FLAG, false);
         try {
             recordChange.setCrestor(user.getId());
-            int i = changeService.insert(recordChange);
+            int i = changeService.insert1(recordChange);
             jo.put(Constants.FLAG, i>0);
             jo.put(Constants.MSG, "换表成功");
         } catch (Exception e) {

@@ -42,4 +42,6 @@ public interface ChangeService {
      */
     public List<Map<String,Object>> exportChange(Map<String, Object> paramsMap);
 
+    int insert1(RecordChange recordChange);
+
 }
