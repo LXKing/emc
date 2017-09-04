@@ -254,21 +254,21 @@ function typefun(these, code) {
 function loadDataFun(){
     chart01Fun();
 
-    chart02Fun();
+    //chart02Fun();
 
-    chart03Fun();
+    //chart03Fun();
 
-    chart04Fun();
+    //chart04Fun();
 
-    chart05Fun();
+    //chart05Fun();
 
-    chart06Fun();
+    //chart06Fun();
 
     chart07Fun();
 
     chart08Fun();
 
-    chart09Fun();
+    //chart09Fun();
 
     chart11Fun();
 
