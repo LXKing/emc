@@ -84,7 +84,14 @@ function query(num){
 /*导出列表*/
 $(document).on("click", ".exportlist", function () {
     var $from = $("#formForExport");
+   console.log($from.serialize());
     var url = $(this).attr('export-url') + '?' + $from.serialize();
     window.open(url);
 });
 
+function reset(){
+    $("#unitName").val("");
+    $("#name").val("");
+    $("#startTime").val("");
+    $("#endTime").val("");
+}

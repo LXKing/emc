@@ -70,9 +70,11 @@ public class RecordChangeController {
 
         cellName.put("UNITNAME", "单位名称");
         cellName.put("NAME", "计量采集表名");
-        cellName.put("PRESTORE_TIME", "预存时间");
+        cellName.put("CHANGE_TIME", "换表时间");
         cellName.put("USED_NUM", "旧表表底");
-        cellName.put("PRESTORE_NUM", "预存值");
+        cellName.put("NEW_NUM", "新表表底");
+        cellName.put("USED_COEF", "旧表系数");
+        cellName.put("NEW_COEF", "新表系数");
         cellName.put("CRESTOR", "创建人");
         cellName.put("CREATE_TIME", "创建时间");
         List<Map<String, Object>> cellValues = null;//列值

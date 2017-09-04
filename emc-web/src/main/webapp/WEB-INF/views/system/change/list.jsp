@@ -37,13 +37,13 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-2">
                 <a class="btns btnsfl btns-lookin" onclick="query(1)">查询</a>
-                <a class="btns btnsfl btns-reset" href="javascipt:;">重置</a>
+                <a class="btns btnsfl btns-reset" onclick =reset()>重置</a>
             </div>
         </div>
     </div>
 
     <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl exportlist btns-green" export-url="${web}/record/change/export" >导出列表</a>
+        <a class="btns btnsfl exportlist btns-green"  export-url="${web}/record/change/export" >导出</a>
         <a class="btns btnsfl btns-lookin" href="javascipt:;">修改日期</a>
     </div>
 

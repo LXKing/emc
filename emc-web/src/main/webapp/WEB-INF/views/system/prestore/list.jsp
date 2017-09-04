@@ -11,10 +11,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script src="${web}/script/huak.web.system.prestore.js"></script>
+
 <div class="main-box">
     <div class="selectbg clearfix">
+        <form id="formForExport">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
+
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
                 <label for="">单位名称</label>
                 <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder="请输入单位名称"/>
@@ -25,7 +28,7 @@
             </div>
 
             <div class="select-box col-xs-12 col-sm-6 col-md-4">
-                <label for="">时间</label>
+                <%--@declare id=""--%><label for="">时间</label>
                 <input id="startTime" name="startTime" class="Wdate time-input" type="text" placeholder="开始时间"
                        onFocus="var endTime=$dp.$('endTime');WdatePicker({onpicked:function(){endTime.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'})"
                         /> 至
@@ -35,13 +38,14 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-2">
                 <a class="btns btnsfl btns-lookin" onclick="query(1)">查询</a>
-                <a class="btns btnsfl btns-reset" href="javascipt:;">重置</a>
+                <a class="btns btnsfl btns-reset" onclick=reset()>重置</a>
             </div>
         </div>
+        </form>
     </div>
 
     <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl exportlist btns-green" export-url="${web}/record/prestore/export" >导出列表</a>
+        <a class="btns btnsfl exportlist btns-green" export-url="${web}/record/prestore/export" >导出</a>
         <a class="btns btnsfl btns-lookin" href="javascipt:;">修改日期</a>
     </div>
 
@@ -91,6 +95,7 @@
     </div>
 
 </div>
+</form>
 <!-- 模板内容 -->
 <textarea id="template" style="display:none">
     {#foreach $T.list as record}

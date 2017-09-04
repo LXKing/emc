@@ -54,6 +54,14 @@ function loadDataFun() {
 
 
 }
+
+function reset(){
+   $("#unitName").val("");
+   $("#name").val("");
+   $("#startTime").val("");
+   $("#endTime").val("");
+}
+
 function query(num){
 
 //table 数据查询
