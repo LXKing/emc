@@ -102,6 +102,47 @@ public class ChangeServiceImpl implements ChangeService {
         return flag;
     }
 
+    /**
+     * 计量器具-换表
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public int insert1(RecordChange record) {
+        int flag = 0 ;
+        String uuid = UUIDGenerator.getUUID();
+        record.setId(uuid);
+        String date = dateDao.getTime();
+        record.setCreateTime(date);
+        MeterCollect meterCollect = meterCollectDao.selectByPrimaryKey(record.getCollectId());
+        Company company = companyDao.selectByPrimaryKey(meterCollect.getComId());
+        meterCollect.setCoef(record.getNewCoef());
+        if(meterCollectDao.updateByPrimaryKey(meterCollect)>0){
+            flag = recordChangeDao.insertSelective(record);
+        }
+        if(flag >0){
+            List<EnergyDataHis> datalist = new ArrayList<>();
+            EnergyDataHis data = new EnergyDataHis();
+            data.setCollectId(record.getCollectId());
+            data.setCollectTime(record.getChangeTime());
+            data.setIschange((byte) 1);
+            data.setIsprestore((byte) 0);
+            data.setChangeNum(record.getNewNum());
+            data.setCollectNum(record.getUsedNum());
+            datalist.add(data);
+            try{
+                energyDataHisService.saveEnergyDatas(datalist,company);
+            }catch (Exception e){
+                recordChangeDao.deleteByPrimaryKey(uuid);
+                meterCollect.setCoef(record.getUsedCoef());
+                meterCollectDao.updateByPrimaryKey(meterCollect);
+                logger.error("预存能耗计算异常："+ e);
+            }
+
+        }
+        return flag;
+    }
     @Override
     public int insertSelective(RecordChange record) {
         return 0;
