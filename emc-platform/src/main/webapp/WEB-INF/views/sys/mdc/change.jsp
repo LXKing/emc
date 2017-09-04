@@ -181,6 +181,7 @@ $(function () {
                 url: _platform + '/meterCollect/change',
                 data: $form.serialize(),
                 type: 'POST',
+                timeout:6300000,
                 dataType: 'json',
                 success: function (result) {
                     if (result.flag) {
