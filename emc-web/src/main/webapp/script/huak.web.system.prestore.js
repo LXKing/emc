@@ -5,14 +5,14 @@ function loadDataFun() {
 
     // http://www.treejs.cn/v3/main.php#_zTreeInfo
     query(1);
-    var setting = {
-        data: {
-            simpleData: {
-                enable: true
-            }
-        }
-    };
-    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+//    var setting = {
+//        data: {
+//            simpleData: {
+//                enable: true
+//            }
+//        }
+//    };
+//    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
 
 ////table 数据查询
 //    var unitName=$("#unitName").val();
