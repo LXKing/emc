@@ -52,3 +52,23 @@
 .facedark .panelleft{
     min-height: 700px;
 }
+
+.editTable .div-edit{
+    margin:0;
+    padding-left: 8px;
+    height: 100%;
+    width: 100%;
+    line-height: 40px;
+}
+
+.editTable .td-edit{
+    padding: 0;
+    min-height: 26px;
+    height: 40px;
+}
+
+.editTable .input-edit{
+    margin:0;
+    height: 40px;
+    width: 100%;
+}
