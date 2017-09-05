@@ -49,7 +49,7 @@
 
 
     <div class="col-xs-12 main-table no-padding">
-        <table class="table table-striped table-bordered table-hover pgtable">
+        <table class="editTable table table-striped table-bordered table-hover pgtable" cellspacing="0" cellpadding="0">
             <thead>
             <tr>
                 <td width="4%">序号</td>
@@ -114,8 +114,10 @@
         <td>
             <div class="text-left">{$T.record.changeTime}</div>
         </td>
-        <td>
-            <div class="text-left">{$T.record.usedNum}</div>
+        <td class="td-edit">
+            <div class="text-left div-edit">{$T.record.usedNum}
+            <input type="hidden" name="" value="{$T.record.usedNum}">
+            </div>
         </td>
         <td>
             <div class="text-left">{$T.record.newNum}</div>
