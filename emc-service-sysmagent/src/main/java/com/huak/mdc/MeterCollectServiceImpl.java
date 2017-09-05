@@ -4,8 +4,6 @@ import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.utils.ColumUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import com.huak.common.utils.MultipartFileParam;
-import com.huak.common.utils.MultipartFileUploadUtil;
 import com.huak.mdc.vo.MeterCollectA;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -389,7 +387,17 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     }
 
     @Override
-    public List<Map<String, Object>> getUnitInfo(String unitType) {
-        return meterCollectDao.getUnitInfo(unitType);
+    public List<Map<String, Object>> getUnitInfo(Map<String, Object> params) {
+        return meterCollectDao.getUnitInfo(params);
+    }
+
+    /**
+     * 填报数据查询
+     * @param params
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> getMeterDatas(Map<String, Object> params) {
+        return meterCollectDao.getMeterDatas(params);
     }
 }

@@ -289,7 +289,9 @@ public class MeterCollectController {
     public String getUnitList(@RequestParam  String unitType){
 
         JSONObject jo = new JSONObject();
-        List<Map<String,Object>> list =   meterCollectService.getUnitInfo(unitType);
+        Map<String,Object> params = new HashMap<>();
+        params.put("unitType",unitType);
+        List<Map<String,Object>> list =   meterCollectService.getUnitInfo(params);
         jo.put(Constants.LIST,list);
         return jo.toJSONString();
     }
@@ -300,7 +302,9 @@ public class MeterCollectController {
         try {
 
             MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
-            List<Map<String,Object>> list=meterCollectService.getUnitInfo(mec.getUnitType().toString());
+            Map<String,Object> params = new HashMap<>();
+            params.put("unitType",mec.getUnitType().toString());
+            List<Map<String,Object>> list=meterCollectService.getUnitInfo(params);
             model.addAttribute("mec", mec);
             model.addAttribute("uList",list);
         } catch (Exception e) {
@@ -320,7 +324,9 @@ public class MeterCollectController {
         logger.info("跳转计量仪器-预存页");
         try {
             MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
-            List<Map<String,Object>> list=meterCollectService.getUnitInfo(mec.getUnitType().toString());
+            Map<String,Object> params = new HashMap<>();
+            params.put("unitType",mec.getUnitType().toString());
+            List<Map<String,Object>> list=meterCollectService.getUnitInfo(params);
             model.addAttribute("mec", mec);
             model.addAttribute("uList",list);
         } catch (Exception e) {
@@ -340,7 +346,9 @@ public class MeterCollectController {
         logger.info("跳转计量仪器-换表页");
         try {
             MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
-            List<Map<String,Object>> list=meterCollectService.getUnitInfo(mec.getUnitType().toString());
+            Map<String,Object> params = new HashMap<>();
+            params.put("unitType",mec.getUnitType().toString());
+            List<Map<String,Object>> list=meterCollectService.getUnitInfo(params);
             model.addAttribute("mec", mec);
             model.addAttribute("uList",list);
         } catch (Exception e) {

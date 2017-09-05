@@ -439,15 +439,15 @@
         max(case when AA.days = 'treedayago' THEN AA.coal else 0 end) treecoal,
         max(case when AA.days = 'treedayago' THEN AA.solar else 0 end) treesolar
 
-        FROM (select 'today' as days,sum(q.totalcol) as total,max((case when q.type= 1 then q.dh else 0 end)) as whater,
+        FROM (select 'today' as days,sum(q.totalcol) as totals,sum(q.totall) as total,max((case when q.type= 1 then q.dh else 0 end)) as whater,
         max((case when q.type= 2 then q.dh else 0 end)) as electric,
         max((case when q.type= 3 then q.dh else 0 end)) as gas,
         max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)) as coal,
         max((case when q.type= 6 then q.dh else 0 end)) as solar
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol,sum(mm.toles) as totall
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,sum(a.DOSAGE*a.COAL_COEF) as toles,AVG(a.AREA)as area
         FROM
         ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
@@ -474,15 +474,15 @@
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates
 
         union all
-        ( select 'yesterday' as days,sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        ( select 'yesterday' as days,sum(q.totalcol),sum(q.totall),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
          max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol,sum(mm.toles) as totall
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,sum(a.DOSAGE*a.COAL_COEF) as toles,AVG(a.AREA)as area
         FROM
         ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
@@ -508,15 +508,15 @@
         </if>
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates)
         union ALL
-        ( select 'towdayago' as days,sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        ( select 'towdayago' as days,sum(q.totalcol),sum(q.totall),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
          max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol,sum(mm.toles) as totall
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,sum(a.DOSAGE*a.COAL_COEF) as toles,AVG(a.AREA)as area
         FROM
         ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit
@@ -543,15 +543,15 @@
 
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates)
         union ALL
-        ( select 'treedayago' as days,sum(q.totalcol),max((case when q.type= 1 then q.dh else 0 end)),
+        ( select 'treedayago' as days,sum(q.totalcol),sum(q.totall),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
          max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
-        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol
+        from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol,sum(mm.toles) as totall
         from (select  c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d') as dates,
-        bbb.type as type,sum(a.DOSAGE)as coles,AVG(a.AREA)as area
+        bbb.type as type,sum(a.DOSAGE)as coles,sum(a.DOSAGE*a.COAL_COEF) as toles,AVG(a.AREA)as area
         FROM
         ${tableName} a,t_emc_energy_type bbb,
         (SELECT UNITID FROM v_emc_unit

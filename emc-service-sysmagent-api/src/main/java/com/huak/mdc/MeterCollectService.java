@@ -77,7 +77,14 @@ public interface MeterCollectService {
 
     /**
      * 获取相关类型的用能单位
+     * @param unitType
      */
-    public List<Map<String,Object>> getUnitInfo(String unitType);
+    public List<Map<String,Object>> getUnitInfo(Map<String, Object> unitType);
 
+    /**
+     * 填报数据查询
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> getMeterDatas(Map<String, Object> params);
 }

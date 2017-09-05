@@ -33,7 +33,14 @@ public interface MeterCollectDao {
 
     List<MeterCollect>  checkSerialNo(String serialNo);
 
-    List<Map<String,Object>> getUnitInfo(String unitType);
+    List<Map<String,Object>> getUnitInfo(Map<String,Object> paramsMap);
 
     List<Map<String,Object>> selectByMaps(Map<String, Object> paramsMap);
+
+    /**
+     * 填报数据表查询
+     * @param params
+     * @return
+     */
+    List<Map<String, Object>>  getMeterDatas(Map<String, Object> params);
 }

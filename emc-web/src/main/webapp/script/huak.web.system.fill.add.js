@@ -66,28 +66,18 @@ function query(num){
     var eTime=$("#endTime").val();
     console.log(unitName);
     $.ajax({
-        url: _web + '/record/change/list',
+        url: _web + '/meterData/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: {unitName:unitName,name:name,startTime:sTime,endTime:eTime,pageNumber:num},
         dataType: "json",
         success: function (data) {
-            console.log(data.list);
-            console.log(data.list.page);
-            $("#redtipspad").text(data.list.page.total);
+            debugger;
+            console.log(data.object);
             // 附上模板
             $("#projectTbody").setTemplateElement("template");
             // 给模板加载数据
-            $("#projectTbody").processTemplate(data.list);
-            /*分页效果*/
-            $("#paging").createPage({
-                pageCount: data.list.page.pages, //总页数
-                current: data.list.page.pageNumber, //当前页数
-                backFn: function (p) { //单击回调方法，p是当前页码
-                    console.log(p);
-                    query(p);
-                }
-            });
+            $("#projectTbody").processTemplate(data);
         }
     });
 }

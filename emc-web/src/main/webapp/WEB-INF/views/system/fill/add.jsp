@@ -18,16 +18,32 @@
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <label for="">单位名称</label>
+                <label for=''>单位名称</label>
                 <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder="请输入单位名称"/>
             </div>
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <label for="">表名</label>
-                <input class="inputs-lg" id="name" name="name" type="text" placeholder="请输入表名"/>
+                <div class="select-box">
+                    <div class="clearfix h-selectbox">
+                        <div class="x-selectfree fl">
+                            <div class="x-sfbgbox">
+                                <div class="x-sfleft1 x-sfw1">
+                                    <input type="text" value="请选择用能单位" readonly="readonly">
+                                </div>
+                                <div class="x-sfright1"></div>
+                            </div>
+                            <div class="x-sfoption x-sfoption1">
+                                <p value="1111">北京公司</p>
+                                <p value="2222">上海公司</p>
+                                <p value="3333">南京集团</p>
+                            </div>
+                            <input type="hidden" value="1111" />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="select-box col-xs-12 col-sm-6 col-md-4">
-                <label for="">时间</label>
+                <label for=''>时间</label>
                 <input id="startTime" name="startTime" class="Wdate time-input" type="text" placeholder="开始时间"
                        onFocus="var endTime=$dp.$('endTime');WdatePicker({onpicked:function(){endTime.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'})"
                         /> 至
@@ -59,27 +75,36 @@
                 <td width="10%">
                     <div class="text-left">计量采集表名</div>
                 </td>
-                <td width="15%">
-                    <div class="text-left">换表时间</div>
+                <td width="6%">
+                    <div class="text-left">能源类型</div>
                 </td>
-                <td width="8%">
-                    <div class="text-left">旧表表底</div>
+                <td width="7%">
+                    <div class="text-left">实虚表</div>
                 </td>
-                <td width="8%">
-                    <div class="text-left">新表表底</div>
+                <td width="7%">
+                    <div class="text-left">总分表</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">旧表系数</div>
+                    <div class="text-left">手/自动</div>
+                </td>
+                <td width="12%">创建时间<i class="icon-sort"></i></td>
+                <td width="6%">
+                    <div class="text-left">表底</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">新表系数</div>
+                    <div class="text-left">系数</div>
                 </td>
-                <td width="8%">
-                    <div class="text-left">创建人<i class="icon-sort"></i></div>
+                <td width="6%">
+                    <div class="text-left">换表</div>
                 </td>
-                <td width="15%">创建时间<i class="icon-sort"></i></td>
-                <td width="10%">
-                    <div>操作</div>
+                <td width="6%">
+                    <div class="text-left">换表表底</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">预存</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">预存值</div>
                 </td>
             </tr>
             </thead>
@@ -88,53 +113,53 @@
             </tbody>
         </table>
     </div>
-    <div class="mainpage clearfix">
-        <div class="mianpageCount pull-left">
-            共<span class="redtips redtipspad" id="redtipspad"></span>条内容
-        </div>
-        <div class="mainpageNow  pull-right text-right" id="paging">
-
-        </div>
-
-    </div>
-
 </div>
 </form>
 <!-- 模板内容 -->
 <textarea id="template" style="display:none">
-    {#foreach $T.list as record}
+    {#foreach $T.object as record}
     <tr>
-        <td>1</td>
+        <td><div class="text-left">{$T.record$index+1}</div></td>
         <td>
             <div class="text-left">{$T.record.unitName}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.name}</div>
+            <div class="text-left">{$T.record.collectName}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.changeTime}</div>
+            <div class="text-left">{$T.record.energyType}</div>
         </td>
-        <td class="td-edit">
-            <div class="text-left div-edit">{$T.record.usedNum}
-            <input type="hidden" name="" value="{$T.record.usedNum}">
+        <td>
+            <div class="text-left">{$T.record.isReal}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.isTotal}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.isAuto}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.collectTime}</div>
+        </td>
+        <td class="{#if $T.record.realFlag == 0}td-edit{#/if}">
+            <div class="text-left div-edit">{$T.record.num}
+               <input type="hidden" name="" value="{$T.record.num}">
             </div>
         </td>
         <td>
-            <div class="text-left">{$T.record.newNum}</div>
+            <div class="text-left">{$T.record.coef}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.usedCoef}</div>
+            <div class="text-left">{$T.record.changestatus}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.newCoef}</div>
+            <div class="text-left">{$T.record.changeNum}</div>
         </td>
-
-        <td>{$T.record.crestor}</td>
-        <td>{$T.record.createTime}</td>
         <td>
-            <div><a href="javascript:detailId(1);" class="operationbtn icon-edit"></a><a href="javascript:detailId(1);"
-                                                                                         class="operationbtn icon-delete"></a>
-            </div>
+            <div class="text-left">{$T.record.prestorestatus}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.prestoreNum}</div>
         </td>
     </tr>
     {#/for}

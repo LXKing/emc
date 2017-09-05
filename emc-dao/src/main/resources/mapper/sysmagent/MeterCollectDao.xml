@@ -417,6 +417,77 @@
         </if>
         order by id
     </select>
+
+
+    <select id="getMeterDatas" parameterType="java.util.Map" resultType="java.util.Map">
+       SELECT
+            a.id,
+            b.UNITNAME unitName,
+            NAME collectName,
+            c.NAME_ZH energyType,
+            (
+                CASE a.ISREAL
+                WHEN 0 THEN
+                    '实表'
+                WHEN 1 THEN
+                    '虚表'
+                ELSE
+                    ''
+                END
+            ) isReal,
+            (
+                CASE a.ISTOTAL
+                WHEN 0 THEN
+                    '否'
+                WHEN 1 THEN
+                    '单位总表'
+                WHEN 2 THEN
+                    '系统总表'
+                ELSE
+                    ''
+                END
+            ) isTotal,
+            (
+                CASE a.ISAUTO
+                WHEN 0 THEN
+                    '自动采集'
+                WHEN 1 THEN
+                    '手工'
+                ELSE
+                    ''
+                END
+            ) isAuto,
+            a.coef,
+            a.ISREAL as realFlag,
+            (case when d.COLLECT_NUM is null then 1 else 2 end) flag,
+            (case d.ISCHANGE when 1 then '是' else '否' end) changestatus,
+            (case d.ISPRESTORE when 1 then '是' else '否' end) prestorestatus,
+         ( CASE a.ISREAL when 0 then (case when d.COLLECT_NUM is null then e.COLLECT_VALUE else d.COLLECT_NUM end ) else a.FORMULA end ) num,
+            d.ISCHANGE as isChange,d.ISPRESTORE as isPrestore,d.CHANGE_NUM as changeNum,d.PRESTORE_NUM as prestoreNum
+        FROM
+            t_emc_meter_collect a
+        LEFT JOIN v_emc_unit b ON a.UNIT_ID = b.UNITID
+        LEFT JOIN t_emc_energy_type c ON a.ENERGY_TYPE_ID = c.ID
+        LEFT JOIN (
+            SELECT
+                COLLECT_ID,
+                COLLECT_TIME,
+                COLLECT_NUM,
+                ISCHANGE,
+                ISPRESTORE,
+                CHANGE_NUM,
+                PRESTORE_NUM
+            FROM
+                t_emc_energy_data_his
+            WHERE
+                COLLECT_TIME = '2017-07-05 16:00:00'
+        ) d ON a.id = d.COLLECT_ID
+        LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%y-%M-%d %h') = '2017-07-05 16'
+        ORDER BY
+            b.UNITNAME,
+            c.NAME_ZH;
+    </select>
+
     <select id="checkName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
@@ -441,8 +512,14 @@
         where  SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
 
     </select>
-    <select id="getUnitInfo" parameterType="java.lang.String" resultType="java.util.Map">
-        SELECT vu.UNITID unitId,vu.UNITNAME unitName from v_emc_unit vu where vu.UNITTYPE=#{unitType,jdbcType=VARCHAR}
+    <select id="getUnitInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT vu.UNITID unitId,vu.UNITNAME unitName from v_emc_unit vu where 1=1
+        <if test="comId != null and comId!=''">
+            and COMID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="unitType != null and unitType!=''">
+            and UNITTYPE = #{unitType,jdbcType=VARCHAR}
+        </if>
     </select>
 
 
