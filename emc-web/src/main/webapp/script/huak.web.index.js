@@ -205,7 +205,7 @@
 });
 
 function typefun(these, code) {
-//    $(these).addClass("on").siblings().removeClass("on");
+    //$(these).addClass("on").siblings().removeClass("on");
     //$("#website").attr("src", _web + "/static/img/index/websitet_cs0" + code + ".png");
     if(faceKey == "dark") {
         $("#website").attr("src", _web + "/static/imgdark/index/websitet_cs0" + code + ".png");

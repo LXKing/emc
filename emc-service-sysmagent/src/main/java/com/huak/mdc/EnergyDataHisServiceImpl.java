@@ -55,6 +55,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
      * @param energyDataHis
      * @param company
      */
+    @Transactional(readOnly = false)
     private boolean saveEnergyData(EnergyDataHis energyDataHis, Company company) throws Exception {
 
         // 查询本期历史
