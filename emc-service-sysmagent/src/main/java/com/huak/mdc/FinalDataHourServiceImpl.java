@@ -16,8 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -178,7 +183,8 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             //todo 计算折算室内温度
 
             //根据公式计算能耗
-            Double dosage = getVirtualDosage(codes, meterCollect.getFormula());
+            Map<String,Object> codeValue = getCodeValues(codes,company,time);
+            Double dosage = getVirtualDosage(codeValue, meterCollect.getFormula(),codes);
 
             FinalDataHour dataHour = new FinalDataHour();
             String id = UUIDGenerator.getUUID();
@@ -205,8 +211,40 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
         return true;
     }
 
-    private Double getVirtualDosage(List<String> codes, String formula) {
-        return null;
+    /**
+     * 根据公式返回值
+     * @param codeValue
+     * @param formula
+     * @param codes
+     * @return
+     * @throws ScriptException
+     */
+    private Double getVirtualDosage(Map<String,Object> codeValue, String formula,List<String> codes) throws ScriptException {
+        for (String code: codes){
+            formula.replaceAll(code,codeValue.get(code).toString());
+        }
+        formula.replaceAll("+","+").replaceAll("-","-").replaceAll("×","*").replaceAll("÷","/");
+        ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
+        return Double.valueOf(jse.eval(formula).toString());
     }
 
+    /**
+     * 根据编码和公司及时间取用量
+     * @param codes
+     * @param company
+     * @param time
+     * @return
+     */
+    public Map<String,Object> getCodeValues(List<String> codes, Company company, String time) {
+        Map<String,Object> codeValues = new HashMap<>();
+        Map<String,Object> params = new HashMap<>();
+        params.put("comId",company.getId());
+        params.put("codes",codes);
+        params.put("time",time);
+        List<Map<String,Object>> list = finalDataHourDao.selectCodeValue(params);
+        for(Map<String,Object> map : list){
+            codeValues.put(map.get("key").toString(),map.get("value"));
+        }
+        return codeValues;
+    }
 }
