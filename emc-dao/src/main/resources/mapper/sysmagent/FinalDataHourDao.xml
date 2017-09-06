@@ -328,13 +328,13 @@
     </insert>
 
     <select id="selectCodeValue" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT CODE key,DOSAGE value FROM
+        SELECT CODE,DOSAGE FROM
 (SELECT ID,CODE FROM t_emc_meter_collect WHERE COM_ID = #{comId} AND CODE IN
         <foreach collection="codes" item="code" index="index"
                  open="(" close=")" separator=",">
             #{code}
         </foreach>
 )c
-LEFT JOIN t_emc_final_data_hour d ON d.NODEID = c.id WHERE d.DOSAGE_TIME =#{time}
+LEFT JOIN ${tableName} d ON d.NODEID = c.id WHERE d.DOSAGE_TIME =#{time}
     </select>
 </mapper>
