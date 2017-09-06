@@ -171,4 +171,21 @@ public class DateUtils {
         date = calendar.getTime();
         return format.format(date);
     }
+
+    /**
+     * 返回时间段每小时集合
+     *
+     * @param time1
+     * @param time2
+     * @return
+     */
+    public static List<String> getDateTimes(String time1, String time2) throws Exception {
+        List<String> list = new ArrayList<>();
+        while (!time1.equals(time2)) {
+            list.add(time1);
+            time1 = DateUtils.getTimeDate(time1, Calendar.HOUR, 1);
+        }
+        list.add(time2);
+        return list;
+    }
 }

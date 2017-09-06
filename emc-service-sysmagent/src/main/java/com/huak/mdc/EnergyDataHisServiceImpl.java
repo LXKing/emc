@@ -1,8 +1,12 @@
 package com.huak.mdc;
 
+import com.huak.common.StringUtils;
 import com.huak.common.UUIDGenerator;
+import com.huak.common.utils.DateUtils;
 import com.huak.mdc.dao.EnergyDataHisDao;
+import com.huak.mdc.dao.MeterCollectDao;
 import com.huak.mdc.model.EnergyDataHis;
+import com.huak.mdc.model.MeterCollect;
 import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -32,6 +38,8 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
     private EnergyDataHisDao energyDataHisDao;
     @Resource
     private FinalDataHourService finalDataHourService;
+    @Resource
+    private MeterCollectDao meterCollectDao;
 
 
     /**
@@ -133,6 +141,86 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         }
         return true;
 
+    }
+
+    /**
+     * 批量保存虚表能耗数据
+     *
+     * @param meterCollectList
+     * @param dateTime
+     * @param company
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public boolean saveVirtualDatas(List<MeterCollect> meterCollectList, String dateTime, Company company) {
+        try {
+            for (MeterCollect meterCollect : meterCollectList) {
+                //保存虚表能耗数据
+                boolean isSuccess = saveVirtualData(meterCollect,dateTime,company);
+                //校验是否成功，保持虚表数据完整性
+                if (!isSuccess) {
+                    throw new UniformityException("批量数据保存部分异常 " + meterCollect.toString());
+                }
+            }
+        } catch (Exception e) {
+            logger.error("批量保存虚表能耗数据失败:" + e.getMessage());
+            throw new UniformityException("批量数据保存部分异常 " + e.getMessage());
+        }
+        return true;
+    }
+
+    /**
+     * 每期数据都是必填
+     * 1.根据dateTime查询前期数据
+     * @param meterCollect
+     * @param dateTime
+     * @param company
+     * @return
+     */
+    private boolean saveVirtualData(MeterCollect meterCollect, String dateTime, Company company) throws Exception {
+        //获取公式
+        String formula = meterCollect.getFormula();
+        //获取第一个code
+        List<String> codes = StringUtils.paresCodes(formula);
+        if(codes.size()==0){
+            return true;//没有公式不计算
+        }
+        String code = codes.get(0);
+        //根据第一个code获取时间区间
+        Map<String, Object> params = new HashMap<>();
+        params.put("code",code);
+        params.put("comId",company.getId());
+        MeterCollect collect = meterCollectDao.checkCode(params).get(0);
+        EnergyDataHis energyDataHis = new EnergyDataHis();
+        energyDataHis.setCollectId(collect.getId());
+        energyDataHis.setCollectTime(dateTime);
+        // 查询本期历史
+        EnergyDataHis bqData = energyDataHisDao.findBqHis(energyDataHis);
+        // 查询前期历史
+        EnergyDataHis qqData = energyDataHisDao.findQqHis(energyDataHis);
+        // 查询后期历史
+        EnergyDataHis hqData = energyDataHisDao.findHqHis(energyDataHis);
+
+        String start = "";
+        String end = "";
+        if(qqData!=null&&hqData!=null){
+            start = qqData.getCollectTime();
+            end = hqData.getCollectTime();
+        }else if(qqData!=null&&hqData==null){
+            start = qqData.getCollectTime();
+            end = bqData.getCollectTime();
+        }else if(qqData==null&&hqData!=null){
+            start = bqData.getCollectTime();
+            end = hqData.getCollectTime();
+        }else{
+            return true;//前期后期数据不存在  不用计算能耗
+        }
+        //时间段每小时集合
+        List<String> dateTimes = DateUtils.getDateTimes(start, end);
+
+        finalDataHourService.saveVirtualDataHour(meterCollect,dateTimes,codes,company);
+
+        return true;
     }
 
 

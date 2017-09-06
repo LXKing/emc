@@ -528,4 +528,5 @@
         CONCAT(a.CODE,"-",a.COM_ID) as code
         from t_emc_meter_collect a
     </select>
+
 </mapper>

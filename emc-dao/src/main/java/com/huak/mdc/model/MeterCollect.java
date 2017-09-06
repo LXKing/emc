@@ -198,4 +198,27 @@ public class MeterCollect implements Serializable{
     public void setComId(String comId) {
         this.comId = comId == null ? null : comId.trim();
     }
+
+    @Override
+    public String toString() {
+        return "MeterCollect{" +
+                "id='" + id + '\'' +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", serialNo='" + serialNo + '\'' +
+                ", energyTypeId='" + energyTypeId + '\'' +
+                ", isreal=" + isreal +
+                ", istotal=" + istotal +
+                ", unitId='" + unitId + '\'' +
+                ", unitType=" + unitType +
+                ", isauto=" + isauto +
+                ", depict='" + depict + '\'' +
+                ", tag='" + tag + '\'' +
+                ", coef=" + coef +
+                ", formula='" + formula + '\'' +
+                ", isprestore=" + isprestore +
+                ", isdelete=" + isdelete +
+                ", comId='" + comId + '\'' +
+                '}';
+    }
 }

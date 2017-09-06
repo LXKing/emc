@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -74,7 +72,7 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             start = energyDataHis.getCollectTime();
         }
         //时间段每小时集合
-        List<String> dateTimes = getDateTimes(start, end);
+        List<String> dateTimes = DateUtils.getDateTimes(start, end);
 
         //查询计量采集表
         MeterCollect meterCollect = meterCollectDao.selectByPrimaryKey(energyDataHis.getCollectId());
@@ -154,21 +152,61 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
         return true;
     }
 
-
     /**
-     * 返回时间段每小时集合
+     * 虚表时间段能耗更新
      *
-     * @param time1
-     * @param time2
      * @return
      */
-    private List<String> getDateTimes(String time1, String time2) throws Exception {
-        List<String> list = new ArrayList<>();
-        while (!time1.equals(time2)) {
-            list.add(time1);
-            time1 = DateUtils.getTimeDate(time1, Calendar.HOUR, 1);
+    @Override
+    @Transactional(readOnly = false)
+    public boolean saveVirtualDataHour(MeterCollect meterCollect, List<String> dateTimes, List<String> codes, Company company) throws Exception {
+        //time %Y-%m-%d %H:00:00
+        for (String time : dateTimes) {
+            //查询该时间的标煤系数
+            Double coalCoef = coalCoefService.getCoalCoefByTime(company.getId(), meterCollect.getEnergyTypeId(), time);
+            //查询该时间的碳排放系数
+            Double carbonFormula = carbonFormulaService.getCarbonFormulaByTime(company.getId(), meterCollect.getEnergyTypeId(), time);
+            //查询该时间的单位面积
+            Double unitArea = unitAreaService.getUnitAreaByTime(company.getId(), meterCollect.getUnitId(), meterCollect.getUnitType(), time);
+            //查询该时间的能源单价
+            BigDecimal energyPrice = energyPriceService.getEnergyPriceByTime(company.getId(),meterCollect.getEnergyTypeId(),time);
+            //查询该时间的天气温度
+            Double weather = weatherService.getWeatherByTime(company.getWcode(), time);
+            //todo 计算折算天气温度
+            //todo 查询该时间段的室内温度
+            Double cWeather = weather;
+            //todo 计算折算室内温度
+
+            //根据公式计算能耗
+            Double dosage = getVirtualDosage(codes, meterCollect.getFormula());
+
+            FinalDataHour dataHour = new FinalDataHour();
+            String id = UUIDGenerator.getUUID();
+            dataHour.setId(id);//自动生成id
+            //dataHour.setTableName(company.getTableName());//动态表
+            dataHour.setTableName("t_emc_final_data_hour");
+            dataHour.setNodeid(meterCollect.getId());
+            dataHour.setComid(company.getId());
+            dataHour.setUnitid(meterCollect.getUnitId());
+            dataHour.setTypeid(meterCollect.getEnergyTypeId());
+            dataHour.setDosageTime(time);
+            dataHour.setDosage(dosage);
+            dataHour.setArea(unitArea);
+            dataHour.setPrice(energyPrice);
+            dataHour.setWtemp(weather);
+            dataHour.setCwtemp(cWeather);
+            dataHour.setCoalCoef(coalCoef);
+            dataHour.setcCoef(carbonFormula);
+            int i = finalDataHourDao.insertOrUpdate(dataHour);
+            if (1 != i) {
+                return false;
+            }
         }
-        list.add(time2);
-        return list;
+        return true;
     }
+
+    private Double getVirtualDosage(List<String> codes, String formula) {
+        return null;
+    }
+
 }

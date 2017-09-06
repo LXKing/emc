@@ -1,6 +1,7 @@
 package com.huak.mdc;
 
 import com.huak.mdc.model.EnergyDataHis;
+import com.huak.mdc.model.MeterCollect;
 import com.huak.org.model.Company;
 
 import java.util.List;
@@ -22,4 +23,10 @@ public interface EnergyDataHisService {
      * @param dataHisList
      */
     public boolean saveEnergyDatas(List<EnergyDataHis> dataHisList,Company company);
+
+    /**
+     * 批量保存虚表能耗数据
+     * @param meterCollectList
+     */
+    public boolean saveVirtualDatas(List<MeterCollect> meterCollectList,String dateTime,Company company);
 }

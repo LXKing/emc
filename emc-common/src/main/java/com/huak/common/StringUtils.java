@@ -1,6 +1,10 @@
 package com.huak.common;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -43,5 +47,22 @@ public class StringUtils {
         }else{
             return true;
         }
+    }
+
+    /**
+     * 解析公式里面的所有code
+     * code A00112
+     * @param formula
+     * @return
+     */
+    public static List<String> paresCodes(String formula){
+        String A = "A[0-9]{5}";
+        List<String> list = new ArrayList<>();
+        Pattern pattern = Pattern.compile(A);
+        Matcher matcher = pattern.matcher(formula);
+        while (matcher.find()){
+            list.add(matcher.group());
+        }
+        return list;
     }
 }
