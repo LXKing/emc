@@ -2,8 +2,8 @@ package com.huak.web.home.meterdata;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
-import com.huak.home.type.ToolVO;
 import com.huak.mdc.MeterCollectService;
+import com.huak.org.model.Company;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,9 @@ public class MeterDataController extends BaseController{
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
+            HttpSession session = request.getSession();
+            Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
+            params.put("comId",company.getId());
             List<Map<String,Object>> map =  meterCollectService.getMeterDatas(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);

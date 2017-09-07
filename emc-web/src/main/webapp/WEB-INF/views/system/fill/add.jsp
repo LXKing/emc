@@ -17,32 +17,60 @@
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
-            <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <label for=''>单位名称</label>
-                <input class="inputs-lg" id="collectName" name="collectName" type="text" placeholder="请输入单位名称"/>
+            <div class="select-box col-xs-12 col-sm-6 col-md-2">
+                <input class="inputs-lg" id="collectName" name="collectName" type="text" placeholder="请输入器具名称"/>
             </div>
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <div class="select-box">
-                    <div class="clearfix h-selectbox">
-                        <div class="x-selectfree fl">
-                            <div class="x-sfbgbox">
-                                <div class="x-sfleft1 x-sfw1">
-                                    <input type="text" value="请选择用能单位" readonly="readonly">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <label for="">单位</label>
+                </div>
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <div class="select-box">
+                        <div class="clearfix h-selectbox">
+                            <div class="x-selectfree fl">
+                                <div class="x-sfbgbox">
+                                    <div class="x-sfleft1 x-sfw1">
+                                        <input type="text" value="请选择用能单位" readonly="readonly">
+                                    </div>
+                                    <div class="x-sfright1"></div>
                                 </div>
-                                <div class="x-sfright1"></div>
+                                <div class="x-sfoption1" id="x-sfoption1">
+                                    <c:forEach items="${unit}" var="item">
+                                        <p value="${item.unitId}">${item.unitName}</p>
+                                    </c:forEach>
+                                </div>
+                                <input id="unitName" type="hidden" value="1111" />
                             </div>
-                            <div class="x-sfoption x-sfoption1" >
-                                <c:forEach items="${unit}" var="item">
-                                    <p value="${item.unitId}">${item.unitName}</p>
-                                </c:forEach>
-                            </div>
-                            <input type="hidden" value="1111" />
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="select-box col-xs-12 col-sm-6 col-md-4">
+            <div class="select-box col-xs-12 col-sm-6 col-md-3">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <label for="">类型</label>
+                </div>
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <div class="select-box">
+                        <div class="clearfix h-selectbox">
+                            <div class="x-selectfree fl">
+                                <div class="x-sfbgbox">
+                                    <div class="x-sfleft1 x-sfw1">
+                                        <input type="text" value="请选择能源类型" readonly="readonly">
+                                    </div>
+                                    <div class="x-sfright1"></div>
+                                </div>
+                                <div class="x-sfoption x-sfoption1">
+                                    <p value="1111">北京公司</p>
+                                    <p value="2222">上海公司</p>
+                                    <p value="3333">南京集团</p>
+                                </div>
+                                <input type="hidden" value="1111" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="select-box col-xs-12 col-sm-6 col-md-2">
                 <label for=''>填报时间</label>
                 <input id="collectTime" name="collectTime" class="Wdate time-input" type="text" placeholder="填报时间"
                     onFocus=" WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss'});"

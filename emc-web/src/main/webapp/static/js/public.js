@@ -690,4 +690,154 @@ function getTrBody(data,size){
 
 
 
+function Map() {
+    this.elements = new Array();
+    //获取MAP元素个数
+    this.size = function() {
+        return this.elements.length;
+    }
 
+    //判断MAP是否为空
+    this.isEmpty = function() {
+        return(this.elements.length < 1);
+    }
+
+    //删除MAP所有元素
+    this.clear = function() {
+        this.elements = new Array();
+    }
+
+    //向MAP中增加元素（key, value)
+    this.put = function(_key, _value) {
+        this.elements.push( {
+            key : _key,
+            value : _value
+        });
+    }
+
+    //删除指定KEY的元素，成功返回True，失败返回False
+    this.remove = function(_key) {
+        var bln = false;
+        try{
+            for(i = 0; i < this.elements.length; i++) {
+                if(this.elements[i].key == _key) {
+                    this.elements.splice(i, 1);
+                    return true;
+                }
+            }
+        } catch(e) {
+            bln = false;
+        }
+        return bln;
+    }
+
+    //获取指定KEY的元素值VALUE，失败返回NULL
+    this.get = function(_key) {
+        try{
+            for(i = 0; i < this.elements.length; i++) {
+                if(this.elements[i].key == _key) {
+                    return this.elements[i].value;
+                }
+            }
+        } catch(e) {
+            return null;
+        }
+    }
+
+    //获取指定索引的元素（使用element.key，element.value获取KEY和VALUE），失败返回NULL
+    this.element = function(_index) {
+        if(_index < 0 || _index >= this.elements.length) {
+            return null;
+        }
+        return this.elements[_index];
+    }
+
+    //判断MAP中是否含有指定KEY的元素
+    this.containsKey = function(_key) {
+        varbln = false;
+        try{
+            for(i = 0; i < this.elements.length; i++) {
+                if(this.elements[i].key == _key) {
+                    bln = true;
+                }
+            }
+        } catch(e) {
+            bln = false;
+        }
+        return bln;
+    }
+
+    //判断MAP中是否含有指定VALUE的元素
+    this.containsValue = function(_value) {
+        var bln = false;
+        try{
+            for(i = 0; i < this.elements.length; i++) {
+                if(this.elements[i].value == _value) {
+                    bln = true;
+                }
+            }
+        } catch(e) {
+            bln = false;
+        }
+        return bln;
+    }
+
+    //获取MAP中所有VALUE的数组（ARRAY）
+    this.values = function() {
+        var arr = new Array();
+        for(i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].value);
+        }
+        return arr;
+    }
+
+    //获取MAP中所有KEY的数组（ARRAY）
+    this.keys = function() {
+        var arr = new Array();
+        for(i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].key);
+        }
+        return arr;
+    }
+}
+
+
+(function($){
+    $.fn.serializeJson = function(){
+        var jsonData1 = {};
+        var serializeArray = this.serializeArray();
+        // 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
+        $(serializeArray).each(function () {
+            if (jsonData1[this.name]) {
+                if ($.isArray(jsonData1[this.name])) {
+                    jsonData1[this.name].push(this.value);
+                } else {
+                    jsonData1[this.name] = [jsonData1[this.name], this.value];
+                }
+            } else {
+                jsonData1[this.name] = this.value;
+            }
+        });
+        // 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
+        var vCount = 0;
+        // 计算json内部的数组最大长度
+        for(var item in jsonData1){
+            var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
+            vCount = (tmp > vCount) ? tmp : vCount;
+        }
+
+        if(vCount > 1) {
+            var jsonData2 = new Array();
+            for(var i = 0; i < vCount; i++){
+                var jsonObj = {};
+                for(var item in jsonData1) {
+                    jsonObj[item] = jsonData1[item][i];
+                }
+                jsonData2.push(jsonObj);
+            }
+            return JSON.stringify(jsonData2);
+        }else{
+            return "[" + JSON.stringify(jsonData1) + "]";
+        }
+    };
+})(jQuery);

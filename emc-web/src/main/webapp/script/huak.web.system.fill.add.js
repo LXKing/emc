@@ -1,7 +1,5 @@
 $(function(){
     loadDataFun();
-
-
 })
 /**
  * 绑定插件到table - tr - td - class
@@ -14,6 +12,7 @@ $(function(){
  </div>
  </td>
  */
+var dataMap = new Map();
 function editTd(){
     var $div,value,$hidden;
     $('.editTable').on('click','tr .td-edit',function(){
@@ -34,8 +33,10 @@ function editTd(){
         var num = Number($this.val());
         if(num != value){
             // 修改标记
-            var $flag = $this.parent('tr').find('input[name="flag"]');
+            var $flag = $td.parent('tr').find('input[name="flag"]');
+            var $id = $td.parent('tr').find('input[name="id"]').val();
             $flag.val(1);//1为用修改  2为不用修改
+            dataMap.remove($id);
         }
         $hidden.val(num);
         $div.empty().append(num).append($hidden);
@@ -43,8 +44,6 @@ function editTd(){
     });
 }
 function loadDataFun() {
-
-    // http://www.treejs.cn/v3/main.php#_zTreeInfo
     query(1);
     editTd();
 
@@ -58,26 +57,54 @@ function reset(){
 }
 
 function query(num){
-
 //table 数据查询
     var unitName=$("#unitName").val();
-    var name=$("#name").val();
-    var sTime=$("#startTime").val();
-    var eTime=$("#endTime").val();
-    console.log(unitName);
+    var collectName=$("#collectName").val();
+    var collectTime=$("#collectTime").val();
     $.ajax({
         url: _web + '/meterData/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data: {unitName:unitName,name:name,startTime:sTime,endTime:eTime,pageNumber:num},
+        data: {collectName:collectName,collectTime:collectTime},
         dataType: "json",
         success: function (data) {
-            debugger;
-            console.log(data.object);
-            // 附上模板
-            $("#projectTbody").setTemplateElement("template");
-            // 给模板加载数据
-            $("#projectTbody").processTemplate(data);
+            if(data.flag){
+                $.each(data.object,function(index,value){
+                    if(value.realFlag == 0){
+                        dataMap.put(value.id,value.id);
+                    }
+                });
+                $("#projectTbody").setTemplateElement("template");
+                $("#projectTbody").processTemplate(data);
+            }
         }
+    });
+}
+//下拉切换事件
+$("body").on("click", "#x-sfoption1 p", function () {
+    var selectval = $(this).html();
+    var selectid = $(this).attr("value");
+    $('#unitName').val(selectid);
+    $(this).parent().prev().find("input").val(selectval);
+    $(this).parent().slideUp(200, function () {
+    });
+});
+
+function dataSave (){
+    if(dataMap.size()>0){
+        top.layer.alert("他么的填完在保存！");
+        return ;
+    }
+    var data = $("#_editForm").serializeJson();
+    $.ajax({
+        url:_web +"/data/fill/add",
+        type: "POST",
+        contentType : 'application/json;charset=utf-8', //设置请求头信息
+        dataType:"json",
+        data:data,            //将Json对象序列化成Json字符串，toJSON()需要引用jquery.json.min.js
+        success: function(data){
+            debugger;
+        }
+
     });
 }

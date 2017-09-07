@@ -1,8 +1,15 @@
 package com.huak.mdc;
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.util.StringUtil;
+import com.huak.base.dao.DateDao;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.utils.ColumUtil;
+import com.huak.mdc.model.EnergyDataHis;
+import com.huak.org.dao.CompanyDao;
+import com.huak.org.model.Company;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import com.huak.mdc.vo.MeterCollectA;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -45,6 +52,12 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MeterCollectServiceImpl implements MeterCollectService {
     @Resource
     MeterCollectDao meterCollectDao;
+    @Resource
+    private EnergyDataHisService energyDataHisService;
+    @Resource
+    private CompanyDao companyDao;
+    @Resource
+    DateDao dateDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicLong counter = new AtomicLong(0L);
 
@@ -194,7 +207,16 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     }
 
 
-
+    /**
+     * 后台-上传入库-数据解析
+     * @param xssfRow
+     * @param classz
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     */
     private Object digitData(XSSFRow xssfRow , Class<?> classz) throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         Object obj = null;
            obj =Class.forName(classz.getName()).newInstance();
@@ -398,6 +420,59 @@ public class MeterCollectServiceImpl implements MeterCollectService {
      */
     @Override
     public List<Map<String, Object>> getMeterDatas(Map<String, Object> params) {
+        String time = dateDao.getTime().substring(0,13);
+        if(!params.containsKey("collectTime")){
+            params.put("collectTime",time);
+        }else{
+            if(StringUtils.isBlank(params.get("collectTime").toString())){
+                params.put("collectTime",time);
+            }
+        }
         return meterCollectDao.getMeterDatas(params);
     }
+
+    /**
+     * 安全与后台-数据填报
+     * @param jo
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public boolean fillData(JSONObject jo) {
+        List<EnergyDataHis> datalist0 = new ArrayList<>();//实表
+        List<String> datalist1 = new ArrayList<>();//虚表
+        List<Map<String,Object>> datas = (List<Map<String, Object>>) jo.get("data");
+        String comId = (String) jo.get("comId");
+        Company company = companyDao.selectByPrimaryKey(comId);
+        String collectTime = "";
+        for(Map data:datas){
+           if(data.get("realFlag").equals(0)){
+               if(StringUtils.isBlank(collectTime)){
+                   collectTime = data.get("collectTime").toString();
+               }
+               EnergyDataHis energy0 = new EnergyDataHis();
+               energy0.setCollectId(data.get("id").toString());
+               energy0.setCollectTime(collectTime);
+               energy0.setIschange((byte) 0);
+               energy0.setIsprestore((byte) 0);
+               energy0.setCollectNum(Double.parseDouble(data.get("num").toString()));
+               datalist0.add(energy0);
+           }
+            if(data.get("realFlag").equals(1)){
+                datalist1.add(data.get("id").toString());
+            }
+        }
+        try {
+            List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMeters(datalist1);
+            if(energyDataHisService.saveEnergyDatas(datalist0,company)){
+                energyDataHisService.saveVirtualDatas(meterCollects,collectTime,company);
+            };
+            return true;
+        }catch (Exception e){
+            logger.error("安全与后台-数据填报异常！");
+        }
+        return false;
+    }
+
+
 }

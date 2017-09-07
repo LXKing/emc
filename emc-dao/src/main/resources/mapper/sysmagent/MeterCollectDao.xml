@@ -423,7 +423,9 @@
        SELECT
             a.id,
             b.UNITNAME unitName,
+            a.COM_ID comId,
             NAME collectName,
+            #{collectTime} as collectTime,
             c.NAME_ZH energyType,
             (
                 CASE a.ISREAL
@@ -480,9 +482,16 @@
             FROM
                 t_emc_energy_data_his
             WHERE
-                COLLECT_TIME = '2017-07-05 16:00:00'
+                DATE_FORMAT(COLLECT_TIME,'%y-%M-%d %h') = #{collectTime}
         ) d ON a.id = d.COLLECT_ID
-        LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%y-%M-%d %h') = '2017-07-05 16'
+        LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%y-%M-%d %h') = #{collectTime}
+        where 1=1
+        <if test="collectName != null and collectName!=''">
+            and a.NAME like concat(concat('%',#{collectName,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="comId != null and comId!=''">
+            and a.COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
         ORDER BY
             b.UNITNAME,
             c.NAME_ZH;
@@ -522,11 +531,25 @@
         </if>
     </select>
 
-
+    <!--导入时，需要判断数据库中是否含有该计量器具，需要获取已有的计量器具-->
     <select id="selectByMaps" parameterType="java.util.Map" resultType="java.util.Map">
         select
         CONCAT(a.CODE,"-",a.COM_ID) as code
         from t_emc_meter_collect a
     </select>
 
+    <!--数据填报时，需要查询所有的虚表-->
+    <select id="selectFictitiousMeters" parameterType="List" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_meter_collect
+        where 1=1
+        <if test="ids != null ">
+            and id in
+            <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+
+    </select>
 </mapper>

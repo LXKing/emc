@@ -43,4 +43,11 @@ public interface MeterCollectDao {
      * @return
      */
     List<Map<String, Object>>  getMeterDatas(Map<String, Object> params);
+
+    /**
+     * 查询虚表
+     * @param params
+     * @return
+     */
+    List<MeterCollect> selectFictitiousMeters(List<String> params);
 }

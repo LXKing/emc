@@ -1,5 +1,6 @@
 package com.huak.mdc;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.mdc.model.MeterCollect;
@@ -87,4 +88,11 @@ public interface MeterCollectService {
      * @return
      */
     List<Map<String,Object>> getMeterDatas(Map<String, Object> params);
+
+    /**
+     * 安全与后台-数据填报
+     * @param jo
+     * @return
+     */
+    boolean fillData(JSONObject jo);
 }
