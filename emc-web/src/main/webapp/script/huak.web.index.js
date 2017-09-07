@@ -1558,7 +1558,7 @@ function chart08Bar(data) {
     for (var i = 0; i < databar.length; i++) {
         var width = 25;
         if(parseInt(databar[i].value) >=50){ width = 50;};
-        barcharthtml += "<div style='width:" + width + "%'><p style='color:" + databar[i].color + "'>" + toDecimal(databar[i].value,1) + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
+        barcharthtml += "<div style='width:" + width + "%'><p style='color:" + databar[i].color + "'>" + toDecimalCommon(databar[i].value,1) + "%</p><div><span style='background:" + databar[i].color + "'><span></div><p>" + databar[i].text + "</p></div>";
     }
     barchartdiv.html(barcharthtml);
 }

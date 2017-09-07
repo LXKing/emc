@@ -82,7 +82,7 @@ function toDecimal(x) {
 }
 
 /*保留小数位*/
-function toDecimal(x,num) {
+function toDecimalCommon(x,num) {
     num = num == undefined ?1:num;
     var f = parseFloat(x);
     if (isNaN(f)) {

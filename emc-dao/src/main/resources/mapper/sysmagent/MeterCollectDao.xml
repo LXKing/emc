@@ -543,17 +543,14 @@
     </select>
 
     <!--数据填报时，需要查询所有的虚表-->
-    <select id="selectFictitiousMeters" parameterType="List" resultMap="BaseResultMap">
+    <select id="selectFictitiousMeters"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_meter_collect
         where 1=1
-        <if test="ids != null ">
             and id in
-            <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+            <foreach collection="list" item="id" index="index" open="(" separator="," close=")">
                 #{id}
             </foreach>
-        </if>
-
     </select>
 </mapper>

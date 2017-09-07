@@ -126,9 +126,9 @@ function initJTenergyData(){
             var _DATA_CURRENT = _DATA.data[0].bm_current;
             var _DATA_LAST = _DATA.data[0].bm_last;
             var _TB = 0;
-            $("#groupTotal").html(toDecimal(_DATA_CURRENT,2));
+            $("#groupTotal").html(toDecimalCommon(_DATA_CURRENT,2));
             if(_DATA_LAST != 0){
-                _TB = parseFloat(toDecimal((_DATA_CURRENT- _DATA_LAST)/_DATA_LAST,4))*10000/100;
+                _TB = parseFloat(toDecimalCommon((_DATA_CURRENT- _DATA_LAST)/_DATA_LAST,4))*10000/100;
             }
             var _ZZ =_TB>0?"↑":((_TB == 0)?"→":"↓");
             $("#groupchangeRate").addClass("energy_gray2");
@@ -286,7 +286,7 @@ function waterEnergyChartFun(_DATA, _YEAR_LIST) {
     var _DATA_LAST = _DATA.totallastyear;
     $("#waterTotal").html(toFormatNum(_DATA_CURRENT));
     if(_DATA_LAST != 0){
-        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+        _TB = parseFloat(toDecimalCommon((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
     }
     if(_TB >0){
         $("#waterTotal").next("span").addClass("energy-remind");
@@ -402,7 +402,7 @@ function electricEnergyChartFun(_DATA, _YEAR_LIST) {
     var _DATA_LAST = _DATA.totallastyear;
     $("#electricTotal").html(toFormatNum(_DATA_CURRENT));
     if(_DATA_LAST != 0){
-        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+        _TB = parseFloat(toDecimalCommon((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
     }
     if(_TB >0){
         $("#electricTotal").next("span").addClass("energy-remind");
@@ -518,7 +518,7 @@ function gasEnergyChartFun(_DATA, _YEAR_LIST) {
     var _DATA_LAST = _DATA.totallastyear;
     $("#gasTotal").html(toFormatNum(_DATA_CURRENT));
     if(_DATA_LAST != 0){
-        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+        _TB = parseFloat(toDecimalCommon((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
     }
     if(_TB >0){
         $("#gasTotal").next("span").addClass("energy-remind");
@@ -634,7 +634,7 @@ function hotEnergyChartFun(_DATA, _YEAR_LIST) {
     var _DATA_LAST = _DATA.totallastyear;
     $("#hotTotal").html(toFormatNum(_DATA_CURRENT));
     if(_DATA_LAST != 0){
-        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+        _TB = parseFloat(toDecimalCommon((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
     }
     if(_TB >0){
         $("#hotTotal").next("span").addClass("energy-remind");
@@ -750,7 +750,7 @@ function coalEnergyChartFun(_DATA, _YEAR_LIST) {
     var _DATA_LAST = _DATA.totallastyear;
     $("#coalTotal").html(toFormatNum(_DATA_CURRENT));
     if(_DATA_LAST != 0){
-        _TB = parseFloat(toDecimal((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
+        _TB = parseFloat(toDecimalCommon((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
     }
     if(_TB >0){
         $("#coalTotal").next("span").addClass("energy-remind");
