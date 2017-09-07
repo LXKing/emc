@@ -68,6 +68,7 @@ function initassessment(result){
                 xData: result.object.heatnames,
                 series: [{
                     type: 'bar',
+                    barWidth: 20,
                     dataList:  result.object.heatnum
 
                 }]
@@ -86,7 +87,7 @@ function initassessment(result){
                 xData: result.object.stationnames,
                 series: [{
                     type: 'bar',
-                    barWidth:30,
+                    barWidth:20,
                     dataList: result.object.stationnums
 
                 }]
