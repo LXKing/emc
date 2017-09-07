@@ -12,14 +12,14 @@
 
 <script src="${web}/script/huak.web.system.fill.add.js"></script>
 
-<form id="formForExport">
+
 <div class="main-box">
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
                 <label for=''>单位名称</label>
-                <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder="请输入单位名称"/>
+                <input class="inputs-lg" id="collectName" name="collectName" type="text" placeholder="请输入单位名称"/>
             </div>
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
                 <div class="select-box">
@@ -31,10 +31,10 @@
                                 </div>
                                 <div class="x-sfright1"></div>
                             </div>
-                            <div class="x-sfoption x-sfoption1">
-                                <p value="1111">北京公司</p>
-                                <p value="2222">上海公司</p>
-                                <p value="3333">南京集团</p>
+                            <div class="x-sfoption x-sfoption1" >
+                                <c:forEach items="${unit}" var="item">
+                                    <p value="${item.unitId}">${item.unitName}</p>
+                                </c:forEach>
                             </div>
                             <input type="hidden" value="1111" />
                         </div>
@@ -43,27 +43,23 @@
             </div>
 
             <div class="select-box col-xs-12 col-sm-6 col-md-4">
-                <label for=''>时间</label>
-                <input id="startTime" name="startTime" class="Wdate time-input" type="text" placeholder="开始时间"
-                       onFocus="var endTime=$dp.$('endTime');WdatePicker({onpicked:function(){endTime.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'})"
-                        /> 至
-                <input id="endTime" name="endTime" class="Wdate time-input" type="text" placeholder="结束时间"
-                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}'})"
+                <label for=''>填报时间</label>
+                <input id="collectTime" name="collectTime" class="Wdate time-input" type="text" placeholder="填报时间"
+                    onFocus=" WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss'});"
                         />
             </div>
             <div class="col-xs-12 col-sm-6 col-md-2">
-                <a class="btns btnsfl btns-lookin" onclick="query(1)">查询</a>
-                <a class="btns btnsfl btns-reset" onclick =reset()>重置</a>
+                <a class="btns btnsfl btns-lookin" style="cursor: pointer;" onclick="query(1)">查询</a>
+                <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick =reset()>重置</a>
             </div>
         </div>
     </div>
 
     <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl btns-green"  href="javascipt:;" >保存</a>
-        <a class="btns btnsfl btns-lookin" href="javascipt:;">修改日期</a>
+        <a class="btns btnsfl btns-green"  onclick="dataSave()" >保存</a>
     </div>
 
-
+    <form id="_editForm">
     <div class="col-xs-12 main-table no-padding">
         <table class="editTable table table-striped table-bordered table-hover pgtable" cellspacing="0" cellpadding="0">
             <thead>
@@ -113,12 +109,18 @@
             </tbody>
         </table>
     </div>
+    </form>
 </div>
-</form>
+
 <!-- 模板内容 -->
 <textarea id="template" style="display:none">
     {#foreach $T.object as record}
     <tr>
+        <input  name = "id" type="hidden" value="{$T.record.id}" />
+        <input  name = "flag" type="hidden" value="{$T.record.flag}" />
+        <input  name = "realFlag" type="hidden" value="{$T.record.realFlag}" />
+        <input  name = "collectTime" type="hidden" value="{$T.record.collectTime}" />
+        <input  name = "comId" type="hidden" value="{$T.record.comId}" />
         <td><div class="text-left">{$T.record$index+1}</div></td>
         <td>
             <div class="text-left">{$T.record.unitName}</div>
@@ -143,7 +145,7 @@
         </td>
         <td class="{#if $T.record.realFlag == 0}td-edit{#/if}">
             <div class="text-left div-edit">{$T.record.num}
-               <input type="hidden" name="" value="{$T.record.num}">
+               <input type="hidden" name="num" value="{$T.record.num}">
             </div>
         </td>
         <td>
