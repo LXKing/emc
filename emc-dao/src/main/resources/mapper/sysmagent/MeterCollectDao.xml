@@ -424,6 +424,7 @@
             a.id,
             b.UNITNAME unitName,
             a.COM_ID comId,
+            a.CODE AS code,
             NAME collectName,
             #{collectTime} as collectTime,
             c.NAME_ZH energyType,
@@ -487,10 +488,13 @@
         LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%y-%M-%d %h') = #{collectTime}
         where 1=1
         <if test="collectName != null and collectName!=''">
-            and a.NAME like concat(concat('%',#{collectName,jdbcType=VARCHAR}),'%')
+            and a.UNIT_ID  = #{collectName,jdbcType=VARCHAR}
         </if>
         <if test="comId != null and comId!=''">
             and a.COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="energyType != null and energyType!=''">
+            and c.TYPE = #{energyType,jdbcType=VARCHAR}
         </if>
         ORDER BY
             b.UNITNAME,

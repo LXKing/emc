@@ -469,7 +469,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             };
             return true;
         }catch (Exception e){
-            logger.error("安全与后台-数据填报异常！");
+            logger.error("安全与后台-数据填报异常！"+e);
         }
         return false;
     }

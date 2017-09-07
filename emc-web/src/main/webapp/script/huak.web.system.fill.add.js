@@ -61,11 +61,12 @@ function query(num){
     var unitName=$("#unitName").val();
     var collectName=$("#collectName").val();
     var collectTime=$("#collectTime").val();
+    var energyType =$("#energyType").val();
     $.ajax({
         url: _web + '/meterData/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data: {collectName:collectName,collectTime:collectTime},
+        data: {collectName:collectName,collectTime:collectTime,unitName:unitName,energyType:energyType},
         dataType: "json",
         success: function (data) {
             if(data.flag){
@@ -81,6 +82,16 @@ function query(num){
     });
 }
 //下拉切换事件
+$("body").on("click", "#energy p", function () {
+    var selectval = $(this).html();
+    var selectid = $(this).attr("value");
+    $('#energyType').val(selectid);
+    $(this).parent().prev().find("input").val(selectval);
+    $(this).parent().slideUp(200, function () {
+    });
+});
+
+//下拉切换事件
 $("body").on("click", "#x-sfoption1 p", function () {
     var selectval = $(this).html();
     var selectid = $(this).attr("value");
@@ -90,9 +101,19 @@ $("body").on("click", "#x-sfoption1 p", function () {
     });
 });
 
+//重置
+function resetDataTable(){
+    $("#x-sfoption1").prev().find("input").val("请选择用能单位");
+    $("#energy").prev().find("input").val("请选择能源类型");
+    $("#unitName").val("");
+    $("#collectName").val("");
+    $("#collectTime").val("");
+    $("#energyType").val("");
+}
+
 function dataSave (){
     if(dataMap.size()>0){
-        top.layer.alert("他么的填完在保存！");
+        top.layer.alert("填完再保存！");
         return ;
     }
     var data = $("#_editForm").serializeJson();
@@ -103,7 +124,12 @@ function dataSave (){
         dataType:"json",
         data:data,            //将Json对象序列化成Json字符串，toJSON()需要引用jquery.json.min.js
         success: function(data){
-            debugger;
+           if(data == "1"){
+               top.layer.alert("数据填报失败！");
+           }
+            if(data == "0"){
+                top.layer.alert("数据已填报！");
+            }
         }
 
     });
