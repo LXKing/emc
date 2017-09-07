@@ -61,9 +61,9 @@ function loadDataFun(){
         	};
             if(data.tb < 0){
             	$("#groupchangeRate").css('color','#3db1b0');
-                $("#groupchangeRate").html(data.tb + "<span class='arrow'>↓</span>");
+                $("#groupchangeRate").html(toDecimal(data.tb) + "<span class='arrow'>↓</span>");
             }else if(data.tb > 0){
-                $("#groupchangeRate").html(data.tb + "<span class='arrow'>↑</span>");
+                $("#groupchangeRate").html(toDecimal(data.tb) + "<span class='arrow'>↑</span>");
             }else if(data.tb == 0){
             	$("#groupchangeRate").css('color','#999');
             	$("#groupchangeRate").html("0" + "<span class='arrow'>→</span>");
@@ -88,13 +88,13 @@ function loadDataFun(){
             }
             if(data.tb < 0){
                 $("#waterchangeRate").css('color','#3db1b0');
-                $("#waterchangeRate").html("("+data.tb + "↓)");
+                $("#waterchangeRate").html("("+toDecimal(data.tb) + "↓)");
             }else if(data.tb > 0){
                 $("#waterchangeRate").addClass("energy-remind");
-                $("#waterchangeRate").html("("+data.tb + "↑)");
+                $("#waterchangeRate").html("("+toDecimal(data.tb) + "↑)");
             }else{
                 $("#waterchangeRate").css('color','#999');
-                $("#waterchangeRate").html("("+data.tb + "→)");
+                $("#waterchangeRate").html("("+toDecimal(data.tb) + "→)");
             }
 
             waterEnergyChartFun(data.datas, data.xdatas);
@@ -117,13 +117,13 @@ function loadDataFun(){
             }
             if(data.tb < 0){
                 $("#electricchangeRate").css('color','#3db1b0');
-                $("#electricchangeRate").html("("+data.tb + "↓)");
+                $("#electricchangeRate").html("("+toDecimal(data.tb) + "↓)");
             }else if(data.tb > 0){
                 $("#electricchangeRate").addClass("energy-remind");
-                $("#electricchangeRate").html("("+data.tb + "↑)");
+                $("#electricchangeRate").html("("+toDecimal(data.tb) + "↑)");
             }else{
                 $("#electricchangeRate").css('color','#999');
-                $("#electricchangeRate").html("("+data.tb + "→)");
+                $("#electricchangeRate").html("("+toDecimal(data.tb) + "→)");
             }
 
             electricEnergyChartFun(data.datas, data.xdatas);
@@ -146,13 +146,13 @@ function loadDataFun(){
             }
             if(data.tb < 0){
                 $("#gaschangeRate").css('color','#3db1b0');
-                $("#gaschangeRate").html("("+data.tb + "↓)");
+                $("#gaschangeRate").html("("+toDecimal(data.tb) + "↓)");
             }else if(data.tb > 0){
                 $("#gaschangeRate").addClass("energy-remind");
-                $("#gaschangeRate").html("("+data.tb + "↑)");
+                $("#gaschangeRate").html("("+toDecimal(data.tb) + "↑)");
             }else{
                 $("#gaschangeRate").css('color','#999');
-                $("#gaschangeRate").html("("+data.tb + "→)");
+                $("#gaschangeRate").html("("+toDecimal(data.tb) + "→)");
             }
 
             gasEnergyChartFun(data.datas, data.xdatas);
@@ -175,13 +175,13 @@ function loadDataFun(){
             }
             if(data.tb < 0){
                 $("#hotchangeRate").css('color','#3db1b0');
-                $("#hotchangeRate").html("("+data.tb + "↓)");
+                $("#hotchangeRate").html("("+toDecimal(data.tb) + "↓)");
             }else if(data.tb > 0){
                 $("#hotchangeRate").addClass("energy-remind");
-                $("#hotchangeRate").html("("+data.tb + "↑)");
+                $("#hotchangeRate").html("("+toDecimal(data.tb) + "↑)");
             }else{
                 $("#hotchangeRate").css('color','#999');
-                $("#hotchangeRate").html("("+data.tb + "→)");
+                $("#hotchangeRate").html("("+toDecimal(data.tb) + "→)");
             }
 
             hotEnergyChartFun(data.datas, data.xdatas);
@@ -204,13 +204,13 @@ function loadDataFun(){
             }
             if(data.tb < 0){
                 $("#coalchangeRate").css('color','#3db1b0');
-                $("#coalchangeRate").html("("+data.tb + "↓)");
+                $("#coalchangeRate").html("("+toDecimal(data.tb) + "↓)");
             }else if(data.tb > 0){
                 $("#coalchangeRate").addClass("energy-remind");
-                $("#coalchangeRate").html("("+data.tb + "↑)");
+                $("#coalchangeRate").html("("+toDecimal(data.tb) + "↑)");
             }else{
                 $("#coalchangeRate").css('color','#999');
-                $("#coalchangeRate").html("("+data.tb + "→)");
+                $("#coalchangeRate").html("("+toDecimal(data.tb) + "→)");
             }
 
             coalEnergyChartFun(data.datas, data.xdatas);
