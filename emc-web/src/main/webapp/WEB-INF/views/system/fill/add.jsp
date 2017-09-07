@@ -17,10 +17,10 @@
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
-            <div class="select-box col-xs-12 col-sm-6 col-md-2">
+            <div class="select-box col-xs-12 col-sm-4 col-md-2">
                 <input class="inputs-lg" id="collectName" name="collectName" type="text" placeholder="请输入器具名称"/>
             </div>
-            <div class="select-box col-xs-12 col-sm-6 col-md-3">
+            <div class="select-box col-xs-12 col-sm-4 col-md-3">
                 <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">单位</label>
                 </div>
@@ -39,13 +39,13 @@
                                         <p value="${item.unitId}">${item.unitName}</p>
                                     </c:forEach>
                                 </div>
-                                <input id="unitName" type="hidden" value="1111" />
+                                <input id="unitName" type="hidden" value="" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="select-box col-xs-12 col-sm-6 col-md-3">
+            <div class="select-box col-xs-12 col-sm-4 col-md-3">
                 <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">类型</label>
                 </div>
@@ -59,18 +59,21 @@
                                     </div>
                                     <div class="x-sfright1"></div>
                                 </div>
-                                <div class="x-sfoption x-sfoption1">
-                                    <p value="1111">北京公司</p>
-                                    <p value="2222">上海公司</p>
-                                    <p value="3333">南京集团</p>
+                                <div class="x-sfoption1" id="energy">
+                                    <p value="1">水</p>
+                                    <p value="2">电</p>
+                                    <p value="3">气</p>
+                                    <p value="4">热</p>
+                                    <p value="5">煤</p>
+                                    <p value="6">油</p>
                                 </div>
-                                <input type="hidden" value="1111" />
+                                <input id="energyType" type="hidden" value="" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="select-box col-xs-12 col-sm-6 col-md-2">
+            <div class="select-box col-xs-12 col-sm-4 col-md-2">
                 <label for=''>填报时间</label>
                 <input id="collectTime" name="collectTime" class="Wdate time-input" type="text" placeholder="填报时间"
                     onFocus=" WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss'});"
@@ -78,13 +81,15 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-2">
                 <a class="btns btnsfl btns-lookin" style="cursor: pointer;" onclick="query(1)">查询</a>
-                <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick =reset()>重置</a>
+                <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick =resetDataTable()>重置</a>
+
             </div>
         </div>
     </div>
 
     <div class="col-xs-12 btngroups   ">
         <a class="btns btnsfl btns-green"  onclick="dataSave()" >保存</a>
+        <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick="openPage('${web}/data/fill')">取消</a>
     </div>
 
     <form id="_editForm">
