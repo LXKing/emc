@@ -466,7 +466,38 @@
             (case d.ISCHANGE when 1 then '是' else '否' end) changestatus,
             (case d.ISPRESTORE when 1 then '是' else '否' end) prestorestatus,
          ( CASE a.ISREAL when 0 then (case when d.COLLECT_NUM is null then e.COLLECT_VALUE else d.COLLECT_NUM end ) else a.FORMULA end ) num,
-            d.ISCHANGE as isChange,d.ISPRESTORE as isPrestore,d.CHANGE_NUM as changeNum,d.PRESTORE_NUM as prestoreNum
+        length((
+        CASE a.ISREAL
+        WHEN 0 THEN
+        (
+        CASE
+        WHEN d.COLLECT_NUM IS NULL THEN
+        e.COLLECT_VALUE
+        ELSE
+        d.COLLECT_NUM
+        END
+        )
+        ELSE
+        a.FORMULA
+        END
+        ))len,
+        CONCAT(left(
+        (
+        CASE a.ISREAL
+        WHEN 0 THEN
+        (
+        CASE
+        WHEN d.COLLECT_NUM IS NULL THEN
+        e.COLLECT_VALUE
+        ELSE
+        d.COLLECT_NUM
+        END
+        )
+        ELSE
+        a.FORMULA
+        END
+        ),8),'...') s,
+        d.ISCHANGE as isChange,d.ISPRESTORE as isPrestore,d.CHANGE_NUM as changeNum,d.PRESTORE_NUM as prestoreNum
         FROM
             t_emc_meter_collect a
         LEFT JOIN v_emc_unit b ON a.UNIT_ID = b.UNITID
@@ -483,7 +514,7 @@
             FROM
                 t_emc_energy_data_his
             WHERE
-                DATE_FORMAT(COLLECT_TIME,'%y-%M-%d %h') = #{collectTime}
+                COLLECT_TIME = #{collectTime}
         ) d ON a.id = d.COLLECT_ID
         LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%y-%M-%d %h') = #{collectTime}
         where 1=1

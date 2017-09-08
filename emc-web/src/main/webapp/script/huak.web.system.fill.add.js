@@ -3,6 +3,10 @@ $(function(){
     dataMap = new Map();
     loadDataFun();
 })
+function loadDataFun() {
+    query(1);
+    editTd();
+}
 /**
  * 绑定插件到table - tr - td - class
  * 单击td 出现input
@@ -14,7 +18,6 @@ $(function(){
  </div>
  </td>
  */
-
 function editTd(){
     var $div,value,$hidden;
     $('.editTable').on('click','tr .td-edit',function(){
@@ -45,28 +48,19 @@ function editTd(){
         $td.empty().append($div);
     });
 }
-function loadDataFun() {
-    query(1);
-    editTd();
 
-}
 
-function reset(){
-   $("#unitName").val("");
-   $("#name").val("");
-   $("#startTime").val("");
-   $("#endTime").val("");
-}
-
-function query(num){
-    debugger;
-    dataMap.clear();
 //table 数据查询
+function query(num){
+    dataMap.clear();
     var unitName=$("#unitName").val();
     var collectName=$("#collectName").val();
     var collectTime=$("#collectTime").val();
-    alert(collectTime);
     var energyType =$("#energyType").val();
+    showOverlay("overlay");
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.ajax({
         url: _web + '/meterData/list',
         type: 'post',
@@ -82,6 +76,8 @@ function query(num){
                 });
                 $("#projectTbody").setTemplateElement("template");
                 $("#projectTbody").processTemplate(data);
+                layer.close(index);
+                hideOverlay("overlay");
             }
         }
     });
@@ -116,18 +112,23 @@ function resetDataTable(){
     $("#energyType").val("");
 }
 
+//填报数据保存
 function dataSave (){
-    debugger;
     if(dataMap.size()>0){
         top.layer.alert("填完再保存！");
         return ;
     }
+    showOverlay("overlay");
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     var data = $("#_editForm").serializeJson();
     $.ajax({
         url:_web +"/data/fill/add",
         type: "POST",
         contentType : 'application/json;charset=utf-8', //设置请求头信息
         dataType:"json",
+        timeout : 720000,
         data:data,            //将Json对象序列化成Json字符串，toJSON()需要引用jquery.json.min.js
         success: function(data){
            if(data == "1"){
@@ -135,8 +136,14 @@ function dataSave (){
            }
             if(data == "0"){
                 top.layer.alert("数据已填报！");
+                layer.close(index);
+                hideOverlay("overlay");
+                dataMap.clear();
             }
         }
     });
-    dataMap.clear();
+}
+
+function format(_VALUE){
+    alert(_VALUE);
 }

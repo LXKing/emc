@@ -137,7 +137,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
 
         } catch (Exception e) {
             logger.error("批量保存能耗数据失败:" + e.getMessage());
-            throw new UniformityException("批量数据保存部分异常 " + e.getMessage());
+            e.printStackTrace();
         }
         return true;
 
@@ -164,7 +164,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
             }
         } catch (Exception e) {
             logger.error("批量保存虚表能耗数据失败:" + e.getMessage());
-            throw new UniformityException("批量数据保存部分异常 " + e.getMessage());
+            e.printStackTrace();
         }
         return true;
     }

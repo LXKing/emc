@@ -11,7 +11,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script src="${web}/script/huak.web.system.fill.add.js"></script>
-
+<style>
+    /* 半透明的遮罩层 */
+    #overlay {
+        background: #000;
+        filter: alpha(opacity=50); /* IE的透明度 */
+        opacity: 0.5;  /* 透明度 */
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 100; /* 此处的图层要大于页面 */
+        display:none;
+    }
+</style>
 
 <div class="main-box">
     <div class="selectbg clearfix">
@@ -88,7 +103,7 @@
     </div>
 
     <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl btns-green"  onclick="dataSave()" >保存</a>
+        <a class="btns btnsfl btns-green"  style="cursor: pointer;" onclick="dataSave()" >保存</a>
         <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick="openPage('${web}/data/fill')">取消</a>
     </div>
 
@@ -98,8 +113,11 @@
             <thead>
             <tr>
                 <td width="4%">序号</td>
-                <td width="12%">
+                <td width="10%">
                     <div class="text-left">单位名称</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">计量编码</div>
                 </td>
                 <td width="10%">
                     <div class="text-left">计量采集表名</div>
@@ -107,10 +125,10 @@
                 <td width="6%">
                     <div class="text-left">能源类型</div>
                 </td>
-                <td width="7%">
+                <td width="6%">
                     <div class="text-left">实虚表</div>
                 </td>
-                <td width="7%">
+                <td width="6%">
                     <div class="text-left">总分表</div>
                 </td>
                 <td width="6%">
@@ -120,7 +138,7 @@
                 <td width="6%">
                     <div class="text-left">表底</div>
                 </td>
-                <td width="6%">
+                <td width="4%">
                     <div class="text-left">系数</div>
                 </td>
                 <td width="6%">
@@ -144,7 +162,7 @@
     </div>
     </form>
 </div>
-
+<div  id="overlay"></div>
 <!-- 模板内容 -->
 <textarea id="template" style="display:none">
     {#foreach $T.object as record}
@@ -157,6 +175,9 @@
         <td><div class="text-left">{$T.record$index+1}</div></td>
         <td>
             <div class="text-left">{$T.record.unitName}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.code}</div>
         </td>
         <td>
             <div class="text-left">{$T.record.collectName}</div>
@@ -177,7 +198,7 @@
             <div class="text-left">{$T.record.collectTime}</div>
         </td>
         <td class="{#if $T.record.realFlag == 0}td-edit{#/if}">
-            <div class="text-left div-edit">{$T.record.num}
+            <div class="text-left div-edit" title="{$T.record.num}">{#if $T.record.len > 10}{$T.record.s}{#else}{$T.record.num} {#/if}
                <input type="hidden" name="num" value="{$T.record.num}">
             </div>
         </td>
