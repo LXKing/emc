@@ -27,7 +27,6 @@ jQuery(document).ready(function($){
                uploader.upload();
     });
     uploader.on( 'fileQueued', function( file ){
-        var debug =$wrap.find('.uploader-list');
         if(checkfile(file)) {
             var $li = '<div id="' + file.id + '" class="item" >' +
                 '<div class="info" style="width:160px;float: left;margin: 5px;font-size:12px;font-weight:bolder;height: 15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;">' + file.name + '</div>' +
@@ -54,6 +53,7 @@ jQuery(document).ready(function($){
         });
     //删除
     $t.on("click",'.webuploadDelbtn',function () {
+        debugger;
         var $ele = $(this);
         var id = $ele.parent().attr("id");
         var file = uploader.getFile(id);
@@ -88,7 +88,6 @@ jQuery(document).ready(function($){
         //服务器响应了
         //ret._raw  类似于 data
         var data =ret.message;
-        debugger;
         if(data.flag != "1"){
                 uploader.reset();
                 top.layer.msg(data.message);
@@ -105,6 +104,7 @@ jQuery(document).ready(function($){
         $t.find( '#'+file.id ).find('p.state').text('已上传');
      });
     uploader.on( 'uploadError', function( file ) {
+        $t.find( '#'+file.id ).find('.webuploadDelbtn').remove();
         $t.find( '#'+file.id ).find('p.state').text('上传出错');
     });
 

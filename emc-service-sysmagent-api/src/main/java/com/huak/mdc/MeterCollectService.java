@@ -8,6 +8,7 @@ import com.huak.mdc.vo.MeterCollectA;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,10 +47,7 @@ public interface MeterCollectService {
      */
     public int updateByPrimaryKeySelective(MeterCollect record);
 
-    /**
-     * 计量器具导入
-     */
-    public Map<String, Object> excelUpload(String s, String path) throws IOException;
+
     /**
      * 计量器具管理查询
      */
@@ -95,4 +93,8 @@ public interface MeterCollectService {
      * @return
      */
     boolean fillData(JSONObject jo);
+
+
+    List<Map<String,Object>> selectByMaps(HashMap<String, Object> stringObjectHashMap);
+
 }

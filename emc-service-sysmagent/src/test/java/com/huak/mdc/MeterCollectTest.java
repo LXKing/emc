@@ -31,7 +31,7 @@ public class MeterCollectTest extends BaseTest {
     public void testSelectDemo() throws IOException {
 
         String path = "D:\\workSp\\code\\upload\\计量器具.xlsx";
-        meterCollectService.excelUpload( path,"计量器具.xlsx");
+//        meterCollectService.excelUpload( path,"计量器具.xlsx");
     }
 
     @Test

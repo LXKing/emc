@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.FileParseUtil;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.common.utils.MultipartFileParam;
@@ -16,6 +17,12 @@ import com.huak.prst.PrestoreService;
 import org.apache.commons.io.FileUtils;
 import com.huak.mdc.model.MeterCollect;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,11 +33,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +86,6 @@ public class MeterCollectController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, true);
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
-        System.out.println(prefix + "start !!!");
         MultipartFileParam param = null;
         Map<String, Object> obj = null;
         RandomAccessFile accessTmpFile = null;
@@ -89,9 +93,6 @@ public class MeterCollectController {
         //使用 工具类解析相关参数，工具类代码见下面
         try {
             param = MultipartFileUploadUtil.parse(request);
-            System.out.println(prefix + "chunks= " + param.getChunks());
-            System.out.println(prefix + "chunk= " + param.getChunk());
-            System.out.println(prefix + "chunkSize= " + param.getParam().get("chunkSize"));
             //这个必须与前端设定的值一致
             long chunkSize = 512 * 1024;
             if (param.isMultipart()) {
@@ -122,12 +123,9 @@ public class MeterCollectController {
                 for (int i = 0; i < completeList.length && isComplete == Byte.MAX_VALUE; i++) {
                     //与运算, 如果有部分没有完成则 isComplete 不是 Byte.MAX_VALUE
                     isComplete = (byte) (isComplete & completeList[i]);
-                    System.out.println(prefix + "check part " + i + " complete?:" + completeList[i]);
                 }
-
                 if (isComplete == Byte.MAX_VALUE) {
-                    System.out.println(prefix + "upload complete !!");
-                    obj = meterCollectService.excelUpload(UPLOAD_TEMP_DIR1 + "\\" + param.getFileName(), param.getFileName());
+                    obj = this.getMap(UPLOAD_TEMP_DIR1 + "\\" + param.getFileName());
                 }
                 accessTmpFile.close();
                 accessConfFile.close();
@@ -158,6 +156,148 @@ public class MeterCollectController {
         jo.put("message",obj);
         return jo.toJSONString();
 
+    }
+    //获取数据
+    private  Map<String,Object> getMap(String path){
+        List<Map<String,Object>> tempdata = meterCollectService.selectByMaps(new HashMap<String, Object>());
+        System.out.println("-------------------------path:"+path+"-------------------------------");
+        String prefix = "req_count:" + counter.incrementAndGet() + ":";
+        System.out.println(prefix + "start !!!");
+        FileInputStream io = null;
+        InputStream io1 = null;
+        Map<String,Object> result = new HashMap<>();
+        result.put(Constants.FLAG,"1");
+        StringBuffer message = new StringBuffer();
+        try {
+            Sheet hssFSheet = null;
+            Workbook hssFWorkBook = null;
+            Row xssfRow = null;
+            MeterCollect meterCollect = null;
+            List<MeterCollect> list = new ArrayList<>();
+            try {
+                io = new FileInputStream(path);
+                hssFWorkBook = new XSSFWorkbook(io);
+            }catch (Exception e){
+                io1 = new FileInputStream(path);
+                hssFWorkBook = new HSSFWorkbook(io1);
+            }
+            for(int i = 0; i< hssFWorkBook.getNumberOfSheets();i++){
+                hssFSheet = hssFWorkBook.getSheetAt(i);
+                for(int k = 1; k<hssFSheet.getPhysicalNumberOfRows();k++){
+                    xssfRow = hssFSheet.getRow(k);
+                    try {
+                        meterCollect = (MeterCollect) FileParseUtil.digitData(xssfRow, MeterCollect.class);
+                        list.add(meterCollect);
+                    }catch (Exception e){
+                        message.append("第"+(k)+"行数据有问题：新增失败");
+                        message.append(",");
+                        result.put("flag","2");
+                        break;
+                    }
+
+                }
+            }
+            for (int m = 0; m<list.size();m++){
+                MeterCollect data = list.get(m);
+                if(null != data.getIsauto() ){
+                    if(data.getIsauto().equals("自动采集")){
+                        data.setIsauto((byte)0);
+                    }
+                    if(data.getIsauto().equals("手工")){
+                        data.setIsauto((byte)1);
+                    }
+                }
+                if(null != data.getIsprestore() ){
+                    if(data.getIsprestore().equals("不是")){
+                        data.setIsprestore((byte)0);
+                    }
+                    if(data.getIsprestore().equals("是")){
+                        data.setIsprestore((byte)1);
+                    }
+                }
+                if(null != data.getIsreal() ){
+                    if(data.getIsreal().equals("否")){
+                        data.setIsreal((byte)0);
+                    }
+                    if(data.getIsreal().equals("单位总表")){
+                        data.setIsreal((byte)1);
+                    }
+                    if(data.getIsreal().equals("系统总表")){
+                        data.setIsreal((byte)2);
+                    }
+                }
+                if(null != data.getIsdelete() ){
+                    if(data.getIsdelete().equals("软删除标识")){
+                        data.setIsdelete((byte)0);
+                    }
+                    if(data.getIsdelete().equals("未删除")){
+                        data.setIsdelete((byte)1);
+                    }
+                }
+                if(null != data.getUnitType() ){
+                    if(data.getUnitType().equals("热源")){
+                        data.setUnitType((byte)1);
+                    }
+                    if(data.getUnitType().equals("一次网")){
+                        data.setUnitType((byte)2);
+                    }
+                    if(data.getUnitType().equals("换热站")){
+                        data.setUnitType((byte)3);
+                    }
+                    if(data.getUnitType().equals("二次线")){
+                        data.setUnitType((byte)4);
+                    }
+                    if(data.getUnitType().equals("用户")){
+                        data.setUnitType((byte)5);
+                    }
+                }
+                boolean index = false;
+                String codeFlag = data.getCode()+"-"+data.getComId();
+                for (Map f :tempdata){
+                    if(f.containsValue(codeFlag)){
+                        index = true;
+                        break;
+                    }
+                }
+                if(!index){
+                    data.setId(UUIDGenerator.getUUID());
+                    try{
+                        meterCollectService.insert(data);
+                        Map<String,Object> meter = new HashMap<>();
+                        meter.put("code",codeFlag);
+                        tempdata.add(meter);
+
+                    }catch (Exception e){
+                        message.append("第"+(m+1)+"行数据有问题：新增失败");
+                        message.append(",");
+                        result.put("flag","2");
+                    }
+                }else{
+                    try{
+                        meterCollectService.updateByPrimaryKeySelective(data);
+                    }catch (Exception e){
+                        message.append("第"+(m+1)+"行数据有问题：更新失败");
+                        message.append(",");
+                        result.put("flag","2");
+                    }
+                }
+            }
+            io.close();
+        } catch (Exception e) {
+            result.put("flag","2");
+            message.append("系统错误！");
+            logger.info("后台-计量器具导入出错"+ e);
+        }finally {
+            if(null != io){
+                try {
+                    io.close();
+                } catch (IOException e) {
+                    logger.info("后台-计量器具导入出错"+ e);
+                }
+            }
+        }
+        result.put("message",message);
+        return  result;
     }
 
 
