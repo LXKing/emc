@@ -135,7 +135,7 @@ function initchart(result){
                 }
 
                 if(value.totallastyear != 0){
-                    tb = toDecimal((value.totalcurrentyear - value.totallastyear)/value.totallastyear,4)*10000/100;
+                    tb = toDecimalCommon((value.totalcurrentyear - value.totallastyear)/value.totallastyear,4)*10000/100;
                 }
 
                 if(tb>0){
@@ -188,7 +188,7 @@ function loadEnergyTotalDetail() {
             var totallast = result.object.data[0].totallastyear;
             if(totallast != 0){
 
-                tb = parseFloat(toDecimal((totalcurrent- totallast)/totallast,4))*10000/100;
+                tb = parseFloat(toDecimalCommon((totalcurrent- totallast)/totallast,4))*10000/100;
             }
             var zz =tb>0?"↑":((tb == 0)?"→":"↓");
             $("#groupTotal").html(toFormatNum(totalcurrent));

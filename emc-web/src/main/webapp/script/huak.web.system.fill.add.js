@@ -1,4 +1,6 @@
+var dataMap =null;
 $(function(){
+    dataMap = new Map();
     loadDataFun();
 })
 /**
@@ -12,7 +14,7 @@ $(function(){
  </div>
  </td>
  */
-var dataMap = new Map();
+
 function editTd(){
     var $div,value,$hidden;
     $('.editTable').on('click','tr .td-edit',function(){
@@ -57,10 +59,13 @@ function reset(){
 }
 
 function query(num){
+    debugger;
+    dataMap.clear();
 //table 数据查询
     var unitName=$("#unitName").val();
     var collectName=$("#collectName").val();
     var collectTime=$("#collectTime").val();
+    alert(collectTime);
     var energyType =$("#energyType").val();
     $.ajax({
         url: _web + '/meterData/list',
@@ -112,6 +117,7 @@ function resetDataTable(){
 }
 
 function dataSave (){
+    debugger;
     if(dataMap.size()>0){
         top.layer.alert("填完再保存！");
         return ;
@@ -131,6 +137,6 @@ function dataSave (){
                 top.layer.alert("数据已填报！");
             }
         }
-
     });
+    dataMap.clear();
 }

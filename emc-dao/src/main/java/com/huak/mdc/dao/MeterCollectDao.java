@@ -46,8 +46,8 @@ public interface MeterCollectDao {
 
     /**
      * 查询虚表
-     * @param params
+     * @param ids
      * @return
      */
-    List<MeterCollect> selectFictitiousMeters(List<String> params);
+    List<MeterCollect> selectFictitiousMeters(List<String> ids);
 }

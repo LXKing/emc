@@ -421,11 +421,14 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     @Override
     public List<Map<String, Object>> getMeterDatas(Map<String, Object> params) {
         String time = dateDao.getTime().substring(0,13);
+
         if(!params.containsKey("collectTime")){
             params.put("collectTime",time);
         }else{
             if(StringUtils.isBlank(params.get("collectTime").toString())){
                 params.put("collectTime",time);
+            }else{
+                params.put("collectTime",params.get("collectTime").toString().substring(0,13));
             }
         }
         return meterCollectDao.getMeterDatas(params);
@@ -440,15 +443,16 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     @Transactional(readOnly = false)
     public boolean fillData(JSONObject jo) {
         List<EnergyDataHis> datalist0 = new ArrayList<>();//实表
-        List<String> datalist1 = new ArrayList<>();//虚表
+        List<String> ids = new ArrayList<>();//虚表
         List<Map<String,Object>> datas = (List<Map<String, Object>>) jo.get("data");
         String comId = (String) jo.get("comId");
         Company company = companyDao.selectByPrimaryKey(comId);
         String collectTime = "";
         for(Map data:datas){
-           if(data.get("realFlag").equals(0)){
+            String flag = data.get("realFlag").toString();
+           if(flag.equals("0")){
                if(StringUtils.isBlank(collectTime)){
-                   collectTime = data.get("collectTime").toString();
+                   collectTime = data.get("collectTime").toString()+":00:00";
                }
                EnergyDataHis energy0 = new EnergyDataHis();
                energy0.setCollectId(data.get("id").toString());
@@ -458,12 +462,12 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                energy0.setCollectNum(Double.parseDouble(data.get("num").toString()));
                datalist0.add(energy0);
            }
-            if(data.get("realFlag").equals(1)){
-                datalist1.add(data.get("id").toString());
+            if(flag.equals("1")){
+                ids.add(data.get("id").toString());
             }
         }
         try {
-            List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMeters(datalist1);
+            List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMeters(ids);
             if(energyDataHisService.saveEnergyDatas(datalist0,company)){
                 energyDataHisService.saveVirtualDatas(meterCollects,collectTime,company);
             };
