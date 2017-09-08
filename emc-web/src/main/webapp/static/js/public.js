@@ -164,10 +164,26 @@ $(function () {
             async:false,
             dataType: "json",
             success: function (data) {
-                $('#toolStartDate').val(data.startDate);
-                $('#toolEndDate').val(data.endDate);
-                $('#begin').val(data.startDate);
-                $('#end').val(data.endDate);
+                if(data.flag==false){
+                    $.ajax({
+                        url: _web + "/tools/search/year",
+                        type: "POST",
+                        async: false,
+                        dataType: "json",
+                        success: function (result) {
+                            $('#toolStartDate').val(result.startDate);
+                            $('#toolEndDate').val(result.endDate);
+                            $('#begin').val(result.startDate);
+                            $('#end').val(result.endDate);
+                        }
+                    });
+                }else{
+                    $('#toolStartDate').val(data.startDate);
+                    $('#toolEndDate').val(data.endDate);
+                    $('#begin').val(data.startDate);
+                    $('#end').val(data.endDate);
+                }
+
             }
         });
     } else {
