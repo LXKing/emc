@@ -40,7 +40,7 @@
     <dubbo:reference id="costTypeService"    interface="com.huak.sys.CostTypeService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="meterCollectService"    interface="com.huak.mdc.MeterCollectService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="prestoreService"    interface="com.huak.prst.PrestoreService" timeout="12000"  check="true" version="${service.version}" />
-    <dubbo:reference id="changeService"    interface="com.huak.prst.ChangeService" timeout="12000"  check="true" version="${service.version}" />
+    <dubbo:reference id="changeService"    interface="com.huak.prst.ChangeService" timeout="720000" retries="0"  check="true" version="${service.version}" />
 
     <!-- 日志 -->
 	<dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="12000"  check="true" version="${service.version}"/>
