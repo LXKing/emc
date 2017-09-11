@@ -126,9 +126,9 @@ public class ThirdAnalysisController extends BaseController {
             tb=0.0;
         }else {
             tb = DoubleUtils.div(DoubleUtils.sub(dhbq, dhtq),dhtq,4)*100;
-        }
-        try {
-            jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
+            }
+            try {
+                jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
             jo.put("ZDH",dhbq);
             jo.put("TB", df.format(tb));
         } catch (Exception e) {
@@ -232,33 +232,50 @@ public class ThirdAnalysisController extends BaseController {
     public String getFgsData(ToolVO toolVO, HttpServletRequest request,@PathVariable("orgId")String orgId){
         logger.info("计算分公司能耗折线图和同比");
         JSONObject jo = new JSONObject();
+        DecimalFormat  df   = new DecimalFormat("######0.0");
+
         Map params = paramsPackageOrg(toolVO, request);
         params.put("orgId",orgId);
+        String start = params.get("startTime").toString();
+        String end = params.get("endTime").toString();
         try {
-            List<Map<String, Object>> list = thirdAnalysisService.getFgsDhDetail(params);
-            Map<String, Object> reMap =thirdAnalysisService.getFgsDhAndTQ(params);
-            //时间数据
-            List<String> dateLine = new ArrayList<>();
-            List<String> newDate = new ArrayList<>();
-            List<String> oldDate = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                Map<String, Object> map =list.get(i);
-                String dh = map.get("BQDH").toString();
-                newDate.add(dh);
-                String dhTq = map.get("TQDH").toString();
-                oldDate.add(dhTq);
-                String date = map.get("TIME").toString();
-                dateLine.add(date);
-            }
+            //单耗详细
+            List<Map<String, Object>> listBq = thirdAnalysisService.getFgsDhDetail(params);
+            List<Map<String, Object>> listTq = thirdAnalysisService.getFgsDhDetailTq(params);
+            //总单耗和同比
+            Map<String, Object> bqMap =thirdAnalysisService.getFgsDhAndTQ(params);
+            Map<String, Object> tqMap =thirdAnalysisService.getFgsDhAndBQ(params);
 
-            jo.put(Constants.XAXIS, dateLine);
-            jo.put("newDate", newDate);
-            jo.put("oldDate", oldDate);
-            jo.put("reMap",reMap);
+            double dhbq;
+            double dhtq;
+            if(bqMap==null){
+                dhbq=0;
+            }else {
+                dhbq=Double.valueOf(bqMap.get("BQDH").toString());
+            }
+            if(tqMap==null){
+                dhtq=0;
+            }else {
+                dhtq=Double.valueOf(tqMap.get("TQDH").toString());
+            }
+            double tb;
+            if(dhbq==0||dhtq==0){
+                tb=0.0;
+            }else {
+                tb = DoubleUtils.div(DoubleUtils.sub(dhbq, dhtq),dhtq,4)*100;
+            }
+            try {
+                jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
+                jo.put("ZDH",dhbq);
+                jo.put("TB", df.format(tb));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return jo.toString();
         }catch (Exception e){
             logger.error("计算分公司能耗折线图和同比" + e.getMessage());
         }
-        return jo.toJSONString();
+        return jo.toString();
     }
 
     /**
@@ -363,24 +380,62 @@ public class ThirdAnalysisController extends BaseController {
     }
 
     /**
-     * 水单耗 (源，网，站，线，户)
+     * 单耗 (水，电，气，热，煤)
      */
-    @RequestMapping(value = "/fgs/org/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/fgs/org/{id}/{energytype}", method = RequestMethod.GET)
     @ResponseBody
-    public String getFgsOrgAll(ToolVO toolVO, HttpServletRequest request,@PathVariable("id")String id){
+    public String getFgsOrgAll(ToolVO toolVO, HttpServletRequest request,
+                               @PathVariable("id")String id,
+                               @PathVariable("energytype")String energytype){
         logger.info("计算源网站线户的单耗同比");
+        DecimalFormat  df   = new DecimalFormat("######0.0");
         JSONObject jo = new JSONObject();
         Map params = paramsPackageOrg(toolVO, request);
-        params.put("id",id);
-        try {
-            Map<String,Object>  reMap1 = thirdAnalysisService.getFgsOrgDh(params);
-            Map<String,Object> reMap2=thirdAnalysisService.getFgsOrgDhAndTQ(params);
-            jo.put("resultData", reMap1);
-            jo.put("TotalTq", reMap2);
-        }catch (Exception e){
-            logger.error("计算源网站线户的单耗同比" + e.getMessage());
+        String start = params.get("startTime").toString();
+        String end = params.get("endTime").toString();
+        if(id!=null&&!"".equals(id)){
+            params.put("id",id);
         }
-        return jo.toJSONString();
+        if(energytype!=null&&!"".equals(energytype)){
+            params.put("energytype",energytype);
+        }
+        try {
+            List<Map<String,Object>>  listBq = thirdAnalysisService.getFgsOrgDhBQ(params);
+            List<Map<String,Object>>  listTq = thirdAnalysisService.getFgsOrgDhTQ(params);
+
+            Map<String,Object> bqMap=thirdAnalysisService.getFgsOrgDhAndBQ(params);
+            Map<String,Object> tqMap=thirdAnalysisService.getFgsOrgDhAndTQ(params);
+
+            double dhbq;
+            double dhtq;
+            if(bqMap==null){
+                dhbq=0;
+            }else {
+                dhbq=Double.valueOf(bqMap.get("BQDH").toString());
+            }
+            if(tqMap==null){
+                dhtq=0;
+            }else {
+                dhtq=Double.valueOf(tqMap.get("TQDH").toString());
+            }
+            double tb;
+            if(dhbq==0||dhtq==0){
+                tb=0.0;
+            }else {
+                tb = DoubleUtils.div(DoubleUtils.sub(dhbq, dhtq),dhtq,4)*100;
+            }
+            try {
+                jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
+                jo.put("ZDH",dhbq);
+                jo.put("TB", df.format(tb));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return jo.toString();
+        }catch (Exception e){
+            logger.error("计算分公司能耗折线图和同比" + e.getMessage());
+        }
+        return jo.toString();
     }
 
     /**

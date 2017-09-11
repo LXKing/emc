@@ -1,6 +1,11 @@
 package com.huak.mdc.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -58,7 +63,10 @@ public class RecordPrestore  implements Serializable {
         this.collectId = collectId == null ? null : collectId.trim();
     }
 
-    public String getPrestoreTime() {
+    public String getPrestoreTime() throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+        Date date = format.parse(prestoreTime);
+        prestoreTime = format.format(date);
         return prestoreTime;
     }
 
@@ -82,7 +90,10 @@ public class RecordPrestore  implements Serializable {
         this.prestoreNum = prestoreNum;
     }
 
-    public String getCreateTime() {
+    public String getCreateTime()  throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+        Date date = format.parse(createTime);
+        createTime = format.format(date);
         return createTime;
     }
 

@@ -44,6 +44,32 @@
             <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
+
+    <resultMap id="BaseResultMapB" type="com.huak.mdc.vo.MeterCollectDataA">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="COLLECTTIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ENERGYTYPE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ISREAL" javaType="java.lang.String" jdbcType="TINYINT" />
+            <arg column="ISTOTAL" javaType="java.lang.String" jdbcType="TINYINT" />
+            <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ISAUTO" javaType="java.lang.String" jdbcType="TINYINT" />
+            <arg column="REALFLAG" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="FLAG" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CHANGESTATUS" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="PRESTORESTATUS" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ISCHANGE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ISPRESTORE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CHANGENUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="PRESTORENUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="COEF" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="ISPRESTORE" javaType="java.lang.String" jdbcType="TINYINT" />
+            <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
     ID, CODE, NAME, SERIAL_NO, ENERGY_TYPE_ID, ISREAL, ISTOTAL, UNIT_ID, UNIT_TYPE, ISAUTO, 
     DEPICT, TAG, COEF, FORMULA, ISPRESTORE, ISDELETE, COM_ID
@@ -583,5 +609,112 @@
             <foreach collection="list" item="id" index="index" open="(" separator="," close=")">
                 #{id}
             </foreach>
+    </select>
+
+    <select id="getGeneralCode" parameterType="java.lang.String" resultType="java.lang.String">
+       SELECT max(mc.CODE) FROM t_emc_meter_collect mc where mc.COM_ID=#{comId,jdbcType=VARCHAR};
+    </select>
+
+    <select id="getFormulaByIsReal" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_emc_meter_collect mc where mc.CODE=#{code,jdbcType=VARCHAR} AND mc.ISREAL='1'
+    </select>
+
+    <select id="getDataLoad" parameterType="java.util.Map" resultMap="BaseResultMapB">
+        SELECT
+        a.id,
+        b.UNITNAME unitName,
+        a.COM_ID comId,
+        a.CODE AS code,
+        NAME name,
+        d.COLLECT_TIME collectTime,
+        c.NAME_ZH energyType,
+        (
+        CASE a.ISREAL
+        WHEN 0 THEN
+        '实表'
+        WHEN 1 THEN
+        '虚表'
+        ELSE
+        ''
+        END
+        ) isReal,
+        (
+        CASE a.ISTOTAL
+        WHEN 0 THEN
+        '否'
+        WHEN 1 THEN
+        '单位总表'
+        WHEN 2 THEN
+        '系统总表'
+        ELSE
+        ''
+        END
+        ) isTotal,
+        (
+        CASE a.ISAUTO
+        WHEN 0 THEN
+        '自动采集'
+        WHEN 1 THEN
+        '手工'
+        ELSE
+        ''
+        END
+        ) isAuto,
+        a.coef,
+        a.ISREAL as realFlag,
+        (case when d.COLLECT_NUM is null then 1 else 2 end) flag,
+        (case d.ISCHANGE when 1 then '是' else '否' end) changestatus,
+        (case d.ISPRESTORE when 1 then '是' else '否' end) prestorestatus,
+        ( CASE a.ISREAL when 0 then  d.COLLECT_NUM  else a.FORMULA end ) num,
+        d.ISCHANGE as isChange,d.ISPRESTORE as isPrestore,d.CHANGE_NUM as changeNum,d.PRESTORE_NUM as prestoreNum
+        FROM
+        t_emc_meter_collect a
+        LEFT JOIN v_emc_unit b ON a.UNIT_ID = b.UNITID
+        LEFT JOIN t_emc_energy_type c ON a.ENERGY_TYPE_ID = c.ID
+        LEFT JOIN (
+        SELECT
+        COLLECT_ID,
+        COLLECT_TIME,
+        COLLECT_NUM,
+        ISCHANGE,
+        ISPRESTORE,
+        CHANGE_NUM,
+        PRESTORE_NUM
+        FROM
+        t_emc_energy_data_his
+        WHERE 1=1
+        <if test="startTime!=null and startTime!=''">
+              COLLECT_TIME  &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and COLLECT_TIME  &lt;=#{endTime}
+        </if>
+        ) d ON a.id = d.COLLECT_ID
+        where 1=1
+                <if test="collectName != null and collectName!=''">
+                    and a.UNIT_ID  = #{Name,jdbcType=VARCHAR}
+                </if>
+                <if test="comId != null and comId!=''">
+                    and a.COM_ID = #{comId,jdbcType=VARCHAR}
+                </if>
+                <if test="energyType != null and energyType!=''">
+                    and c.TYPE = #{energyType,jdbcType=VARCHAR}
+                </if>
+
+        ORDER BY
+        b.UNITNAME,
+        c.NAME_ZH
+    </select>
+
+    <!--填报时，需要查询所有的虚表-->
+    <select id="selectMeterByCode"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_meter_collect
+        where 1=1
+
+          <if test="code !=null and  code!=''">
+              and like
+          </if>
     </select>
 </mapper>

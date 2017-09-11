@@ -63,11 +63,19 @@ public interface ThirdAnalysisService {
      * 三级页面分公司耗明细查询
      */
     public List<Map<String,Object>> getFgsDhDetail(Map<String,Object> map);
+    /**
+     * 三级页面分公司耗明细查询
+     */
+    public List<Map<String,Object>> getFgsDhDetailTq(Map<String,Object> map);
 
     /**
      * 三级页面分公司能耗明细查询 总值和同比
      */
     public Map<String,Object> getFgsDhAndTQ(Map<String,Object> map);
+    /**
+     * 三级页面分公司能耗明细查询 总值和同比 (同期)
+     */
+    public Map<String,Object> getFgsDhAndBQ(Map<String,Object> map);
 
     /**
      * 三级页面分公司排名
@@ -80,13 +88,24 @@ public interface ThirdAnalysisService {
     public List<Map<String,Object>> getFgsStationDh(Map<String,Object> map);
 
     /**
-     * 三级页面水能耗 (源，网，站，线，户)
+     * 三级页面能耗 (源，网，站，线，户)每天的
      */
-    public Map<String,Object> getFgsOrgDh(Map<String,Object> map);
+    public List<Map<String,Object>> getFgsOrgDhBQ(Map<String,Object> map);
+
+    /**
+     * 三级页面能耗 (源，网，站，线，户)每天的
+     */
+    public List<Map<String,Object>> getFgsOrgDhTQ(Map<String,Object> map);
+
+
     /**
      * 三级页面水能耗 (源，网，站，线，户) 的总单耗和同比
      */
     public Map<String,Object> getFgsOrgDhAndTQ(Map<String,Object> map);
+    /**
+     * 三级页面水能耗 (源，网，站，线，户) 的总单耗和同比
+     */
+    public Map<String,Object> getFgsOrgDhAndBQ(Map<String,Object> map);
 
     /**
      *三级页面-用能单位类型-同期计划数据表格加载

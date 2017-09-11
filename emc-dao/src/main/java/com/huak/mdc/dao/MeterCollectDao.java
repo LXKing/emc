@@ -2,10 +2,9 @@ package com.huak.mdc.dao;
 
 import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.vo.MeterCollectA;
+import com.huak.mdc.vo.MeterCollectDataA;
 import org.springframework.stereotype.Repository;
 
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +44,21 @@ public interface MeterCollectDao {
     List<Map<String, Object>>  getMeterDatas(Map<String, Object> params);
 
     /**
-     * 查询虚表
-     * @param ids
+     * 填报数据表查询
+     * @param params
      * @return
      */
-    List<MeterCollect> selectFictitiousMeters(List<String> ids);
+    List<MeterCollectDataA>  getDataLoad(Map<String, Object> params);
+
+    /**
+     * 查询虚表
+     * @param
+     * @return
+     */
+
+    List<MeterCollect> selectFictitiousMeters(List<String> params);
+
+    public String getGeneralCode(String comId);
+
+    public Integer getFormulaByIsReal(String formula);
 }

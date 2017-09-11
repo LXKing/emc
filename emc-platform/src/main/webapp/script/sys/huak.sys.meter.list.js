@@ -356,11 +356,13 @@ function deleteMeter(id) {
 }
 
 function addMeterCollect() {
-
-    openLayer(_platform + "/meterCollect/add", "添加计量器具表", "addMeterCollectAddForm", null, null);
+    var comId = $(top.document).find("[name='searchComp']").val();
+    openLayer(_platform + "/meterCollect/add/"+comId, "添加计量器具表", "addMeterCollectAddForm", null, null);
 }
 function params(params) {
     var ts = $(top.document).find("[name='searchComp']").val();
     $("#comId").val(ts);
     return $("#meter-form").serialize();
 }
+
+

@@ -12,35 +12,62 @@
 
 <script src="${web}/script/huak.web.system.fill.js"></script>
 
-<form id="formForExport">
 <div class="main-box">
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
             <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <label for="">单位名称</label>
-                <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder="请输入单位名称"/>
+                <label for=""></label>
+                <input class="inputs-lg" id="name" name="name" type="text" placeholder="请输入单位名称"/>
             </div>
-            <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                    <label for="">能源类型</label>
+            <div class="select-box col-xs-12 col-sm-4 col-md-3">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <label for="">单位</label>
                 </div>
-                <div class="select-box col-xs-12 col-sm-6 col-md-3">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <div class="select-box">
                         <div class="clearfix h-selectbox">
                             <div class="x-selectfree fl">
                                 <div class="x-sfbgbox">
                                     <div class="x-sfleft1 x-sfw1">
-                                        <input type="text" value="参考tools页面下拉框" readonly="readonly">
+                                        <input type="text" value="请选择用能单位" readonly="readonly">
                                     </div>
                                     <div class="x-sfright1"></div>
                                 </div>
-                                <div class="x-sfoption x-sfoption1">
-                                    <p value="1111">北京公司</p>
-                                    <p value="2222">上海公司</p>
-                                    <p value="3333">南京集团</p>
+                                <div class="x-sfoption1" id="x-sfoption1">
+                                    <c:forEach items="${unit}" var="item">
+                                        <p value="${item.unitId}">${item.unitName}</p>
+                                    </c:forEach>
                                 </div>
-                                <input type="hidden" value="1111" />
+                                <input id="unitName" name="unitName" type="hidden" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="select-box col-xs-12 col-sm-4 col-md-3">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <label for="">类型</label>
+                </div>
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                    <div class="select-box">
+                        <div class="clearfix h-selectbox">
+                            <div class="x-selectfree fl">
+                                <div class="x-sfbgbox">
+                                    <div class="x-sfleft1 x-sfw1">
+                                        <input type="text" value="请选择能源类型" readonly="readonly">
+                                    </div>
+                                    <div class="x-sfright1"></div>
+                                </div>
+                                <div class="x-sfoption1" id="energy">
+                                    <p value="1">水</p>
+                                    <p value="2">电</p>
+                                    <p value="3">气</p>
+                                    <p value="4">热</p>
+                                    <p value="5">煤</p>
+                                    <p value="6">油</p>
+                                </div>
+                                <input id="energyType" name="energyType" type="hidden" value="" />
                             </div>
                         </div>
                     </div>
@@ -57,19 +84,21 @@
                         />
             </div>
             <div class="col-xs-12 col-sm-6 col-md-2">
-                <a class="btns btnsfl btns-lookin" onclick="query(1)">查询</a>
-                <a class="btns btnsfl btns-reset" onclick =reset()>重置</a>
+                <a class="btns btnsfl btns-lookin" href="javascript:void(0)" onclick="query(1)">查询</a>
+                <a class="btns btnsfl btns-reset" href="javascript:void(0)" onclick =reset()>重置</a>
             </div>
         </div>
     </div>
 
     <div class="col-xs-12 btngroups   ">
         <a class="btns btnsfl btns-green" href="javascipt:;"  onclick="openPage('${web}/data/fill/add')" >数据填报</a>
+        <a class="btns btnsfl btns-green" href="javascript:void(0)" onclick="dataSave()" >保存</a>
+
     </div>
 
-
+    <form id="_editForm">
     <div class="col-xs-12 main-table no-padding">
-        <table class="table table-striped table-bordered table-hover pgtable">
+        <table class="editTable table table-striped table-bordered table-hover pgtable">
             <thead>
             <tr>
                 <td width="4%">序号</td>
@@ -79,25 +108,40 @@
                 <td width="10%">
                     <div class="text-left">计量采集表名</div>
                 </td>
-                <td width="15%">
-                    <div class="text-left">换表时间</div>
-                </td>
-                <td width="8%">
-                    <div class="text-left">旧表表底</div>
-                </td>
-                <td width="8%">
-                    <div class="text-left">新表表底</div>
+                <td width="6%">
+                    <div class="text-left">计量代码</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">旧表系数</div>
+                    <div class="text-left">能源类型</div>
+                </td>
+                <td width="7%">
+                    <div class="text-left">实虚表</div>
+                </td>
+                <td width="7%">
+                    <div class="text-left">总分表</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">新表系数</div>
+                    <div class="text-left">手/自动</div>
                 </td>
-                <td width="8%">
-                    <div class="text-left">创建人<i class="icon-sort"></i></div>
+                <td width="12%">创建时间<i class="icon-sort"></i></td>
+                <td width="6%">
+                    <div class="text-left">表底</div>
                 </td>
-                <td width="15%">创建时间<i class="icon-sort"></i></td>
+                <td width="6%">
+                    <div class="text-left">系数</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">换表</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">换表表底</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">预存</div>
+                </td>
+                <td width="6%">
+                    <div class="text-left">预存值</div>
+                </td>
                 <td width="10%">
                     <div>操作</div>
                 </td>
@@ -117,41 +161,73 @@
         </div>
 
     </div>
-
+    </form>
 </div>
-</form>
+
 <!-- 模板内容 -->
 <textarea id="template" style="display:none">
-    {#foreach $T.list as record}
+    {#foreach $T.object.list as record}
     <tr>
-        <td>1</td>
+        <input  name="id" type="hidden" value="{$T.record.id}" />
+        <%--<input  name="cid" type="hidden" value="{$T.record.cid}" />--%>
+        <input  name="flag" type="hidden" value="{$T.record.flag}" />
+        <input  name="realFlag" type="hidden" value="{$T.record.realFlag}" />
+        <input  name = "collectTime" type="hidden" value="{$T.record.collectTime}" />
+        <input  name = "comId" type="hidden" value="{$T.record.comId}" />
+        <input  name = "changeNum" type="hidden" value="{$T.record.changeNum}" />
+        <input  name = "prestoreNum" type="hidden" value="{$T.record.prestoreNum}" />
+        <input  name = "isprestore" type="hidden" value="{$T.record.prestorestatus}" />
+        <input  name = "ischange" type="hidden" value="{$T.record.changeStatus}" />
+        <input  name = "code" type="hidden" value="{$T.record.code}" />
+
+        <td><div class="text-left">{$T.record$index+1}</div></td>
         <td>
-            <div class="text-left">{$T.record.unitName}</div>
+            <div class="text-left">{$T.record.unitname}</div>
         </td>
         <td>
             <div class="text-left">{$T.record.name}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.changeTime}</div>
+            <div class="text-left">{$T.record.code}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.usedNum}</div>
+            <div class="text-left">{$T.record.energyType}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.newNum}</div>
+            <div class="text-left">{$T.record.isreal}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.usedCoef}</div>
+            <div class="text-left">{$T.record.istotal}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.newCoef}</div>
+            <div class="text-left">{$T.record.isauto}</div>
         </td>
+        <td>
+            <div class="text-left">{$T.record.collectTime}</div>
+        </td>
+        <td class="td-edit">
+            <div class="text-left div-edit">{$T.record.num}
+                <input type="hidden" name="num" value="{$T.record.num}">
+            </div>
 
-        <td>{$T.record.crestor}</td>
-        <td>{$T.record.createTime}</td>
+        </td>
         <td>
-            <div><a href="javascript:detailId(1);" class="operationbtn icon-edit"></a><a href="javascript:detailId(1);"
-                                                                                         class="operationbtn icon-delete"></a>
+            <div class="text-left">{$T.record.coef}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.changeStatus}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.changeNum}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.prestorestatus}</div>
+        </td>
+        <td>
+            <div class="text-left">{$T.record.prestoreNum}</div>
+        </td>
+        <td >
+            <div ><a href="javascript:void(0)" class="operationbtn {#if $T.record.realFlag == 0}icon-edit{#/if}"></a>
             </div>
         </td>
     </tr>

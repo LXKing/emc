@@ -3,10 +3,12 @@ package com.huak.mdc;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.mdc.model.EnergyDataHis;
 import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.vo.MeterCollectA;
+import com.huak.mdc.vo.MeterCollectDataA;
+import com.huak.org.model.Company;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,10 @@ public interface MeterCollectService {
      */
     public int updateByPrimaryKeySelective(MeterCollect record);
 
-
+    /**
+     * 计量器具导入
+     */
+    public Map<String, Object> excelUpload(String s, String path) throws IOException;
     /**
      * 计量器具管理查询
      */
@@ -79,7 +84,10 @@ public interface MeterCollectService {
      * @param unitType
      */
     public List<Map<String,Object>> getUnitInfo(Map<String, Object> unitType);
-
+    /**
+     * 生成计量器具表code
+     */
+    public String getGeneralCode(String comId);
     /**
      * 填报数据查询
      * @param params
@@ -88,13 +96,27 @@ public interface MeterCollectService {
     List<Map<String,Object>> getMeterDatas(Map<String, Object> params);
 
     /**
+     * 填报数据查询
+     * @param params
+     * @return
+     */
+
+    public PageResult<MeterCollectDataA> queryDataLoadByPage(Map<String,Object> paramsMap, Page page);
+    /**
      * 安全与后台-数据填报
      * @param jo
      * @return
      */
     boolean fillData(JSONObject jo);
 
+    /**
+     * 校验公式该code是否都是虚表
+     */
+    boolean getFormulaByIsReal(String formula);
+
+
 
     List<Map<String,Object>> selectByMaps(HashMap<String, Object> stringObjectHashMap);
 
+    boolean addData(JSONObject jo);
 }

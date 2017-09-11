@@ -280,11 +280,20 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
         return thirdAnalysisDao.getFgsDh(map);
     }
 
+
+    @Override
+    public List<Map<String, Object>> getFgsDhDetailTq(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsDh(map);
+    }
+
     @Override
     public Map<String, Object> getFgsDhAndTQ(Map<String, Object> map) {
         return thirdAnalysisDao.getFgsZdhAndTq(map);
     }
-
+    @Override
+    public Map<String, Object> getFgsDhAndBQ(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsZdhAndBq(map);
+    }
     @Override
     public List<Map<String, Object>> getFgsFeedDh(Map<String, Object> map) {
         return thirdAnalysisDao.getFgsFeedDh(map);
@@ -296,74 +305,23 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
     }
 
     @Override
-    public Map<String, Object> getFgsOrgDh(Map<String, Object> map) {
-        List<Map<String, Object>> list = thirdAnalysisDao.getFgsOrgDh(map);
-        //时间数据
-        List<String> dateLine = new ArrayList<>();
-        //水电气热煤的  封装数据
-
-        List<String> waterBq = new ArrayList<>();
-        List<String> waterTq = new ArrayList<>();
-        List<String> electricBq = new ArrayList<>();
-        List<String> electricTq = new ArrayList<>();
-        List<String> gasBq = new ArrayList<>();
-        List<String> gasTq = new ArrayList<>();
-        List<String> hotBq = new ArrayList<>();
-        List<String> hotTq = new ArrayList<>();
-        List<String> coalBq = new ArrayList<>();
-        List<String> coalTq = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Map<String, Object> mapData =list.get(i);
-            //水的数据
-            String newWater = mapData.get("waterBq").toString();
-            waterBq.add(newWater);
-            String oldWater = mapData.get("waterTq").toString();
-            waterTq.add(oldWater);
-            //电的数据
-            String newElectric = mapData.get("electricBq").toString();
-            electricBq.add(newElectric);
-            String oldElectric = mapData.get("electricTq").toString();
-            electricTq.add(oldElectric);
-            //气的数据
-            String newGas = mapData.get("gasBq").toString();
-            gasBq.add(newGas);
-            String oldGas = mapData.get("gasTq").toString();
-            gasTq.add(oldGas);
-            //热的数据
-            String newLineWater = mapData.get("hotBq").toString();
-            hotBq.add(newLineWater);
-            String oldLineWater = mapData.get("hotTq").toString();
-            hotTq.add(oldLineWater);
-            //煤的数据
-            String newCoal = mapData.get("coalBq").toString();
-            coalBq.add(newCoal);
-            String oldCoal = mapData.get("coalTq").toString();
-            coalTq.add(oldCoal);
-
-            String date = mapData.get("TIME").toString();
-            dateLine.add(date);
-        }
-
-        Map<String,Object> resulMap=new  HashMap<String,Object>();
-        resulMap.put("waterBq",waterBq);
-        resulMap.put("waterTq",waterTq);
-        resulMap.put("electricBq",electricBq);
-        resulMap.put("electricTq",electricTq);
-        resulMap.put("gasBq",gasBq);
-        resulMap.put("gasTq",gasTq);
-        resulMap.put("hotBq",hotBq);
-        resulMap.put("hotTq",hotTq);
-        resulMap.put("coalBq",coalBq);
-        resulMap.put("coalTq",coalTq);
-        resulMap.put("dateLine",dateLine);
-        return resulMap;
+    public List<Map<String, Object>> getFgsOrgDhBQ(Map<String, Object> map) {
+        List<Map<String, Object>> list = thirdAnalysisDao.getFgsOrgDhBQ(map);
+        return list;
     }
-
+    @Override
+    public List<Map<String, Object>> getFgsOrgDhTQ(Map<String, Object> map) {
+        List<Map<String, Object>> list = thirdAnalysisDao.getFgsOrgDhTQ(map);
+        return list;
+    }
     @Override
     public Map<String, Object> getFgsOrgDhAndTQ(Map<String, Object> map) {
-        return thirdAnalysisDao.getFgsOrgAndTq(map);
+        return thirdAnalysisDao.getFgsOrgAndTQ(map);
     }
-
+    @Override
+    public Map<String, Object> getFgsOrgDhAndBQ(Map<String, Object> map) {
+        return thirdAnalysisDao.getFgsOrgAndBQ(map);
+    }
 
     /**
      *三级页面-用能单位类型-同期计划数据表格加载

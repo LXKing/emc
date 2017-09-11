@@ -789,11 +789,9 @@
 
     </select>
     <select id="getFgsDh"  resultType="java.util.Map" parameterType="java.util.Map">
-        SELECT v.fgsid id,DATE_FORMAT(v.DOSAGE_TIME, '%Y-%m-%d') TIME,
-        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
-        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH
-        FROM
-        (
+        SELECT
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH
+        from (
         SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
         FROM
         (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
@@ -805,65 +803,30 @@
         t_emc_org o
         WHERE o.COM_ID = #{comId}) t,
         (SELECT * FROM t_emc_org WHERE 1=1
-        <if test="orgId != null and orgId !=''">
-            AND ID = #{orgId}
-        </if>
+
+        AND ID = #{orgId}
+
 
         ) tmo
         WHERE tmo.ID = t.fgsid) a
         LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
 
-        AND vu.HEAT_TYPE=#{feedType}
         <if test="orgType != null and orgType!=''">
             AND  vu.UNITTYPE = #{orgType}
         </if>
         LEFT JOIN  (SELECT fdh.UNITID, fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
         LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
-        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        WHERE  fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTime}
         GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d'),eet.TYPE) d1 ON d1.UNITID = vu.unitid
         GROUP BY d1.TYPE,DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d')) f
         GROUP BY f.TYPE,DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d')
-        ) v LEFT JOIN
-        (
-        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
-        FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
-        (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
-        SELECT
-        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
-        o.*
-        FROM
-        t_emc_org o
-        WHERE o.COM_ID = #{comId}) t,
-        (SELECT * FROM t_emc_org WHERE 1=1
-        <if test="orgId != null and orgId !=''">
-            AND ID = #{orgId}
-        </if>
-        ) tmo
-        WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
-        <if test="orgType != null and orgType!=''">
-            AND  vu.UNITTYPE = #{orgType}
-        </if>
-        LEFT JOIN  (SELECT fdh.UNITID,fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
-        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
-        GROUP BY fdh.UNITID,eet.TYPE,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d')) d1 ON d1.UNITID = vu.unitid
-        GROUP BY DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d'),d1.TYPE) f
-        GROUP BY DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d'),f.TYPE
-        ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
-        GROUP BY v.fgsid,DATE_FORMAT(v.DOSAGE_TIME, '%Y-%m-%d') ORDER BY v.SORT asc
+        )v GROUP BY v.fgsid,DATE_FORMAT(v.DOSAGE_TIME, '%Y-%m-%d')
+
     </select>
-
-    <select id="getFgsZdhAndTq" resultType="java.util.Map" parameterType="java.util.Map">
-
-        SELECT e.BQDH ZDH,e.TQDH tqdh, ROUND(IFNULL((e.BQDH-e.TQDH)/e.TQDH,0),2) TQ
+    <select id="getFgsDhTq"  resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH
         from (
-        SELECT v.fgsid id,v.ORG_NAME orgname,
-        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
-        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH
-        FROM
-        (
         SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
         FROM
         (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
@@ -873,52 +836,92 @@
         o.ORG_NAME,o.SORT,o.ID
         FROM
         t_emc_org o
-        WHERE o.COM_ID =  #{comId}) t,
+        WHERE o.COM_ID = #{comId}) t,
         (SELECT * FROM t_emc_org WHERE 1=1
-        and id=#{orgId}
+
+        AND ID = #{orgId}
+
+
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+
         <if test="orgType != null and orgType!=''">
             AND  vu.UNITTYPE = #{orgType}
         </if>
         LEFT JOIN  (SELECT fdh.UNITID, fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
         LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
-        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        WHERE  fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTimeTq}
         GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d'),eet.TYPE) d1 ON d1.UNITID = vu.unitid
         GROUP BY d1.TYPE,DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d')) f
         GROUP BY f.TYPE,DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d')
-        ) v LEFT JOIN
-        (
-        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
+        )v GROUP BY v.fgsid,DATE_FORMAT(v.DOSAGE_TIME, '%Y-%m-%d')
+
+    </select>
+    <select id="getFgsZdhAndTq" resultType="java.util.Map" parameterType="java.util.Map">
+
+        SELECT
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) TQDH
+        FROM (
+        SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
-        (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
+        (SELECT t.sort,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
-        o.*
+        o.ORG_NAME,o.SORT,o.ID
         FROM
         t_emc_org o
         WHERE o.COM_ID =#{comId}) t,
         (SELECT * FROM t_emc_org WHERE 1=1
-        AND ID = #{orgId}
+        and id=#{orgId}
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
         <if test="orgType != null and orgType!=''">
             AND  vu.UNITTYPE = #{orgType}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
-        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
-        WHERE  fdh.DOSAGE_TIME<![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME<![CDATA[ <= ]]> #{endTimeTq}
-        GROUP BY fdh.UNITID,eet.TYPE,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d')) d1 ON d1.UNITID = vu.unitid
-        GROUP BY DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d'),d1.TYPE) f
-        GROUP BY DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d'),f.TYPE
-        ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
-        GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc
-        )e
-    </select>
 
+        LEFT JOIN  (SELECT fdh.UNITID, fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime} AND fdh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTime}
+        GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d'),eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY d1.TYPE,DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d')) f
+        GROUP BY f.TYPE,DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d')
+
+        )v GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT
+    </select>
+    <select id="getFgsZdhAndBq" resultType="java.util.Map" parameterType="java.util.Map">
+
+        SELECT
+        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH
+        FROM (
+        SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA,f.DOSAGE_TIME
+        FROM
+        (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE,d1.DOSAGE_TIME FROM
+        (SELECT t.sort,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        SELECT
+        ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
+        o.ORG_NAME,o.SORT,o.ID
+        FROM
+        t_emc_org o
+        WHERE o.COM_ID =#{comId}) t,
+        (SELECT * FROM t_emc_org WHERE 1=1
+        and id=#{orgId}
+        ) tmo
+        WHERE tmo.ID = t.fgsid) a
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="orgType != null and orgType!=''">
+            AND  vu.UNITTYPE = #{orgType}
+        </if>
+        LEFT JOIN  (SELECT fdh.UNITID, fdh.DOSAGE_TIME,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
+        LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
+        WHERE  fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTimeTq}
+        GROUP BY fdh.UNITID,DATE_FORMAT(fdh.DOSAGE_TIME, '%Y-%m-%d'),eet.TYPE) d1 ON d1.UNITID = vu.unitid
+        GROUP BY d1.TYPE,DATE_FORMAT(d1.DOSAGE_TIME, '%Y-%m-%d')) f
+        GROUP BY f.TYPE,DATE_FORMAT(f.DOSAGE_TIME, '%Y-%m-%d')
+        )v GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT
+    </select>
 
     <select id="getFgsFeedDh" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT v.UNITID ID,v.UNITNAME NAME,
@@ -1166,30 +1169,10 @@
         group by M.UNITTYPE
 
     </select>
-    <select id="getFgsOrgDh" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT
-        ROUND((IFNULL(d1.waterEnergy,0)),2) waterBq,
-        ROUND((IFNULL(d1.electricEnergy,0)),2) electricBq,
-        ROUND((IFNULL(d1.gasEnergy,0)),2) gasBq,
-        ROUND((IFNULL(d1.hotEnergy,0)),2) hotBq,
-        ROUND((IFNULL(d1.coalEnergy,0)),2) coalBq,
-        ROUND((IFNULL(d2.waterEnergy,0)),2) waterTq,
-        ROUND((IFNULL(d2.electricEnergy,0)),2) electricTq,
-        ROUND((IFNULL(d2.gasEnergy,0)),2) gasTq,
-        ROUND((IFNULL(d2.hotEnergy,0)),2) hotTq,
-        ROUND((IFNULL(d2.coalEnergy,0)),2) coalTq,
 
-        d1.yeardate TIME
-        from (
+    <select id="getFgsOrgDhBQ" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT
-        SUM( CASE a.energytype WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergy,
-        SUM( CASE a.energytype WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS electricEnergy,
-        SUM( CASE a.energytype WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS gasEnergy,
-        SUM( CASE a.energytype WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS hotEnergy,
-        SUM( CASE a.energytype WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS coalEnergy,
-        a.energytype,
-        a.yeardate,
-        a.total
+        ROUND(IFNULL(a.dosage / a.area,0),2) as dh
         from (
         SELECT
         sum(B.area) area,
@@ -1205,19 +1188,13 @@
         <if test="feedType!=null and feedType!=''">
             AND vu.heat_type=#{feedType,jdbcType=VARCHAR}
         </if>
-        <if test="orgType!=null and orgType!=''">
-            AND vu.UNITTYPE = #{orgType,jdbcType=VARCHAR}
-        </if>
-        <if test="id!=null and id!=''">
+        <if test="id != null and id !=''">
             and ID=#{id}
         </if>
+        <if test="orgType != null and orgType!=''">
+            AND  vu.UNITTYPE = #{orgType}
+        </if>
         )
-        WHERE
-        FIND_IN_SET(
-        ID,
-        emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
-        )
-        AND P_ORG_ID != '0'
         ) a
         LEFT JOIN (
         SELECT
@@ -1229,25 +1206,19 @@
         DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
         FROM
         (
-        ${tableName} h
+        t_emc_final_data_hour_tj h
         LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
         )
         WHERE
-        1 = 1
-        AND (
-        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startTime,jdbcType=VARCHAR}, '%Y-%m-%d')
-        AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime,jdbcType=VARCHAR}, '%Y-%m-%d')
-        )
-        OR (
-        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &gt;= SUBDATE(
-        DATE_FORMAT(#{startTime,jdbcType=VARCHAR}, '%Y-%m-%d'),
-        INTERVAL 1 YEAR
-        )
-        AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(
-        DATE_FORMAT(#{endTime,jdbcType=VARCHAR}, '%Y-%m-%d'),
-        INTERVAL 1 YEAR
-        )
-        )
+        <if test="energytype != null and energytype !=''">
+            and et.TYPE = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and h.DOSAGE_TIME <![CDATA[>=]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and h.DOSAGE_TIME <![CDATA[<=]]> #{endTime,jdbcType=VARCHAR}
+        </if>
         GROUP BY
         unitid,
         energytype,
@@ -1260,120 +1231,73 @@
         a.yeardate IS NOT NULL
         GROUP BY
         a.yeardate
-        )d1 LEFT JOIN
-        (
-        SELECT
-        SUM( CASE a.energytype WHEN '1' THEN a.dosage / a.area ELSE 0 END ) AS waterEnergy,
-        SUM( CASE a.energytype WHEN '2' THEN a.dosage / a.area ELSE 0 END ) AS electricEnergy,
-        SUM( CASE a.energytype WHEN '3' THEN a.dosage / a.area ELSE 0 END ) AS gasEnergy,
-        SUM( CASE a.energytype WHEN '4' THEN a.dosage / a.area ELSE 0 END ) AS hotEnergy,
-        SUM( CASE a.energytype WHEN '5' THEN a.dosage / a.area ELSE 0 END ) AS coalEnergy,
-        a.energytype,
-        a.yeardate,
-        a.total
-        from (
-        SELECT
-        sum(B.area) area,
-        sum(B.dosage) dosage,
-        SUM(B.total) total,
-        B.energytype,
-        a.unittype,
-        B.yeardate
-        FROM
-        ( SELECT vu.UNITID,vu.UNITTYPE FROM
-        ( t_emc_org
-        LEFT JOIN v_emc_unit vu ON ID = vu.ORGID
-        <if test="feedType!=null and feedType!=''">
-            AND vu.heat_type=#{feedType,jdbcType=VARCHAR}
-        </if>
-        <if test="orgType!=null and orgType!=''">
-            AND vu.UNITTYPE = #{orgType,jdbcType=VARCHAR}
-        </if>
-        <if test="id!=null and id!=''">
-            and ID=#{id}
-        </if>
-        )
-        WHERE
-        FIND_IN_SET(
-        ID,
-        emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})
-        )
-        AND P_ORG_ID != '0'
-        ) a
-        LEFT JOIN (
-        SELECT
-        h.UNITID AS unitid,
-
-        avg(h.AREA) area,
-        sum(h.DOSAGE) AS dosage,
-        sum(h.DOSAGE * h.COAL_COEF) AS total,
-        et.type AS energytype,
-        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
-        FROM
-        (
-        ${tableName} h
-        LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
-        )
-        WHERE
-        1 = 1
-        AND (
-        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startTimeTq,jdbcType=VARCHAR}, '%Y-%m-%d')
-        AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTimeTq,jdbcType=VARCHAR}, '%Y-%m-%d')
-        )
-        OR (
-        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &gt;= SUBDATE(
-        DATE_FORMAT(#{startTimeTq,jdbcType=VARCHAR}, '%Y-%m-%d'),
-        INTERVAL 1 YEAR
-        )
-        AND DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') &lt;= SUBDATE(
-        DATE_FORMAT(#{endTimeTq,jdbcType=VARCHAR}, '%Y-%m-%d'),
-        INTERVAL 1 YEAR
-        )
-        )
-        GROUP BY
-        unitid,
-        energytype,
-        yeardate
-        ) B ON a.UNITID = B.unitid
-        GROUP BY
-        B.energytype,
-        B.yeardate
-        )a WHERE
-        a.yeardate IS NOT NULL
-        GROUP BY
-        a.yeardate
-        )d2 on d1.energytype=d2.energytype
     </select>
-    <select id="getFgsOrgAndTq" parameterType="java.util.Map" resultType="java.util.Map">
-
-        SELECT  t.bqwater STotal,
-        ROUND(IFNULL((t.bqwater-t.tqwater)/t.tqwater,0),2) STB,
-        t.bqelectric DTotal,
-        ROUND(IFNULL((t.bqelectric-t.tqelectric)/t.tqelectric,0),2) DTB,
-        t.bqgas QTotal,
-        ROUND(IFNULL((t.bqgas-t.tqgas)/t.tqgas,0),2) QTB,
-        t.bqheat RTotal,
-        ROUND(IFNULL((t.bqheat-t.tqheat)/t.tqheat,0),2) RTB,
-        t.bqcoal MTotal,
-        ROUND(IFNULL((t.bqcoal-t.tqcoal)/t.tqheat,0),2) MTB
-        from  (
-        SELECT v.fgsid id,v.ORG_NAME orgname,v.sort,
-        ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) BQDH,
-        ROUND(IFNULL(SUM(CASE v1.TYPE WHEN '4' THEN 0 ELSE v1.BQBM END)/AVG(v1.BQAREA),0),2) TQDH,
-        ROUND(MAX(CASE v.TYPE WHEN '1' THEN v.BQDH ELSE 0 END),2) bqwater,
-        ROUND(MAX(CASE v1.TYPE WHEN '1' THEN v1.BQDH ELSE 0 END),2) tqwater,
-        ROUND(MAX(CASE v.TYPE WHEN '2' THEN v.BQDH ELSE 0 END),2) bqelectric,
-        ROUND(MAX(CASE v1.TYPE WHEN '2' THEN v1.BQDH ELSE 0 END),2) tqelectric,
-        ROUND(MAX(CASE v.TYPE WHEN '3' THEN v.BQDH ELSE 0 END),2) bqgas,
-        ROUND(MAX(CASE v1.TYPE WHEN '3' THEN v1.BQDH ELSE 0 END),2) tqgas,
-        ROUND(MAX(CASE v.TYPE WHEN '4' THEN v.BQDH ELSE 0 END),2) bqheat,
-        ROUND(MAX(CASE v1.TYPE WHEN '4' THEN v1.BQDH ELSE 0 END),2) tqheat,
-        ROUND(MAX(CASE v.TYPE WHEN '5' THEN v.BQDH ELSE 0 END),2) bqcoal,
-        ROUND(MAX(CASE v1.TYPE WHEN '5' THEN v1.BQDH ELSE 0 END),2) tqcoal,
-        ROUND(MAX(CASE v.TYPE WHEN '6' THEN v.BQDH ELSE 0 END),2) bqoil,
-        ROUND(MAX(CASE v1.TYPE WHEN '6' THEN v1.BQDH ELSE 0 END),2) tqoil
+    <select id="getFgsOrgDhTQ" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        ROUND(IFNULL(a.dosage / a.area,0),2) as dh
+        from (
+        SELECT
+        sum(B.area) area,
+        sum(B.dosage) dosage,
+        SUM(B.total) total,
+        B.energytype,
+        a.unittype,
+        B.yeardate
+        FROM
+        ( SELECT vu.UNITID,vu.UNITTYPE FROM
+        ( t_emc_org
+        LEFT JOIN v_emc_unit vu ON ID = vu.ORGID
+        <if test="feedType!=null and feedType!=''">
+            AND vu.heat_type=#{feedType,jdbcType=VARCHAR}
+        </if>
+        <if test="id != null and id !=''">
+            and ID=#{id}
+        </if>
+        <if test="orgType != null and orgType!=''">
+            AND  vu.UNITTYPE = #{orgType}
+        </if>
+        )
+        ) a
+        LEFT JOIN (
+        SELECT
+        h.UNITID AS unitid,
+        avg(h.AREA) area,
+        sum(h.DOSAGE) AS dosage,
+        sum(h.DOSAGE * h.COAL_COEF) AS total,
+        et.type AS energytype,
+        DATE_FORMAT(h.DOSAGE_TIME, '%Y-%m-%d') AS yeardate
         FROM
         (
+        t_emc_final_data_hour_tj h
+        LEFT JOIN t_emc_energy_type et ON h.TYPEID = et.id
+        )
+        WHERE
+        <if test="energytype != null and energytype !=''">
+            and et.TYPE = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and h.DOSAGE_TIME <![CDATA[>=]]> #{startTimeTq,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and h.DOSAGE_TIME <![CDATA[<=]]> #{endTimeTq,jdbcType=VARCHAR}
+        </if>
+        GROUP BY
+        unitid,
+        energytype,
+        yeardate
+        ) B ON a.UNITID = B.unitid
+        GROUP BY
+        B.energytype,
+        B.yeardate
+        )a WHERE
+        a.yeardate IS NOT NULL
+        GROUP BY
+        a.yeardate
+    </select>
+        <select id="getFgsOrgAndBQ" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  ROUND(IFNULL(v.BQDH,0),2) BQDH from
+        (
+
         SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
         (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
@@ -1386,52 +1310,78 @@
         WHERE o.COM_ID = #{comId}) t,
         (SELECT * FROM t_emc_org WHERE 1=1
         <if test="id != null and id !=''">
-            AND ID = #{id}
+            and ID=#{id}
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
-        <if test="orgType != null and orgType !=''">
-            AND vu.UNITTYPE=#{orgType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType!=null and feedType!=''">
+            AND vu.heat_type=#{feedType,jdbcType=VARCHAR}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM ${tableName} fdh
+        <if test="orgType != null and orgType!=''">
+            AND  vu.UNITTYPE = #{orgType}
+        </if>
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
         LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
-        WHERE  fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime}  AND fdh.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        WHERE
+        <if test="energytype != null and energytype !=''">
+            and eet.TYPE = #{energytype,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and fdh.DOSAGE_TIME <![CDATA[>=]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and fdh.DOSAGE_TIME <![CDATA[<=]]> #{endTime,jdbcType=VARCHAR}
+        </if>
         GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
         GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
-        ) v LEFT JOIN
+        )v
+    </select>
+ <select id="getFgsOrgAndTQ" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  ROUND(IFNULL(v.BQDH,0),2) TQDH from
         (
-        SELECT f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
+
+        SELECT f.sort,f.fgsid,f.ORG_NAME,f.TYPE,f.BQ/f.BQAREA BQDH,f.BQBM,f.BQAREA
         FROM
-        (SELECT a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
-        (SELECT t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
+        (SELECT a.sort,a.fgsid,a.ORG_NAME,SUM(d1.BM) BQBM,SUM(d1.DOSAGE) BQ,SUM(d1.AREA) BQAREA,d1.TYPE FROM
+        (SELECT t.sort,t.fgsid,tmo.ORG_NAME,t.ID orgid FROM (
         SELECT
         ( SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getparents (o.ID) ) AND P_ORG_ID = 0) ) fgsid,
-        o.*
+        o.ORG_NAME,o.SORT,o.ID
         FROM
         t_emc_org o
         WHERE o.COM_ID = #{comId}) t,
         (SELECT * FROM t_emc_org WHERE 1=1
         <if test="id != null and id !=''">
-            AND ID = #{id}
+            and ID=#{id}
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
-        <if test="orgType != null and orgType !=''">
-            AND vu.UNITTYPE=#{orgType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType!=null and feedType!=''">
+            AND vu.heat_type=#{feedType,jdbcType=VARCHAR}
         </if>
-        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM ${tableName} fdh
+        <if test="orgType != null and orgType!=''">
+            AND  vu.UNITTYPE = #{orgType}
+        </if>
+        LEFT JOIN  (SELECT fdh.UNITID,SUM(fdh.DOSAGE) DOSAGE,SUM(fdh.DOSAGE*fdh.COAL_COEF) BM,AVG(fdh.AREA) AREA,eet.TYPE FROM t_emc_final_data_hour_tj fdh
         LEFT JOIN t_emc_energy_type eet ON eet.ID = fdh.TYPEID
-        WHERE  fdh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND fdh.DOSAGE_TIME <![CDATA[ <= ]]> #{endTimeTq}
+        WHERE
+        <if test="energytype != null and energytype !=''">
+            and eet.TYPE = #{energytype,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and fdh.DOSAGE_TIME <![CDATA[>=]]> #{startTimeTq,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and fdh.DOSAGE_TIME <![CDATA[<=]]> #{endTimeTq,jdbcType=VARCHAR}
+        </if>
         GROUP BY fdh.UNITID,eet.TYPE) d1 ON d1.UNITID = vu.unitid
         GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
-        ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
-        GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc ) t
-    </select>
-
+        )v
+</select>
     <!--三级页面-用能单位-表格数据展示-->
     <select id="getThirdTables" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT

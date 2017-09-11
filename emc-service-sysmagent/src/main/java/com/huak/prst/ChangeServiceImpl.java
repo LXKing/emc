@@ -1,29 +1,28 @@
 package com.huak.prst;
 
+import com.github.pagehelper.PageHelper;
 import com.huak.base.dao.DateDao;
 import com.huak.common.UUIDGenerator;
-import com.huak.mdc.EnergyDataHisService;
-import com.huak.mdc.UniformityException;
-import com.huak.mdc.dao.MeterCollectDao;
-
-import com.github.pagehelper.PageHelper;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.mdc.EnergyDataHisService;
+import com.huak.mdc.dao.MeterCollectDao;
 import com.huak.mdc.dao.RecordChangeDao;
 import com.huak.mdc.dao.RecordPrestoreDao;
 import com.huak.mdc.model.EnergyDataHis;
 import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.model.RecordChange;
+import com.huak.mdc.vo.RecordChangeA;
 import com.huak.org.dao.CompanyDao;
 import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
-import com.huak.mdc.vo.RecordChangeA;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +82,11 @@ public class ChangeServiceImpl implements ChangeService {
             List<EnergyDataHis> datalist = new ArrayList<>();
             EnergyDataHis data = new EnergyDataHis();
             data.setCollectId(record.getCollectId());
-            data.setCollectTime(record.getChangeTime());
+            try {
+                data.setCollectTime(record.getChangeTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             data.setIschange((byte) 1);
             data.setIsprestore((byte) 0);
             data.setChangeNum(record.getNewNum());
@@ -125,7 +128,12 @@ public class ChangeServiceImpl implements ChangeService {
             List<EnergyDataHis> datalist = new ArrayList<>();
             EnergyDataHis data = new EnergyDataHis();
             data.setCollectId(record.getCollectId());
-            data.setCollectTime(record.getChangeTime());
+            try{
+                data.setCollectTime(record.getChangeTime());
+            }catch (Exception e){
+                    e.getMessage();
+            }
+
             data.setIschange((byte) 1);
             data.setIsprestore((byte) 0);
             data.setChangeNum(record.getNewNum());

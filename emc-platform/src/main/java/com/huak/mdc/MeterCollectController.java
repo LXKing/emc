@@ -2,26 +2,20 @@ package com.huak.mdc;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
-import com.huak.common.CommonExcelExport;
-import com.huak.common.Constants;
-import com.huak.common.FileParseUtil;
-import com.huak.common.UUIDGenerator;
+import com.huak.common.*;
 import com.huak.common.page.Page;
 import com.huak.common.utils.MultipartFileParam;
 import com.huak.common.utils.MultipartFileUploadUtil;
+import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.model.RecordChange;
 import com.huak.mdc.model.RecordPrestore;
-import com.huak.org.model.Company;
 import com.huak.prst.ChangeService;
 import com.huak.prst.PrestoreService;
 import org.apache.commons.io.FileUtils;
-import com.huak.mdc.model.MeterCollect;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -349,9 +343,13 @@ public class MeterCollectController {
         }
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage(Model model) {
+    @RequestMapping(value = "/add/{comId}", method = RequestMethod.GET)
+    public String addPage(Model model,@PathVariable("comId") String comId) {
         logger.info("计量器具新增页面");
+        String code = meterCollectService.getGeneralCode(comId);
+        String s = code.substring(1,code.length());
+        String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
+        model.addAttribute("code","A"+newCode);
         return "/sys/mdc/add";
     }
     @RequestMapping(value = "/addvalue", method = RequestMethod.POST)
@@ -579,4 +577,20 @@ public class MeterCollectController {
         }
         return jo.toJSONString();
     }
+    @ResponseBody
+    @RequestMapping(value = "/check/formula", method = RequestMethod.POST)
+    public String checkFormula(@RequestParam  String formula
+    ){
+        JSONObject jo = new JSONObject();
+        List<Object> arr = new ArrayList<Object>();
+        List<String> list = StringUtils.paresCodes(formula);
+        for (int i = 0; i <list.size() ; i++) {
+            boolean flag =   meterCollectService.getFormulaByIsReal(list.get(i));
+            arr.add(flag);
+        }
+        boolean result = arr.contains(true);
+        jo.put("result",result);
+        return jo.toJSONString();
+    }
+
 }

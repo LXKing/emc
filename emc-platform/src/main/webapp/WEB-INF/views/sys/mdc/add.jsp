@@ -50,7 +50,7 @@
                             class="red">*</span>计量代码：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="code" id="code" class="form-control" type="text" maxlength="16" placeholder="请输入计量代码">
+                        <input name="code" id="code" class="form-control" value="${code}" type="text" maxlength="7" placeholder="请输入计量代码">
                     </div>
                 </div>
                 <div class="form-group">
@@ -175,7 +175,6 @@ $.validator.setDefaults({
 
 //以下为官方示例
 $(function () {
-
     // validate signup form on keyup and submit
     var icon = "<i class='fa fa-times-circle'></i> ";
     var comId = $(top.document).find(".chosen-select").find("option:selected").val();//选中的文本
@@ -191,13 +190,16 @@ $(function () {
     $(top.document).find("#isreal").on('change', function () {
         var real = $(this).val();
         if(real==1){
-            //0-实表-预存  1-虚表-公式
+            //0-实表-预存  1-虚表-公式+-×÷]
             var html='<div  class="form-group">'+
                      '<label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">'+
                      '<span class="red"></span>公式：</label>'+
                      '<div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">'+
-                    '<input name="formula" id="formula" class="form-control" type="text" maxlength="16" placeholder="请输入公式">'+
-                    '</div>'+'</div>';
+                     '<input name="formula" id="formula" class="form-control" type="text" maxlength="64" placeholder="请输入公式">'+
+                     '<div><button class="btnFun" type="button">+</button><button type="button" class="btnFun">-</button>' +
+                     '<button type="button" class="btnFun">×</button><button type="button" class="btnFun">÷</button>' +
+                     '<button type="button" class="btnFun">(</button><button type="button" class="btnFun">)</button></div>'+
+                     '</div>'+'</div>';
             $(top.document).find("#yucun").html("");
             $(top.document).find("#gongshi").html(html);
         }
@@ -213,6 +215,18 @@ $(function () {
                     '</div>'+'</div>';
             $(top.document).find("#gongshi").html("");
             $(top.document).find("#yucun").html(html);
+        }
+    });
+
+    $(top.document).delegate(".btnFun",'click', function () {
+        //alert($(this).text());
+        var v = $(top.document).find("#formula").val();
+        if(v==''||v==null){
+            top.layer.msg("请填写公式");
+            return false;
+        }else{
+            //alert(v+$(this).text());
+            $(top.document).find("#formula").val(v+$(this).text());
         }
     });
 
@@ -279,6 +293,32 @@ $(function () {
         //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
         return deferred.state() == "resolved" ? true : false;
     }, "出场编号已存在");
+    // 校验公式
+    $.validator.addMethod("checkFormula", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        var reg=/^[(A\d{5})\.\+\-\×\÷]+$/;
+        if(!reg.test(value)){
+            //top.layer.msg("请输入数字!");
+            return false;
+        }else{
+
+            $.ajax({
+                url: _platform + '/meterCollect/check/formula',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {formula:value},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.result) {
+                        return false;
+                    } else {
+                        top.layer.msg("ok!");
+                        return true;
+                    }
+                }
+            });
+        }
+    }, "请输入正确的公式");
     $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
         $(this).closest('.form-group').removeClass('has-error');
         $(this).siblings('.help-block').remove();
@@ -346,6 +386,10 @@ $(function () {
             ,
             isdelete: {
                 required:true
+            },
+            formula: {
+                required:true,
+                checkFormula:true
             }
         },
         messages: {
@@ -428,4 +472,5 @@ function getType(type){
         }
     });
 }
+
 </script>

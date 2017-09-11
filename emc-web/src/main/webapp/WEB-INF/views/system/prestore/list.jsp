@@ -45,8 +45,8 @@
     </div>
 
     <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl exportlist btns-green" export-url="${web}/record/prestore/export" >导出</a>
-        <a class="btns btnsfl btns-lookin" href="javascipt:;">修改日期</a>
+        <a class="btns btnsfl exportprestor btns-green" export-url="${web}/record/prestore/export" >导出</a>
+
     </div>
 
 
@@ -74,9 +74,9 @@
                     <div class="text-left">创建人<i class="icon-sort"></i></div>
                 </td>
                 <td width="15%">创建时间<i class="icon-sort"></i></td>
-                <td width="10%">
-                    <div>操作</div>
-                </td>
+                <%--<td width="10%">--%>
+                    <%--<div>操作</div>--%>
+                <%--</td>--%>
             </tr>
             </thead>
             <tbody id="projectTbody">
@@ -100,7 +100,7 @@
 <textarea id="template" style="display:none">
     {#foreach $T.list as record}
     <tr>
-        <td>1</td>
+        <td>{$T.record$index}</td>
         <td>
             <div class="text-left">{$T.record.unitName}</div>
         </td>
@@ -118,11 +118,11 @@
         </td>
         <td>{$T.record.crestor}</td>
         <td>{$T.record.createTime}</td>
-        <td>
-            <div><a href="javascript:detailId(1);" class="operationbtn icon-edit"></a><a href="javascript:detailId(1);"
-                                                                                         class="operationbtn icon-delete"></a>
-            </div>
-        </td>
+        <%--<td>--%>
+            <%--<div><a href="javascript:detailId(1);" class="operationbtn icon-edit"></a><a href="javascript:detailId(1);"--%>
+                                                                                         <%--class="operationbtn icon-delete"></a>--%>
+            <%--</div>--%>
+        <%--</td>--%>
     </tr>
     {#/for}
 </textarea>
