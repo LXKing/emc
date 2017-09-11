@@ -53,7 +53,7 @@
 
                 <div class="clearfix energy-list col-lg-12 ">
                     <div class="energy-list-box energy-list-box-first">
-                        <a href="energy_consumption.html">
+                        <a >
                             <div class="energy-head ">
                                 <span class="energy-list-name">水用量</span>
                                 <div class="energy-list-info">
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="energy-list-box">
-                        <a href="energy_consumption.html">
+                        <a>
                             <div class="energy-head ">
                                 <span class="energy-list-name">电用量</span>
                                 <div class="energy-list-info">
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="energy-list-box">
-                        <a href="energy_consumption.html">
+                        <a>
                             <div class="energy-head ">
                                 <span class="energy-list-name">气用量</span>
                                 <div class="energy-list-info">
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="energy-list-box">
-                        <a href="energy_consumption.html">
+                        <a>
                             <div class="energy-head ">
                                 <span class="energy-list-name">热用量</span>
                                 <div class="energy-list-info">
@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="energy-list-box energy-list-box-last">
-                        <a href="energy_consumption.html">
+                        <a>
                             <div class="energy-head ">
                                 <span class="energy-list-name">煤用量</span>
                                 <div class="energy-list-info">
