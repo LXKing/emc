@@ -50,10 +50,6 @@ public interface MeterCollectService {
     public int updateByPrimaryKeySelective(MeterCollect record);
 
     /**
-     * 计量器具导入
-     */
-    public Map<String, Object> excelUpload(String s, String path) throws IOException;
-    /**
      * 计量器具管理查询
      */
     public PageResult<MeterCollectA> queryByPage(Map<String,Object> paramsMap, Page page);

@@ -294,7 +294,6 @@ public class MeterCollectController {
         return  result;
     }
 
-
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap, Page page) {

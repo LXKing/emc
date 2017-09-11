@@ -70,10 +70,9 @@ function query(num){
         data: {name:name,startTime:startTime,endTime:endTime,unitName:unitName,energyType:energyType},
         dataType: "json",
         success: function (data) {
-            console.log(data.object.page.pages);
+            console.info(data);
             if(data.flag){
                 $.each(data.object,function(index,value){
-                    //console.log(value);
                     if(value.realFlag == 0){
                         dataMap.put(value.id,value.id);
                     }
@@ -86,7 +85,6 @@ function query(num){
                     pageCount: data.object.page.pages, //总页数
                     current: data.object.page.pageNumber, //当前页数
                     backFn: function (p) { //单击回调方法，p是当前页码
-                        //console.log(p);
                         query(p);
                     }
                 });

@@ -74,7 +74,7 @@ public class DataFillController extends BaseController{
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         JSONObject jo = new JSONObject();
-        if(datas == null || datas.size() <= 0){ return "No any ID.中文"; }
+        if(datas == null || datas.size() <= 0){ return "1"; }
         jo.put("data",datas);
         jo.put("comId",company.getId());
         boolean flag = meterCollectService.fillData(jo);
@@ -114,13 +114,13 @@ public class DataFillController extends BaseController{
     }
 
     /**
-     * 安全与后台-数据填报
+     * 安全与后台-历史数据填报
      * @return
      */
     @RequestMapping(value = "/add/data",method = RequestMethod.POST  )
     @ResponseBody
     public String addData(HttpServletRequest request,@RequestBody List<Map<String,Object>> datas){
-        logger.info("安全与后台-数据填报开始");
+        logger.info("安全与后台-历史数据填报开始");
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         JSONObject jo = new JSONObject();

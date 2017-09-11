@@ -47,8 +47,10 @@ public class MeterCollectDataA implements Serializable{
         private String isprestore;
 
         private String comId;
+        private String len;
+        private String s;
 
-    public MeterCollectDataA(String id, String code, String name,String collectTime, String energyType, String isreal, String istotal, String unitname, String isauto, String realFlag, String flag, String changeStatus, String prestorestatus, String num, String isChange, String isPrestore, String changeNum, String prestoreNum, Double coef, String isprestore,String comId) {
+    public MeterCollectDataA(String id, String code, String name,String collectTime, String energyType, String isreal, String istotal, String unitname, String isauto, String realFlag, String flag, String changeStatus, String prestorestatus, String num, String isChange, String isPrestore, String changeNum, String prestoreNum, Double coef, String isprestore,String comId,String len,String s) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -70,6 +72,8 @@ public class MeterCollectDataA implements Serializable{
         this.coef = coef;
         this.isprestore = isprestore;
         this.comId=comId;
+        this.len = len;
+        this.s = s;
     }
 
     public String getId() {
@@ -236,5 +240,21 @@ public class MeterCollectDataA implements Serializable{
 
     public void setComId(String comId) {
         this.comId = comId;
+    }
+
+    public String getLen() {
+        return len;
+    }
+
+    public void setLen(String len) {
+        this.len = len;
+    }
+
+    public String getS() {
+        return s;
+    }
+
+    public void setS(String s) {
+        this.s = s;
     }
 }

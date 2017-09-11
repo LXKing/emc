@@ -55,10 +55,11 @@ public interface MeterCollectDao {
      * @param
      * @return
      */
-
-    List<MeterCollect> selectFictitiousMeters(List<String> params);
+    List<MeterCollect> selectFictitiousMeters(List<String> ids);
 
     public String getGeneralCode(String comId);
 
     public Integer getFormulaByIsReal(String formula);
+
+    List<MeterCollect> selectFictitiousMetersByCode(Map<String, Object> params);
 }

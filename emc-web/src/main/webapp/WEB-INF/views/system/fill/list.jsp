@@ -16,11 +16,10 @@
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
-            <div class="select-box col-xs-12 col-sm-6 col-md-3">
-                <label for=""></label>
+            <div class="select-box col-xs-12 col-sm-2 col-md-2" >
                 <input class="inputs-lg" id="name" name="name" type="text" placeholder="请输入单位名称"/>
             </div>
-            <div class="select-box col-xs-12 col-sm-4 col-md-3">
+            <div class="select-box col-xs-12 col-sm-3 col-md-2">
                 <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">单位</label>
                 </div>
@@ -45,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="select-box col-xs-12 col-sm-4 col-md-3">
+            <div class="select-box col-xs-12 col-sm-3 col-md-2">
                 <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">类型</label>
                 </div>
@@ -74,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="select-box col-xs-12 col-sm-6 col-md-4">
+            <div class="select-box col-xs-12 col-sm-4 col-md-4">
                 <label for="">时间</label>
                 <input id="startTime" name="startTime" class="Wdate time-input" type="text" placeholder="开始时间"
                        onFocus="var endTime=$dp.$('endTime');WdatePicker({onpicked:function(){endTime.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'})"
@@ -108,22 +107,22 @@
                 <td width="10%">
                     <div class="text-left">计量采集表名</div>
                 </td>
-                <td width="6%">
-                    <div class="text-left">计量代码</div>
+                <td width="5%">
+                    <div class="text-left">代码</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">能源类型</div>
+                    <div class="text-left">类型</div>
                 </td>
-                <td width="7%">
+                <td width="5%">
                     <div class="text-left">实虚表</div>
                 </td>
-                <td width="7%">
+                <td width="5%">
                     <div class="text-left">总分表</div>
                 </td>
                 <td width="6%">
                     <div class="text-left">手/自动</div>
                 </td>
-                <td width="12%">创建时间<i class="icon-sort"></i></td>
+                <td width="9%">创建时间<i class="icon-sort"></i></td>
                 <td width="6%">
                     <div class="text-left">表底</div>
                 </td>
@@ -136,13 +135,13 @@
                 <td width="6%">
                     <div class="text-left">换表表底</div>
                 </td>
-                <td width="6%">
+                <td width="5%">
                     <div class="text-left">预存</div>
                 </td>
-                <td width="6%">
+                <td width="5%">
                     <div class="text-left">预存值</div>
                 </td>
-                <td width="10%">
+                <td width="12%">
                     <div>操作</div>
                 </td>
             </tr>
@@ -206,7 +205,8 @@
             <div class="text-left">{$T.record.collectTime}</div>
         </td>
         <td class="td-edit">
-            <div class="text-left div-edit">{$T.record.num}
+            <div class="text-left div-edit" title="{$T.record.num}">
+                {#if $T.record.len > 10}{$T.record.s}{#else}{$T.record.num}{#/if}
                 <input type="hidden" name="num" value="{$T.record.num}">
             </div>
 

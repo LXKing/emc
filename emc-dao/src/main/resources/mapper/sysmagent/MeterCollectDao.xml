@@ -68,6 +68,8 @@
             <arg column="COEF" javaType="java.lang.Double" jdbcType="DOUBLE" />
             <arg column="ISPRESTORE" javaType="java.lang.String" jdbcType="TINYINT" />
             <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="len" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="s" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
   <sql id="Base_Column_List">
@@ -451,7 +453,7 @@
             b.UNITNAME unitName,
             a.COM_ID comId,
             a.CODE AS code,
-            NAME collectName,
+            a.NAME collectName,
             #{collectTime} as collectTime,
             c.NAME_ZH energyType,
             (
@@ -554,7 +556,7 @@
             and c.TYPE = #{energyType,jdbcType=VARCHAR}
         </if>
         ORDER BY
-            b.UNITNAME,
+            b.UNITNAME,a.NAME,
             c.NAME_ZH;
     </select>
 
@@ -599,17 +601,6 @@
         from t_emc_meter_collect a
     </select>
 
-    <!--数据填报时，需要查询所有的虚表-->
-    <select id="selectFictitiousMeters"  resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from t_emc_meter_collect
-        where 1=1
-            and id in
-            <foreach collection="list" item="id" index="index" open="(" separator="," close=")">
-                #{id}
-            </foreach>
-    </select>
 
     <select id="getGeneralCode" parameterType="java.lang.String" resultType="java.lang.String">
        SELECT max(mc.CODE) FROM t_emc_meter_collect mc where mc.COM_ID=#{comId,jdbcType=VARCHAR};
@@ -620,16 +611,16 @@
     </select>
 
     <select id="getDataLoad" parameterType="java.util.Map" resultMap="BaseResultMapB">
-        SELECT
-        a.id,
+       SELECT
+        a.COLLECT_ID as id,
         b.UNITNAME unitName,
-        a.COM_ID comId,
-        a.CODE AS code,
-        NAME name,
-        d.COLLECT_TIME collectTime,
+        d.COM_ID comId,
+        d.CODE AS code,
+        d.NAME name,
+        date_format(a.COLLECT_TIME,'%Y-%m-%d %H') collectTime,
         c.NAME_ZH energyType,
         (
-        CASE a.ISREAL
+        CASE d.ISREAL
         WHEN 0 THEN
         '实表'
         WHEN 1 THEN
@@ -639,7 +630,7 @@
         END
         ) isReal,
         (
-        CASE a.ISTOTAL
+        CASE d.ISTOTAL
         WHEN 0 THEN
         '否'
         WHEN 1 THEN
@@ -651,7 +642,7 @@
         END
         ) isTotal,
         (
-        CASE a.ISAUTO
+        CASE d.ISAUTO
         WHEN 0 THEN
         '自动采集'
         WHEN 1 THEN
@@ -660,18 +651,32 @@
         ''
         END
         ) isAuto,
-        a.coef,
-        a.ISREAL as realFlag,
-        (case when d.COLLECT_NUM is null then 1 else 2 end) flag,
-        (case d.ISCHANGE when 1 then '是' else '否' end) changestatus,
-        (case d.ISPRESTORE when 1 then '是' else '否' end) prestorestatus,
-        ( CASE a.ISREAL when 0 then  d.COLLECT_NUM  else a.FORMULA end ) num,
-        d.ISCHANGE as isChange,d.ISPRESTORE as isPrestore,d.CHANGE_NUM as changeNum,d.PRESTORE_NUM as prestoreNum
+        d.coef,
+        d.ISREAL as realFlag,
+        (case when a.COLLECT_NUM is null then 1 else 2 end) flag,
+        (case a.ISCHANGE when 1 then '是' else '否' end) changestatus,
+        (case a.ISPRESTORE when 1 then '是' else '否' end) prestorestatus,
+        ( CASE d.ISREAL when 0 then  a.COLLECT_NUM  else d.FORMULA end ) num,
+        length((
+        CASE d.ISREAL
+        WHEN 0 THEN
+        a.COLLECT_NUM
+        ELSE
+        d.FORMULA
+        END
+        ))len,
+        CONCAT(left(
+        (
+        CASE d.ISREAL
+        WHEN 0 THEN
+        a.COLLECT_NUM
+        ELSE
+        d.FORMULA
+        END
+        ),8),'...') s,
+        a.ISCHANGE as isChange,a.ISPRESTORE as isPrestore,a.CHANGE_NUM as changeNum,a.PRESTORE_NUM as prestoreNum
         FROM
-        t_emc_meter_collect a
-        LEFT JOIN v_emc_unit b ON a.UNIT_ID = b.UNITID
-        LEFT JOIN t_emc_energy_type c ON a.ENERGY_TYPE_ID = c.ID
-        LEFT JOIN (
+        (
         SELECT
         COLLECT_ID,
         COLLECT_TIME,
@@ -684,37 +689,54 @@
         t_emc_energy_data_his
         WHERE 1=1
         <if test="startTime!=null and startTime!=''">
-              COLLECT_TIME  &gt;= #{startTime}
+            and  COLLECT_TIME <![CDATA[ >= ]]> #{startTime}
         </if>
         <if test="endTime!=null and endTime!=''">
-            and COLLECT_TIME  &lt;=#{endTime}
+            and COLLECT_TIME  <![CDATA[ <= ]]> #{endTime}
         </if>
-        ) d ON a.id = d.COLLECT_ID
+        ) a  LEFT JOIN t_emc_meter_collect d ON  a.COLLECT_ID = d.id
+        LEFT JOIN v_emc_unit b ON d.UNIT_ID = b.UNITID
+        LEFT JOIN t_emc_energy_type c ON d.ENERGY_TYPE_ID = c.ID
         where 1=1
-                <if test="collectName != null and collectName!=''">
-                    and a.UNIT_ID  = #{Name,jdbcType=VARCHAR}
-                </if>
-                <if test="comId != null and comId!=''">
-                    and a.COM_ID = #{comId,jdbcType=VARCHAR}
-                </if>
-                <if test="energyType != null and energyType!=''">
-                    and c.TYPE = #{energyType,jdbcType=VARCHAR}
-                </if>
-
+        <if test="collectName != null and collectName!=''">
+            and d.UNIT_ID  = #{collectName,jdbcType=VARCHAR}
+        </if>
+        <if test="comId != null and comId!=''">
+            and d.COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
+        <if test="energyType != null and energyType!=''">
+            and c.TYPE = #{energyType,jdbcType=VARCHAR}
+        </if>
         ORDER BY
-        b.UNITNAME,
+        b.UNITNAME,d.NAME,
         c.NAME_ZH
     </select>
 
-    <!--填报时，需要查询所有的虚表-->
-    <select id="selectMeterByCode"  resultMap="BaseResultMap">
+
+
+
+    <!--数据填报时，需要查询所有的虚表-->
+    <select id="selectFictitiousMeters"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_meter_collect
-        where 1=1
+        where  id in
+        <foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
-          <if test="code !=null and  code!=''">
-              and like
-          </if>
+    <!--历史数据填报时，需要查询所有的虚表-->
+    <select id="selectFictitiousMetersByCode"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_meter_collect
+        where ISREAL = 1
+        <if test="code != null and code !=''">
+           and  FORMULA like concat(concat('%',#{code,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="comId != null and comId !=''">
+            and  COM_ID = #{comId,jdbcType=VARCHAR}
+        </if>
     </select>
 </mapper>

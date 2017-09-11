@@ -70,7 +70,6 @@ function query(num){
         success: function (data) {
             if(data.flag){
                 $.each(data.object,function(index,value){
-                    console.log(value);
                     if(value.realFlag == 0){
                         dataMap.put(value.id,value.id);
                     }
