@@ -79,7 +79,7 @@ public class MeterCollectController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String add(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String add(HttpServletRequest request, HttpServletResponse response){
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, true);
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
@@ -137,12 +137,20 @@ public class MeterCollectController {
             logger.error("后台-计量器具导入异常:" + e);
         } finally {
             if (null != accessConfFile) {
-                accessConfFile.close();
+                try {
+                    accessConfFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (null != accessTmpFile) {
+                        try {
+                            accessTmpFile.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
-            if (null != accessTmpFile) {
-                accessTmpFile.close();
-            }
-
 
             File file = new File(UPLOAD_TEMP_DIR1);
             if (file.exists()) {
