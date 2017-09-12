@@ -136,12 +136,13 @@ public class MeterCollectController {
             jo.put(Constants.FLAG, false);
             logger.error("后台-计量器具导入异常:" + e);
         } finally {
-            if (null != accessTmpFile) {
-                accessTmpFile.close();
-            }
             if (null != accessConfFile) {
                 accessConfFile.close();
             }
+            if (null != accessTmpFile) {
+                accessTmpFile.close();
+            }
+
 
             File file = new File(UPLOAD_TEMP_DIR1);
             if (file.exists()) {
