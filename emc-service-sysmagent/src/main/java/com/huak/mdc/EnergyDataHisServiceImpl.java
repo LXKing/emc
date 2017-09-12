@@ -60,6 +60,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
      * 9.查询室温
      * 10.计算折算室温
      * 11.组装FinalDataHour保存或修改
+     *
      * @param energyDataHis
      * @param company
      */
@@ -86,16 +87,16 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         }
         // 如果后期历史存在，则修改本期到后期时间段的能耗数据
         if (null != hqData && null != hqData.getId()) {
-            boolean isSave = finalDataHourService.saveDataHour(energyDataHis,hqData,company);
-            if(!isSave){
+            boolean isSave = finalDataHourService.saveDataHour(energyDataHis, hqData, company);
+            if (!isSave) {
                 return false;
             }
         }
 
         // 如果前期历史存在，则修改本期到前期时间段的能耗数据
         if (null != qqData && null != qqData.getId()) {
-            boolean isSave = finalDataHourService.saveDataHour(energyDataHis,qqData,company);
-            if(!isSave){
+            boolean isSave = finalDataHourService.saveDataHour(energyDataHis, qqData, company);
+            if (!isSave) {
                 return false;
             }
         }
@@ -156,7 +157,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         try {
             for (MeterCollect meterCollect : meterCollectList) {
                 //保存虚表能耗数据
-                boolean isSuccess = saveVirtualData(meterCollect,dateTime,company);
+                boolean isSuccess = saveVirtualData(meterCollect, dateTime, company);
                 //校验是否成功，保持虚表数据完整性
                 if (!isSuccess) {
                     throw new UniformityException("批量数据保存部分异常 " + meterCollect.toString());
@@ -172,6 +173,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
     /**
      * 每期数据都是必填
      * 1.根据dateTime查询前期数据
+     *
      * @param meterCollect
      * @param dateTime
      * @param company
@@ -182,14 +184,14 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         String formula = meterCollect.getFormula();
         //获取第一个code
         List<String> codes = StringUtils.paresCodes(formula);
-        if(codes.size()==0){
+        if (codes.size() == 0) {
             return true;//没有公式不计算
         }
         String code = codes.get(0);
         //根据第一个code获取时间区间
         Map<String, Object> params = new HashMap<>();
-        params.put("code",code);
-        params.put("comId",company.getId());
+        params.put("code", code);
+        params.put("comId", company.getId());
         MeterCollect collect = meterCollectDao.checkCode(params).get(0);
         EnergyDataHis energyDataHis = new EnergyDataHis();
         energyDataHis.setCollectId(collect.getId());
@@ -203,24 +205,23 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
 
         String start = "";
         String end = "";
-        if(qqData!=null&&hqData!=null){
+        if (qqData != null && hqData != null) {
             start = qqData.getCollectTime();
             end = hqData.getCollectTime();
-        }else if(qqData!=null&&hqData==null){
+        } else if (qqData != null) {
             start = qqData.getCollectTime();
             end = bqData.getCollectTime();
-        }else if(qqData==null&&hqData!=null){
+        } else if (hqData != null) {
             start = bqData.getCollectTime();
             end = hqData.getCollectTime();
-        }else{
+        } else {
             return true;//前期后期数据不存在  不用计算能耗
         }
         //时间段每小时集合
         List<String> dateTimes = DateUtils.getDateTimes(start, end);
 
-        return finalDataHourService.saveVirtualDataHour(meterCollect,dateTimes,codes,company);
+        return finalDataHourService.saveVirtualDataHour(meterCollect, dateTimes, codes, company);
     }
-
 
 
 }
