@@ -124,7 +124,12 @@ public class MeterCollectController {
                 if (isComplete == Byte.MAX_VALUE) {
                     obj = this.getMap(UPLOAD_TEMP_DIR1 + "\\" + param.getFileName());
                 }
+
+            }
+            if (null != accessTmpFile) {
                 accessTmpFile.close();
+            }
+            if (null != accessConfFile) {
                 accessConfFile.close();
             }
         } catch (Exception e) {
