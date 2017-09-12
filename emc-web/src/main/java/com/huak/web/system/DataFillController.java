@@ -38,6 +38,7 @@ public class DataFillController extends BaseController{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private MeterCollectService meterCollectService;
+    private final String COM_ID = "comId";
 
     @RequestMapping(method = RequestMethod.GET)
     public String page(HttpServletRequest request,Model model){
@@ -45,7 +46,7 @@ public class DataFillController extends BaseController{
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         Map<String,Object> params = new HashMap<>();
-        params.put("comId",company.getId());
+        params.put(COM_ID,company.getId());
         List<Map<String,Object>> data = meterCollectService.getUnitInfo(params);
         model.addAttribute("unit",data);
         return "system/fill/list";
@@ -57,7 +58,7 @@ public class DataFillController extends BaseController{
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         Map<String,Object> params = new HashMap<>();
-        params.put("comId",company.getId());
+        params.put(COM_ID,company.getId());
         List<Map<String,Object>> data = meterCollectService.getUnitInfo(params);
         model.addAttribute("unit",data);
         return "system/fill/add";
@@ -76,7 +77,7 @@ public class DataFillController extends BaseController{
         JSONObject jo = new JSONObject();
         if(datas == null || datas.size() <= 0){ return "1"; }
         jo.put("data",datas);
-        jo.put("comId",company.getId());
+        jo.put(COM_ID,company.getId());
         boolean flag = meterCollectService.fillData(jo);
     if(flag){
         return "0";
@@ -97,7 +98,7 @@ public class DataFillController extends BaseController{
         try {
             HttpSession session = request.getSession();
             Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
-            params.put("comId",company.getId());
+            params.put(COM_ID,company.getId());
             PageResult<MeterCollectDataA> result =  meterCollectService.queryDataLoadByPage(params,page);
             if (result!= null) {
                 jo.put(Constants.FLAG, true);
@@ -125,7 +126,7 @@ public class DataFillController extends BaseController{
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         JSONObject jo = new JSONObject();
         jo.put("data",datas);
-        jo.put("comId",company.getId());
+        jo.put(COM_ID,company.getId());
         boolean flag =meterCollectService.addData(jo);
         if(flag){
             return "0";
