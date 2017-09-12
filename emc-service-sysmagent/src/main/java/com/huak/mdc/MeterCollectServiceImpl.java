@@ -3,12 +3,9 @@ package com.huak.mdc;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.huak.base.dao.DateDao;
-import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.common.utils.ColumUtil;
 import com.huak.mdc.dao.MeterCollectDao;
 import com.huak.mdc.model.EnergyDataHis;
 import com.huak.mdc.model.MeterCollect;
@@ -17,24 +14,17 @@ import com.huak.mdc.vo.MeterCollectDataA;
 import com.huak.org.dao.CompanyDao;
 import com.huak.org.model.Company;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -60,6 +50,8 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     DateDao dateDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicLong counter = new AtomicLong(0L);
+
+    private final String  COLLECT_TIME= "collectTime";
 
     @Override
     public int deleteByPrimaryKey(String id) {
@@ -147,13 +139,13 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     public List<Map<String, Object>> getMeterDatas(Map<String, Object> params) {
         String time = dateDao.getTime().substring(0,13);
 
-        if(!params.containsKey("collectTime")){
-            params.put("collectTime",time);
+        if(!params.containsKey(COLLECT_TIME)){
+            params.put(COLLECT_TIME,time);
         }else{
-            if(StringUtils.isBlank(params.get("collectTime").toString())){
-                params.put("collectTime",time);
+            if(StringUtils.isBlank(params.get(COLLECT_TIME).toString())){
+                params.put(COLLECT_TIME,time);
             }else{
-                params.put("collectTime",params.get("collectTime").toString().substring(0,13));
+                params.put(COLLECT_TIME,params.get(COLLECT_TIME).toString().substring(0,13));
             }
         }
         return meterCollectDao.getMeterDatas(params);
@@ -191,7 +183,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             String flag = data.get("realFlag").toString();
            if(flag.equals("0")){
                if(StringUtils.isBlank(collectTime)){
-                   collectTime = data.get("collectTime").toString()+":00:00";
+                   collectTime = data.get(COLLECT_TIME).toString()+":00:00";
                }
                EnergyDataHis energy0 = new EnergyDataHis();
                energy0.setCollectId(data.get("id").toString());
@@ -251,7 +243,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                     _data.put("comId",comId);
                     EnergyDataHis energy0 = new EnergyDataHis();
                     energy0.setCollectId(data.get("id").toString());
-                    energy0.setCollectTime(data.get("collectTime").toString()+":00:00");
+                    energy0.setCollectTime(data.get(COLLECT_TIME).toString()+":00:00");
                     energy0.setIschange((byte) 0);
                     energy0.setIsprestore((byte) 0);
                     energy0.setCollectNum(Double.parseDouble(data.get("num").toString()));
@@ -259,7 +251,7 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                     try {
                         List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMetersByCode(_data);
                         if(energyDataHisService.saveEnergyDatas(datalist0,company)){
-                            energyDataHisService.saveVirtualDatas(meterCollects,data.get("collectTime").toString()+":00:00",company);
+                            energyDataHisService.saveVirtualDatas(meterCollects,data.get(COLLECT_TIME).toString()+":00:00",company);
                         };
                         return true;
                     }catch (Exception e){
