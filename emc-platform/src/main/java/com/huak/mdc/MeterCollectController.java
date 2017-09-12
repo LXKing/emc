@@ -53,6 +53,7 @@ public class MeterCollectController {
     private static AtomicLong counter = new AtomicLong(0L);
     private static String UPLOAD_TEMP_DIR = "/usr/software/upload/sysmagent";
     private static String UPLOAD_TEMP_DIR1 = "D:\\workSp\\code\\upload";
+
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public String listPage(Model model) {
         logger.info("转至系统计量器具列表页");
@@ -61,6 +62,7 @@ public class MeterCollectController {
 
     /**
      * 跳转至计量器具导入界面
+     *
      * @param model
      * @return
      */
@@ -72,11 +74,12 @@ public class MeterCollectController {
 
     /**
      * 后台-计量器具导入
+     *
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String add(HttpServletRequest request,HttpServletResponse response) {
+    public String add(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, true);
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
@@ -124,43 +127,41 @@ public class MeterCollectController {
                 accessTmpFile.close();
                 accessConfFile.close();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             jo.put(Constants.FLAG, false);
-            logger.error("后台-计量器具导入异常:"+e);
-        }finally {
-                try {
-                    if(null !=accessTmpFile){
-                      accessTmpFile.close();
-                    }
-                    if(null !=accessConfFile){
-                        accessConfFile.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+            logger.error("后台-计量器具导入异常:" + e);
+        } finally {
+            if (null != accessTmpFile) {
+                accessTmpFile.close();
+            }
+            if (null != accessConfFile) {
+                accessConfFile.close();
+            }
+
+            File file = new File(UPLOAD_TEMP_DIR1);
+            if (file.exists()) {
+                System.out.println("删除excel");
+                File[] files = file.listFiles();
+                for (File files1 : files) {
+                    files1.delete();
                 }
-                File file = new File(UPLOAD_TEMP_DIR1);
-                if(file.exists()){
-                    System.out.println("删除excel");
-                    File[] files = file.listFiles();
-                    for (File files1 : files){
-                        files1.delete();
-                    }
-                }
+            }
         }
-        jo.put("message",obj);
+        jo.put("message", obj);
         return jo.toJSONString();
 
     }
+
     //获取数据
-    private  Map<String,Object> getMap(String path){
-        List<Map<String,Object>> tempdata = meterCollectService.selectByMaps(new HashMap<String, Object>());
-        System.out.println("-------------------------path:"+path+"-------------------------------");
+    private Map<String, Object> getMap(String path) {
+        List<Map<String, Object>> tempdata = meterCollectService.selectByMaps(new HashMap<String, Object>());
+        System.out.println("-------------------------path:" + path + "-------------------------------");
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
         System.out.println(prefix + "start !!!");
         FileInputStream io = null;
         InputStream io1 = null;
-        Map<String,Object> result = new HashMap<>();
-        result.put(Constants.FLAG,"1");
+        Map<String, Object> result = new HashMap<>();
+        result.put(Constants.FLAG, "1");
         StringBuffer message = new StringBuffer();
         try {
             Sheet hssFSheet = null;
@@ -171,127 +172,127 @@ public class MeterCollectController {
             try {
                 io = new FileInputStream(path);
                 hssFWorkBook = new XSSFWorkbook(io);
-            }catch (Exception e){
+            } catch (Exception e) {
                 io1 = new FileInputStream(path);
                 hssFWorkBook = new HSSFWorkbook(io1);
             }
-            for(int i = 0; i< hssFWorkBook.getNumberOfSheets();i++){
+            for (int i = 0; i < hssFWorkBook.getNumberOfSheets(); i++) {
                 hssFSheet = hssFWorkBook.getSheetAt(i);
-                for(int k = 1; k<hssFSheet.getPhysicalNumberOfRows();k++){
+                for (int k = 1; k < hssFSheet.getPhysicalNumberOfRows(); k++) {
                     xssfRow = hssFSheet.getRow(k);
                     try {
                         meterCollect = (MeterCollect) FileParseUtil.digitData(xssfRow, MeterCollect.class);
                         list.add(meterCollect);
-                    }catch (Exception e){
-                        message.append("第"+(k)+"行数据有问题：新增失败");
+                    } catch (Exception e) {
+                        message.append("第" + (k) + "行数据有问题：新增失败");
                         message.append(",");
-                        result.put("flag","2");
+                        result.put("flag", "2");
                         break;
                     }
 
                 }
             }
-            for (int m = 0; m<list.size();m++){
+            for (int m = 0; m < list.size(); m++) {
                 MeterCollect data = list.get(m);
-                if(null != data.getIsauto() ){
-                    if(data.getIsauto().equals("自动采集")){
-                        data.setIsauto((byte)0);
+                if (null != data.getIsauto()) {
+                    if (data.getIsauto().equals("自动采集")) {
+                        data.setIsauto((byte) 0);
                     }
-                    if(data.getIsauto().equals("手工")){
-                        data.setIsauto((byte)1);
-                    }
-                }
-                if(null != data.getIsprestore() ){
-                    if(data.getIsprestore().equals("不是")){
-                        data.setIsprestore((byte)0);
-                    }
-                    if(data.getIsprestore().equals("是")){
-                        data.setIsprestore((byte)1);
+                    if (data.getIsauto().equals("手工")) {
+                        data.setIsauto((byte) 1);
                     }
                 }
-                if(null != data.getIsreal() ){
-                    if(data.getIsreal().equals("否")){
-                        data.setIsreal((byte)0);
+                if (null != data.getIsprestore()) {
+                    if (data.getIsprestore().equals("不是")) {
+                        data.setIsprestore((byte) 0);
                     }
-                    if(data.getIsreal().equals("单位总表")){
-                        data.setIsreal((byte)1);
-                    }
-                    if(data.getIsreal().equals("系统总表")){
-                        data.setIsreal((byte)2);
+                    if (data.getIsprestore().equals("是")) {
+                        data.setIsprestore((byte) 1);
                     }
                 }
-                if(null != data.getIsdelete() ){
-                    if(data.getIsdelete().equals("软删除标识")){
-                        data.setIsdelete((byte)0);
+                if (null != data.getIsreal()) {
+                    if (data.getIsreal().equals("否")) {
+                        data.setIsreal((byte) 0);
                     }
-                    if(data.getIsdelete().equals("未删除")){
-                        data.setIsdelete((byte)1);
+                    if (data.getIsreal().equals("单位总表")) {
+                        data.setIsreal((byte) 1);
+                    }
+                    if (data.getIsreal().equals("系统总表")) {
+                        data.setIsreal((byte) 2);
                     }
                 }
-                if(null != data.getUnitType() ){
-                    if(data.getUnitType().equals("热源")){
-                        data.setUnitType((byte)1);
+                if (null != data.getIsdelete()) {
+                    if (data.getIsdelete().equals("软删除标识")) {
+                        data.setIsdelete((byte) 0);
                     }
-                    if(data.getUnitType().equals("一次网")){
-                        data.setUnitType((byte)2);
+                    if (data.getIsdelete().equals("未删除")) {
+                        data.setIsdelete((byte) 1);
                     }
-                    if(data.getUnitType().equals("换热站")){
-                        data.setUnitType((byte)3);
+                }
+                if (null != data.getUnitType()) {
+                    if (data.getUnitType().equals("热源")) {
+                        data.setUnitType((byte) 1);
                     }
-                    if(data.getUnitType().equals("二次线")){
-                        data.setUnitType((byte)4);
+                    if (data.getUnitType().equals("一次网")) {
+                        data.setUnitType((byte) 2);
                     }
-                    if(data.getUnitType().equals("用户")){
-                        data.setUnitType((byte)5);
+                    if (data.getUnitType().equals("换热站")) {
+                        data.setUnitType((byte) 3);
+                    }
+                    if (data.getUnitType().equals("二次线")) {
+                        data.setUnitType((byte) 4);
+                    }
+                    if (data.getUnitType().equals("用户")) {
+                        data.setUnitType((byte) 5);
                     }
                 }
                 boolean index = false;
-                String codeFlag = data.getCode()+"-"+data.getComId();
-                for (Map f :tempdata){
-                    if(f.containsValue(codeFlag)){
+                String codeFlag = data.getCode() + "-" + data.getComId();
+                for (Map f : tempdata) {
+                    if (f.containsValue(codeFlag)) {
                         index = true;
                         break;
                     }
                 }
-                if(!index){
+                if (!index) {
                     data.setId(UUIDGenerator.getUUID());
-                    try{
+                    try {
                         meterCollectService.insert(data);
-                        Map<String,Object> meter = new HashMap<>();
-                        meter.put("code",codeFlag);
+                        Map<String, Object> meter = new HashMap<>();
+                        meter.put("code", codeFlag);
                         tempdata.add(meter);
 
-                    }catch (Exception e){
-                        message.append("第"+(m+1)+"行数据有问题：新增失败");
+                    } catch (Exception e) {
+                        message.append("第" + (m + 1) + "行数据有问题：新增失败");
                         message.append(",");
-                        result.put("flag","2");
+                        result.put("flag", "2");
                     }
-                }else{
-                    try{
+                } else {
+                    try {
                         meterCollectService.updateByPrimaryKeySelective(data);
-                    }catch (Exception e){
-                        message.append("第"+(m+1)+"行数据有问题：更新失败");
+                    } catch (Exception e) {
+                        message.append("第" + (m + 1) + "行数据有问题：更新失败");
                         message.append(",");
-                        result.put("flag","2");
+                        result.put("flag", "2");
                     }
                 }
             }
             io.close();
         } catch (Exception e) {
-            result.put("flag","2");
+            result.put("flag", "2");
             message.append("系统错误！");
-            logger.info("后台-计量器具导入出错"+ e);
-        }finally {
-            if(null != io){
+            logger.info("后台-计量器具导入出错" + e);
+        } finally {
+            if (null != io) {
                 try {
                     io.close();
                 } catch (IOException e) {
-                    logger.info("后台-计量器具导入出错"+ e);
+                    logger.info("后台-计量器具导入出错" + e);
                 }
             }
         }
-        result.put("message",message);
-        return  result;
+        result.put("message", message);
+        return result;
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
@@ -310,6 +311,7 @@ public class MeterCollectController {
 
     /**
      * 计量仪器导出
+     *
      * @param paramsMap
      * @param response
      * @throws IOException
@@ -321,7 +323,7 @@ public class MeterCollectController {
         HSSFWorkbook wb = null;
         OutputStream out = null;
         try {
-            List<Map<String,Object>> data = meterCollectService.exportExcel(paramsMap);
+            List<Map<String, Object>> data = meterCollectService.exportExcel(paramsMap);
             wb = CommonExcelExport.excelExport(Constants.CELL_NAME, data);
             //response输出流导出excel
             String mimetype = "application/vnd.ms-excel";
@@ -335,22 +337,23 @@ public class MeterCollectController {
             out.close();
         } catch (Exception e) {
             logger.error("后台-导出计量采集表EXCEL异常" + e.getMessage());
-        }finally {
-            if(null != out){
+        } finally {
+            if (null != out) {
                 out.close();
             }
         }
     }
 
     @RequestMapping(value = "/add/{comId}", method = RequestMethod.GET)
-    public String addPage(Model model,@PathVariable("comId") String comId) {
+    public String addPage(Model model, @PathVariable("comId") String comId) {
         logger.info("计量器具新增页面");
         String code = meterCollectService.getGeneralCode(comId);
-        String s = code.substring(1,code.length());
+        String s = code.substring(1, code.length());
         String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
-        model.addAttribute("code","A"+newCode);
+        model.addAttribute("code", "A" + newCode);
         return "/sys/mdc/add";
     }
+
     @RequestMapping(value = "/addvalue", method = RequestMethod.POST)
     @ResponseBody
     public String add(MeterCollect meterCollect, HttpServletRequest request) {
@@ -360,7 +363,7 @@ public class MeterCollectController {
         jo.put(Constants.FLAG, false);
         try {
             //虚表时 给预存字段设置  默认值
-            if(meterCollect.getIsreal()==Byte.valueOf("1")){
+            if (meterCollect.getIsreal() == Byte.valueOf("1")) {
                 meterCollect.setIsprestore(Byte.valueOf("0"));
             }
             meterCollect.setId(UUIDGenerator.getUUID());
@@ -373,63 +376,67 @@ public class MeterCollectController {
         }
         return jo.toJSONString();
     }
+
     @ResponseBody
     @RequestMapping(value = "/check/code", method = RequestMethod.POST)
-    public String checkNodeCode(@RequestParam  String code,
-                                @RequestParam  String comId ){
+    public String checkNodeCode(@RequestParam String code,
+                                @RequestParam String comId) {
 
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("code",code);
-        map.put("comId",comId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", code);
+        map.put("comId", comId);
         JSONObject jo = new JSONObject();
-        boolean  flag =   meterCollectService.checkCode(map);
-        if(flag){
-            jo.put(Constants.FLAG,false);
-        }else{
+        boolean flag = meterCollectService.checkCode(map);
+        if (flag) {
+            jo.put(Constants.FLAG, false);
+        } else {
             jo.put(Constants.FLAG, true);
         }
         return jo.toJSONString();
     }
+
     @ResponseBody
     @RequestMapping(value = "/check/name", method = RequestMethod.POST)
-    public String checkName(@RequestParam  String name,
-                                @RequestParam  String unitId ){
+    public String checkName(@RequestParam String name,
+                            @RequestParam String unitId) {
 
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("name",name);
-        map.put("unitId",unitId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("name", name);
+        map.put("unitId", unitId);
         JSONObject jo = new JSONObject();
-        boolean  flag =   meterCollectService.checkName(map);
-        if(flag){
-            jo.put(Constants.FLAG,false);
-        }else{
+        boolean flag = meterCollectService.checkName(map);
+        if (flag) {
+            jo.put(Constants.FLAG, false);
+        } else {
             jo.put(Constants.FLAG, true);
         }
         return jo.toJSONString();
     }
+
     @ResponseBody
     @RequestMapping(value = "/check/serialno", method = RequestMethod.POST)
-    public String checkSerialSo(@RequestParam  String serialNo
-    ){
+    public String checkSerialSo(@RequestParam String serialNo
+    ) {
 
         JSONObject jo = new JSONObject();
-        boolean  flag =   meterCollectService.checkNo(serialNo);
-        if(flag){
-            jo.put(Constants.FLAG,false);
-        }else{
+        boolean flag = meterCollectService.checkNo(serialNo);
+        if (flag) {
+            jo.put(Constants.FLAG, false);
+        } else {
             jo.put(Constants.FLAG, true);
         }
         return jo.toJSONString();
     }
+
     @ResponseBody
     @RequestMapping(value = "/unit", method = RequestMethod.POST)
-    public String getUnitList(@RequestParam  String unitType){
+    public String getUnitList(@RequestParam String unitType) {
 
         JSONObject jo = new JSONObject();
-        Map<String,Object> params = new HashMap<>();
-        params.put("unitType",unitType);
-        List<Map<String,Object>> list =   meterCollectService.getUnitInfo(params);
-        jo.put(Constants.LIST,list);
+        Map<String, Object> params = new HashMap<>();
+        params.put("unitType", unitType);
+        List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
+        jo.put(Constants.LIST, list);
         return jo.toJSONString();
     }
 
@@ -438,12 +445,12 @@ public class MeterCollectController {
         logger.info("跳转修改热源页");
         try {
 
-            MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
-            Map<String,Object> params = new HashMap<>();
-            params.put("unitType",mec.getUnitType().toString());
-            List<Map<String,Object>> list=meterCollectService.getUnitInfo(params);
+            MeterCollect mec = meterCollectService.selectByPrimaryKey(id);
+            Map<String, Object> params = new HashMap<>();
+            params.put("unitType", mec.getUnitType().toString());
+            List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
             model.addAttribute("mec", mec);
-            model.addAttribute("uList",list);
+            model.addAttribute("uList", list);
         } catch (Exception e) {
             logger.error("跳转修改页异常" + e.getMessage());
         }
@@ -451,7 +458,8 @@ public class MeterCollectController {
     }
 
     /**
-     *计量仪器-预存
+     * 计量仪器-预存
+     *
      * @param model
      * @param id
      * @return
@@ -460,12 +468,12 @@ public class MeterCollectController {
     public String prestore(Model model, @PathVariable("id") String id) {
         logger.info("跳转计量仪器-预存页");
         try {
-            MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
-            Map<String,Object> params = new HashMap<>();
-            params.put("unitType",mec.getUnitType().toString());
-            List<Map<String,Object>> list=meterCollectService.getUnitInfo(params);
+            MeterCollect mec = meterCollectService.selectByPrimaryKey(id);
+            Map<String, Object> params = new HashMap<>();
+            params.put("unitType", mec.getUnitType().toString());
+            List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
             model.addAttribute("mec", mec);
-            model.addAttribute("uList",list);
+            model.addAttribute("uList", list);
         } catch (Exception e) {
             logger.error("跳转计量仪器-预存页异常" + e.getMessage());
         }
@@ -473,7 +481,8 @@ public class MeterCollectController {
     }
 
     /**
-     *计量仪器-换表
+     * 计量仪器-换表
+     *
      * @param model
      * @param id
      * @return
@@ -482,12 +491,12 @@ public class MeterCollectController {
     public String change(Model model, @PathVariable("id") String id) {
         logger.info("跳转计量仪器-换表页");
         try {
-            MeterCollect mec= meterCollectService.selectByPrimaryKey(id);
-            Map<String,Object> params = new HashMap<>();
-            params.put("unitType",mec.getUnitType().toString());
-            List<Map<String,Object>> list=meterCollectService.getUnitInfo(params);
+            MeterCollect mec = meterCollectService.selectByPrimaryKey(id);
+            Map<String, Object> params = new HashMap<>();
+            params.put("unitType", mec.getUnitType().toString());
+            List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
             model.addAttribute("mec", mec);
-            model.addAttribute("uList",list);
+            model.addAttribute("uList", list);
         } catch (Exception e) {
             logger.error("跳转计量仪器-换表页异常" + e.getMessage());
         }
@@ -495,12 +504,13 @@ public class MeterCollectController {
     }
 
     /**
-     *计量仪器-换表-计算能耗
+     * 计量仪器-换表-计算能耗
+     *
      * @return
      */
     @RequestMapping(value = "/change", method = RequestMethod.POST)
     @ResponseBody
-    public String change(RecordChange recordChange,HttpServletRequest request) {
+    public String change(RecordChange recordChange, HttpServletRequest request) {
         logger.info("计量仪器-换表-计算能耗开始");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Constants.SESSION_KEY);
@@ -509,7 +519,7 @@ public class MeterCollectController {
         try {
             recordChange.setCrestor(user.getId());
             int i = changeService.insert1(recordChange);
-            jo.put(Constants.FLAG, i>0);
+            jo.put(Constants.FLAG, i > 0);
             jo.put(Constants.MSG, "换表成功");
         } catch (Exception e) {
             logger.error("计量仪器-换表-计算能耗异常" + e.getMessage());
@@ -519,12 +529,13 @@ public class MeterCollectController {
     }
 
     /**
-     *计量仪器-预存-计算能耗
+     * 计量仪器-预存-计算能耗
+     *
      * @return
      */
     @RequestMapping(value = "/prestore", method = RequestMethod.POST)
     @ResponseBody
-    public String presotre(RecordPrestore recordChange,HttpServletRequest request) {
+    public String presotre(RecordPrestore recordChange, HttpServletRequest request) {
         logger.info("计量仪器-预存-计算能耗开始");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Constants.SESSION_KEY);
@@ -533,7 +544,7 @@ public class MeterCollectController {
         try {
             recordChange.setCrestor(user.getId());
             int i = prestoreService.insert(recordChange);
-            jo.put(Constants.FLAG, i>0);
+            jo.put(Constants.FLAG, i > 0);
             jo.put(Constants.MSG, "预存成功");
         } catch (Exception e) {
             logger.error("计量仪器-预存-计算能耗异常" + e.getMessage());
@@ -544,7 +555,7 @@ public class MeterCollectController {
 
     @RequestMapping(value = "/editvalue", method = RequestMethod.POST)
     @ResponseBody
-    public String editValue(MeterCollect meterCollect,HttpServletRequest request) {
+    public String editValue(MeterCollect meterCollect, HttpServletRequest request) {
         logger.info("修改计量器具");
 
         JSONObject jo = new JSONObject();
@@ -559,6 +570,7 @@ public class MeterCollectController {
         }
         return jo.toJSONString();
     }
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteMeter(@PathVariable("id") String id) {
@@ -576,19 +588,20 @@ public class MeterCollectController {
         }
         return jo.toJSONString();
     }
+
     @ResponseBody
     @RequestMapping(value = "/check/formula", method = RequestMethod.POST)
-    public String checkFormula(@RequestParam  String formula
-    ){
+    public String checkFormula(@RequestParam String formula
+    ) {
         JSONObject jo = new JSONObject();
         List<Object> arr = new ArrayList<Object>();
         List<String> list = StringUtils.paresCodes(formula);
-        for (int i = 0; i <list.size() ; i++) {
-            boolean flag =   meterCollectService.getFormulaByIsReal(list.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            boolean flag = meterCollectService.getFormulaByIsReal(list.get(i));
             arr.add(flag);
         }
         boolean result = arr.contains(true);
-        jo.put("result",result);
+        jo.put("result", result);
         return jo.toJSONString();
     }
 
