@@ -44,13 +44,11 @@ public class MeterCollectDataA implements Serializable{
 
         private Double coef;
 
-        private String isprestore;
-
         private String comId;
         private String len;
         private String s;
 
-    public MeterCollectDataA(String id, String code, String name,String collectTime, String energyType, String isreal, String istotal, String unitname, String isauto, String realFlag, String flag, String changeStatus, String prestorestatus, String num, String isChange, String isPrestore, String changeNum, String prestoreNum, Double coef, String isprestore,String comId,String len,String s) {
+    public MeterCollectDataA(String id, String code, String name,String collectTime, String energyType, String isreal, String istotal, String unitname, String isauto, String realFlag, String flag, String changeStatus, String prestorestatus, String num, String isChange, String isPrestore, String changeNum, String prestoreNum, Double coef, String comId,String len,String s) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -70,7 +68,6 @@ public class MeterCollectDataA implements Serializable{
         this.changeNum = changeNum;
         this.prestoreNum = prestoreNum;
         this.coef = coef;
-        this.isprestore = isprestore;
         this.comId=comId;
         this.len = len;
         this.s = s;
@@ -224,14 +221,6 @@ public class MeterCollectDataA implements Serializable{
 
     public void setCoef(Double coef) {
         this.coef = coef;
-    }
-
-    public String getIsprestore() {
-        return isprestore;
-    }
-
-    public void setIsprestore(String isprestore) {
-        this.isprestore = isprestore;
     }
 
     public String getComId() {
