@@ -218,9 +218,7 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         //时间段每小时集合
         List<String> dateTimes = DateUtils.getDateTimes(start, end);
 
-        finalDataHourService.saveVirtualDataHour(meterCollect,dateTimes,codes,company);
-
-        return true;
+        return finalDataHourService.saveVirtualDataHour(meterCollect,dateTimes,codes,company);
     }
 
 
