@@ -38,6 +38,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private MenuDao menuDao;
 
+    private final String  P_MENU_ID = "pMenuId";
+
 	/**
 	 * 分页查询用户信息
 	 */
@@ -286,15 +288,15 @@ public class UserServiceImpl implements UserService {
         //查询后台一级菜单
         paramsMap.put("menuType",1);
         paramsMap.put("id",id);
-        paramsMap.put("pMenuId",pMenuId);
+        paramsMap.put(P_MENU_ID,pMenuId);
         List<Map<String, Object>> afterMenus = userDao.selectMenusByUser(paramsMap);
         //查询二级菜单
         for (Map<String, Object> oneMap:afterMenus){
-            paramsMap.put("pMenuId",oneMap.get("id"));
+            paramsMap.put(P_MENU_ID,oneMap.get("id"));
             List<Map<String, Object>> oneMenus = userDao.selectMenusByUser(paramsMap);
             List<Map<String, Object>> oneMenusNew = new LinkedList<>();
             for(Map<String, Object> twoMap:oneMenus){
-                paramsMap.put("pMenuId",twoMap.get("id"));
+                paramsMap.put(P_MENU_ID,twoMap.get("id"));
                 List<Map<String, Object>> twoMenus = userDao.selectMenusByUser(paramsMap);
                 twoMap.put("menus",twoMenus);
                 oneMenusNew.add(twoMap);
@@ -349,16 +351,16 @@ public class UserServiceImpl implements UserService {
         paramsMap.clear();
         paramsMap.put("menuType",model.getMenuType());
         paramsMap.put("id",user.getId());
-        paramsMap.put("pMenuId",menu.getId());
+        paramsMap.put(P_MENU_ID,menu.getId());
         List<Map<String, Object>> afterMenus = userDao.selectMenusByUser(paramsMap);
         menus.addAll(afterMenus);
         //查询二级菜单
         for (Map<String, Object> oneMap:afterMenus){
-            paramsMap.put("pMenuId",oneMap.get("id"));
+            paramsMap.put(P_MENU_ID,oneMap.get("id"));
             List<Map<String, Object>> oneMenus = userDao.selectMenusByUser(paramsMap);
             menus.addAll(oneMenus);
             for(Map<String, Object> twoMap:oneMenus){
-                paramsMap.put("pMenuId",twoMap.get("id"));
+                paramsMap.put(P_MENU_ID,twoMap.get("id"));
                 List<Map<String, Object>> twoMenus = userDao.selectMenusByUser(paramsMap);
                 menus.addAll(twoMenus);
             }
