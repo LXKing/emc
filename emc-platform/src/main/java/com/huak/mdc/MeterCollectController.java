@@ -126,12 +126,12 @@ public class MeterCollectController {
                 }
 
             }
-            if (null != accessTmpFile) {
+/*            if (null != accessTmpFile) {
                 accessTmpFile.close();
             }
             if (null != accessConfFile) {
                 accessConfFile.close();
-            }
+            }*/
         } catch (Exception e) {
             jo.put(Constants.FLAG, false);
             logger.error("后台-计量器具导入异常:" + e);
