@@ -31,11 +31,15 @@
 <div class="main-box">
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
-            <!--<div class="clearfix row">-->
-            <div class="select-box col-xs-12 col-sm-4 col-md-2">
-                <input class="inputs-lg" id="collectName" name="collectName" type="text" placeholder="请输入器具名称"/>
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3" >
+                <div class="select-box col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label for="">表名称</label>
+                </div>
+                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
+                    <input class="inputs-lg" id="collectName" name="collectName" type="text" placeholder="请输入表名称"/>
+                </div>
             </div>
-            <div class="select-box col-xs-12 col-sm-4 col-md-3">
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">单位</label>
                 </div>
@@ -60,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="select-box col-xs-12 col-sm-4 col-md-3">
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">类型</label>
                 </div>
@@ -88,16 +92,20 @@
                     </div>
                 </div>
             </div>
-            <div class="select-box col-xs-12 col-sm-4 col-md-2">
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <label for=''>填报时间</label>
                 <input id="collectTime" name="collectTime" class="Wdate time-input" type="text" placeholder="填报时间"
                     onFocus=" WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss'});"
                         />
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-2">
-                <a class="btns btnsfl btns-lookin" style="cursor: pointer;" onclick="query(1)">查询</a>
-                <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick =resetDataTable()>重置</a>
+        </div>
+        <div class="sele-row clearfix row">
 
+            <div class="select-box col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            </div>
+            <div class="select-box col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <a class="btns btnsfl btns-lookin" style="cursor: pointer;" onclick="query(1)">筛选</a>
+                <a class="btns btnsfl btns-reset" style="cursor: pointer;" onclick =resetDataTable()>重置</a>
             </div>
         </div>
     </div>
@@ -113,7 +121,7 @@
             <thead>
             <tr>
                 <td width="4%">序号</td>
-                <td width="10%">
+                <td width="14%">
                     <div class="text-left">单位名称</div>
                 </td>
                 <td width="6%">
@@ -122,7 +130,7 @@
                 <td width="10%">
                     <div class="text-left">计量采集表名</div>
                 </td>
-                <td width="6%">
+                <td width="8%">
                     <div class="text-left">能源类型</div>
                 </td>
                 <td width="6%">
@@ -135,7 +143,7 @@
                     <div class="text-left">手/自动</div>
                 </td>
                 <td width="12%">创建时间<i class="icon-sort"></i></td>
-                <td width="6%">
+                <td width="10%">
                     <div class="text-left">表底</div>
                 </td>
                 <td width="4%">
@@ -144,15 +152,15 @@
                 <td width="6%">
                     <div class="text-left">换表</div>
                 </td>
-                <td width="6%">
+                <td width="8%">
                     <div class="text-left">换表表底</div>
                 </td>
-                <td width="6%">
-                    <div class="text-left">预存</div>
-                </td>
-                <td width="6%">
-                    <div class="text-left">预存值</div>
-                </td>
+                <%--<td width="6%">--%>
+                    <%--<div class="text-left">预存</div>--%>
+                <%--</td>--%>
+                <%--<td width="6%">--%>
+                    <%--<div class="text-left">预存值</div>--%>
+                <%--</td>--%>
             </tr>
             </thead>
             <tbody id="projectTbody">
@@ -211,12 +219,12 @@
         <td>
             <div class="text-left">{$T.record.changeNum}</div>
         </td>
-        <td>
-            <div class="text-left">{$T.record.prestorestatus}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.prestoreNum}</div>
-        </td>
+        <%--<td>--%>
+            <%--<div class="text-left">{$T.record.prestorestatus}</div>--%>
+        <%--</td>--%>
+        <%--<td>--%>
+            <%--<div class="text-left">{$T.record.prestoreNum}</div>--%>
+        <%--</td>--%>
     </tr>
     {#/for}
 </textarea>

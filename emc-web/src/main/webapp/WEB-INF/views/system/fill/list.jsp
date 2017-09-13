@@ -16,39 +16,11 @@
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
-            <div class="select-box col-xs-12 col-sm-2 col-md-2" >
-                <input class="inputs-lg" id="name" name="name" type="text" placeholder="请输入单位名称"/>
-            </div>
-            <div class="select-box col-xs-12 col-sm-3 col-md-2">
-                <div class="select-box col-xs-12 col-sm-4 col-md-2">
-                    <label for="">单位</label>
-                </div>
-                <div class="select-box col-xs-12 col-sm-4 col-md-2">
-                    <div class="select-box">
-                        <div class="clearfix h-selectbox">
-                            <div class="x-selectfree fl">
-                                <div class="x-sfbgbox">
-                                    <div class="x-sfleft1 x-sfw1">
-                                        <input type="text" value="请选择用能单位" readonly="readonly">
-                                    </div>
-                                    <div class="x-sfright1"></div>
-                                </div>
-                                <div class="x-sfoption1" id="x-sfoption1">
-                                    <c:forEach items="${unit}" var="item">
-                                        <p value="${item.unitId}">${item.unitName}</p>
-                                    </c:forEach>
-                                </div>
-                                <input id="unitName" name="unitName" type="hidden" value="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="select-box col-xs-12 col-sm-3 col-md-2">
-                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="select-box col-xs-1 col-sm-1 col-md-1 col-lg-1">
                     <label for="">类型</label>
                 </div>
-                <div class="select-box col-xs-12 col-sm-4 col-md-2">
+                <div class="select-box col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <div class="select-box">
                         <div class="clearfix h-selectbox">
                             <div class="x-selectfree fl">
@@ -72,17 +44,62 @@
                     </div>
                 </div>
             </div>
-
-            <div class="select-box col-xs-12 col-sm-4 col-md-4">
-                <label for="">时间</label>
-                <input id="startTime" name="startTime" class="Wdate time-input" type="text" placeholder="开始时间"
-                       onFocus="var endTime=$dp.$('endTime');WdatePicker({onpicked:function(){endTime.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'})"
-                        /> 至
-                <input id="endTime" name="endTime" class="Wdate time-input" type="text" placeholder="结束时间"
-                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}'})"
-                        />
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3" >
+                <div class="select-box col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label for="">表名称</label>
+                </div>
+                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
+                    <input class="inputs-lg" id="name" name="name" type="text" placeholder=" 请输入表名称"/>
+                </div>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-2">
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="select-box col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label for="">单位</label>
+                </div>
+                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
+                    <div class="select-box">
+                        <div class="clearfix h-selectbox">
+                            <div class="x-selectfree fl">
+                                <div class="x-sfbgbox">
+                                    <div class="x-sfleft1 x-sfw1">
+                                        <input type="text" value="请选择用能单位" readonly="readonly">
+                                    </div>
+                                    <div class="x-sfright1"></div>
+                                </div>
+                                <div class="x-sfoption1" id="x-sfoption1">
+                                    <c:forEach items="${unit}" var="item">
+                                        <p value="${item.unitId}">${item.unitName}</p>
+                                    </c:forEach>
+                                </div>
+                                <input id="unitName" name="unitName" type="hidden" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="select-box col-xs-1 col-sm-1 col-md-1  col-lg-1">
+                    <label for="">时间</label>
+                </div>
+                <div class="select-box col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <input id="startTime" name="startTime" class="Wdate time-input" type="text" placeholder="开始时间"
+                           onFocus="var endTime=$dp.$('endTime');WdatePicker({onpicked:function(){endTime.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'})"
+                            />
+                </div>
+                <div class="select-box col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <input id="endTime" name="endTime" class="Wdate time-input" type="text" placeholder="结束时间"
+                           onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}'})"
+                            />
+                </div>
+
+            </div>
+
+        </div>
+        <div class="sele-row clearfix row">
+
+            <div class="select-box col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            </div>
+            <div class="select-box col-xs-2 col-sm-2 col-md-2 col-lg-2">
                 <a class="btns btnsfl btns-lookin" href="javascript:void(0)" onclick="query(1)">查询</a>
                 <a class="btns btnsfl btns-reset" href="javascript:void(0)" onclick =reset()>重置</a>
             </div>
@@ -101,7 +118,7 @@
             <thead>
             <tr>
                 <td width="4%">序号</td>
-                <td width="12%">
+                <td width="14%">
                     <div class="text-left">单位名称</div>
                 </td>
                 <td width="10%">
@@ -122,25 +139,25 @@
                 <td width="6%">
                     <div class="text-left">手/自动</div>
                 </td>
-                <td width="9%">创建时间<i class="icon-sort"></i></td>
-                <td width="6%">
+                <td width="12%">创建时间<i class="icon-sort"></i></td>
+                <td width="8%">
                     <div class="text-left">表底</div>
                 </td>
                 <td width="6%">
                     <div class="text-left">系数</div>
                 </td>
-                <td width="6%">
+                <td width="4%">
                     <div class="text-left">换表</div>
                 </td>
                 <td width="6%">
                     <div class="text-left">换表表底</div>
                 </td>
-                <td width="5%">
-                    <div class="text-left">预存</div>
-                </td>
-                <td width="5%">
-                    <div class="text-left">预存值</div>
-                </td>
+                <%--<td width="5%">--%>
+                    <%--<div class="text-left">预存</div>--%>
+                <%--</td>--%>
+                <%--<td width="5%">--%>
+                    <%--<div class="text-left">预存值</div>--%>
+                <%--</td>--%>
                 <td width="12%">
                     <div>操作</div>
                 </td>
@@ -220,14 +237,14 @@
         <td>
             <div class="text-left">{$T.record.changeNum}</div>
         </td>
-        <td>
-            <div class="text-left">{$T.record.prestorestatus}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.prestoreNum}</div>
-        </td>
+        <%--<td>--%>
+            <%--<div class="text-left">{$T.record.prestorestatus}</div>--%>
+        <%--</td>--%>
+        <%--<td>--%>
+            <%--<div class="text-left">{$T.record.prestoreNum}</div>--%>
+        <%--</td>--%>
         <td >
-            <div ><a href="javascript:void(0)" class="operationbtn {#if $T.record.realFlag == 0}icon-edit{#/if}"></a>
+            <div ><a href="javascript:void(0)" title="修改历史表底" class="operationbtn {#if $T.record.realFlag == 0}icon-edit{#/if}"></a>
             </div>
         </td>
     </tr>
