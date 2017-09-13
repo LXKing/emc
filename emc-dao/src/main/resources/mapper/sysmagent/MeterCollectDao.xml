@@ -66,7 +66,6 @@
             <arg column="CHANGENUM" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="PRESTORENUM" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="COEF" javaType="java.lang.Double" jdbcType="DOUBLE" />
-            <arg column="ISPRESTORE" javaType="java.lang.String" jdbcType="TINYINT" />
             <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="len" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="s" javaType="java.lang.String" jdbcType="VARCHAR" />
