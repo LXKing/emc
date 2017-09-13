@@ -27,6 +27,8 @@ function loadDataFun() {
         var num = Number($this.val());
         //console.log(num);
         if(num != value){
+            //显示保存按钮
+            $("#data-save").show();
             // 修改标记
             var $flag = $td.parent('tr').find('input[name="flag"]');
             var $id = $td.parent('tr').find('input[name="id"]');
@@ -93,6 +95,7 @@ function query(num){
     });
 }
 function dataSave (){
+    $("#data-save").hide();
 //    if(dataMap.size()>0){
 //        top.layer.alert("填完再保存！");
 //        return ;
@@ -107,6 +110,7 @@ function dataSave (){
         data:data,            //将Json对象序列化成Json字符串，toJSON()需要引用jquery.json.min.js
         success: function(data){
             if(data == "1"){
+                $("#data-save").show();
                 top.layer.alert("数据填报失败！");
             }
             if(data == "0"){

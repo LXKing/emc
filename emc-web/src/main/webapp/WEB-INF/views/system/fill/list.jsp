@@ -108,7 +108,7 @@
 
     <div class="col-xs-12 btngroups   ">
         <a class="btns btnsfl btns-green" href="javascipt:;"  onclick="openPage('${web}/data/fill/add')" >数据填报</a>
-        <a class="btns btnsfl btns-green" href="javascript:void(0)" onclick="dataSave()" >保存</a>
+        <a class="btns btnsfl btns-green" href="javascript:void(0)" id="data-save" onclick="dataSave()" style="display: none" >保存</a>
 
     </div>
 
