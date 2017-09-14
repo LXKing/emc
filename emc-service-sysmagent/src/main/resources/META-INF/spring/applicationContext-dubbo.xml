@@ -140,5 +140,13 @@
     <dubbo:service interface="com.huak.prst.ChangeService" ref="changeService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="indexTypeService" class="com.huak.sys.IndexTypeServiceImpl"></bean>
+    <dubbo:service interface="com.huak.sys.IndexTypeService" ref="indexTypeService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="indexRecordService" class="com.huak.health.IndexRecordServiceImpl"></bean>
+    <dubbo:service interface="com.huak.health.IndexRecordService" ref="indexRecordService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
 </beans>
