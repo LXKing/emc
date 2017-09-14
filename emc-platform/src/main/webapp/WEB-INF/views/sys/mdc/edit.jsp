@@ -182,34 +182,36 @@ $(function () {
     var $form = $(top.document).find("#MeterCollectEditForm");
 
     $(top.document).find(".chosen-select").on('change', function () {
-        alert($(this).val());
+        //alert($(this).val());
         getType($(this).val());
     });
 
-
             //0-实表-预存  1-虚表-公式
-            var html='<div  class="form-group">'+
-                     '<label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">'+
-                     '<span class="red"></span>公式：</label>'+
-                     '<div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">'+
-                    '<input name="formula" id="formula" class="form-control" type="text" value="${mec.formula}" maxlength="16" placeholder="请输入公式">'+
-                    '</div>'+'</div>';
 
+            var html='<div  class="form-group">'+
+                    '<label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">'+
+                    '<span class="red"></span>公式：</label>'+
+                    '<div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">'+
+                    '<input name="formula" id="formula" class="form-control" type="text" value="${mec.formula}" maxlength="120" placeholder="请输入公式">'+
+                    '<div><button class="btnFun" type="button">+</button><button type="button" class="btnFun">-</button>' +
+                    '<button type="button" class="btnFun">×</button><button type="button" class="btnFun">÷</button>' +
+                    '<button type="button" class="btnFun">(</button><button type="button" class="btnFun">)</button></div>'+
+                    '</div>'+'</div>';
             $(top.document).find("#gongshi").html(html);
 
 
-            var html='<div  class="form-group">'+
-                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
-                    '<div class="col-sm-8">'+
-                    '<select name="isprestore" id="isprestore" class="chosen-select form-control">'+
-                    '<option value="">请选择类型</option>'+
-                    '<option <c:if test="${mec.isprestore eq 0}">selected="selected" </c:if> value="0">不是</option>'+
-                    '<option <c:if test="${mec.isprestore eq 1}">selected="selected" </c:if> value="1">是</option>'+
-                    '</select>'+
-                    '</div>'+'</div>';
+            <%--var html='<div  class="form-group">'+--%>
+                    <%--'<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+--%>
+                    <%--'<div class="col-sm-8">'+--%>
+                    <%--'<select name="isprestore" id="isprestore" class="chosen-select form-control">'+--%>
+                    <%--'<option value="">请选择类型</option>'+--%>
+                    <%--'<option <c:if test="${mec.isprestore eq 0}">selected="selected" </c:if> value="0">不是</option>'+--%>
+                    <%--'<option <c:if test="${mec.isprestore eq 1}">selected="selected" </c:if> value="1">是</option>'+--%>
+                    <%--'</select>'+--%>
+                    <%--'</div>'+'</div>';--%>
 
-            $(top.document).find("#yucun").html(html);
-            $(top.document).find("#isprestore").chosen();
+            <%--$(top.document).find("#yucun").html(html);--%>
+            <%--$(top.document).find("#isprestore").chosen();--%>
 
     $(top.document).find("#isreal").on('change', function () {
         var real = $(this).val();
@@ -219,24 +221,64 @@ $(function () {
                     '<label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label">'+
                     '<span class="red"></span>公式：</label>'+
                     '<div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">'+
-                    '<input name="formula" id="formula" class="form-control" type="text" maxlength="16" placeholder="请输入公式">'+
+                    '<input name="formula" id="formula" class="form-control" type="text" value="" maxlength="120" placeholder="请输入公式">'+
+                    '<div><button class="btnFun" type="button">+</button><button type="button" class="btnFun">-</button>' +
+                    '<button type="button" class="btnFun">×</button><button type="button" class="btnFun">÷</button>' +
+                    '<button type="button" class="btnFun">(</button><button type="button" class="btnFun">)</button></div>'+
                     '</div>'+'</div>';
             $(top.document).find("#yucun").html("");
             $(top.document).find("#gongshi").html(html);
         }
-        if(real==0){
-            var html='<div  class="form-group">'+
-                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
-                    '<div class="col-sm-8">'+
-                    '<select name="isprestore" id="isprestore" class="chosen-select form-control">'+
-                    '<option value="">请选择类型</option>'+
-                    '<option value="0">不是</option>'+
-                    '<option value="1">是</option>'+
-                    '</select>'+
-                    '</div>'+'</div>';
-            $(top.document).find("#gongshi").html("");
-            $(top.document).find("#yucun").html(html);
-            $(top.document).find("#isprestore").chosen();
+//        if(real==0){
+//            var html='<div  class="form-group">'+
+//                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
+//                    '<div class="col-sm-8">'+
+//                    '<select name="isprestore" id="isprestore" class="chosen-select form-control">'+
+//                    '<option value="">请选择类型</option>'+
+//                    '<option value="0">不是</option>'+
+//                    '<option value="1">是</option>'+
+//                    '</select>'+
+//                    '</div>'+'</div>';
+//            $(top.document).find("#gongshi").html("");
+//            $(top.document).find("#yucun").html(html);
+//            $(top.document).find("#isprestore").chosen();
+//        }
+    });
+
+    $(top.document).delegate(".btnFun",'click', function () {
+        //alert($(this).text());
+        var value = $(this).text();
+        var v = $(top.document).find("#formula").val();
+
+        if(v==''||v==null){
+            top.layer.msg("请填写公式");
+            return false;
+        }else {
+            //alert(v+$(this).text());
+            var reg = /^[(A\d{5})\.\+\-\×\÷]+$/;
+            //alert(v);
+            if (!reg.test(v)) {
+                top.layer.msg("请输入正确的公式，该不合法!");
+                return false;
+            }else{
+                $.ajax({
+                    url: _platform + '/meterCollect/check/formula',
+                    type: 'POST',
+                    async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                    data: {formula:v},
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.result) {
+                            top.layer.msg("请输入正确的公式!");
+                            return false;
+                        } else {
+                            $(top.document).find("#formula").val(v+value);
+                        }
+                    }
+                });
+
+            }
         }
     });
     $.validator.addMethod("checkName", function (value, element) {
@@ -453,7 +495,7 @@ $(function () {
 
 function getType(type){
 
-    alert(type);
+    //alert(type);
     $.ajax({
         url: _platform + '/meterCollect/unit',
         type: 'POST',

@@ -23,12 +23,12 @@
         <div class="col-lg-12 mb14  ">
             <div class=" index_contentBox clearfix">
                 <div class="titbox clearfix no-padding no-margin">
-                    <div class="pull-left groupEnergyTit energyTit"><i></i>集团总单耗<small class="font-sm">Energy Monitoring</small></div>
+                    <div class="pull-left groupEnergyTit energyTit"><i></i>总单耗<small class="font-sm">Energy Monitoring</small></div>
                 </div>
                 <div class="groupEnergy-box col-lg-12  clearfix">
                     <div class="chart-box groupEnergy-chart col-lg-10 ">
                         <div class="cb-header">
-                            <span class="cb-title">集团总单耗 (单位: Tce/m²)</span>
+                            <span class="cb-title">总单耗 (单位: Tce/m²)</span>
                             <div class="cb-title-right" style="margin-right: 36px;">
                                 <label>
                                     <span class="cb-legend-blue"></span>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="groupEnergy-info col-lg-2 ">
                         <h3 id="groupTotal" class="groupTotal"><!--760.4--></h3>
-                        <div class="small">集团总单耗 (Tce/m²)</div>
+                        <div class="small">总单耗 (Tce/m²)</div>
                         <h4 id="groupchangeRate" class="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                         <div class="small">同比去年 (%)</div>
                     </div>

@@ -20,7 +20,7 @@
                     <label class="col-sm-3  control-label"><span class="red">*</span>供热单位类型：</label>
 
                     <div class="col-sm-8">
-                        <select id="unitType" name="unitType" class="chosen-select form-control">
+                        <select id="unitType" name="unitType" class="chosen-select unittype-select form-control">
                             <c:forEach items="${sysDic['orgType']}" var="type">
                                 <option value="${type.seq}">${type.des}</option>
                             </c:forEach>
@@ -65,7 +65,7 @@
                     <label class="col-sm-3  control-label"><span class="red">*</span>能源类型：</label>
 
                     <div class="col-sm-8">
-                        <select id="energyTypeId" name="energyTypeId" class="chosen-select form-control">
+                        <select id="energyTypeId" name="energyTypeId" class="chosen-select  form-control">
                             <option value="">请选择类型</option>
                             <c:forEach items="${sysDic['energyType']}" var="type">
                                 <option value="${type.seq}">${type.des}</option>
@@ -184,9 +184,14 @@ $(function () {
 
     var unittype = $(top.document).find("#unitType").find("option:selected").val();
         getType(unittype);
-    $(top.document).find(".chosen-select").on('change', function () {
-        getType($(this).val());
+//    $(top.document).find(".unittype-select").on('change', function () {
+//        getType($(this).val());
+//    });
+    $(top.document).find(".unittype-select").chosen().on('change',function () {
+        var unittype = $(top.document).find("#unitType").find("option:selected").val();
+        getType(unittype);
     });
+
     $(top.document).find("#isreal").on('change', function () {
         var real = $(this).val();
         if(real==1){
@@ -203,32 +208,57 @@ $(function () {
             $(top.document).find("#yucun").html("");
             $(top.document).find("#gongshi").html(html);
         }
-        if(real==0){
-            var html='<div  class="form-group">'+
-                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
-                    '<div class="col-sm-8">'+
-                    '<select name="isprestore" id="isprestore" class="chosen-select form-control">'+
-                    '<option value="">请选择类型</option>'+
-                    '<option value="0">不是</option>'+
-                    '<option value="1">是</option>'+
-                    '</select>'+
-                    '</div>'+'</div>';
-            $(top.document).find("#gongshi").html("");
-            $(top.document).find("#yucun").html(html);
-        }
+//        if(real==0){
+//            var html='<div  class="form-group">'+
+//                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
+//                    '<div class="col-sm-8">'+
+//                    '<select name="isprestore" id="isprestore" class="chosen-select form-control">'+
+//                    '<option value="">请选择类型</option>'+
+//                    '<option value="0">不是</option>'+
+//                    '<option value="1">是</option>'+
+//                    '</select>'+
+//                    '</div>'+'</div>';
+//            $(top.document).find("#gongshi").html("");
+//            $(top.document).find("#yucun").html(html);
+//        }
     });
 
     $(top.document).delegate(".btnFun",'click', function () {
         //alert($(this).text());
+        var value = $(this).text();
         var v = $(top.document).find("#formula").val();
+
         if(v==''||v==null){
             top.layer.msg("请填写公式");
             return false;
-        }else{
+        }else {
             //alert(v+$(this).text());
-            $(top.document).find("#formula").val(v+$(this).text());
-        }
-    });
+            var reg = /^[(A\d{5})\.\+\-\×\÷]+$/;
+            //alert(v);
+            if (!reg.test(v)) {
+                top.layer.msg("请输入正确的公式，该不合法!");
+                return false;
+            }else{
+                $.ajax({
+                url: _platform + '/meterCollect/check/formula',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {formula:v},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if (data.result) {
+                        top.layer.msg("请输入正确的公式!");
+                        return false;
+                    } else {
+                        $(top.document).find("#formula").val(v+value);
+                    }
+                }
+            });
+
+         }
+      }
+   });
 
     $.validator.addMethod("checkName", function (value, element) {
         var name = $(top.document).find('#name').val();
@@ -294,31 +324,33 @@ $(function () {
         return deferred.state() == "resolved" ? true : false;
     }, "出场编号已存在");
     // 校验公式
-    $.validator.addMethod("checkFormula", function(value, element) {
-        var deferred = $.Deferred();//创建一个延迟对象
-        var reg=/^[(A\d{5})\.\+\-\×\÷]+$/;
-        if(!reg.test(value)){
-            //top.layer.msg("请输入数字!");
-            return false;
-        }else{
-
-            $.ajax({
-                url: _platform + '/meterCollect/check/formula',
-                type: 'POST',
-                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {formula:value},
-                dataType: 'json',
-                success: function (data) {
-                    if (data.result) {
-                        return false;
-                    } else {
-                        top.layer.msg("ok!");
-                        return true;
-                    }
-                }
-            });
-        }
-    }, "请输入正确的公式");
+//    $.validator.addMethod("checkFormula", function(value, element) {
+//        var deferred = $.Deferred();//创建一个延迟对象
+//        var reg=/^[(A\d{5})\.\+\-\×\÷]+$/;
+//        if(!reg.test(value)){
+//            //top.layer.msg("请输入数字!");
+//            return false;
+//        }else{
+//
+//            $.ajax({
+//                url: _platform + '/meterCollect/check/formula',
+//                type: 'POST',
+//                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+//                data: {formula:value},
+//                dataType: 'json',
+//                success: function (data) {
+//                    console.log(data);
+//                    if (data.result) {
+//                        return false;
+//                    } else {
+//                        top.layer.msg("ok!");
+//                        deferred.resolve();
+//                        return true;
+//                    }
+//                }
+//            });
+//        }
+//    }, "请输入正确的公式");
     $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
         $(this).closest('.form-group').removeClass('has-error');
         $(this).siblings('.help-block').remove();
@@ -388,8 +420,7 @@ $(function () {
                 required:true
             },
             formula: {
-                required:true,
-                checkFormula:true
+                required:true
             }
         },
         messages: {
@@ -459,13 +490,14 @@ function getType(type){
         url: _platform + '/meterCollect/unit',
         type: 'POST',
         dataType: 'json',
-        data:{unitType:type},
+        data:{unitType:type,comId:$(top.document).find(".chosen-select").find("option:selected").val()},
         success: function (result) {
             var data = result.list;
             var optionHtml='';
             for(var i =0;i<data.length;i++){
                 optionHtml+='<option value="'+data[i].unitId+'">'+data[i].unitName+'</option>'
             }
+            debugger;
             $(top.document).find(".chosen-select-unit").append(optionHtml);
             //下拉框js
             $(top.document).find(".chosen-select-unit").chosen();

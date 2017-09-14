@@ -28,16 +28,16 @@
                         <input type="hidden" id="orgId" name="orgId" value="">
                         <input type="hidden" id="comId"  name="comId" value="">
                         <div class="row">
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">计量代码</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" id="code" name="code" placeholder="请输入计量代码">
+                                        <input type="text" class="form-control" id="code" name="code" placeholder="请输入代码">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row1">
-                                <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                            <div>
+                                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">名称</label>
                                         <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">能源类型</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -59,7 +59,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">单位类型</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -72,7 +74,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+
+
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">实虚表</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -84,7 +88,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">总表</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -97,7 +101,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                            </div>
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">自动采集</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -109,17 +115,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row1">
-                                <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+
+                                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">点表</label>
+                                        <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">采集点</label>
                                         <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
                                             <input type="text" class="form-control" id="tag" name="tag" placeholder="请输入点表">
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+
+                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">预存</label>
                                     <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
@@ -131,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            </div>
                             <div class="row">
                                 <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
                                     <c:if test="${sessionScope._auth['meterCollectAdd']}">
@@ -161,10 +167,9 @@
 
                                 </div>
                                 </div>
-                            </div>
 
-                        </div>
                     </form>
+
                     <div class="example">
                         <table id="meter-table-list">
                         </table>

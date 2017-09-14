@@ -236,27 +236,39 @@ function initable() {
             {
                 title: '点表',
                 field: 'tag',
-                align: 'center'
+                align: 'center',
+                formatter: function (value, row, index) {
+                    if (value.length > 6) {
+                        return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
+                    }
+                    return value;
+                }
             },
             {
                 title: '公式',
                 field: 'formula',
-                align: 'center'
-            },
-            {
-                title: '预存',
-                field: 'isprestore',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    if (value == '0') {
-                        return '不是';
+                    if (value.length > 6) {
+                        return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
                     }
-                    if (value == '1') {
-                        return '是 ';
-                    }
-                    return '';
+                    return value;
                 }
             },
+//            {
+//                title: '预存',
+//                field: 'isprestore',
+//                align: 'center',
+//                formatter: function (value, row, index) {
+//                    if (value == '0') {
+//                        return '不是';
+//                    }
+//                    if (value == '1') {
+//                        return '是 ';
+//                    }
+//                    return '';
+//                }
+//            },
             {
                 title: '删除标识',
                 field: 'isdelete',
@@ -297,10 +309,10 @@ function initable() {
                     }
                     if ($("#meterCollectDelete").val()) {
                         if (row.isreal == '0') {
-                            html += '<a title="换表" class="btn btn-xs btn-info " onclick="changeMeter(&quot;' + row.id + '&quot;)"> <i class="fa fa-edit"></i></a>&nbsp;';
-                            if(row.isprestore == '1' ){
-                                html += '<a title="预存" class="btn btn-xs btn-info" onclick="prestoreMeter(&quot;' + row.id + '&quot;)"> <i class="fa fa-edit"></i></a>&nbsp;';
-                            }
+                            html += '<a title="换表" class="btn btn-xs btn-info " onclick="changeMeter(&quot;' + row.id + '&quot;)"> <i class="fa  fa-magic"></i></a>&nbsp;';
+//                            if(row.isprestore == '1' ){
+//                                html += '<a title="预存" class="btn btn-xs btn-info" onclick="prestoreMeter(&quot;' + row.id + '&quot;)"> <i class="fa fa-edit"></i></a>&nbsp;';
+//                            }
                         }
                     }
                     return html;

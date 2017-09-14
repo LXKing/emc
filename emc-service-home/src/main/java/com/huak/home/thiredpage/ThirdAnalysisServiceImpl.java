@@ -283,7 +283,14 @@ public class ThirdAnalysisServiceImpl implements ThirdAnalysisService {
 
     @Override
     public List<Map<String, Object>> getFgsDhDetailTq(Map<String, Object> map) {
-        return thirdAnalysisDao.getFgsDh(map);
+        List<Map<String, Object>> list = thirdAnalysisDao.getFgsDhTq(map);
+        for (int i = 0; i <list.size() ; i++) {
+             if(list.size()<=1){
+                 list.clear();
+             }
+            list.clear();
+        }
+        return list;
     }
 
     @Override
