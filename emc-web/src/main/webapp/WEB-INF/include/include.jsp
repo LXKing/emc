@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%--图标--%>
 <link rel="shortcut icon" href="${web}/static/favicon.ico">
-
+<link href="${web}/static/css/chosen/chosen.css" rel="stylesheet">
 <!-- bootstrap & fontawesome -->
+
 <link rel="stylesheet" href="${web}/static/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${web}/static/assets/css/font-awesome.css" />
 
@@ -40,11 +41,13 @@
 <script src="${web}/static/js/Bsie/selectivizr.js"></script>
 <![endif]-->
 <script src="${web}/static/js/jquery/jquery.min.js"></script>
+<script src="${web}/static/js/validate/jquery.validate.min.js"></script>
 <script src="${web}/static/js/echarts/echarts3/echarts.min.js"></script>
 <script src="${web}/static/js/echarts/echarts3/dist/ecStat.js"></script>
 <script src="${web}/static/assets/js/bootstrap.min.js"></script>
 <script src="${web}/static/js/My97DatePicker/WdatePicker.js"></script>
-
+<%--chosen--%>
+<script src="${web}/static/js/chosen/chosen.jquery.js"></script>
 
 
 <script src="${web}/static/js/navscript.js"></script>

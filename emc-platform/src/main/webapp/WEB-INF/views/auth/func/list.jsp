@@ -33,6 +33,9 @@
                                 <c:if test="${sessionScope._auth['funcAdd']}">
                                 <button type="button" class="btn btn-sm btn-info" onclick="addFunc()"><i class="fa fa-plus"></i>添加</button>
                                 </c:if>
+                                <c:if test="${sessionScope._auth['funcCache']}">
+                                    <button type="button" class="btn btn-sm btn-info" onclick="cache()"><i class="fa fa-spinner"></i>缓存</button>
+                                </c:if>
                                 <input type="hidden" id="funcUpdate" value="${sessionScope._auth['funcUpdate']}">
                                 <input type="hidden" id="funcDelete" value="${sessionScope._auth['funcDelete']}">
                             </div>

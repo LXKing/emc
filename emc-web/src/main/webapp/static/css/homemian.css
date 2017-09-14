@@ -8,7 +8,11 @@ body {
     color: #666;
     font-size: 12px
 }
-
+#header,
+#footer{
+    position: relative;
+    z-index: 10;
+}
 #header,
 #footer,
 .main-container,
@@ -172,7 +176,7 @@ input {
 
 .redtips {
     color: #d4513b;
-    ;
+;
 }
 
 .redtipspad {
@@ -2520,9 +2524,150 @@ input {
 .ztree li span.button.ico_docu{
     background:url(../img/backstage-file.png) no-repeat center center;
 }
-/*.ztree li a{ */
-    /*height: 27px;*/
-/*}*/
+.ztree li a{
+    height: 27px;
+}
 .ztree li span.button.center_docu,.ztree li span.button.bottom_docu{
     background:none;
+}
+.publicmenu{
+    width:196px;
+    position: fixed;
+    height: 100%;
+    box-sizing: border-box;
+    top:0px;
+    left:0px;
+    padding-top: 64px;
+    background: #39414e;
+    z-index:9;
+}
+.publicmenu div{
+    height: 44px;
+    line-height: 44px;
+    padding-left:15px;
+    border-bottom:1px solid #495260;
+    color: #d5e7ff;
+}
+.publicmenu ul{
+    list-style: none;
+    padding: 0;
+    margin:0;
+}
+
+.publicmenu ul li{
+    height: 44px;
+    line-height: 44px;
+    padding:0px;
+    margin:0;
+    position: relative;
+
+}
+.publicmenu ul li.more{
+    background-repeat: no-repeat;
+    background-position: 182px center;
+    background-image: url(../img/s1.png)  ;
+}
+.publicmenu ul li.more:hover,
+.publicmenu ul li.active.more{
+    background-image: url(../img/s2.png);
+}
+
+.publicmenu ul li a{
+    display: block;
+    color:#fff;
+    background-color: transparent;
+    margin-left:17px;
+    border-bottom:1px solid #495260;
+    cursor: pointer;
+}
+.publicmenu ul li.active,
+.publicmenu ul li:hover {
+    background-color: #fff;
+}
+.publicmenu ul li:hover a,
+.publicmenu ul li.active a{
+    border-bottom: none;
+    color: #8b93a0;
+}
+.publicmenu ul li:hover  ul{
+    display: block;
+}
+.publicmenu ul li  ul{
+    display: none;
+    position: absolute;
+    width:170px;
+    left: 196px;
+    top:0px;
+}
+
+.publicmenu ul li ul{
+    background-color: #39414e;
+}
+.publicmenu ul li ul li{
+
+}
+.publicmenu ul li ul li a,
+.publicmenu ul li.active ul li a{
+    display: block;
+    color:#fff;
+    background-color: transparent;
+    border-bottom:1px solid #495260;
+}
+.publicmenu ul li ul li.active{
+
+}
+.publicmenu ul li ul li:hover a,
+.publicmenu ul li ul li.active a{
+    background-color: #fff;
+    color: #8b93a0;
+    border-bottom: none;
+}
+.publicmenu .scbtn{
+    position: absolute;
+    left: 196px;
+    top:70px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    width:11px;
+    height: 31px;
+    display: block;
+    background-image: url(../img/ss1.png);
+}
+.publicmenu .scbtn.close{
+    background-image: url(../img/ss2.png);
+    opacity: 1;
+}
+
+.ztree li span.button.chk.checkbox_true_full,
+.ztree li span.button.chk.checkbox_true_full_focus{
+    background-image: url(../img/shensegou.png);
+    background-position: center center;
+    width:14px;
+    height:14px;
+}
+.grouplist-wrap{
+
+}
+.grouplist-wrap label{
+    float:left;
+}
+.grouplist{
+    position: relative;
+    width: 176px;
+    float: left;
+}
+.grouplist input{
+    width: 100% !important;
+}
+.grouplist > ul{
+    display: none;
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    border-left: 1px solid #dfe0e1;
+    border-right: 1px solid #dfe0e1;
+    border-bottom: 1px solid #dfe0e1;
+    height: 200px;
+    overflow-y: auto;
+    z-index: 999;
 }

@@ -50,4 +50,6 @@ public interface OrgService {
     List<Map<String, Object>> selectFeedByid(String orgId);
 
     List<Map<String, Object>> selectStationByid(String orgId);
+
+    List<Map<String, Object>> selectViewByMap(Map<String, Object> paramsMap);
 }

@@ -177,4 +177,10 @@ public class OrgServiceImpl implements OrgService {
         paramsMap.put("orgId",orgId);
         return nodeDao.selectStationByMap(paramsMap);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectViewByMap(Map<String, Object> paramsMap) {
+        return orgDao.selectViewByMap(paramsMap);
+    }
 }

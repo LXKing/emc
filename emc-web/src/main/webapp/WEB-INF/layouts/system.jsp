@@ -64,6 +64,27 @@
     </script>
 </head>
 <body>
+<%-- 菜单 --%>
+<%--<div class="publicmenu">--%>
+    <%--<div>当前页面</div>--%>
+    <%--<ul>--%>
+        <%--<li><a>二级目录A</a></li>--%>
+        <%--<li><a>二级目录A</a></li>--%>
+        <%--<li class="active more"><a>二级目录A</a>--%>
+            <%--<ul>--%>
+                <%--<li><a href="#">三级目录</a></li>--%>
+                <%--<li class="active"><a href="#">三级目录</a></li>--%>
+                <%--<li><a href="#">三级目录</a></li>--%>
+                <%--<li><a href="#">三级目录</a></li>--%>
+                <%--<li><a href="#">三级目录</a></li>--%>
+            <%--</ul>--%>
+        <%--</li>--%>
+        <%--<li><a>二级目录A</a></li>--%>
+        <%--<li><a>二级目录A</a></li>--%>
+        <%--<li><a>二级目录A</a></li>--%>
+    <%--</ul>--%>
+<%--</div>--%>
+
 <%@include file="/WEB-INF/include/header.jsp" %>
 <div class="main-container">
     <div class="clearfix row no-margin index_header">

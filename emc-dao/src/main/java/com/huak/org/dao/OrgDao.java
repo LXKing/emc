@@ -30,4 +30,6 @@ public interface OrgDao {
     List<Map<String,Object>> selectOrgTree(Map<String, Object> paramsMap);
 
     void updateOrgPid(String comId);
+
+    List<Map<String,Object>> selectViewByMap(Map<String, Object> paramsMap);
 }

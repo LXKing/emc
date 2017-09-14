@@ -92,7 +92,7 @@ public class FuncController {
             jo.put(Constants.FLAG ,true);
             jo.put(Constants.MSG ,"修改功能成功");
             //重新加载缓存
-            menuAware.afterPropertiesSet();
+            //menuAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("修改功能异常" + e.getMessage());
             jo.put(Constants.MSG ,"修改功能失败");
@@ -124,7 +124,7 @@ public class FuncController {
             jo.put(Constants.FLAG ,true);
             jo.put(Constants.MSG ,"添加功能成功");
             //重新加载缓存
-            menuAware.afterPropertiesSet();
+            //menuAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("添加功能异常" + e.getMessage());
             jo.put(Constants.MSG ,"添加功能失败");
@@ -148,7 +148,7 @@ public class FuncController {
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "删除功能成功");
             //重新加载缓存
-            menuAware.afterPropertiesSet();
+            //menuAware.afterPropertiesSet();
         } catch (Exception e) {
             logger.error("删除功能异常" + e.getMessage());
             jo.put(Constants.MSG, "删除功能失败");
@@ -203,6 +203,27 @@ public class FuncController {
             }
         }catch (Exception e){
             logger.error("功能查询唯一性校验异常"+e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/cache",method = RequestMethod.POST)
+    @ResponseBody
+    public String cache(){
+        logger.info("刷新缓存");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            //重新加载缓存
+            menuAware.afterPropertiesSet();
+
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "刷新缓存成功");
+
+        } catch (Exception e) {
+            logger.error("刷新缓存异常" + e.getMessage());
+            jo.put(Constants.MSG, "刷新缓存失败");
         }
         return jo.toJSONString();
     }

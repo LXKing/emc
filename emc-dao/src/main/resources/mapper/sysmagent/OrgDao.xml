@@ -180,4 +180,16 @@
         AND t.P_ORG_ID!=0
 
     </update>
+
+    <select id="selectViewByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT u.UNITID,u.UNITNAME FROM (SELECT * FROM t_emc_org WHERE COM_ID=#{comId}
+        <if test="orgId != null and orgId !=''">
+            AND  FIND_IN_SET(ID, emc_func_org_getchilds(#{orgId}))
+        </if>
+        ) a, v_emc_unit u
+        WHERE a.id=u.ORGID
+        <if test="unitType != null and unitType !=''">
+            AND  u.UNITTYPE=#{unitType}
+        </if>
+    </select>
 </mapper>

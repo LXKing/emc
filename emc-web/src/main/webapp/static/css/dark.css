@@ -1530,3 +1530,61 @@
     border: 1px solid #3c6275;
     color:#fff
 }
+
+.facedark .publicmenu{
+    background: #132430;
+    border-right: 1px solid #33fff8;
+}
+.facedark .publicmenu div{
+    color: #ffffff;
+}
+.facedark .publicmenu ul li.more{
+    background-image: url(../imgdark/s2.png)  ;
+}
+.facedark .publicmenu ul li.more:hover,
+.facedark .publicmenu ul li.active.more{
+    background-image: url(../imgdark/s1.png);
+}
+.facedark .publicmenu ul li.active,
+.facedark .publicmenu ul li:hover {
+    background-color: #092b36;
+}
+
+.facedark .publicmenu ul li ul li:hover a,
+.facedark .publicmenu ul li ul li.active a{
+    background-color: #092b36;
+    color: #fff;
+}
+.facedark .publicmenu ul li a{
+    display: block;
+    color:#618292;
+
+}
+.facedark .publicmenu ul li:hover a,
+.facedark .publicmenu ul li.active a{
+    color:#fff;
+}
+.facedark .publicmenu ul li  ul li a{
+    color:#618292 !important;
+}
+.facedark .publicmenu ul li ul li:hover a,
+.facedark .publicmenu ul li ul li.active a{
+    color:#fff !important;
+}
+
+.facedark .publicmenu .scbtn{
+    background-image: url(../imgdark/ss1.png);
+}
+.facedark .publicmenu .scbtn.close{
+    background-image: url(../imgdark/ss2.png);
+    opacity: 1;
+}
+.facedark .ztree li span.button.chk.checkbox_true_full{
+    background-image: url(../imgdark/shensegou.png);
+}
+.facedark .grouplist > ul{
+    background: #071d2a;
+    border-left: 1px solid #21404e;
+    border-right: 1px solid #21404e;
+    border-bottom: 1px solid #21404e;
+}

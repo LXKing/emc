@@ -144,6 +144,26 @@ function addFunc() {
     openLayer(url,"添加功能","funcAddForm");
 }
 
+function cache(){
+    var index = top.layer.load(1, {
+        shade: [0.1, '#fff'] //0.1透明度的白色背景
+    });
+    $.ajax({
+        url: _platform + '/func/cache',
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            if (result.flag) {
+                top.layer.closeAll();
+                top.layer.msg(result.msg);
+            } else {
+                top.layer.close(index);
+                top.layer.msg(result.msg);
+            }
+        }
+    });
+}
+
 
 function deleteFunc(id) {
     top.layer.confirm('您是否确定删除功能？', {
