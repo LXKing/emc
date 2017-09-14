@@ -75,9 +75,9 @@
                     <div class="text-left">新表系数</div>
                 </td>
                 <td width="8%">
-                    <div class="text-left">创建人<i class="icon-sort"></i></div>
+                    <div class="text-left">创建人</div>
                 </td>
-                <td width="15%">创建时间<i class="icon-sort"></i></td>
+                <td width="15%">创建时间</td>
                 <%--<td width="10%">--%>
                     <%--<div>操作</div>--%>
                 <%--</td>--%>
@@ -104,7 +104,7 @@
 <textarea id="template" style="display:none">
     {#foreach $T.list as record}
     <tr>
-        <td>{$T.record$index}</td>
+        <td>{$T.record$index+1}</td>
         <td>
             <div class="text-left">{$T.record.unitName}</div>
         </td>
