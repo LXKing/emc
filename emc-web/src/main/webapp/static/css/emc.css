@@ -141,3 +141,13 @@
 .facedark .chosen-container .chosen-drop {
     background: #0e1d29;
 }
+
+.help-block {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.facedark .form-group.has-success input:focus,
+.facedark .form-group.has-success select:focus,
+.facedark .form-group.has-success textarea:focus {
+    background-color: #0e1d29;
+}

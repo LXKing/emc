@@ -31,9 +31,6 @@
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <select id="unitId" name="unitId" class="chosen-select form-control">
-                            <c:forEach items="${sysDic['orgType']}" var="type">
-                                <option value="${type.seq}">${type.des}</option>
-                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -43,9 +40,7 @@
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <select id="typeId" name="typeId" class="chosen-select form-control">
-                            <c:forEach items="${sysDic['orgType']}" var="type">
-                                <option value="${type.seq}">${type.des}</option>
-                            </c:forEach>
+
                         </select>
                     </div>
                 </div>
@@ -55,7 +50,7 @@
                             class="red">*</span>企业指标：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeZh" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入字典类型(中文)">
+                        <input name="enterprise" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入企业指标">
                     </div>
                 </div>
                 <div class="form-group">
@@ -63,7 +58,7 @@
                             class="red">*</span>地方指标：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeZh" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入字典类型(中文)">
+                        <input name="local" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入地方指标">
                     </div>
                 </div>
                 <div class="form-group">
@@ -71,15 +66,14 @@
                             class="red">*</span>行业指标：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeZh" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入字典类型(中文)">
+                        <input name="industry" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入行业指标">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>生效时间：</label>
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>生效时间：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="typeZh" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入字典类型(中文)">
+                        <input id="indexTime" type="text" class="laydate-icon  form-control inputs-lg layer-date"  name="indexTime" placeholder="请选择生效时间"/>
                     </div>
                 </div>
             </form>
@@ -113,38 +107,24 @@
     //以下为官方示例
     $(function () {
         var $form = $(top.document).find("#indexAddForm");
-        $("#unitType,#typeId,#unitId").chosen();
+
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
 
-        $.ajax({
-            url: _web + '/select/org/unit',
-            type: 'POST',
-            data: {comId: $("#comId").val(),orgId:$("#orgId").val(),unitType:$("#unitType").val()},
-            dataType: 'json',
-            success: function (result) {
-                var $element = $("#unitId");
-                $element.empty();
-                $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.UNITID + '">' + item.UNITNAME + '</option>');
-                });
-                $element.chosen("destroy").chosen();
-            }
+        laydate({
+            elem: '#indexTime',
+            format: 'YYYY-MM-DD hh:00:00',
+            max: '2099-06-16 ', //最大日期
+            istime: true,
+            istoday: false,
+            event: 'focus'
         });
-        $.ajax({
-            url: _web + '/select/index/type',
-            type: 'POST',
-            data: {unitType:$("#unitType").val()},
-            dataType: 'json',
-            success: function (result) {
-                var $element = $("#typeId");
-                $element.empty();
-                $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.INDEXID + '">' + item.INDEXNAME + '</option>');
-                });
-                $element.chosen("destroy").chosen();
-            }
-        });
+
+        $("#unitType").chosen();
+        //加载用能单位
+        getUnitSelect();
+        //加载指标类型
+        getIndexTypeSelect();
 
         $.validator.addMethod("checkName", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
@@ -166,71 +146,11 @@
             return deferred.state() == "resolved" ? true : false;
         }, '该字典类型下字典名称已存在');
 
-        $.validator.addMethod("checkSeq", function(value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url:_platform + '/sys/dic/check/seq',
-                type:'POST',
-                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {seq:value,typeUs:$(top.document).find('input[name="typeUs"]').val()},
-                dataType: 'json',
-                success:function(result) {
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
-                    }
-                }
-            });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, '该字典类型下排序已存在');
-
-        $.validator.addMethod("checkTypeUs", function(value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url:_platform + '/sys/dic/check/type/us',
-                type:'POST',
-                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {typeZh:$(top.document).find('input[name="typeZh"]').val(),typeUs:$(top.document).find('input[name="typeUs"]').val()},
-                dataType: 'json',
-                success:function(result) {
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
-                    }
-                }
-            });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, '字典类型(英文)和字典类型(中文)不匹配');
-
-        $.validator.addMethod("checkTypeZh", function(value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url:_platform + '/sys/dic/check/type/zh',
-                type:'POST',
-                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {typeZh:$(top.document).find('input[name="typeZh"]').val(),typeUs:$(top.document).find('input[name="typeUs"]').val()},
-                dataType: 'json',
-                success:function(result) {
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
-                    }
-                }
-            });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, '字典类型(中文)和字典类型(英文)不匹配');
-
-        //排序校验
-        $.validator.addMethod("isSeq", function(value, element){
-            var tel = /^\d+$/;
+        //小数校验
+        $.validator.addMethod("isFloat", function(value, element){
+            var tel = /^\d+(\.\d{1,3})?$/;
             return this.optional(element) || (tel.test(value));
-        }, icon + "请输入数字");
+        }, icon + "请输入正整数或者小数,小数点后不超过三位");
 
         //提示信息绑定
         $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
@@ -259,36 +179,40 @@
             },
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
-                des: {
-                    required: true,
-                    checkName:true
+                typeId: {
+                    required: true
                 },
-                typeUs: {
+                industry: {
                     required: true,
-                    checkTypeUs:true
+                    isFloat: true
                 },
-                typeZh: {
+                local: {
                     required: true,
-                    checkTypeZh:true
+                    isFloat: true
                 },
-                seq: {
+                enterprise: {
                     required: true,
-                    isSeq: true,
-                    checkSeq:true
+                    isFloat: true
+                },
+                indexTime:{
+                    required: true
                 }
             },
             messages: {
-                des: {
-                    required: icon + "请输入字典名称"
+                typeId: {
+                    required: icon + "请选择指标类型"
                 },
-                typeUs: {
-                    required: icon + "请输入字典类型(英文)"
+                industry: {
+                    required: icon + "请输入行业指标"
                 } ,
-                typeZh: {
-                    required: icon + "请输入字典类型(中文)"
+                local: {
+                    required: icon + "请输入地方指标"
                 },
-                seq: {
-                    required: icon + "请输入排序"
+                enterprise: {
+                    required: icon + "请输入企业指标"
+                },
+                indexTime:{
+                    required: icon + "请选择生效时间"
                 }
             },
             submitHandler: function () {
@@ -296,7 +220,7 @@
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url: _platform + '/sys/dic/add',
+                    url: _web + '/index/allocation/add',
                     data: $form.serialize(),
                     type: 'POST',
                     dataType: 'json',
@@ -304,7 +228,7 @@
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            $('#dic-table-list').bootstrapTable("refresh");
+                            //$('#dic-table-list').bootstrapTable("refresh");
                         } else {
                             top.layer.close(index);
                             top.layer.msg(result.msg);
@@ -315,4 +239,38 @@
         });
 
     });
+
+    function getUnitSelect() {
+        $.ajax({
+            url: _web + '/select/org/unit',
+            type: 'POST',
+            data: {comId: $("#comId").val(),orgId:$("#orgId").val(),unitType:$("#unitType").val()},
+            dataType: 'json',
+            success: function (result) {
+                var $element = $("#unitId");
+                $element.empty();
+                $.each(result, function (idx, item) {
+                    $element.append('<option value="' + item.UNITID + '">' + item.UNITNAME + '</option>');
+                });
+                $element.chosen("destroy").chosen();
+            }
+        });
+    }
+
+    function getIndexTypeSelect() {
+        $.ajax({
+            url: _web + '/select/index/type',
+            type: 'POST',
+            data: {unitType:$("#unitType").val()},
+            dataType: 'json',
+            success: function (result) {
+                var $element = $("#typeId");
+                $element.empty();
+                $.each(result, function (idx, item) {
+                    $element.append('<option value="' + item.INDEXID + '">' + item.INDEXNAME + '</option>');
+                });
+                $element.chosen("destroy").chosen();
+            }
+        });
+    }
 </script>

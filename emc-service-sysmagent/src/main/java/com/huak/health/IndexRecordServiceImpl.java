@@ -1,6 +1,7 @@
 package com.huak.health;
 
 import com.github.pagehelper.PageHelper;
+import com.huak.base.dao.DateDao;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -31,6 +32,8 @@ public class IndexRecordServiceImpl implements IndexRecordService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private IndexRecordDao indexRecordDao;
+    @Resource
+    private DateDao dateDao;
 
     @Override
     @Transactional(readOnly = false)
@@ -43,6 +46,7 @@ public class IndexRecordServiceImpl implements IndexRecordService {
     @Transactional(readOnly = false)
     public int insert(IndexRecord record) {
         logger.info("新增指标配置");
+        record.setCreateTime(dateDao.getTime());
         return indexRecordDao.insert(record);
     }
 
