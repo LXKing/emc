@@ -139,7 +139,7 @@
                 <td width="6%">
                     <div class="text-left">手/自动</div>
                 </td>
-                <td width="12%">创建时间<i class="icon-sort"></i></td>
+                <td width="12%">创建时间</td>
                 <td width="8%">
                     <div class="text-left">表底</div>
                 </td>
