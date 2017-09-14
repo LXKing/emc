@@ -31,8 +31,8 @@
                             <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">计量代码</label>
-                                    <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" id="code" name="code" placeholder="请输入计量代码">
+                                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                        <input type="text" class="form-control" id="code" name="code" placeholder="请输入代码">
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                 <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
                                     <div class="form-group">
                                         <label class="control-label col-sm-4 col-xs-4 col-md-4 col-lg-4">名称</label>
-                                        <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8">
+                                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                             <input type="text" class="form-control" id="name" name="name" placeholder="请输入名称">
                                         </div>
                                     </div>
@@ -162,8 +162,6 @@
                                 </div>
                                 </div>
                             </div>
-
-                        </div>
                     </form>
                     <div class="example">
                         <table id="meter-table-list">

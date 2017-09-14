@@ -129,8 +129,8 @@ public class ThirdAnalysisController extends BaseController {
             }
             try {
                 jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
-            jo.put("ZDH",dhbq);
-            jo.put("TB", df.format(tb));
+                jo.put("ZDH",dhbq);
+                jo.put("TB", df.format(tb));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -224,59 +224,6 @@ public class ThirdAnalysisController extends BaseController {
         return jo.toJSONString();
     }
 
-    /**
-     * 分公司单耗明细
-     */
-    @RequestMapping(value = "/fgs/detail/{orgId}", method = RequestMethod.GET)
-    @ResponseBody
-    public String getFgsData(ToolVO toolVO, HttpServletRequest request,@PathVariable("orgId")String orgId){
-        logger.info("计算分公司能耗折线图和同比");
-        JSONObject jo = new JSONObject();
-        DecimalFormat  df   = new DecimalFormat("######0.0");
-
-        Map params = paramsPackageOrg(toolVO, request);
-        params.put("orgId",orgId);
-        String start = params.get("startTime").toString();
-        String end = params.get("endTime").toString();
-        try {
-            //单耗详细
-            List<Map<String, Object>> listBq = thirdAnalysisService.getFgsDhDetail(params);
-            List<Map<String, Object>> listTq = thirdAnalysisService.getFgsDhDetailTq(params);
-            //总单耗和同比
-            Map<String, Object> bqMap =thirdAnalysisService.getFgsDhAndTQ(params);
-            Map<String, Object> tqMap =thirdAnalysisService.getFgsDhAndBQ(params);
-
-            double dhbq;
-            double dhtq;
-            if(bqMap==null){
-                dhbq=0;
-            }else {
-                dhbq=Double.valueOf(bqMap.get("BQDH").toString());
-            }
-            if(tqMap==null){
-                dhtq=0;
-            }else {
-                dhtq=Double.valueOf(tqMap.get("TQDH").toString());
-            }
-            double tb;
-            if(dhbq==0||dhtq==0){
-                tb=0.0;
-            }else {
-                tb = DoubleUtils.div(DoubleUtils.sub(dhbq, dhtq),dhtq,4)*100;
-            }
-            try {
-                jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
-                jo.put("ZDH",dhbq);
-                jo.put("TB", df.format(tb));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return jo.toString();
-        }catch (Exception e){
-            logger.error("计算分公司能耗折线图和同比" + e.getMessage());
-        }
-        return jo.toString();
-    }
 
     /**
      *热源的水单耗排名
@@ -399,7 +346,7 @@ public class ThirdAnalysisController extends BaseController {
         if(energytype!=null&&!"".equals(energytype)){
             params.put("energytype",energytype);
         }
-        try {
+
             List<Map<String,Object>>  listBq = thirdAnalysisService.getFgsOrgDhBQ(params);
             List<Map<String,Object>>  listTq = thirdAnalysisService.getFgsOrgDhTQ(params);
 
@@ -429,12 +376,59 @@ public class ThirdAnalysisController extends BaseController {
                 jo.put("ZDH",dhbq);
                 jo.put("TB", df.format(tb));
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("计算分公司能耗折线图和同比" + e.getMessage());
             }
             return jo.toString();
-        }catch (Exception e){
-            logger.error("计算分公司能耗折线图和同比" + e.getMessage());
-        }
+
+    }
+    /**
+     * 分公司单耗明细
+     */
+    @RequestMapping(value = "/fgs/detail/{orgId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFgsData(ToolVO toolVO, HttpServletRequest request,@PathVariable("orgId")String orgId){
+        logger.info("计算分公司能耗折线图和同比");
+        JSONObject jo = new JSONObject();
+        DecimalFormat  df   = new DecimalFormat("######0.0");
+
+        Map params = paramsPackageOrg(toolVO, request);
+        params.put("orgId",orgId);
+        String start = params.get("startTime").toString();
+        String end = params.get("endTime").toString();
+
+            //单耗详细
+            List<Map<String, Object>> listBq = thirdAnalysisService.getFgsDhDetail(params);
+            List<Map<String, Object>> listTq = thirdAnalysisService.getFgsDhDetailTq(params);
+            //总单耗和同比
+            Map<String, Object> tqMap =thirdAnalysisService.getFgsDhAndTQ(params);
+            Map<String, Object> bqMap =thirdAnalysisService.getFgsDhAndBQ(params);
+
+            double dhbq;
+            double dhtq;
+            if(bqMap==null){
+                dhbq=0;
+            }else {
+                dhbq=Double.valueOf(bqMap.get("BQDH").toString());
+            }
+            if(tqMap==null){
+                dhtq=0;
+            }else {
+                dhtq=Double.valueOf(tqMap.get("TQDH").toString());
+            }
+            double tb;
+            if(dhbq==0||dhtq==0){
+                tb=0.0;
+            }else {
+                tb = DoubleUtils.div(DoubleUtils.sub(dhbq, dhtq),dhtq,4)*100;
+            }
+            try {
+                jo = CollectionUtil.packageDataLine(start,end,listBq,listTq);
+                jo.put("ZDH",dhbq);
+                jo.put("TB", df.format(tb));
+
+            } catch (Exception e) {
+                logger.error("计算分公司能耗折线图和同比" + e.getMessage());
+            }
         return jo.toString();
     }
 

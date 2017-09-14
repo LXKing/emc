@@ -101,7 +101,13 @@
  };*/
 $(function() {
     loadDHdetail();
-    loadOrgDH();
+
+    loadWaterDH();
+    loadElectricDH();
+    loadGasDH();
+    loadHotDH();
+    loadCoalDH();
+
     loadFeedDH(1);
     loadStationDH(1);
     loadTable();
@@ -115,31 +121,32 @@ function loadDHdetail(){
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (data) {
-
-            $(".groupTotal").text(data.reMap.ZDH);
-            if(data.reMap.TQ>0){
-                var TQ = data.reMap.TQ+"<span class='arrow'>↑</span>";
+            console.log(data);
+            $(".groupTotal").text(data.ZDH);
+            if(data.TB>0){
+                var TQ = data.TB+"<span class='arrow'>↑</span>";
                 $(".groupchangeRate").html(TQ);
-            }else if(data.reMap.TQ==0){
-                var TQ = data.reMap.TQ+"<span class='arrow'>→</span>";
-                $(".groupchangeRate").html(TQ)
-            }else if(data.reMap.TQ<0){
-                var TQ = data.reMap.TQ+"<span class='arrow'>↓</span>";
-                $(".groupchangeRate").html(TQ)
+            }else if(data.TB==0){
+                var TQ = data.TB+"<span class='arrow'>→</span>";
+                $(".groupchangeRate").html(TQ);
+            }else if(data.TB<0){
+                var TQ = data.TB+"<span class='arrow'>↓</span>";
+                $(".groupchangeRate").html(TQ);
             }
             echartsSelf({
                 id: "groupEnergyChart",
                 echartsConfig: {
-                    xData: data.xaxis,
+                    xData: data.xdatas,
                     series: [{
                         type: 'line',
-                        dataList: data.newDate,
+                        name:data.datas[0].typeName,
+                        dataList: data.datas[0].dataList,
                         typeLine: 'solid'
-
                     },
                         {
                             type: 'line',
-                            dataList: data.oldDate,
+                            name:data.datas[1].typeName,
+                            dataList: data.datas[1].dataList,
                             typeLine: 'dashed'
                         }
                     ]
@@ -195,225 +202,286 @@ function loadStationDH(type) {
     });
 }
 
-//加载源、网、站、线、户  的水单耗
+//加载水，电，气，热，煤单耗
 
-function loadOrgDH() {
-
+function loadWaterDH() {
+    var energytype = "1";
     var id = $("#id").val();
     $.ajax({
-        url: _web + "/third/analysis/fgs/org/"+id,
+        url: _web + "/third/analysis/fgs/org/" + id + "/" + energytype,
         type: "GET",
         data: $("#searchTools").serialize(),
         dataType: "json",
         success: function (data) {
             console.log(data);
             getWater(data);
-            getElectric(data);
-            getGas(data);
-            getHot(data);
-            getCoal(data);
         }
     });
+}
+function getWater(data){
+    $(".waterDw").html("T/m²");
+    $(".waterTotal").html(data.ZDH);
 
-    function getWater(data){
-        $(".waterDw").html("T/m²");
-        $(".waterTotal").html(data.TotalTq.STotal);
-
-        if(data.TotalTq.STB < 0){
-            $(".waterTotal").closest(".energy-head").addClass("energy-snh");
-        }else{
-            $(".waterTotal").next("span").addClass("energy-remind");
-            $(".waterTotal").addClass("energy-remind");
-            $(".waterTotal").closest(".energy-head").addClass("energy-snh-remind");
-        }
-        if(data.TotalTq.STB < 0){
-            $(".waterchangeRate").css('color','#3db1b0');
-            $(".waterchangeRate").html("("+data.TotalTq.STB + "↓)");
-        }else if(data.TotalTq.STB > 0){
-            $(".waterchangeRate").addClass("energy-remind");
-            $(".waterchangeRate").html("("+data.TotalTq.STB + "↑)");
-        }else{
-            $(".waterchangeRate").css('color','#999');
-            $(".waterchangeRate").html("("+data.TotalTq.STB + "→)");
-        }
-        echartsSelf({
-            id: "waterEnergyChart",
-            echartsConfig: {
-                xData: data.resultData.dateLine,
-                series: [{
+    if(data.TB < 0){
+        $(".waterTotal").closest(".energy-head").addClass("energy-snh");
+    }else{
+        $(".waterTotal").next("span").addClass("energy-remind");
+        $(".waterTotal").addClass("energy-remind");
+        $(".waterTotal").closest(".energy-head").addClass("energy-snh-remind");
+    }
+    if(data.TB < 0){
+        $(".waterchangeRate").css('color','#3db1b0');
+        $(".waterchangeRate").html("("+data.TB + "↓)");
+    }else if(data.TB > 0){
+        $(".waterchangeRate").addClass("energy-remind");
+        $(".waterchangeRate").html("("+data.TB + "↑)");
+    }else{
+        $(".waterchangeRate").css('color','#999');
+        $(".waterchangeRate").html("("+data.TB + "→)");
+    }
+    echartsSelf({
+        id: "waterEnergyChart",
+        echartsConfig: {
+            xData: data.xdatas,
+            series: [{
+                type: 'line',
+                name:data.datas[0].typeName,
+                dataList: data.datas[0].dataList,
+                typeLine: 'solid'
+            },
+                {
                     type: 'line',
-                    dataList: data.resultData.waterBq,
-                    typeLine: 'solid'
-                },
-                    {
-                        type: 'line',
-                        dataList: data.resultData.waterTq,
-                        typeLine: 'dashed'
-                    }
-                ]
+                    name:data.datas[1].typeName,
+                    dataList: data.datas[1].dataList,
+                    typeLine: 'dashed'
+                }
+            ]
+        }
+    });
+}
+    function loadElectricDH() {
+        var energytype = "2";
+        var id = $("#id").val();
+        $.ajax({
+            url: _web + "/third/analysis/fgs/org/" + id + "/" + energytype,
+            type: "GET",
+            data: $("#searchTools").serialize(),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                getElectric(data);
             }
         });
     }
     function getElectric(data){
-        $(".electricTotal").html(data.TotalTq.DTotal);
+        $(".electricTotal").html(data.ZDH);
         $(".electricDw").html("kW·h/m²");
 
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".electricTotal").closest(".energy-head").addClass("energy-snh");
         }else{
             $(".electricTotal").next("span").addClass("energy-remind");
             $(".electricTotal").addClass("energy-remind");
             $(".electricTotal").closest(".energy-head").addClass("energy-snh-remind");
         }
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".elechangeRate").css('color','#3db1b0');
-            $(".elechangeRate").html("("+data.TotalTq.STB + "↓)");
-        }else if(data.TotalTq.STB > 0){
+            $(".elechangeRate").html("("+data.TB + "↓)");
+        }else if(data.TB > 0){
             $(".elechangeRate").addClass("energy-remind");
-            $(".elechangeRate").html("("+data.TotalTq.STB + "↑)");
+            $(".elechangeRate").html("("+data.TB + "↑)");
         }else{
             $(".elechangeRate").css('color','#999');
-            $(".elechangeRate").html("("+data.TotalTq.STB + "→)");
+            $(".elechangeRate").html("("+data.TB + "→)");
         }
         echartsSelf({
             id: "electricEnergyChart",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.electricBq,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
-
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.electricTq,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
     }
+function loadGasDH() {
+    var energytype = "3";
+    var id = $("#id").val();
+    $.ajax({
+        url: _web + "/third/analysis/fgs/org/" + id + "/" + energytype,
+        type: "GET",
+        data: $("#searchTools").serialize(),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            getGas(data);
+        }
+    });
+}
     function getGas(data){
-        $(".gasTotal").html(data.TotalTq.QTotal);
+        $(".gasTotal").html(data.ZDH);
         $(".gasDw").html("m³/m²");
 
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".gasTotal").closest(".energy-head").addClass("energy-snh");
         }else{
             $(".gasTotal").next("span").addClass("energy-remind");
             $(".gasTotal").addClass("energy-remind");
             $(".gasTotal").closest(".energy-head").addClass("energy-snh-remind");
         }
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".gaschangeRate").css('color','#3db1b0');
-            $(".gaschangeRate").html("("+data.TotalTq.STB + "↓)");
-        }else if(data.TotalTq.STB > 0){
+            $(".gaschangeRate").html("("+data.TB + "↓)");
+        }else if(data.TB > 0){
             $(".gaschangeRate").addClass("energy-remind");
-            $(".gaschangeRate").html("("+data.TotalTq.STB + "↑)");
+            $(".gaschangeRate").html("("+data.TB + "↑)");
         }else{
             $(".gaschangeRate").css('color','#999');
-            $(".gaschangeRate").html("("+data.TotalTq.STB + "→)");
+            $(".gaschangeRate").html("("+data.TB + "→)");
         }
         echartsSelf({
             id: "gasEnergyChart",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.gasBq,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
 
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.gasTq,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
     }
+    function loadHotDH() {
+        var energytype = "4";
+        var id = $("#id").val();
+        $.ajax({
+            url: _web + "/third/analysis/fgs/org/" + id + "/" + energytype,
+            type: "GET",
+            data: $("#searchTools").serialize(),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                getHot(data);
+            }
+        });
+    }
     function getHot(data){
-        $(".hotTotal").html(data.TotalTq.RTotal);
+        $(".hotTotal").html(data.ZDH);
         $(".hotDw").html("GJ/m²");
 
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".hotTotal").closest(".energy-head").addClass("energy-snh");
         }else{
             $(".hotTotal").next("span").addClass("energy-remind");
             $(".hotTotal").addClass("energy-remind");
             $(".hotTotal").closest(".energy-head").addClass("energy-snh-remind");
         }
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".hotchangeRate").css('color','#3db1b0');
-            $(".hotchangeRate").html("("+data.TotalTq.STB + "↓)");
-        }else if(data.TotalTq.STB > 0){
+            $(".hotchangeRate").html("("+data.TB + "↓)");
+        }else if(data.TB > 0){
             $(".hotchangeRate").addClass("energy-remind");
-            $(".hotchangeRate").html("("+data.TotalTq.STB + "↑)");
+            $(".hotchangeRate").html("("+data.TB + "↑)");
         }else{
             $(".hotchangeRate").css('color','#999');
-            $(".hotchangeRate").html("("+data.TotalTq.STB + "→)");
+            $(".hotchangeRate").html("("+data.TB + "→)");
         }
         echartsSelf({
             id: "hotEnergyChart",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.hotBq,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
 
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.hotTq,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
     }
+        function loadCoalDH() {
+            var energytype = "5";
+            var id = $("#id").val();
+            $.ajax({
+                url: _web + "/third/analysis/fgs/org/" + id + "/" + energytype,
+                type: "GET",
+                data: $("#searchTools").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    getCoal(data);
+                }
+            });
+        }
     function getCoal(data){
-        $(".coalTotal").html(data.TotalTq.MTotal);
+        $(".coalTotal").html(data.ZDH);
         $(".coalDw").html("T/m²");
 
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".coalTotal").closest(".energy-head").addClass("energy-snh");
         }else{
             $(".coalTotal").next("span").addClass("energy-remind");
             $(".coalTotal").addClass("energy-remind");
             $(".coalTotal").closest(".energy-head").addClass("energy-snh-remind");
         }
-        if(data.TotalTq.STB < 0){
+        if(data.TB < 0){
             $(".coalchangeRate").css('color','#3db1b0');
-            $(".coalchangeRate").html("("+data.TotalTq.STB + "↓)");
-        }else if(data.TotalTq.STB > 0){
+            $(".coalchangeRate").html("("+data.TB + "↓)");
+        }else if(data.TB > 0){
             $(".coalchangeRate").addClass("energy-remind");
-            $(".coalchangeRate").html("("+data.TotalTq.STB + "↑)");
+            $(".coalchangeRate").html("("+data.TB + "↑)");
         }else{
             $(".coalchangeRate").css('color','#999');
-            $(".coalchangeRate").html("("+data.TotalTq.STB + "→)");
+            $(".coalchangeRate").html("("+data.TB + "→)");
         }
         echartsSelf({
             id: "coalEnergyChart",
             echartsConfig: {
-                xData: data.resultData.dateLine,
+                xData: data.xdatas,
                 series: [{
                     type: 'line',
-                    dataList: data.resultData.coalBq,
+                    name:data.datas[0].typeName,
+                    dataList: data.datas[0].dataList,
                     typeLine: 'solid'
 
                 },
                     {
                         type: 'line',
-                        dataList: data.resultData.coalTq,
+                        name:data.datas[1].typeName,
+                        dataList: data.datas[1].dataList,
                         typeLine: 'dashed'
                     }
                 ]
             }
         });
-    }
+
 }
 //加载热源的单耗排名
 function feedDh(data){

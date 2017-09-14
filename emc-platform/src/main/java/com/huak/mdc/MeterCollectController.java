@@ -376,10 +376,9 @@ public class MeterCollectController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            //虚表时 给预存字段设置  默认值
-            if (meterCollect.getIsreal() == Byte.valueOf("1")) {
-                meterCollect.setIsprestore(Byte.valueOf("0"));
-            }
+           //给预存字段设置  默认值0 不预存
+            meterCollect.setIsprestore(Byte.valueOf("0"));
+
             meterCollect.setId(UUIDGenerator.getUUID());
             meterCollectService.insert(meterCollect);
             jo.put(Constants.FLAG, true);
@@ -444,11 +443,12 @@ public class MeterCollectController {
 
     @ResponseBody
     @RequestMapping(value = "/unit", method = RequestMethod.POST)
-    public String getUnitList(@RequestParam String unitType) {
+    public String getUnitList(@RequestParam String unitType,@RequestParam String comId) {
 
         JSONObject jo = new JSONObject();
         Map<String, Object> params = new HashMap<>();
         params.put("unitType", unitType);
+        params.put("comId", comId);
         List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
         jo.put(Constants.LIST, list);
         return jo.toJSONString();
