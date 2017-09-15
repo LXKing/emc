@@ -7,31 +7,23 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="wrapper wrapper-content">
     <div class="row col-sm-12 col-xs-12 col-md-12 col-lg-12">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="indexAddForm" dic="form">
+            <form class="form-horizontal" id="indexEditForm" dic="form">
+                <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" id="comId" name="comId" value="${company.id}">
                 <input type="hidden" id="orgId" name="orgId" value="${org.id}">
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>单位类型：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="unitType" name="unitType" class="chosen-select form-control">
-                            <c:forEach items="${sysDic['orgType']}" var="type">
-                                <option value="${type.seq}">${type.des}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
+                <input type="hidden" id="unitType" name="unitType" value="${indexRecord.UNITTYPE}">
+                <input type="hidden" id="unitId" name="unitId" value="${indexRecord.UNIT_ID}">
+                <input type="hidden" name="id" value="${indexRecord.ID}">
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>用能单位：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="unitId" name="unitId" class="chosen-select form-control">
-                        </select>
+                        <input class="form-control inputs-lg" value="${indexRecord.UNITNAME}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,7 +42,7 @@
                             class="red">*</span>企业指标：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="enterprise" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入企业指标">
+                        <input name="enterprise" class="form-control inputs-lg" value="${indexRecord.ENTERPRISE}" type="text" maxlength="16" placeholder="请输入企业指标">
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,7 +50,7 @@
                             class="red">*</span>地方指标：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="local" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入地方指标">
+                        <input name="local" class="form-control inputs-lg" value="${indexRecord.LOCAL}" type="text" maxlength="16" placeholder="请输入地方指标">
                     </div>
                 </div>
                 <div class="form-group">
@@ -66,14 +58,14 @@
                             class="red">*</span>行业指标：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="industry" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入行业指标">
+                        <input name="industry" class="form-control inputs-lg" value="${indexRecord.INDUSTRY}" type="text" maxlength="16" placeholder="请输入行业指标">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>生效时间：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input id="indexTime" type="text" class="laydate-icon  form-control inputs-lg layer-date"  name="indexTime" placeholder="请选择生效时间"/>
+                        <input id="indexTime" type="text" class="laydate-icon  form-control inputs-lg layer-date"  value="<fmt:formatDate value="${indexRecord.INDEX_TIME}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" name="indexTime" placeholder="请选择生效时间"/>
                     </div>
                 </div>
             </form>
@@ -106,7 +98,7 @@
 
     //以下为官方示例
     $(function () {
-        var $form = $(top.document).find("#indexAddForm");
+        var $form = $(top.document).find("#indexEditForm");
 
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
@@ -120,18 +112,13 @@
             event: 'focus'
         });
 
-        $("#unitType").chosen().on('change',function () {
-            //加载用能单位
-            getUnitSelect();
-            //加载指标类型
-            getIndexTypeSelect();
-        });
-        //加载用能单位
-        getUnitSelect();
         //加载指标类型
         getIndexTypeSelect();
 
         $.validator.addMethod("checkType", function(value, element) {
+            if(value=='${indexRecoed.TYPE_ID}'){
+                return true;
+            }
             var deferred = $.Deferred();//创建一个延迟对象
             $.ajax({
                 url:_web + '/index/allocation/check/type',
@@ -226,7 +213,7 @@
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url: _web + '/index/allocation/add',
+                    url: _web + '/index/allocation/edit',
                     data: $form.serialize(),
                     type: 'POST',
                     dataType: 'json',
@@ -246,23 +233,6 @@
 
     });
 
-    function getUnitSelect() {
-        $.ajax({
-            url: _web + '/select/org/unit',
-            type: 'POST',
-            data: {comId: $("#comId").val(),orgId:$("#orgId").val(),unitType:$("#unitType").val()},
-            dataType: 'json',
-            success: function (result) {
-                var $element = $("#unitId");
-                $element.empty();
-                $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.UNITID + '">' + item.UNITNAME + '</option>');
-                });
-                $element.chosen("destroy").chosen();
-            }
-        });
-    }
-
     function getIndexTypeSelect() {
         $.ajax({
             url: _web + '/select/index/type',
@@ -273,7 +243,7 @@
                 var $element = $("#typeId");
                 $element.empty();
                 $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.INDEXID + '">' + item.INDEXNAME + '</option>');
+                    $element.append('<option ' + (item.INDEXID == "${indexRecord.TYPE_ID}"?'selected':'') + ' value="' + item.INDEXID + '">' + item.INDEXNAME + '</option>');
                 });
                 $element.chosen("destroy").chosen();
             }

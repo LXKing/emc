@@ -3,6 +3,7 @@ package com.huak.health;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.health.model.IndexRecord;
+import com.huak.health.vo.IndexRecordA;
 
 import java.util.Map;
 
@@ -30,5 +31,9 @@ public interface IndexRecordService {
 
     int updateByPrimaryKey(IndexRecord record);
 
-    PageResult<IndexRecord> queryByPage(Map<String, Object> paramsMap, Page page);
+    PageResult<IndexRecordA> queryByPage(Map<String, Object> paramsMap, Page page);
+
+    Long checkType(Map<String, Object> paramsMap);
+
+    Map<String, Object> selectUpdateMap(String id);
 }

@@ -72,8 +72,9 @@ public class LoginController {
 
     @RequestMapping(value = "/login-in")
     @ResponseBody
+    //@OperationLogAnnotation(operationType="查询",module="能管产品前台-登录服务-用户登录",methods="loginIn",description="产品后台登录")
     public String loginIn(HttpServletRequest request, String login, String pwd, String vc) {
-        logger.info("登录后台");
+        logger.info("登录前台");
         HttpSession session = request.getSession();
         JSONObject jo = new JSONObject();
         jo.put(IS_LOGIN, true);
@@ -102,6 +103,8 @@ public class LoginController {
                     session.setAttribute(Constants.SESSION_KEY, user);
                     session.setAttribute(Constants.SESSION_ORG_KEY, org);
                     session.setAttribute(Constants.SESSION_COM_KEY, company);
+                    //权限
+                    session.setAttribute(com.huak.common.Constants.SESSION_AUTH_KEY, userService.getAuths(id));
                     userService.update2LoginSuccess(id);
                     jo.put(IS_LOGIN, true);
                 } else {

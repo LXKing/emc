@@ -3,7 +3,7 @@ package com.huak.org.model;
 import java.io.Serializable;
 
 public class Company implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7837005267781422274L;
     private String id;
 
     private String cname;
@@ -82,5 +82,9 @@ public class Company implements Serializable{
         this.wname = wname;
         this.tableName = tableName;
         this.logoImg = logoImg;
+    }
+
+    public Company() {
+        super();
     }
 }

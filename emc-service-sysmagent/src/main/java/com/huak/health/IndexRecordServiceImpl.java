@@ -7,6 +7,7 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.health.dao.IndexRecordDao;
 import com.huak.health.model.IndexRecord;
+import com.huak.health.vo.IndexRecordA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,7 @@ public class IndexRecordServiceImpl implements IndexRecordService {
     @Transactional(readOnly = false)
     public int insertSelective(IndexRecord record) {
         logger.info("删除指标配置");
+        record.setCreateTime(dateDao.getTime());
         return indexRecordDao.insertSelective(record);
     }
 
@@ -80,9 +82,23 @@ public class IndexRecordServiceImpl implements IndexRecordService {
 
     @Override
     @Transactional(readOnly = true)
-    public PageResult<IndexRecord> queryByPage(Map<String, Object> paramsMap, Page page) {
+    public PageResult<IndexRecordA> queryByPage(Map<String, Object> paramsMap, Page page) {
         logger.info("分页查询指标配置");
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(indexRecordDao.selectPageByMap(paramsMap));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkType(Map<String, Object> paramsMap) {
+        logger.info("同一用能单位指标类型唯一性校验");
+        return indexRecordDao.checkType(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> selectUpdateMap(String id) {
+        logger.info("修改指标配置查询");
+        return indexRecordDao.selectUpdateMap(id);
     }
 }

@@ -2,6 +2,7 @@ package com.huak.health.dao;
 
 
 import com.huak.health.model.IndexRecord;
+import com.huak.health.vo.IndexRecordA;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +22,9 @@ public interface IndexRecordDao {
 
     int updateByPrimaryKey(IndexRecord record);
 
-    List<IndexRecord> selectPageByMap(Map<String, Object> paramsMap);
+    List<IndexRecordA> selectPageByMap(Map<String, Object> paramsMap);
+
+    Long checkType(Map<String, Object> paramsMap);
+
+    Map<String, Object> selectUpdateMap(String id);
 }

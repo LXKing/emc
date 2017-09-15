@@ -15,6 +15,20 @@
       <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+    <resultMap id="BaseResultMapA" type="com.huak.health.vo.IndexRecordA">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNIT_METER" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ENTERPRISE" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="LOCAL" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="INDUSTRY" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="INDEX_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="USER_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
     ID, TYPE_ID, COM_ID, UNIT_ID, ENTERPRISE, LOCAL, INDUSTRY, INDEX_TIME, CREATE_TIME, 
     CREATOR
@@ -153,20 +167,71 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
-    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from t_emc_index_record
-        where 1=1
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMapA">
+        SELECT
+        r.ID,
+        v.UNITNAME,
+        t. NAME,
+        t.UNIT_METER,
+        r.ENTERPRISE,
+        r.LOCAL,
+        r.INDUSTRY,
+        r.INDEX_TIME,
+        r.CREATE_TIME,
+        u.USER_NAME
+        FROM
+        t_emc_index_record r,
+        t_emc_index_type t,
+        v_emc_unit v,
+        t_emc_auth_user u
+        WHERE
+        r.COM_ID = v.COMID
+        AND r.TYPE_ID = t.ID
+        AND r.UNIT_ID = v.UNITID
+        AND r.CREATOR = u.ID
         <if test="typeId != null and typeId !=''">
-            and  TYPE_ID =#{typeId}
+            and  r.TYPE_ID =#{typeId}
         </if>
         <if test="comId != null and comId !=''">
-            and  COM_ID = #{comId}
+            and  r.COM_ID = #{comId}
         </if>
         <if test="unitId != null and unitId !=''">
-            and  UNIT_ID = #{unitId}
+            and  r.UNIT_ID = #{unitId}
         </if>
-        order by UNIT_ID,TYPE_ID ASC
+        <if test="orgId != null and orgId !=''">
+            and  v.ORGID = #{orgId}
+        </if>
+        <if test="unitName != null and unitName !=''">
+            and  v.UNITNAME like CONCAT('%',#{unitName},'%')
+        </if>
+        order by r.UNIT_ID,r.TYPE_ID ASC,INDEX_TIME DESC
+    </select>
+
+    <select id="checkType" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(ID) FROM t_emc_index_record where UNIT_ID = #{unitId} AND TYPE_ID=#{typeId}  AND COM_ID=#{comId}
+    </select>
+
+    <select id="selectUpdateMap" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        r.ID,
+        r.UNIT_ID,
+        r.TYPE_ID,
+        t. NAME,
+        t.UNIT_METER,
+        u.UNITNAME,
+        u.UNITTYPE,
+        r.ENTERPRISE,
+        r.INDEX_TIME,
+        r.INDUSTRY,
+        r. LOCAL
+        FROM
+        t_emc_index_record r,
+        v_emc_unit u,
+        t_emc_index_type t
+        WHERE
+        u.UNITID = r.UNIT_ID
+        AND u.COMID = r.COM_ID
+        AND t.ID = r.TYPE_ID
+        AND r.ID=#{id}
     </select>
 </mapper>
