@@ -18,7 +18,7 @@
                     <label class="col-sm-3  control-label"><span class="red">*</span>供热单位类型：</label>
 
                     <div class="col-sm-8">
-                        <select id="unitType" name="unitType" class="chosen-select form-control">
+                        <select id="unitType" name="unitType" class="chosen-select unittype-select form-control">
                             <c:forEach items="${sysDic['orgType']}" var="type">
                                 <option <c:if test="${mec.unitType eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
                             </c:forEach>
@@ -55,10 +55,10 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red"></span>出场编号：</label>
+                            class="red"></span>出厂编号：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="serialNo" id="serialNo" class="form-control" value="${mec.serialNo}" type="text" maxlength="16" placeholder="请输入出场编号">
+                        <input name="serialNo" id="serialNo" class="form-control" value="${mec.serialNo}" type="text" maxlength="16" placeholder="请输入出厂编号">
                     </div>
                 </div>
                 <div class="form-group">
@@ -67,8 +67,8 @@
                     <div class="col-sm-8">
                         <select id="energyTypeId" name="energyTypeId" class="chosen-select form-control">
                             <option value="">请选择类型</option>
-                            <c:forEach items="${sysDic['energyType']}" var="type">
-                                <option <c:if test="${mec.energyTypeId eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
+                            <c:forEach items="${energy}" var="type">
+                                <option <c:if test="${mec.energyTypeId eq type.id}">selected="selected" </c:if> value="${type.id}">${type.nameZh}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -180,10 +180,9 @@ $(function () {
     var icon = "<i class='fa fa-times-circle'></i> ";
 
     var $form = $(top.document).find("#MeterCollectEditForm");
-
-    $(top.document).find(".chosen-select").on('change', function () {
-        //alert($(this).val());
-        getType($(this).val());
+    $(top.document).find(".unittype-select").chosen().on('change',function () {
+        var unittype = $(top.document).find("#unitType").find("option:selected").val();
+        getType(unittype);
     });
 
             //0-实表-预存  1-虚表-公式
@@ -229,7 +228,7 @@ $(function () {
             $(top.document).find("#yucun").html("");
             $(top.document).find("#gongshi").html(html);
         }
-//        if(real==0){
+        if(real==0){
 //            var html='<div  class="form-group">'+
 //                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
 //                    '<div class="col-sm-8">'+
@@ -239,10 +238,10 @@ $(function () {
 //                    '<option value="1">是</option>'+
 //                    '</select>'+
 //                    '</div>'+'</div>';
-//            $(top.document).find("#gongshi").html("");
+            $(top.document).find("#gongshi").html("");
 //            $(top.document).find("#yucun").html(html);
 //            $(top.document).find("#isprestore").chosen();
-//        }
+        }
     });
 
     $(top.document).delegate(".btnFun",'click', function () {
@@ -373,7 +372,17 @@ $(function () {
         }
         return false;
     });
-
+    // 长度数值校验
+    $.validator.addMethod("isDouble", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        var reg = new RegExp("^[0-9]+(.[0-9]{1,6})?$");
+        if(!reg.test(value)){
+            //top.layer.msg("请输入数字!");
+            return false;
+        }else{
+            return true;
+        }
+    }, "请确认输入的数值为整数或小数(精确到6位小数：如:0.000001)");
     $form.validate({
         onsubmit: true,// 是否在提交是验证
         //移开光标:如果有内容,则进行验证
@@ -417,7 +426,8 @@ $(function () {
                 required:true
             },
             coef: {
-                required:true
+                required:true,
+                isDouble:true
             },
             tag: {
                 required:true
@@ -500,16 +510,23 @@ function getType(type){
         url: _platform + '/meterCollect/unit',
         type: 'POST',
         dataType: 'json',
-        data:{unitType:type},
+        data:{unitType:type,comId:$(top.document).find(".chosen-select").find("option:selected").val()},
         success: function (result) {
+            var $elment=$(top.document).find(".chosen-select-unit");
+            $elment.empty();
             var data = result.list;
             var optionHtml='';
             for(var i =0;i<data.length;i++){
-                optionHtml+='<option  value="'+data[i].unitId+'">'+data[i].unitName+'</option>'
+                optionHtml+='<option value="'+data[i].unitId+'">'+data[i].unitName+'</option>'
             }
-            $(top.document).find("#unitId").append(optionHtml);
+            if(optionHtml==null||optionHtml==""){
+                top.layer.msg("该类型下没有供热单位");
+                $elment.empty();
+            }else{
+                $elment.append(optionHtml);
+            }
             //下拉框js
-            $(top.document).find("#unitId").chosen();
+            $elment.chosen("destroy").chosen();
         }
     });
 }

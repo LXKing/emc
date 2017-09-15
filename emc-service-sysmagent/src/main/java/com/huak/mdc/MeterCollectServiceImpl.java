@@ -13,6 +13,8 @@ import com.huak.mdc.vo.MeterCollectA;
 import com.huak.mdc.vo.MeterCollectDataA;
 import com.huak.org.dao.CompanyDao;
 import com.huak.org.model.Company;
+import com.huak.sys.dao.EnergyTypeDao;
+import com.huak.sys.model.EnergyType;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,8 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     private CompanyDao companyDao;
     @Resource
     DateDao dateDao;
+    @Resource
+    private EnergyTypeDao energyTypeDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicLong counter = new AtomicLong(0L);
 
@@ -261,5 +265,11 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<EnergyType> getEnergyType() {
+         Map<String,Object> data = new HashMap<>();
+        return energyTypeDao.queryByMap(data);
     }
 }

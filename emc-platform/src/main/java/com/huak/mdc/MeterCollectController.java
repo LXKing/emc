@@ -11,6 +11,7 @@ import com.huak.mdc.model.RecordChange;
 import com.huak.mdc.model.RecordPrestore;
 import com.huak.prst.ChangeService;
 import com.huak.prst.PrestoreService;
+import com.huak.sys.model.EnergyType;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -362,9 +363,11 @@ public class MeterCollectController {
     public String addPage(Model model, @PathVariable("comId") String comId) {
         logger.info("计量器具新增页面");
         String code = meterCollectService.getGeneralCode(comId);
+        List<EnergyType> list  = meterCollectService.getEnergyType();
         String s = code.substring(1, code.length());
         String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
         model.addAttribute("code", "A" + newCode);
+        model.addAttribute("energy",list);
         return "/sys/mdc/add";
     }
 
@@ -463,6 +466,8 @@ public class MeterCollectController {
             Map<String, Object> params = new HashMap<>();
             params.put("unitType", mec.getUnitType().toString());
             List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
+            List<EnergyType> listE  = meterCollectService.getEnergyType();
+            model.addAttribute("energy",listE);
             model.addAttribute("mec", mec);
             model.addAttribute("uList", list);
         } catch (Exception e) {

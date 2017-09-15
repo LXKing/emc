@@ -238,8 +238,11 @@ function initable() {
                 field: 'tag',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    if (value.length > 6) {
-                        return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
+                    if(value!=null&&value!="") {
+                        if (value.length > 6) {
+                            return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
+                        }
+                        return value;
                     }
                     return value;
                 }
@@ -249,10 +252,12 @@ function initable() {
                 field: 'formula',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    if (value.length > 6) {
-                        return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
+                    if(value!=null&&value!="") {
+                        if (value.length > 6) {
+                            return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
+                        }
+                        return value;
                     }
-                    return value;
                 }
             },
 //            {
@@ -288,8 +293,11 @@ function initable() {
                 field: 'depict',
                 align: 'center',
                 formatter: function (value, row, index) {
+                    if(value!=null&&value!=""){
                     if (value.length > 6) {
                         return '<span title="' + value + '">' + value.substr(0, 6) + '</span>';
+                    }
+                    return value;
                     }
                     return value;
                 }
