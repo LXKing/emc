@@ -8,6 +8,7 @@ import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.vo.MeterCollectA;
 import com.huak.mdc.vo.MeterCollectDataA;
 import com.huak.org.model.Company;
+import com.huak.sys.model.EnergyType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -115,4 +116,6 @@ public interface MeterCollectService {
     List<Map<String,Object>> selectByMaps(HashMap<String, Object> stringObjectHashMap);
 
     boolean addData(JSONObject jo);
+
+    List<EnergyType> getEnergyType();
 }

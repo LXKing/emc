@@ -62,4 +62,6 @@ public interface MeterCollectDao {
     public Integer getFormulaByIsReal(String formula);
 
     List<MeterCollect> selectFictitiousMetersByCode(Map<String, Object> params);
+
+
 }

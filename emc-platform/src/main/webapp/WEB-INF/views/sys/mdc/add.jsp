@@ -67,8 +67,8 @@
                     <div class="col-sm-8">
                         <select id="energyTypeId" name="energyTypeId" class="chosen-select  form-control">
                             <option value="">请选择类型</option>
-                            <c:forEach items="${sysDic['energyType']}" var="type">
-                                <option value="${type.seq}">${type.des}</option>
+                            <c:forEach items="${energy}" var="type">
+                                <option value="${type.id}">${type.nameZh}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -208,7 +208,7 @@ $(function () {
             $(top.document).find("#yucun").html("");
             $(top.document).find("#gongshi").html(html);
         }
-//        if(real==0){
+        if(real==0){
 //            var html='<div  class="form-group">'+
 //                    '<label class="col-sm-3  control-label"><span class="red">*</span>是否预存：</label>'+
 //                    '<div class="col-sm-8">'+
@@ -218,9 +218,9 @@ $(function () {
 //                    '<option value="1">是</option>'+
 //                    '</select>'+
 //                    '</div>'+'</div>';
-//            $(top.document).find("#gongshi").html("");
+            $(top.document).find("#gongshi").html("");
 //            $(top.document).find("#yucun").html(html);
-//        }
+        }
     });
 
     $(top.document).delegate(".btnFun",'click', function () {
@@ -251,6 +251,7 @@ $(function () {
                         top.layer.msg("请输入正确的公式!");
                         return false;
                     } else {
+                        //alert(v+value);
                         $(top.document).find("#formula").val(v+value);
                     }
                 }
@@ -363,7 +364,17 @@ $(function () {
         }
         return false;
     });
-
+    // 长度数值校验
+    $.validator.addMethod("isDouble", function(value, element) {
+        var deferred = $.Deferred();//创建一个延迟对象
+        var reg = new RegExp("^[0-9]+(.[0-9]{1,6})?$");
+        if(!reg.test(value)){
+            //top.layer.msg("请输入数字!");
+            return false;
+        }else{
+            return true;
+        }
+    }, "请确认输入的数值为整数或小数(精确到6位小数：如:0.000001)");
     $form.validate({
         onsubmit: true,// 是否在提交是验证
         //移开光标:如果有内容,则进行验证
@@ -407,7 +418,8 @@ $(function () {
                 required:true
             },
             coef: {
-                required:true
+                required:true,
+                isDouble:true
             },
             tag: {
                 required:true
@@ -492,15 +504,21 @@ function getType(type){
         dataType: 'json',
         data:{unitType:type,comId:$(top.document).find(".chosen-select").find("option:selected").val()},
         success: function (result) {
+            var $elment=$(top.document).find(".chosen-select-unit");
+            $elment.empty();
             var data = result.list;
             var optionHtml='';
             for(var i =0;i<data.length;i++){
                 optionHtml+='<option value="'+data[i].unitId+'">'+data[i].unitName+'</option>'
             }
-            debugger;
-            $(top.document).find(".chosen-select-unit").append(optionHtml);
+            if(optionHtml==null||optionHtml==""){
+                top.layer.msg("该类型下没有供热单位");
+                $elment.empty();
+            }else{
+                $elment.append(optionHtml);
+            }
             //下拉框js
-            $(top.document).find(".chosen-select-unit").chosen();
+            $elment.chosen("destroy").chosen();
         }
     });
 }
