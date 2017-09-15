@@ -439,10 +439,12 @@ $(function () {
     });
 
     $(".applyBtn").click(function () {
+        debugger
         $("#begin").val(startDate.Format("yyyy-MM-dd"));
         $("#end").val(endDate.Format("yyyy-MM-dd"));
         if (endDate < startDate) {
-            $("#end").val("");
+            layer.msg('开始时间小于结束时间！');
+            return false;
         }
         $("#selectdate").hide();
         setCookie('toolStartDate', startDate.Format("yyyy-MM-dd"), 3);
