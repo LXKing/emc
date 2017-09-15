@@ -55,10 +55,10 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red"></span>出场编号：</label>
+                            class="red"></span>出厂编号：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="serialNo" id="serialNo" class="form-control" type="text" maxlength="16" placeholder="请输入出场编号">
+                        <input name="serialNo" id="serialNo" class="form-control" type="text" maxlength="16" placeholder="请输入出厂编号">
                     </div>
                 </div>
                 <div class="form-group">
