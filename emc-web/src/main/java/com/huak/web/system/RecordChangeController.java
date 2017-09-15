@@ -49,11 +49,8 @@ public class RecordChangeController {
     }
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public String list(@RequestParam Map<String, Object> paramsMap) {
+    public String list(@RequestParam Map<String, Object> paramsMap,Page page) {
         logger.info("记录表页分页查询");
-        Page page = new Page();
-        String pageNumber=paramsMap.get("pageNumber").toString();
-        page.setPageNumber(Integer.valueOf(pageNumber));
         JSONObject jo = new JSONObject();
         try {
             jo.put(Constants.LIST, changeService.queryByPage(paramsMap, page));

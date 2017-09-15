@@ -289,7 +289,7 @@
         mc.NAME,
         mc.SERIAL_NO,
         vu.UNITNAME,
-        mc.ENERGY_TYPE_ID,
+        et.TYPE ENERGY_TYPE_ID,
         mc.ISREAL,
         mc.ISTOTAL,
         mc.UNIT_ID,
@@ -304,6 +304,7 @@
         mc.COM_ID
         FROM
         t_emc_meter_collect mc
+        left join t_emc_energy_type et  on mc.ENERGY_TYPE_ID = et.id
         LEFT JOIN v_emc_unit vu ON mc.UNIT_ID = vu.UNITID
         where 1=1
         <if test="code != null and code!=''">
@@ -316,7 +317,7 @@
             and SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
         </if>
         <if test="energyTypeId != null and energyTypeId!=''">
-            and ENERGY_TYPE_ID = #{energyTypeId,jdbcType=VARCHAR}
+            and et.TYPE = #{energyTypeId,jdbcType=VARCHAR}
         </if>
         <if test="isreal != null and isreal !=''">
             and ISREAL = #{isreal,jdbcType=TINYINT}
@@ -697,8 +698,11 @@
         LEFT JOIN v_emc_unit b ON d.UNIT_ID = b.UNITID
         LEFT JOIN t_emc_energy_type c ON d.ENERGY_TYPE_ID = c.ID
         where 1=1
-        <if test="collectName != null and collectName!=''">
-            and d.UNIT_ID  = #{collectName,jdbcType=VARCHAR}
+        <if test="unitId != null and unitId!=''">
+            and d.UNIT_ID  = #{unitId,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null and name!=''">
+            and d.NAME  = #{name,jdbcType=VARCHAR}
         </if>
         <if test="comId != null and comId!=''">
             and d.COM_ID = #{comId,jdbcType=VARCHAR}

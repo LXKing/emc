@@ -17,10 +17,10 @@
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
             <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">类型</label>
                 </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <div class="select-box">
                         <div class="clearfix h-selectbox">
                             <div class="x-selectfree fl">
@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="x-sfright1"></div>
                                 </div>
-                                <div class="x-sfoption1" id="energy">
+                                <div class="x-sfoption1" id="energyType">
                                     <p value="1">水</p>
                                     <p value="2">电</p>
                                     <p value="3">气</p>
@@ -53,10 +53,10 @@
                 </div>
             </div>
             <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <label for="">单位</label>
                 </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
+                <div class="select-box col-xs-12 col-sm-4 col-md-2">
                     <div class="select-box">
                         <div class="clearfix h-selectbox">
                             <div class="x-selectfree fl">
@@ -71,7 +71,7 @@
                                         <p value="${item.unitId}">${item.unitName}</p>
                                     </c:forEach>
                                 </div>
-                                <input id="unitName" name="unitName" type="hidden" value="" />
+                                <input id="unitId" name="unitId" type="hidden" value="" />
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                 <td width="6%">
                     <div class="text-left">手/自动</div>
                 </td>
-                <td width="12%">创建时间<i class="icon-sort"></i></td>
+                <td width="12%">创建时间</td>
                 <td width="8%">
                     <div class="text-left">表底</div>
                 </td>

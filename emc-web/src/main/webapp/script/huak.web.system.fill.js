@@ -42,20 +42,37 @@ function loadDataFun() {
 }
 
 function reset(){
-   $("#unitName").val("");
-   $("#name").val("");
-   $("#startTime").val("");
-   $("#endTime").val("");
+    $("#x-sfoption1").prev().find("input").val("请选择用能单位");
+    $("#energyType").prev().find("input").val("请选择能源类型");
+    $("#unitId").val("");
+    $("#name").val("");
+    $("#name").val("");
+    $("#energyType").val("");
 }
+//下拉切换事件
+$("body").on("click", "#energyType p", function () {
+    var selectval = $(this).html();
+    var selectid = $(this).attr("value");
 
+    $('#energyType').val(selectid);
+    $(this).parent().prev().find("input").val(selectval);
+    $(this).parent().slideUp(200, function () {
+    });
+});
 
-
+//下拉切换事件
+$("body").on("click", "#x-sfoption1 p", function () {
+    var selectval = $(this).html();
+    var selectid = $(this).attr("value");
+    $(this).parent().prev().find("input").val(selectval);
+    $(this).parent().slideUp(200, function () {
+    });
+});
 
 function query(num){
 //table 数据查询
-    debugger;
     dataMap.clear();
-    var unitName=$("#unitName").val();
+    var unitId=$("#unitId").val();
     var name=$("#name").val();
     var startTime=$("#startTime").val();
     var endTime=$("#endTime").val();
@@ -69,7 +86,7 @@ function query(num){
         url: _web + '/data/fill/list/data',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data: {name:name,startTime:startTime,endTime:endTime,unitName:unitName,energyType:energyType},
+        data: {name:name,startTime:startTime,endTime:endTime,unitId:unitId,energyType:energyType},
         dataType: "json",
         success: function (data) {
             console.info(data);
