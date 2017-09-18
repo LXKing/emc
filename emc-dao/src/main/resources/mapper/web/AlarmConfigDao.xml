@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huak.health.dao.AlarmConfigDao">
+  <resultMap id="BaseResultMap" type="com.huak.health.model.AlarmConfig">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ALARM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ALARM_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="ALARM_LEVEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="MODEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="ISENABLE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TAG, ALARM_NAME, ALARM_TYPE, ALARM_LEVEL, MODEL, NUM, ISENABLE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_emc_alarm_config
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_emc_alarm_config
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huak.health.model.AlarmConfig">
+    insert into t_emc_alarm_config (ID, TAG, ALARM_NAME, 
+      ALARM_TYPE, ALARM_LEVEL, MODEL, 
+      NUM, ISENABLE)
+    values (#{id,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{alarmName,jdbcType=VARCHAR}, 
+      #{alarmType,jdbcType=TINYINT}, #{alarmLevel,jdbcType=TINYINT}, #{model,jdbcType=TINYINT}, 
+      #{num,jdbcType=DOUBLE}, #{isenable,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huak.health.model.AlarmConfig">
+    insert into t_emc_alarm_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="tag != null">
+        TAG,
+      </if>
+      <if test="alarmName != null">
+        ALARM_NAME,
+      </if>
+      <if test="alarmType != null">
+        ALARM_TYPE,
+      </if>
+      <if test="alarmLevel != null">
+        ALARM_LEVEL,
+      </if>
+      <if test="model != null">
+        MODEL,
+      </if>
+      <if test="num != null">
+        NUM,
+      </if>
+      <if test="isenable != null">
+        ISENABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmName != null">
+        #{alarmName,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmType != null">
+        #{alarmType,jdbcType=TINYINT},
+      </if>
+      <if test="alarmLevel != null">
+        #{alarmLevel,jdbcType=TINYINT},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=TINYINT},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=DOUBLE},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.health.model.AlarmConfig">
+    update t_emc_alarm_config
+    <set>
+      <if test="tag != null">
+        TAG = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmName != null">
+        ALARM_NAME = #{alarmName,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmType != null">
+        ALARM_TYPE = #{alarmType,jdbcType=TINYINT},
+      </if>
+      <if test="alarmLevel != null">
+        ALARM_LEVEL = #{alarmLevel,jdbcType=TINYINT},
+      </if>
+      <if test="model != null">
+        MODEL = #{model,jdbcType=TINYINT},
+      </if>
+      <if test="num != null">
+        NUM = #{num,jdbcType=DOUBLE},
+      </if>
+      <if test="isenable != null">
+        ISENABLE = #{isenable,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huak.health.model.AlarmConfig">
+    update t_emc_alarm_config
+    set TAG = #{tag,jdbcType=VARCHAR},
+      ALARM_NAME = #{alarmName,jdbcType=VARCHAR},
+      ALARM_TYPE = #{alarmType,jdbcType=TINYINT},
+      ALARM_LEVEL = #{alarmLevel,jdbcType=TINYINT},
+      MODEL = #{model,jdbcType=TINYINT},
+      NUM = #{num,jdbcType=DOUBLE},
+      ISENABLE = #{isenable,jdbcType=TINYINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
