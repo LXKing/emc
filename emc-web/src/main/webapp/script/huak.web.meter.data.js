@@ -216,7 +216,7 @@ function uploaderExcel() {
 /**
  * 前台-安全与后台-采集表管理-导出excel
  */
-$(document).on("click", ".exportchange", function () {
+$(document).on("click", ".export", function () {
     var $from = $("#meter-search-form");
     var url = $(this).attr('export-url') + '?' + $from.serialize();
      window.location.href = url;

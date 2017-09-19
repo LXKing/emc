@@ -208,7 +208,7 @@
         </div>
         <div class="col-xs-12 btngroups   ">
             <a class="btns btnsfl btns-green" style="cursor: pointer" onclick="addMeterCollect()" >添加</a>
-            <a class="btns btnsfl btns-green exportchange" style="cursor: pointer;" export-url="${web}/meterData/export">导出Excel</a>
+            <a class="btns btnsfl btns-green export" style="cursor: pointer;" export-url="${web}/meterData/export">导出Excel</a>
             <a  class="btns btnsfl btns-green" style="cursor: pointer" onclick="uploaderExcel()"> 批量导入</a>
         </div>
         <div class="col-xs-12 main-table no-padding">
