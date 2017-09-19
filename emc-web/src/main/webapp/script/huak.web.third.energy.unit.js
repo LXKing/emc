@@ -95,6 +95,7 @@ function initAssessment(){
                     series: [
                         {
                             type: 'bar',
+                            name:'能耗用量',
                             dataList: result.object.cur,
                             barWidth: 20
                         }
@@ -121,6 +122,7 @@ function initAssessment(){
                     series: [
                         {
                             type: 'line',
+                            name:'能耗用量',
                             dataList: result.object.data[0].currentYear,
                             barWidth: 20
 
@@ -136,36 +138,43 @@ function initAssessment(){
 function chart01Fun(data) {
     echartsSelf({
         id: "groupEnergyChart",
+        leftName:'用量',
+        rightName:'同期偏差',
         echartsConfig: {
             dataZoom: true,
             xAxisBoundaryGap: true,
             axisLabelRotate: '-50', //倾斜角度
             axisLabelInterval:0,
             xData: data.name,
-            series: [{
-                type: 'line',
-                dataList: data.tqb,
-                name:'同期',
-                typeLine: 'solid',
-                yAxisIndex: 1
-            },
+            series: [
+                {
+                    type: 'line',
+                    label:{show:true},
+                    dataList: data.tqb,
+                    name:'同期偏差',
+                    typeLine: 'solid',
+                    yAxisIndex: 1,
+                    label: {
+                        show: true
+                    }
+                },
                 {
                     type: 'bar',
-                    name:'计划',
+                    name:'本年计划',
                     dataList: data.plan,
                     barWidth: 20,
                     barColor: 'rgba(59,150,219,0.4)'
                 },
                 {
                     type: 'bar',
-                    name:'本期',
+                    name:'本期能耗',
                     dataList: data.cur,
                     barWidth: 20,
                     barColor: 'rgba(59,150,219,1)'
                 },
                 {
                     type: 'bar',
-                    name:'同期',
+                    name:'去年同期',
                     dataList: data.tq,
                     barWidth: 20,
                     barColor: 'rgba(50,187,182,1)'

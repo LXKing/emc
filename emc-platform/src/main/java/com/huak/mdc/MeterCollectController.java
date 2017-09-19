@@ -78,7 +78,7 @@ public class MeterCollectController {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "text/html;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.POST, value = "upload", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String add(HttpServletRequest request, HttpServletResponse response){
         JSONObject jo = new JSONObject();

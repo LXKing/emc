@@ -385,9 +385,9 @@
     <!--组件-昨天、今天、明天-->
     <select id="selectrecentDetail"  resultType="java.util.Map" parameterType="java.util.Map">
         select
-        CC.ttotal,CC.twhater,CC.telectric,CC.tgas,CC.theat,CC.tcoal,CC.tsolar,
-        CC.ytotal,CC.ywhater,CC.yelectric,CC.ygas,CC.yheat,CC.ycoal,CC.ysolar,
-        CC.towtotal,CC.towwhater,CC.towelectric,CC.towgas,CC.towheat,CC.towcoal,CC.towsolar,
+        ROUND(CC.ttotal,1) ttotal,CC.twhater,CC.telectric,CC.tgas,CC.theat,CC.tcoal,CC.tsolar,
+        ROUND(CC.ytotal,1) ytotal,CC.ywhater,CC.yelectric,CC.ygas,CC.yheat,CC.ycoal,CC.ysolar,
+        ROUND(CC.towtotal,1) towtotal,CC.towwhater,CC.towelectric,CC.towgas,CC.towheat,CC.towcoal,CC.towsolar,
         CC.treewhater,CC.treeelectric,CC.treegas,CC.treeheat,CC.treetotal,CC.treesolar,
         (CASE WHEN CC.twhater=0 then 0 else ROUND((CC.twhater-CC.ywhater)/CC.twhater,1) end) as twhaterzz,
         (CASE WHEN CC.telectric=0 then 0 else ROUND((CC.telectric-CC.yelectric)/CC.telectric,1) end) as telectriczz,
@@ -466,7 +466,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
         <if test="today != null and today !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{today},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{today},' 23:59:59')
@@ -501,7 +501,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
         <if test="yesterday != null and yesterday !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{yesterday},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{yesterday},' 23:59:59')
@@ -535,7 +535,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
         <if test="towdayago != null and towdayago !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{towdayago},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{towdayago},' 23:59:59')
@@ -546,7 +546,7 @@
         ( select 'treedayago' as days,sum(q.totalcol),sum(q.totall),max((case when q.type= 1 then q.dh else 0 end)),
         max((case when q.type= 2 then q.dh else 0 end)),
         max((case when q.type= 3 then q.dh else 0 end)),
-         max((case when q.type= 4 then q.dh else 0 end)) heat,
+        max((case when q.type= 4 then q.dh else 0 end)) heat,
         max((case when q.type= 5 then q.dh else 0 end)),
         max((case when q.type= 6 then q.dh else 0 end))
         from (SELECT mm.dates,mm.type,ROUND(sum(mm.coles)/sum(mm.area),1)dh ,sum(mm.coles) as totalcol,sum(mm.toles) as totall
@@ -570,7 +570,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
         <if test="treedayago != null and treedayago !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{treedayago},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{treedayago},' 23:59:59')

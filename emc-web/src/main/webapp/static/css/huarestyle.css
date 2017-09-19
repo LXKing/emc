@@ -725,6 +725,7 @@ input[type="text"].time-input {
 }
 
 .chart-box .cb-header .cb-title-right {
+    margin-right: 36px;
 	float: right;
 }
 

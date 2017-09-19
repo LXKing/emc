@@ -37,26 +37,25 @@
                         <span class="cb-title">2016~2017年度采暖季水能耗情况对比 (单位: m³)</span>
 
 
-                        <div class="cb-title-right" style="margin-right: 36px;">
+                        <div class="cb-title-right" style="margin-right:10px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
-                                同比单耗
+                                同期偏差
                             </label>
                             <label>
                                 <span class="cb-legend-gray"></span>
-                                实际单耗
+                               本期计划
                             </label>
                             <label>
                                 <span class="cb-legend-gray"></span>
-                                计划单耗
+                                本期能耗
                             </label>
                             <label>
                                 <span class="cb-legend-gray"></span>
-                                同比
+                               去年同期
                             </label>
                             <label>
-                                <span class="cb-legend-gray"></span>
-                                同比(单位:GJ)
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  同比(单位:%)
                             </label>
                         </div>
                     </div>
