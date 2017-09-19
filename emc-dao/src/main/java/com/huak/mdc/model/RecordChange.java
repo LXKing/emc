@@ -113,10 +113,8 @@ public class RecordChange  implements Serializable {
     }
 
     public String getCreateTime() throws ParseException {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
-        Date date = format.parse(createTime);
-        createTime = format.format(date);
-        return createTime;
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(format.parse(createTime));
     }
 
     public void setCreateTime(String createTime) {

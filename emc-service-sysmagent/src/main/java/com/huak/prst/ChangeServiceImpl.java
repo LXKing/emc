@@ -116,7 +116,7 @@ public class ChangeServiceImpl implements ChangeService {
         int flag = 0 ;
         String uuid = UUIDGenerator.getUUID();
         record.setId(uuid);
-        String date = dateDao.getTime();
+        String date = dateDao.getTime().substring(0,19);
         record.setCreateTime(date);
         MeterCollect meterCollect = meterCollectDao.selectByPrimaryKey(record.getCollectId());
         Company company = companyDao.selectByPrimaryKey(meterCollect.getComId());
@@ -145,7 +145,7 @@ public class ChangeServiceImpl implements ChangeService {
                 recordChangeDao.deleteByPrimaryKey(uuid);
                 meterCollect.setCoef(record.getUsedCoef());
                 meterCollectDao.updateByPrimaryKey(meterCollect);
-                logger.error("预存能耗计算异常："+ e);
+                logger.error("换表能耗计算异常："+ e);
             }
 
         }

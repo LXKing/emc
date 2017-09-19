@@ -261,7 +261,7 @@ function deleteMeter(id) {
  * 前台-安全与后台-采集表管理-换表
  */
 function changeMeter(id) {
-    openLayer(_web + "/meterData/change/"+id, "采集表更换", "meterCollectChangeForm", null, null);
+    openLayer(_web + "/meterData/change/"+id, "采集表更换", "meterDataChangeForm", null, null);
 }
 
 
@@ -269,5 +269,5 @@ function changeMeter(id) {
  * 前台-安全与后台-采集表管理-预存
  */
 function prestoreMeter(id) {
-    openLayer(_web + "/meterData/prestore/"+id, "采集表预存", "meterCollectPrestoreForm", null, null);
+    openLayer(_web + "/meterData/prestore/"+id, "采集表预存", "meterDataPrestoreForm", null, null);
 }

@@ -15,26 +15,29 @@ function loadDataFun() {
     var year = date.getFullYear();
     var od = $(".ec_title");
     $.each($(".button-group").find("a"), function(sindex, sitem) {
-    $(this).click(function() {
-        var title ='';
-        $(od[0]).empty();
-        $(od[1]).empty();
-        var yeart =  (year-1) +'~'+ year;
-        title = yeart;
-        $(".cb-title").empty();
-        $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
         var type = parseInt(sindex)+1;
-        $("#energytype").val(type);
-        if(type == 1){ title += '年度水能耗情况对比 (单位: T)';$(od[0]).html(yeart+"年度水能耗排名(T)");$(od[1]).html("水总能耗趋势(T)");}
-        if(type == 2){ title += '年度电能耗情况对比 (单位: kW·h)';$(od[0]).html(yeart+"年度电能耗排名(kW·h)");$(od[1]).html("电总能耗趋势(kW·h)");}
-        if(type == 3){ title += '年度气能耗情况对比 (单位: m³)';$(od[0]).html(yeart+"年度气能耗排名(m³)");$(od[1]).html("气总能耗趋势(m³)");}
-        if(type == 4){ title += '年度热能耗情况对比 (单位: GJ)';$(od[0]).html(yeart+"年度热能耗排名(GJ)");$(od[1]).html("热总能耗趋势(GJ)");}
-        if(type == 5){ title += '年度煤能耗情况对比 (单位: T)';$(od[0]).html(yeart+"年度煤能耗排名(T)");$(od[1]).html("煤总能耗趋势(T)");}
-        $(".cb-title").html(title);
-        initChart01(sindex);
-        initAssessment();
-    });
+        $(this).click(function() {
+            var title ='';
+            $(od[0]).empty();
+            $(od[1]).empty();
+            var yeart =  (year-1) +'~'+ year;
+            title = yeart;
+            $(".cb-title").empty();
+            $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
 
+            $("#energytype").val(type);
+            if(type == 1){ title += '年度水能耗情况对比 (单位: T)';$(od[0]).html(yeart+"年度水能耗排名(T)");$(od[1]).html("水总能耗趋势(T)");}
+            if(type == 2){ title += '年度电能耗情况对比 (单位: kW·h)';$(od[0]).html(yeart+"年度电能耗排名(kW·h)");$(od[1]).html("电总能耗趋势(kW·h)");}
+            if(type == 3){ title += '年度气能耗情况对比 (单位: m³)';$(od[0]).html(yeart+"年度气能耗排名(m³)");$(od[1]).html("气总能耗趋势(m³)");}
+            if(type == 4){ title += '年度热能耗情况对比 (单位: GJ)';$(od[0]).html(yeart+"年度热能耗排名(GJ)");$(od[1]).html("热总能耗趋势(GJ)");}
+            if(type == 5){ title += '年度煤能耗情况对比 (单位: T)';$(od[0]).html(yeart+"年度煤能耗排名(T)");$(od[1]).html("煤总能耗趋势(T)");}
+            $(".cb-title").html(title);
+            initChart01(sindex);
+            initAssessment();
+        });
+        if(type == 1){
+            $(this).click();
+        }
     });
 }
 
@@ -117,7 +120,6 @@ function initAssessment(){
                     axisLabelRotate: '0', //倾斜角度
                     xAxisBoundaryGap: true,
                     dataZoom: true,
-
                     xData: result.object.date,
                     series: [
                         {

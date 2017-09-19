@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="meterCollectPrestoreForm" role="form">
+            <form class="form-horizontal" id="meterDataPrestoreForm" role="form">
                 <input id="comId" name="comId" type="hidden" class="class-comid" value="${mec.comId}">
                 <input type="hidden" name="collectId" value="${mec.id}"/>
                 <div class="form-group">
@@ -100,7 +100,7 @@ $(function () {
     // validate signup form on keyup and submit
     var icon = "<i class='fa fa-times-circle'></i> ";
 
-    var $form = $(top.document).find("#meterCollectPrestoreForm");
+    var $form = $(top.document).find("#meterDataPrestoreForm");
 
     $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
         $(this).closest('.form-group').removeClass('has-error');
@@ -167,7 +167,7 @@ $(function () {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
             $.ajax({
-                url: _platform + '/meterCollect/prestore',
+                url: _web + '/meterData/prestore',
                 data: $form.serialize(),
                 type: 'POST',
                 dataType: 'json',
@@ -175,7 +175,7 @@ $(function () {
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
-                        $('#meter-table-list').bootstrapTable("refresh");
+                        queryMeter(1);
                     } else {
                         top.layer.close(index);
                         top.layer.msg(result.msg);

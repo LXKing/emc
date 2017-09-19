@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="meterCollectChangeForm" role="form">
+            <form class="form-horizontal" id="meterDataChangeForm" role="form">
                 <input id="comId" name="comId" type="hidden" class="class-comid" value="${mec.comId}">
                 <input type="hidden" name="collectId" value="${mec.id}"/>
                 <div class="form-group">
@@ -111,7 +111,7 @@ $(function () {
     // validate signup form on keyup and submit
     var icon = "<i class='fa fa-times-circle'></i> ";
 
-    var $form = $(top.document).find("#meterCollectChangeForm");
+    var $form = $(top.document).find("#meterDataChangeForm");
 
     $(top.document).on('mousedown','input:not(:submit):not(:button)',function(){
         $(this).closest('.form-group').removeClass('has-error');
@@ -178,7 +178,7 @@ $(function () {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
             $.ajax({
-                url: _platform + '/meterCollect/change',
+                url: _web + '/meterData/change',
                 data: $form.serialize(),
                 type: 'POST',
                 timeout:6300000,
@@ -187,7 +187,7 @@ $(function () {
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
-                        $('#meter-table-list').bootstrapTable("refresh");
+                        queryMeter(1);
                     } else {
                         top.layer.close(index);
                         top.layer.msg(result.msg);
@@ -202,7 +202,7 @@ $(function () {
 function getType(type){
 
     $.ajax({
-        url: _platform + '/meterCollect/unit',
+        url: _web + '/meterData/unit',
         type: 'POST',
         dataType: 'json',
         data:{unitType:type},
@@ -220,7 +220,7 @@ function getType(type){
 }
 function getType(type){
     $.ajax({
-        url: _platform + '/meterCollect/unit',
+        url: _web + '/meterData/unit',
         type: 'POST',
         dataType: 'json',
         data:{unitType:type},
