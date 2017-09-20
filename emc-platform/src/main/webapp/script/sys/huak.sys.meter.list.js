@@ -258,6 +258,7 @@ function initable() {
                         }
                         return value;
                     }
+                    return value;
                 }
             },
 //            {
