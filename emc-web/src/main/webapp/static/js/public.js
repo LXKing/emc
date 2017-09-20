@@ -20,23 +20,40 @@ Date.prototype.Format = function (fmt) { //author: meizz
 /**
  * 公共方法
  * 格式化数据
- *
+ * 算小数点保留六位 4位+.+1位
+ * 例：123456789.1111 ->1.2亿
+ *     12345678.1111 ->1234.6万
+ *     12345.1111->1.2万
+ *     1234.1111->1234.1
  * */
-function toFormatNum(val){
-    var divisor = 10000;//倍率
-    var suffix = '万';//单位
+function toFormatNum(val,num){
+    num = num == undefined ? 1:num;
+    var divisor = 1;//倍率
+    var suffix = '';//单位
     var f = parseFloat(val);
     if (isNaN(f)) {
         return 0;
     }
-    return toOneDecimal(f/divisor) + suffix;
+    if(f-99999999>0){
+        divisor = 100000000;
+        suffix = '亿';
+    }else if(f-9999>0){
+        divisor = 10000;
+        suffix = '万';
+    }
+    var result = parseFloat(f/divisor).toFixed(num);
+    if(num>0){
+        var disp = 10;
+        for(var i=1;i < num;i++){
+            disp = disp*10;
+        }
+        result = Math.round(f/divisor*disp)/disp;
+    }
+
+    return  result + suffix;
 }
 
-/**
- * 公共方法
- * 格式化数据
- *
- * */
+
 function toFormatNumber(val,num){
     num = num == undefined ? 1:num;
     var divisor = 10000;//倍率
@@ -45,7 +62,7 @@ function toFormatNumber(val,num){
     if (isNaN(f)) {
         return 0;
     }
-    var result = parseFloat(f/divisor).toFixed(num)
+    var result = parseFloat(f/divisor).toFixed(num);
     return  result+ suffix;
 }
 
@@ -161,6 +178,11 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if(data.flag==false){
+                    $('.btnAlarm').each(function () {
+                        if ("本年度" == $(this).text()) {
+                            $(this).addClass("btnAlarm-on").siblings().removeClass("btnAlarm-on");
+                        }
+                    });
                     $.ajax({
                         url: _web + "/tools/search/year",
                         type: "POST",
