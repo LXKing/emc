@@ -128,9 +128,9 @@ function loadDataFun(){
         dataType: "json",
         success : function(data) {
         	$("#groupTotal").html(data.data.groupTotal.energy.value);
-        	if(data.data.groupTotal.energy.type == 1){
-        		$("#groupTotal").addClass("energy_gray");
-        	};
+//        	if(data.data.groupTotal.energy.type == 1){
+//        		$("#groupTotal").addClass("energy_gray");
+//        	};
             if(data.data.groupTotal.changeRate.type == 1){
             	$("#groupchangeRate").css('color','#3db1b0');
                 $("#groupchangeRate").html(data.data.groupTotal.changeRate.rate + "<span class='arrow'>↓</span>");
