@@ -1,4 +1,14 @@
 ﻿$(function () {
+    console.info('12345678910.3--->'+toFormatNum(12345678910.3));
+    console.info('1234567891.3--->'+toFormatNum(1234567891.3));
+    console.info('123456789.3--->'+toFormatNum(123456789.3));
+    console.info('12345678.3--->'+toFormatNum(12345678.3));
+    console.info('1234567.3--->'+toFormatNum(1234567.3));
+    console.info('123456.3--->'+toFormatNum(123456.3));
+    console.info('12345.3--->'+toFormatNum(12345.3));
+    console.info('1234.3--->'+toFormatNum(1234.3));
+    console.info('123.3--->'+toFormatNum(123.3));
+    console.info('12.3--->'+toFormatNum(12.3));
     chart12Fun();
     chart10Fun();
     var myChartEnergy;
@@ -1256,10 +1266,10 @@ function chart07Fun() {
                 initChart(kedu1, currentPlan, bm_total);
                 pcd = toDecimal(pcd);
                 pcdz =  toDecimal(pcdz);
-                $("#pc_plan_percent").html("偏差度(" + pcd + "%)");
+                $("#pc_plan_percent").html("偏差度(" + toFormatNum(pcd) + "%)");
                 $("#pc_plan").html(pcdz);
                 /*总标煤展示*/
-                $("#bm_total").html(toDecimal(bm_total));
+                $("#bm_total").html(toFormatNum(bm_total));
                 var tb_flag = result.object.total_flag;
                 var total_tb = result.object.total_tb;
                 if (tb_flag == true) {
@@ -1275,7 +1285,7 @@ function chart07Fun() {
                     $("#total_tb").attr("class", "");//白
                 }
                 /*水*/
-                $("#whater").html(toFormatNumber(result.object.whater,0) + "T");
+                $("#whater").html(toFormatNum(result.object.whater,0) + "T");
                 var tb_flag = result.object.whater_flag;
                 var total_tb = result.object.whater_tb;
                 if (tb_flag == true) {
@@ -1293,7 +1303,7 @@ function chart07Fun() {
                     $("#whater_tb").html("(" + total_tb + "→)");
                 }
                 /*电*/
-                $("#electric").html(toFormatNumber(result.object.electric,0) + "kW·h");
+                $("#electric").html(toFormatNum(result.object.electric,0) + "kW·h");
                 var tb_flag = result.object.electric_flag;
                 var total_tb = result.object.electric_tb;
                 if (tb_flag == true) {
@@ -1311,7 +1321,7 @@ function chart07Fun() {
                     $("#electric_tb").html("(" + total_tb + "→)");
                 }
                 /*气*/
-                $("#gas").html(toFormatNumber(result.object.gas,0) + "m³");
+                $("#gas").html(toFormatNum(result.object.gas,0) + "m³");
                 var tb_flag = result.object.gas_flag;
                 var total_tb = result.object.gas_tb;
                 if (tb_flag == true) {
@@ -1329,7 +1339,7 @@ function chart07Fun() {
                     $("#gas_tb").html("(" + total_tb + "→)");
                 }
                 /*热*/
-                $("#heat").html(toFormatNumber(result.object.heat,0) + "GJ");
+                $("#heat").html(toFormatNum(result.object.heat,0) + "GJ");
                 var tb_flag = result.object.heat_flag;
                 var total_tb = result.object.heat_tb;
                 if (tb_flag == true) {
@@ -1347,7 +1357,7 @@ function chart07Fun() {
                     $("#heat_tb").html("(" + total_tb + "→)");
                 }
                 /*煤*/
-                $("#coal").html(toFormatNumber(result.object.coal,0) + "T");
+                $("#coal").html(toFormatNum(result.object.coal,0) + "T");
                 var tb_flag = result.object.coal_flag;
                 var total_tb = result.object.coal_tb;
                 if (tb_flag == true) {
