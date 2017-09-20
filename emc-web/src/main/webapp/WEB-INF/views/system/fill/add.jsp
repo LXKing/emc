@@ -9,25 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<link href="${web}/static/css/load.css" rel="stylesheet">
 <script src="${web}/script/huak.web.system.fill.add.js"></script>
-<style>
-    /* 半透明的遮罩层 */
-    #overlay {
-        background: #000;
-        filter: alpha(opacity=50); /* IE的透明度 */
-        opacity: 0.5;  /* 透明度 */
-        display: none;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        z-index: 100; /* 此处的图层要大于页面 */
-        display:none;
-    }
-</style>
-
 <div class="main-box">
     <div class="selectbg clearfix">
         <div class="sele-row clearfix row">

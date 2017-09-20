@@ -341,7 +341,7 @@ function changeMeter(id) {
 }
 
 
-//计量仪器-换表
+//计量仪器-预存
 function prestoreMeter(id) {
     openLayer(_platform + "/meterCollect/prestore/"+id, "计量器具预存", "meterCollectPrestoreForm", null, null);
 }

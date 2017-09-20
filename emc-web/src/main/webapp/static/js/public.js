@@ -844,12 +844,17 @@ function showOverlay(id) {
     $("#"+id).width(pageWidth());
     // fadeTo第一个参数为速度，第二个为透明度
     // 多重方式控制透明度，保证兼容性，但也带来修改麻烦的问题
-    $("#overlay").fadeTo(200, 0.5);
+     top.layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $("#overlay").fadeTo(100, 0.3);
 }
 
 /* 隐藏覆盖层 */
 function hideOverlay(id) {
+    top.layer.closeAll();
     $("#"+id).fadeOut(200);
+
 }
 
 /* 当前页面高度 */

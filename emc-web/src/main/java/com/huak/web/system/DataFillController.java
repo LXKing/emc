@@ -123,6 +123,7 @@ public class DataFillController extends BaseController{
     public String addData(HttpServletRequest request,@RequestBody List<Map<String,Object>> datas){
         logger.info("安全与后台-历史数据填报开始");
         HttpSession session = request.getSession();
+        Map<String,Object> map = new HashMap<>();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         JSONObject jo = new JSONObject();
         jo.put("data",datas);

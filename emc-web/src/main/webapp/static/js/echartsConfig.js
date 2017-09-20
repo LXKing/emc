@@ -18,19 +18,19 @@ var echartsSelf = function(options) {
                 yAxisIndex: _item.yAxisIndex,
                 lineStyle: {
                     normal: {
-                        type: _item.typeLine || 'solid',
+                        type: _item.typeLine || 'solid'
 
                     }
                 },
                 itemStyle: {
                     normal: {
-
-                        color: _item.barColor || null,
+                        label : _item.label || null,
+                        color: _item.barColor || null
                     }
                 },
                 barGap: 0,
                 data: _item.dataList,
-                barWidth: _item.barWidth || null,
+                barWidth: _item.barWidth || null
 
             };
             seriesData.push(seriesitem);
@@ -93,7 +93,7 @@ var echartsSelf = function(options) {
                     show: true,
                     textStyle: {
                         color: chartsColor.linefontcolor,
-                        fontFamily: 'arial',
+                        fontFamily: 'arial'
                     },
 
                     interval:(options.echartsConfig.axisLabelInterval=='undefined'||options.echartsConfig.axisLabelInterval==null)?'auto':options.echartsConfig.axisLabelInterval,
@@ -135,7 +135,6 @@ var echartsSelf = function(options) {
                 }
             }, {
                 type: 'value',
-                name: 'right',
                 position: 'right',
                 axisTick: {
                     show: false
@@ -157,9 +156,10 @@ var echartsSelf = function(options) {
                     show: true,
                     textStyle: {
                         color: chartsColor.linefontcolor,
-                        fontFamily: 'arial'
+                        fontFamily: 'arial',
+                        format: '{value}%'
                     }
-                },
+                }
             }],
             color: chartsColor.ec2.facecolor1,
             series: seriesData

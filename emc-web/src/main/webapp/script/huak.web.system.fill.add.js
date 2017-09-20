@@ -58,9 +58,6 @@ function query(num){
     var collectTime=$("#collectTime").val();
     var energyType =$("#energyType").val();
     showOverlay("overlay");
-    var index = layer.load(1, {
-        shade: [0.1,'#fff'] //0.1透明度的白色背景
-    });
     $.ajax({
         url: _web + '/meterData/list',
         type: 'post',
@@ -76,7 +73,6 @@ function query(num){
                 });
                 $("#projectTbody").setTemplateElement("template");
                 $("#projectTbody").processTemplate(data);
-                layer.close(index);
                 hideOverlay("overlay");
             }
         }
