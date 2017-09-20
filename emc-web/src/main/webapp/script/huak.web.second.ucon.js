@@ -273,7 +273,7 @@ function fgsEnergyList(data){
 }
 
 function getHtmlTd(bq,an){
-    return '<td class="need_title">'+bq+'（同<span class="'+(an == 0?"":(an > 0?"redcolor":"bluecolor"))+'">'+toDecimal(an)+'%'+(an == 0?"→":(an > 0?"↑":"↓"))+'</span>）</td>';
+    return '<td class="need_title">'+toDecimal(bq)+'（同<span class="'+(an == 0?"":(an > 0?"redcolor":"bluecolor"))+'">'+toDecimal(an)+'%'+(an == 0?"→":(an > 0?"↑":"↓"))+'</span>）</td>';
 }
 /*集团总单耗-折线图*/
 function groupEnergyChartFun(datalist, datelist){
