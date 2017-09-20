@@ -65,7 +65,6 @@
                         <div id="chart1"></div>
                     </div>
                 </div>
-
                 <div class="energy-list-box">
                     <div class="energy-head ">
                         <span class="energy-list-name">管网-<span class="maintitle"></span></span>
