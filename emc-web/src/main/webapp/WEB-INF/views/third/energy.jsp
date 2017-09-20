@@ -43,7 +43,7 @@
                     <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
-                    <h4 id="groupTotal">0</h4>
+                    <h3 id="groupTotal">0</h3>
                     <div class="small">集团总能耗 (GJ/m3)</div>
                     <h4 id="groupchangeRate">0<span class="arrow"></span></h4>
                     <div class="small">同比去年 (%)</div>
