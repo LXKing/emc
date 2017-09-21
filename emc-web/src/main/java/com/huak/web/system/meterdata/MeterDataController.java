@@ -13,7 +13,6 @@ import com.huak.mdc.model.RecordPrestore;
 import com.huak.org.model.Company;
 import com.huak.prst.ChangeService;
 import com.huak.prst.PrestoreService;
-import com.huak.web.home.BaseController;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,7 +21,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +53,8 @@ public class MeterDataController {
     private static AtomicLong counter = new AtomicLong(0L);
     private static String UPLOAD_TEMP_DIR = "/usr/software/upload/sysmagent";
     private static String UPLOAD_TEMP_DIR1 = "D:\\workSp\\code\\upload";
+
+    private static final String COM_ID = "comId";
     /**
      * 前台-安全与后台-转至系统计量器具列表页
      * @param model
@@ -92,7 +92,7 @@ public class MeterDataController {
         try {
             HttpSession session = request.getSession();
             Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
-            params.put("comId",company.getId());
+            params.put(COM_ID,company.getId());
             List<Map<String,Object>> map =  meterCollectService.getMeterDatas(params);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
@@ -120,7 +120,7 @@ public class MeterDataController {
         logger.info("前台-安全与后台-采集表管理查询");
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
-        paramsMap.put("comId",company.getId());
+        paramsMap.put(COM_ID,company.getId());
         JSONObject jo = new JSONObject();
         try {
             jo.put(Constants.LIST, meterCollectService.queryByPage(paramsMap, page));
@@ -143,7 +143,7 @@ public class MeterDataController {
         logger.info("前台-安全与后台-采集表管理-采集表导出");
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
-        paramsMap.put("comId",company.getId());
+        paramsMap.put(COM_ID,company.getId());
         String workBookName = "采集表";//文件名
         HSSFWorkbook wb = null;
         OutputStream out = null;
@@ -183,7 +183,7 @@ public class MeterDataController {
         String s = code.substring(1, code.length());
         String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
         model.addAttribute("code", "A" + newCode);
-        model.addAttribute("comId", company.getId());
+        model.addAttribute(COM_ID, company.getId());
         return "/system/metermanage/add";
     }
 
@@ -229,7 +229,7 @@ public class MeterDataController {
     public String checkNodeCode(@RequestParam String code, @RequestParam String comId) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("code", code);
-        map.put("comId", comId);
+        map.put(COM_ID, comId);
         JSONObject jo = new JSONObject();
         boolean flag = meterCollectService.checkCode(map);
         if (flag) {
