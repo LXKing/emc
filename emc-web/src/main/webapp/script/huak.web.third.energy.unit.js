@@ -10,7 +10,6 @@ function loadDataFun() {
     initAssessment();
     initTable();
     initChart01(0);
-
     var date = new Date();
     var year = date.getFullYear();
     var od = $(".ec_title");

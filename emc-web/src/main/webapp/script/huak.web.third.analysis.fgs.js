@@ -166,7 +166,7 @@ function loadTable(){
         data: data,
         dataType: "json",
         success: function (result) {
-
+            console.log(result);
             thirdTable(result.object);
         }
     });
@@ -175,6 +175,17 @@ function loadTable(){
 //加载分公司热源的单耗排名
 function loadFeedDH(type) {
     var id = $("#id").val();
+    if(type==1){
+        $(".title_dw_feed").html("换热站单耗排名(T/m²)");
+    }if(type==2){
+        $(".title_dw_feed").html("换热站单耗排名(kW·h/m²)");
+    }if(type==3){
+        $(".title_dw_feed").html("换热站单耗排名(m³/m²)");
+    }if(type==4){
+        $(".title_dw_feed").html("换热站单耗排名(GJ/m²)");
+    }if(type==5){
+        $(".title_dw_feed").html("换热站单耗排名( T/m²)");
+    }
     $.ajax({
         url: _web + "/third/analysis/fgs/feed-dh/"+type+"/"+id,
         type: "GET",
@@ -190,6 +201,17 @@ function loadFeedDH(type) {
 //加载分公司换热站的单耗排名
 function loadStationDH(type) {
     var id = $("#id").val();
+    if(type==1){
+        $(".title_dw_station").html("换热站单耗排名(T/m²)");
+    }if(type==2){
+        $(".title_dw_station").html("换热站单耗排名(kW·h/m²)");
+    }if(type==3){
+        $(".title_dw_station").html("换热站单耗排名(m³/m²)");
+    }if(type==4){
+        $(".title_dw_station").html("换热站单耗排名(GJ/m²)");
+    }if(type==5){
+        $(".title_dw_station").html("换热站单耗排名( T/m²)");
+    }
     $.ajax({
         url: _web + "/third/analysis/fgs/station-dh/"+type+"/"+id,
         type: "GET",
@@ -500,6 +522,7 @@ function feedDh(data){
             series: [{
                 type: 'bar',
                 dataList: data.mapValue,
+                name:'单耗',
                 barWidth: 20
             }]
         }
@@ -522,32 +545,33 @@ function stationDh(data){
             series: [{
                 type: 'bar',
                 dataList: data.mapValue,
+                name:'单耗',
                 barWidth: 20
             }]
         }
     });
 }
-function loadDataFun() {
-    createtable();
-    $.each($(".ec_title"), function(index, item) {
-        if(index == 0) {
-            $.each($(this).find("a"), function(sindex, sitem) {
-                $(this).click(function() {
-                    $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
-                    chart01Fun(top1[sindex]);
-                });
-
-            });
-        } else {
-            $.each($(this).find("a"), function(sindex, sitem) {
-                $(this).click(function() {
-                    $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
-                    chart02Fun(top2[sindex]);
-                });
-            });
-        }
-    })
-
+//function loadDataFun() {
+//    createtable();
+//    $.each($(".ec_title"), function(index, item) {
+//        if(index == 0) {
+//            $.each($(this).find("a"), function(sindex, sitem) {
+//                $(this).click(function() {
+//                    $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
+//                    chart01Fun(top1[sindex]);
+//                });
+//
+//            });
+//        } else {
+//            $.each($(this).find("a"), function(sindex, sitem) {
+//                $(this).click(function() {
+//                    $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
+//                    chart02Fun(top2[sindex]);
+//                });
+//            });
+//        }
+//    })
+//}
 //    $.each($(".energy-list .energy-chart > div"), function(index, item) {
 //        var options = {
 //            id: item.id,
@@ -626,4 +650,4 @@ function loadDataFun() {
 //            }]
 //        }
 //    });
-}
+

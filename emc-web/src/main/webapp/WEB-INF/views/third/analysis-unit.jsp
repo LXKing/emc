@@ -54,9 +54,10 @@
                                 <span class="cb-legend-gray"></span>
                                 同比
                             </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <label>
-                                <span class="cb-legend-gray"></span>
-                                同比(单位:GJ)
+                                <span class=""></span>
+                                同比(单位:%)
                             </label>
                         </div>
                     </div>
@@ -128,50 +129,6 @@
                             <div id="right_div1">
                                 <div id="right_divx">
                                     <table id="right_table1" class="table table-bordered">
-                                        <tr>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                            <th colspan="3">07月03日</th>
-                                        </tr>
-                                        <tr>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                            <td>实际</td>
-                                            <td>计划</td>
-                                            <td>同期</td>
-                                        </tr>
 
                                     </table>
                                     <div id="right_table1_gun"></div>
@@ -179,40 +136,6 @@
                             </div>
                             <div id="right_div2">
                                 <table id="right_table2" class="table table-bordered">
-
-                                    <tr class="bg">
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                        <td>800</td>
-                                        <td>600</td>
-                                        <td>2.6↑</td>
-                                    </tr>
-
 
                                 </table>
                             </div>
