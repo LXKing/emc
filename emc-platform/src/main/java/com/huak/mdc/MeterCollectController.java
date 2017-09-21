@@ -362,7 +362,11 @@ public class MeterCollectController {
     @RequestMapping(value = "/add/{comId}", method = RequestMethod.GET)
     public String addPage(Model model, @PathVariable("comId") String comId) {
         logger.info("计量器具新增页面");
-        String code = meterCollectService.getGeneralCode(comId);
+        String code=null;
+        code = meterCollectService.getGeneralCode(comId);
+        if(code==null||code==""){
+            code="A00000";
+        }
         List<EnergyType> list  = meterCollectService.getEnergyType();
         String s = code.substring(1, code.length());
         String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
