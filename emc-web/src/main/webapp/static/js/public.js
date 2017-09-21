@@ -644,6 +644,7 @@ function thirdTable(data){
     }else{
         var flag = 0;
         $.each(data.list,function(idx,item){
+            debugger
             //取第一个总量
             if(idx==0){
                 var total = getTotalTable(data,item.unitType);

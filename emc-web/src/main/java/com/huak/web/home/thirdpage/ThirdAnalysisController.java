@@ -7,7 +7,9 @@ import com.huak.common.Constants;
 import com.huak.common.utils.DoubleUtils;
 import com.huak.home.thiredpage.ThirdAnalysisService;
 import com.huak.home.type.ToolVO;
+import com.huak.org.OrgService;
 import com.huak.org.model.Company;
+import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,6 +49,9 @@ public class ThirdAnalysisController extends BaseController {
     private static  String COMPANY_ID = "comId";
     @Autowired
     private ThirdAnalysisService thirdAnalysisService;
+    @Resource
+    private OrgService orgService;
+
     private static  String ENERGY_TYPE = "energytype";
     private static  String ORG_TYPE = "orgType";
     private static String coding="UTF-8";
@@ -70,6 +76,8 @@ public class ThirdAnalysisController extends BaseController {
     public String fgsPage(Model model,HttpServletRequest request,@PathVariable("id")String id){
         logger.info("跳转分公司三级单耗页面");
         model.addAttribute("id",id);
+        Org org  = orgService.selectByPrimaryKey(id);
+        model.addAttribute("orgName",org.getOrgName());
         return "third/analysis-fgs";
     }
 
@@ -449,7 +457,7 @@ public class ThirdAnalysisController extends BaseController {
         try {
             paramsMap.put(COMPANY_ID,company.getId());
             paramsMap.put("id",id);
-            Map<String,Object> map =  thirdAnalysisService.getThirdTables(paramsMap);
+             Map<String,Object> map =  thirdAnalysisService.getThirdTables(paramsMap);
             if (map!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, map);

@@ -571,6 +571,7 @@ function feedDh(data){
             series: [{
                 type: 'bar',
                 dataList: data.mapValue,
+                name:'单耗',
                 barWidth: 20
             }]
         }
@@ -593,6 +594,7 @@ function stationDh(data){
             series: [{
                 type: 'bar',
                 dataList: data.mapValue,
+                name:'单耗',
                 barWidth: 20
             }]
         }
