@@ -118,4 +118,6 @@ public interface MeterCollectService {
     boolean addData(JSONObject jo);
 
     List<EnergyType> getEnergyType();
+
+    List<Map<String,Object>> selectTags();
 }

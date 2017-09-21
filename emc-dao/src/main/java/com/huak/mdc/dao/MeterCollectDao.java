@@ -64,4 +64,5 @@ public interface MeterCollectDao {
     List<MeterCollect> selectFictitiousMetersByCode(Map<String, Object> params);
 
 
+    List<Map<String,Object>> selectTags();
 }

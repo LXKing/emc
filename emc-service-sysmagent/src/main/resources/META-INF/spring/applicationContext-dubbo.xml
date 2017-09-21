@@ -148,5 +148,13 @@
     <dubbo:service interface="com.huak.health.IndexRecordService" ref="indexRecordService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="alarmConfigService" class="com.huak.health.AlarmConfigServiceImpl"></bean>
+    <dubbo:service interface="com.huak.health.AlarmConfigService" ref="alarmConfigService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="alarmRecordService" class="com.huak.health.AlarmRecordServiceImpl"></bean>
+    <dubbo:service interface="com.huak.health.AlarmRecordService" ref="alarmRecordService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
 </beans>

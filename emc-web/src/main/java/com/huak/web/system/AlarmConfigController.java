@@ -5,8 +5,9 @@ import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
-import com.huak.health.IndexRecordService;
-import com.huak.health.model.IndexRecord;
+import com.huak.health.AlarmConfigService;
+import com.huak.health.model.AlarmConfig;
+import com.huak.health.vo.AlarmConfigVO;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
@@ -40,7 +41,7 @@ public class AlarmConfigController extends BaseController {
     private static final String COMPANY = "company";
     private static final String ORG = "org";
     @Resource
-    private IndexRecordService indexRecordService;
+    private AlarmConfigService alarmConfigService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String page(HttpServletRequest request,Model model){
@@ -68,7 +69,7 @@ public class AlarmConfigController extends BaseController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(IndexRecord indexRecord, HttpServletRequest request) {
+    public String add(AlarmConfig alarmConfig, HttpServletRequest request) {
         logger.info("添加报警配置");
 
         JSONObject jo = new JSONObject();
@@ -77,9 +78,8 @@ public class AlarmConfigController extends BaseController {
             HttpSession session = request.getSession();
             User user = (User)session.getAttribute(Constants.SESSION_KEY);
 
-            indexRecord.setId(UUIDGenerator.getUUID());
-            indexRecord.setCreator(user.getId());
-            indexRecordService.insertSelective(indexRecord);
+            alarmConfig.setId(UUIDGenerator.getUUID());
+            alarmConfigService.insertSelective(alarmConfig);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加报警配置成功");
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class AlarmConfigController extends BaseController {
         logger.info("报警配置列表分页查询");
         JSONObject jo = new JSONObject();
         try {
-            jo.put(Constants.LIST, indexRecordService.queryByPage(paramsMap, page));
+            jo.put(Constants.LIST, alarmConfigService.queryByPage(paramsMap, page));
         } catch (Exception e) {
             logger.error("报警配置列表分页查询异常" + e.getMessage());
         }
@@ -108,26 +108,26 @@ public class AlarmConfigController extends BaseController {
         HttpSession session = request.getSession();
         Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
 
-        Map<String,Object> indexRecord = indexRecordService.selectUpdateMap(id);
+        AlarmConfigVO alarmConfig = alarmConfigService.selectUpdateMap(id);
         model.addAttribute("company",company);
-        model.addAttribute("indexRecord",indexRecord);
+        model.addAttribute("alarmConfig",alarmConfig);
         return "system/alarm/edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     @ResponseBody
-    public String edit(IndexRecord indexRecord) {
-        logger.info("添加报警配置");
+    public String edit(AlarmConfig alarmConfig) {
+        logger.info("修改报警配置");
 
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            indexRecordService.updateByPrimaryKeySelective(indexRecord);
+            alarmConfigService.updateByPrimaryKeySelective(alarmConfig);
             jo.put(Constants.FLAG, true);
-            jo.put(Constants.MSG, "添加报警配置成功");
+            jo.put(Constants.MSG, "修改报警配置成功");
         } catch (Exception e) {
-            logger.error("添加报警配置异常" + e.getMessage());
-            jo.put(Constants.MSG, "添加报警配置失败");
+            logger.error("修改报警配置异常" + e.getMessage());
+            jo.put(Constants.MSG, "修改报警配置失败");
         }
         return jo.toJSONString();
     }
@@ -140,7 +140,7 @@ public class AlarmConfigController extends BaseController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            indexRecordService.deleteByPrimaryKey(id);
+            alarmConfigService.deleteByPrimaryKey(id);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "删除报警配置成功");
         } catch (Exception e) {
@@ -157,10 +157,10 @@ public class AlarmConfigController extends BaseController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            Long num = indexRecordService.checkType(paramsMap);
-            if (num == 0) {
-                jo.put(Constants.FLAG, true);
-            }
+//            Long num = alarmConfigService.checkType(paramsMap);
+//            if (num == 0) {
+//                jo.put(Constants.FLAG, true);
+//            }
         } catch (Exception e) {
             logger.error("同一用能单位报警类型唯一性校验异常" + e.getMessage());
         }

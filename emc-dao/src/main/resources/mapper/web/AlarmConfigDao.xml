@@ -3,18 +3,39 @@
 <mapper namespace="com.huak.health.dao.AlarmConfigDao">
   <resultMap id="BaseResultMap" type="com.huak.health.model.AlarmConfig">
     <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ALARM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ALARM_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="ALARM_LEVEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="MODEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="ISENABLE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="ALARM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="ALARM_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        <arg column="ALARM_LEVEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        <arg column="MODEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        <arg column="NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
+        <arg column="ISENABLE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="UNIT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="UNIT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
-  </resultMap>
+</resultMap>
+    <resultMap id="BaseResultMapA" type="com.huak.health.vo.AlarmConfigVO">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="TAG" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ALARM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ALARM_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="ALARM_LEVEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="MODEL" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="NUM" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="ISENABLE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="COM_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNIT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNIT_TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="ORGID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ORGNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="UNITNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
-    ID, TAG, ALARM_NAME, ALARM_TYPE, ALARM_LEVEL, MODEL, NUM, ISENABLE
+    ID, TAG, ALARM_NAME, ALARM_TYPE, ALARM_LEVEL, MODEL, NUM, ISENABLE,COM_ID,UNIT_ID,UNIT_TYPE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -29,10 +50,10 @@
   <insert id="insert" parameterType="com.huak.health.model.AlarmConfig">
     insert into t_emc_alarm_config (ID, TAG, ALARM_NAME, 
       ALARM_TYPE, ALARM_LEVEL, MODEL, 
-      NUM, ISENABLE)
+      NUM, ISENABLE,COM_ID,UNIT_ID,UNIT_TYPE)
     values (#{id,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{alarmName,jdbcType=VARCHAR}, 
       #{alarmType,jdbcType=TINYINT}, #{alarmLevel,jdbcType=TINYINT}, #{model,jdbcType=TINYINT}, 
-      #{num,jdbcType=DOUBLE}, #{isenable,jdbcType=TINYINT})
+      #{num,jdbcType=DOUBLE}, #{isenable,jdbcType=TINYINT},#{comId,jdbcType=VARCHAR},#{unitId,jdbcType=VARCHAR},#{unitType,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.health.model.AlarmConfig">
     insert into t_emc_alarm_config
@@ -61,6 +82,15 @@
       <if test="isenable != null">
         ISENABLE,
       </if>
+        <if test="comId != null">
+            COM_ID,
+        </if>
+        <if test="unitId != null">
+            UNIT_ID,
+        </if>
+        <if test="unitType != null">
+            UNIT_TYPE,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,6 +117,15 @@
       <if test="isenable != null">
         #{isenable,jdbcType=TINYINT},
       </if>
+        <if test="comId != null">
+            #{comId,jdbcType=VARCHAR},
+        </if>
+        <if test="unitId != null">
+            #{unitId,jdbcType=VARCHAR},
+        </if>
+        <if test="unitType != null">
+            #{unitType,jdbcType=TINYINT},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.health.model.AlarmConfig">
@@ -113,6 +152,15 @@
       <if test="isenable != null">
         ISENABLE = #{isenable,jdbcType=TINYINT},
       </if>
+        <if test="comId != null">
+            COM_ID = #{comId,jdbcType=VARCHAR},
+        </if>
+        <if test="unitId != null">
+            UNIT_ID = #{unitId,jdbcType=VARCHAR},
+        </if>
+        <if test="unitType != null">
+            UNIT_TYPE = #{unitType,jdbcType=TINYINT},
+        </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -124,7 +172,66 @@
       ALARM_LEVEL = #{alarmLevel,jdbcType=TINYINT},
       MODEL = #{model,jdbcType=TINYINT},
       NUM = #{num,jdbcType=DOUBLE},
-      ISENABLE = #{isenable,jdbcType=TINYINT}
+      ISENABLE = #{isenable,jdbcType=TINYINT},
+      COM_ID = #{comId,jdbcType=VARCHAR},
+      UNIT_ID = #{unitId,jdbcType=VARCHAR},
+      UNIT_TYPE = #{unitType,jdbcType=TINYINT}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectPageByMap" parameterType="java.util.HashMap" resultMap="BaseResultMapA">
+        SELECT
+        c.*,
+        v.ORGID,
+        v.ORGNAME,
+        v.UNITNAME
+        FROM
+        t_emc_alarm_config c,
+        v_emc_unit v
+        WHERE
+        c.COM_ID = v.COMID
+        AND c.UNIT_TYPE = v.UNITTYPE
+        AND c.UNIT_ID = v.UNITID
+        <if test="unitType != null and unitType !=''">
+            AND v.UNITTYPE=#{unitType}
+        </if>
+        <if test="comId != null and comId !=''">
+            AND v.COMID = #{comId}
+        </if>
+        <if test="unitName != null and unitName !=''">
+            and  v.UNITNAME like CONCAT('%',#{unitName},'%')
+        </if>
+        <if test="alarmName != null and alarmName !=''">
+            and  c.ALARM_NAME like CONCAT('%',#{alarmName},'%')
+        </if>
+        <if test="tag != null and tag !=''">
+            and  c.TAG like CONCAT('%',#{tag},'%')
+        </if>
+        <if test="alarmType != null and alarmType !=''">
+            AND c.ALARM_TYPE = #{alarmType}
+        </if>
+        <if test="alarmLevel != null and alarmLevel !=''">
+            AND c.ALARM_LEVEL = #{alarmLevel}
+        </if>
+        <if test="orgId != null and orgId !=''">
+            and  v.ORGID IN (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId})))
+        </if>
+        order by c.UNIT_TYPE,c.UNIT_ID,c.ALARM_TYPE,c.ALARM_LEVEL ASC
+
+
+    </select>
+    <select id="selectUpdate" parameterType="java.lang.String" resultMap="BaseResultMapA">
+        SELECT
+        c.*,
+        v.ORGID,
+        v.ORGNAME,
+        v.UNITNAME
+        FROM
+        t_emc_alarm_config c,
+        v_emc_unit v
+        WHERE
+        c.COM_ID = v.COMID
+        AND c.UNIT_TYPE = v.UNITTYPE
+        AND c.UNIT_ID = v.UNITID
+        AND c.ID=#{id}
+    </select>
 </mapper>

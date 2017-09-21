@@ -1,5 +1,6 @@
 package com.huak.web.home;
 
+import com.huak.mdc.MeterCollectService;
 import com.huak.org.OrgService;
 import com.huak.sys.IndexTypeService;
 import org.slf4j.Logger;
@@ -34,6 +35,8 @@ public class SelectController {
     private IndexTypeService indexTypeService;//指标类型
     @Resource
     private OrgService orgService;//用能单位
+    @Resource
+    private MeterCollectService meterCollectService;//采集表
 
     @RequestMapping(value = "/index/type",method = RequestMethod.POST)
     @ResponseBody
@@ -47,5 +50,12 @@ public class SelectController {
     public List<Map<String,Object>> getUnitList(@RequestParam Map<String, Object> paramsMap){
         logger.info("获取用能单位下拉列表");
         return orgService.selectViewByMap(paramsMap);
+    }
+
+    @RequestMapping(value = "/tags",method = RequestMethod.POST)
+    @ResponseBody
+    public List<Map<String,Object>> getUnitTags(){
+        logger.info("获取用能单位下的点表下拉列表");
+        return meterCollectService.selectTags();
     }
 }

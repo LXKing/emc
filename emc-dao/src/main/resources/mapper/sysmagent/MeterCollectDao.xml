@@ -742,4 +742,8 @@
             and  COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
     </select>
+
+    <select id="selectTags"  resultType="java.util.Map">
+        select TAG from t_emc_meter_collect group by TAG order by TAG DESC
+    </select>
 </mapper>

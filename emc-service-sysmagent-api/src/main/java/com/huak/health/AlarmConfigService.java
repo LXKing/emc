@@ -1,6 +1,11 @@
 package com.huak.health;
 
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import com.huak.health.model.AlarmConfig;
+import com.huak.health.vo.AlarmConfigVO;
+
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -25,4 +30,8 @@ public interface AlarmConfigService {
     int updateByPrimaryKeySelective(AlarmConfig record);
 
     int updateByPrimaryKey(AlarmConfig record);
+
+    PageResult<AlarmConfigVO> queryByPage(Map<String, Object> paramsMap, Page page);
+
+    AlarmConfigVO selectUpdateMap(String id);
 }

@@ -1,7 +1,11 @@
 package com.huak.health.dao;
 
 import com.huak.health.model.AlarmConfig;
+import com.huak.health.vo.AlarmConfigVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface AlarmConfigDao {
@@ -16,4 +20,8 @@ public interface AlarmConfigDao {
     int updateByPrimaryKeySelective(AlarmConfig record);
 
     int updateByPrimaryKey(AlarmConfig record);
+
+    List<AlarmConfigVO> selectPageByMap(Map<String, Object> paramsMap);
+
+    AlarmConfigVO selectUpdate(String id);
 }

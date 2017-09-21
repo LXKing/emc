@@ -1,8 +1,8 @@
-package com.huak.health.model;
+package com.huak.health.vo;
 
 import java.io.Serializable;
 
-public class AlarmConfig  implements Serializable {
+public class AlarmConfigVO implements Serializable {
     private static final long serialVersionUID = 7046455220653574627L;
     private String id;
 
@@ -26,7 +26,13 @@ public class AlarmConfig  implements Serializable {
 
     private Byte unitType;
 
-    public AlarmConfig(String id, String tag, String alarmName, Byte alarmType, Byte alarmLevel, Byte model, Double num, Byte isenable, String comId, String unitId, Byte unitType) {
+    private String orgId;
+
+    private String orgName;
+
+    private String unitName;
+
+    public AlarmConfigVO(String id, String tag, String alarmName, Byte alarmType, Byte alarmLevel, Byte model, Double num, Byte isenable, String comId, String unitId, Byte unitType, String orgId, String orgName, String unitName) {
         this.id = id;
         this.tag = tag;
         this.alarmName = alarmName;
@@ -38,9 +44,12 @@ public class AlarmConfig  implements Serializable {
         this.comId = comId;
         this.unitId = unitId;
         this.unitType = unitType;
+        this.orgId = orgId;
+        this.orgName = orgName;
+        this.unitName = unitName;
     }
 
-    public AlarmConfig() {
+    public AlarmConfigVO() {
         super();
     }
 
@@ -116,12 +125,36 @@ public class AlarmConfig  implements Serializable {
         this.comId = comId;
     }
 
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
     public String getUnitId() {
         return unitId;
     }
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
     public Byte getUnitType() {
@@ -131,4 +164,5 @@ public class AlarmConfig  implements Serializable {
     public void setUnitType(Byte unitType) {
         this.unitType = unitType;
     }
+
 }

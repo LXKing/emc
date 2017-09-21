@@ -272,4 +272,10 @@ public class MeterCollectServiceImpl implements MeterCollectService {
          Map<String,Object> data = new HashMap<>();
         return energyTypeDao.queryByMap(data);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectTags() {
+        return meterCollectDao.selectTags();
+    }
 }

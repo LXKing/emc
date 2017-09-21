@@ -27,7 +27,7 @@
                     <label for="">单位名称</label>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder=" 请输入表名称"/>
+                    <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder=" 请输入单位名称"/>
                 </div>
             </div>
             <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
