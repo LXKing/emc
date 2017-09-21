@@ -189,6 +189,9 @@
         AND r.TYPE_ID = t.ID
         AND r.UNIT_ID = v.UNITID
         AND r.CREATOR = u.ID
+        <if test="unitType != null and unitType !=''">
+            AND v.UNITTYPE=#{unitType}
+        </if>
         <if test="typeId != null and typeId !=''">
             and  r.TYPE_ID =#{typeId}
         </if>

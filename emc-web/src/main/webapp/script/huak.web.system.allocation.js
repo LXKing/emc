@@ -46,11 +46,11 @@ function loadDataFun() {
 }
 
 function reset() {
-    $("#unitName").val("");
+    $("#unitNameSearch").val("");
     $("#unit_type").siblings('.x-sfbgbox1').find(':input').val('请选择单位类型');
     $("#index_type").find('.x-sfbgbox1').find(':input').val('请先选择单位类型');
-    $("#unitType").val("");
-    $("#typeId").val("");
+    $("#unitTypeSearch").val("");
+    $("#typeIdSearch").val("");
 }
 /**
  * 分页查询

@@ -42,7 +42,7 @@
                                         <p value="${type.seq}">${type.des}</p>
                                     </c:forEach>
                                 </div>
-                                <input type="hidden" id="unitType" name="unitType" value="" />
+                                <input type="hidden" id="unitTypeSearch" name="unitType" value="" />
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                     <label for="">单位名称</label>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="unitName" name="unitName" type="text" placeholder=" 请输入单位名称"/>
+                    <input class="inputs-lg" id="unitNameSearch" name="unitName" type="text" placeholder=" 请输入单位名称"/>
                 </div>
             </div>
             <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -61,7 +61,7 @@
                     <label for="">报警描述</label>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="alarmName" name="alarmName" type="text" placeholder=" 请输入报警描述"/>
+                    <input class="inputs-lg" id="alarmNameSearch" name="alarmName" type="text" placeholder=" 请输入报警描述"/>
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                     <label for="">点表</label>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="tag" name="tag" type="text" placeholder=" 请输入点表"/>
+                    <input class="inputs-lg" id="tagSearch" name="tag" type="text" placeholder=" 请输入点表"/>
                 </div>
             </div>
             <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -96,7 +96,7 @@
                                         <p value="${type.seq}">${type.des}</p>
                                     </c:forEach>
                                 </div>
-                                <input type="hidden" id="alarmType" name="alarmType" value="" />
+                                <input type="hidden" id="alarmTypeSearch" name="alarmType" value="" />
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                                         <p value="${type.seq}">${type.des}</p>
                                     </c:forEach>
                                 </div>
-                                <input type="hidden" id="alarmLevel" name="alarmLevel" value="" />
+                                <input type="hidden" id="alarmLevelSearch" name="alarmLevel" value="" />
                             </div>
                         </div>
                     </div>

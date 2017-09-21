@@ -28,15 +28,15 @@ function loadDataFun() {
 }
 
 function reset() {
-    $("#unitName").val("");
+    $("#unitNameSearch").val("");
     $("#unit_type").siblings('.x-sfbgbox1').find(':input').val('请选择单位类型');
     $("#alarm_type").find('.x-sfbgbox1').find(':input').val('请选择报警类型');
     $("#alarm_level").find('.x-sfbgbox1').find(':input').val('请选择报警等级');
-    $("#unitType").val("");
-    $("#alarmLevel").val("");
-    $("#alarmType").val("");
-    $("#alarmName").val("");
-    $("#tag").val("");
+    $("#unitTypeSearch").val("");
+    $("#alarmLevelSearch").val("");
+    $("#alarmTypeSearch").val("");
+    $("#alarmNameSearch").val("");
+    $("#tagSearch").val("");
 }
 /**
  * 分页查询
