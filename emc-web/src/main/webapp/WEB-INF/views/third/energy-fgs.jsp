@@ -168,115 +168,113 @@
         </div>
 
     </div>
-</div>
 
-<div class="col-lg-12 no-padding index_contentList">
-<div class="col-lg-12 mb14">
-<div class="index_contentBox clearfix">
-<div class="titbox clearfix no-padding no-margin">
-<div class="clearfix pull-left energyTit analy_tit_as"><i></i>各站点能耗明细<small class="font-sm">Energy consumption details</small></div>
-<a export-url="${web}/third/fgs/export/${id}" class="pull-right exportlist mr15">导出列表</a>
+    <div class="col-lg-12 no-padding index_contentList">
+        <div class="col-lg-12 mb14">
+            <div class="index_contentBox clearfix">
+                <div class="titbox clearfix no-padding no-margin">
+                    <div class="clearfix pull-left energyTit analy_tit_as"><i></i>各站点能耗明细<small class="font-sm">Energy consumption details</small></div>
+                    <a export-url="${web}/third/fgs/export/${id}" class="pull-right exportlist mr15">导出列表</a>
 
-<div class="  col-lg-12  tablewrap">
-<div class="">
-<div id="left_div">
-    <div id="left_div1">
-        <table id="left_table1" class="table table-bordered">
-            <tr>
-                <th style="height: 54px;"> </th>
-            </tr>
+                    <div class="  col-lg-12  tablewrap">
+                        <div class="">
+                            <div id="left_div">
+                                <div id="left_div1">
+                                    <table id="left_table1" class="table table-bordered">
+                                        <tr>
+                                            <th style="height: 54px;"> </th>
+                                        </tr>
 
-        </table>
-    </div>
-    <div id="left_div2">
-        <table id="left_table2" class="table table-bordered">
-            <tr class="bg">
-                <th>源</th>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div id="right_div">
-    <div id="right_div1">
-        <div id="right_divx">
-            <table id="right_table1" class="table table-bordered">
-                <tr>
-                    <th colspan="3">水能耗(T)</th>
-                    <th colspan="3">电能耗(kWh)</th>
-                    <th colspan="3">气能耗(m³)</th>
-                    <th colspan="3">热能耗(GJ)</th>
-                    <th colspan="3">煤能耗(T)</th>
-                </tr>
-                <tr>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                </tr>
+                                    </table>
+                                </div>
+                                <div id="left_div2">
+                                    <table id="left_table2" class="table table-bordered">
+                                        <tr class="bg">
+                                            <th>源</th>
+                                        </tr>
+                                        <script>
+                                            for(var i =0;i<20;i++){
+                                                document.write("<tr><td>源1</td></tr>")
+                                            }
+                                        </script>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="right_div">
+                                <div id="right_div1">
+                                    <div id="right_divx">
+                                        <table id="right_table1" class="table table-bordered">
+                                            <tr>
+                                                <th colspan="3">水能耗(T)</th>
+                                                <th colspan="3">电能耗(kWh)</th>
+                                                <th colspan="3">气能耗(m³)</th>
+                                                <th colspan="3">热能耗(GJ)</th>
+                                                <th colspan="3">煤能耗(T)</th>
+                                            </tr>
+                                            <tr>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                                <td>实际</td>
+                                                <td>计划</td>
+                                                <td>同期</td>
+                                            </tr>
 
-            </table>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="right_div2">
+                                    <table id="right_table2" class="table table-bordered">
+
+                                        <tr class="bg">
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-    </div>
-    <div id="right_div2">
-        <table id="right_table2" class="table table-bordered">
 
-            <tr class="bg">
-            </tr>
-            <tr>
-            </tr>
-            <tr>
-            </tr>
-            <tr>
-            </tr>
-        </table>
     </div>
 </div>
-</div>
 
-</div>
 
-</div>
-
-</div>
-
-</div>
-
-</div>
 <!-- <div class="index_contentList">-->
 </div>
 </body>
