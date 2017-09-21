@@ -29,7 +29,7 @@
                 <div class="groupEnergy-box col-lg-12  clearfix">
                     <div class="chart-box groupEnergy-chart col-lg-10 ">
                         <div class="cb-header">
-                            <span class="cb-title">${orgName}总单耗 (单位: Tce/m²)</span>
+                            <span class="cb-title">${orgName}总单耗 (单位: Tce/万m²)</span>
                             <div class="cb-title-right" style="margin-right: 36px;">
                                 <label>
                                     <span class="cb-legend-blue"></span>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="groupEnergy-info col-lg-2 ">
                         <h3 id="groupTotal" class="groupTotal"><!--760.4--></h3>
-                        <div class="small">总单耗 (Tce/m²)</div>
+                        <div class="small">总单耗 (Tce/万m²)</div>
                         <h4 id="groupchangeRate" class="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                         <div class="small">同比去年 (%)</div>
                     </div>
@@ -58,7 +58,7 @@
                                 <span class="energy-list-name">水单耗</span>
                                 <div class="energy-list-info">
                                     <span class="energy-list-num waterTotal" id="waterTotal"></span>
-                                    <span class="energy-list-measure waterDw">Tce/m²</span>
+                                    <span class="energy-list-measure waterDw">Tce/万m²</span>
                                     <span class="energy-list-proportion waterchangeRate" id="waterchangeRate"></span>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                     <div class="col-lg-12 no-padding mt30">
                         <div class="col-lg-6 no-padding analyBoxList">
                             <div class="ec_title">
-                                <span class="title_dw_station">换热站单耗排名(Tce/m²)</span>
+                                <span class="title_dw_station">换热站单耗排名(Tce/万m²)</span>
                                 <%--http://192.168.155.196:8081/emc/js/energy_company.js--%>
 												<span class="button-group">
 												<a href="javascript:;" onclick="loadStationDH(1)" class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadStationDH(2)" class="bg-left">电</a><a href="javascript:;" onclick="loadStationDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadStationDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadStationDH(5)"  class="bg-right">煤</a>
@@ -152,7 +152,7 @@
                         </div>
                         <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                             <div class="ec_title">
-                                <span class="title_dw_feed">供热源单耗排名(Tce/m²)</span>	<span class="button-group">
+                                <span class="title_dw_feed">供热源单耗排名(Tce/万m²)</span>	<span class="button-group">
 												<a href="javascript:;" onclick="loadFeedDH(1)"  class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadFeedDH(2)"  class="bg-left">电</a><a href="javascript:;" onclick="loadFeedDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadFeedDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadFeedDH(5)" class="bg-right">煤</a>
 											</span>
                             </div>

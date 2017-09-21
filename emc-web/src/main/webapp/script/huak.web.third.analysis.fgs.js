@@ -176,15 +176,15 @@ function loadTable(){
 function loadFeedDH(type) {
     var id = $("#id").val();
     if(type==1){
-        $(".title_dw_feed").html("换热站单耗排名(T/m²)");
+        $(".title_dw_feed").html("换热站单耗排名(T/万m²)");
     }if(type==2){
-        $(".title_dw_feed").html("换热站单耗排名(kW·h/m²)");
+        $(".title_dw_feed").html("换热站单耗排名(kW·h/万m²)");
     }if(type==3){
-        $(".title_dw_feed").html("换热站单耗排名(m³/m²)");
+        $(".title_dw_feed").html("换热站单耗排名(m³/万m²)");
     }if(type==4){
-        $(".title_dw_feed").html("换热站单耗排名(GJ/m²)");
+        $(".title_dw_feed").html("换热站单耗排名(GJ/万m²)");
     }if(type==5){
-        $(".title_dw_feed").html("换热站单耗排名( T/m²)");
+        $(".title_dw_feed").html("换热站单耗排名( T/万m²)");
     }
     $.ajax({
         url: _web + "/third/analysis/fgs/feed-dh/"+type+"/"+id,
@@ -202,15 +202,15 @@ function loadFeedDH(type) {
 function loadStationDH(type) {
     var id = $("#id").val();
     if(type==1){
-        $(".title_dw_station").html("换热站单耗排名(T/m²)");
+        $(".title_dw_station").html("换热站单耗排名(T/万m²)");
     }if(type==2){
-        $(".title_dw_station").html("换热站单耗排名(kW·h/m²)");
+        $(".title_dw_station").html("换热站单耗排名(kW·h/万m²)");
     }if(type==3){
-        $(".title_dw_station").html("换热站单耗排名(m³/m²)");
+        $(".title_dw_station").html("换热站单耗排名(m³/万m²)");
     }if(type==4){
-        $(".title_dw_station").html("换热站单耗排名(GJ/m²)");
+        $(".title_dw_station").html("换热站单耗排名(GJ/万m²)");
     }if(type==5){
-        $(".title_dw_station").html("换热站单耗排名( T/m²)");
+        $(".title_dw_station").html("换热站单耗排名( T/万m²)");
     }
     $.ajax({
         url: _web + "/third/analysis/fgs/station-dh/"+type+"/"+id,
@@ -241,7 +241,7 @@ function loadWaterDH() {
     });
 }
 function getWater(data){
-    $(".waterDw").html("T/m²");
+    $(".waterDw").html("T/万m²");
     $(".waterTotal").html(data.ZDH);
 
     if(data.TB < 0){
@@ -297,7 +297,7 @@ function getWater(data){
     }
     function getElectric(data){
         $(".electricTotal").html(data.ZDH);
-        $(".electricDw").html("kW·h/m²");
+        $(".electricDw").html("kW·h/万m²");
 
         if(data.TB < 0){
             $(".electricTotal").closest(".energy-head").addClass("energy-snh");
@@ -352,7 +352,7 @@ function loadGasDH() {
 }
     function getGas(data){
         $(".gasTotal").html(data.ZDH);
-        $(".gasDw").html("m³/m²");
+        $(".gasDw").html("m³/万m²");
 
         if(data.TB < 0){
             $(".gasTotal").closest(".energy-head").addClass("energy-snh");
@@ -408,7 +408,7 @@ function loadGasDH() {
     }
     function getHot(data){
         $(".hotTotal").html(data.ZDH);
-        $(".hotDw").html("GJ/m²");
+        $(".hotDw").html("GJ/万m²");
 
         if(data.TB < 0){
             $(".hotTotal").closest(".energy-head").addClass("energy-snh");
@@ -464,7 +464,7 @@ function loadGasDH() {
         }
     function getCoal(data){
         $(".coalTotal").html(data.ZDH);
-        $(".coalDw").html("T/m²");
+        $(".coalDw").html("T/万m²");
 
         if(data.TB < 0){
             $(".coalTotal").closest(".energy-head").addClass("energy-snh");

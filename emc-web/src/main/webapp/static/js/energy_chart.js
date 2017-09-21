@@ -936,7 +936,7 @@ function chart09Fun() {
 	var barchart01 = echarts.init(document.getElementById('barchart01'));
 	var option = {
 		title: {
-			subtext: '分公司能耗 (单位: GJ/m²)',
+			subtext: '分公司能耗 (单位: GJ/万m²)',
 			top: '-18px',
 			left: '35px',
 			subtextStyle: {

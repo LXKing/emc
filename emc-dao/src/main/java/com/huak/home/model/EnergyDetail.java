@@ -20,31 +20,31 @@ public class EnergyDetail implements Serializable {
     private static final long serialVersionUID = 7396936548669299782L;
     private String id;/* 主键 */
     private String unitName;
-    private Double totalBq;/* 总单耗（Tce/m²） */
+    private Double totalBq;/* 总单耗（Tce/万m²） */
     private Double totalTq;
     private Double totalAn;
 
-    private Double waterBq;/* 水单耗（t/m²） */
+    private Double waterBq;/* 水单耗（t/万m²） */
     private Double waterTq;
     private Double waterAn;
 
-    private Double electricBq;/* 电单耗(kW·h/m²)*/
+    private Double electricBq;/* 电单耗(kW·h/万m²)*/
     private Double electricTq;
     private Double electricAn;
 
-    private Double gasBq; /* 气单耗（m³/m²） */
+    private Double gasBq; /* 气单耗（m³/万m²） */
     private Double gasTq;
     private Double gasAn;
 
-    private Double heatBq; /* 热单耗（GJ/m²） */
+    private Double heatBq; /* 热单耗（GJ/万m²） */
     private Double heatTq;
     private Double heatAn;
 
-    private Double coalBq;    /* 煤单耗（t/m²） */
+    private Double coalBq;    /* 煤单耗（t/万m²） */
     private Double coalTq;
     private Double coalAn;
 
-    private Double oilBq;  /* 油单耗（L/m²） */
+    private Double oilBq;  /* 油单耗（L/万m²） */
     private Double oilTq;
     private Double oilAn;
 

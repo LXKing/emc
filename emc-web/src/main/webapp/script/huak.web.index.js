@@ -39,11 +39,11 @@
                     $(".costAll").html(data.all.costAll + "万元");
                 }
 //                if (data.all.yardage == null || data.all.yardage == '') {
-//                    $(".yardage").html(0 + " Tce/m²");
+//                    $(".yardage").html(0 + " Tce/万m²");
 //                } else {
-//                    $(".yardage").html(data.all.yardage + " Tce/m²");
+//                    $(".yardage").html(data.all.yardage + " Tce/万m²");
 //                }
-//                $(".zyardage").html(2358 + " GJ/m²");
+//                $(".zyardage").html(2358 + " GJ/万m²");
 //                if (data.all.priceArea == null || data.all.priceArea == '') {
 //                    $(".priceArea").html(0 + " 万m²");
 //                } else {
@@ -75,11 +75,11 @@
 //                    $(".costAll").html(data.all.costAll + " 万元");
 //                }
                 if (data.all.yardage == null || data.all.yardage == '') {
-                    $(".yardage").html(0 + "Tce/m²");
+                    $(".yardage").html(0 + "Tce/万m²");
                 } else {
-                    $(".yardage").html(data.all.yardage + "Tce/m²");
+                    $(".yardage").html(data.all.yardage + "Tce/万m²");
                 }
-                $(".zyardage").html(0 + "GJ/m²");
+                $(".zyardage").html(0 + "GJ/万m²");
                 if (data.all.priceArea == null || data.all.priceArea == '') {
                     $(".priceArea").html(0 + "万m²");
                 } else {
@@ -1998,7 +1998,7 @@ function chart13Fun() {
                 var recentdata = result.object;
                 var recenthtml = "";
                 var recentlisthtml = "";
-                var unitlist = ['T/m²', 'kW·h/m²', 'm³/m²', 'GJ/m²'];
+                var unitlist = ['T/万m²', 'kW·h/万m²', 'm³/万m²', 'GJ/万m²'];
                 for (var i = 0; i < recentdata.length; i++) {
                     recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
                     recentlisthtml += "<ul>";

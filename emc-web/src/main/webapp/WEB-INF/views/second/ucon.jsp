@@ -27,7 +27,7 @@
             <div class="groupEnergy-box col-lg-12  clearfix">
                 <div class="chart-box groupEnergy-chart col-lg-10 ">
                     <div class="cb-header">
-                        <span class="cb-title">总单耗 (单位: Tce/m²)</span>
+                        <span class="cb-title">总单耗 (单位: Tce/万m²)</span>
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="groupEnergy-info col-lg-2 ">
                     <h3 id="groupTotal"><!--760.4--></h3>
-                    <div class="small">总单耗 (Tce/m²)</div>
+                    <div class="small">总单耗 (Tce/万m²)</div>
                     <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                     <div class="small">同比去年 (%)</div>
                 </div>
@@ -56,7 +56,7 @@
                         <span class="energy-list-name">水单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="waterTotal"></span>
-                            <span class="energy-list-measure ">T/m²</span>
+                            <span class="energy-list-measure ">T/万m²</span>
                             <span class="energy-list-proportion " id="waterchangeRate"></span>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <span class="energy-list-name">电单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="electricTotal"></span>
-                            <span class="energy-list-measure ">kW·h/m²</span>
+                            <span class="energy-list-measure ">kW·h/万m²</span>
                             <span class="energy-list-proportion" id="elechangeRate"></span>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                         <span class="energy-list-name">气单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num " id="gasTotal"></span>
-                            <span class="energy-list-measure ">m³/m²</span>
+                            <span class="energy-list-measure ">m³/万m²</span>
                             <span class="energy-list-proportion " id="gaschangeRate"></span>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         <span class="energy-list-name">热单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="hotTotal"></span>
-                            <span class="energy-list-measure">GJ/m²</span>
+                            <span class="energy-list-measure">GJ/万m²</span>
                             <span class="energy-list-proportion" id="hotchangeRate"></span>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                         <span class="energy-list-name">煤单耗</span>
                         <div class="energy-list-info">
                             <span class="energy-list-num" id="coalTotal"></span>
-                            <span class="energy-list-measure ">T/m²</span>
+                            <span class="energy-list-measure ">T/万m²</span>
                             <span class="energy-list-proportion" id="coalchangeRate"></span>
                         </div>
                     </div>
@@ -149,13 +149,13 @@
                     <thead>
                     <tr class="first_tr">
                         <td>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}</td>
-                        <td>总单耗（Tce/m²）</td>
-                        <td>水单耗（T/m²）</td>
-                        <td>电单耗(kW·h/m²)</td>
-                        <td>气单耗（m³/m²）</td>
-                        <td>热单耗（GJ/m²）</td>
-                        <td>煤单耗（T/m²）</td>
-                        <td>油单耗（L/m²）</td>
+                        <td>总单耗（Tce/万m²）</td>
+                        <td>水单耗（T/万m²）</td>
+                        <td>电单耗(kW·h/万m²)</td>
+                        <td>气单耗（m³/万m²）</td>
+                        <td>热单耗（GJ/万m²）</td>
+                        <td>煤单耗（T/万m²）</td>
+                        <td>油单耗（L/万m²）</td>
                     </tr>
                     </thead>
                     <tbody id="fgsEnergyTbody">
@@ -225,13 +225,13 @@
                     <thead>
                     <tr class="first_tr">
                         <td>用能单位</td>
-                        <td>总单耗（Tce/m²）</td>
-                        <td>水单耗（T/m²）</td>
-                        <td>电单耗(kW·h/m²)</td>
-                        <td>气单耗（m³/m²）</td>
-                        <td>热单耗（GJ/m²）</td>
-                        <td>煤单耗（T/m²）</td>
-                        <td>油单耗（L/m²）</td>
+                        <td>总单耗（Tce/万m²）</td>
+                        <td>水单耗（T/万m²）</td>
+                        <td>电单耗(kW·h/万m²)</td>
+                        <td>气单耗（m³/万m²）</td>
+                        <td>热单耗（GJ/万m²）</td>
+                        <td>煤单耗（T/万m²）</td>
+                        <td>油单耗（L/万m²）</td>
                     </tr>
                     </thead>
                     <tbody id="EnergyDetailTbody">

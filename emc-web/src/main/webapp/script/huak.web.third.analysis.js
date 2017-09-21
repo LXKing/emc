@@ -290,15 +290,15 @@ function getStationEc(data,type){
     chart3  =echarts.init(document.getElementById('chart3'));
     $(".stationTotal").html(data.ZDH);
     if(type=="1"){
-        $(".stationDw").html("T/m²");
+        $(".stationDw").html("T/万m²");
     }else if(type=="2"){
-        $(".stationDw").html("kW·h/m²");
+        $(".stationDw").html("kW·h/万m²");
     }else if(type=="3"){
-        $(".stationDw").html("m³/m²");
+        $(".stationDw").html("m³/万m²");
     }else if(type=="4"){
-        $(".stationDw").html("GJ/m²");
+        $(".stationDw").html("GJ/万m²");
     }else if(type=="5"){
-        $(".stationDw").html("T/m²");
+        $(".stationDw").html("T/万m²");
     }
     if(data.TB < 0){
         $(".stationTotal").closest(".energy-head").addClass("energy-snh");
@@ -343,15 +343,15 @@ function getFeedEc(data,type){
     chart1  =echarts.init(document.getElementById('chart1'));
     $(".feedTotal").html(data.ZDH);
     if(type=="1"){
-        $(".feedDw").html("T/m²");
+        $(".feedDw").html("T/万m²");
     }else if(type=="2"){
-        $(".feedDw").html("kW·h/m²");
+        $(".feedDw").html("kW·h/万m²");
     }else if(type=="3"){
-        $(".feedDw").html("m³/m²");
+        $(".feedDw").html("m³/万m²");
     }else if(type=="4"){
-        $(".feedDw").html("GJ/m²");
+        $(".feedDw").html("GJ/万m²");
     }else if(type=="5"){
-        $(".feedDw").html("T/m²");
+        $(".feedDw").html("T/万m²");
     }
 
     if(data.TB < 0){
@@ -396,15 +396,15 @@ function getNetEc(data,type){
     chart2  =echarts.init(document.getElementById('chart2'));
     $(".netTotal").html(data.ZDH)
     if(type=="1"){
-        $(".netDw").html("T/m²");
+        $(".netDw").html("T/万m²");
     }else if(type=="2"){
-        $(".netDw").html("kW·h/m²");
+        $(".netDw").html("kW·h/万m²");
     }else if(type=="3"){
-        $(".netDw").html("m³/m²");
+        $(".netDw").html("m³/万m²");
     }else if(type=="4"){
-        $(".netDw").html("GJ/m²");
+        $(".netDw").html("GJ/万m²");
     }else if(type=="5"){
-        $(".netDw").html("T/m²");
+        $(".netDw").html("T/万m²");
     }
 
     if(data.TB < 0){
@@ -450,15 +450,15 @@ function getLine(data,type){
     chart4  =echarts.init(document.getElementById('chart4'));
     $(".lineTotal").html(data.ZDH);
     if(type=="1"){
-        $(".lineDw").html("T/m²");
+        $(".lineDw").html("T/万m²");
     }else if(type=="2"){
-        $(".lineDw").html("kW·h/m²");
+        $(".lineDw").html("kW·h/万m²");
     }else if(type=="3"){
-        $(".lineDw").html("m³/m²");
+        $(".lineDw").html("m³/万m²");
     }else if(type=="4"){
-        $(".lineDw").html("GJ/m²");
+        $(".lineDw").html("GJ/万m²");
     }else if(type=="5") {
-        $(".lineDw").html("T/m²");
+        $(".lineDw").html("T/万m²");
     }
 
     if(data.TB < 0){
@@ -504,15 +504,15 @@ function getRoomEc(data,type){
     chart5  =echarts.init(document.getElementById('chart5'));
     $(".roomTotal").html(data.ZDH);
     if(type=="1"){
-        $(".roomDw").html("T/m²");
+        $(".roomDw").html("T/万m²");
     }else if(type=="2"){
-        $(".roomDw").html("kW·h/m²");
+        $(".roomDw").html("kW·h/万m²");
     }else if(type=="3"){
-        $(".roomDw").html("m³/m²");
+        $(".roomDw").html("m³/万m²");
     }else if(type=="4"){
-        $(".roomDw").html("GJ/m²");
+        $(".roomDw").html("GJ/万m²");
     }else if(type=="5") {
-        $(".roomDw").html("T/m²");
+        $(".roomDw").html("T/万m²");
     }
 
     if(data.TB < 0){
