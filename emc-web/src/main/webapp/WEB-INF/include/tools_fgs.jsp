@@ -13,27 +13,27 @@
         <a href="index.html">[<var class="xmhpg">首页 </var>]</a> &gt; [<var class="xmhpg" style="color: #666;">能源流概况</var>]--%>
     </div>
 
-    <div class="mianTop pull-right">
+    <div class="mianTop pull-right" style="min-width: 600px;">
         <div class="selectbg clearfix col-xs-12">
 
-            <div class="select-box clearfix" style="width: 160px">
+            <%--<div class="select-box clearfix">--%>
                 <%--<div class="clearfix h-selectbox">--%>
                     <%--<div class="x-selectfree fl">--%>
                         <%--<div class="x-sfbgbox">--%>
                             <%--<div class="x-sfleft1 x-sfw1">--%>
-                                <%--<input type="text" value="" readonly="readonly">--%>
+                                <%--&lt;%&ndash;<input type="text" value="" readonly="readonly">&ndash;%&gt;--%>
                             <%--</div>--%>
                             <%--<div class="x-sfright1"></div>--%>
                         <%--</div>--%>
                         <%--<div class="x-sfoption x-sfoption1">--%>
-                            <%--<p value=" "> </p>--%>
-                            <%--&lt;%&ndash;<p value="2222">上海公司</p>--%>
-                            <%--<p value="3333">南京集团</p>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<p value=" "> </p>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;&lt;%&ndash;<p value="2222">上海公司</p>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<p value="3333">南京集团</p>&ndash;%&gt;&ndash;%&gt;--%>
                         <%--</div>--%>
-                        <%--<input type="hidden" value="1111" />--%>
+                        <%--&lt;%&ndash;<input type="hidden" value="1111" />&ndash;%&gt;--%>
                     <%--</div>--%>
                 <%--</div>--%>
-            </div>
+            <%--</div>--%>
             <div class="select-box select-boxbtnAlarm clearfix">
                 <a href="javascript:;" class="btnAlarm btnAlarm-on">集中供暖</a>
                 <a href="javascript:;" class="btnAlarm ">区域供暖</a>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <meta name="decorator" content="main_third"/>
+    <meta name="decorator" content="main_third_fgs"/>
     <title>华热能管系统-能耗分析</title>
     <script src="${web}/script/huak.web.third.energy.fgs.js"></script>
 </head>
