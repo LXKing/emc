@@ -168,240 +168,241 @@
         </div>
 
     </div>
-</div>
+    <div class="col-lg-12 no-padding index_contentList">
+    <div class="col-lg-12 mb14">
+    <div class="index_contentBox clearfix">
+    <div class="titbox clearfix no-padding no-margin">
+    <div class="pull-left energyTit analy_tit_as"><i></i>各站点单耗明细<small class="font-sm">Energy consumption details</small></div>
+    <a export-url="${web}/third/analysis/fgs/export/${id}" class="pull-right exportlist mr15">导出列表</a>
 
-<div class="col-lg-12 no-padding index_contentList">
-<div class="col-lg-12 mb14">
-<div class="index_contentBox clearfix">
-<div class="titbox clearfix no-padding no-margin">
-<div class="pull-left energyTit analy_tit_as"><i></i>各站点单耗明细<small class="font-sm">Energy consumption details</small></div>
-<a export-url="${web}/third/analysis/fgs/export/${id}" class="pull-right exportlist mr15">导出列表</a>
-
-<div class="  col-lg-12  tablewrap">
-<div class="">
-<div id="left_div">
-    <div id="left_div1">
-        <table id="left_table1" class="table table-bordered">
-            <tr>
-                <th style="height: 54px;"> </th>
-            </tr>
-
-        </table>
-    </div>
-    <div id="left_div2">
-        <table id="left_table2" class="table table-bordered">
-            <tr class="bg">
-                <th>源</th>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-            <tr>
-                <td>源1</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div id="right_div">
-    <div id="right_div1">
-        <div id="right_divx">
-            <table id="right_table1" class="table table-bordered">
+    <div class="  col-lg-12  tablewrap">
+    <div class="">
+    <div id="left_div">
+        <div id="left_div1">
+            <table id="left_table1" class="table table-bordered">
                 <tr>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                    <th colspan="3">水能耗(GJ)</th>
-                </tr>
-                <tr>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
-                    <td>实际</td>
-                    <td>计划</td>
-                    <td>同期</td>
+                    <th style="height: 54px;"> </th>
                 </tr>
 
             </table>
         </div>
+        <div id="left_div2">
+            <table id="left_table2" class="table table-bordered">
+                <tr class="bg">
+                    <th>源</th>
+                </tr>
+                <tr>
+                    <td>源1</td>
+                </tr>
+                <tr>
+                    <td>源1</td>
+                </tr>
+                <tr>
+                    <td>源1</td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div id="right_div2">
-        <table id="right_table2" class="table table-bordered">
+    <div id="right_div">
+        <div id="right_div1">
+            <div id="right_divx">
+                <table id="right_table1" class="table table-bordered">
+                    <tr>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                        <th colspan="3">水能耗(GJ)</th>
+                    </tr>
+                    <tr>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                        <td>实际</td>
+                        <td>计划</td>
+                        <td>同期</td>
+                    </tr>
 
-            <tr class="bg">
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-                <td>800</td>
-                <td>600</td>
-                <td>2.6↑</td>
-            </tr>
-        </table>
+                </table>
+            </div>
+        </div>
+        <div id="right_div2">
+            <table id="right_table2" class="table table-bordered">
+
+                <tr class="bg">
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                </tr>
+                <tr>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                </tr>
+                <tr>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                </tr>
+                <tr>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                    <td>800</td>
+                    <td>600</td>
+                    <td>2.6↑</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
     </div>
 </div>
-</div>
 
-</div>
 
-</div>
-
-</div>
-
-</div>
-
-</div>
 <!-- <div class="index_contentList">-->
 </div>
 </body>
