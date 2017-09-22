@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public class Constants {
     /* 统一登录url */
-    //public final static String LOGIN_URL = "http://www.e-heating.org/login.html";
-    public final static String LOGIN_URL = "http://localhost:8081/emc-web/login";
+    public final static String LOGIN_URL = "http://www.e-heating.org/login.html";
+    //public final static String LOGIN_URL = "http://localhost:8081/emc-web/login";
 
     /* 分页常量 */
     public final static String OFFSET = "offset";
