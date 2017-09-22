@@ -136,8 +136,8 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             FinalDataHour dataHour = new FinalDataHour();
             String id = UUIDGenerator.getUUID();
             dataHour.setId(id);//自动生成id
-            //dataHour.setTableName(company.getTableName());//动态表
-            dataHour.setTableName("t_emc_final_data_hour");
+            dataHour.setTableName(company.getTableName());//动态表
+            //dataHour.setTableName("t_emc_final_data_hour");
             dataHour.setNodeid(energyDataHis.getCollectId());
             dataHour.setComid(company.getId());
             dataHour.setUnitid(meterCollect.getUnitId());
@@ -190,8 +190,8 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             FinalDataHour dataHour = new FinalDataHour();
             String id = UUIDGenerator.getUUID();
             dataHour.setId(id);//自动生成id
-            //dataHour.setTableName(company.getTableName());//动态表
-            dataHour.setTableName("t_emc_final_data_hour");
+            dataHour.setTableName(company.getTableName());//动态表
+            //dataHour.setTableName("t_emc_final_data_hour");
             dataHour.setNodeid(meterCollect.getId());
             dataHour.setComid(company.getId());
             dataHour.setUnitid(meterCollect.getUnitId());
