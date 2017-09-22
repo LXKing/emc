@@ -54,4 +54,48 @@ public interface ComponentService {
      * @return
      */
     Map<String,Object> healthcheck(Map<String, Object> paramsMap);
+
+    /**
+     * 报警-单耗接口-实现
+     * @param params 说明：
+     * {
+     *     startTime：#开始时间 格式：yyyy-MM-dd hh:mm:ss,
+     *     endTime：#结束时间 格式：yyyy-MM-dd hh:mm:ss,
+     *     comId：#当前登录公司id
+     * }
+     * @return Map 说明:
+     * {
+     *   message:{flag：true/false,message:描述}
+     *   data：{
+     *     level1: #轻度,
+     *     level2：#中度,
+     *     level3：#重度,
+     *     total:  #检测总数
+     *   }
+     * }
+     */
+    Map<String,Object> getAlarms(Map<String, Object> params);
+
+    /**
+     * 报警详情-单耗接口-实现
+     * @param params 说明：
+     * {
+     *     startTime：#开始时间 格式：yyyy-MM-dd hh:mm:ss,
+     *     endTime：#结束时间 格式：yyyy-MM-dd hh:mm:ss,
+     *     comId：#当前登录公司id
+     * }
+     * @return Map 说明:
+     * {
+     *   message:{flag：true/false,message:#描述}
+     *   data：{
+     *     enterprise: #企业指标,
+     *     industry：#行业指标,
+     *     local：#地方指标,
+     *     num: #平均单耗
+     *     type：#指标类型,
+     *     unitname：#用能单位
+     *   }
+     * }
+     */
+    Map<String,Object> getAlarmsDetail(Map<String,Object> params);
 }

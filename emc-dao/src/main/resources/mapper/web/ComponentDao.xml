@@ -578,6 +578,7 @@
         GROUP BY c.UNITID, date_format(a.DOSAGE_TIME, '%Y-%m-%d'),	bbb.type)mm group by mm.dates,mm.type)q group by q.dates))AA)CC
     </select>
 
+    <!--获取计划-->
     <select id="getplan" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
            p.num as plan
@@ -603,6 +604,7 @@
         LIMIT 0, 1
     </select>
 
+    <!--获取当前采暖季-->
     <select id="getCurrentSeason" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT
         *
@@ -614,7 +616,7 @@
         AND t.EDATE <![CDATA[ >= ]]> #{edate}
     </select>
 
-
+    <!--获取上个采暖季-->
     <select id="getPreSeason" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT
         *
@@ -626,4 +628,178 @@
         ORDER BY t.EDATE DESC
     </select>
 
+    <!--获取报警数据-->
+    <select id="getAlarms" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        SUM(case when (c.m <![CDATA[ >= ]]>  d.ENTERPRISE and c.m <![CDATA[ < ]]> d.LOCAL) then 1 else 0 end ) mild,
+        SUM(case when (c.m <![CDATA[ >= ]]>  d.LOCAL and c.m <![CDATA[ < ]]> d.INDUSTRY) then 1 else 0 end ) moderate,
+        SUM(case when c.m <![CDATA[ >= ]]>  d.INDUSTRY then 1 else 0 end ) serious,
+        count(1) total
+        FROM
+        (
+        SELECT
+        b.type,
+        b.unitid,
+        <choose>
+            <when test="0 == days">
+                sum(b.dosage) / (avg(b.area)) m
+            </when>
+            <otherwise>
+                sum(b.dosage) / (avg(b.area)*#{days})m
+            </otherwise>
+        </choose>
+        FROM
+        (
+        SELECT
+        a.UNITID unitid,
+        b.type type,
+        DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d %H') time,
+        avg(a.AREA) area,
+        avg(a.DOSAGE) dosage
+        FROM
+        t_emc_final_data_hour_tj a
+        LEFT JOIN t_emc_energy_type b ON a.TYPEID = b.id
+        WHERE 1=1
+        <if test="startTime != null and startTime !=''">
+            AND a.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            AND a.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  a.COMID  = #{comId}
+        </if>
+        GROUP BY
+        a.UNITID,
+        b.type,
+        DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d %H')
+        ) b
+        GROUP BY
+        b.type,
+        b.UNITID
+        ) c ,
+        (
+        SELECT
+        e.UNIT_ID,
+        f.ENERGY_TYPE,
+        e.ENTERPRISE,
+        e. LOCAL,
+        e.INDUSTRY
+        FROM
+        t_emc_index_record e
+        LEFT JOIN t_emc_index_type f ON e.TYPE_ID = f.ID
+        WHERE
+        e.INDEX_TIME = (
+        SELECT
+        max(INDEX_TIME)
+        FROM
+        t_emc_index_record
+        WHERE
+        UNIT_ID = e.UNIT_ID
+        AND TYPE_ID = e.TYPE_ID
+        GROUP BY
+        UNIT_ID,
+        TYPE_ID
+        )
+        <if test="comId != null and comId !=''">
+            and  e.COM_ID  = #{comId}
+        </if>
+        group by f.ENERGY_TYPE,e.UNIT_ID
+        ) d
+        where c.type = d.ENERGY_TYPE
+        AND c.unitid = d.UNIT_ID
+        and c.m >= d.ENTERPRISE
+    </select>
+
+    <!--获取报警详情-->
+    <select id="getAlarmsDetail" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            aa.ENTERPRISE as enterprise,
+            aa.INDUSTRY as industry,
+            aa.LOCAL as local,
+            aa.m as num,
+            aa.type as type,
+            bb.UNITNAME as unitname
+        FROM
+        (SELECT
+        SUM(case when (c.m <![CDATA[ >= ]]>  d.ENTERPRISE and c.m <![CDATA[ < ]]> d.LOCAL) then 1 else 0 end ) mild,
+        SUM(case when (c.m <![CDATA[ >= ]]>  d.LOCAL and c.m <![CDATA[ < ]]> d.INDUSTRY) then 1 else 0 end ) moderate,
+        SUM(case when c.m <![CDATA[ >= ]]>  d.INDUSTRY then 1 else 0 end ) serious,
+        count(1) total
+        FROM
+        (
+        SELECT
+        b.type,
+        b.unitid,
+        <choose>
+            <when test="0 == days">
+                sum(b.dosage) / (avg(b.area)) m
+            </when>
+            <otherwise>
+                sum(b.dosage) / (avg(b.area)*#{days})m
+            </otherwise>
+        </choose>
+        FROM
+        (
+        SELECT
+        a.UNITID unitid,
+        b.type type,
+        DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d %H') time,
+        avg(a.AREA) area,
+        avg(a.DOSAGE) dosage
+        FROM
+        t_emc_final_data_hour_tj a
+        LEFT JOIN t_emc_energy_type b ON a.TYPEID = b.id
+        WHERE 1=1
+        <if test="startTime != null and startTime !=''">
+            AND a.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            AND a.DOSAGE_TIME <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="comId != null and comId !=''">
+            and  a.COMID  = #{comId}
+        </if>
+        GROUP BY
+        a.UNITID,
+        b.type,
+        DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d %H')
+        ) b
+        GROUP BY
+        b.type,
+        b.UNITID
+        ) c ,
+        (
+        SELECT
+        e.UNIT_ID,
+        f.ENERGY_TYPE,
+        e.ENTERPRISE,
+        e. LOCAL,
+        e.INDUSTRY
+        FROM
+        t_emc_index_record e
+        LEFT JOIN t_emc_index_type f ON e.TYPE_ID = f.ID
+        WHERE
+        e.INDEX_TIME = (
+        SELECT
+        max(INDEX_TIME)
+        FROM
+        t_emc_index_record
+        WHERE
+        UNIT_ID = e.UNIT_ID
+        AND TYPE_ID = e.TYPE_ID
+        GROUP BY
+        UNIT_ID,
+        TYPE_ID
+        )
+        <if test="comId != null and comId !=''">
+            and  e.COM_ID  = #{comId}
+        </if>
+        group by f.ENERGY_TYPE,e.UNIT_ID
+        ) d
+        where c.type = d.ENERGY_TYPE
+        AND c.unitid = d.UNIT_ID
+        and c.m >= d.ENTERPRISE) aa
+        LEFT JOIN v_emc_unit bb ON aa.unitid = bb.UNITID;
+    </select>
 </mapper>
