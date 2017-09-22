@@ -650,7 +650,7 @@ public class ComponentServiceImpl implements ComponentService{
             }else{
                 previousValues.add(0);
             }
-            total += Double.valueOf(da.get("num").toString());
+            total += Double.valueOf(da.get("num").toString().replaceAll(",",""));
         }
         if(days.size()>0){
             avgs = total/days.size();
