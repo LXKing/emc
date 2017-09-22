@@ -17,6 +17,7 @@
     <!--后台-->
     <decorator name="system" page="system.jsp"/>
 
-
+    <!--三级页面分公司装饰器-->
+    <decorator name="main_third_fgs" page="main_third_fgs.jsp"/>
 
 </decorators>
