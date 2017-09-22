@@ -126,7 +126,7 @@ function loadDHdetail(){
         data: data,
         dataType: "json",
         success: function (data) {
-            $(".groupTotal").text(data.ZDH);
+            $(".groupTotal").text(toFormatNum(data.ZDH));
             if(data.TB>0){
                 var TB = data.TB+"<span class='arrow'>↑</span>";
                 $(".groupchangeRate").html(TB);
@@ -288,7 +288,7 @@ function getStationEc(data,type){
     console.log(data);
     $("#chart3").empty();
     chart3  =echarts.init(document.getElementById('chart3'));
-    $(".stationTotal").html(data.ZDH);
+    $(".stationTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".stationDw").html("T/万m²");
     }else if(type=="2"){
@@ -341,7 +341,7 @@ function getStationEc(data,type){
 function getFeedEc(data,type){
     $("#chart1").empty();
     chart1  =echarts.init(document.getElementById('chart1'));
-    $(".feedTotal").html(data.ZDH);
+    $(".feedTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".feedDw").html("T/万m²");
     }else if(type=="2"){
@@ -394,7 +394,7 @@ function getFeedEc(data,type){
 function getNetEc(data,type){
     $("#chart2").empty();
     chart2  =echarts.init(document.getElementById('chart2'));
-    $(".netTotal").html(data.ZDH)
+    $(".netTotal").html(toFormatNum(data.ZDH))
     if(type=="1"){
         $(".netDw").html("T/万m²");
     }else if(type=="2"){
@@ -448,7 +448,7 @@ function getNetEc(data,type){
 function getLine(data,type){
     $("#chart4").empty();
     chart4  =echarts.init(document.getElementById('chart4'));
-    $(".lineTotal").html(data.ZDH);
+    $(".lineTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".lineDw").html("T/万m²");
     }else if(type=="2"){
@@ -502,7 +502,7 @@ function getLine(data,type){
 function getRoomEc(data,type){
     $("#chart5").empty();
     chart5  =echarts.init(document.getElementById('chart5'));
-    $(".roomTotal").html(data.ZDH);
+    $(".roomTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".roomDw").html("T/万m²");
     }else if(type=="2"){

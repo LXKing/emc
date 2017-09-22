@@ -228,12 +228,15 @@ $(function () {
         var value = $(this).text();
         var v = $(top.document).find("#formula").val();
 
+        if(value=="("){
+            $(top.document).find("#formula").val(v+value);
+        }
         if(v==''||v==null){
-            top.layer.msg("请填写公式");
+            top.layer.msg("请填写公式或组成公式的代码");
             return false;
         }else {
             //alert(v+$(this).text());
-            var reg = /^[(A\d{5})\.\+\-\×\÷]+$/;
+            var reg = /^[((\A\d{5})\.\+\-\×\÷]+$/;
             //alert(v);
             if (!reg.test(v)) {
                 top.layer.msg("请输入正确的公式，该不合法!");

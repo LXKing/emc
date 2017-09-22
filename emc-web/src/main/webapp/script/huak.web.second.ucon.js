@@ -127,7 +127,7 @@ function loadDataFun(){
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-        	$("#groupTotal").html(data.data.groupTotal.energy.value);
+        	$("#groupTotal").html(toFormatNum(data.data.groupTotal.energy.value));
 //        	if(data.data.groupTotal.energy.type == 1){
 //        		$("#groupTotal").addClass("energy_gray");
 //        	};
@@ -142,7 +142,7 @@ function loadDataFun(){
             }
             //水单耗
             console.log(data.data.waterTotal.energy.value);
-            $("#waterTotal").html(data.data.waterTotal.energy.value);
+            $("#waterTotal").html(toFormatNum(data.data.waterTotal.energy.value));
             if(data.data.waterTotal.energy.type == 1){
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh");
             }else{
@@ -161,7 +161,7 @@ function loadDataFun(){
                 $("#waterchangeRate").html("("+data.data.waterTotal.changeRate.rate + "→)");
             }
             //电单耗
-            $("#electricTotal").html(data.data.electricTotal.energy.value);
+            $("#electricTotal").html(toFormatNum(data.data.electricTotal.energy.value));
             if(data.data.electricTotal.energy.type == 1){
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh");
             }else{
@@ -180,7 +180,7 @@ function loadDataFun(){
                 $("#elechangeRate").html("("+data.data.electricTotal.changeRate.rate + "→)");
             };
             //气单耗
-            $("#gasTotal").html(data.data.gasTotal.energy.value);
+            $("#gasTotal").html(toFormatNum(data.data.gasTotal.energy.value));
             if(data.data.gasTotal.energy.type == 1){
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh");
             }else{
@@ -200,7 +200,7 @@ function loadDataFun(){
             };
 
             //热单耗
-            $("#hotTotal").html(data.data.hotTotal.energy.value);
+            $("#hotTotal").html(toFormatNum(data.data.hotTotal.energy.value));
             if(data.data.hotTotal.energy.type == 1){
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh");
             }else{
@@ -220,7 +220,7 @@ function loadDataFun(){
             };
 
             //煤单耗
-            $("#coalTotal").html(data.data.coalTotal.energy.value);
+            $("#coalTotal").html(toFormatNum(data.data.coalTotal.energy.value));
             if(data.data.coalTotal.energy.type == 1){
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh");
             }else{

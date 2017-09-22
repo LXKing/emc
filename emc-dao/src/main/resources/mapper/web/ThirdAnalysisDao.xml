@@ -141,7 +141,7 @@
         sum(B.dosage) dosage,
         SUM(B.total) total,
         B.energytype,
-        b.unitid,
+        B.unitid,
         B.yeardate
         FROM
         ( SELECT vu.UNITID FROM

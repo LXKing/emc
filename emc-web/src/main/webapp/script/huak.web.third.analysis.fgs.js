@@ -122,7 +122,7 @@ function loadDHdetail(){
         dataType: "json",
         success: function (data) {
             console.log(data);
-            $(".groupTotal").text(data.ZDH);
+            $(".groupTotal").text(toFormatNum(data.ZDH));
             if(data.TB>0){
                 var TQ = data.TB+"<span class='arrow'>↑</span>";
                 $(".groupchangeRate").html(TQ);
@@ -242,7 +242,7 @@ function loadWaterDH() {
 }
 function getWater(data){
     $(".waterDw").html("T/万m²");
-    $(".waterTotal").html(data.ZDH);
+    $(".waterTotal").html(toFormatNum(data.ZDH));
 
     if(data.TB < 0){
         $(".waterTotal").closest(".energy-head").addClass("energy-snh");
@@ -296,7 +296,7 @@ function getWater(data){
         });
     }
     function getElectric(data){
-        $(".electricTotal").html(data.ZDH);
+        $(".electricTotal").html(toFormatNum(data.ZDH));
         $(".electricDw").html("kW·h/万m²");
 
         if(data.TB < 0){
@@ -351,7 +351,7 @@ function loadGasDH() {
     });
 }
     function getGas(data){
-        $(".gasTotal").html(data.ZDH);
+        $(".gasTotal").html(toFormatNum(data.ZDH));
         $(".gasDw").html("m³/万m²");
 
         if(data.TB < 0){
@@ -407,7 +407,7 @@ function loadGasDH() {
         });
     }
     function getHot(data){
-        $(".hotTotal").html(data.ZDH);
+        $(".hotTotal").html(toFormatNum(data.ZDH));
         $(".hotDw").html("GJ/万m²");
 
         if(data.TB < 0){
@@ -463,7 +463,7 @@ function loadGasDH() {
             });
         }
     function getCoal(data){
-        $(".coalTotal").html(data.ZDH);
+        $(".coalTotal").html(toFormatNum(data.ZDH));
         $(".coalDw").html("T/万m²");
 
         if(data.TB < 0){

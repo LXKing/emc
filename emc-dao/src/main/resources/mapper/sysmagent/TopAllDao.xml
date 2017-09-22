@@ -201,7 +201,7 @@
     <!--成本平方米-->
     <select id="selectPriceAreaByMap" parameterType="java.util.Map" resultType="java.lang.String">
 
-        SELECT ROUND(sum(b.area)/10000,4) area from (
+        SELECT ROUND(sum(b.area),4) area from (
             SELECT  a.UNITTYPE , avg(a.AREA) area from (
             SELECT  sum(h.BM) BM,sum(h.DOSAGE) DOSAGE,h.TYPE,ou.UNITTYPE,SUM(h.AREA) AREA  from (
             SELECT v.UNITTYPE,v.UNITID from (SELECT ID FROM

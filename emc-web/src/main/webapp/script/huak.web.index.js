@@ -77,7 +77,7 @@
                 if (data.all.yardage == null || data.all.yardage == '') {
                     $(".yardage").html(0 + "Tce/万m²");
                 } else {
-                    $(".yardage").html(data.all.yardage + "Tce/万m²");
+                    $(".yardage").html(toFormatNum(data.all.yardage) + "Tce/万m²");
                 }
                 $(".zyardage").html(0 + "GJ/万m²");
                 if (data.all.priceArea == null || data.all.priceArea == '') {

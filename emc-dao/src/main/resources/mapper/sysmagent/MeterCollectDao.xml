@@ -308,10 +308,11 @@
         LEFT JOIN v_emc_unit vu ON mc.UNIT_ID = vu.UNITID
         where 1=1
         <if test="code != null and code!=''">
-            and CODE = #{code,jdbcType=VARCHAR}
+            and CODE LIKE CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+
         </if>
         <if test="name != null and name!=''">
-            and NAME = #{name,jdbcType=VARCHAR}
+            and NAME LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
         </if>
         <if test="serialNo != null and serialNo!=''">
             and SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
@@ -338,7 +339,7 @@
             and  DEPICT = #{depict,jdbcType=VARCHAR}
         </if>
         <if test="tag != null and tag!=''">
-            and TAG = #{tag,jdbcType=VARCHAR}
+            and TAG LIKE CONCAT('%',#{tag,jdbcType=VARCHAR},'%')
         </if>
         <if test="coef != null and coef!=''">
             and COEF = #{coef,jdbcType=DOUBLE}
@@ -355,7 +356,7 @@
         <if test="comId != null and comId!=''">
             and COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
-        order by id
+        order by vu.UNITNAME,mc.CODE,et.TYPE,mc.ISREAL asc
     </select>
     <select id="selectAllByMap" parameterType="java.util.Map" resultType="java.util.Map">
         select
