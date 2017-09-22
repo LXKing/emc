@@ -44,7 +44,7 @@
                         <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                     </div>
                     <div class="groupEnergy-info col-lg-2 ">
-                        <h4 id="groupTotal"><!--760.4--></h4>
+                        <h3 id="groupTotal"><!--760.4--></h3>
                         <div class="small">${orgName}能耗 (Tce)</div>
                         <h4 id="groupchangeRate"><!--3.4<span class="arrow">↑</span>--></h4>
                         <div class="small">同比去年 (%)</div>

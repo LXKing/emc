@@ -35,8 +35,6 @@
                     </div>
                     <div class="cb-header">
                         <span class="cb-title"></span>
-
-
                         <div class="cb-title-right" style="margin-right:10px;">
                             <label>
                                 <span class="cb-legend-blue"></span>
@@ -61,35 +59,25 @@
                     </div>
                     <div id="groupEnergyChart" style="width: 100%;height:365px;"></div>
                 </div>
-
             </div>
-
-
             <div class="AssessmentBox rconttable col-lg-12 no-padding">
-
                 <div class="col-lg-12 no-padding mt30">
                     <div class="col-lg-6 no-padding analyBoxList">
                         <div class="ec_title">
                             2016~2017年度水能耗排名(GJ)
                         </div>
                         <div id="piechart_as" style="width: 100%;height:268px;"></div>
-
                     </div>
                     <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                         <div class="ec_title">
                             水总能耗趋势(GJ)
                         </div>
                         <div id="linechart_as" style="width: 100%;height:268px;"></div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
-
     </div>
-
 </div>
 
 <div class="col-lg-12 no-padding index_contentList">
