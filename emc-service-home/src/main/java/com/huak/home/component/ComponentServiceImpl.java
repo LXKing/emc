@@ -59,6 +59,9 @@ public class ComponentServiceImpl implements ComponentService{
     private String DATA_VALUE2 = "value2";
     private String TREND = "trend";
     private String TYPE_NAME = "typeName";
+    private String MESSAGE = "message";
+    private String FLAG = "flag";
+    private String DATA = "data";
     /** 
      * 组件 能耗明细查询
      * @param params
@@ -673,15 +676,15 @@ public class ComponentServiceImpl implements ComponentService{
         Map<String,Object> other = new HashMap<>();
         Map<String,Object> upper = new HashMap<>();
         upper.put(TYPE_NAME,"上限");
-        upper.put("data",excellent);
+        upper.put(DATA,excellent);
 
         Map<String,Object> standa = new HashMap<>();
         standa.put(TYPE_NAME,"下限");
-        standa.put("data",standard);
+        standa.put(DATA,standard);
 
         Map<String,Object> avgMap = new HashMap<>();
         avgMap.put(TYPE_NAME,"平均值");
-        avgMap.put("data",avg);
+        avgMap.put(DATA,avg);
 
             other.put("upperLimit",upper);
             other.put("lowerLimit",standa);
@@ -689,7 +692,7 @@ public class ComponentServiceImpl implements ComponentService{
 
         Map<String,Object> result = new HashMap<>();
         result.put("yearDate",days);
-        result.put("data",results);
+        result.put(DATA,results);
         result.put("other",other);
         return result;
     }
@@ -1018,20 +1021,20 @@ public class ComponentServiceImpl implements ComponentService{
                 days = DateUtils.daysBetween(params.get(STARTTIME).toString(), params.get(ENDTIME).toString())+1;
                 params.put("days",days);
             } catch (ParseException e) {
-                result.put("flag",false);
-                result.put("message","失败");
-                result.put("data",null);
+                result.put(FLAG,false);
+                result.put(MESSAGE,"失败");
+                result.put(DATA,null);
                 return result;
             }
         }else {
-            result.put("flag",false);
-            result.put("message","失败");
-            result.put("data",null);
+            result.put(FLAG,false);
+            result.put(MESSAGE,"失败");
+            result.put(DATA,null);
             return result;
         }
-        result.put("flag",true);
-        result.put("message","成功");
-        result.put("data",componentDao.getAlarms(params));
+        result.put(FLAG,true);
+        result.put(MESSAGE,"成功");
+        result.put(DATA,componentDao.getAlarms(params));
         return  result;
     }
 
@@ -1065,20 +1068,20 @@ public class ComponentServiceImpl implements ComponentService{
                 days = DateUtils.daysBetween(params.get(STARTTIME).toString(), params.get(ENDTIME).toString())+1;
                 params.put("days",days);
             } catch (ParseException e) {
-                result.put("flag",false);
-                result.put("message","失败");
-                result.put("data",null);
+                result.put(FLAG,false);
+                result.put(MESSAGE,"失败");
+                result.put(DATA,null);
                 return result;
             }
         }else {
-            result.put("flag",false);
-            result.put("message","失败");
-            result.put("data",null);
+            result.put(FLAG,false);
+            result.put(MESSAGE,"失败");
+            result.put(DATA,null);
             return result;
         }
-        result.put("flag",true);
-        result.put("message","成功");
-        result.put("data",componentDao.getAlarms(params));
+        result.put(FLAG,true);
+        result.put(MESSAGE,"成功");
+        result.put(DATA,componentDao.getAlarms(params));
         return result;
     }
 }
