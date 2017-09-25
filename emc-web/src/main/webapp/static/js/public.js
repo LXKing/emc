@@ -219,6 +219,47 @@ $(function () {
         return false;
     });
 
+    $('.publicmenu .scbtn').click(function(){
+        if($('.publicmenu').css('left')=="0px"){
+            $('.publicmenu').animate({left:'-196px'});
+            $('.publicmenu .scbtn').animate({left:'0px'});
+            $('.publicmenu .scbtn').addClass('close');
+        }else{
+            $('.publicmenu .scbtn').animate({left:'196px'});
+            $('.publicmenu').animate({left:'0px'});
+            $('.publicmenu .scbtn').removeClass('close');
+        }
+
+    });
+
+    $('.publicmenu .btn-up').click(function(){
+        var top = parseInt($('.publicmenu-con > ul').css("top"));
+        if(-top>=parseInt($('.publicmenu-con > ul').height())-44){
+            return;
+        }
+        $('.publicmenu-con > ul').animate({"top":(top-44)+"px"});
+    });
+
+    $('.publicmenu .btn-down').click(function(){
+        var top = parseInt($('.publicmenu-con > ul').css("top"));
+        if(top==0){
+            return;
+        }
+        $('.publicmenu-con > ul').animate({"top":(top+44)+"px"});
+    });
+
+
+
+    $(".grouplist input").click(function(){
+        $(this).next().show();
+    });
+    $(".grouplist").hover(function(){
+
+    },function(){
+        $(this).find("ul").hide();
+    });
+
+
     $("body").on("click", ".x-sfbgbox", function () {
         $(this).next().stop(true, false).slideToggle(200, function () {
         });

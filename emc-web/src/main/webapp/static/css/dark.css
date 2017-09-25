@@ -32,12 +32,12 @@
     border: 1px solid #3c6275 !important;
     color: #618292 !important;
     background-color: transparent;
-
+   
 }
 
 .facedark  .Wdate{
     background-image:url(../imgdark/backstage-date.png);
-
+     
 }
 
 .facedark .x-sfleft1 {
@@ -1519,10 +1519,10 @@
     line-height: 20px;
 }
 .facedark .icon-edit{
-
+    
     background: url(../imgdark/backstage-edit.png) no-repeat;
 }
-.facedark .icon-delete{
+.facedark .icon-delete{ 
     background: url(../imgdark/backstage-delete.png) no-repeat;
 }
 .facedark .mainpageNow  input{
@@ -1532,48 +1532,48 @@
 }
 
 .facedark .publicmenu{
-    background: #132430;
+    background: rgba(19, 36, 48, 0.9);
     border-right: 1px solid #33fff8;
 }
 .facedark .publicmenu div{
     color: #ffffff;
 }
-.facedark .publicmenu ul li.more{
+.facedark .publicmenu .publicmenu-con  >ul >li.more >a{ 
     background-image: url(../imgdark/s2.png)  ;
 }
-.facedark .publicmenu ul li.more:hover,
-.facedark .publicmenu ul li.active.more{
+.facedark .publicmenu>.publicmenu-con>  ul >li.more:hover> a,
+.facedark .publicmenu>.publicmenu-con>  ul> li.active.more> a{
     background-image: url(../imgdark/s1.png);
 }
-.facedark .publicmenu ul li.active,
-.facedark .publicmenu ul li:hover {
+.facedark .publicmenu .publicmenu-con> ul li.active,
+.facedark .publicmenu .publicmenu-con> ul li:hover {
     background-color: #092b36;
 }
 
-.facedark .publicmenu ul li ul li:hover a,
-.facedark .publicmenu ul li ul li.active a{
+.facedark .publicmenu.publicmenu-con> > ul> li >ul >li:hover> a,
+.facedark .publicmenu .publicmenu-con> >ul> li >ul> li.active >a{
     background-color: #092b36;
-    color: #fff;
+    color: #fff; 
 }
-.facedark .publicmenu ul li a{
-    display: block;
+.facedark .publicmenu .publicmenu-con>  ul li a{
+    display: block; 
     color:#618292;
 
 }
-.facedark .publicmenu ul li:hover a,
-.facedark .publicmenu ul li.active a{
+.facedark .publicmenu .publicmenu-con> ul li:hover a, 
+.facedark .publicmenu .publicmenu-con > ul li.active a{
     color:#fff;
 }
-.facedark .publicmenu ul li  ul li a{
+.facedark .publicmenu  .publicmenu-con> ul li  ul li a{
     color:#618292 !important;
 }
-.facedark .publicmenu ul li ul li:hover a,
-.facedark .publicmenu ul li ul li.active a{
+.facedark .publicmenu  .publicmenu-con> ul li ul li:hover a,
+.facedark .publicmenu  .publicmenu-con> ul li ul li.active a{
     color:#fff !important;
 }
 
 .facedark .publicmenu .scbtn{
-    background-image: url(../imgdark/ss1.png);
+background-image: url(../imgdark/ss1.png);
 }
 .facedark .publicmenu .scbtn.close{
     background-image: url(../imgdark/ss2.png);
@@ -1587,4 +1587,37 @@
     border-left: 1px solid #21404e;
     border-right: 1px solid #21404e;
     border-bottom: 1px solid #21404e;
+}
+
+
+.facedark body ::-webkit-scrollbar-track {
+    background-color: rgba(57, 220, 214, .07);
+}
+
+.facedark body ::-webkit-scrollbar-thumb {
+    background-color: rgba(51, 255, 248, .2);
+    border-left: 2px solid rgba(51, 255, 248, 1);
+    border-right: 2px solid rgba(51, 255, 248, 1)
+}
+
+.facedark body ::-webkit-scrollbar-thumb:active {
+    background-color: rgba(51, 255, 248, .2)
+}
+
+.facedark body ::-webkit-scrollbar-corner {
+    background-color: rgba(57, 220, 214, .07);
+}
+
+.facedark body::-webkit-scrollbar-thumb:vertical {
+    border: none;
+    border-top: 2px solid rgba(51, 255, 248, 1);
+    border-bottom: 2px solid rgba(51, 255, 248, 1);
+}
+
+.facedark .btn-up{
+    background-image: url('../imgdark/shanggun.png');
+}
+
+.facedark .btn-down{
+    background-image: url('../imgdark/xiagun.png');
 }

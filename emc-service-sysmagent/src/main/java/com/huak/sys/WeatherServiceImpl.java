@@ -1,5 +1,6 @@
 package com.huak.sys;
 
+import com.huak.common.Constants;
 import com.huak.weather.dao.WeatherDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,12 @@ import java.util.Map;
  * Function List:  <BR>
  */
 @Service
-public class WeatherServiceImpl implements WeatherService{
+public class WeatherServiceImpl implements WeatherService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private WeatherDao weatherDao;
+
     /**
      * 找到公司本小时的平均天气温度
      *
@@ -38,8 +40,9 @@ public class WeatherServiceImpl implements WeatherService{
     @Transactional(readOnly = true)
     public Double getWeatherByTime(String wcode, String time) {
         Map<String, Object> params = new HashMap();
-        params.put("wcode",wcode);
-        params.put("time",time);
-        return weatherDao.getWeatherByTime(params);
+        params.put("wcode", wcode);
+        params.put("time", time);
+        Double num = weatherDao.getWeatherByTime(params);
+        return null == num ? Constants.EXPTION_NUM : num;
     }
 }

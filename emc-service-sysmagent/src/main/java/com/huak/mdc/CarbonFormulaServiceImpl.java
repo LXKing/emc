@@ -1,5 +1,6 @@
 package com.huak.mdc;
 
+import com.huak.common.Constants;
 import com.huak.mdc.dao.CarbonFormulaDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import java.util.Map;
  * Function List:  <BR>
  */
 @Service
-public class CarbonFormulaServiceImpl implements CarbonFormulaService{
+public class CarbonFormulaServiceImpl implements CarbonFormulaService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
@@ -38,9 +39,10 @@ public class CarbonFormulaServiceImpl implements CarbonFormulaService{
     @Transactional(readOnly = true)
     public Double getCarbonFormulaByTime(String id, String energyTypeId, String time) {
         Map<String, Object> params = new HashMap();
-        params.put("id",id);
-        params.put("energyTypeId",energyTypeId);
-        params.put("time",time);
-        return carbonFormulaDao.getCarbonFormulaByTime(params);
+        params.put("id", id);
+        params.put("energyTypeId", energyTypeId);
+        params.put("time", time);
+        Double num = carbonFormulaDao.getCarbonFormulaByTime(params);
+        return null == num ? Constants.EXPTION_NUM : num;
     }
 }

@@ -151,3 +151,6 @@
 .facedark .form-group.has-success textarea:focus {
     background-color: #0e1d29;
 }
+.panelright {
+     margin-left: 0px;
+}

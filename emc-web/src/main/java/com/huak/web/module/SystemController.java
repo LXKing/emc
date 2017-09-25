@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,19 +45,8 @@ public class SystemController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Constants.SESSION_KEY);
         List<Map<String, Object>> menus =  userService.getSystemMenusByUser(MenuModel.SYSTEM,user);
-        /*封装成tree*/
-        List<Map<String, Object>> treeMenus = new ArrayList<>();
-        for(Map<String, Object> map:menus){
-            Map<String, Object> treeMap = new HashMap();
-            treeMap.put("id",map.get("id"));//主键
-            treeMap.put("pId",map.get("pMenuId"));//父节点
-            treeMap.put("href",map.get("menuUrl"));//url
-            treeMap.put("name",map.get("menuName"));//名称
-            treeMap.put("open",true);//展开
-            //treeMap.put("icon",map.get("menuName"));//图标
-            treeMenus.add(treeMap);
-        }
-        model.addAttribute("menus", JSONArray.toJSON(treeMenus));
+
+        model.addAttribute("menus", JSONArray.toJSON(menus));
         return "system/index";
     }
 

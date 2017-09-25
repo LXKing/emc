@@ -353,19 +353,13 @@ public class UserServiceImpl implements UserService {
         paramsMap.put("id",user.getId());
         paramsMap.put(P_MENU_ID,menu.getId());
         List<Map<String, Object>> afterMenus = userDao.selectMenusByUser(paramsMap);
-        menus.addAll(afterMenus);
         //查询二级菜单
         for (Map<String, Object> oneMap:afterMenus){
             paramsMap.put(P_MENU_ID,oneMap.get("id"));
             List<Map<String, Object>> oneMenus = userDao.selectMenusByUser(paramsMap);
-            menus.addAll(oneMenus);
-            for(Map<String, Object> twoMap:oneMenus){
-                paramsMap.put(P_MENU_ID,twoMap.get("id"));
-                List<Map<String, Object>> twoMenus = userDao.selectMenusByUser(paramsMap);
-                menus.addAll(twoMenus);
-            }
+            oneMap.put("menus",oneMenus);
+            menus.add(oneMap);
         }
-
         return menus;
     }
 }

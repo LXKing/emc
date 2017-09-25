@@ -21,26 +21,30 @@
     <sitemesh:head/>
     <script>
         $(function () {
-            //console.info("重置面包屑");
-            var nodes = ${menus};
-            var setting = {
-                view: {
-                    dblClickExpand: false,//屏蔽掉双击事件
-                    showLine: true,//是否显示节点之间的连线
-                    //fontCss:{'color':'black','font-weight':'bold'},//字体样式函数
-                    selectedMulti: false //设置是否允许同时选中多个节点
-                },
+            //菜单绑定单击事件
+            $('.publicmenu').on('click','ul a',function(){
 
-                data: {
-                    simpleData: {
-                        enable: true
-                    }
-                },
-                callback: {
-                    onClick: onClick
+                var menuName = $(this).text();
+                var url = $(this).attr('menu-url');
+                if("后台首页"==menuName){
+                    document.location.replace(_web + url);
+                    return false;
                 }
-            };
-            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+                if('#'!=url){
+                    $('.publicmenu .title').text(menuName);
+                    $(".pull-left.yuce-tit").html(menuName);
+                    $('.publicmenu li').removeClass('active');
+                    $(this).parent().addClass('active');
+                    $(this).parents('.more').addClass('active');
+                    $('.publicmenu').animate({left:'-196px'});
+                    $('.publicmenu .scbtn').animate({left:'0px'});
+                    $('.publicmenu .scbtn').addClass('close');
+
+                    openPage(_web + url);
+                }else{
+                    return false;
+                }
+            });
         });
 
         function onClick(event,treeId, treeNode) {
@@ -65,25 +69,30 @@
 </head>
 <body>
 <%-- 菜单 --%>
-<%--<div class="publicmenu">--%>
-    <%--<div>当前页面</div>--%>
-    <%--<ul>--%>
-        <%--<li><a>二级目录A</a></li>--%>
-        <%--<li><a>二级目录A</a></li>--%>
-        <%--<li class="active more"><a>二级目录A</a>--%>
-            <%--<ul>--%>
-                <%--<li><a href="#">三级目录</a></li>--%>
-                <%--<li class="active"><a href="#">三级目录</a></li>--%>
-                <%--<li><a href="#">三级目录</a></li>--%>
-                <%--<li><a href="#">三级目录</a></li>--%>
-                <%--<li><a href="#">三级目录</a></li>--%>
-            <%--</ul>--%>
-        <%--</li>--%>
-        <%--<li><a>二级目录A</a></li>--%>
-        <%--<li><a>二级目录A</a></li>--%>
-        <%--<li><a>二级目录A</a></li>--%>
-    <%--</ul>--%>
-<%--</div>--%>
+<div class="publicmenu" style="left:-196px">
+
+    <a href="javascript:void(0);" class="scbtn" style="left:0px"></a>
+    <div class="title">后台首页</div>
+    <div class="publicmenu-con">
+        <a href="javascript:void(0);" class="btn-up btngun"></a>
+        <a href="javascript:void(0);" class="btn-down btngun"></a>
+        <ul>
+            <c:forEach items="${menus}" var="oneMenu">
+                <li class="${fn:length(oneMenu.menus)>0?'more':''} ${oneMenu.menuName eq '后台首页'?'active':''}">
+                    <a href="javascript:void(0);" menu-url="${oneMenu.menuUrl}">${oneMenu.menuName}</a>
+                    <c:if test="${fn:length(oneMenu.menus)>0}">
+                        <ul>
+                            <c:forEach items="${oneMenu.menus}" var="twoMenu">
+                                <li class=""><a href="javascript:void(0);" menu-url="${twoMenu.menuUrl}">${twoMenu.menuName}</a></li>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
+
+</div>
 
 <%@include file="/WEB-INF/include/header.jsp" %>
 <div class="main-container">
@@ -102,9 +111,6 @@
 
     </div>
     <div class="main-two-panel">
-        <div class="panelleft">
-            <ul id="treeDemo" class="ztree"></ul>
-        </div>
         <div class="panelright" id="panelright">
             <sitemesh:body/>
         </div>
