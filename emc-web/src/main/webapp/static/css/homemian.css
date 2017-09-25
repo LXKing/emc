@@ -2011,7 +2011,7 @@ input {
 }
 
 
-/*.energy_consumption .energy-list-box:nth-child(1) .energy-head {
+.energy_consumption .energy-list-box:nth-child(1) .energy-head {
 	background-image: url(../img/yuan_g.png);
 }
 
@@ -2049,7 +2049,7 @@ input {
 
 .energy_consumption .energy-list-box:nth-child(5) .energy-head.energy-add {
 	background-image: url(../img/hu_h.png);
-}*/
+}
 
 .energy_consumption .energy-add .energy-list-info span {
     color: #d4513b !important;
