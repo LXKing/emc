@@ -63,4 +63,11 @@ public interface ComponentDao {
      * @return
      */
     Map<String,Object> selectrecentDetail(Map<String, Object> paramsMap);
+
+    /**
+     * 报警-单耗接口-实现
+     * @param params
+     * @return
+     */
+    Map<String,Object> getAlarms(Map<String, Object> params);
 }

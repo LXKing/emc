@@ -329,7 +329,7 @@ public class ComponentServiceImpl implements ComponentService{
      * @return
      */
     private List<Map<String, Object>> assemblyData(Map<String, Object> data) {
-       boolean flag = (null == data);
+        boolean flag = (null == data);
         List<Map<String,Object>> results = new ArrayList<>();//昨天、今天、明天
         Map<String,Object> towdayagao = new HashMap<>();//前天map
         List<Map<String,Object>> temp = new ArrayList<>();//前天list
@@ -650,7 +650,7 @@ public class ComponentServiceImpl implements ComponentService{
             }else{
                 previousValues.add(0);
             }
-            total += Double.valueOf(da.get("num").toString().replaceAll(",",""));
+            total += Double.valueOf(da.get("num").toString().replaceAll(",", ""));
         }
         if(days.size()>0){
             avgs = total/days.size();
@@ -683,9 +683,9 @@ public class ComponentServiceImpl implements ComponentService{
         avgMap.put(TYPE_NAME,"平均值");
         avgMap.put("data",avg);
 
-        other.put("upperLimit",upper);
-        other.put("lowerLimit",standa);
-        other.put("average",avgMap);
+            other.put("upperLimit",upper);
+            other.put("lowerLimit",standa);
+            other.put("average",avgMap);
 
         Map<String,Object> result = new HashMap<>();
         result.put("yearDate",days);
@@ -990,4 +990,95 @@ public class ComponentServiceImpl implements ComponentService{
         return data;
     }
 
+    /**
+     * 报警-单耗接口-实现
+     * @param params 说明：
+     * {
+     *     startTime：#开始时间 格式：yyyy-MM-dd,
+     *     endTime：#结束时间 格式：yyyy-MM-dd,
+     *     comId：#当前登录公司id
+     * }
+     * @return Map 说明:
+     * {
+     *   flag：true/false,
+     *   message:描述,
+     *   data：{
+     *     mild: #轻度,
+     *     moderate：#中度,
+     *     serious：#重度,
+     *     total:  #检测总数
+     *   }
+     * }
+     */
+    public Map<String,Object> getAlarms(Map<String,Object> params)  {
+        Map<String,Object> result= new HashMap<>();
+        int days = 0;
+        if(params.containsKey(STARTTIME) && params.containsKey(ENDTIME)){
+            try {
+                days = DateUtils.daysBetween(params.get(STARTTIME).toString(), params.get(ENDTIME).toString())+1;
+                params.put("days",days);
+            } catch (ParseException e) {
+                result.put("flag",false);
+                result.put("message","失败");
+                result.put("data",null);
+                return result;
+            }
+        }else {
+            result.put("flag",false);
+            result.put("message","失败");
+            result.put("data",null);
+            return result;
+        }
+        result.put("flag",true);
+        result.put("message","成功");
+        result.put("data",componentDao.getAlarms(params));
+        return  result;
+    }
+
+    /**
+     * 报警详情-单耗接口-实现
+     * @param params 说明：
+     * {
+     *     startTime：#开始时间 格式：yyyy-MM-dd,
+     *     endTime：#结束时间 格式：yyyy-MM-dd,
+     *     comId：#当前登录公司id
+     * }
+     * @return Map 说明:
+     * {
+     *   flag：#true/false,
+     *   message: #描述,
+     *   data：[{
+     *     enterprise: #企业指标,
+     *     industry：#行业指标,
+     *     local：#地方指标,
+     *     num: #平均单耗
+     *     type：#指标类型,
+     *     unitname：#用能单位
+     *   }]
+     * }
+     */
+    public Map<String,Object> getAlarmsDetail(Map<String,Object> params)  {
+        Map<String,Object> result= new HashMap<>();
+        int days = 0;
+        if(params.containsKey(STARTTIME) && params.containsKey(ENDTIME)){
+            try {
+                days = DateUtils.daysBetween(params.get(STARTTIME).toString(), params.get(ENDTIME).toString())+1;
+                params.put("days",days);
+            } catch (ParseException e) {
+                result.put("flag",false);
+                result.put("message","失败");
+                result.put("data",null);
+                return result;
+            }
+        }else {
+            result.put("flag",false);
+            result.put("message","失败");
+            result.put("data",null);
+            return result;
+        }
+        result.put("flag",true);
+        result.put("message","成功");
+        result.put("data",componentDao.getAlarms(params));
+        return result;
+    }
 }
