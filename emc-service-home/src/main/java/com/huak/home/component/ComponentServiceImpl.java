@@ -632,7 +632,7 @@ public class ComponentServiceImpl implements ComponentService{
         List<Map<String, Object>> previous = componentDao.getenergycomparision(params);
         Map<String,Object> previousValue = new HashMap<>();
         for(Map pr : previous){
-            previousValue.put(pr.get("dates").toString(),pr.get("num"));
+            previousValue.put(pr.get("dates").toString(),pr.get("num").toString().replaceAll(",", ""));
         }
         List<String> days = new ArrayList<>();//时间列表
         List<Object> values = new ArrayList<>();//今年对应时间列表的值
@@ -644,9 +644,9 @@ public class ComponentServiceImpl implements ComponentService{
         double avgs = 0.0;
         for (Map da :current){
             days.add(da.get("dates").toString());//时间列表
-            excellent.add(da.get("excellent"));//上线
-            standard.add(da.get("standard"));//下线
-            values.add(da.get("num").toString());//今年时间值
+            excellent.add(da.get("excellent").toString().replaceAll(",", ""));//上线
+            standard.add(da.get("standard").toString().replaceAll(",", ""));//下线
+            values.add(da.get("num").toString().replaceAll(",", ""));//今年时间值
             String pretime = this.getPreviousDates(da.get("dates").toString(),"yyyy-MM-dd");
             if(previousValue.containsKey(pretime)){
                 previousValues.add(previousValue.get(pretime));

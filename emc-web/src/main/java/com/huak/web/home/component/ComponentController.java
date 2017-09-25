@@ -240,18 +240,23 @@ public class ComponentController extends BaseController{
         try {
              /*封装条件*/
             Map params = paramsPackageOrg(toolVO, request);
-
+            Map<String,Object> jjdata = new HashMap<>();
+            Map<String,Object> datemp  = componentService.getAlarms(params);
+            if((boolean)datemp.get("flag")){
+                jjdata = (Map<String, Object>) datemp.get("data");
+            }else{
+                jjdata.put("serious",0);
+                jjdata.put("moderate",0);
+                jjdata.put("mild",0);
+                jjdata.put("css","a");
+            }
+            jjdata.put("css","b");
             Map<String,Object> data = new HashMap<>();
             Map<String,Object> gkdata = new HashMap<>();
             gkdata.put("serious",135);
             gkdata.put("moderate",135);
             gkdata.put("mild",135);
             gkdata.put("css","b");
-            Map<String,Object> jjdata = new HashMap<>();
-            jjdata.put("serious",0);
-            jjdata.put("moderate",28);
-            jjdata.put("mild",360);
-            jjdata.put("css","a");
             Map<String,Object> fwdata = new HashMap<>();
             fwdata.put("serious",0);
             fwdata.put("moderate",0);
