@@ -294,6 +294,7 @@ function waterEnergyChartFun(_DATA, _YEAR_LIST) {
         $("#waterTotal").closest(".energy-head").addClass("energy-snh-remind");
         $("#waterchangeRate").html("(" + toDecimal(_TB) + "↑)");
     }else{
+        $("#waterTotal").closest(".energy-head").addClass("energy-snh");
         if(_TB == 0){
             $("#waterchangeRate").html("(" + 0 + "→)");
         }else{
@@ -410,6 +411,7 @@ function electricEnergyChartFun(_DATA, _YEAR_LIST) {
         $("#electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
         $("#elechangeRate").html("(" + toDecimal(_TB) + "↑)");
     }else{
+        $("#electricTotal").closest(".energy-head").addClass("energy-dnh");
         if(_TB == 0){
             $("#elechangeRate").html("(" + 0 + "→)");
         }else{
@@ -526,6 +528,7 @@ function gasEnergyChartFun(_DATA, _YEAR_LIST) {
         $("#gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
         $("#gaschangeRate").html("(" + toDecimal(_TB) + "↑)");
     }else{
+        $("#gasTotal").closest(".energy-head").addClass("energy-qnh");
         if(_TB == 0){
             $("#gaschangeRate").html("(" + 0 + "→)");
         }else{
@@ -642,6 +645,7 @@ function hotEnergyChartFun(_DATA, _YEAR_LIST) {
         $("#hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
         $("#hotchangeRate").html("(" + toDecimal(_TB) + "↑)");
     }else{
+        $("#hotTotal").closest(".energy-head").addClass("energy-rnh");
         if(_TB == 0){
             $("#hotchangeRate").html("(" + 0 + "→)");
         }else{
@@ -758,6 +762,7 @@ function coalEnergyChartFun(_DATA, _YEAR_LIST) {
         $("#coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
         $("#coalchangeRate").html("(" + toDecimal(_TB) + "↑)");
     }else{
+        $("#coalTotal").closest(".energy-head").addClass("energy-mnh");
         if(_TB == 0){
             $("#coalchangeRate").html("(" + 0 + "→)");
         }else{
