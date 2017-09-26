@@ -262,7 +262,7 @@ function typefun(these, code) {
 };
 
 function loadDataFun(){
-    chart01Fun();
+
 
     //chart02Fun();
 
@@ -274,15 +274,17 @@ function loadDataFun(){
 
     //chart06Fun();
 
-    chart07Fun();
 
-    chart08Fun();
+
+
 
     //chart09Fun();
 
     chart11Fun();
-
     chart13Fun();
+    chart08Fun();
+    chart01Fun();
+    chart07Fun();
 }
 var myChartEnergy;
 var myChartQualified;
@@ -303,7 +305,7 @@ $(".index_menuBox").height(websiteheight);
 /*组件-单耗趋势*/
 function chart01Fun() {
     $.ajax({
-        url: _web + '/component/energycomparison',
+        url: _web + '/energycomparison/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: $("#searchTools").serialize(),
@@ -1250,7 +1252,7 @@ function chart06Fun() {
 /*能耗明细*/
 function chart07Fun() {
     $.ajax({
-        url: _web + '/component/energyDetail',
+        url: _web + '/energyConsumption/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: $("#searchTools").serialize(),
@@ -1534,7 +1536,7 @@ function returnFloat(value) {
 /*居民 合格率趋势*/
 function chart08Fun() {
     $.ajax({
-        url: _web + '/component/roomtemperature',
+        url: _web + '/roomtemperature/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: $("#searchTools").serialize()+"&"+$.param({min:18,max:22}),
@@ -1807,7 +1809,7 @@ function chart09Fun() {
 /*组件-天气预报*/
 function chart10Fun() {
     $.ajax({
-        url: _web + '/component/weather',
+        url: _web + '/weathercondition/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         dataType: "json",
@@ -1987,7 +1989,7 @@ function initchart10(hours, temps) {
 function chart13Fun() {
     //trend 1升  2降
     $.ajax({
-        url: _web + '/component/recentdetail',
+        url: _web + '/recentdetail/list',
         type: 'post',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: $("#searchTools").serialize(),
@@ -2163,7 +2165,7 @@ function chart12Fun() {
     var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
     initchart12(titledata);
     $.ajax({
-        url: _web + "/component/healthcheck",
+        url: _web + "/healthcheck/list",
         type: "POST",
         data: $("#searchTools").serialize(),
         dataType: "json",
@@ -2181,8 +2183,8 @@ function initchart12(titledata){
     var html = "";
     html += "<div>";
     for(var i = 0; i < titledata.length; i++) {
-        var classname = "runc";
-        html += "<div id='"+(parseInt(i)+parseInt(1))+"' class='" + classname + "'><h1>" + titledata[i] + "</h1>" +
+//        var classname = "runc";
+        html += "<div id='"+(parseInt(i)+parseInt(1))+"' class='runc'><h1>" + titledata[i] + "</h1>" +
             "<div><div><div></div></div></div></div>";
     }
     html += "</div>";
@@ -2233,32 +2235,52 @@ function doCss(data){
 
 /*组件-健康指数-定时器任务1*/
 function timerTask(i,data){
-    $("#"+i).attr("class","runm");
+    $("#"+i).attr("class","runb");
     setTimeout(function(){
         if(i == 1){
             $("#"+i).attr("class","run"+data.object.gkyx.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.gkyx.serious);
             $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.gkyx.moderate);
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.gkyx.mild);
-            $("#"+i+1).attr("class","run"+data.object.gkyx.css);
+            if(data.object.gkyx.css == 'm'){
+                $("#"+i+1).attr("class","runb");
+            }else{
+                $("#"+i+1).attr("class","run"+data.object.gkyx.css);
+            }
+
         }else if( i == 2){
             $("#"+i).attr("class","run"+data.object.jjyx.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.jjyx.serious);
             $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.jjyx.moderate);
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.jjyx.mild);
-            $("#"+i+1).attr("class","run"+data.object.jjyx.css);
+
+            if(data.object.jjyx.css == 'm'){
+                $("#"+i+1).attr("class","runb");
+            }else{
+                $("#"+i+1).attr("class","run"+data.object.jjyx.css);
+            }
+
         }else if (i == 3){
             $("#"+i).attr("class","run"+data.object.fwqk.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
             $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.fwqk.moderate);
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.fwqk.mild);
-            $("#"+i+1).attr("class","run"+data.object.fwqk.css);
+            if(data.object.fwqk.css == 'm'){
+                $("#"+i+1).attr("class","runb");
+            }else{
+                $("#"+i+1).attr("class","run"+data.object.fwqk.css);
+            }
+
         }else if( i == 4){
             $("#"+i).attr("class","run"+data.object.zygl.css);
             $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.zygl.serious);
             $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.zygl.moderate);
             $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.zygl.mild);
-            $("#"+i+1).attr("class","run"+data.object.zygl.css);
+            if(data.object.zygl.css == 'm'){
+                $("#"+i+1).attr("class","runb");
+            }else{
+                $("#"+i+1).attr("class","run"+data.object.zygl.css);
+            }
         }
         if(i<=3){
             timerTask(parseInt(i)+1,data);
