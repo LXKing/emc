@@ -49,6 +49,7 @@ public class EnergySecond implements Serializable {
     private Double oilBq;
     private Double oilTq;
     private Double oilAn;
+    private int sort;
 
     DecimalFormat format = new DecimalFormat("#.0000");
 
@@ -270,5 +271,13 @@ public class EnergySecond implements Serializable {
 
     public void setFormat(DecimalFormat format) {
         this.format = format;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 }
