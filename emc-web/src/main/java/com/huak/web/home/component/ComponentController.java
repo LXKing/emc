@@ -243,7 +243,17 @@ public class ComponentController extends BaseController{
             Map<String,Object> jjdata = new HashMap<>();
             Map<String,Object> datemp  = componentService.getAlarms(params);
             if((boolean)datemp.get("flag")){
-                jjdata = (Map<String, Object>) datemp.get("data");
+                Map<String,Object> temp = (Map<String, Object>) datemp.get("data");
+
+                jjdata.put("serious",null == temp.get("serious") ?0:temp.get("serious"));
+                jjdata.put("moderate",null == temp.get("moderate") ?0:temp.get("moderate"));
+                jjdata.put("mild",null == temp.get("mild") ?0:temp.get("mild"));
+                if(null != temp.get("serious") && temp.get("serious")!= 0){
+                    jjdata.put("css","b");
+                }else{
+                    jjdata.put("css","a");
+                }
+
             }else{
                 jjdata.put("serious",0);
                 jjdata.put("moderate",0);
