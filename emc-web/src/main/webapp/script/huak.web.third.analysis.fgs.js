@@ -127,9 +127,11 @@ function loadDHdetail(){
                 var TQ = data.TB+"<span class='arrow'>↑</span>";
                 $(".groupchangeRate").html(TQ);
             }else if(data.TB==0){
+                $("#groupchangeRate").css('color','#999');
                 var TQ = data.TB+"<span class='arrow'>→</span>";
                 $(".groupchangeRate").html(TQ);
             }else if(data.TB<0){
+                $("#groupchangeRate").css('color','#3db1b0');
                 var TQ = data.TB+"<span class='arrow'>↓</span>";
                 $(".groupchangeRate").html(TQ);
             }
@@ -300,11 +302,11 @@ function getWater(data){
         $(".electricDw").html("kW·h/万m²");
 
         if(data.TB < 0){
-            $(".electricTotal").closest(".energy-head").addClass("energy-snh");
+            $(".electricTotal").closest(".energy-head").addClass("energy-dnh");
         }else{
             $(".electricTotal").next("span").addClass("energy-remind");
             $(".electricTotal").addClass("energy-remind");
-            $(".electricTotal").closest(".energy-head").addClass("energy-snh-remind");
+            $(".electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
         }
         if(data.TB < 0){
             $(".elechangeRate").css('color','#3db1b0');
@@ -355,11 +357,11 @@ function loadGasDH() {
         $(".gasDw").html("m³/万m²");
 
         if(data.TB < 0){
-            $(".gasTotal").closest(".energy-head").addClass("energy-snh");
+            $(".gasTotal").closest(".energy-head").addClass("energy-qnh");
         }else{
             $(".gasTotal").next("span").addClass("energy-remind");
             $(".gasTotal").addClass("energy-remind");
-            $(".gasTotal").closest(".energy-head").addClass("energy-snh-remind");
+            $(".gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
         }
         if(data.TB < 0){
             $(".gaschangeRate").css('color','#3db1b0');
@@ -411,11 +413,11 @@ function loadGasDH() {
         $(".hotDw").html("GJ/万m²");
 
         if(data.TB < 0){
-            $(".hotTotal").closest(".energy-head").addClass("energy-snh");
+            $(".hotTotal").closest(".energy-head").addClass("energy-rnh");
         }else{
             $(".hotTotal").next("span").addClass("energy-remind");
             $(".hotTotal").addClass("energy-remind");
-            $(".hotTotal").closest(".energy-head").addClass("energy-snh-remind");
+            $(".hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
         }
         if(data.TB < 0){
             $(".hotchangeRate").css('color','#3db1b0');
@@ -467,11 +469,11 @@ function loadGasDH() {
         $(".coalDw").html("T/万m²");
 
         if(data.TB < 0){
-            $(".coalTotal").closest(".energy-head").addClass("energy-snh");
+            $(".coalTotal").closest(".energy-head").addClass("energy-mnh");
         }else{
             $(".coalTotal").next("span").addClass("energy-remind");
             $(".coalTotal").addClass("energy-remind");
-            $(".coalTotal").closest(".energy-head").addClass("energy-snh-remind");
+            $(".coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
         }
         if(data.TB < 0){
             $(".coalchangeRate").css('color','#3db1b0');

@@ -140,25 +140,7 @@ function initable() {
             {
                 title: '能源类型',
                 field: 'energyTypeId',
-                align: 'center',
-                formatter: function (value, row, index) {
-                    if (value == '1') {
-                        return '水';
-                    }
-                    if (value == '2') {
-                        return '电';
-                    }
-                    if (value == '3') {
-                        return '气';
-                    }
-                    if (value == '4') {
-                        return '热';
-                    }
-                    if (value == '5') {
-                        return '煤';
-                    }
-                    return '';
-                }
+                align: 'center'
             },
             {
                 title: '实虚表',
@@ -186,7 +168,7 @@ function initable() {
                         return '系统总表 ';
                     }
                     if (value == '0') {
-                        return '总表 ';
+                        return '否 ';
                     }
                     return '';
                 }

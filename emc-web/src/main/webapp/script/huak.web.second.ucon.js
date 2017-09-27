@@ -1332,9 +1332,12 @@ function chart06Fun(data){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:data.legends
-        },
-        color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
+            data:data.legends,
+            textStyle:{
+        color:chartsColor.ec4.facecolor5
+    }
+},
+color:chartsColor.ec4.facecolor5,
         xAxis: {
             type: 'category',
             boundaryGap: false,

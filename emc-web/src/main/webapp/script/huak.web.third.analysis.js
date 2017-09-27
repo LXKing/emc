@@ -131,9 +131,11 @@ function loadDHdetail(){
                 var TB = data.TB+"<span class='arrow'>↑</span>";
                 $(".groupchangeRate").html(TB);
             }else if(data.TB==0){
+                $("#groupchangeRate").css('color','#999');
                 var TB = data.TB+"<span class='arrow'>→</span>";
                 $(".groupchangeRate").html(TB);
             }else if(data.TB<0){
+                $("#groupchangeRate").css('color','#3db1b0');
                 var TB = data.TB+"<span class='arrow'>↓</span>";
                 $(".groupchangeRate").html(TB)
             }
@@ -291,22 +293,27 @@ function getStationEc(data,type){
     $(".stationTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".stationDw").html("T/万m²");
+        $(".stationDw").closest(".energy-head").addClass("energy-snh-remind");
     }else if(type=="2"){
         $(".stationDw").html("kW·h/万m²");
+        $(".stationDw").closest(".energy-head").addClass("energy-dnh-remind");
     }else if(type=="3"){
         $(".stationDw").html("m³/万m²");
+        $(".stationDw").closest(".energy-head").addClass("energy-qnh-remind");
     }else if(type=="4"){
         $(".stationDw").html("GJ/万m²");
+        $(".stationDw").closest(".energy-head").addClass("energy-rnh-remind");
     }else if(type=="5"){
         $(".stationDw").html("T/万m²");
+        $(".stationDw").closest(".energy-head").addClass("energy-mnh-remind");
     }
-    if(data.TB < 0){
-        $(".stationTotal").closest(".energy-head").addClass("energy-snh");
-    }else{
-        $(".stationTotal").next("span").addClass("energy-remind");
-        $(".stationTotal").addClass("energy-remind");
-        $(".stationTotal").closest(".energy-head").addClass("energy-snh-remind");
-    }
+//    if(data.TB < 0){
+//        $(".stationTotal").closest(".energy-head").addClass("energy-snh");
+//    }else{
+//        $(".stationTotal").next("span").addClass("energy-remind");
+//        $(".stationTotal").addClass("energy-remind");
+//        $(".stationTotal").closest(".energy-head").addClass("energy-snh-remind");
+//    }
     if(data.TB < 0){
         $(".stationTQ").css('color','#3db1b0');
         $(".stationTQ").html("("+data.TB + "↓)");
@@ -344,23 +351,28 @@ function getFeedEc(data,type){
     $(".feedTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".feedDw").html("T/万m²");
+        $(".feedTotal").closest(".energy-head").addClass("energy-snh-remind");
     }else if(type=="2"){
         $(".feedDw").html("kW·h/万m²");
+        $(".feedTotal").closest(".energy-head").addClass("energy-dnh-remind");
     }else if(type=="3"){
         $(".feedDw").html("m³/万m²");
+        $(".feedTotal").closest(".energy-head").addClass("energy-qnh-remind");
     }else if(type=="4"){
         $(".feedDw").html("GJ/万m²");
+        $(".feedTotal").closest(".energy-head").addClass("energy-rnh-remind");
     }else if(type=="5"){
         $(".feedDw").html("T/万m²");
+        $(".feedTotal").closest(".energy-head").addClass("energy-mnh-remind");
     }
 
-    if(data.TB < 0){
-        $(".feedTotal").closest(".energy-head").addClass("energy-snh");
-    }else{
-        $(".feedTotal").next("span").addClass("energy-remind");
-        $(".feedTotal").addClass("energy-remind");
-        $(".feedTotal").closest(".energy-head").addClass("energy-snh-remind");
-    }
+//    if(data.TB < 0){
+//        $(".feedTotal").closest(".energy-head").addClass("energy-snh");
+//    }else{
+//        $(".feedTotal").next("span").addClass("energy-remind");
+//        $(".feedTotal").addClass("energy-remind");
+//        $(".feedTotal").closest(".energy-head").addClass("energy-snh-remind");
+//    }
     if(data.TB < 0){
         $(".feedTQ").css('color','#3db1b0');
         $(".feedTQ").html("("+data.TB + "↓)");
@@ -397,23 +409,28 @@ function getNetEc(data,type){
     $(".netTotal").html(toFormatNum(data.ZDH))
     if(type=="1"){
         $(".netDw").html("T/万m²");
+        $(".netDw").closest(".energy-head").addClass("energy-snh-remind");
     }else if(type=="2"){
         $(".netDw").html("kW·h/万m²");
+        $(".netDw").closest(".energy-head").addClass("energy-dnh-remind");
     }else if(type=="3"){
         $(".netDw").html("m³/万m²");
+        $(".netDw").closest(".energy-head").addClass("energy-qnh-remind");
     }else if(type=="4"){
         $(".netDw").html("GJ/万m²");
+        $(".netDw").closest(".energy-head").addClass("energy-rnh-remind");
     }else if(type=="5"){
         $(".netDw").html("T/万m²");
+        $(".netDw").closest(".energy-head").addClass("energy-mnh-remind");
     }
 
-    if(data.TB < 0){
-        $(".netTotal").closest(".energy-head").addClass("energy-snh");
-    }else{
-        $(".netTotal").next("span").addClass("energy-remind");
-        $(".netTotal").addClass("energy-remind");
-        $(".netTotal").closest(".energy-head").addClass("energy-snh-remind");
-    }
+//    if(data.TB < 0){
+//        $(".netTotal").closest(".energy-head").addClass("energy-snh");
+//    }else{
+//        $(".netTotal").next("span").addClass("energy-remind");
+//        $(".netTotal").addClass("energy-remind");
+//        $(".netTotal").closest(".energy-head").addClass("energy-snh-remind");
+//    }
     if(data.TB < 0){
         $(".netTQ").css('color','#3db1b0');
         $(".netTQ").html("("+data.TB + "↓)");
@@ -451,23 +468,26 @@ function getLine(data,type){
     $(".lineTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".lineDw").html("T/万m²");
+        $(".netDw").closest(".energy-head").addClass("energy-snh-remind");
+
     }else if(type=="2"){
         $(".lineDw").html("kW·h/万m²");
+        $(".lineDw").closest(".energy-head").addClass("energy-dnh-remind");
+
     }else if(type=="3"){
         $(".lineDw").html("m³/万m²");
+        $(".lineDw").closest(".energy-head").addClass("energy-qnh-remind");
+
     }else if(type=="4"){
         $(".lineDw").html("GJ/万m²");
+        $(".lineDw").closest(".energy-head").addClass("energy-enh-remind");
+
     }else if(type=="5") {
         $(".lineDw").html("T/万m²");
+        $(".lineDw").closest(".energy-head").addClass("energy-mnh-remind");
+
     }
 
-    if(data.TB < 0){
-        $(".lineTotal").closest(".energy-head").addClass("energy-snh");
-    }else{
-        $(".lineTotal").next("span").addClass("energy-remind");
-        $(".lineTotal").addClass("energy-remind");
-        $(".lineTotal").closest(".energy-head").addClass("energy-snh-remind");
-    }
     if(data.TB < 0){
         $(".lineTQ").css('color','#3db1b0');
         $(".lineTQ").html("("+data.TB + "↓)");
@@ -505,23 +525,21 @@ function getRoomEc(data,type){
     $(".roomTotal").html(toFormatNum(data.ZDH));
     if(type=="1"){
         $(".roomDw").html("T/万m²");
+        $(".roomDw").closest(".energy-head").addClass("energy-snh-remind");
     }else if(type=="2"){
         $(".roomDw").html("kW·h/万m²");
+        $(".roomDw").closest(".energy-head").addClass("energy-dnh-remind");
     }else if(type=="3"){
         $(".roomDw").html("m³/万m²");
+        $(".roomDw").closest(".energy-head").addClass("energy-qnh-remind");
     }else if(type=="4"){
         $(".roomDw").html("GJ/万m²");
+        $(".roomDw").closest(".energy-head").addClass("energy-rnh-remind");
     }else if(type=="5") {
         $(".roomDw").html("T/万m²");
+        $(".roomDw").closest(".energy-head").addClass("energy-mnh-remind");
     }
 
-    if(data.TB < 0){
-        $(".roomTotal").closest(".energy-head").addClass("energy-snh");
-    }else{
-        $(".roomTotal").next("span").addClass("energy-remind");
-        $(".roomTotal").addClass("energy-remind");
-        $(".roomTotal").closest(".energy-head").addClass("energy-snh-remind");
-    }
     if(data.TB < 0){
         $(".roomTQ").css('color','#3db1b0');
         $(".roomTQ").html("("+data.TB + "↓)");

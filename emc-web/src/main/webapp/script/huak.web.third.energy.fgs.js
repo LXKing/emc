@@ -285,6 +285,7 @@ function waterEnergyChartFun(_DATA, _YEAR_LIST) {
     var _DATA_CURRENT = _DATA.totalcurrentyear;
     var _DATA_LAST = _DATA.totallastyear;
     $("#waterTotal").html(toFormatNum(_DATA_CURRENT));
+    debugger;
     if(_DATA_LAST != 0){
         _TB = parseFloat(toDecimalCommon((_DATA_CURRENT - _DATA_LAST)/_DATA_LAST,4))*10000/100;
     }

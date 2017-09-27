@@ -45,6 +45,7 @@ function query(num){
                 pageCount: data.list.page.pages, //总页数
                 current: data.list.page.pageNumber, //当前页数
                 backFn: function (p) { //单击回调方法，p是当前页码
+                    console.log(p);
                     query(p);
                 }
             });

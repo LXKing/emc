@@ -1,32 +1,26 @@
 package com.huak.mdc.model;
 
 import java.io.Serializable;
-/**
- * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
- * ProjectName:emc<BR>
- * File name:  com.huak.mdc.model<BR>
- * Author:  lichao  <BR>
- * Project:emc    <BR>
- * Version: v 1.0      <BR>
- * Date: 2017/8/28<BR>
- * Description: 采集元数据    <BR>
- * Function List:  <BR>
- */
-public class MetaData  implements Serializable {
+import java.util.Date;
+
+public class MetaData implements Serializable{
     private static final long serialVersionUID = -4795427870423268586L;
     private String tag;
 
-    private String collectTime;
+    private Date collectTime;
 
     private String collectType;
 
     private Double collectValue;
 
-    public MetaData(String tag, String collectTime, String collectType, Double collectValue) {
+    private Byte readSate;
+
+    public MetaData(String tag, Date collectTime, String collectType, Double collectValue, Byte readSate) {
         this.tag = tag;
         this.collectTime = collectTime;
         this.collectType = collectType;
         this.collectValue = collectValue;
+        this.readSate = readSate;
     }
 
     public MetaData() {
@@ -41,11 +35,11 @@ public class MetaData  implements Serializable {
         this.tag = tag == null ? null : tag.trim();
     }
 
-    public String getCollectTime() {
+    public Date getCollectTime() {
         return collectTime;
     }
 
-    public void setCollectTime(String collectTime) {
+    public void setCollectTime(Date collectTime) {
         this.collectTime = collectTime;
     }
 
@@ -63,5 +57,13 @@ public class MetaData  implements Serializable {
 
     public void setCollectValue(Double collectValue) {
         this.collectValue = collectValue;
+    }
+
+    public Byte getReadSate() {
+        return readSate;
+    }
+
+    public void setReadSate(Byte readSate) {
+        this.readSate = readSate;
     }
 }
