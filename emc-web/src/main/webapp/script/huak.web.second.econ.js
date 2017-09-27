@@ -71,151 +71,120 @@ function loadDataFun(){
             groupEnergyChartFun(data.datas, data.xdatas);
         }
     });
-    //水能耗
+    //类型能耗
     $.ajax({
         url : _web+"/energy/monitor/line/yl",
         type : "POST",
-        data:$("#searchTools").serialize()+"&"+ $.param({type:"1"}),
+        data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-            $("#waterTotal").html(toFormatNum(data.bq));
-            if(data.tb < 0){
+            $("#waterTotal").html(toFormatNum(data.bq.water));
+            if(data.tb.water < 0){
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh");
             }else{
                 $("#waterTotal").next("span").addClass("energy-remind");
                 $("#waterTotal").addClass("energy-remind");
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh-remind");
             }
-            if(data.tb < 0){
+            if(data.tb.water < 0){
                 $("#waterchangeRate").css('color','#3db1b0');
-                $("#waterchangeRate").html("("+toFormatNum(data.tb) + "↓)");
-            }else if(data.tb > 0){
+                $("#waterchangeRate").html("("+toFormatNum(data.tb.water) + "↓)");
+            }else if(data.tb.water > 0){
                 $("#waterchangeRate").addClass("energy-remind");
-                $("#waterchangeRate").html("("+toFormatNum(data.tb) + "↑)");
+                $("#waterchangeRate").html("("+toFormatNum(data.tb.water) + "↑)");
             }else{
                 $("#waterchangeRate").css('color','#999');
-                $("#waterchangeRate").html("("+toFormatNum(data.tb) + "→)");
+                $("#waterchangeRate").html("("+toFormatNum(data.tb.water) + "→)");
             }
 
-            waterEnergyChartFun(data.datas, data.xdatas);
-        }
-    });
-    //电能耗
-    $.ajax({
-        url : _web+"/energy/monitor/line/yl",
-        type : "POST",
-        data:$("#searchTools").serialize()+"&"+ $.param({type:"2"}),
-        dataType: "json",
-        success : function(data) {
-            $("#electricTotal").html(toFormatNum(data.bq));
-            if(data.tb < 0){
+            waterEnergyChartFun(data.water.datas, data.water.xdatas);
+
+            $("#electricTotal").html(toFormatNum(data.bq.electric));
+            if(data.tb.electric < 0){
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh");
             }else{
                 $("#electricTotal").next("span").addClass("energy-remind");
                 $("#electricTotal").addClass("energy-remind");
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
             }
-            if(data.tb < 0){
-                $("#electricchangeRate").css('color','#3db1b0');
-                $("#electricchangeRate").html("("+toFormatNum(data.tb) + "↓)");
-            }else if(data.tb > 0){
-                $("#electricchangeRate").addClass("energy-remind");
-                $("#electricchangeRate").html("("+toFormatNum(data.tb) + "↑)");
+            if(data.tb.electric < 0){
+                $("#elechangeRate").css('color','#3db1b0');
+                $("#elechangeRate").html("("+toFormatNum(data.tb.electric) + "↓)");
+            }else if(data.tb.electric > 0){
+                $("#elechangeRate").addClass("energy-remind");
+                $("#elechangeRate").html("("+toFormatNum(data.tb.electric) + "↑)");
             }else{
-                $("#electricchangeRate").css('color','#999');
-                $("#electricchangeRate").html("("+toFormatNum(data.tb) + "→)");
+                $("#elechangeRate").css('color','#999');
+                $("#elechangeRate").html("("+toFormatNum(data.tb.electric) + "→)");
             }
 
-            electricEnergyChartFun(data.datas, data.xdatas);
-        }
-    });
-    //气能耗
-    $.ajax({
-        url : _web+"/energy/monitor/line/yl",
-        type : "POST",
-        data:$("#searchTools").serialize()+"&"+ $.param({type:"3"}),
-        dataType: "json",
-        success : function(data) {
-            $("#gasTotal").html(toFormatNum(data.bq));
-            if(data.tb < 0){
+            electricEnergyChartFun(data.electric.datas, data.electric.xdatas);
+
+            $("#gasTotal").html(toFormatNum(data.bq.gas));
+            if(data.tb.gas < 0){
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh");
             }else{
                 $("#gasTotal").next("span").addClass("energy-remind");
                 $("#gasTotal").addClass("energy-remind");
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
             }
-            if(data.tb < 0){
+            if(data.tb.gas < 0){
                 $("#gaschangeRate").css('color','#3db1b0');
-                $("#gaschangeRate").html("("+toFormatNum(data.tb) + "↓)");
-            }else if(data.tb > 0){
+                $("#gaschangeRate").html("("+toFormatNum(data.tb.gas) + "↓)");
+            }else if(data.tb.gas > 0){
                 $("#gaschangeRate").addClass("energy-remind");
-                $("#gaschangeRate").html("("+toFormatNum(data.tb) + "↑)");
+                $("#gaschangeRate").html("("+toFormatNum(data.tb.gas) + "↑)");
             }else{
                 $("#gaschangeRate").css('color','#999');
-                $("#gaschangeRate").html("("+toFormatNum(data.tb) + "→)");
+                $("#gaschangeRate").html("("+toFormatNum(data.tb.gas) + "→)");
             }
 
-            gasEnergyChartFun(data.datas, data.xdatas);
-        }
-    });
-    //热能耗
-    $.ajax({
-        url : _web+"/energy/monitor/line/yl",
-        type : "POST",
-        data:$("#searchTools").serialize()+"&"+ $.param({type:"4"}),
-        dataType: "json",
-        success : function(data) {
-            $("#hotTotal").html(toFormatNum(data.bq));
-            if(data.tb < 0){
+            gasEnergyChartFun(data.gas.datas, data.gas.xdatas);
+
+            $("#hotTotal").html(toFormatNum(data.bq.heat));
+            if(data.tb.heat < 0){
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh");
             }else{
                 $("#hotTotal").next("span").addClass("energy-remind");
                 $("#hotTotal").addClass("energy-remind");
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
             }
-            if(data.tb < 0){
+            if(data.tb.heat < 0){
                 $("#hotchangeRate").css('color','#3db1b0');
-                $("#hotchangeRate").html("("+toFormatNum(data.tb) + "↓)");
-            }else if(data.tb > 0){
+                $("#hotchangeRate").html("("+toFormatNum(data.tb.heat) + "↓)");
+            }else if(data.tb.heat > 0){
                 $("#hotchangeRate").addClass("energy-remind");
-                $("#hotchangeRate").html("("+toFormatNum(data.tb) + "↑)");
+                $("#hotchangeRate").html("("+toFormatNum(data.tb.heat) + "↑)");
             }else{
                 $("#hotchangeRate").css('color','#999');
-                $("#hotchangeRate").html("("+toFormatNum(data.tb) + "→)");
+                $("#hotchangeRate").html("("+toFormatNum(data.tb.heat) + "→)");
             }
 
-            hotEnergyChartFun(data.datas, data.xdatas);
-        }
-    });
-    //煤能耗
-    $.ajax({
-        url : _web+"/energy/monitor/line/yl",
-        type : "POST",
-        data:$("#searchTools").serialize()+"&"+ $.param({type:"5"}),
-        dataType: "json",
-        success : function(data) {
-            $("#coalTotal").html(toFormatNum(data.bq));
-            if(data.tb < 0){
+            hotEnergyChartFun(data.heat.datas, data.heat.xdatas);
+
+            $("#coalTotal").html(toFormatNum(data.bq.coal));
+            if(data.tb.coal < 0){
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh");
             }else{
                 $("#coalTotal").next("span").addClass("energy-remind");
                 $("#coalTotal").addClass("energy-remind");
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
             }
-            if(data.tb < 0){
+            if(data.tb.coal < 0){
                 $("#coalchangeRate").css('color','#3db1b0');
-                $("#coalchangeRate").html("("+toFormatNum(data.tb) + "↓)");
-            }else if(data.tb > 0){
+                $("#coalchangeRate").html("("+toFormatNum(data.tb.coal) + "↓)");
+            }else if(data.tb.coal > 0){
                 $("#coalchangeRate").addClass("energy-remind");
-                $("#coalchangeRate").html("("+toFormatNum(data.tb) + "↑)");
+                $("#coalchangeRate").html("("+toFormatNum(data.tb.coal) + "↑)");
             }else{
                 $("#coalchangeRate").css('color','#999');
-                $("#coalchangeRate").html("("+toFormatNum(data.tb) + "→)");
+                $("#coalchangeRate").html("("+toFormatNum(data.tb.coal) + "→)");
             }
 
-            coalEnergyChartFun(data.datas, data.xdatas);
+            coalEnergyChartFun(data.coal.datas, data.coal.xdatas);
         }
     });
+
     
     /**
      * 能源流相关开始

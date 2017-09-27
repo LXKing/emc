@@ -224,7 +224,7 @@
             </div>
         </td>
         <td>
-            <div class="text-left">
+            <div class="text-left">{$T.record.model}
                 {#if $T.record.model==0}低低{#elseif $T.record.model==1}低{#elseif $T.record.model==2}高{#elseif $T.record.model==3}高高{#else}{$T.record.model}{#/if}
             </div>
         </td>

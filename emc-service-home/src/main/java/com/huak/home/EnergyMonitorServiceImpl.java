@@ -182,7 +182,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Double selectYlBqTotal(Map<String, String> params) {
+    public Map<String, Object> selectYlBqTotal(Map<String, String> params) {
         return eaDao.selectYlBqTotal(params);
     }
 
@@ -194,7 +194,7 @@ public class EnergyMonitorServiceImpl implements EnergyMonitorService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Double selectYlTqTotal(Map<String, String> params) {
+    public Map<String, Object> selectYlTqTotal(Map<String, String> params) {
         return eaDao.selectYlTqTotal(params);
     }
 

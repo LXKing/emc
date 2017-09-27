@@ -8,6 +8,8 @@
 
     <!--默认的装饰器-->
     <decorator name="default" page="default.jsp"/>
+    <!--登录的装饰器-->
+    <decorator name="login" page="login.jsp"/>
     <!--主要的装饰器-->
     <decorator name="main" page="main.jsp"/>
     <!--带有回到顶部的装饰器-->

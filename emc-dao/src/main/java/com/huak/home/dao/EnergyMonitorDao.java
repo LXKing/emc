@@ -52,13 +52,13 @@ public interface EnergyMonitorDao {
      * @param params
      * @return
      */
-    Double selectYlBqTotal(Map<String, String> params);
+    Map<String, Object> selectYlBqTotal(Map<String, String> params);
     /**
      * 查询同期用量总量
      * @param params
      * @return
      */
-    Double selectYlTqTotal(Map<String, String> params);
+    Map<String, Object> selectYlTqTotal(Map<String, String> params);
 
 
 	/**

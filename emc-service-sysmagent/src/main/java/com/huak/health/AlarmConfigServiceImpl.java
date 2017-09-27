@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,7 +76,7 @@ public class AlarmConfigServiceImpl implements AlarmConfigService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public PageResult<AlarmConfigVO> queryByPage(Map<String, Object> paramsMap, Page page) {
         logger.info("分页查询报警配置");
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
@@ -83,9 +84,16 @@ public class AlarmConfigServiceImpl implements AlarmConfigService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public AlarmConfigVO selectUpdateMap(String id) {
         logger.info("更新查询报警配置");
         return alarmConfigDao.selectUpdate(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> exportAlarmConfig(Map<String, Object> paramsMap) {
+        logger.info("导出报警配置");
+        return null;
     }
 }

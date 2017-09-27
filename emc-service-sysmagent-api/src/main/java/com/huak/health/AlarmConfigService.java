@@ -5,6 +5,7 @@ import com.huak.common.page.PageResult;
 import com.huak.health.model.AlarmConfig;
 import com.huak.health.vo.AlarmConfigVO;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,4 +35,6 @@ public interface AlarmConfigService {
     PageResult<AlarmConfigVO> queryByPage(Map<String, Object> paramsMap, Page page);
 
     AlarmConfigVO selectUpdateMap(String id);
+
+    List<Map<String,Object>> exportAlarmConfig(Map<String, Object> paramsMap);
 }

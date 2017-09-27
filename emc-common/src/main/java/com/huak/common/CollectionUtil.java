@@ -164,6 +164,20 @@ public class CollectionUtil {
         return map;
     }
 
+    /**
+     * list转map
+     *
+     * @param list
+     * @return
+     */
+    private static Map<String, Object> listToMap(List<Map<String, Object>> list,String type) {
+        Map<String, Object> map = new HashMap<>();
+        for (Map<String, Object> listMap : list) {
+            map.put(listMap.get("dayDate").toString(), listMap.get(type));
+        }
+        return map;
+    }
+
 //    public static void main(String[] args) {
 //        String start = "2017-01-02 33";
 //        String end = "2017-03-04 33";
@@ -197,5 +211,57 @@ public class CollectionUtil {
 //        }
 //        System.err.println("------------------");
 //    }
+
+    /**
+     * 封装数据方法
+     * 由于emc系统有大量的本期和同期的折线图，故有此公共方法
+     * 限制：横坐标每天时间、本期折线、同期折线
+     *
+     * @param start    开始时间
+     * @param end      结束时间
+     * @param thisList 本期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
+     * @param sameList 同期数据List<Map<String,Object>> map中一定存在key{dayDate,dayValue}
+     * @return JSONObject
+     * key = xdatas value = List<String>{}   横坐标
+     * key = datas value = List<String>{}    两条线，本期同期
+     */
+    public static JSONObject packageDataLineYl(String start, String end, List<Map<String, Object>> thisList, List<Map<String, Object>> sameList,String type) throws Exception {
+        JSONObject json = new JSONObject();
+        List<String> aList = new ArrayList<>();
+        List<String> bList = new ArrayList<>();
+        //格式化时间 返回时间list 确定2月29号
+        List<String> dates = getDatesList(start, end);
+        //list转map
+        Map<String, Object> aMap = listToMap(thisList,type);
+        Map<String, Object> bMap = listToMap(sameList,type);
+        //循环时间list 从map取数据封装成list 没有补0
+        for (String key : dates) {
+            Object a = aMap.get(key);
+            Object b = bMap.get(getYestYear(key));
+            if (StringUtils.isEmpty(a)) {
+                aList.add("0");
+            } else {
+                aList.add(a.toString());
+            }
+            if (StringUtils.isEmpty(b)) {
+                bList.add("0");
+            } else {
+                bList.add(b.toString());
+            }
+        }
+        //返回数据map
+        json.put("xdatas", dates);
+        Map<String, Object> bqMap = new HashMap<>();
+        bqMap.put(TYPE_NAME, "本期");
+        bqMap.put(DATA_LIST, aList);
+        Map<String, Object> tqMap = new HashMap<>();
+        tqMap.put(TYPE_NAME, "同期");
+        tqMap.put(DATA_LIST, bList);
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(bqMap);
+        list.add(tqMap);
+        json.put("datas", list);
+        return json;
+    }
 
 }

@@ -129,99 +129,100 @@
 
 
     <select id="selectYlBqLine" resultType="java.util.Map" parameterType="java.util.Map">
-        SELECT ROUND(SUM(b.DOSAGE),2) dayValue,b.DOSAGE_TIME dayDate FROM (
+        SELECT
+        SUM( CASE b.TYPE WHEN '2' THEN b.DOSAGE ELSE 0 END ) AS electric,
+        SUM( CASE b.TYPE WHEN '1' THEN b.DOSAGE ELSE 0 END ) AS water,
+        SUM( CASE b.TYPE WHEN '4' THEN b.DOSAGE ELSE 0 END ) AS heat,
+        SUM( CASE b.TYPE WHEN '3' THEN b.DOSAGE ELSE 0 END ) AS gas,
+        SUM( CASE b.TYPE WHEN '5' THEN b.DOSAGE ELSE 0 END ) AS coal,
+        SUM( CASE b.TYPE WHEN '6' THEN b.DOSAGE ELSE 0 END ) AS oil,  b.DOSAGE_TIME dayDate FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
-        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME FROM
-        (SELECT et.ID FROM t_emc_energy_type et
-        <if test="type!=null and type!=''">
-            WHERE  et.TYPE=#{type}
-        </if>
-        <if test="type==null or type==''">
-            WHERE et.TYPE<![CDATA[ <> ]]>'4'
-        </if>
-        ) t ,
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME,t.TYPE FROM
+        (SELECT et.ID,et.TYPE FROM t_emc_energy_type et) t ,
         (SELECT SUM(dh.DOSAGE) DOSAGE,DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME,dh.UNITID,dh.TYPEID FROM ${tableName} dh
         WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTime} AND dh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTime}
         GROUP BY DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d'),dh.UNITID,dh.TYPEID) d
         WHERE t.ID = d.TYPEID
-        GROUP BY d.UNITID,d.DOSAGE_TIME) b
+        GROUP BY d.UNITID,d.DOSAGE_TIME,t.TYPE) b
         WHERE a.UNITID = b.UNITID
         GROUP BY b.DOSAGE_TIME
         ORDER BY b.DOSAGE_TIME
     </select>
     <select id="selectYlTqLine" resultType="java.util.Map" parameterType="java.util.Map">
-        SELECT ROUND(SUM(b.DOSAGE),2) dayValue,b.DOSAGE_TIME dayDate FROM (
+        SELECT
+        SUM( CASE b.TYPE WHEN '2' THEN b.DOSAGE ELSE 0 END ) AS electric,
+        SUM( CASE b.TYPE WHEN '1' THEN b.DOSAGE ELSE 0 END ) AS water,
+        SUM( CASE b.TYPE WHEN '3' THEN b.DOSAGE ELSE 0 END ) AS gas,
+        SUM( CASE b.TYPE WHEN '4' THEN b.DOSAGE ELSE 0 END ) AS heat,
+        SUM( CASE b.TYPE WHEN '5' THEN b.DOSAGE ELSE 0 END ) AS coal,
+        SUM( CASE b.TYPE WHEN '6' THEN b.DOSAGE ELSE 0 END ) AS oil,b.DOSAGE_TIME dayDate FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
-        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME FROM
-        (SELECT et.ID FROM t_emc_energy_type et
-        <if test="type!=null and type!=''">
-            WHERE  et.TYPE=#{type}
-        </if>
-        <if test="type==null or type==''">
-            WHERE et.TYPE<![CDATA[ <> ]]>'4'
-        </if>
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME,t.TYPE FROM
+        (SELECT et.ID,et.TYPE FROM t_emc_energy_type et
         ) t ,
         (SELECT SUM(dh.DOSAGE) DOSAGE,DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME,dh.UNITID,dh.TYPEID FROM ${tableName} dh
         WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME <![CDATA[ >= ]]> #{startTimeTq} AND dh.DOSAGE_TIME  <![CDATA[ <= ]]> #{endTimeTq}
         GROUP BY DATE_FORMAT(dh.DOSAGE_TIME,'%Y-%m-%d'),dh.UNITID,dh.TYPEID) d
         WHERE t.ID = d.TYPEID
-        GROUP BY d.UNITID,d.DOSAGE_TIME) b
+        GROUP BY d.UNITID,d.DOSAGE_TIME,t.TYPE) b
         WHERE a.UNITID = b.UNITID
         GROUP BY b.DOSAGE_TIME
         ORDER BY b.DOSAGE_TIME
     </select>
-    <select id="selectYlBqTotal" resultType="java.lang.Double" parameterType="java.util.Map">
-        SELECT ROUND(SUM(b.DOSAGE),2) DOSAGE FROM (
+    <select id="selectYlBqTotal" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+        SUM( CASE b.TYPE WHEN '2' THEN b.DOSAGE ELSE 0 END ) AS electric,
+        SUM( CASE b.TYPE WHEN '1' THEN b.DOSAGE ELSE 0 END ) AS water,
+        SUM( CASE b.TYPE WHEN '3' THEN b.DOSAGE ELSE 0 END ) AS gas,
+        SUM( CASE b.TYPE WHEN '4' THEN b.DOSAGE ELSE 0 END ) AS heat,
+        SUM( CASE b.TYPE WHEN '5' THEN b.DOSAGE ELSE 0 END ) AS coal,
+        SUM( CASE b.TYPE WHEN '6' THEN b.DOSAGE ELSE 0 END ) AS oil
+        FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
-        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID FROM
-        (SELECT et.ID FROM t_emc_energy_type et
-        <if test="type!=null and type!=''">
-            WHERE  et.TYPE=#{type}
-        </if>
-        <if test="type==null or type==''">
-            WHERE et.TYPE<![CDATA[ <> ]]>'4'
-        </if>
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,t.TYPE FROM
+        (SELECT et.ID,et.TYPE FROM t_emc_energy_type et
         ) t ,
         (SELECT SUM(dh.DOSAGE) DOSAGE,dh.UNITID,dh.TYPEID FROM ${tableName} dh
         WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTime} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTime}
         GROUP BY dh.UNITID,dh.TYPEID) d
         WHERE t.ID = d.TYPEID
-        GROUP BY d.UNITID) b
+        GROUP BY d.UNITID,t.TYPE) b
         WHERE a.UNITID = b.UNITID
     </select>
-    <select id="selectYlTqTotal" resultType="java.lang.Double" parameterType="java.util.Map">
-        SELECT ROUND(SUM(b.DOSAGE),2) DOSAGE FROM (
+    <select id="selectYlTqTotal" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+        SUM( CASE b.TYPE WHEN '2' THEN b.DOSAGE ELSE 0 END ) AS electric,
+        SUM( CASE b.TYPE WHEN '1' THEN b.DOSAGE ELSE 0 END ) AS water,
+        SUM( CASE b.TYPE WHEN '3' THEN b.DOSAGE ELSE 0 END ) AS gas,
+        SUM( CASE b.TYPE WHEN '4' THEN b.DOSAGE ELSE 0 END ) AS heat,
+        SUM( CASE b.TYPE WHEN '5' THEN b.DOSAGE ELSE 0 END ) AS coal,
+        SUM( CASE b.TYPE WHEN '6' THEN b.DOSAGE ELSE 0 END ) AS oil
+        FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
-        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID FROM
-        (SELECT et.ID FROM t_emc_energy_type et
-        <if test="type!=null and type!=''">
-            WHERE  et.TYPE=#{type}
-        </if>
-        <if test="type==null or type==''">
-            WHERE et.TYPE<![CDATA[ <> ]]>'4'
-        </if>
+        (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,t.TYPE FROM
+        (SELECT et.ID,et.TYPE FROM t_emc_energy_type et
         ) t ,
         (SELECT SUM(dh.DOSAGE) DOSAGE,dh.UNITID,dh.TYPEID FROM ${tableName} dh
         WHERE dh.COMID=#{comId} AND dh.DOSAGE_TIME<![CDATA[ >= ]]>#{startTimeTq} AND dh.DOSAGE_TIME<![CDATA[ <= ]]>#{endTimeTq}
         GROUP BY dh.UNITID,dh.TYPEID) d
         WHERE t.ID = d.TYPEID
-        GROUP BY d.UNITID) b
+        GROUP BY d.UNITID,t.TYPE) b
         WHERE a.UNITID = b.UNITID
     </select>
   

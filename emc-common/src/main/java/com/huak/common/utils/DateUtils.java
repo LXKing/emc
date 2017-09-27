@@ -174,7 +174,7 @@ public class DateUtils {
 
     /**
      * 返回时间段每小时集合
-     *
+     * 不计算结束时间
      * @param time1
      * @param time2
      * @return
@@ -185,7 +185,6 @@ public class DateUtils {
             list.add(time1);
             time1 = DateUtils.getTimeDate(time1, Calendar.HOUR, 1);
         }
-        list.add(time2);
         return list;
     }
 }

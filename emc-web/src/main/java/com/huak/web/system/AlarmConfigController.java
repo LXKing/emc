@@ -2,6 +2,7 @@ package com.huak.web.system;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
+import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
@@ -11,6 +12,7 @@ import com.huak.health.vo.AlarmConfigVO;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -150,20 +157,38 @@ public class AlarmConfigController extends BaseController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/check/type", method = RequestMethod.POST)
-    @ResponseBody
-    public String checkType(@RequestParam Map<String, Object> paramsMap) {
-        logger.info("同一用能单位报警类型唯一性校验");
-        JSONObject jo = new JSONObject();
-        jo.put(Constants.FLAG, false);
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(@RequestParam Map<String, Object> paramsMap, HttpServletResponse response) {
+        logger.info("导出记录列表EXCEL");
+        String workBookName = "预存记录列表";//文件名
+        Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
+
+        cellName.put("UNITNAME", "单位名称");
+        cellName.put("NAME", "计量采集表名");
+        cellName.put("CHANGE_TIME", "换表时间");
+        cellName.put("USED_NUM", "旧表表底");
+        cellName.put("NEW_NUM", "新表表底");
+        cellName.put("USED_COEF", "旧表系数");
+        cellName.put("NEW_COEF", "新表系数");
+        cellName.put("CRESTOR", "创建人");
+        cellName.put("CREATE_TIME", "创建时间");
+        List<Map<String, Object>> cellValues = null;//列值
+        OutputStream out = null;
         try {
-//            Long num = alarmConfigService.checkType(paramsMap);
-//            if (num == 0) {
-//                jo.put(Constants.FLAG, true);
-//            }
+            cellValues = alarmConfigService.exportAlarmConfig(paramsMap);
+            HSSFWorkbook wb = CommonExcelExport.excelExport(cellName, cellValues);
+            //response输出流导出excel
+            String mimetype = "application/vnd.ms-excel";
+            response.setContentType(mimetype);
+            response.setCharacterEncoding("UTF-8");
+            String fileName = workBookName + ".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            out = response.getOutputStream();
+            wb.write(out);
+            out.flush();
+            out.close();
         } catch (Exception e) {
-            logger.error("同一用能单位报警类型唯一性校验异常" + e.getMessage());
+            logger.error("导出记录列表EXCEL异常" + e.getMessage());
         }
-        return jo.toJSONString();
     }
 }

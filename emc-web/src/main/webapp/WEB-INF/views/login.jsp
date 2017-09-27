@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <meta name="decorator" content="default"/>
+    <meta name="decorator" content="login"/>
     <title>能源管控中心后台管理系统 - 登录</title>
     <script src="${web}/script/huak.login.js"></script>
     <script>

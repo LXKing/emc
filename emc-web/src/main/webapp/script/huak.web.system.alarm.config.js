@@ -42,6 +42,9 @@ function reset() {
  * 分页查询
  */
 function queryAlarmConfig() {
+    var index = top.layer.load(1, {
+        shade: [0.1, '#fff'] //0.1透明度的白色背景
+    });
     $.ajax({
         url: _web + '/alarm/config/list',
         type: 'POST',
@@ -61,6 +64,7 @@ function queryAlarmConfig() {
                     queryAlarmConfig();
                 }
             });
+            top.layer.close(index);
         }
     });
 }

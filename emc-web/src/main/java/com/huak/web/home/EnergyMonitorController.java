@@ -44,6 +44,7 @@ public class EnergyMonitorController extends BaseController {
 
     @Autowired
     private EnergyMonitorService eaService;
+    private static String[] TYPES={"electric", "water", "gas", "coal", "oil","heat"};
 
     /**
      * 跳转二级能耗页面
@@ -318,32 +319,40 @@ public class EnergyMonitorController extends BaseController {
      */
     @RequestMapping(value = "/line/yl", method = RequestMethod.POST)
     @ResponseBody
-    public String lineYl(ToolVO toolVO, HttpServletRequest request,String type) {
+    public String lineYl(ToolVO toolVO, HttpServletRequest request) {
         logger.info("查询能耗用量时间折线图统一接口");
         JSONObject jo = new JSONObject();
         try {
             /*封装条件*/
             Map params = paramsPackageOrg(toolVO, request);
-            params.put("type",type);
 
             String start = params.get("startTime").toString();
             String end = params.get("endTime").toString();
             //查询折线数据
             List<Map<String, Object>> bqLine = eaService.selectYlBqLine(params);
             List<Map<String, Object>> tqLine = eaService.selectYlTqLine(params);
-            Double bq = eaService.selectYlBqTotal(params);
-            Double tq = eaService.selectYlTqTotal(params);
-            if(null == bq){
-                bq = 0d;
+            Map<String, Object> bqMap = eaService.selectYlBqTotal(params);
+            Map<String, Object> tqMap = eaService.selectYlTqTotal(params);
+            Map<String, Object> tbMap = new HashMap<>();
+            for(String type:TYPES){
+                Double bq = 0d;
+                Double tq = 0d;
+                if(null!=bqMap.get(type)){
+                    bq = Double.valueOf(bqMap.get(type).toString());
+                }
+                if(null!=tqMap.get(type)){
+                    tq = Double.valueOf(tqMap.get(type).toString());
+                }
+                Double tb = DoubleUtils.div(DoubleUtils.sub(bq,tq),bq,4)*100;
+                tbMap.put(type,tb);
+
+                JSONObject jsonObject = CollectionUtil.packageDataLineYl(start,end,bqLine,tqLine,type);
+                jo.put(type,jsonObject);
             }
-            if(null == tq){
-                tq = 0d;
-            }
-            Double tb = DoubleUtils.div(DoubleUtils.sub(bq,tq),bq,4)*100;
-            jo = CollectionUtil.packageDataLine(start,end,bqLine,tqLine);
-            jo.put("bq",bq);
-            jo.put("tq",tq);
-            jo.put("tb",tb);
+
+            jo.put("bq",bqMap);
+            jo.put("tq",tqMap);
+            jo.put("tb",tbMap);
             jo.put("success", true);
             jo.put("message", "查询集团能耗数据成功！");
         } catch (Exception e) {

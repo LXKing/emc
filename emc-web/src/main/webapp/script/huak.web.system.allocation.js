@@ -56,6 +56,9 @@ function reset() {
  * 分页查询
  */
 function queryAllocation() {
+    var index = top.layer.load(1, {
+        shade: [0.1, '#fff'] //0.1透明度的白色背景
+    });
     $.ajax({
         url: _web + '/index/allocation/list',
         type: 'POST',
@@ -75,6 +78,7 @@ function queryAllocation() {
                     queryAllocation();
                 }
             });
+            top.layer.close(index);
         }
     });
 }
