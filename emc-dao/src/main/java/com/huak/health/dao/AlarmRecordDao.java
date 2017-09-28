@@ -16,4 +16,6 @@ public interface AlarmRecordDao {
     int updateByPrimaryKeySelective(AlarmRecord record);
 
     int updateByPrimaryKey(AlarmRecord record);
+
+    AlarmRecord selectByConfigId(String id);
 }

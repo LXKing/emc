@@ -242,7 +242,7 @@
         GROUP BY a.fgsid,a.ORG_NAME,d1.TYPE) f
         GROUP BY f.fgsid,f.ORG_NAME,f.TYPE
         ) v1 ON v.fgsid = v1.fgsid AND v.TYPE = v1.TYPE
-        GROUP BY v.fgsid,v.ORG_NAME ORDER BY v.SORT asc
+        GROUP BY v.fgsid,v.ORG_NAME ORDER BY ROUND(IFNULL(SUM(CASE v.TYPE WHEN '4' THEN 0 ELSE v.BQBM END)/AVG(v.BQAREA),0),2) desc
 
     </select>
 

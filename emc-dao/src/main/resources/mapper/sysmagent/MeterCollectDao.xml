@@ -289,7 +289,7 @@
         mc.NAME,
         mc.SERIAL_NO,
         vu.UNITNAME,
-        et.TYPE ENERGY_TYPE_ID,
+        et.NAME_ZH ENERGY_TYPE_ID,
         mc.ISREAL,
         mc.ISTOTAL,
         mc.UNIT_ID,
@@ -307,6 +307,7 @@
         left join t_emc_energy_type et  on mc.ENERGY_TYPE_ID = et.id
         LEFT JOIN v_emc_unit vu ON mc.UNIT_ID = vu.UNITID
         where 1=1
+        and mc.ISDELETE=0
         <if test="code != null and code!=''">
             and CODE LIKE CONCAT('%',#{code,jdbcType=VARCHAR},'%')
 
@@ -703,7 +704,7 @@
             and d.UNIT_ID  = #{unitId,jdbcType=VARCHAR}
         </if>
         <if test="name != null and name!=''">
-            and d.NAME  = #{name,jdbcType=VARCHAR}
+            and d.NAME  LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
         </if>
         <if test="comId != null and comId!=''">
             and d.COM_ID = #{comId,jdbcType=VARCHAR}

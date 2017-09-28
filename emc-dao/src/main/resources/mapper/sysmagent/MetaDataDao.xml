@@ -13,7 +13,7 @@
     TAG, COLLECT_TIME, COLLECT_TYPE, COLLECT_VALUE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_emc_meta_data
     where TAG = #{tag,jdbcType=VARCHAR}

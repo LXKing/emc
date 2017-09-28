@@ -23,6 +23,10 @@
     <dubbo:service interface="com.huak.weather.WeatherTaskService" ref="weatherTaskService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="workWarnService" class="com.huak.diacrisis.WorkWarnServiceImpl"></bean>
+    <dubbo:service interface="com.huak.diacrisis.WorkWarnService" ref="workWarnService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="roomTempService" class="com.huak.api.RoomTempServiceImpl"></bean>
     <dubbo:service interface="com.huak.api.RoomTempService" ref="roomTempService" timeout="3000" loadbalance="random"
                    executes="200"

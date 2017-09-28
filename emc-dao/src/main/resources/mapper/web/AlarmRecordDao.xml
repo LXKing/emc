@@ -92,4 +92,11 @@
       END_TIME = #{endTime,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectByConfigId"  parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        from t_emc_alarm_record  er
+        where er.CONFIG_ID=#{id,jdbcType=VARCHAR}
+        and er.END_TIME is null
+    </select>
 </mapper>

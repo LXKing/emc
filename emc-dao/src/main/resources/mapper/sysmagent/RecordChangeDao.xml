@@ -178,10 +178,10 @@
             and CRESTOR = #{crestor,jdbcType=VARCHAR}
         </if>
         <if test="name != null and name!=''">
-            and mc.name = #{name,jdbcType=VARCHAR}
+            and mc.name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
         </if>
         <if test="unitName != null and unitName!=''">
-            and vu.UNITNAME = #{unitName,jdbcType=VARCHAR}
+            and vu.UNITNAME LIKE CONCAT('%',#{unitName,jdbcType=VARCHAR},'%')
         </if>
         order by rp.CREATE_TIME,rp.CHANGE_TIME desc
     </select>

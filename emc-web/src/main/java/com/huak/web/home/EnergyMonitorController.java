@@ -296,7 +296,7 @@ public class EnergyMonitorController extends BaseController {
             if(null == tq){
                 tq = 0d;
             }
-            Double tb = DoubleUtils.div(DoubleUtils.sub(bq,tq),bq,4)*100;
+            Double tb = DoubleUtils.div(DoubleUtils.sub(bq,tq),tq,4)*100;
             jo = CollectionUtil.packageDataLine(start,end,bqLine,tqLine);
             jo.put("bq",bq);
             jo.put("tq",tq);

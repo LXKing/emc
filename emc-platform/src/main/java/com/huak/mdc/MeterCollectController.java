@@ -598,11 +598,14 @@ public class MeterCollectController {
     @ResponseBody
     public String deleteMeter(@PathVariable("id") String id) {
         logger.info("删除计量器具");
-
+        MeterCollect meterCollect = new MeterCollect();
+        meterCollect.setIsdelete(Byte.valueOf("1"));
+        meterCollect.setId(id);
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            meterCollectService.deleteByPrimaryKey(id);
+            meterCollectService.updateByPrimaryKeySelective(meterCollect);
+
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "删除成功");
         } catch (Exception e) {

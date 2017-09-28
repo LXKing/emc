@@ -47,7 +47,7 @@ function loadDataFun(){
             chart04Fun(data);
         }
     });
-    
+
     //能耗折线
     $.ajax({
         url : _web+"/energy/monitor/line/bm",
@@ -56,147 +56,179 @@ function loadDataFun(){
         dataType: "json",
         success : function(data) {
             $("#groupTotal").html(toFormatNum(data.bq));
-        	/*if(data.tb < 0){
-        		$("#groupTotal").addClass("energy_gray");
-        	};*/
+            /*if(data.tb < 0){
+             $("#groupTotal").addClass("energy_gray");
+             };*/
             if(data.tb < 0){
-            	$("#groupchangeRate").css('color','#3db1b0');
+                $("#groupchangeRate").css('color','#3db1b0');
                 $("#groupchangeRate").html(toFormatNum(data.tb) + "<span class='arrow'>↓</span>");
             }else if(data.tb > 0){
                 $("#groupchangeRate").html(toFormatNum(data.tb) + "<span class='arrow'>↑</span>");
             }else if(data.tb == 0){
-            	$("#groupchangeRate").css('color','#999');
-            	$("#groupchangeRate").html("0" + "<span class='arrow'>→</span>");
+                $("#groupchangeRate").css('color','#999');
+                $("#groupchangeRate").html("0" + "<span class='arrow'>→</span>");
             }
             groupEnergyChartFun(data.datas, data.xdatas);
         }
     });
-    //类型能耗
+    //水能耗
     $.ajax({
         url : _web+"/energy/monitor/line/yl",
         type : "POST",
-        data:$("#searchTools").serialize(),
+        data:$("#searchTools").serialize()+"&"+ $.param({type:"1"}),
         dataType: "json",
         success : function(data) {
-            $("#waterTotal").html(toFormatNum(data.bq.water));
-            if(data.tb.water < 0){
+            $("#waterTotal").html(toFormatNum(data.bq));
+            if(data.tb < 0){
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh");
             }else{
                 $("#waterTotal").next("span").addClass("energy-remind");
                 $("#waterTotal").addClass("energy-remind");
                 $("#waterTotal").closest(".energy-head").addClass("energy-snh-remind");
             }
-            if(data.tb.water < 0){
+            if(data.tb < 0){
                 $("#waterchangeRate").css('color','#3db1b0');
-                $("#waterchangeRate").html("("+toFormatNum(data.tb.water) + "↓)");
-            }else if(data.tb.water > 0){
+                $("#waterchangeRate").html("("+toFormatNum(data.tb) + "↓)");
+            }else if(data.tb > 0){
                 $("#waterchangeRate").addClass("energy-remind");
-                $("#waterchangeRate").html("("+toFormatNum(data.tb.water) + "↑)");
+                $("#waterchangeRate").html("("+toFormatNum(data.tb) + "↑)");
             }else{
                 $("#waterchangeRate").css('color','#999');
-                $("#waterchangeRate").html("("+toFormatNum(data.tb.water) + "→)");
+                $("#waterchangeRate").html("("+toFormatNum(data.tb) + "→)");
             }
 
-            waterEnergyChartFun(data.water.datas, data.water.xdatas);
-
-            $("#electricTotal").html(toFormatNum(data.bq.electric));
-            if(data.tb.electric < 0){
+            waterEnergyChartFun(data.datas, data.xdatas);
+        }
+    });
+    //电能耗
+    $.ajax({
+        url : _web+"/energy/monitor/line/yl",
+        type : "POST",
+        data:$("#searchTools").serialize()+"&"+ $.param({type:"2"}),
+        dataType: "json",
+        success : function(data) {
+            console.log(data);
+            $("#electricTotal").html(toFormatNum(data.bq));
+            if(data.tb < 0){
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh");
             }else{
                 $("#electricTotal").next("span").addClass("energy-remind");
                 $("#electricTotal").addClass("energy-remind");
                 $("#electricTotal").closest(".energy-head").addClass("energy-dnh-remind");
             }
-            if(data.tb.electric < 0){
+            if(data.tb < 0){
                 $("#elechangeRate").css('color','#3db1b0');
-                $("#elechangeRate").html("("+toFormatNum(data.tb.electric) + "↓)");
-            }else if(data.tb.electric > 0){
+                $("#elechangeRate").html("("+toFormatNum(data.tb) + "↓)");
+            }else if(data.tb > 0){
                 $("#elechangeRate").addClass("energy-remind");
-                $("#elechangeRate").html("("+toFormatNum(data.tb.electric) + "↑)");
+                $("#elechangeRate").html("("+toFormatNum(data.tb) + "↑)");
             }else{
                 $("#elechangeRate").css('color','#999');
-                $("#elechangeRate").html("("+toFormatNum(data.tb.electric) + "→)");
+                $("#elechangeRate").html("("+toFormatNum(data.tb) + "→)");
             }
 
-            electricEnergyChartFun(data.electric.datas, data.electric.xdatas);
-
-            $("#gasTotal").html(toFormatNum(data.bq.gas));
-            if(data.tb.gas < 0){
+            electricEnergyChartFun(data.datas, data.xdatas);
+        }
+    });
+    //气能耗
+    $.ajax({
+        url : _web+"/energy/monitor/line/yl",
+        type : "POST",
+        data:$("#searchTools").serialize()+"&"+ $.param({type:"3"}),
+        dataType: "json",
+        success : function(data) {
+            $("#gasTotal").html(toFormatNum(data.bq));
+            if(data.tb < 0){
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh");
             }else{
                 $("#gasTotal").next("span").addClass("energy-remind");
                 $("#gasTotal").addClass("energy-remind");
                 $("#gasTotal").closest(".energy-head").addClass("energy-qnh-remind");
             }
-            if(data.tb.gas < 0){
+            if(data.tb < 0){
                 $("#gaschangeRate").css('color','#3db1b0');
-                $("#gaschangeRate").html("("+toFormatNum(data.tb.gas) + "↓)");
-            }else if(data.tb.gas > 0){
+                $("#gaschangeRate").html("("+toFormatNum(data.tb) + "↓)");
+            }else if(data.tb > 0){
                 $("#gaschangeRate").addClass("energy-remind");
-                $("#gaschangeRate").html("("+toFormatNum(data.tb.gas) + "↑)");
+                $("#gaschangeRate").html("("+toFormatNum(data.tb) + "↑)");
             }else{
                 $("#gaschangeRate").css('color','#999');
-                $("#gaschangeRate").html("("+toFormatNum(data.tb.gas) + "→)");
+                $("#gaschangeRate").html("("+toFormatNum(data.tb) + "→)");
             }
 
-            gasEnergyChartFun(data.gas.datas, data.gas.xdatas);
-
-            $("#hotTotal").html(toFormatNum(data.bq.heat));
-            if(data.tb.heat < 0){
+            gasEnergyChartFun(data.datas, data.xdatas);
+        }
+    });
+    //热能耗
+    $.ajax({
+        url : _web+"/energy/monitor/line/yl",
+        type : "POST",
+        data:$("#searchTools").serialize()+"&"+ $.param({type:"4"}),
+        dataType: "json",
+        success : function(data) {
+            $("#hotTotal").html(toFormatNum(data.bq));
+            if(data.tb < 0){
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh");
             }else{
                 $("#hotTotal").next("span").addClass("energy-remind");
                 $("#hotTotal").addClass("energy-remind");
                 $("#hotTotal").closest(".energy-head").addClass("energy-rnh-remind");
             }
-            if(data.tb.heat < 0){
+            if(data.tb < 0){
                 $("#hotchangeRate").css('color','#3db1b0');
-                $("#hotchangeRate").html("("+toFormatNum(data.tb.heat) + "↓)");
-            }else if(data.tb.heat > 0){
+                $("#hotchangeRate").html("("+toFormatNum(data.tb) + "↓)");
+            }else if(data.tb > 0){
                 $("#hotchangeRate").addClass("energy-remind");
-                $("#hotchangeRate").html("("+toFormatNum(data.tb.heat) + "↑)");
+                $("#hotchangeRate").html("("+toFormatNum(data.tb) + "↑)");
             }else{
                 $("#hotchangeRate").css('color','#999');
-                $("#hotchangeRate").html("("+toFormatNum(data.tb.heat) + "→)");
+                $("#hotchangeRate").html("("+toFormatNum(data.tb) + "→)");
             }
 
-            hotEnergyChartFun(data.heat.datas, data.heat.xdatas);
-
-            $("#coalTotal").html(toFormatNum(data.bq.coal));
-            if(data.tb.coal < 0){
+            hotEnergyChartFun(data.datas, data.xdatas);
+        }
+    });
+    //煤能耗
+    $.ajax({
+        url : _web+"/energy/monitor/line/yl",
+        type : "POST",
+        data:$("#searchTools").serialize()+"&"+ $.param({type:"5"}),
+        dataType: "json",
+        success : function(data) {
+            $("#coalTotal").html(toFormatNum(data.bq));
+            if(data.tb < 0){
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh");
             }else{
                 $("#coalTotal").next("span").addClass("energy-remind");
                 $("#coalTotal").addClass("energy-remind");
                 $("#coalTotal").closest(".energy-head").addClass("energy-mnh-remind");
             }
-            if(data.tb.coal < 0){
+            if(data.tb < 0){
                 $("#coalchangeRate").css('color','#3db1b0');
-                $("#coalchangeRate").html("("+toFormatNum(data.tb.coal) + "↓)");
-            }else if(data.tb.coal > 0){
+                $("#coalchangeRate").html("("+toFormatNum(data.tb) + "↓)");
+            }else if(data.tb > 0){
                 $("#coalchangeRate").addClass("energy-remind");
-                $("#coalchangeRate").html("("+toFormatNum(data.tb.coal) + "↑)");
+                $("#coalchangeRate").html("("+toFormatNum(data.tb) + "↑)");
             }else{
                 $("#coalchangeRate").css('color','#999');
-                $("#coalchangeRate").html("("+toFormatNum(data.tb.coal) + "→)");
+                $("#coalchangeRate").html("("+toFormatNum(data.tb) + "→)");
             }
 
-            coalEnergyChartFun(data.coal.datas, data.coal.xdatas);
+            coalEnergyChartFun(data.datas, data.xdatas);
         }
     });
 
-    
     /**
      * 能源流相关开始
      */
-    //能源流明细
+        //能源流明细
     $.ajax({
         url : _web+"/energy/monitor/energyFlowTable",
         type : "GET",
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-        	renderEnergyFlowDetail(data.data);
+            renderEnergyFlowDetail(data.data);
         }
     });
     //能源流能耗占比分布图
@@ -206,7 +238,7 @@ function loadDataFun(){
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-        	chart2EnergyPie(data.data);
+            chart2EnergyPie(data.data);
         }
     });
     //能源流能耗趋势对比图
@@ -216,7 +248,7 @@ function loadDataFun(){
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-        	chart2EnergyLine(data.data);
+            chart2EnergyLine(data.data);
         }
     });
     //能源流能耗同比
@@ -226,7 +258,7 @@ function loadDataFun(){
         data:$("#searchTools").serialize(),
         dataType: "json",
         success : function(data) {
-        	chart2EnergyBar(data.data);
+            chart2EnergyBar(data.data);
         }
     });
 }
@@ -884,6 +916,7 @@ function chart01Fun(data){
 /*分公司能耗趋势对比图*/
 function chart02Fun(data){
     var linechart = echarts.init(document.getElementById('linechart'));
+    console.log(data);
     var option = {
 
         tooltip: {
@@ -1207,10 +1240,10 @@ function chart04Fun(data){
 
 /*能源流能耗明细*/
 function renderEnergyFlowDetail(data){
-	$('#energyFlowDetail').html('');
-	var html = '';
-	for(var i=0;i<data.length;i++){
-		html+="<tr class=\""+(i%2==0?"":"bgc")+"\">";
+    $('#energyFlowDetail').html('');
+    var html = '';
+    for(var i=0;i<data.length;i++){
+        html+="<tr class=\""+(i%2==0?"":"bgc")+"\">";
         html+="<td>";
         html+="    <a href='"+_web+"/third/energy/unit/"+data[i].unittype+"' class='need_a'>"+data[i].unitname+"</a>";
         html+="</td>";
@@ -1222,8 +1255,8 @@ function renderEnergyFlowDetail(data){
         html+=getHtmlTd(data[i].coalE,data[i].coalS);
         html+=getHtmlTd(data[i].oilE,data[i].oilS);
         html+="</tr>";
-	}
-	$('#energyFlowDetail').html(html);
+    }
+    $('#energyFlowDetail').html(html);
 }
 /*能源流能耗占比分布图*/
 function chart2EnergyPie(data){
@@ -1319,9 +1352,12 @@ function chart2EnergyLine(data){
             itemHeight:4,
             icon:'rect',
             itemGap:20,
-            data:data.legends
+            data:data.legends,
+            textStyle:{
+                color:chartsColor.ec4.facecolor5
+            }
         },
-        color:['#c675c3', '#8d82cc', '#3b96db', '#32bbb6', '#df614c'],
+        color:chartsColor.ec4.facecolor5,
         xAxis: {
             type: 'category',
             boundaryGap: false,
