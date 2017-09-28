@@ -1,6 +1,5 @@
 package com.huak.home.component;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,6 +74,29 @@ public interface ComponentService {
      * }
      */
     Map<String,Object> getAlarms(Map<String, Object> params);
+    /**
+     * 报警-工况-实现
+     * @param params 说明：
+     * {
+     *     startTime：#开始时间 格式：yyyy-MM-dd hh:mm:ss,
+     *     endTime：#结束时间 格式：yyyy-MM-dd hh:mm:ss,
+     *     comId：#当前登录公司id
+     * }
+     * @return Map 说明:
+     * {
+     *   message:{flag：true/false,message:描述}
+     *   data：{
+     *     level1: 1级,
+     *     level2：2级,
+     *     level3：3级,
+     *     level4：4级
+     *     total:  总数
+     *   }
+     * }
+     */
+    Map<String,Object> getWorkAlarms(Map<String, Object> params);
+
+    Map<String,Object> getTempAlarms(Map<String, Object> params);
 
     /**
      * 报警详情-单耗接口-实现
@@ -98,4 +120,8 @@ public interface ComponentService {
      * }
      */
     Map<String,Object> getAlarmsDetail(Map<String,Object> params);
+
+    Map<String,Object> getWorkAlarmsDetail(Map<String, Object> params);
+
+    Map<String,Object> getTempAlarmsDetail(Map<String, Object> params);
 }

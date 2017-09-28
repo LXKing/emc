@@ -802,4 +802,56 @@
         and c.m >= d.ENTERPRISE) aa
         LEFT JOIN v_emc_unit bb ON aa.unitid = bb.UNITID;
     </select>
+
+    <select id="getWorkAlarmTotal" parameterType="java.util.Map" resultType="java.lang.Double">
+        SELECT count(*) FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a ,
+        t_emc_alarm_config c WHERE c.COM_ID=a.COMID AND c.UNIT_ID = a.UNITID AND c.UNIT_TYPE = a.UNITTYPE
+        AND c.ISENABLE = 0
+    </select>
+    <select id="getWorkAlarmNum" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        sum(case when s.LEVEL= 0 then s.num else 0 end) level1,
+        sum(case when s.LEVEL= 1 then s.num else 0 end) level2,
+        sum(case when s.LEVEL= 2 then s.num else 0 end) level3,
+        sum(case when s.LEVEL= 3 then s.num else 0 end) level4
+        FROM (
+        SELECT COUNT(r.id) num,c.ALARM_LEVEL LEVEL FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a ,
+        t_emc_alarm_config c,t_emc_alarm_record r WHERE c.COM_ID=a.COMID AND c.UNIT_ID = a.UNITID AND c.UNIT_TYPE = a.UNITTYPE
+        AND c.ISENABLE = 0 AND r.CONFIG_ID = c.ID AND r.END_TIME IS NULL
+        GROUP BY c.ALARM_LEVEL) s
+    </select>
+    <select id="getTempAlarmTotal" parameterType="java.util.Map" resultType="java.lang.Double">
+        SELECT count(*) FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a ,
+        t_emc_temperature_tj t,t_emc_alarm_config_temp c
+        WHERE t.COM_ID = a.COMID AND t.STATION_NAME = a.UNITNAME
+        AND c.COM_ID =a.COMID AND c.UNIT_ID = a.UNITID
+        AND c.UNIT_TYPE = a.UNITTYPE AND c.ISENABLE = '0'
+        AND  t.REDE_TIME <![CDATA[ >= ]]> #{startTime} AND t.REDE_TIME <![CDATA[ <= ]]> #{endTime}
+    </select>
+    <select id="getTempAlarmNum" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT sum(c.MINTEMP>t.TEMP) min,sum(t.TEMP>c.MAXTEMP) max
+        FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+        ) a ,
+        t_emc_temperature_tj t,t_emc_alarm_config_temp c
+        WHERE t.COM_ID = a.COMID AND t.STATION_NAME = a.UNITNAME
+        AND c.COM_ID =a.COMID AND c.UNIT_ID = a.UNITID
+        AND c.UNIT_TYPE = a.UNITTYPE AND c.ISENABLE = '0'
+        AND  t.REDE_TIME <![CDATA[ >= ]]> #{startTime} AND t.REDE_TIME <![CDATA[ <= ]]> #{endTime}
+        AND (c.MINTEMP>t.TEMP OR t.TEMP>c.MAXTEMP)
+    </select>
 </mapper>

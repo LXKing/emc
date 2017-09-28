@@ -2162,7 +2162,7 @@ function chart11Fun() {
 function chart12Fun() {
     $(".barwrap").show();
     $(".barwrap2").hide();
-    var titledata = ['工况运行', '经济运行', '服务情况', '作业管理'];
+    var titledata = ['工况运行', '经济运行', '服务情况', '室温报警'];
     initchart12(titledata);
     $.ajax({
         url: _web + "/healthcheck/list",
@@ -2189,33 +2189,28 @@ function initchart12(titledata){
     }
     html += "</div>";
     html += "<div>";
-    for(var i = 1; i <= titledata.length; i++) {
-        var v1 = "";
-        var v2 = "";
-        var v3 = "";
-        var vc1 = "";
-        var vc3 = "";
-        var vc2 = "";
-        if(i < data.length) {
-            v1 = data[i].value1;
-            v2 = data[i].value2;
-            v3 = data[i].value3;
-            if(parseInt(v1) > 0) {
-                vc1 = "c";
-            }
-            if(parseInt(v2) > 0) {
-                vc2 = "b";
-            }
-            if(parseInt(v3) > 0) {
-                vc3 = "a";
-            }
-        }
+    for(var i = 0; i < titledata.length; i++){
         var classname = "runc";
         html += "<div id='"+i+1+"'  class='" + classname + "'><div class='jiao'></div><ul>";
-        html += "<li>严重<span class='a'>" + v1 + "</span></li>";
-        html += "<li>中度<span class='b'>" + v2 + "</span></li>";
-        html += "<li>轻度<span class='c'>" + v3 + "</span></li>";
+        if("工况运行"==titledata[i]){
+            html += "<li>四级<span class='a'></span></li>";
+            html += "<li>三级<span class='b'></span></li>";
+            html += "<li>二级<span class='c'></span></li>";
+            html += "<li>一级<span class='d'></span></li>";
+        }else if("经济运行"==titledata[i]) {
+            html += "<li>行标<span class='a'></span></li>";
+            html += "<li>地标<span class='b'></span></li>";
+            html += "<li>企标<span class='c'></span></li>";
+        }else if("室温报警"==titledata[i]){
+            html += "<li>低温<span class='a'></span></li>";
+            html += "<li>高温<span class='b'></span></li>";
+        }else{
+            html += "<li>严重<span class='a'></span></li>";
+            html += "<li>中度<span class='b'></span></li>";
+            html += "<li>轻度<span class='c'></span></li>";
+        }
         html += "</ul></div>";
+
     }
     html += "</div>";
     $("#chart12").html(html);
@@ -2239,47 +2234,47 @@ function timerTask(i,data){
     setTimeout(function(){
         if(i == 1){
             $("#"+i).attr("class","run"+data.object.gkyx.css);
-            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.gkyx.serious);
-            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.gkyx.moderate);
-            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.gkyx.mild);
+            $($("#"+(i-1)+1).find("ul li")[0]).find("span").html(data.object.gkyx.level4);
+            $($("#"+(i-1)+1).find("ul li")[1]).find("span").html(data.object.gkyx.level3);
+            $($("#"+(i-1)+1).find("ul li")[2]).find("span").html(data.object.gkyx.level2);
+            $($("#"+(i-1)+1).find("ul li")[3]).find("span").html(data.object.gkyx.level1);
             if(data.object.gkyx.css == 'm'){
-                $("#"+i+1).attr("class","runb");
+                $("#"+(i-1)+1).attr("class","runb");
             }else{
-                $("#"+i+1).attr("class","run"+data.object.gkyx.css);
+                $("#"+(i-1)+1).attr("class","run"+data.object.gkyx.css);
             }
 
         }else if( i == 2){
             $("#"+i).attr("class","run"+data.object.jjyx.css);
-            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.jjyx.serious);
-            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.jjyx.moderate);
-            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.jjyx.mild);
+            $($("#"+(i-1)+1).find("ul li")[0]).find("span").html(data.object.jjyx.serious);
+            $($("#"+(i-1)+1).find("ul li")[1]).find("span").html(data.object.jjyx.moderate);
+            $($("#"+(i-1)+1).find("ul li")[2]).find("span").html(data.object.jjyx.mild);
 
             if(data.object.jjyx.css == 'm'){
-                $("#"+i+1).attr("class","runb");
+                $("#"+(i-1)+1).attr("class","runb");
             }else{
-                $("#"+i+1).attr("class","run"+data.object.jjyx.css);
+                $("#"+(i-1)+1).attr("class","run"+data.object.jjyx.css);
             }
 
         }else if (i == 3){
             $("#"+i).attr("class","run"+data.object.fwqk.css);
-            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
-            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.fwqk.moderate);
-            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.fwqk.mild);
+            $($("#"+(i-1)+1).find("ul li")[0]).find("span").html(data.object.fwqk.serious);
+            $($("#"+(i-1)+1).find("ul li")[1]).find("span").html(data.object.fwqk.moderate);
+            $($("#"+(i-1)+1).find("ul li")[2]).find("span").html(data.object.fwqk.mild);
             if(data.object.fwqk.css == 'm'){
-                $("#"+i+1).attr("class","runb");
+                $("#"+(i-1)+1).attr("class","runb");
             }else{
-                $("#"+i+1).attr("class","run"+data.object.fwqk.css);
+                $("#"+(i-1)+1).attr("class","run"+data.object.fwqk.css);
             }
 
         }else if( i == 4){
             $("#"+i).attr("class","run"+data.object.zygl.css);
-            $($("#"+i+1).find("ul li")[0]).find("span").html(data.object.zygl.serious);
-            $($("#"+i+1).find("ul li")[1]).find("span").html(data.object.zygl.moderate);
-            $($("#"+i+1).find("ul li")[2]).find("span").html(data.object.zygl.mild);
+            $($("#"+(i-1)+1).find("ul li")[0]).find("span").html(data.object.zygl.min);
+            $($("#"+(i-1)+1).find("ul li")[1]).find("span").html(data.object.zygl.max);
             if(data.object.zygl.css == 'm'){
-                $("#"+i+1).attr("class","runb");
+                $("#"+(i-1)+1).attr("class","runb");
             }else{
-                $("#"+i+1).attr("class","run"+data.object.zygl.css);
+                $("#"+(i-1)+1).attr("class","run"+data.object.zygl.css);
             }
         }
         if(i<=3){

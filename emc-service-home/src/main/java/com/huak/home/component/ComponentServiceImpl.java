@@ -1039,6 +1039,51 @@ public class ComponentServiceImpl implements ComponentService{
     }
 
     /**
+     * 报警-工况-实现
+     *
+     * @param params 说明：
+     *               {
+     *               startTime：#开始时间 格式：yyyy-MM-dd hh:mm:ss,
+     *               endTime：#结束时间 格式：yyyy-MM-dd hh:mm:ss,
+     *               comId：#当前登录公司id
+     *               }
+     * @return Map 说明:
+     * {
+     * message:{flag：true/false,message:描述}
+     * data：{
+     * level1: 1级,
+     * level2：2级,
+     * level3：3级,
+     * level4：4级
+     * total:  总数
+     * }
+     * }
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> getWorkAlarms(Map<String, Object> params) {
+        Double total = componentDao.getWorkAlarmTotal(params);
+        Map<String,Object> map = componentDao.getWorkAlarmNum(params);
+        if(null == map){
+            map = new HashMap<>();
+        }
+        map.put("total",total);
+        return map;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> getTempAlarms(Map<String, Object> params) {
+        Double total = componentDao.getTempAlarmTotal(params);
+        Map<String,Object> map = componentDao.getTempAlarmNum(params);
+        if(null == map){
+            map = new HashMap<>();
+        }
+        map.put("total",total);
+        return map;
+    }
+
+    /**
      * 报警详情-单耗接口-实现
      * @param params 说明：
      * {
@@ -1083,5 +1128,15 @@ public class ComponentServiceImpl implements ComponentService{
         result.put(MESSAGE,"成功");
         result.put(DATA,componentDao.getAlarms(params));
         return result;
+    }
+
+    @Override
+    public Map<String, Object> getWorkAlarmsDetail(Map<String, Object> params) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getTempAlarmsDetail(Map<String, Object> params) {
+        return null;
     }
 }

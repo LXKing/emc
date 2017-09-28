@@ -70,4 +70,32 @@ public interface ComponentDao {
      * @return
      */
     Map<String,Object> getAlarms(Map<String, Object> params);
+
+    /**
+     * 工况预警总数
+     * @param params
+     * @return
+     */
+    Double getWorkAlarmTotal(Map<String, Object> params);
+
+    /**
+     * 工况预警记录数
+     * @param params
+     * @return
+     */
+    Map<String,Object> getWorkAlarmNum(Map<String, Object> params);
+
+    /**
+     * 室温预警总数
+     * @param params
+     * @return
+     */
+    Double getTempAlarmTotal(Map<String, Object> params);
+
+    /**
+     * 室温预警记录数
+     * @param params
+     * @return
+     */
+    Map<String,Object> getTempAlarmNum(Map<String, Object> params);
 }

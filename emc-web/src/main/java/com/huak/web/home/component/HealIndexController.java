@@ -43,13 +43,17 @@ public class HealIndexController   extends BaseController {
             Map params = paramsPackageOrg(toolVO, request);
             Map<String,Object> jjdata = new HashMap<>();
             Map<String,Object> datemp  = componentService.getAlarms(params);
+
             if((boolean)datemp.get("flag")){
                 Map<String,Object> temp = (Map<String, Object>) datemp.get("data");
 
-                jjdata.put("serious",null == temp.get("serious") ?0:temp.get("serious"));
-                jjdata.put("moderate",null == temp.get("moderate") ?0:temp.get("moderate"));
-                jjdata.put("mild",null == temp.get("mild") ?0:temp.get("mild"));
-                if(null != temp.get("serious") && temp.get("serious")!= 0){
+                int jjSerious = null == temp.get("serious") ?0:Integer.valueOf(temp.get("serious").toString());
+                int jjModerate = null == temp.get("moderate") ?0:Integer.valueOf(temp.get("moderate").toString());
+                int jjMild = null == temp.get("mild") ?0:Integer.valueOf(temp.get("mild").toString());
+                jjdata.put("serious",jjSerious);
+                jjdata.put("moderate",jjModerate);
+                jjdata.put("mild",jjMild);
+                if(jjSerious+jjModerate+jjMild>0){
                     jjdata.put("css","m");
                 }else{
                     jjdata.put("css","a");
@@ -62,25 +66,41 @@ public class HealIndexController   extends BaseController {
                 jjdata.put("css","a");
             }
             Map<String,Object> data = new HashMap<>();
-            Map<String,Object> gkdata = new HashMap<>();
-            gkdata.put("serious",135);
-            gkdata.put("moderate",135);
-            gkdata.put("mild",135);
-            gkdata.put("css","m");
+            Map<String,Object> workData = componentService.getWorkAlarms(params);
+            int workLevel1 = null == workData.get("level1") ?0:Integer.valueOf(workData.get("level1").toString());
+            int workLevel2 = null == workData.get("level2") ?0:Integer.valueOf(workData.get("level2").toString());
+            int workLevel3 = null == workData.get("level3") ?0:Integer.valueOf(workData.get("level3").toString());
+            int workLevel4 = null == workData.get("level4") ?0:Integer.valueOf(workData.get("level4").toString());
+            workData.put("level1",workLevel1);
+            workData.put("level2",workLevel2);
+            workData.put("level3",workLevel3);
+            workData.put("level4",workLevel4);
+            if(workLevel1+workLevel2+workLevel3+workLevel4>0){
+                workData.put("css","m");
+            }else{
+                workData.put("css","a");
+            }
+
             Map<String,Object> fwdata = new HashMap<>();
             fwdata.put("serious",0);
             fwdata.put("moderate",0);
             fwdata.put("mild",0);
             fwdata.put("css","a");
-            Map<String,Object> zydata = new HashMap<>();
-            zydata.put("serious",1000);
-            zydata.put("moderate",380);
-            zydata.put("mild",600);
-            zydata.put("css","m");
-            data.put("gkyx",gkdata);
+
+            Map<String,Object> tempData = componentService.getTempAlarms(params);
+            int tempMin = null == tempData.get("min") ?0:Integer.valueOf(tempData.get("min").toString());
+            int tempMax = null == tempData.get("max") ?0:Integer.valueOf(tempData.get("max").toString());
+            tempData.put("min",tempMin);
+            tempData.put("max",tempMax);
+            if(tempMax+tempMin>0){
+                tempData.put("css","m");
+            }else{
+                tempData.put("css","a");
+            }
+            data.put("gkyx",workData);
             data.put("jjyx",jjdata);
             data.put("fwqk",fwdata);
-            data.put("zygl",zydata);
+            data.put("zygl",tempData);
             if (data!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, data);

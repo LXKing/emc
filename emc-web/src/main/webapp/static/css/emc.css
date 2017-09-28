@@ -185,3 +185,20 @@
 .panelright {
      margin-left: 0px;
 }
+
+.quanquanwrap>div:nth-child(2)>div>ul li {
+    height: 25px;
+    line-height: 25px;
+}
+.quanquanwrap>div:nth-child(2)>div>ul li:nth-child(1) span.a {
+    color: #d4513b;
+}
+.quanquanwrap>div:nth-child(2)>div>ul li:nth-child(2) span.b {
+    color: #348bce;
+}
+.quanquanwrap>div:nth-child(2)>div>ul li:nth-child(3) span.c {
+    color: #2eada8;
+}
+.quanquanwrap>div:nth-child(2)>div>ul li:nth-child(4) span.d {
+    color: #adaa4c;
+}
