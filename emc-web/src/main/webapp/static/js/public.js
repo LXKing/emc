@@ -246,9 +246,11 @@ $(function () {
     $('.publicmenu .scbtn').click(function(){
         if($('.publicmenu').css('left')=="0px"){
             $('.publicmenu').animate({left:'-196px'});
+            $('.publicmenu-con').hide();
             $('.publicmenu .scbtn').animate({left:'0px'});
             $('.publicmenu .scbtn').addClass('close');
         }else{
+            $('.publicmenu-con').show();
             $('.publicmenu .scbtn').animate({left:'196px'});
             $('.publicmenu').animate({left:'0px'});
             $('.publicmenu .scbtn').removeClass('close');

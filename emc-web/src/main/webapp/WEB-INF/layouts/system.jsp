@@ -36,6 +36,7 @@
                     $('.publicmenu li').removeClass('active');
                     $(this).parent().addClass('active');
                     $(this).parents('.more').addClass('active');
+                    $('.publicmenu-con').hide();
                     $('.publicmenu').animate({left:'-196px'});
                     $('.publicmenu .scbtn').animate({left:'0px'});
                     $('.publicmenu .scbtn').addClass('close');
@@ -46,16 +47,6 @@
                 }
             });
         });
-
-        function onClick(event,treeId, treeNode) {
-            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-            if (treeNode.isParent) {
-                zTree.expandNode(treeNode);//如果是父节点，则展开该节点
-            }else{
-                $(".pull-left.yuce-tit").html(treeNode.name);
-                openPage(_web + treeNode.href);//ajax
-            }
-        }
 
 
         /**
@@ -73,7 +64,7 @@
 
     <a href="javascript:void(0);" class="scbtn" style="left:0px"></a>
     <div class="title">后台首页</div>
-    <div class="publicmenu-con">
+    <div class="publicmenu-con" style="display: none">
         <a href="javascript:void(0);" class="btn-up btngun"></a>
         <a href="javascript:void(0);" class="btn-down btngun"></a>
         <ul>
