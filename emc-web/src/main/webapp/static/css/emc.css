@@ -43,6 +43,13 @@
     background-image: -ms-linear-gradient( -45deg, rgb(234, 145, 80) 0%, rgb(224, 96, 61) 100%);
 }
 
+.facedark .quanquanwrap>div:nth-child(1)>div.runa>div>div,
+.facedark .quanquanwrap>div:nth-child(1)>div.runa>div:after {
+    background-image: -moz-linear-gradient( -45deg, rgb(50, 187, 182) 0%, rgb(59, 150, 219) 100%);
+    background-image: -webkit-linear-gradient( -45deg, rgb(50, 187, 182) 0%, rgb(59, 150, 219) 100%);
+    background-image: -ms-linear-gradient( -45deg, rgb(50, 187, 182) 0%, rgb(59, 150, 219) 100%);
+}
+
 .quanquanwrap>div:nth-child(1)>div:nth-child(1).runm>div>div>div:after {
     background-image: url(../imgdark/index/icon1_1_g.png)
 }

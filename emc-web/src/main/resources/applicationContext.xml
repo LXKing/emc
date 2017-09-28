@@ -47,6 +47,8 @@
     <dubbo:reference id="indexTypeService"    interface="com.huak.sys.IndexTypeService" timeout="12000"  check="true" version="${service.version}" />
 
     <dubbo:reference id="alarmConfigService"    interface="com.huak.health.AlarmConfigService" timeout="12000"  check="true" version="${service.version}" />
+    <dubbo:reference id="alarmConfigTempService"    interface="com.huak.health.AlarmConfigTempService" timeout="12000"  check="true" version="${service.version}" />
+
     <dubbo:reference id="alarmRecordService"    interface="com.huak.health.AlarmRecordService" timeout="12000"  check="true" version="${service.version}" />
 
     <!--home-->
