@@ -143,7 +143,7 @@
         <div class="index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
                 <div class="pull-left energyTit analy_tit"><i></i>${(company.nextDes ne null&&company.nextDes ne "")?company.nextDes:"分公司"}能耗明细<small class="font-sm">Assessment indicators</small></div>
-                <a class="pull-right exportlist mr15" export-url="${web}/energy/monitor/fgs/export">导出列表</a>
+                <a class="pull-right exportlist mr15 export-emc" export-url="${web}/energy/monitor/fgs/export">导出列表</a>
             </div>
             <div class="AssessmentBox rconttable col-lg-12 no-padding">
                 <table class="table table-striped table-bordered table-hover col-lg-12 no-padding">
@@ -234,7 +234,7 @@
         <div class="index_contentBox clearfix">
             <div class="titbox clearfix no-padding no-margin">
                 <div class="pull-left energyTit analy_tit_as"><i></i>能源流明细<small class="font-sm">Assessment indicators</small></div>
-                <a export-url="${web}/energy/monitor/exportEnergyFlowDetail" class="pull-right exportlist mr15">导出列表</a>
+                <a export-url="${web}/energy/monitor/exportEnergyFlowDetail" class="pull-right exportlist mr15 export-emc">导出列表</a>
             </div>
             <div class="AssessmentBox rconttable col-lg-12 no-padding">
                 <table class="table table-striped table-bordered table-hover col-lg-12 no-padding">

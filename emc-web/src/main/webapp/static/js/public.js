@@ -536,7 +536,7 @@ $(function () {
     });
 
     /*导出列表*/
-    $(document).on("click", ".exportlist", function () {
+    $(document).on("click", ".export-emc", function () {
         var $from = $("#searchTools");
         var url = $(this).attr('export-url') + '?' + $from.serialize();
         window.open(url);

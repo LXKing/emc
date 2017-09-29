@@ -142,7 +142,7 @@
         <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="alarmConfigAddForm" layer-title="添加报警配置" layer-url="${web}/alarm/config/add">添加</a>
     </c:if>
     <c:if test="${sessionScope._auth['alarmExport']}">
-        <a class="btns btnsfl btns-green" href="javascript:void(0);">导出</a>
+        <a class="btns btnsfl btns-green export-emc" href="javascript:void(0);" export-url="${web}/alarm/config/export">导出</a>
     </c:if>
     <c:if test="${sessionScope._auth['alarmImport']}">
         <a class="btns btnsfl btns-green" href="javascript:void(0);">导入</a>
@@ -224,7 +224,7 @@
             </div>
         </td>
         <td>
-            <div class="text-left">{$T.record.model}
+            <div class="text-left">
                 {#if $T.record.model==0}低低{#elseif $T.record.model==1}低{#elseif $T.record.model==2}高{#elseif $T.record.model==3}高高{#else}{$T.record.model}{#/if}
             </div>
         </td>
