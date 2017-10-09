@@ -27,6 +27,16 @@ import java.util.Map;
 public class HealIndexController   extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final static String SERIOUS = "serious";
+    private final static String MODERATE = "moderate";
+    private final static String MILD = "mild";
+    private final static String LEVEL1 = "level1";
+    private final static String LEVEL2 = "level2";
+    private final static String LEVEL3 = "level3";
+    private final static String LEVEL4 = "level4";
+    private final static String MIN = "min";
+    private final static String MAX = "max";
+    private final static String CSS = "css";
     @Resource
     private ComponentService componentService;
     /**
@@ -49,55 +59,55 @@ public class HealIndexController   extends BaseController {
             if((boolean)datemp.get("flag")){
                 Map<String,Object> temp = (Map<String, Object>) datemp.get("data");
 
-                int jjSerious = null == temp.get("serious") ?0:Integer.valueOf(temp.get("serious").toString());
-                int jjModerate = null == temp.get("moderate") ?0:Integer.valueOf(temp.get("moderate").toString());
-                int jjMild = null == temp.get("mild") ?0:Integer.valueOf(temp.get("mild").toString());
-                jjdata.put("serious",jjSerious);
-                jjdata.put("moderate",jjModerate);
-                jjdata.put("mild",jjMild);
+                int jjSerious = null == temp.get(SERIOUS) ?0:Integer.valueOf(temp.get(SERIOUS).toString());
+                int jjModerate = null == temp.get(MODERATE) ?0:Integer.valueOf(temp.get(MODERATE).toString());
+                int jjMild = null == temp.get(MILD) ?0:Integer.valueOf(temp.get(MILD).toString());
+                jjdata.put(SERIOUS,jjSerious);
+                jjdata.put(MODERATE,jjModerate);
+                jjdata.put(MILD,jjMild);
                 if(jjSerious+jjModerate+jjMild>0){
-                    jjdata.put("css","m");
+                    jjdata.put(CSS,"m");
                 }else{
-                    jjdata.put("css","a");
+                    jjdata.put(CSS,"a");
                 }
 
             }else{
-                jjdata.put("serious",0);
-                jjdata.put("moderate",0);
-                jjdata.put("mild",0);
-                jjdata.put("css","a");
+                jjdata.put(SERIOUS,0);
+                jjdata.put(MODERATE,0);
+                jjdata.put(MILD,0);
+                jjdata.put(CSS,"a");
             }
             Map<String,Object> data = new HashMap<>();
             Map<String,Object> workData = componentService.getWorkAlarms(params);
-            int workLevel1 = null == workData.get("level1") ?0:Integer.valueOf(workData.get("level1").toString());
-            int workLevel2 = null == workData.get("level2") ?0:Integer.valueOf(workData.get("level2").toString());
-            int workLevel3 = null == workData.get("level3") ?0:Integer.valueOf(workData.get("level3").toString());
-            int workLevel4 = null == workData.get("level4") ?0:Integer.valueOf(workData.get("level4").toString());
-            workData.put("level1",workLevel1);
-            workData.put("level2",workLevel2);
-            workData.put("level3",workLevel3);
-            workData.put("level4",workLevel4);
+            int workLevel1 = null == workData.get(LEVEL1) ?0:Integer.valueOf(workData.get(LEVEL1).toString());
+            int workLevel2 = null == workData.get(LEVEL2) ?0:Integer.valueOf(workData.get(LEVEL2).toString());
+            int workLevel3 = null == workData.get(LEVEL3) ?0:Integer.valueOf(workData.get(LEVEL3).toString());
+            int workLevel4 = null == workData.get(LEVEL4) ?0:Integer.valueOf(workData.get(LEVEL4).toString());
+            workData.put(LEVEL1,workLevel1);
+            workData.put(LEVEL2,workLevel2);
+            workData.put(LEVEL3,workLevel3);
+            workData.put(LEVEL4,workLevel4);
             if(workLevel1+workLevel2+workLevel3+workLevel4>0){
-                workData.put("css","m");
+                workData.put(CSS,"m");
             }else{
-                workData.put("css","a");
+                workData.put(CSS,"a");
             }
 
             Map<String,Object> fwdata = new HashMap<>();
-            fwdata.put("serious",0);
-            fwdata.put("moderate",0);
-            fwdata.put("mild",0);
-            fwdata.put("css","a");
+            fwdata.put(SERIOUS,0);
+            fwdata.put(MODERATE,0);
+            fwdata.put(MILD,0);
+            fwdata.put(CSS,"a");
 
             Map<String,Object> tempData = componentService.getTempAlarms(params);
-            int tempMin = null == tempData.get("min") ?0:Integer.valueOf(tempData.get("min").toString());
-            int tempMax = null == tempData.get("max") ?0:Integer.valueOf(tempData.get("max").toString());
-            tempData.put("min",tempMin);
-            tempData.put("max",tempMax);
+            int tempMin = null == tempData.get(MIN) ?0:Integer.valueOf(tempData.get(MIN).toString());
+            int tempMax = null == tempData.get(MAX) ?0:Integer.valueOf(tempData.get(MAX).toString());
+            tempData.put(MIN,tempMin);
+            tempData.put(MAX,tempMax);
             if(tempMax+tempMin>0){
-                tempData.put("css","m");
+                tempData.put(CSS,"m");
             }else{
-                tempData.put("css","a");
+                tempData.put(CSS,"a");
             }
             data.put("gkyx",workData);
             data.put("jjyx",jjdata);
@@ -137,10 +147,10 @@ public class HealIndexController   extends BaseController {
         Double score = 100d;
 
         Double work = 0d;
-        int workLevel1 = null == workData.get("level1") ?0:Integer.valueOf(workData.get("level1").toString());
-        int workLevel2 = null == workData.get("level2") ?0:Integer.valueOf(workData.get("level2").toString());
-        int workLevel3 = null == workData.get("level3") ?0:Integer.valueOf(workData.get("level3").toString());
-        int workLevel4 = null == workData.get("level4") ?0:Integer.valueOf(workData.get("level4").toString());
+        int workLevel1 = null == workData.get(LEVEL1) ?0:Integer.valueOf(workData.get(LEVEL1).toString());
+        int workLevel2 = null == workData.get(LEVEL2) ?0:Integer.valueOf(workData.get(LEVEL2).toString());
+        int workLevel3 = null == workData.get(LEVEL3) ?0:Integer.valueOf(workData.get(LEVEL3).toString());
+        int workLevel4 = null == workData.get(LEVEL4) ?0:Integer.valueOf(workData.get(LEVEL4).toString());
         if(workLevel1>0){
             work = DoubleUtils.add(work, PercentType.WORK_ONE.getMolecule());
         }
@@ -156,8 +166,8 @@ public class HealIndexController   extends BaseController {
         work = DoubleUtils.div(work,PercentType.WORK_ONE.getDenominator());
 
         Double temp = 0d;
-        int tempMin = null == tempData.get("min") ?0:Integer.valueOf(tempData.get("min").toString());
-        int tempMax = null == tempData.get("max") ?0:Integer.valueOf(tempData.get("max").toString());
+        int tempMin = null == tempData.get(MIN) ?0:Integer.valueOf(tempData.get(MIN).toString());
+        int tempMax = null == tempData.get(MAX) ?0:Integer.valueOf(tempData.get(MAX).toString());
         if(tempMin>0){
             temp = DoubleUtils.add(temp, PercentType.TEMP_MIN.getMolecule());
         }
@@ -167,9 +177,9 @@ public class HealIndexController   extends BaseController {
         temp = DoubleUtils.div(temp,PercentType.TEMP_MIN.getDenominator());
 
         Double jj = 0d;
-        int jjSerious = null == jjdata.get("serious") ?0:Integer.valueOf(jjdata.get("serious").toString());
-        int jjModerate = null == jjdata.get("moderate") ?0:Integer.valueOf(jjdata.get("moderate").toString());
-        int jjMild = null == jjdata.get("mild") ?0:Integer.valueOf(jjdata.get("mild").toString());
+        int jjSerious = null == jjdata.get(SERIOUS) ?0:Integer.valueOf(jjdata.get(SERIOUS).toString());
+        int jjModerate = null == jjdata.get(MODERATE) ?0:Integer.valueOf(jjdata.get(MODERATE).toString());
+        int jjMild = null == jjdata.get(MILD) ?0:Integer.valueOf(jjdata.get(MILD).toString());
         if(jjSerious>0){
             jj = DoubleUtils.add(jj, PercentType.JJ_ROWER.getMolecule());
         }
