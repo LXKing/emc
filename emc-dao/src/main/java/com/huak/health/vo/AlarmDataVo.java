@@ -15,6 +15,7 @@ import java.io.Serializable;
  */
 public class AlarmDataVo implements Serializable{
 
+    private static final long serialVersionUID = -1837499202727609005L;
     private String id;
 
     private String tag;
