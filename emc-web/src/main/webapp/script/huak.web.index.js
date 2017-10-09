@@ -2193,10 +2193,10 @@ function initchart12(titledata){
         var classname = "runc";
         html += "<div id='"+i+1+"'  class='" + classname + "'><div class='jiao'></div><ul>";
         if("工况运行"==titledata[i]){
-            html += "<li>四级<span class='a'></span></li>";
-            html += "<li>三级<span class='b'></span></li>";
-            html += "<li>二级<span class='c'></span></li>";
-            html += "<li>一级<span class='d'></span></li>";
+            html += "<li>一级<span class='a'></span></li>";
+            html += "<li>二级<span class='b'></span></li>";
+            html += "<li>三级<span class='c'></span></li>";
+            html += "<li>四级<span class='d'></span></li>";
         }else if("经济运行"==titledata[i]) {
             html += "<li>行标<span class='a'></span></li>";
             html += "<li>地标<span class='b'></span></li>";
@@ -2234,10 +2234,10 @@ function timerTask(i,data){
     setTimeout(function(){
         if(i == 1){
             $("#"+i).attr("class","run"+data.object.gkyx.css);
-            $($("#"+(i-1)+1).find("ul li")[0]).find("span").html(data.object.gkyx.level4);
-            $($("#"+(i-1)+1).find("ul li")[1]).find("span").html(data.object.gkyx.level3);
-            $($("#"+(i-1)+1).find("ul li")[2]).find("span").html(data.object.gkyx.level2);
-            $($("#"+(i-1)+1).find("ul li")[3]).find("span").html(data.object.gkyx.level1);
+            $($("#"+(i-1)+1).find("ul li")[0]).find("span").html(data.object.gkyx.level1);
+            $($("#"+(i-1)+1).find("ul li")[1]).find("span").html(data.object.gkyx.level2);
+            $($("#"+(i-1)+1).find("ul li")[2]).find("span").html(data.object.gkyx.level3);
+            $($("#"+(i-1)+1).find("ul li")[3]).find("span").html(data.object.gkyx.level4);
             if(data.object.gkyx.css == 'm'){
                 $("#"+(i-1)+1).attr("class","runb");
             }else{
@@ -2282,6 +2282,7 @@ function timerTask(i,data){
         }else{
             $(".barwrap").hide();
             $(".barwrap2").show();
+            $(".barwrap2 div").first().text(data.object.score);
             return;
         }
     },i*2000);

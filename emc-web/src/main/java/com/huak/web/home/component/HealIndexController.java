@@ -2,6 +2,8 @@ package com.huak.web.home.component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
+import com.huak.common.utils.DoubleUtils;
+import com.huak.health.type.PercentType;
 import com.huak.home.component.ComponentService;
 import com.huak.home.type.ToolVO;
 import com.huak.web.home.BaseController;
@@ -101,6 +103,8 @@ public class HealIndexController   extends BaseController {
             data.put("jjyx",jjdata);
             data.put("fwqk",fwdata);
             data.put("zygl",tempData);
+            Double score = calculatedFraction(workData,jjdata,fwdata,tempData);
+            data.put("score",score);
             if (data!= null) {
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.OBJECT, data);
@@ -114,4 +118,77 @@ public class HealIndexController   extends BaseController {
         }
         return jo.toJSONString();
     }
+
+    /**
+     * 健康指数分数
+     * 初始化分数100分
+     * 四个模块分为1/4*100
+     * 工况运行 一级4/10 二级3/10 三级2/10 四级1/10
+     * 经济运行 行标3/6 地标2/6 企标1/6
+     * 服务情况 1/1
+     * 室温报警 低温1/2 高温1/2
+     * @param workData 工况运行
+     * @param jjdata 经济运行
+     * @param fwdata 服务情况
+     * @param tempData 室温报警
+     * @return 分数
+     */
+    public Double calculatedFraction(Map<String,Object> workData,Map<String,Object> jjdata,Map<String,Object> fwdata,Map<String,Object> tempData){
+        Double score = 100d;
+
+        Double work = 0d;
+        int workLevel1 = null == workData.get("level1") ?0:Integer.valueOf(workData.get("level1").toString());
+        int workLevel2 = null == workData.get("level2") ?0:Integer.valueOf(workData.get("level2").toString());
+        int workLevel3 = null == workData.get("level3") ?0:Integer.valueOf(workData.get("level3").toString());
+        int workLevel4 = null == workData.get("level4") ?0:Integer.valueOf(workData.get("level4").toString());
+        if(workLevel1>0){
+            work = DoubleUtils.add(work, PercentType.WORK_ONE.getMolecule());
+        }
+        if(workLevel2>0){
+            work = DoubleUtils.add(work, PercentType.WORK_TWO.getMolecule());
+        }
+        if(workLevel3>0){
+            work = DoubleUtils.add(work, PercentType.WORK_THREE.getMolecule());
+        }
+        if(workLevel4>0){
+            work = DoubleUtils.add(work, PercentType.WORK_FOUR.getMolecule());
+        }
+        work = DoubleUtils.div(work,PercentType.WORK_ONE.getDenominator());
+
+        Double temp = 0d;
+        int tempMin = null == tempData.get("min") ?0:Integer.valueOf(tempData.get("min").toString());
+        int tempMax = null == tempData.get("max") ?0:Integer.valueOf(tempData.get("max").toString());
+        if(tempMin>0){
+            temp = DoubleUtils.add(temp, PercentType.TEMP_MIN.getMolecule());
+        }
+        if(tempMax>0){
+            temp = DoubleUtils.add(temp, PercentType.TEMP_MAX.getMolecule());
+        }
+        temp = DoubleUtils.div(temp,PercentType.TEMP_MIN.getDenominator());
+
+        Double jj = 0d;
+        int jjSerious = null == jjdata.get("serious") ?0:Integer.valueOf(jjdata.get("serious").toString());
+        int jjModerate = null == jjdata.get("moderate") ?0:Integer.valueOf(jjdata.get("moderate").toString());
+        int jjMild = null == jjdata.get("mild") ?0:Integer.valueOf(jjdata.get("mild").toString());
+        if(jjSerious>0){
+            jj = DoubleUtils.add(jj, PercentType.JJ_ROWER.getMolecule());
+        }
+        if(jjModerate>0){
+            jj = DoubleUtils.add(jj, PercentType.JJ_LANDMARK.getMolecule());
+        }
+        if(jjMild>0){
+            jj = DoubleUtils.add(jj, PercentType.JJ_ENTER.getMolecule());
+        }
+        jj = DoubleUtils.div(jj,PercentType.JJ_ROWER.getDenominator());
+
+        work = DoubleUtils.div(DoubleUtils.mul(work,PercentType.FOUR_ONE.getMolecule()),PercentType.FOUR_ONE.getDenominator());
+        temp = DoubleUtils.div(DoubleUtils.mul(temp,PercentType.FOUR_ONE.getMolecule()),PercentType.FOUR_ONE.getDenominator());
+        jj = DoubleUtils.div(DoubleUtils.mul(jj,PercentType.FOUR_ONE.getMolecule()),PercentType.FOUR_ONE.getDenominator());
+        Double service = 0d;
+
+        Double reduce = DoubleUtils.add(work,DoubleUtils.add(temp,DoubleUtils.add(jj,service)));
+        score = DoubleUtils.mul(score,DoubleUtils.sub(1d,reduce));
+        return DoubleUtils.round(score,0);
+    }
+
 }
