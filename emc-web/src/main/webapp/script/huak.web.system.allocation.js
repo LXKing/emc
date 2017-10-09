@@ -10,7 +10,7 @@ function loadDataFun() {
         });
     });
     //下拉切换事件
-    $("body").off("click", ".x-sfoption1 p").on("click", ".x-sfoption1 p", function () {
+    $("body").off("click", ".x-sfoption1 p").on("click", ".x-sfoption1 p", function (event) {
         var selectval = $(this).html();
         var selectid = $(this).attr("value");
 
@@ -37,11 +37,12 @@ function loadDataFun() {
         }
         $(this).parent().slideUp(200, function () {
         });
-
+        event.stopPropagation();
     });
-    $("body").on("mouseleave", ".x-selectfree", function () {
+    $("body").on("mouseleave", ".x-selectfree", function (event) {
         $(this).find(".x-sfoption1").slideUp(200, function () {
         });
+        event.stopPropagation();
     });
 }
 

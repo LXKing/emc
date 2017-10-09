@@ -159,19 +159,23 @@ public class AlarmConfigController extends BaseController {
 
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public void export(@RequestParam Map<String, Object> paramsMap, HttpServletResponse response) {
-        logger.info("导出记录列表EXCEL");
-        String workBookName = "预存记录列表";//文件名
+        logger.info("导出工况报警配置列表EXCEL");
+        String workBookName = "工况报警配置列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 
+        cellName.put("TAG", "点名");
+        cellName.put("ALARM_NAME", "描述");
+        cellName.put("ALARM_TYPE", "类型0-开关1-模拟");
+        cellName.put("ALARM_LEVEL", "等级0-一级1-二级2-三级3-四级");
+        cellName.put("MODEL", "报警模式0-低低1-低2-高3-高高");
+        cellName.put("NUM", "阈值");
+        cellName.put("ISENABLE", "是否启用0-启用 1-停用");
+        cellName.put("COM_ID", "公司主键");
+        cellName.put("ORGID", "组织主键");
+        cellName.put("ORGNAME", "组织名称");
+        cellName.put("UNIT_ID", "单位主键");
         cellName.put("UNITNAME", "单位名称");
-        cellName.put("NAME", "计量采集表名");
-        cellName.put("CHANGE_TIME", "换表时间");
-        cellName.put("USED_NUM", "旧表表底");
-        cellName.put("NEW_NUM", "新表表底");
-        cellName.put("USED_COEF", "旧表系数");
-        cellName.put("NEW_COEF", "新表系数");
-        cellName.put("CRESTOR", "创建人");
-        cellName.put("CREATE_TIME", "创建时间");
+        cellName.put("UNIT_TYPE", "单位类型1-源2-网3-站4-线5-户");
         List<Map<String, Object>> cellValues = null;//列值
         OutputStream out = null;
         try {
@@ -188,7 +192,7 @@ public class AlarmConfigController extends BaseController {
             out.flush();
             out.close();
         } catch (Exception e) {
-            logger.error("导出记录列表EXCEL异常" + e.getMessage());
+            logger.error("导出工况报警配置列表EXCEL异常" + e.getMessage());
         }
     }
 }

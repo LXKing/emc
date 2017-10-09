@@ -24,4 +24,6 @@ public interface AlarmConfigDao {
     List<AlarmConfigVO> selectPageByMap(Map<String, Object> paramsMap);
 
     AlarmConfigVO selectUpdate(String id);
+
+    List<Map<String,Object>> exportAlarmConfig(Map<String, Object> paramsMap);
 }

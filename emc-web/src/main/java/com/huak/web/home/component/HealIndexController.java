@@ -188,7 +188,8 @@ public class HealIndexController   extends BaseController {
 
         Double reduce = DoubleUtils.add(work,DoubleUtils.add(temp,DoubleUtils.add(jj,service)));
         score = DoubleUtils.mul(score,DoubleUtils.sub(1d,reduce));
-        return DoubleUtils.round(score,0);
+        score = DoubleUtils.round(score,0);
+        return score>0?score:0d;
     }
 
 }

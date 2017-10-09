@@ -234,4 +234,46 @@
         AND c.UNIT_ID = v.UNITID
         AND c.ID=#{id}
     </select>
+
+    <select id="exportAlarmConfig" parameterType="java.util.HashMap" resultType="java.util.Map">
+        SELECT
+        c.*,
+        v.ORGID,
+        v.ORGNAME,
+        v.UNITNAME
+        FROM
+        t_emc_alarm_config c,
+        v_emc_unit v
+        WHERE
+        c.COM_ID = v.COMID
+        AND c.UNIT_TYPE = v.UNITTYPE
+        AND c.UNIT_ID = v.UNITID
+        <if test="unitType != null and unitType !=''">
+            AND v.UNITTYPE=#{unitType}
+        </if>
+        <if test="comId != null and comId !=''">
+            AND v.COMID = #{comId}
+        </if>
+        <if test="unitName != null and unitName !=''">
+            and  v.UNITNAME like CONCAT('%',#{unitName},'%')
+        </if>
+        <if test="alarmName != null and alarmName !=''">
+            and  c.ALARM_NAME like CONCAT('%',#{alarmName},'%')
+        </if>
+        <if test="tag != null and tag !=''">
+            and  c.TAG like CONCAT('%',#{tag},'%')
+        </if>
+        <if test="alarmType != null and alarmType !=''">
+            AND c.ALARM_TYPE = #{alarmType}
+        </if>
+        <if test="alarmLevel != null and alarmLevel !=''">
+            AND c.ALARM_LEVEL = #{alarmLevel}
+        </if>
+        <if test="orgId != null and orgId !=''">
+            and  v.ORGID IN (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId})))
+        </if>
+        order by c.UNIT_TYPE,c.UNIT_ID,c.ALARM_TYPE,c.ALARM_LEVEL ASC
+
+
+    </select>
 </mapper>

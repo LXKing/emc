@@ -141,7 +141,7 @@ function loadRuning(healthRuning) {
         ]
     }];
 
-    var faceKey = localStorage.faceKey == "dark" ? "imgdark" : "img";
+    var faceKey =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
     if (healthRuning) {
         var html = '';
         for (var i = 0; i < data.length; i++) {
@@ -253,7 +253,7 @@ function chart01Fun() {
                 waveImage.onload = null;
                 callback();
             }
-            waveImage.src = 'img/wave2.png';
+            waveImage.src = _web + '/static/img/wave2.png';
         }
 
         function animate() {

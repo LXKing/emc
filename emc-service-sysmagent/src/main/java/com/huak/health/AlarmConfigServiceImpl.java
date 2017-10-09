@@ -94,6 +94,6 @@ public class AlarmConfigServiceImpl implements AlarmConfigService {
     @Transactional(readOnly = true)
     public List<Map<String, Object>> exportAlarmConfig(Map<String, Object> paramsMap) {
         logger.info("导出报警配置");
-        return null;
+        return alarmConfigDao.exportAlarmConfig(paramsMap);
     }
 }
