@@ -2,6 +2,7 @@ package com.huak.web.home.health;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.huak.health.model.PollingMessage;
 import com.huak.health.type.PollingType;
 import com.huak.tools.HealthItem;
 import com.huak.web.home.BaseController;
@@ -36,11 +37,11 @@ public class HealthController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static Queue<String> CONNECTIONS = new ConcurrentLinkedQueue<>();
+    private static Queue<PollingMessage> CONNECTIONS = new ConcurrentLinkedQueue<>();//消息队列
 
-    private static boolean OVER = false;
+    private static boolean OVER = false;//标识
 
-    private final static long TIMEOUT = 20000l;
+    private final static long TIMEOUT = 20000l;//超时时间
 
     @RequestMapping(method = RequestMethod.GET)
     public String page(Model model, HttpServletRequest request) {
@@ -57,7 +58,7 @@ public class HealthController extends BaseController {
             OVER = false;
             //todo 业务数据入队列
             for(int i=0;i<20;i++){
-                CONNECTIONS.offer(i+"次检测");
+                CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),i));
             }
 
             OVER = true;
@@ -75,19 +76,22 @@ public class HealthController extends BaseController {
     @RequestMapping(value = "/polling",method = RequestMethod.GET)
     public @ResponseBody  DeferredResult<JSONObject> polling( HttpServletRequest request,HttpServletResponse response) {
         synchronized(this){
-            DeferredResult<JSONObject> result = new DeferredResult<>(TIMEOUT,null);  //设置超时30s,超时返回null
+            DeferredResult<JSONObject> result = new DeferredResult<>(TIMEOUT,null);  //设置超时,超时返回null
             final JSONObject jo = new JSONObject();
             if(OVER && CONNECTIONS.isEmpty()){
+                //消息接收完毕，返回结束标识
                 jo.put(PollingType.END.getKey(),PollingType.END.getDes());
                 result.setResult(jo);
             }else{
-                final String msg = CONNECTIONS.poll();
+                //队列取值
+                final PollingMessage msg = CONNECTIONS.poll();
                 jo.put(PollingType.MSG.getKey(),msg);
                 result.setResult(jo);
+                //结束后操作
                 result.onCompletion(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println(jo.toJSONString());
+                        //System.out.println(jo.toJSONString());
                     }
                 });
             }
