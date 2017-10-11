@@ -34,6 +34,7 @@
             <ref bean="stringHttpMessageConverter" />
             <ref bean="fastJsonHttpMessageConverter" />
         </mvc:message-converters>
+        <mvc:async-support default-timeout="5000"/>
     </mvc:annotation-driven>
 
    
