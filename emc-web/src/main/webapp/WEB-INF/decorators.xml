@@ -22,4 +22,7 @@
     <!--三级页面分公司装饰器-->
     <decorator name="main_third_fgs" page="main_third_fgs.jsp"/>
 
+    <!--健康指数装饰器-->
+    <decorator name="health" page="health.jsp"/>
+
 </decorators>

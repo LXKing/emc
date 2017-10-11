@@ -209,3 +209,52 @@
 .quanquanwrap>div:nth-child(2)>div>ul li:nth-child(4) span.d {
     color: #adaa4c;
 }
+.facedark .healthwrap .healthitem>div>h1 {
+    color: #fff;
+}
+.facedark .healthwrap .resultlist .healthitem .panelwrap {
+    border-bottom: none;
+}
+.healthwrap .healthitem .panelwrap {
+    border: none;
+}
+.healthwrap .healthitem>div>h1 {
+    position: relative;
+    padding-left: 13px;
+}
+.facedark .erroritem>div:nth-child(1):after {
+    right: 0;
+    width: 85%;
+    left: auto;
+    background: #203e4d;
+}
+.erroritem>div:nth-child(1):after {
+    content: '';
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    background: #e5e5e5;
+    clear: both;
+    display: block;
+    top: 29px;
+}
+.erroritem>div:nth-child(1) {
+    position: relative;
+}
+.erroritem>div>h1 {
+    margin-bottom: 22px;
+    padding-top: 22px;
+    background: #fff;
+    padding-right: 10px;
+    float: left;
+    z-index: 999;
+    position: relative;
+}
+.healthwrap .erroritem .panelwrap {
+    clear: both;
+    min-height: 50px;
+}
+.facedark .erroritem>div>h1 {
+    background: transparent;
+}

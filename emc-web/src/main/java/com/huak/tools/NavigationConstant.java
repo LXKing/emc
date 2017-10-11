@@ -50,6 +50,9 @@ public class NavigationConstant {
     public final static Navigation THIRD_CONS_LINE = new Navigation(SECOND_CONS,"二次线单耗分析","/third/analysis/unit/4");
     public final static Navigation THIRD_CONS_ROOM = new Navigation(SECOND_CONS,"民户单耗分析","/third/analysis/unit/5");
 
+    /* 健康指数 */
+    public final static Navigation HEALTH = new Navigation(HOME,"健康指数","/health");
+
     /*能耗分析*/
 
 
@@ -96,6 +99,8 @@ public class NavigationConstant {
         NAVIGATIONS.add(THIRD_CONS_STATION);
         NAVIGATIONS.add(THIRD_CONS_LINE);
         NAVIGATIONS.add(THIRD_CONS_ROOM);
+
+        NAVIGATIONS.add(HEALTH);
 
         NAVIGATIONS.add(SYSTEM);
     }

@@ -1,15 +1,12 @@
-loadDataFun();
+var faceKey =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
 
 function loadDataFun() {
-
+    initRuning();
     chart01Fun();
 
-    var healthRuning = false;
-    loadRuning(healthRuning);
-
     $("#runbtn").click(function() {
-        healthRuning = !healthRuning;
-        loadRuning(healthRuning);
+        polling();
+        loadRuning1();
     });
 
     $(".normalitem h1").click(function() {
@@ -24,124 +21,83 @@ function loadDataFun() {
     });
 
 }
+function loadRuning1(){
+    $.ajax({
+        url : _web+"/health/testing",
+        type : "POST",
+        cache : false,
+        dataType: "json",
+        success : function(data) {
+        }
+    });
+}
 
-function loadRuning(healthRuning) {
+function polling(){
+    $.ajax({
+        url : _web+"/health/polling",
+        type : "GET",
+        timeout:30000,
+        cache : false,
+        dataType:"JSON",
+        success : function(data) {
+            if(data != null && data != ""){
+                console.info(data);
+                console.info(data.msg);
+                console.info(data.end);
+                if(data.end==null||data.end==""||data.end=="undefined"){
+                    polling();
+                }
+            }else{
+                polling();
+            }
 
-    if (healthRuning) {
-        $("#running").show();
-        $("#runbtn").hide();
-    } else {
-        $("#running").hide();
-        $("#runbtn").show();
-    }
+        },
+        complete:function(XMLHttpRequest,status){
+            console.info("status"+status);
+            if(status=='timeout') {//超时,status还有success,error等值的情况
+                polling();
+            }
+        }
+    });
+}
+/**
+ * 初始化待检测项
+ */
+function initRuning(){
+    var healthItem = eval($("#healthItem").val());
 
-    var data = [{
-        title: '作业管理',
-        items: [{
+    $("#healthcount").html(healthItem.length);
+    $.each(healthItem,function(idx,item){
+        var  $li = '<li><div><img src="'+faceKey+'/health/'+item.img+'-nor.png"></div><p>'+item.title+'</p></li>';
+        $("#healthlistul").append($li);
+    });
+}
+
+function loadRuning() {
+
+    $("#running").show();
+    $("#runbtn").hide();
+
+    var data =[{
+        title:'',
+        item:[{
             img: 'test-01-01',
             name: '万平米工单',
-            state: 1,
-            error: 1,
-        },
-            {
-                img: 'test-01-02',
-                name: '万平米工单',
-                state: 1,
-                error: 1,
-            },
-            {
-                img: 'test-01-03',
-                name: '万平米工单',
-                state: 2,
-                error: 1,
-            },
-            {
-                img: 'test-01-04',
-                name: '万平米工单',
-                state: 0,
-                error: 0,
-
-            }
-        ]
-    }, {
-        title: '作业管理2',
-        items: [{
+            error: 1
+        },{
             img: 'test-01-01',
             name: '万平米工单',
-            state: 1,
-            error: 1,
-        },
-            {
-                img: 'test-01-02',
-                name: '万平米工单',
-                state: 1,
-                error: 1,
-            },
-            {
-                img: 'test-01-03',
-                name: '万平米工单',
-                state: 2,
-                error: 1,
-            },
-            {
-                img: 'test-01-04',
-                name: '万平米工单',
-                state: 0,
-                error: 0,
+            error: 3
+        }]
+    },{
 
-            }, {
-                img: 'test-01-01',
-                name: '万平米工单',
-                state: 1,
-                error: 1,
-            },
-            {
-                img: 'test-01-02',
-                name: '万平米工单',
-                state: 1,
-                error: 1,
-            },
-            {
-                img: 'test-01-03',
-                name: '万平米工单',
-                state: 2,
-                error: 1,
-            },
-            {
-                img: 'test-01-04',
-                name: '万平米工单',
-                state: 0,
-                error: 0,
+    },{
 
-            }, {
-                img: 'test-01-01',
-                name: '万平米工单',
-                state: 1,
-                error: 1,
-            },
-            {
-                img: 'test-01-02',
-                name: '万平米工单',
-                state: 1,
-                error: 1,
-            },
-            {
-                img: 'test-01-03',
-                name: '万平米工单',
-                state: 2,
-                error: 1,
-            },
-            {
-                img: 'test-01-04',
-                name: '万平米工单',
-                state: 0,
-                error: 0,
+    },{
 
-            }
-        ]
     }];
 
-    var faceKey =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
+
     if (healthRuning) {
         var html = '';
         for (var i = 0; i < data.length; i++) {
