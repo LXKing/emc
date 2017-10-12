@@ -16,51 +16,6 @@ import java.util.List;
  */
 public class HealthItem {
 
-   static class Item{
-        private String title;
-        private String img;
-        private String parentName;
-        private String parentTitle;
-
-       public String getTitle() {
-           return title;
-       }
-
-       public void setTitle(String title) {
-           this.title = title;
-       }
-
-       public String getImg() {
-           return img;
-       }
-
-       public void setImg(String img) {
-           this.img = img;
-       }
-
-       public String getParentName() {
-           return parentName;
-       }
-
-       public void setParentName(String parentName) {
-           this.parentName = parentName;
-       }
-
-       public String getParentTitle() {
-           return parentTitle;
-       }
-
-       public void setParentTitle(String parentTitle) {
-           this.parentTitle = parentTitle;
-       }
-
-       Item(String title, String img, String parentName, String parentTitle) {
-            this.title = title;
-            this.img = img;
-            this.parentName = parentName;
-            this.parentTitle = parentTitle;
-        }
-    }
     public static List<Item> HEALTH_ITEM = new ArrayList<>();
 
     static {

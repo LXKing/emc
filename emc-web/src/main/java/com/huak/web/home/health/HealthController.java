@@ -5,11 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.health.model.PollingMessage;
 import com.huak.health.type.PollingType;
 import com.huak.tools.HealthItem;
+import com.huak.tools.Item;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +19,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -52,7 +55,7 @@ public class HealthController extends BaseController {
 
     @RequestMapping(value = "/testing",method = RequestMethod.POST)
     @ResponseBody
-    public void testing( HttpServletRequest request,HttpServletResponse response) {
+    public void testing( HttpServletRequest request,HttpServletResponse response,@RequestBody List<Item> items) {
         synchronized(this){
             CONNECTIONS.clear();
             OVER = false;

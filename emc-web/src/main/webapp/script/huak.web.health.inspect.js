@@ -1,12 +1,19 @@
-var faceKey =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
+var imgPath =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
 
 function loadDataFun() {
     initRuning();
     chart01Fun();
 
     $("#runbtn").click(function() {
-        polling();
+        $(".erroritem").show();
+        $(".normalitem").show();
+        //polling();
         loadRuning1();
+//        modifyStateRuning();
+//        setTimeout(function(){
+//            modifyStateStop(0);
+//        },5000);
+
     });
 
     $(".normalitem h1").click(function() {
@@ -21,17 +28,112 @@ function loadDataFun() {
     });
 
 }
+/**
+ * 修改第一个图标为运行状态
+ */
+function modifyStateRuning(){
+    var $ul = $("#healthlistul");
+    var $first_li = $ul.find("li").first();
+    $first_li.find("div").addClass("state0");
+    var url = $first_li.find("img").attr("src");
+    var path = url.substr(0,url.lastIndexOf("/"));
+    var imgName = url.substr(url.lastIndexOf("/"),url.length);
+    imgName = imgName.replace("-nor","");
+    $first_li.find("img").attr("src",path + imgName);
+}
+/**
+ * 修改运行图标
+ * 如果num>0为异常
+ * num==0为正常，分组显示
+ * @param num
+ */
+function modifyStateStop(num){
+    var $ul = $("#healthlistul");
+    var $first_li = $ul.find("li").first();
+    var $li = $first_li.clone();
+    $li.find("div").removeClass("state0");
+    var url = $li.find("img").attr("src");
+    var path = url.substr(0,url.lastIndexOf("/"));
+    var imgName = url.substr(url.lastIndexOf("/"),url.length);
+
+    if(num>0){//异常
+        imgName = imgName.replace(".png","-abnor.png");
+        $li.find("img").attr("src",path + imgName);
+        $li.find("p").append('<span>'+num+'</span>');
+
+        $("#errorlistul").append($li.hide());
+        $li.fadeIn(1000,function(){
+            $li.show();
+        });
+        var count = Number($("#errorcount").text());
+        if(count==null||count=='NaN'){
+            count = 0;
+        }
+        $("#errorcount").text(count+1);
+    }else{
+        imgName = imgName.replace(".png","-nor.png");
+        $li.find("img").attr("src",path + imgName);
+        var parentName = $li.attr("parentName");
+        var parentTitle = $li.attr("parentTitle");
+        if($('#'+parentName).length==0){
+            var html = '<div class="panelwrap" id="'+parentName+'"><div class="title"><h1>'+parentTitle+' - 共<span>0</span>项</h1></div><ul></ul></div>';
+            $('.normalitem').append(html);
+        }
+        $('#'+parentName).find('ul').append($li.hide());
+        $li.fadeIn(1000,function(){
+            $li.show();
+        });
+
+        var $span = $('#'+parentName).find('.title').find('span');
+        var count1 = Number($span.text());
+        if(count1==null||count1=='NaN'){
+            count1 = 0;
+        }
+        $span.text(count1+1);
+
+        var count = Number($("#normalcount").text());
+        if(count==null||count=='NaN'){
+            count = 0;
+        }
+        $("#normalcount").text(count+1);
+    }
+    $first_li.fadeOut(1000,function(){
+        $first_li.remove()
+    });
+
+}
+/**
+ * 打印信息
+ * @param msg
+ */
+function printlnMsg(msg){
+    var $div = $("#printMsg");
+    var length = $div.find("p").length;
+    if(length<7){
+        $div.append('<p>' + msg + '</p>');
+    }else if(length == 7){
+        $div.find("p").first().text("...");
+        $div.find("p").eq(1).remove();
+        $div.append('<p>' + msg + '</p>');
+    }
+}
+
 function loadRuning1(){
+    var healthItems = eval($("#healthItem").val());
     $.ajax({
         url : _web+"/health/testing",
+        contentType : 'application/json;charset=utf-8', //设置请求头信息
         type : "POST",
         cache : false,
+        data: JSON.stringify(healthItems),
         dataType: "json",
         success : function(data) {
         }
     });
 }
-
+/**
+ * 长连接
+ */
 function polling(){
     $.ajax({
         url : _web+"/health/polling",
@@ -65,10 +167,10 @@ function polling(){
  */
 function initRuning(){
     var healthItem = eval($("#healthItem").val());
-
+    $("#healthlistul").empty();
     $("#healthcount").html(healthItem.length);
     $.each(healthItem,function(idx,item){
-        var  $li = '<li><div><img src="'+faceKey+'/health/'+item.img+'-nor.png"></div><p>'+item.title+'</p></li>';
+        var  $li = '<li parentName="'+item.parentName+'" parentTitle="'+item.parentTitle+'"><div><img src="'+imgPath+'/health/'+item.img+'-nor.png"></div><p>'+item.title+'</p></li>';
         $("#healthlistul").append($li);
     });
 }
