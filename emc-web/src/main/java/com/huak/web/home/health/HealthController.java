@@ -2,8 +2,12 @@ package com.huak.web.home.health;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.Constants;
 import com.huak.health.model.PollingMessage;
 import com.huak.health.type.PollingType;
+import com.huak.home.component.HealthScoreRecordService;
+import com.huak.org.model.Company;
+import com.huak.org.model.Org;
 import com.huak.tools.HealthItem;
 import com.huak.tools.Item;
 import com.huak.web.home.BaseController;
@@ -17,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Queue;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -46,6 +53,11 @@ public class HealthController extends BaseController {
 
     private final static long TIMEOUT = 20000l;//超时时间
 
+    private static final String COM_ID = "comId";
+    private static final String ORG = "orgId";
+
+    @Resource
+    private HealthScoreRecordService healthService;
     @RequestMapping(method = RequestMethod.GET)
     public String page(Model model, HttpServletRequest request) {
         logger.info("跳转健康指数页面");
@@ -103,7 +115,62 @@ public class HealthController extends BaseController {
 
     }
 
+    public void healthIndex( HttpServletRequest request,List<String> list) {
+        synchronized(this) {
+            Map<String, Object> params = new HashMap<String, Object>();
+            HttpSession session = request.getSession();
+            Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+            Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
 
+            params.put(COM_ID, company.getId());
+            params.put(ORG, org.getId());
+            for (int i = 0; i < list.size(); i++) {
+                for (Map.Entry<String, Object> entry : HealthItem.map.entrySet()) {
+                    System.out.println("key= " + entry.getKey() + " and value= "
+                            + entry.getValue());
+                    if (entry.getKey().equals(list.get(i))) {
+                        params.put("name", entry.getKey());
 
+                        if ("JJYX".equals(entry.getValue())) {
+                            List<PollingMessage> listp = healthService.getIndexData(params);
+                            //业务数据放入队列
 
+                            OVER = false;
+                            for (int j = 0; j < listp.size(); j++) {
+                                CONNECTIONS.offer(listp.get(j));
+                            }
+                            CONNECTIONS.offer(new PollingMessage(PollingType.END.getKey(),PollingType.END.getDes()));
+                            OVER = true;
+                        }
+                        if ("SWBJ".equals(entry.getValue())) {
+                            List<PollingMessage> listp = healthService.getIndexTemp(params);
+                            //业务数据放入队列
+
+                            OVER = false;
+                            for (int j = 0; j < listp.size(); j++) {
+                                CONNECTIONS.offer(listp.get(j));
+                            }
+                            CONNECTIONS.offer(new PollingMessage(PollingType.END.getKey(),PollingType.END.getDes()));
+                            OVER = true;
+                        }
+                        if("GKYX".equals(entry.getValue())){
+                            //业务数据放入队列
+
+                            OVER = false;
+                            CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),0));
+
+                            OVER = true;
+                        }
+                        if("FWQK".equals(entry.getValue())){
+                            //业务数据放入队列
+
+                            OVER = false;
+                            CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),0));
+                            OVER = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

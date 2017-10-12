@@ -39,7 +39,8 @@
     <dubbo:reference id="changeService"    interface="com.huak.prst.ChangeService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="meterCollectService"    interface="com.huak.mdc.MeterCollectService" timeout="720000" retries="0" check="true" version="${service.version}" />
     <!--组件-->
-      <dubbo:reference id="componentService"    interface="com.huak.home.component.ComponentService" timeout="120000"  check="true" version="${service.version}" />
+    <dubbo:reference id="componentService"    interface="com.huak.home.component.ComponentService" timeout="120000"  check="true" version="${service.version}" />
+    <dubbo:reference id="healthScoreRecordService"    interface="com.huak.home.component.HealthScoreRecordService" timeout="120000"  check="true" version="${service.version}" />
     <!-- 日志 -->
     <dubbo:reference id="loggerService"    interface="com.huak.log.OperateLogService" timeout="120000"  check="true" version="${service.version}"/>
 
