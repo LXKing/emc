@@ -21,35 +21,37 @@ import java.io.IOException;
  * Description:     <BR>
  * Function List:  <BR>
  */
-public class MeterCollectTest {
-//    @Resource
-//    private MeterCollectService meterCollectService;
-//    @Autowired
-//    private PrestoreService prestoreService;
+public class MeterCollectTest extends BaseTest {
+    @Resource
+    private MeterCollectService meterCollectService;
+    @Autowired
+    private PrestoreService prestoreService;
+    @Test
+    @Rollback
+    public void testSelectDemo() throws IOException {
+
+        String path = "D:\\workSp\\code\\upload\\计量器具.xlsx";
+//        meterCollectService.excelUpload( path,"计量器具.xlsx");
+    }
+
+    @Test
+    @Rollback
+    public void test() throws Exception {
+        RecordPrestore recode = new RecordPrestore();
+        recode.setCollectId("2");
+        recode.setPrestoreTime("2017-07-05 00:00:00");
+        recode.setUsedNum(123.0);
+        recode.setPrestoreNum(4111.0);
+        recode.setCrestor("a9e246fa035d42b6adcbedccb9cbbf1d");
+        prestoreService.insert(recode);
+    }
 //    @Test
 //    @Rollback
-//    public void testSelectDemo() throws IOException {
-//
-//        String path = "D:\\workSp\\code\\upload\\计量器具.xlsx";
-////        meterCollectService.excelUpload( path,"计量器具.xlsx");
+//    public void testPage() throws Exception {
+//        Map<String,Object> map = new HashMap<String,Object>();
+//        map.put("comId","a3e5e868e7844c349e5cf51c5e6bc37d");
+//        Page page = new Page();
+//        PageResult<MetaCompanyA> list = metaCompanyService.queryByPage(map,page);
+//        System.out.println("---"+list.getList().get(0).getCname());
 //    }
-
-//    @Test
-//    @Rollback
-//    public void test() throws Exception {
-//        RecordPrestore recode = new RecordPrestore();
-//        recode.setCollectId("2");
-//        recode.setPrestoreTime("2017-07-05 00:00:00");
-//        recode.setUsedNum(123.0);
-//        recode.setPrestoreNum(4111.0);
-//        recode.setCrestor("a9e246fa035d42b6adcbedccb9cbbf1d");
-//        prestoreService.insert(recode);
-//    }
-
-   public static  void main(String[] str){
-       int a = 128;
-       int b = 129;
-       int i =  2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2;
-       System.out.println(i);
-   }
 }
