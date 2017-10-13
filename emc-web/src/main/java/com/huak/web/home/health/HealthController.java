@@ -129,23 +129,17 @@ public class HealthController extends BaseController {
                         params.put("name", items.get(i).getTitle());
 
                         if ("JJYX".equals(items.get(i).getParentName())) {
-                                List<IndexDataA> listj = healthService.getIndexData(params);
-                                List<PollingMessage> listp =  new ArrayList<PollingMessage>();
-                                int count=0;
-                                for (int n = 0; n < listj.size(); n++) {
-                                    if(Double.valueOf(listj.get(n).getDh())>listj.get(n).getIndustry()){
-                                        count++;
-                                    }
-                                    String s1 = listj.get(n).getUnitName()+listj.get(n).getName()+listj.get(n).getDh()+listj.get(n).getUnitMeter();
-                                    listp.add(new PollingMessage(PollingType.MSG.getKey(),s1));
+                            List<IndexDataA> listj = healthService.getIndexData(params);
+                            List<PollingMessage> listp = new ArrayList<PollingMessage>();
+                            int count = 0;
+                            for (int n = 0; n < listj.size(); n++) {
+                                if (Double.valueOf(listj.get(n).getDh()) > listj.get(n).getIndustry()) {
+                                    count++;
                                 }
-                                listp.add(new PollingMessage(PollingType.NUM.getKey(),count));
-
-                            //业务数据放入队列
-
-                            for (int j = 0; j < listp.size(); j++) {
-                                CONNECTIONS.offer(listp.get(j));
+                                String s1 = listj.get(n).getUnitName() + listj.get(n).getName() + listj.get(n).getDh() + listj.get(n).getUnitMeter();
+                                CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
                             }
+                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), count));
                         }
                         if ("SWBJ".equals(items.get(i).getParentName())) {
                             List<IndexTempA> listm = healthService.getIndexTemp(params);
@@ -159,13 +153,9 @@ public class HealthController extends BaseController {
                                     count++;
                                 }
                                 String s1 =listm.get(m).getStationName()+listm.get(m).getCommunityName()+listm.get(m).getRoomCode()+"室温"+listm.get(m).getTemp()+"℃";
-                                listp.add(new PollingMessage(PollingType.MSG.getKey(),s1));
+                                CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),s1));
                             }
-                            listp.add(new PollingMessage(PollingType.NUM.getKey(),count));
-
-                            for (int j = 0; j < listp.size(); j++) {
-                                CONNECTIONS.offer(listp.get(j));
-                            }
+                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(),count));
                         }
                         if("GKYX".equals(items.get(i).getParentName())){
                             //业务数据放入队列
