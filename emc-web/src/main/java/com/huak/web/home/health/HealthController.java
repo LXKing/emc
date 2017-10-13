@@ -15,6 +15,7 @@ import com.huak.tools.Item;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Function List:  <BR>
  */
 @Controller
+@Scope("prototype")
 @RequestMapping("/health")
 public class HealthController extends BaseController {
 
@@ -51,13 +53,14 @@ public class HealthController extends BaseController {
 
     private static boolean OVER = false;//标识
 
-    private final static long TIMEOUT = 20000l;//超时时间
+    private final static long TIMEOUT = 30000l;//超时时间
 
     private static final String COM_ID = "comId";
     private static final String ORG = "orgId";
 
     @Resource
     private HealthScoreRecordService healthService;
+
     @RequestMapping(method = RequestMethod.GET)
     public String page(Model model, HttpServletRequest request) {
         logger.info("跳转健康指数页面");
@@ -65,108 +68,109 @@ public class HealthController extends BaseController {
         return "health/inspect";
     }
 
-    @RequestMapping(value = "/testing",method = RequestMethod.POST)
+    @RequestMapping(value = "/testing", method = RequestMethod.POST)
     @ResponseBody
-    public void testing( HttpServletRequest request,HttpServletResponse response, @RequestBody List<JSONObject> items) {
-        synchronized(this){
-            CONNECTIONS.clear();
-            OVER = false;
-            //业务数据入队列
-            List<Item> list = JSONObject.parseArray(items.toString(),Item.class);
-            healthIndex(request,list);
+    public void testing(HttpServletRequest request, HttpServletResponse response, @RequestBody List<JSONObject> items) {
+        CONNECTIONS.clear();
+        OVER = false;
+        //业务数据入队列
+        List<Item> list = JSONObject.parseArray(items.toString(), Item.class);
+        healthIndex(request, list);
 
-            OVER = true;
-        }
-
+        OVER = true;
     }
 
     /**
+     * 开启长连接
      *
-     *  开启长连接
      * @param request
      * @param response
      * @return
      */
-    @RequestMapping(value = "/polling",method = RequestMethod.GET)
-    public @ResponseBody  DeferredResult<JSONObject> polling( HttpServletRequest request,HttpServletResponse response) {
-        synchronized(this){
-            DeferredResult<JSONObject> result = new DeferredResult<>(TIMEOUT,null);  //设置超时,超时返回null
-            final JSONObject jo = new JSONObject();
-            if(OVER && CONNECTIONS.isEmpty()){
-                //消息接收完毕，返回结束标识
-                jo.put(PollingType.END.getKey(),PollingType.END.getDes());
-                result.setResult(jo);
-            }else{
-                //队列取值
-                final PollingMessage msg = CONNECTIONS.poll();
-                jo.put(PollingType.MSG.getKey(),msg);
-                result.setResult(jo);
-                //结束后操作
-                result.onCompletion(new Runnable() {
-                    @Override
-                    public void run() {
-                        //System.out.println(jo.toJSONString());
-                    }
-                });
+    @RequestMapping(value = "/polling", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    DeferredResult<JSONObject> polling(HttpServletRequest request, HttpServletResponse response) throws InterruptedException {
+        Thread.sleep(300);
+        DeferredResult<JSONObject> result = new DeferredResult<>(TIMEOUT, null);  //设置超时,超时返回null
+        final JSONObject jo = new JSONObject();
+        if (OVER && CONNECTIONS.isEmpty()) {
+            //消息接收完毕，返回结束标识
+            jo.put(PollingType.END.getKey(), PollingType.END.getDes());
+            result.setResult(jo);
+        } else {
+            //队列取值
+            final PollingMessage pollingMessage = CONNECTIONS.poll();
+            if (pollingMessage != null) {
+                jo.put(pollingMessage.getKey(), pollingMessage.getValue());
             }
-            return result;
+
+            result.setResult(jo);
+            //结束后操作
+            result.onCompletion(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(jo.toJSONString());
+                }
+            });
         }
+        return result;
 
     }
 
-    public void healthIndex( HttpServletRequest request,List<Item> items) {
-        synchronized(this) {
-            Map<String, Object> params = new HashMap<String, Object>();
-            HttpSession session = request.getSession();
-            Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
-            Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+    public void healthIndex(HttpServletRequest request, List<Item> items) {
 
-            params.put(COM_ID, company.getId());
-            params.put(ORG, org.getId());
+        Map<String, Object> params = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
 
-            for (int i = 0; i < items.size(); i++) {
+        params.put(COM_ID, company.getId());
+        params.put(ORG, org.getId());
 
-                        params.put("name", items.get(i).getTitle());
+        for (int i = 0; i < items.size(); i++) {
 
-                        if ("JJYX".equals(items.get(i).getParentName())) {
-                            List<IndexDataA> listj = healthService.getIndexData(params);
-                            List<PollingMessage> listp = new ArrayList<PollingMessage>();
-                            int count = 0;
-                            for (int n = 0; n < listj.size(); n++) {
-                                if (Double.valueOf(listj.get(n).getDh()) > listj.get(n).getIndustry()) {
-                                    count++;
-                                }
-                                String s1 = listj.get(n).getUnitName() + listj.get(n).getName() + listj.get(n).getDh() + listj.get(n).getUnitMeter();
-                                CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
-                            }
-                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), count));
-                        }
-                        if ("SWBJ".equals(items.get(i).getParentName())) {
-                            List<IndexTempA> listm = healthService.getIndexTemp(params);
-                            //业务数据放入队列
+            params.put("name", items.get(i).getTitle());
 
-                            List<PollingMessage> listp =  new ArrayList<PollingMessage>();
-                            int count=0;
-                            for (int m = 0; m < listm.size(); m++) {
-                                if(Double.valueOf(listm.get(m).getTemp())>=listm.get(m).getMinTemp()
-                                        &&Double.valueOf(listm.get(m).getTemp())<=listm.get(m).getMaxTemp()){
-                                    count++;
-                                }
-                                String s1 =listm.get(m).getStationName()+listm.get(m).getCommunityName()+listm.get(m).getRoomCode()+"室温"+listm.get(m).getTemp()+"℃";
-                                CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),s1));
-                            }
-                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(),count));
-                        }
-                        if("GKYX".equals(items.get(i).getParentName())){
-                            //业务数据放入队列
-                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(),0));
-                        }
-                        if("FWQK".equals(items.get(i).getParentName())){
-                            //业务数据放入队列
-                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(),0));
+            if ("JJYX".equals(items.get(i).getParentName())) {
+                List<IndexDataA> listj = healthService.getIndexData(params);
+                List<PollingMessage> listp = new ArrayList<PollingMessage>();
+                int count = 0;
+                for (int n = 0; n < listj.size(); n++) {
+                    if (Double.valueOf(listj.get(n).getDh()) > listj.get(n).getIndustry()) {
+                        count++;
+                    }
+                    String s1 = listj.get(n).getUnitName() + listj.get(n).getName() + listj.get(n).getDh() + listj.get(n).getUnitMeter();
+                    CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
+                }
+                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), count));
+            }
+            if ("SWBJ".equals(items.get(i).getParentName())) {
+                List<IndexTempA> listm = healthService.getIndexTemp(params);
+                //业务数据放入队列
 
-                        }
+                List<PollingMessage> listp = new ArrayList<PollingMessage>();
+                int count = 0;
+                for (int m = 0; m < listm.size(); m++) {
+                    if (Double.valueOf(listm.get(m).getTemp()) >= listm.get(m).getMinTemp()
+                            && Double.valueOf(listm.get(m).getTemp()) <= listm.get(m).getMaxTemp()) {
+                        count++;
+                    }
+                    String s1 = listm.get(m).getStationName() + listm.get(m).getCommunityName() + listm.get(m).getRoomCode() + "室温" + listm.get(m).getTemp() + "℃";
+                    CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
+                }
+                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), count));
+            }
+            if ("GKYX".equals(items.get(i).getParentName())) {
+                //业务数据放入队列
+                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
+            }
+            if ("FWQK".equals(items.get(i).getParentName())) {
+                //业务数据放入队列
+                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
+
             }
         }
+
     }
 }

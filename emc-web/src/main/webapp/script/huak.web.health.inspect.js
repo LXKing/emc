@@ -7,13 +7,8 @@ function loadDataFun() {
     $("#runbtn").click(function() {
         $(".erroritem").show();
         $(".normalitem").show();
-        //polling();
+        polling();
         loadRuning1();
-//        modifyStateRuning();
-//        setTimeout(function(){
-//            modifyStateStop(0);
-//        },5000);
-
     });
 
     $(".normalitem h1").click(function() {
@@ -97,9 +92,9 @@ function modifyStateStop(num){
         }
         $("#normalcount").text(count+1);
     }
-    $first_li.fadeOut(1000,function(){
-        $first_li.remove()
-    });
+    $first_li.remove();
+
+    modifyStateRuning();
 
 }
 /**
@@ -119,6 +114,7 @@ function printlnMsg(msg){
 }
 
 function loadRuning1(){
+    modifyStateRuning();
     var healthItems = eval($("#healthItem").val());
     $.ajax({
         url : _web+"/health/testing",
@@ -128,6 +124,7 @@ function loadRuning1(){
         data: JSON.stringify(healthItems),
         dataType: "json",
         success : function(data) {
+
         }
     });
 }
@@ -143,11 +140,16 @@ function polling(){
         dataType:"JSON",
         success : function(data) {
             if(data != null && data != ""){
-                console.info(data);
-                console.info(data.msg);
-                console.info(data.end);
+                if(data.msg!=null&&data.msg!="undefined"&&data.msg!=""){
+                    printlnMsg(data.msg);
+                }
+                if(data.num!=null&&data.num!="undefined"){
+                    modifyStateStop(data.num);
+                }
                 if(data.end==null||data.end==""||data.end=="undefined"){
                     polling();
+                }else{
+
                 }
             }else{
                 polling();
