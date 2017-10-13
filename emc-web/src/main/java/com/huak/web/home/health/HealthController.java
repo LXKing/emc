@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,8 +23,6 @@ import org.springframework.web.context.request.async.DeferredResult;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Queue;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -67,14 +64,13 @@ public class HealthController extends BaseController {
 
     @RequestMapping(value = "/testing",method = RequestMethod.POST)
     @ResponseBody
-    public void testing( HttpServletRequest request,HttpServletResponse response,@RequestBody List<Item> items) {
+    public void testing( HttpServletRequest request,HttpServletResponse response, List<JSONObject> items) {
         synchronized(this){
             CONNECTIONS.clear();
             OVER = false;
-            //todo 业务数据入队列
-            for(int i=0;i<20;i++){
-                CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),i));
-            }
+            //业务数据入队列
+            List<Item> list = JSONObject.parseArray(items.toString(),Item.class);
+            healthIndex(request,list);
 
             OVER = true;
         }
@@ -106,7 +102,7 @@ public class HealthController extends BaseController {
                 result.onCompletion(new Runnable() {
                     @Override
                     public void run() {
-                        //System.out.println(jo.toJSONString());
+                        System.out.println(jo.toJSONString());
                     }
                 });
             }
@@ -115,7 +111,7 @@ public class HealthController extends BaseController {
 
     }
 
-    public void healthIndex( HttpServletRequest request,List<String> list) {
+    public void healthIndex( HttpServletRequest request,List<Item> list) {
         synchronized(this) {
             Map<String, Object> params = new HashMap<String, Object>();
             HttpSession session = request.getSession();
