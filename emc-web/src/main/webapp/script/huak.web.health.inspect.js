@@ -185,9 +185,15 @@ function initRuning(){
  * 设置分数信息
  */
 function setChart(score,info,date){
-    $("#chart01").find('h1').text(score);
-    $("#chart01").find('h2').text(info);
-    $("#chart01").find('h3').text(date);
+    if(score!=null){
+        $("#chart01").find('h1').text(score);
+    }
+    if(info!=null){
+        $("#chart01").find('h2').text(info);
+    }
+    if(date!=null){
+        $("#chart01").find('h3').text(date);
+    }
     chart01Fun();
 }
 
