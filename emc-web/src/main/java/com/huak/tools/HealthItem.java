@@ -17,9 +17,6 @@ public class HealthItem {
 
     public static List<Item> HEALTH_ITEM = new ArrayList<>();
 
-    public static Map<String,Object> map = new HashMap<>();
-
-
 
     static {
         //工况运行
@@ -47,26 +44,6 @@ public class HealthItem {
         HEALTH_ITEM.add(new Item("万平米工单","test-04-03","FWQK","服务情况"));
         //室温报警
         HEALTH_ITEM.add(new Item("室温报警","test-01-03","SWBJ","室温报警"));
-        map.put("一次供温","GKYX");
-        map.put("一次回温","GKYX");
-        map.put("二次供温","GKYX");
-        map.put("二次回温","GKYX");
-        map.put("一次供水","GKYX");
-        map.put("一次回水","GKYX");
-        map.put("二次供水","GKYX");
-        map.put("二次回水","GKYX");
-        map.put("水单耗","JJYX");
-        map.put("水效率","JJYX");
-        map.put("电单耗","JJYX");
-        map.put("电效率","JJYX");
-        map.put("气单耗","JJYX");
-        map.put("气效率","JJYX");
-        map.put("煤单耗","JJYX");
-        map.put("煤效率","JJYX");
-        map.put("油单耗","JJYX");
-        map.put("油效率","JJYX");
-        map.put("热单耗","JJYX");
-        map.put("万平米工单","FWQK");
-        map.put("室温报警","SWBJ");
+
     }
 }

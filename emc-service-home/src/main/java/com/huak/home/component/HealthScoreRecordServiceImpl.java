@@ -4,8 +4,6 @@ package com.huak.home.component;
 import com.huak.base.dao.DateDao;
 import com.huak.health.dao.HealthScoreRecordDao;
 import com.huak.health.model.HealthScoreRecord;
-import com.huak.health.model.PollingMessage;
-import com.huak.health.type.PollingType;
 import com.huak.health.vo.IndexDataA;
 import com.huak.health.vo.IndexTempA;
 import com.huak.home.dao.SearchDao;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -62,24 +59,14 @@ public class HealthScoreRecordServiceImpl implements HealthScoreRecordService{
     }
 
     @Override
-    public List<PollingMessage> getIndexData(Map<String, Object> params) {
+    public List<IndexDataA> getIndexData(Map<String, Object> params) {
         List<IndexDataA> list =  healthScoreRecordDao.getIndexData(params);
-        List<PollingMessage> listp =  new ArrayList<PollingMessage>();
-        int count=0;
-        for (int i = 0; i < list.size(); i++) {
-            if(Double.valueOf(list.get(i).getDh())>list.get(i).getIndustry()){
-                count++;
-            }
-            String s1 = list.get(i).getUnitName()+list.get(i).getName()+list.get(i).getDh()+list.get(i).getUnitMeter();
-            listp.add(new PollingMessage(PollingType.MSG.getKey(),s1));
-        }
-        listp.add(new PollingMessage(PollingType.NUM.getKey(),count));
 
-        return listp;
+        return list;
     }
 
     @Override
-    public List<PollingMessage> getIndexTemp(Map<String, Object> params) {
+    public List<IndexTempA> getIndexTemp(Map<String, Object> params) {
         Calendar calendar = Calendar.getInstance();
         String startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
         String endTime = calendar.getWeekYear()+"-03-15 23:59:59";
@@ -87,19 +74,7 @@ public class HealthScoreRecordServiceImpl implements HealthScoreRecordService{
         params.put("endTime",endTime);
         List<IndexTempA> list =  healthScoreRecordDao.getIndexTemp(params);
 
-        List<PollingMessage> listp =  new ArrayList<PollingMessage>();
-        int count=0;
-        for (int i = 0; i < list.size(); i++) {
-            if(Double.valueOf(list.get(i).getTemp())>=list.get(i).getMinTemp()
-               &&Double.valueOf(list.get(i).getTemp())<=list.get(i).getMaxTemp()){
-                count++;
-            }
-            String s1 =list.get(i).getStationName()+list.get(i).getCommunityName()+list.get(i).getRoomCode()+"室温"+list.get(i).getTemp()+"℃";
-            listp.add(new PollingMessage(PollingType.MSG.getKey(),s1));
-        }
-        listp.add(new PollingMessage(PollingType.NUM.getKey(),count));
-
-        return listp;
+        return list;
     }
 
 }

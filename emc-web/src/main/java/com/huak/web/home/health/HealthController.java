@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
 import com.huak.health.model.PollingMessage;
 import com.huak.health.type.PollingType;
+import com.huak.health.vo.IndexDataA;
+import com.huak.health.vo.IndexTempA;
 import com.huak.home.component.HealthScoreRecordService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
@@ -15,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,7 +67,7 @@ public class HealthController extends BaseController {
 
     @RequestMapping(value = "/testing",method = RequestMethod.POST)
     @ResponseBody
-    public void testing( HttpServletRequest request,HttpServletResponse response, List<JSONObject> items) {
+    public void testing( HttpServletRequest request,HttpServletResponse response, @RequestBody List<JSONObject> items) {
         synchronized(this){
             CONNECTIONS.clear();
             OVER = false;
@@ -102,7 +105,7 @@ public class HealthController extends BaseController {
                 result.onCompletion(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println(jo.toJSONString());
+                        //System.out.println(jo.toJSONString());
                     }
                 });
             }
@@ -111,7 +114,7 @@ public class HealthController extends BaseController {
 
     }
 
-    public void healthIndex( HttpServletRequest request,List<Item> list) {
+    public void healthIndex( HttpServletRequest request,List<Item> items) {
         synchronized(this) {
             Map<String, Object> params = new HashMap<String, Object>();
             HttpSession session = request.getSession();
@@ -120,52 +123,59 @@ public class HealthController extends BaseController {
 
             params.put(COM_ID, company.getId());
             params.put(ORG, org.getId());
-            for (int i = 0; i < list.size(); i++) {
-                for (Map.Entry<String, Object> entry : HealthItem.map.entrySet()) {
-                    System.out.println("key= " + entry.getKey() + " and value= "
-                            + entry.getValue());
-                    if (entry.getKey().equals(list.get(i))) {
-                        params.put("name", entry.getKey());
 
-                        if ("JJYX".equals(entry.getValue())) {
-                            List<PollingMessage> listp = healthService.getIndexData(params);
+            for (int i = 0; i < items.size(); i++) {
+
+                        params.put("name", items.get(i).getTitle());
+
+                        if ("JJYX".equals(items.get(i).getParentName())) {
+                                List<IndexDataA> listj = healthService.getIndexData(params);
+                                List<PollingMessage> listp =  new ArrayList<PollingMessage>();
+                                int count=0;
+                                for (int n = 0; n < listj.size(); n++) {
+                                    if(Double.valueOf(listj.get(n).getDh())>listj.get(n).getIndustry()){
+                                        count++;
+                                    }
+                                    String s1 = listj.get(n).getUnitName()+listj.get(n).getName()+listj.get(n).getDh()+listj.get(n).getUnitMeter();
+                                    listp.add(new PollingMessage(PollingType.MSG.getKey(),s1));
+                                }
+                                listp.add(new PollingMessage(PollingType.NUM.getKey(),count));
+
                             //业务数据放入队列
 
-                            OVER = false;
                             for (int j = 0; j < listp.size(); j++) {
                                 CONNECTIONS.offer(listp.get(j));
                             }
-                            CONNECTIONS.offer(new PollingMessage(PollingType.END.getKey(),PollingType.END.getDes()));
-                            OVER = true;
                         }
-                        if ("SWBJ".equals(entry.getValue())) {
-                            List<PollingMessage> listp = healthService.getIndexTemp(params);
+                        if ("SWBJ".equals(items.get(i).getParentName())) {
+                            List<IndexTempA> listm = healthService.getIndexTemp(params);
                             //业务数据放入队列
 
-                            OVER = false;
+                            List<PollingMessage> listp =  new ArrayList<PollingMessage>();
+                            int count=0;
+                            for (int m = 0; m < listm.size(); m++) {
+                                if(Double.valueOf(listm.get(m).getTemp())>=listm.get(m).getMinTemp()
+                                        &&Double.valueOf(listm.get(m).getTemp())<=listm.get(m).getMaxTemp()){
+                                    count++;
+                                }
+                                String s1 =listm.get(m).getStationName()+listm.get(m).getCommunityName()+listm.get(m).getRoomCode()+"室温"+listm.get(m).getTemp()+"℃";
+                                listp.add(new PollingMessage(PollingType.MSG.getKey(),s1));
+                            }
+                            listp.add(new PollingMessage(PollingType.NUM.getKey(),count));
+
                             for (int j = 0; j < listp.size(); j++) {
                                 CONNECTIONS.offer(listp.get(j));
                             }
-                            CONNECTIONS.offer(new PollingMessage(PollingType.END.getKey(),PollingType.END.getDes()));
-                            OVER = true;
                         }
-                        if("GKYX".equals(entry.getValue())){
+                        if("GKYX".equals(items.get(i).getParentName())){
                             //业务数据放入队列
-
-                            OVER = false;
-                            CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),0));
-
-                            OVER = true;
+                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(),0));
                         }
-                        if("FWQK".equals(entry.getValue())){
+                        if("FWQK".equals(items.get(i).getParentName())){
                             //业务数据放入队列
+                            CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(),0));
 
-                            OVER = false;
-                            CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(),0));
-                            OVER = true;
                         }
-                    }
-                }
             }
         }
     }

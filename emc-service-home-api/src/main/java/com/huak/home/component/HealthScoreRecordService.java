@@ -1,7 +1,8 @@
 package com.huak.home.component;
 
 import com.huak.health.model.HealthScoreRecord;
-import com.huak.health.model.PollingMessage;
+import com.huak.health.vo.IndexDataA;
+import com.huak.health.vo.IndexTempA;
 
 import java.util.List;
 import java.util.Map;
@@ -37,11 +38,11 @@ public interface HealthScoreRecordService {
     /**
      * 查询健康指数 指标单位集合
      */
-    List<PollingMessage> getIndexData(Map<String,Object> params);
+    List<IndexDataA> getIndexData(Map<String,Object> params);
 
     /**
      * 查询健康指数 室温检测
      */
-    List<PollingMessage> getIndexTemp(Map<String,Object> params);
+    List<IndexTempA> getIndexTemp(Map<String,Object> params);
 
 }
