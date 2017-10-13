@@ -56,6 +56,7 @@
                         </div>
                         <div id="resulthealth" class="right clearfix">
                             <input type="hidden" id="healthItem" value='${healthItem}'>
+                            <input type="hidden" id="key" value='${key}'>
                             <div class="resultlist">
 
                                 <div class="healthitem">

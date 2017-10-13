@@ -3,6 +3,7 @@ package com.huak.web.home.health;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.health.model.PollingMessage;
 import com.huak.health.type.PollingType;
 import com.huak.health.vo.IndexDataA;
@@ -15,7 +16,6 @@ import com.huak.tools.Item;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,20 +43,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Function List:  <BR>
  */
 @Controller
-@Scope("prototype")
 @RequestMapping("/health")
 public class HealthController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static Queue<PollingMessage> CONNECTIONS = new ConcurrentLinkedQueue<>();//消息队列
-
-    private static boolean OVER = false;//标识
+    private static Map<String,Object> queueMap = new HashMap<>();
 
     private final static long TIMEOUT = 30000l;//超时时间
 
     private static final String COM_ID = "comId";
     private static final String ORG = "orgId";
+
+    private static final String Q = "Q";
+    private static final String F = "F";
+    private static final String KEY = "key";
 
     @Resource
     private HealthScoreRecordService healthService;
@@ -64,20 +65,31 @@ public class HealthController extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public String page(Model model, HttpServletRequest request) {
         logger.info("跳转健康指数页面");
+        String key = UUIDGenerator.getUUID();
+        Queue<PollingMessage> pollingMessageQueue = new ConcurrentLinkedQueue<>();//消息队列
+        queueMap.put(key+Q,pollingMessageQueue);
+        queueMap.put(key+F,false);
         model.addAttribute("healthItem", JSONArray.toJSONString(HealthItem.HEALTH_ITEM));
+        model.addAttribute(KEY,key);
         return "health/inspect";
     }
 
     @RequestMapping(value = "/testing", method = RequestMethod.POST)
     @ResponseBody
     public void testing(HttpServletRequest request, HttpServletResponse response, @RequestBody List<JSONObject> items) {
-        CONNECTIONS.clear();
-        OVER = false;
+        int idx = items.size()-1;
+        JSONObject keyObject = items.get(idx);
+        String key = keyObject.getString(KEY);
+        items.remove(idx);
+
+        Queue<PollingMessage> pollingMessageQueue = (Queue<PollingMessage>) queueMap.get(key+Q);
+
+        pollingMessageQueue.clear();
         //业务数据入队列
         List<Item> list = JSONObject.parseArray(items.toString(), Item.class);
-        healthIndex(request, list);
+        healthIndex(request, list, pollingMessageQueue);
 
-        OVER = true;
+        queueMap.put(key+F,true);
     }
 
     /**
@@ -90,17 +102,22 @@ public class HealthController extends BaseController {
     @RequestMapping(value = "/polling", method = RequestMethod.GET)
     public
     @ResponseBody
-    DeferredResult<JSONObject> polling(HttpServletRequest request, HttpServletResponse response) throws InterruptedException {
+    DeferredResult<JSONObject> polling(HttpServletRequest request, HttpServletResponse response,String key) throws InterruptedException {
         Thread.sleep(300);
         DeferredResult<JSONObject> result = new DeferredResult<>(TIMEOUT, null);  //设置超时,超时返回null
+        boolean over = (boolean) queueMap.get(key+F);
+        Queue<PollingMessage> pollingMessageQueue = (Queue<PollingMessage>) queueMap.get(key+Q);
+
         final JSONObject jo = new JSONObject();
-        if (OVER && CONNECTIONS.isEmpty()) {
+        if (over && pollingMessageQueue.isEmpty()) {
             //消息接收完毕，返回结束标识
             jo.put(PollingType.END.getKey(), PollingType.END.getDes());
             result.setResult(jo);
+            queueMap.remove(key+Q);
+            queueMap.remove(key+F);
         } else {
             //队列取值
-            final PollingMessage pollingMessage = CONNECTIONS.poll();
+            final PollingMessage pollingMessage = pollingMessageQueue.poll();
             if (pollingMessage != null) {
                 jo.put(pollingMessage.getKey(), pollingMessage.getValue());
             }
@@ -118,7 +135,7 @@ public class HealthController extends BaseController {
 
     }
 
-    public void healthIndex(HttpServletRequest request, List<Item> items) {
+    public void healthIndex(HttpServletRequest request, List<Item> items,Queue<PollingMessage> pollingMessageQueue) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         HttpSession session = request.getSession();
@@ -141,9 +158,9 @@ public class HealthController extends BaseController {
                         count++;
                     }
                     String s1 = listj.get(n).getUnitName() + listj.get(n).getName() + listj.get(n).getDh() + listj.get(n).getUnitMeter();
-                    CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
+                    pollingMessageQueue.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
                 }
-                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), count));
+                pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), count));
             }
             if ("SWBJ".equals(items.get(i).getParentName())) {
                 List<IndexTempA> listm = healthService.getIndexTemp(params);
@@ -157,17 +174,17 @@ public class HealthController extends BaseController {
                         count++;
                     }
                     String s1 = listm.get(m).getStationName() + listm.get(m).getCommunityName() + listm.get(m).getRoomCode() + "室温" + listm.get(m).getTemp() + "℃";
-                    CONNECTIONS.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
+                    pollingMessageQueue.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
                 }
-                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), count));
+                pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), count));
             }
             if ("GKYX".equals(items.get(i).getParentName())) {
                 //业务数据放入队列
-                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
+                pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
             }
             if ("FWQK".equals(items.get(i).getParentName())) {
                 //业务数据放入队列
-                CONNECTIONS.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
+                pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
 
             }
         }

@@ -116,6 +116,8 @@ function printlnMsg(msg){
 function loadRuning1(){
     modifyStateRuning();
     var healthItems = eval($("#healthItem").val());
+    var key = $("#key").val();
+    healthItems.push({"key":key});
     $.ajax({
         url : _web+"/health/testing",
         contentType : 'application/json;charset=utf-8', //设置请求头信息
@@ -132,10 +134,12 @@ function loadRuning1(){
  * 长连接
  */
 function polling(){
+    var key = $("#key").val();
     $.ajax({
         url : _web+"/health/polling",
         type : "GET",
         timeout:30000,
+        data:{"key":key},
         cache : false,
         dataType:"JSON",
         success : function(data) {
