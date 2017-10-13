@@ -2,13 +2,13 @@ var imgPath =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "
 
 function loadDataFun() {
     initRuning();
-    chart01Fun();
+    setChart(99,'上次检测分数','2018-10-01');
 
     $("#runbtn").click(function() {
         $(".erroritem").show();
         $(".normalitem").show();
         polling();
-        loadRuning1();
+        loadRuning();
     });
 
     $(".normalitem h1").click(function() {
@@ -113,7 +113,7 @@ function printlnMsg(msg){
     }
 }
 
-function loadRuning1(){
+function loadRuning(){
     modifyStateRuning();
     var healthItems = eval($("#healthItem").val());
     var key = $("#key").val();
@@ -181,110 +181,14 @@ function initRuning(){
     });
 }
 
-function loadRuning() {
-
-    $("#running").show();
-    $("#runbtn").hide();
-
-    var data =[{
-        title:'',
-        item:[{
-            img: 'test-01-01',
-            name: '万平米工单',
-            error: 1
-        },{
-            img: 'test-01-01',
-            name: '万平米工单',
-            error: 3
-        }]
-    },{
-
-    },{
-
-    },{
-
-    }];
-
-
-    if (healthRuning) {
-        var html = '';
-        for (var i = 0; i < data.length; i++) {
-            html += '<div class="panelwrap">';
-            html += '	<div class="title"><h1>' + data[i].title + ' - 共<span>' + data[i].items.length + '</span>项</h1></div>';
-            html += '	<ul>';
-            for (var j = 0; j < data[i].items.length; j++) {
-                var statestr = "";
-                if (data[i].items[j].state == 1) {
-                    statestr = '-abnor';
-                } else if (data[i].items[j].state == 2) {
-                    statestr = '-nor';
-                }
-                html += '		<li>';
-                html += '<div class="state' + data[i].items[j].state + '"><img src="' + faceKey + '/health/' + data[i].items[j].img + statestr + '.png" /></div>';
-                html += '			<p>' + data[i].items[j].name + (data[i].items[j].error == 0 ? "" : "<span>" + data[i].items[j].error + "</span>") + '</p>';
-                html += '		</li>';
-            }
-            html += '	</ul>';
-            html += '</div>';
-        }
-        $("#resulthealth").html(html);
-    } else {
-        var html = "<div class='resultlist'>";
-        html += '<div class="erroritem">';
-        html += '<div>';
-        html += '<h1>发现<span id="errorcount">0</span>项异常</h1>';
-        html += '</div>';
-        html += '<div class="panelwrap">';
-        html += '<ul id="errorlistul">';
-        html += '</ul>';
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="normalitem">';
-        html += '<div>';
-        html += '<h1>以下<span id="normalcount">0</span>项无异常</h1>';
-        html += '</div>';
-        var normalcount = 0;
-        var errorcount = 0;
-        var count = 0;
-        var normalHtml = "";
-        var errorHtml = "";
-        for (var i = 0; i < data.length; i++) {
-
-            html += '<div class="panelwrap">';
-
-            count = 0;
-            normalHtml = ""
-
-            for (var j = 0; j < data[i].items.length; j++) {
-                var itemshtml = "";
-                itemshtml += '		<li>';
-                itemshtml += '<div><img src="' + faceKey + '/health/' + data[i].items[j].img + (data[i].items[j].state == 1 ? '-abnor' : '-nor') + '.png" /></div>';
-                itemshtml += '			<p>' + data[i].items[j].name + (data[i].items[j].error == 0 ? "" : "<span>" + data[i].items[j].error + "</span>") + '</p>';
-                itemshtml += '		</li>';
-
-                if (data[i].items[j].state == 1) {
-                    errorcount++;
-                    errorHtml += itemshtml;
-                } else {
-                    count++;
-                    normalHtml += itemshtml;
-                }
-            }
-            html += '	<div class="title"><h1>' + data[i].title + ' - 共<span>' + count + '</span>项</h1></div>';
-            html += "<ul>" + normalHtml + "</ul>";
-            html += '</div>';
-            normalcount += count;
-        }
-
-
-        html += '</div></div>';
-        $("#resulthealth").html(html);
-        $("#normalcount").html(normalcount);
-        $("#errorcount").html(errorcount);
-        $("#errorlistul").html(errorHtml);
-    }
-
-
+/**
+ * 设置分数信息
+ */
+function setChart(score,info,date){
+    $("#chart01").find('h1').text(score);
+    $("#chart01").find('h2').text(info);
+    $("#chart01").find('h3').text(date);
+    chart01Fun();
 }
 
 function chart01Fun() {
