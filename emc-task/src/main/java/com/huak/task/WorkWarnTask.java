@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * Project:emc    <BR>
  * Version: v 1.0      <BR>
  * Date: 2017/7/11<BR>
- * Description:   定时任务测试  <BR>
+ * Description:   工况报警  <BR>
  * Function List:  <BR>
  */
 @Component("workWarnTask")
