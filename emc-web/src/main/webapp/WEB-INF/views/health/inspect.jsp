@@ -44,12 +44,13 @@
                                 </div>
                             </div>
                             <div id="running" style="display: none">
-                                <h1>正在检测作业管理...</h1>
+                                <h1>正在检测...</h1>
                                 <div class="pressbar">
                                     <div></div>
                                 </div>
                             </div>
                             <a id="runbtn"></a>
+                            <a id="replacebtn" style="display: none" href="${web}/health" target="_self"></a>
                             <div id="printMsg">
 
                             </div>

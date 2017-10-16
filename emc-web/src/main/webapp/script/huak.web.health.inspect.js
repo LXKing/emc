@@ -1,5 +1,6 @@
 var imgPath =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
 
+var bfbfm;
 function loadDataFun() {
     initRuning();
     loadScore();
@@ -107,7 +108,21 @@ function modifyStateStop(num){
     }
     $first_li.remove();
 
-    modifyStateRuning();
+    var healthcount = Number($("#healthcount").text());
+    if(healthcount==null||healthcount=='NaN'){
+        healthcount = 0;
+    }
+    $("#healthcount").text(healthcount-1);
+
+    //不是最后一个
+    if(healthcount-1!=0){
+        var bfb = (bfbfm-healthcount+1)/bfbfm*100;
+        modifyStateRuning();
+        setPressbar(bfb);
+    }else{
+        setPressbar(100);
+    }
+
 
 }
 /**
@@ -128,6 +143,8 @@ function printlnMsg(msg){
 
 function loadRuning(){
     modifyStateRuning();
+    $("#running").show();
+    $("#runbtn").hide();
     var healthItems = eval($("#healthItem").val());
     var key = $("#key").val();
     healthItems.push({"key":key});
@@ -198,6 +215,7 @@ function initRuning(){
     var healthItem = eval($("#healthItem").val());
     $("#healthlistul").empty();
     $("#healthcount").html(healthItem.length);
+    bfbfm = healthItem.length;
     $.each(healthItem,function(idx,item){
         var  $li = '<li parentName="'+item.parentName+'" parentTitle="'+item.parentTitle+'"><div><img src="'+imgPath+'/health/'+item.img+'-nor.png"></div><p>'+item.title+'</p></li>';
         $("#healthlistul").append($li);
@@ -220,6 +238,16 @@ function setChart(score,info,date){
     chart01Fun();
 }
 
+/**
+ * 进度条设置
+ */
+function setPressbar(bfb){
+    $(".pressbar div").css( 'width',bfb+'%');
+    if(bfb == 100){
+        $("#replacebtn").show();
+        $("#running").hide();
+    }
+}
 function chart01Fun() {
 
     //占比-赋值即可
