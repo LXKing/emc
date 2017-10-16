@@ -269,3 +269,7 @@
 .facedark #replacebtn {
     background: url(../imgdark/health/test-btn-retest.png) no-repeat;
 }
+
+.pressbar div {
+    width: 0px;
+}
