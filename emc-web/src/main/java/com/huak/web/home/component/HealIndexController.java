@@ -1,11 +1,16 @@
 package com.huak.web.home.component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.auth.model.User;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.common.utils.DoubleUtils;
+import com.huak.health.model.HealthScoreRecord;
 import com.huak.health.type.PercentType;
 import com.huak.home.component.ComponentService;
+import com.huak.home.component.HealthScoreRecordService;
 import com.huak.home.type.ToolVO;
+import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +49,10 @@ public class HealIndexController   extends BaseController {
     private final static String CSS = "css";
     @Resource
     private ComponentService componentService;
+
+    @Resource
+    private HealthScoreRecordService healthService;
+
     /**
      * 组件-健康指数检测
      * @param request
@@ -49,7 +63,10 @@ public class HealIndexController   extends BaseController {
     public String healthcheck(ToolVO toolVO,HttpServletRequest request) {
         logger.info("组件-健康指数检测加载");
         JSONObject jo = new JSONObject();
+        String startTime=null;
+        String endTime=null;
         jo.put(Constants.FLAG, false);
+
         try {
              /*封装条件*/
             Map params = paramsPackageOrg(toolVO, request);
@@ -129,6 +146,129 @@ public class HealIndexController   extends BaseController {
         return jo.toJSONString();
     }
 
+    @RequestMapping(value = "/list/second", method = RequestMethod.POST)
+    @ResponseBody
+    public String second(ToolVO toolVO,HttpServletRequest request) {
+        logger.info("健康指数检测二级页面分数计算");
+        JSONObject jo = new JSONObject();
+        String startTime=null;
+        String endTime=null;
+        jo.put(Constants.FLAG, false);
+        if(toolVO.getToolEndDate()==null&&toolVO.getToolStartDate()==null&&toolVO.getToolOrgId()==null){
+            HttpSession session = request.getSession();
+            Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+            Calendar calendar = Calendar.getInstance();
+            startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
+            endTime = calendar.getWeekYear()+"-03-15 23:59:59";
+            toolVO.setToolStartDate(startTime);
+            toolVO.setToolEndDate(endTime);
+            toolVO.setToolOrgId(org.getId().toString());
+        }
+        try {
+             /*封装条件*/
+            Map params = paramsPackageOrg(toolVO, request);
+            Map<String,Object> jjdata = new HashMap<>();
+            Map<String,Object> datemp  = componentService.getAlarms(params);
+
+            if((boolean)datemp.get("flag")){
+                Map<String,Object> temp = (Map<String, Object>) datemp.get("data");
+
+                int jjSerious = null == temp.get(SERIOUS) ?0:Integer.valueOf(temp.get(SERIOUS).toString());
+                int jjModerate = null == temp.get(MODERATE) ?0:Integer.valueOf(temp.get(MODERATE).toString());
+                int jjMild = null == temp.get(MILD) ?0:Integer.valueOf(temp.get(MILD).toString());
+                jjdata.put(SERIOUS,jjSerious);
+                jjdata.put(MODERATE,jjModerate);
+                jjdata.put(MILD,jjMild);
+                if(jjSerious+jjModerate+jjMild>0){
+                    jjdata.put(CSS,"m");
+                }else{
+                    jjdata.put(CSS,"a");
+                }
+
+            }else{
+                jjdata.put(SERIOUS,0);
+                jjdata.put(MODERATE,0);
+                jjdata.put(MILD,0);
+                jjdata.put(CSS,"a");
+            }
+            Map<String,Object> data = new HashMap<>();
+            Map<String,Object> workData = componentService.getWorkAlarms(params);
+            int workLevel1 = null == workData.get(LEVEL1) ?0:Integer.valueOf(workData.get(LEVEL1).toString());
+            int workLevel2 = null == workData.get(LEVEL2) ?0:Integer.valueOf(workData.get(LEVEL2).toString());
+            int workLevel3 = null == workData.get(LEVEL3) ?0:Integer.valueOf(workData.get(LEVEL3).toString());
+            int workLevel4 = null == workData.get(LEVEL4) ?0:Integer.valueOf(workData.get(LEVEL4).toString());
+            workData.put(LEVEL1,workLevel1);
+            workData.put(LEVEL2,workLevel2);
+            workData.put(LEVEL3,workLevel3);
+            workData.put(LEVEL4,workLevel4);
+            if(workLevel1+workLevel2+workLevel3+workLevel4>0){
+                workData.put(CSS,"m");
+            }else{
+                workData.put(CSS,"a");
+            }
+            Map<String,Object> fwdata = new HashMap<>();
+            fwdata.put(SERIOUS,0);
+            fwdata.put(MODERATE,0);
+            fwdata.put(MILD,0);
+            fwdata.put(CSS,"a");
+
+            Map<String,Object> tempData = componentService.getTempAlarms(params);
+            int tempMin = null == tempData.get(MIN) ?0:Integer.valueOf(tempData.get(MIN).toString());
+            int tempMax = null == tempData.get(MAX) ?0:Integer.valueOf(tempData.get(MAX).toString());
+            tempData.put(MIN,tempMin);
+            tempData.put(MAX,tempMax);
+            if(tempMax+tempMin>0){
+                tempData.put(CSS,"m");
+            }else{
+                tempData.put(CSS,"a");
+            }
+            data.put("gkyx",workData);
+            data.put("jjyx",jjdata);
+            data.put("fwqk",fwdata);
+            data.put("zygl",tempData);
+            Double score = calculatedFraction(workData,jjdata,fwdata,tempData);
+            data.put("score",score);
+            data.put("date",getDateTime());
+            HealthScoreRecord health = new HealthScoreRecord();
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute(Constants.SESSION_KEY);
+            Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+            health.setId(UUIDGenerator.getUUID());
+            health.setUserid(user.getId());
+            health.setOrgId(org.getId().toString());
+            health.setScore(score);
+            health.setCreateTime(getDateTime());
+            healthService.insertSelective(health);
+            if (data!= null) {
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT, data);
+            }else{
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.OBJECT,  new HashMap<>());
+            }
+        } catch (Exception e) {
+            jo.put(Constants.FLAG,false);
+            logger.error("健康指数检测二级页面分数计算" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
+    @RequestMapping(value = "/score", method = RequestMethod.POST)
+    @ResponseBody
+    public String score(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("健康指数二级页面-获取分数");
+        JSONObject jo = new JSONObject();
+        Map<String, Object> params = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute(Constants.SESSION_KEY);
+        Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+        params.put("userid",user.getId());
+        params.put("orgId",org.getId());
+        HealthScoreRecord  h= healthService.getRecordById(params);
+        jo.put("score",h.getScore());
+        jo.put("time",h.getCreateTime().substring(0,h.getCreateTime().length()-2));
+        return  jo.toJSONString();
+    }
+
     /**
      * 健康指数分数
      * 初始化分数100分
@@ -145,7 +285,6 @@ public class HealIndexController   extends BaseController {
      */
     public Double calculatedFraction(Map<String,Object> workData,Map<String,Object> jjdata,Map<String,Object> fwdata,Map<String,Object> tempData){
         Double score = 100d;
-
         Double work = 0d;
         int workLevel1 = null == workData.get(LEVEL1) ?0:Integer.valueOf(workData.get(LEVEL1).toString());
         int workLevel2 = null == workData.get(LEVEL2) ?0:Integer.valueOf(workData.get(LEVEL2).toString());
@@ -202,4 +341,9 @@ public class HealIndexController   extends BaseController {
         return score>0?score:0d;
     }
 
+    private String getDateTime(){
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改格式
+        return dateFormat.format(now);
+    }
 }

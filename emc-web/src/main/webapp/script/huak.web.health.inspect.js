@@ -2,8 +2,7 @@ var imgPath =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "
 
 function loadDataFun() {
     initRuning();
-    setChart(99,'上次检测分数','2018-10-01');
-
+    loadScore();
     $("#runbtn").click(function() {
         $(".erroritem").show();
         $(".normalitem").show();
@@ -22,6 +21,20 @@ function loadDataFun() {
 
     });
 
+}
+
+function loadScore(){
+    $.ajax({
+        url: _web + "/healthcheck/score",
+        type: "POST",
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            // doCss(data);
+            setChart(data.score,'上次检测分数',data.time);
+        }
+    });
 }
 /**
  * 修改第一个图标为运行状态
@@ -153,7 +166,17 @@ function polling(){
                 if(data.end==null||data.end==""||data.end=="undefined"){
                     polling();
                 }else{
-
+                    $.ajax({
+                        url: _web + "/healthcheck/list/second",
+                        type: "POST",
+                        data: {},
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                           // doCss(data);
+                            setChart(data.object.score,'检测分数',data.object.date);
+                        }
+                    });
                 }
             }else{
                 polling();
