@@ -10,7 +10,6 @@ import com.huak.health.type.PercentType;
 import com.huak.home.component.ComponentService;
 import com.huak.home.component.HealthScoreRecordService;
 import com.huak.home.type.ToolVO;
-import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
@@ -150,14 +149,13 @@ public class HealIndexController   extends BaseController {
     @RequestMapping(value = "/list/second", method = RequestMethod.POST)
     @ResponseBody
     public String second(ToolVO toolVO,HttpServletRequest request) {
-        logger.info("组件-健康指数检测加载");
+        logger.info("健康指数检测二级页面分数计算");
         JSONObject jo = new JSONObject();
         String startTime=null;
         String endTime=null;
         jo.put(Constants.FLAG, false);
         if(toolVO.getToolEndDate()==null&&toolVO.getToolStartDate()==null&&toolVO.getToolOrgId()==null){
             HttpSession session = request.getSession();
-            Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
             Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
             Calendar calendar = Calendar.getInstance();
             startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
@@ -250,7 +248,7 @@ public class HealIndexController   extends BaseController {
             }
         } catch (Exception e) {
             jo.put(Constants.FLAG,false);
-            logger.error("组件-健康指数检测加载异常" + e.getMessage());
+            logger.error("健康指数检测二级页面分数计算" + e.getMessage());
         }
         return jo.toJSONString();
     }
