@@ -36,9 +36,9 @@
                             <div class="charts">
                                 <div id="chart01">
                                     <div class="value">
-                                        <h1>79.8</h1>
+                                        <h1 id="score">79.8</h1>
                                         <h2>上次检测分数</h2>
-                                        <h3>2018-01-02</h3>
+                                        <h3 id="scoreTime">2018-01-02</h3>
                                     </div>
 
                                 </div>

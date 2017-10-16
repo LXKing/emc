@@ -5,7 +5,7 @@
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ORG_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="SCORE" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="SCORE" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="USERID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
@@ -53,7 +53,7 @@
   <insert id="insert" parameterType="com.huak.health.model.HealthScoreRecord">
     insert into t_emc_health_score_record (ID, ORG_ID, SCORE, 
       USERID, CREATE_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{score,jdbcType=DOUBLE},
       #{userid,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.health.model.HealthScoreRecord">
@@ -83,7 +83,7 @@
         #{orgId,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
-        #{score,jdbcType=INTEGER},
+        #{score,jdbcType=DOUBLE},
       </if>
       <if test="userid != null">
         #{userid,jdbcType=VARCHAR},
@@ -100,7 +100,7 @@
         ORG_ID = #{orgId,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
-        SCORE = #{score,jdbcType=INTEGER},
+        SCORE = #{score,jdbcType=DOUBLE},
       </if>
       <if test="userid != null">
         USERID = #{userid,jdbcType=VARCHAR},
@@ -114,7 +114,7 @@
   <update id="updateByPrimaryKey" parameterType="com.huak.health.model.HealthScoreRecord">
     update t_emc_health_score_record
     set ORG_ID = #{orgId,jdbcType=VARCHAR},
-      SCORE = #{score,jdbcType=INTEGER},
+      SCORE = #{score,jdbcType=DOUBLE},
       USERID = #{userid,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
