@@ -258,3 +258,14 @@
 .facedark .erroritem>div>h1 {
     background: transparent;
 }
+
+#replacebtn {
+     cursor: pointer;
+     background: url('../img/health/test-btn-retest.png') no-repeat;
+     height: 44px;
+     width: 140px;
+     display: inline-block
+ }
+.facedark #replacebtn {
+    background: url(../imgdark/health/test-btn-retest.png) no-repeat;
+}
