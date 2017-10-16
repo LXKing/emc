@@ -1,6 +1,8 @@
 var imgPath =_web + "/static/" + (localStorage.faceKey == "dark" ? "imgdark" : "img");
 
 var bfbfm;
+
+
 function loadDataFun() {
     initRuning();
     loadScore();
@@ -10,8 +12,7 @@ function loadDataFun() {
         polling();
         loadRuning();
     });
-
-    $(".normalitem h1").click(function() {
+    $(document).on('click','.normalitem h1',function(){
         $(this).parent().parent().find("ul").toggle();
         if ($(this).parent().parent().find("ul").is(":hidden")) {
             $(this).addClass('open');
@@ -19,9 +20,7 @@ function loadDataFun() {
             $(this).removeClass('open');
 
         }
-
     });
-
 }
 
 function loadScore(){
