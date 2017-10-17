@@ -26,7 +26,7 @@
     <task:scheduled-tasks>
         <task:scheduled ref="weatherTask" method="currentWeather" cron="0 21 * * * ?"/>
         <task:scheduled ref="weatherTask" method="forcastWeather7d" cron="0 0 2 * * ?"/>
-        <task:scheduled ref="workWarnTask" method="workWarnInfo" cron="0 0 2 * * ?"/>
+        <task:scheduled ref="workWarnTask" method="workWarnInfo" cron="0 0/10 * * * ?"/>
     </task:scheduled-tasks>
 
 </beans>
