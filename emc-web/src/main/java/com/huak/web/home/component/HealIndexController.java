@@ -7,9 +7,11 @@ import com.huak.common.UUIDGenerator;
 import com.huak.common.utils.DoubleUtils;
 import com.huak.health.model.HealthScoreRecord;
 import com.huak.health.type.PercentType;
+import com.huak.home.SearchService;
 import com.huak.home.component.ComponentService;
 import com.huak.home.component.HealthScoreRecordService;
 import com.huak.home.type.ToolVO;
+import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
@@ -53,6 +55,8 @@ public class HealIndexController   extends BaseController {
     @Resource
     private HealthScoreRecordService healthService;
 
+    @Resource
+    private SearchService searchService;
     /**
      * 组件-健康指数检测
      * @param request
@@ -146,6 +150,7 @@ public class HealIndexController   extends BaseController {
         return jo.toJSONString();
     }
 
+
     @RequestMapping(value = "/list/second", method = RequestMethod.POST)
     @ResponseBody
     public String second(ToolVO toolVO,HttpServletRequest request) {
@@ -157,11 +162,18 @@ public class HealIndexController   extends BaseController {
         if(toolVO.getToolEndDate()==null&&toolVO.getToolStartDate()==null&&toolVO.getToolOrgId()==null){
             HttpSession session = request.getSession();
             Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+            Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
             Calendar calendar = Calendar.getInstance();
-            startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
-            endTime = calendar.getWeekYear()+"-03-15 23:59:59";
-            toolVO.setToolStartDate(startTime);
-            toolVO.setToolEndDate(endTime);
+//            startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
+//            endTime = calendar.getWeekYear()+"-03-15 23:59:59";
+            JSONObject season = searchService.getSeason(company.getId());
+            if(season==null){
+                jo.put(Constants.FLAG,false);
+                jo.put(Constants.MSG,"未设置采暖季,请先设置本采暖季后进行检查");
+                return jo.toJSONString();
+            }
+            toolVO.setToolStartDate(season.getString("startDate"));
+            toolVO.setToolEndDate(season.getString("endDate"));
             toolVO.setToolOrgId(org.getId().toString());
         }
         try {
@@ -209,10 +221,7 @@ public class HealIndexController   extends BaseController {
             Map<String,Object> fwdata = new HashMap<>();
             fwdata.put(SERIOUS,0);
             fwdata.put(MODERATE,0);
-            fwdata.put(MILD,0);
-            fwdata.put(CSS,"a");
-
-            Map<String,Object> tempData = componentService.getTempAlarms(params);
+             Map<String,Object> tempData = componentService.getTempAlarms(params);
             int tempMin = null == tempData.get(MIN) ?0:Integer.valueOf(tempData.get(MIN).toString());
             int tempMax = null == tempData.get(MAX) ?0:Integer.valueOf(tempData.get(MAX).toString());
             tempData.put(MIN,tempMin);
@@ -229,6 +238,7 @@ public class HealIndexController   extends BaseController {
             Double score = calculatedFraction(workData,jjdata,fwdata,tempData);
             data.put("score",score);
             data.put("date",getDateTime());
+
             HealthScoreRecord health = new HealthScoreRecord();
             HttpSession session = request.getSession();
             User user = (User)session.getAttribute(Constants.SESSION_KEY);
