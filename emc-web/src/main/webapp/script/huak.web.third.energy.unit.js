@@ -154,6 +154,7 @@ function chart01Fun(data) {
                     dataList: data.tqb,
                     name:'同期偏差',
                     typeLine: 'solid',
+                    barColor: 'rgba(50,187,182,1)',
                     yAxisIndex: 1,
                     label: {
                         show: true

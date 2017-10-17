@@ -273,3 +273,23 @@
 .pressbar div {
     width: 0px;
 }
+
+.chart-box .cb-legend {
+    width: 8px;
+    height: 4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.chart-box .cb-legend-1 {
+    background-color: rgba(59,150,219,0.4);
+}
+.chart-box .cb-legend-2 {
+    background-color: rgba(59,150,219,1);
+}
+.chart-box .cb-legend-3 {
+    background-color: rgba(50,187,182,1);
+}
+.chart-box .cb-legend-4 {
+    background-color: rgba(50,187,182,1);
+}

@@ -39,20 +39,20 @@
 
                         <div class="cb-title-right" style="margin-right: 36px;">
                             <label>
-                                <span class="cb-legend-blue"></span>
-                                同比单耗
+                                <span class="cb-legend cb-legend-1"></span>
+                                同期偏差
                             </label>
                             <label>
-                                <span class="cb-legend-gray"></span>
-                                实际单耗
+                                <span class="cb-legend cb-legend-2"></span>
+                                本期计划
                             </label>
                             <label>
-                                <span class="cb-legend-gray"></span>
-                                计划单耗
+                                <span class="cb-legend cb-legend-3"></span>
+                                本期能耗
                             </label>
                             <label>
-                                <span class="cb-legend-gray"></span>
-                                同比
+                                <span class="cb-legend cb-legend-4"></span>
+                                去年同期
                             </label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <label>
