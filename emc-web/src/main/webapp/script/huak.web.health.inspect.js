@@ -190,7 +190,11 @@ function polling(){
                         success: function (data) {
                             console.log(data);
                            // doCss(data);
-                            setChart(data.object.score,'检测分数',data.object.date);
+                            if(data.flag==false){
+                                top.layer.msg(data.msg);
+                            }else{
+                                setChart(data.object.score,'检测分数',data.object.date);
+                            }
                         }
                     });
                 }
