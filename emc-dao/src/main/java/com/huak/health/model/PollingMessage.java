@@ -1,5 +1,6 @@
 package com.huak.health.model;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -37,5 +38,17 @@ public class PollingMessage implements Serializable{
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out)
+            throws IOException {
+        //执行序列化存储
+        out.writeObject(value);
+    }
+
+    private void readObject(java.io.ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
+        //执行反序列化读取
+        value =  in.readObject();
     }
 }
