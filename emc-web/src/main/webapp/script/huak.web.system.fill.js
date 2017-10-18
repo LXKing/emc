@@ -48,6 +48,8 @@ function reset(){
     $("#name").val("");
     $("#name").val("");
     $("#energyType").val("");
+    $("#startTime").val("");
+    $("#endTime").val("");
 }
 //下拉切换事件
 $("body").on("click", "#energyType p", function () {
@@ -65,6 +67,7 @@ $("body").on("click", "#x-sfoption1 p", function (event) {
     var selectval = $(this).html();
     var selectid = $(this).attr("value");
     $(this).parent().prev().find("input").val(selectval);
+    $("#unitId").val(selectid);
     $(this).parent().slideUp(200, function () {
     });
     event.stopPropagation();

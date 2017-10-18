@@ -15,6 +15,8 @@
     <script src="${platform}/script/org/huak.org.heatseason.list.js"></script>
 </head>
 <body class="gray-bg">
+<input id="userSeasonUpdate" VALUE="${sessionScope._auth['userSeasonUpdate']}"  type="hidden"/>
+<input id="userSeasonDelete" VALUE="${sessionScope._auth['userSeasonDelete']}"  type="hidden"/>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
 
@@ -50,11 +52,11 @@
 
                         <div class="row">
                             <div class="col-sm-8 col-xs-8 col-md-8 col-lg-8  btn-group">
-
+                                <c:if test="${sessionScope._auth['userSeasonAdd']}">
                                 <button type="button" class="btn btn-sm btn-info top-layer-min" layer-form-id="seasonAddForm" layer-title="添加采暖" layer-url="${platform}/season/add">
                                     <i class="fa fa-plus"></i>添加
                                 </button>
-
+                                </c:if>
                                     <%--<button type="button" class="btn btn-sm btn-info " onclick="addSeason()">--%>
                                         <%--<i class="fa fa-plus"></i>添加--%>
                                     <%--</button>--%>

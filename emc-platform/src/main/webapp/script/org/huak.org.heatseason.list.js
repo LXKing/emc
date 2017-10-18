@@ -78,8 +78,15 @@ $(function () {
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
-                    return '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="seasonEditForm" layer-title="编辑采暖" layer-url="'+_platform+'/season/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;' +
-                        '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteSeason(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+
+                    var html = "";
+                    if($("#userSeasonUpdate").val()){
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="seasonEditForm" layer-title="编辑采暖" layer-url="'+_platform+'/season/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                    }
+                    if($("#userSeasonDelete").val()){
+                        html +=  '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteSeason(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
+                    }
+                    return html;
                 }
             }
 
