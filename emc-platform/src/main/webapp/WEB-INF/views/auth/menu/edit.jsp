@@ -83,6 +83,7 @@
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
+            var pMenuId = $(top.document).find("#pMenuId").val();
             if("${menu.menuName}" == $(top.document).find("#menuName").val()){
                 //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
                 deferred.resolve();
@@ -91,7 +92,7 @@
                     url:_platform+'/menu/check',
                     type:'POST',
                     async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                    data: {menuName:$(top.document).find('#menuName').val()},
+                    data: {menuName:$(top.document).find('#menuName').val(),pMenuId:pMenuId},
                     dataType: 'json',
                     success:function(result) {
                         if (!result.flag) {

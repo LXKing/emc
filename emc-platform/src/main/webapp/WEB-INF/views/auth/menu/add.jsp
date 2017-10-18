@@ -84,11 +84,12 @@
         $(top.document).find(".chosen-select:not([name='searchComp'])").chosen();
         $.validator.addMethod("checkUnique", function(value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
+            var pMenuId = $(top.document).find("#pMenuId").val();
             $.ajax({
                 url:_platform+'/menu/check',
                 type:'POST',
                 async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {menuName:value},
+                data: {menuName:value,pMenuId:pMenuId},
                 dataType: 'json',
                 success:function(result) {
                     if (!result.flag) {
