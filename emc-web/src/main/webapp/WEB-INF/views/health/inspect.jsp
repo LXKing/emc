@@ -35,11 +35,23 @@
                         <div class="left">
                             <div class="charts">
                                 <div id="chart01">
-                                    <div class="value">
-                                        <h1 id="score">79.8</h1>
-                                        <h2>上次检测分数</h2>
-                                        <h3 id="scoreTime">2018-01-02</h3>
-                                    </div>
+                                    <c:choose>
+                                        <c:when test="${flag eq false}">
+                                        <div class="value">
+                                          <h1>100</h1>
+                                            <h2>无检测记录</h2>
+                                            <h3></h3>
+                                         </div>
+                                    </c:when>
+                                    <c:when test="${flag eq true}">
+                                        <div class="value">
+                                            <h1 id="score">${score}</h1>
+                                            <h2>上次检测记录</h2>
+                                            <h3 id="scoreTime">${time}</h3>
+                                        </div>
+                                    </c:when>
+
+                                    </c:choose>
 
                                 </div>
                             </div>

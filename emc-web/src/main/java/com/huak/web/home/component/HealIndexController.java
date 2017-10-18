@@ -169,7 +169,7 @@ public class HealIndexController   extends BaseController {
             JSONObject season = searchService.getSeason(company.getId());
             if(season==null){
                 jo.put(Constants.FLAG,false);
-                jo.put(Constants.MSG,"未设置采暖季,请先设置本采暖季后进行检查");
+                jo.put(Constants.MSG,"未设置采暖季,请先设置本采暖季后进行检测");
                 return jo.toJSONString();
             }
             toolVO.setToolStartDate(season.getString("startDate"));
@@ -274,8 +274,14 @@ public class HealIndexController   extends BaseController {
         params.put("userid",user.getId());
         params.put("orgId",org.getId());
         HealthScoreRecord  h= healthService.getRecordById(params);
-        jo.put("score",h.getScore());
-        jo.put("time",h.getCreateTime().substring(0,h.getCreateTime().length()-2));
+        if(h==null){
+            jo.put(Constants.FLAG,false);
+        }else {
+            jo.put(Constants.FLAG,true);
+            jo.put("score",h.getScore());
+            jo.put("time",h.getCreateTime().substring(0,h.getCreateTime().length()-2));
+        }
+
         return  jo.toJSONString();
     }
 
