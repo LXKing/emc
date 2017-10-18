@@ -167,11 +167,6 @@ public class HealIndexController   extends BaseController {
 //            startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
 //            endTime = calendar.getWeekYear()+"-03-15 23:59:59";
             JSONObject season = searchService.getSeason(company.getId());
-            if(season==null){
-                jo.put(Constants.FLAG,false);
-                jo.put(Constants.MSG,"未设置采暖季,请先设置本采暖季后进行检测");
-                return jo.toJSONString();
-            }
             toolVO.setToolStartDate(season.getString("startDate"));
             toolVO.setToolEndDate(season.getString("endDate"));
             toolVO.setToolOrgId(org.getId().toString());
@@ -261,6 +256,29 @@ public class HealIndexController   extends BaseController {
             logger.error("健康指数检测二级页面分数计算" + e.getMessage());
         }
         return jo.toJSONString();
+    }
+    @RequestMapping(value = "/season", method = RequestMethod.POST)
+    @ResponseBody
+    public String season(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("检验采暖季");
+        JSONObject jo = new JSONObject();
+        Map<String, Object> params = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        Calendar calendar = Calendar.getInstance();
+//            startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
+//            endTime = calendar.getWeekYear()+"-03-15 23:59:59";
+        JSONObject season = searchService.getSeason(company.getId());
+        if(season==null){
+            jo.put(Constants.FLAG,false);
+            jo.put(Constants.MSG,"未设置采暖季,请先设置本采暖季后进行检测");
+            return jo.toJSONString();
+        }else {
+            jo.put(Constants.FLAG,true);
+            jo.put(Constants.MSG,"采暖季已经设置");
+        }
+        return  jo.toJSONString();
     }
     @RequestMapping(value = "/score", method = RequestMethod.POST)
     @ResponseBody

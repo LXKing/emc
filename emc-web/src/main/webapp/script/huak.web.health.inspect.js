@@ -6,12 +6,10 @@ var bfbfm;
 function loadDataFun() {
     initRuning();
     setChart(null,null,null);
-    //loadScore();
     $("#runbtn").click(function() {
-        $(".erroritem").show();
-        $(".normalitem").show();
         polling();
         loadRuning();
+
     });
     $(document).on('click','.normalitem h1',function(){
         $(this).parent().parent().find("ul").toggle();
@@ -146,23 +144,43 @@ function printlnMsg(msg){
 }
 
 function loadRuning(){
-    modifyStateRuning();
-    $("#running").show();
-    $("#runbtn").hide();
-    var healthItems = eval($("#healthItem").val());
-    var key = $("#key").val();
-    healthItems.push({"key":key});
+
     $.ajax({
-        url : _web+"/health/testing",
+        url : _web+"/healthcheck/season",
         contentType : 'application/json;charset=utf-8', //设置请求头信息
         type : "POST",
         cache : false,
-        data: JSON.stringify(healthItems),
+        data: {},
         dataType: "json",
         success : function(data) {
+            if(data.flag==false){
+                top.layer.msg(data.msg);
+                return false;
+            }else{
+                modifyStateRuning();
+                $("#running").show();
+                $("#runbtn").hide();
+                $(".erroritem").show();
+                $(".normalitem").show();
+                var healthItems = eval($("#healthItem").val());
+                var key = $("#key").val();
+                healthItems.push({"key":key});
 
+                $.ajax({
+                    url : _web+"/health/testing",
+                    contentType : 'application/json;charset=utf-8', //设置请求头信息
+                    type : "POST",
+                    cache : false,
+                    data: JSON.stringify(healthItems),
+                    dataType: "json",
+                    success : function(data) {
+
+                    }
+                });
+            }
         }
     });
+
 }
 /**
  * 长连接
