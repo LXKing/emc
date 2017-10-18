@@ -4,6 +4,7 @@ import com.huak.base.BaseTest;
 import com.huak.base.dao.DateDao;
 import com.huak.common.utils.DateUtils;
 import com.huak.health.model.HealthScoreRecord;
+import com.huak.health.vo.WorkWarnVo;
 import com.huak.home.component.ComponentService;
 import com.huak.home.component.HealthScoreRecordService;
 import org.junit.Test;
@@ -64,6 +65,17 @@ public class ComponentTest  extends BaseTest {
         params.put("userid","88cd8b26b6234610a0b92cc38b834304");
         HealthScoreRecord h = healthScoreRecordService.getRecordById(params);
         System.out.println(h.getScore());
+    }
+    @Test
+    public void testgkyx(){
+        Map<String,Object> params = new  HashMap<String,Object>();
+        params.put("orgId","74");
+        params.put("comId","a3e5e868e7844c349e5cf51c5e6bc37d");
+        params.put("alarmName","一次回温");
+        List<WorkWarnVo> h = healthScoreRecordService.getWorkWarnInfo(params);
+        for (int i = 0; i < h.size(); i++) {
+            System.out.println(h.get(i).getAlarmName());
+        }
     }
 //    @Test
 //    public void testAdd(){

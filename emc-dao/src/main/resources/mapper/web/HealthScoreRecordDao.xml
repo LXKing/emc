@@ -37,6 +37,16 @@
 
         </constructor>
     </resultMap>
+    <resultMap id="BaseResultMapC" type="com.huak.health.vo.WorkWarnVo">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ALARM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ALARM_LEVEL" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MODEL" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="START_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
     ID, ORG_ID, SCORE, USERID, CREATE_TIME
   </sql>
@@ -213,4 +223,43 @@
         and tj.REDE_TIME<![CDATA[ <= ]]> #{endTime}
         and tj.COM_ID = #{comId}
     </select>
+
+
+    <select id="getWorkWarnInfo" parameterType="java.util.Map" resultMap="BaseResultMapC">
+
+        SELECT b.ID,b.ALARM_NAME,b.START_TIME,b.MODEL,b.ALARM_LEVEL from
+        (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
+        FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET
+        ( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
+        WHERE o.ID=v.ORGID
+        AND COMID=#{comId}
+        ) a,
+        (SELECT
+        r.ID,
+        c.ALARM_NAME,
+        c.COM_ID,
+        c.UNIT_ID,
+        c.ALARM_TYPE,
+        (case c.ALARM_LEVEL
+        when 0 then '一级'
+        when 1 then '二级'
+        when 2 then '三级'
+        when 3 then '四级'
+        END) ALARM_LEVEL,
+        (case c.MODEL
+        when 0 then '低低'
+        when 1 then '低'
+        when 2 then '高'
+        when 3 then '高高'
+        END) MODEL ,
+        r.START_TIME
+        FROM
+        t_emc_alarm_config c
+        LEFT JOIN t_emc_alarm_record r ON c.ID = r.CONFIG_ID
+        where r.END_TIME is null and r.START_TIME is not NULL
+        and c.ALARM_NAME like  concat(concat('%',#{alarmName,jdbcType=VARCHAR}),'%')
+        and c.COM_ID=#{comId}
+        ) b  where a.COMID = b.COM_ID and a.UNITID = b.UNIT_ID
+    </select>
+
 </mapper>

@@ -6,6 +6,7 @@ import com.huak.health.dao.HealthScoreRecordDao;
 import com.huak.health.model.HealthScoreRecord;
 import com.huak.health.vo.IndexDataA;
 import com.huak.health.vo.IndexTempA;
+import com.huak.health.vo.WorkWarnVo;
 import com.huak.home.dao.SearchDao;
 import com.huak.task.dao.TemperatureDao;
 import com.huak.weather.dao.WeatherAqiDao;
@@ -77,4 +78,8 @@ public class HealthScoreRecordServiceImpl implements HealthScoreRecordService{
         return list;
     }
 
+    @Override
+    public List<WorkWarnVo> getWorkWarnInfo(Map<String, Object> params) {
+        return healthScoreRecordDao.getWorkWarnInfo(params);
+    }
 }

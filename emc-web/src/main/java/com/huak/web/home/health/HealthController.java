@@ -2,12 +2,15 @@ package com.huak.web.home.health;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
+import com.huak.health.model.HealthScoreRecord;
 import com.huak.health.model.PollingMessage;
 import com.huak.health.type.PollingType;
 import com.huak.health.vo.IndexDataA;
 import com.huak.health.vo.IndexTempA;
+import com.huak.health.vo.WorkWarnVo;
 import com.huak.home.component.HealthScoreRecordService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
@@ -65,8 +68,23 @@ public class HealthController extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public String page(Model model, HttpServletRequest request) {
         logger.info("跳转健康指数页面");
+        Map<String, Object> params = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute(Constants.SESSION_KEY);
+        Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
+        params.put("userid",user.getId());
+        params.put("orgId",org.getId());
+        HealthScoreRecord h= healthService.getRecordById(params);
+        if(h==null){
+            model.addAttribute(Constants.FLAG,false);
+        }else {
+            model.addAttribute(Constants.FLAG,true);
+            model.addAttribute("score",h.getScore());
+            model.addAttribute("time",h.getCreateTime().substring(0,h.getCreateTime().length()-2));
+        }
         String key = UUIDGenerator.getUUID();
         Queue<PollingMessage> pollingMessageQueue = new ConcurrentLinkedQueue<>();//消息队列
+
         queueMap.put(key+Q,pollingMessageQueue);
         queueMap.put(key+F,false);
         model.addAttribute("healthItem", JSONArray.toJSONString(HealthItem.HEALTH_ITEM));
@@ -151,7 +169,7 @@ public class HealthController extends BaseController {
 
             if ("JJYX".equals(items.get(i).getParentName())) {
                 List<IndexDataA> listj = healthService.getIndexData(params);
-                List<PollingMessage> listp = new ArrayList<PollingMessage>();
+                //经济运行业务数据放入队列
                 int count = 0;
                 for (int n = 0; n < listj.size(); n++) {
                     if (Double.valueOf(listj.get(n).getDh()) > listj.get(n).getIndustry()) {
@@ -164,7 +182,7 @@ public class HealthController extends BaseController {
             }
             if ("SWBJ".equals(items.get(i).getParentName())) {
                 List<IndexTempA> listm = healthService.getIndexTemp(params);
-                //业务数据放入队列
+                //室温报警业务数据放入队列
 
                 List<PollingMessage> listp = new ArrayList<PollingMessage>();
                 int count = 0;
@@ -179,15 +197,21 @@ public class HealthController extends BaseController {
                 pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), count));
             }
             if ("GKYX".equals(items.get(i).getParentName())) {
-                //业务数据放入队列
-                pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
+                //工况运行业务数据放入队列
+                params.put("alarmName",items.get(i).getTitle());
+                List<WorkWarnVo> list = healthService.getWorkWarnInfo(params);
+                int count = 0;
+                for (int j = 0; j <list.size() ; j++) {
+                    count++;
+                    String s1=list.get(j).getAlarmName()+"-"+list.get(j).getAlarmLevel()+"-"+list.get(j).getModel()+"-"+list.get(j).getStartTime();
+                    pollingMessageQueue.offer(new PollingMessage(PollingType.MSG.getKey(), s1));
+                }
+                pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), count));
             }
             if ("FWQK".equals(items.get(i).getParentName())) {
                 //业务数据放入队列
                 pollingMessageQueue.offer(new PollingMessage(PollingType.NUM.getKey(), 0));
-
             }
         }
-
     }
 }

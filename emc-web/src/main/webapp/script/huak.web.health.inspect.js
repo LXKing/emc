@@ -5,7 +5,8 @@ var bfbfm;
 
 function loadDataFun() {
     initRuning();
-    loadScore();
+    setChart(null,null,null);
+    //loadScore();
     $("#runbtn").click(function() {
         $(".erroritem").show();
         $(".normalitem").show();
@@ -32,7 +33,11 @@ function loadScore(){
         success: function (data) {
             console.log(data);
             // doCss(data);
-            setChart(data.score,'上次检测分数',data.time);
+            if(data.flag==false){
+                setChart(100,'无检测记录',null);
+            }else{
+                setChart(data.score,'上次检测分数',data.time);
+            }
         }
     });
 }

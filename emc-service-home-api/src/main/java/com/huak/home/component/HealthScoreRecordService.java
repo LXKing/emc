@@ -3,6 +3,7 @@ package com.huak.home.component;
 import com.huak.health.model.HealthScoreRecord;
 import com.huak.health.vo.IndexDataA;
 import com.huak.health.vo.IndexTempA;
+import com.huak.health.vo.WorkWarnVo;
 
 import java.util.List;
 import java.util.Map;
@@ -45,4 +46,8 @@ public interface HealthScoreRecordService {
      */
     List<IndexTempA> getIndexTemp(Map<String,Object> params);
 
+    /**
+     * 查询工况报警信息
+     */
+    List<WorkWarnVo> getWorkWarnInfo(Map<String,Object> params);
 }
