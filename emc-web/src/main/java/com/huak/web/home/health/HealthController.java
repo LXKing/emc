@@ -79,7 +79,7 @@ public class HealthController extends BaseController {
             model.addAttribute(Constants.FLAG,false);
         }else {
             model.addAttribute(Constants.FLAG,true);
-            model.addAttribute("score",h.getScore());
+            model.addAttribute("score",String.valueOf(h.getScore()).substring(0,String.valueOf(h.getScore()).lastIndexOf(".")));
             model.addAttribute("time",h.getCreateTime().substring(0,h.getCreateTime().length()-2));
         }
         String key = UUIDGenerator.getUUID();
