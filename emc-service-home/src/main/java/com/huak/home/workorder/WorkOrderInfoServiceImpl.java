@@ -39,7 +39,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int saveA(WorkOrderInfo workOrder) {
         logger.info("保存工单");
         return 0;
@@ -53,9 +53,12 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int sendABorC(WorkOrderInfo workOrder) {
         logger.info("派单员派送工单给班长");
+        
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+        
         return 0;
     }
 
@@ -67,8 +70,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int saveAndSendABorC(WorkOrderInfo workOrder) {
+        logger.info("派单员保存工单并派送工单给班长");
         return 0;
     }
 
@@ -80,8 +84,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int takingB(WorkOrderInfo workOrder) {
+        logger.info("班长接单");
         return 0;
     }
 
@@ -93,8 +98,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int backB(WorkOrderInfo workOrder) {
+        logger.info("班长退单");
         return 0;
     }
 
@@ -106,8 +112,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int finishB(WorkOrderInfo workOrder) {
+        logger.info("班长完成");
         return 0;
     }
 
@@ -119,8 +126,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int confirmAB(WorkOrderInfo workOrder) {
+        logger.info("班长完成派单员确认");
         return 0;
     }
 
@@ -132,8 +140,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int resetFinishAB(WorkOrderInfo workOrder) {
+        logger.info("班长完成派单员重新派送");
         return 0;
     }
 
@@ -145,8 +154,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int closeAB(WorkOrderInfo workOrder) {
+        logger.info("班长退单派单员关闭");
         return 0;
     }
 
@@ -158,8 +168,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int resetBackAB(WorkOrderInfo workOrder) {
+        logger.info("班长退单派单员重新派送");
         return 0;
     }
 
@@ -171,8 +182,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int sendAC(WorkOrderInfo workOrder) {
+        logger.info("派单员派送工单接单员");
         return 0;
     }
 
@@ -184,8 +196,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int saveAndSendAC(WorkOrderInfo workOrder) {
+        logger.info("派单员保存工单并派送工单接单员");
         return 0;
     }
 
@@ -197,8 +210,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int takingC(WorkOrderInfo workOrder) {
+        logger.info("接单员接单");
         return 0;
     }
 
@@ -210,8 +224,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int backC(WorkOrderInfo workOrder) {
+        logger.info("接单员退单");
         return 0;
     }
 
@@ -223,8 +238,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int finishC(WorkOrderInfo workOrder) {
+        logger.info("接单员完成");
         return 0;
     }
 
@@ -236,8 +252,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int confirmAC(WorkOrderInfo workOrder) {
+        logger.info("接单员完成派单员确认");
         return 0;
     }
 
@@ -249,8 +266,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int resetFinishAC(WorkOrderInfo workOrder) {
+        logger.info("接单员完成派单员重新派送");
         return 0;
     }
 
@@ -262,8 +280,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int closeAC(WorkOrderInfo workOrder) {
+        logger.info("接单员退单派单员关闭");
         return 0;
     }
 
@@ -275,8 +294,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public int resetBackAC(WorkOrderInfo workOrder) {
+        logger.info("接单员退单派单员重新派送");
         return 0;
     }
 }
