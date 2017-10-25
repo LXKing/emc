@@ -53,8 +53,8 @@
     <dubbo:service interface="com.huak.home.FrameService" ref="frameService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
-    <bean id="workOrderService" class="com.huak.home.workorder.WorkOrderRecordServiceImpl"></bean>
-    <dubbo:service interface="com.huak.home.workorder.WorkOrderRecordService" ref="workOrderService" timeout="3000" loadbalance="random"
+    <bean id="workOrderRecordService" class="com.huak.home.workorder.WorkOrderRecordServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.workorder.WorkOrderRecordService" ref="workOrderRecordService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="thirdAnalysisService" class="com.huak.home.thiredpage.ThirdAnalysisServiceImpl"></bean>

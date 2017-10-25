@@ -1,9 +1,9 @@
 package com.huak.home.workorder;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.huak.workorder.dao.WorkOrderRecordDao;
 import com.huak.workorder.model.WorkOrderRecord;
 import com.huak.workorder.vo.WorkOrderRecordA;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 

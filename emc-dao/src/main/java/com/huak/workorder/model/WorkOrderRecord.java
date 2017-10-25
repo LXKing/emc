@@ -1,7 +1,5 @@
 package com.huak.workorder.model;
 
-import java.util.Date;
-
 public class WorkOrderRecord {
     private String id;
 
@@ -9,7 +7,7 @@ public class WorkOrderRecord {
 
     private Byte beforStatus;
 
-    private Date operateTime;
+    private String operateTime;
 
     private String opertor;
 
@@ -19,7 +17,7 @@ public class WorkOrderRecord {
 
     private String des;
 
-    public WorkOrderRecord(String id, String code, Byte beforStatus, Date operateTime, String opertor, String sendee, Byte afterStatus, String des) {
+    public WorkOrderRecord(String id, String code, Byte beforStatus, String operateTime, String opertor, String sendee, Byte afterStatus, String des) {
         this.id = id;
         this.code = code;
         this.beforStatus = beforStatus;
@@ -58,11 +56,11 @@ public class WorkOrderRecord {
         this.beforStatus = beforStatus;
     }
 
-    public Date getOperateTime() {
+    public String getOperateTime() {
         return operateTime;
     }
 
-    public void setOperateTime(Date operateTime) {
+    public void setOperateTime(String operateTime) {
         this.operateTime = operateTime;
     }
 

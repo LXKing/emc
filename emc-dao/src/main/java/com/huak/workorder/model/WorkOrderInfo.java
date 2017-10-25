@@ -15,11 +15,11 @@ public class WorkOrderInfo implements Serializable{
 
     private String content;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date finishTime;
+    private String finishTime;
 
-    private Date createTime;
+    private String createTime;
 
     private String creator;
 
@@ -33,7 +33,7 @@ public class WorkOrderInfo implements Serializable{
 
     private String reason;
 
-    public WorkOrderInfo(String id, String code, Byte type, String name, String content, Date startTime, Date finishTime, Date createTime, String creator, Byte status, String finish, Date actualFinishTime, String comid, String reason) {
+    public WorkOrderInfo(String id, String code, Byte type, String name, String content, String startTime, String finishTime, String createTime, String creator, Byte status, String finish, Date actualFinishTime, String comid, String reason) {
         this.id = id;
         this.code = code;
         this.type = type;
@@ -94,27 +94,27 @@ public class WorkOrderInfo implements Serializable{
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getFinishTime() {
+    public String getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Date finishTime) {
+    public void setFinishTime(String finishTime) {
         this.finishTime = finishTime;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

@@ -6,7 +6,7 @@
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="BEFOR_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="OPERATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="OPERATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="OPERTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SENDEE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="AFTER_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -19,7 +19,7 @@
             <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="BEFOR_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
-            <arg column="OPERATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="OPERATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="OPERTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="SENDEE" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="AFTER_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -47,7 +47,7 @@
       OPERATE_TIME, OPERTOR, SENDEE, 
       AFTER_STATUS, DES)
     values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{beforStatus,jdbcType=TINYINT}, 
-      #{operateTime,jdbcType=TIMESTAMP}, #{opertor,jdbcType=VARCHAR}, #{sendee,jdbcType=VARCHAR}, 
+      #{operateTime,jdbcType=VARCHAR}, #{opertor,jdbcType=VARCHAR}, #{sendee,jdbcType=VARCHAR},
       #{afterStatus,jdbcType=TINYINT}, #{des,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.workorder.model.WorkOrderRecord">
@@ -89,7 +89,7 @@
         #{beforStatus,jdbcType=TINYINT},
       </if>
       <if test="operateTime != null">
-        #{operateTime,jdbcType=TIMESTAMP},
+        #{operateTime,jdbcType=VARCHAR},
       </if>
       <if test="opertor != null">
         #{opertor,jdbcType=VARCHAR},
@@ -115,7 +115,7 @@
         BEFOR_STATUS = #{beforStatus,jdbcType=TINYINT},
       </if>
       <if test="operateTime != null">
-        OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+        OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
       </if>
       <if test="opertor != null">
         OPERTOR = #{opertor,jdbcType=VARCHAR},
@@ -136,7 +136,7 @@
     update t_emc_work_order_record
     set CODE = #{code,jdbcType=VARCHAR},
       BEFOR_STATUS = #{beforStatus,jdbcType=TINYINT},
-      OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+      OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
       OPERTOR = #{opertor,jdbcType=VARCHAR},
       SENDEE = #{sendee,jdbcType=VARCHAR},
       AFTER_STATUS = #{afterStatus,jdbcType=TINYINT},
@@ -151,6 +151,6 @@
                     t_emc_work_order_record wor
                  LEFT JOIN
                        t_emc_auth_user au ON wor.OPERTOR = au.ID
-                where wor.CODE=${code,jdbcType=VARCHAR}
+                where wor.CODE=#{code,jdbcType=VARCHAR}
     </select>
 </mapper>

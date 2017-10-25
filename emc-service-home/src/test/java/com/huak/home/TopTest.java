@@ -1,7 +1,10 @@
 package com.huak.home;
 
 import com.huak.base.BaseTest;
+import com.huak.base.dao.DateDao;
+import com.huak.common.UUIDGenerator;
 import com.huak.home.workorder.WorkOrderRecordService;
+import com.huak.workorder.model.WorkOrderRecord;
 import com.huak.workorder.vo.WorkOrderRecordA;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
@@ -25,7 +28,8 @@ public class TopTest extends BaseTest{
 
     @Resource
     private  FrameService frameService;
-
+    @Resource
+    private DateDao dateDao;
     @Resource
     private WorkOrderRecordService workOrderService;
     @Test
@@ -80,8 +84,18 @@ public class TopTest extends BaseTest{
     @Test
     @Rollback
     public void testgd(){
-        String ss = "12345";
-        WorkOrderRecordA work = workOrderService.selectAllRecord(ss);
-        System.out.printf(work.getCode());
+        String code = "12345";
+        WorkOrderRecordA work = workOrderService.selectAllRecord(code);
+        System.out.println(work.getCode());
+    }
+    @Test
+    @Rollback
+    public void testinsert(){
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(UUIDGenerator.getUUID());
+        record.setBeforStatus(Byte.valueOf("0"));
+        record.setOperateTime(dateDao.getTime());
+        workOrderService.insertWorkOrderRecord(record);
     }
 }
