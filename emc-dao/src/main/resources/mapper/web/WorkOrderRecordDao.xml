@@ -5,14 +5,32 @@
     <constructor>
       <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="OPERATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="BEFOR_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="OPERATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="OPERTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SENDEE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="AFTER_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="DES" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+
+    <resultMap id="BaseResultMapA" type="com.huak.workorder.vo.WorkOrderRecordA">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="BEFOR_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="OPERATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="OPERTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="SENDEE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="AFTER_STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="DES" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="USER_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+
+        </constructor>
+    </resultMap>
+
   <sql id="Base_Column_List">
-    ID, CODE, STATUS, OPERATE_TIME, OPERTOR, SENDEE
+    ID, CODE, BEFOR_STATUS, OPERATE_TIME, OPERTOR, SENDEE, AFTER_STATUS, DES
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,12 +43,12 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.huak.workorder.model.WorkOrderRecord">
-    insert into t_emc_work_order_record (ID, CODE, STATUS, 
-      OPERATE_TIME, OPERTOR, SENDEE
-      )
-    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{operateTime,jdbcType=VARCHAR}, #{opertor,jdbcType=VARCHAR}, #{sendee,jdbcType=VARCHAR}
-      )
+    insert into t_emc_work_order_record (ID, CODE, BEFOR_STATUS, 
+      OPERATE_TIME, OPERTOR, SENDEE, 
+      AFTER_STATUS, DES)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{beforStatus,jdbcType=TINYINT}, 
+      #{operateTime,jdbcType=TIMESTAMP}, #{opertor,jdbcType=VARCHAR}, #{sendee,jdbcType=VARCHAR}, 
+      #{afterStatus,jdbcType=TINYINT}, #{des,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.workorder.model.WorkOrderRecord">
     insert into t_emc_work_order_record
@@ -41,8 +59,8 @@
       <if test="code != null">
         CODE,
       </if>
-      <if test="status != null">
-        STATUS,
+      <if test="beforStatus != null">
+        BEFOR_STATUS,
       </if>
       <if test="operateTime != null">
         OPERATE_TIME,
@@ -53,6 +71,12 @@
       <if test="sendee != null">
         SENDEE,
       </if>
+      <if test="afterStatus != null">
+        AFTER_STATUS,
+      </if>
+      <if test="des != null">
+        DES,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -61,17 +85,23 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
+      <if test="beforStatus != null">
+        #{beforStatus,jdbcType=TINYINT},
       </if>
       <if test="operateTime != null">
-        #{operateTime,jdbcType=VARCHAR},
+        #{operateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="opertor != null">
         #{opertor,jdbcType=VARCHAR},
       </if>
       <if test="sendee != null">
         #{sendee,jdbcType=VARCHAR},
+      </if>
+      <if test="afterStatus != null">
+        #{afterStatus,jdbcType=TINYINT},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -81,11 +111,11 @@
       <if test="code != null">
         CODE = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        STATUS = #{status,jdbcType=TINYINT},
+      <if test="beforStatus != null">
+        BEFOR_STATUS = #{beforStatus,jdbcType=TINYINT},
       </if>
       <if test="operateTime != null">
-        OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+        OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="opertor != null">
         OPERTOR = #{opertor,jdbcType=VARCHAR},
@@ -93,16 +123,34 @@
       <if test="sendee != null">
         SENDEE = #{sendee,jdbcType=VARCHAR},
       </if>
+      <if test="afterStatus != null">
+        AFTER_STATUS = #{afterStatus,jdbcType=TINYINT},
+      </if>
+      <if test="des != null">
+        DES = #{des,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.huak.workorder.model.WorkOrderRecord">
     update t_emc_work_order_record
     set CODE = #{code,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=TINYINT},
-      OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+      BEFOR_STATUS = #{beforStatus,jdbcType=TINYINT},
+      OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
       OPERTOR = #{opertor,jdbcType=VARCHAR},
-      SENDEE = #{sendee,jdbcType=VARCHAR}
+      SENDEE = #{sendee,jdbcType=VARCHAR},
+      AFTER_STATUS = #{afterStatus,jdbcType=TINYINT},
+      DES = #{des,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectAllRecord" parameterType="java.lang.String" resultMap="BaseResultMapA">
+        SELECT
+	          wor.*,au.USER_NAME
+                FROM
+                    t_emc_work_order_record wor
+                 LEFT JOIN
+                       t_emc_auth_user au ON wor.OPERTOR = au.ID
+                where wor.CODE=${code,jdbcType=VARCHAR}
+    </select>
 </mapper>
