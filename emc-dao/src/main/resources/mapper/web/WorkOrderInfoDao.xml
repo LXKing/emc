@@ -8,13 +8,13 @@
       <arg column="TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CONTENT" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="START_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="FINISH_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="START_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FINISH_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="FINISH" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ACTUAL_FINISH_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="ACTUAL_FINISH_TIME" javaType="java.util.Date" jdbcType="VARCHAR" />
       <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
@@ -40,9 +40,9 @@
       STATUS, FINISH, ACTUAL_FINISH_TIME, 
       COMID, REASON)
     values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
-      #{finishTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{finish,jdbcType=VARCHAR}, #{actualFinishTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+      #{finishTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{finish,jdbcType=VARCHAR}, #{actualFinishTime,jdbcType=VARCHAR}, 
       #{comid,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.workorder.model.WorkOrderInfo">
@@ -108,13 +108,13 @@
         #{content,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null">
-        #{startTime,jdbcType=TIMESTAMP},
+        #{startTime,jdbcType=VARCHAR},
       </if>
       <if test="finishTime != null">
-        #{finishTime,jdbcType=TIMESTAMP},
+        #{finishTime,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=VARCHAR},
       </if>
       <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
@@ -126,7 +126,7 @@
         #{finish,jdbcType=VARCHAR},
       </if>
       <if test="actualFinishTime != null">
-        #{actualFinishTime,jdbcType=TIMESTAMP},
+        #{actualFinishTime,jdbcType=VARCHAR},
       </if>
       <if test="comid != null">
         #{comid,jdbcType=VARCHAR},
@@ -152,13 +152,13 @@
         CONTENT = #{content,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null">
-        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+        START_TIME = #{startTime,jdbcType=VARCHAR},
       </if>
       <if test="finishTime != null">
-        FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+        FINISH_TIME = #{finishTime,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       </if>
       <if test="creator != null">
         CREATOR = #{creator,jdbcType=VARCHAR},
@@ -170,7 +170,7 @@
         FINISH = #{finish,jdbcType=VARCHAR},
       </if>
       <if test="actualFinishTime != null">
-        ACTUAL_FINISH_TIME = #{actualFinishTime,jdbcType=TIMESTAMP},
+        ACTUAL_FINISH_TIME = #{actualFinishTime,jdbcType=VARCHAR},
       </if>
       <if test="comid != null">
         COMID = #{comid,jdbcType=VARCHAR},
@@ -187,13 +187,13 @@
       TYPE = #{type,jdbcType=TINYINT},
       NAME = #{name,jdbcType=VARCHAR},
       CONTENT = #{content,jdbcType=VARCHAR},
-      START_TIME = #{startTime,jdbcType=TIMESTAMP},
-      FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      FINISH_TIME = #{finishTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATOR = #{creator,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=TINYINT},
       FINISH = #{finish,jdbcType=VARCHAR},
-      ACTUAL_FINISH_TIME = #{actualFinishTime,jdbcType=TIMESTAMP},
+      ACTUAL_FINISH_TIME = #{actualFinishTime,jdbcType=VARCHAR},
       COMID = #{comid,jdbcType=VARCHAR},
       REASON = #{reason,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
