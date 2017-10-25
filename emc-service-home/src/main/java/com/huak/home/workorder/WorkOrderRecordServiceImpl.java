@@ -1,4 +1,4 @@
-package com.huak.home;
+package com.huak.home.workorder;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.huak.workorder.dao.WorkOrderRecordDao;
@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  * Function List:  <BR>
  */
 @Service
-public class WorkOrderServiceImpl implements WorkOrderService {
+public class WorkOrderRecordServiceImpl implements WorkOrderRecordService {
 
     @Resource
     private WorkOrderRecordDao workOrderRecordDao;
