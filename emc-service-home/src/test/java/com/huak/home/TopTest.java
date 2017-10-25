@@ -1,6 +1,8 @@
 package com.huak.home;
 
 import com.huak.base.BaseTest;
+import com.huak.home.workorder.WorkOrderRecordService;
+import com.huak.workorder.vo.WorkOrderRecordA;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 
@@ -23,6 +25,9 @@ public class TopTest extends BaseTest{
 
     @Resource
     private  FrameService frameService;
+
+    @Resource
+    private WorkOrderRecordService workOrderService;
     @Test
     @Rollback
     public void getCostTotal(){
@@ -71,5 +76,12 @@ public class TopTest extends BaseTest{
 //        CostVo ss = frameService.selectFeedCostTotalByMap(params);
 //
 //        System.out.print(ss.getDevice());
+    }
+    @Test
+    @Rollback
+    public void testgd(){
+        String ss = "12345";
+        WorkOrderRecordA work = workOrderService.selectAllRecord(ss);
+        System.out.printf(work.getCode());
     }
 }

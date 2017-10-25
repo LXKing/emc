@@ -26,6 +26,7 @@ public class ComponentTest  extends BaseTest {
     private DateDao dateDao;
     @Autowired
     private HealthScoreRecordService healthScoreRecordService;
+
     @Test
     public void execute(){
         Map<String,Object> params = new HashMap<>();
@@ -77,6 +78,7 @@ public class ComponentTest  extends BaseTest {
             System.out.println(h.get(i).getAlarmName());
         }
     }
+
 //    @Test
 //    public void testAdd(){
 //        HealthScoreRecord h = new HealthScoreRecord();

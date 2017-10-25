@@ -1,4 +1,4 @@
-package com.huak.home;
+package com.huak.home.workorder;
 
 import com.huak.workorder.model.WorkOrderRecord;
 import com.huak.workorder.vo.WorkOrderRecordA;
@@ -16,9 +16,9 @@ import com.huak.workorder.vo.WorkOrderRecordA;
  * Function List:  <BR>
  */
 
-public interface WorkOrderService {
+public interface WorkOrderRecordService {
 
     void insertWorkOrderRecord(WorkOrderRecord record);
 
-    WorkOrderRecordA selectAllRecord(String code);
+    public WorkOrderRecordA selectAllRecord(String code);
 }
