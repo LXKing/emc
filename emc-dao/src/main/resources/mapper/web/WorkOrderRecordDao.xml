@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huak.workorder.dao.WorkOrderRecordDao">
+  <resultMap id="BaseResultMap" type="com.huak.workorder.model.WorkOrderRecord">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="OPERATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="OPERTOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SENDEE" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CODE, STATUS, OPERATE_TIME, OPERTOR, SENDEE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_emc_work_order_record
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_emc_work_order_record
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.huak.workorder.model.WorkOrderRecord">
+    insert into t_emc_work_order_record (ID, CODE, STATUS, 
+      OPERATE_TIME, OPERTOR, SENDEE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{operateTime,jdbcType=VARCHAR}, #{opertor,jdbcType=VARCHAR}, #{sendee,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huak.workorder.model.WorkOrderRecord">
+    insert into t_emc_work_order_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="operateTime != null">
+        OPERATE_TIME,
+      </if>
+      <if test="opertor != null">
+        OPERTOR,
+      </if>
+      <if test="sendee != null">
+        SENDEE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="opertor != null">
+        #{opertor,jdbcType=VARCHAR},
+      </if>
+      <if test="sendee != null">
+        #{sendee,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huak.workorder.model.WorkOrderRecord">
+    update t_emc_work_order_record
+    <set>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="operateTime != null">
+        OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="opertor != null">
+        OPERTOR = #{opertor,jdbcType=VARCHAR},
+      </if>
+      <if test="sendee != null">
+        SENDEE = #{sendee,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huak.workorder.model.WorkOrderRecord">
+    update t_emc_work_order_record
+    set CODE = #{code,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=TINYINT},
+      OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+      OPERTOR = #{opertor,jdbcType=VARCHAR},
+      SENDEE = #{sendee,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
