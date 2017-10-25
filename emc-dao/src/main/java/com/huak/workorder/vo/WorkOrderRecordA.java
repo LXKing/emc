@@ -1,8 +1,10 @@
-package com.huak.workorder.model;
+package com.huak.workorder.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class WorkOrderRecord {
+public class WorkOrderRecordA implements Serializable{
+    private static final long serialVersionUID = 2067628565652894835L;
     private String id;
 
     private String code;
@@ -19,7 +21,9 @@ public class WorkOrderRecord {
 
     private String des;
 
-    public WorkOrderRecord(String id, String code, Byte beforStatus, Date operateTime, String opertor, String sendee, Byte afterStatus, String des) {
+    private String userName;
+
+    public WorkOrderRecordA(String id, String code, Byte beforStatus, Date operateTime, String opertor, String sendee, Byte afterStatus, String des, String userName) {
         this.id = id;
         this.code = code;
         this.beforStatus = beforStatus;
@@ -28,9 +32,10 @@ public class WorkOrderRecord {
         this.sendee = sendee;
         this.afterStatus = afterStatus;
         this.des = des;
+        this.userName=userName;
     }
 
-    public WorkOrderRecord() {
+    public WorkOrderRecordA() {
         super();
     }
 
@@ -96,5 +101,11 @@ public class WorkOrderRecord {
 
     public void setDes(String des) {
         this.des = des == null ? null : des.trim();
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

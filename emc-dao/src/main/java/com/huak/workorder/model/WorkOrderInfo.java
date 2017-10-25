@@ -1,9 +1,10 @@
 package com.huak.workorder.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class WorkOrderInfo implements Serializable{
-    private static final long serialVersionUID = -8609021829001947047L;
+    private static final long serialVersionUID = -1758831625704939057L;
     private String id;
 
     private String code;
@@ -14,11 +15,11 @@ public class WorkOrderInfo implements Serializable{
 
     private String content;
 
-    private String startTime;
+    private Date startTime;
 
-    private String finishTime;
+    private Date finishTime;
 
-    private String createTime;
+    private Date createTime;
 
     private String creator;
 
@@ -26,11 +27,13 @@ public class WorkOrderInfo implements Serializable{
 
     private String finish;
 
-    private String actualFinishTime;
+    private Date actualFinishTime;
 
     private String comid;
 
-    public WorkOrderInfo(String id, String code, Byte type, String name, String content, String startTime, String finishTime, String createTime, String creator, Byte status, String finish, String actualFinishTime, String comid) {
+    private String reason;
+
+    public WorkOrderInfo(String id, String code, Byte type, String name, String content, Date startTime, Date finishTime, Date createTime, String creator, Byte status, String finish, Date actualFinishTime, String comid, String reason) {
         this.id = id;
         this.code = code;
         this.type = type;
@@ -44,6 +47,7 @@ public class WorkOrderInfo implements Serializable{
         this.finish = finish;
         this.actualFinishTime = actualFinishTime;
         this.comid = comid;
+        this.reason = reason;
     }
 
     public WorkOrderInfo() {
@@ -90,27 +94,27 @@ public class WorkOrderInfo implements Serializable{
         this.content = content == null ? null : content.trim();
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getFinishTime() {
+    public Date getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(String finishTime) {
+    public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -138,11 +142,11 @@ public class WorkOrderInfo implements Serializable{
         this.finish = finish == null ? null : finish.trim();
     }
 
-    public String getActualFinishTime() {
+    public Date getActualFinishTime() {
         return actualFinishTime;
     }
 
-    public void setActualFinishTime(String actualFinishTime) {
+    public void setActualFinishTime(Date actualFinishTime) {
         this.actualFinishTime = actualFinishTime;
     }
 
@@ -152,5 +156,13 @@ public class WorkOrderInfo implements Serializable{
 
     public void setComid(String comid) {
         this.comid = comid == null ? null : comid.trim();
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
     }
 }

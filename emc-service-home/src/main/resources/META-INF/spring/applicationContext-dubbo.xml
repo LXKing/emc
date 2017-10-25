@@ -34,6 +34,10 @@
     <dubbo:service interface="com.huak.home.component.HealthScoreRecordService" ref="healthScoreRecordService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="workOrderService" class="com.huak.home.WorkOrderServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.WorkOrderService" ref="workOrderService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <!--三级页面service注册-->
     <bean id="thiredpageEnergyService" class="com.huak.home.thiredpage.ThiredpageEnergyImpl"></bean>
     <dubbo:service interface="com.huak.home.thiredpage.ThiredpageEnergyService" ref="thiredpageEnergyService" timeout="3000" loadbalance="random"
