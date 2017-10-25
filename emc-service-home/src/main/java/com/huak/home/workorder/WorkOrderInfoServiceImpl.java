@@ -1,8 +1,15 @@
 package com.huak.home.workorder;
 
+import com.huak.workorder.dao.WorkOrderInfoDao;
+import com.huak.workorder.dao.WorkOrderRecordDao;
+import com.huak.workorder.dao.WorkOrderResetDao;
 import com.huak.workorder.model.WorkOrderInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -17,6 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    private WorkOrderInfoDao workOrderInfoDao;
+    @Resource
+    private WorkOrderRecordDao workOrderRecordDao;
+    @Resource
+    private WorkOrderResetDao workOrderResetDao;
     /**
      * 保存工单
      *
@@ -26,6 +41,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     @Override
     @Transactional(readOnly = true)
     public int saveA(WorkOrderInfo workOrder) {
+        logger.info("保存工单");
         return 0;
     }
 
@@ -39,6 +55,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     @Override
     @Transactional(readOnly = true)
     public int sendABorC(WorkOrderInfo workOrder) {
+        logger.info("派单员派送工单给班长");
         return 0;
     }
 
