@@ -38,7 +38,7 @@
     <dubbo:reference id="prestoreService"    interface="com.huak.prst.PrestoreService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="changeService"    interface="com.huak.prst.ChangeService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="meterCollectService"    interface="com.huak.mdc.MeterCollectService" timeout="720000" retries="0" check="true" version="${service.version}" />
-    <dubbo:reference id="workOrderService"    interface="com.huak.home.WorkOrderService" timeout="720000" retries="0" check="true" version="${service.version}" />
+
     <!--组件-->
     <dubbo:reference id="componentService"    interface="com.huak.home.component.ComponentService" timeout="120000"  check="true" version="${service.version}" />
     <dubbo:reference id="healthScoreRecordService"    interface="com.huak.home.component.HealthScoreRecordService" timeout="120000"  check="true" version="${service.version}" />
@@ -58,6 +58,7 @@
     <dubbo:reference id="searchService"    interface="com.huak.home.SearchService" timeout="120000"  check="true" version="${service.version}" />
     <dubbo:reference id="consAnalysisService"    interface="com.huak.home.ConsAnalysisService" timeout="120000"  check="true" version="${service.version}" />
     <dubbo:reference id="frameService"    interface="com.huak.home.FrameService" timeout="120000"  check="true" version="${service.version}" />
+    <dubbo:reference id="workOrderService"    interface="com.huak.home.workorder.WorkOrderRecordService" timeout="120000"  check="true" version="${service.version}" />
     <!--三级页面-->
     <dubbo:reference id="thiredpageEnergyService"  interface="com.huak.home.thiredpage.ThiredpageEnergyService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="thirdAnalysisService"    interface="com.huak.home.thiredpage.ThirdAnalysisService" timeout="120000"  check="true" version="${service.version}" />

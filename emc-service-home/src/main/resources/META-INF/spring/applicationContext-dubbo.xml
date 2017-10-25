@@ -34,10 +34,7 @@
     <dubbo:service interface="com.huak.home.component.HealthScoreRecordService" ref="healthScoreRecordService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
-    <bean id="workOrderService" class="com.huak.home.WorkOrderServiceImpl"></bean>
-    <dubbo:service interface="com.huak.home.WorkOrderService" ref="workOrderService" timeout="3000" loadbalance="random"
-                   executes="200"
-                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
     <!--三级页面service注册-->
     <bean id="thiredpageEnergyService" class="com.huak.home.thiredpage.ThiredpageEnergyImpl"></bean>
     <dubbo:service interface="com.huak.home.thiredpage.ThiredpageEnergyService" ref="thiredpageEnergyService" timeout="3000" loadbalance="random"
@@ -54,6 +51,10 @@
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="frameService" class="com.huak.home.FrameServiceImpl"></bean>
     <dubbo:service interface="com.huak.home.FrameService" ref="frameService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="workOrderService" class="com.huak.home.workorder.WorkOrderRecordServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.workorder.WorkOrderRecordService" ref="workOrderService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="thirdAnalysisService" class="com.huak.home.thiredpage.ThirdAnalysisServiceImpl"></bean>
