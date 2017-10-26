@@ -1,7 +1,6 @@
 package com.huak.workorder.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class WorkOrderRecordA implements Serializable{
     private static final long serialVersionUID = 2067628565652894835L;
@@ -9,21 +8,21 @@ public class WorkOrderRecordA implements Serializable{
 
     private String code;
 
-    private Byte beforStatus;
+    private Integer beforStatus;
 
-    private Date operateTime;
+    private String operateTime;
 
     private String opertor;
 
     private String sendee;
 
-    private Byte afterStatus;
+    private Integer afterStatus;
 
     private String des;
 
     private String userName;
 
-    public WorkOrderRecordA(String id, String code, Byte beforStatus, Date operateTime, String opertor, String sendee, Byte afterStatus, String des, String userName) {
+    public WorkOrderRecordA(String id, String code, Integer beforStatus, String operateTime, String opertor, String sendee, Integer afterStatus, String des, String userName) {
         this.id = id;
         this.code = code;
         this.beforStatus = beforStatus;
@@ -55,19 +54,19 @@ public class WorkOrderRecordA implements Serializable{
         this.code = code == null ? null : code.trim();
     }
 
-    public Byte getBeforStatus() {
+    public Integer getBeforStatus() {
         return beforStatus;
     }
 
-    public void setBeforStatus(Byte beforStatus) {
+    public void setBeforStatus(Integer beforStatus) {
         this.beforStatus = beforStatus;
     }
 
-    public Date getOperateTime() {
+    public String getOperateTime() {
         return operateTime;
     }
 
-    public void setOperateTime(Date operateTime) {
+    public void setOperateTime(String operateTime) {
         this.operateTime = operateTime;
     }
 
@@ -87,11 +86,11 @@ public class WorkOrderRecordA implements Serializable{
         this.sendee = sendee == null ? null : sendee.trim();
     }
 
-    public Byte getAfterStatus() {
+    public Integer getAfterStatus() {
         return afterStatus;
     }
 
-    public void setAfterStatus(Byte afterStatus) {
+    public void setAfterStatus(Integer afterStatus) {
         this.afterStatus = afterStatus;
     }
 
