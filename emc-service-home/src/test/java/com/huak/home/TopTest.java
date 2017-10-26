@@ -4,7 +4,8 @@ import com.huak.base.BaseTest;
 import com.huak.base.dao.DateDao;
 import com.huak.common.UUIDGenerator;
 import com.huak.home.workorder.WorkOrderRecordService;
-import com.huak.workorder.model.WorkOrderRecord;
+import com.huak.workorder.model.WorkOrderInfo;
+import com.huak.workorder.type.WorkOrderStatus;
 import com.huak.workorder.vo.WorkOrderRecordA;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
@@ -91,11 +92,51 @@ public class TopTest extends BaseTest{
     @Test
     @Rollback
     public void testinsert(){
-        WorkOrderRecord record = new WorkOrderRecord();
-        record.setId(UUIDGenerator.getUUID());
-        record.setCode(UUIDGenerator.getUUID());
-        record.setBeforStatus(Byte.valueOf("0"));
-        record.setOperateTime(dateDao.getTime());
-        workOrderService.insertWorkOrderRecord(record);
+//        WorkOrderRecord record = new WorkOrderRecord();
+//        record.setId(UUIDGenerator.getUUID());
+//        record.setCode(UUIDGenerator.getUUID());
+//        record.setBeforStatus(Byte.valueOf("0"));
+//        record.setOperateTime(dateDao.getTime());
+//        record.setOpertor("73155a30b2484c89b853d8683fca5935");
+//        record.setSendee("73155a30b2484c89b853d8683fca5935");
+//        record.setAfterStatus(Byte.valueOf("0"));
+//        record.setDes("sdsfdsfds");
+//        workOrderService.insertWorkOrderRecord(record);
+    }
+
+    @Test
+    @Rollback
+    public void testSendgd(){
+        String code = "12345";
+        WorkOrderRecordA work = workOrderService.selectAllRecord(code);
+        System.out.println(work.getCode());
+        //创建工单--controller
+
+        WorkOrderInfo workOrderInfo = new WorkOrderInfo();
+        workOrderInfo.setId(UUIDGenerator.getUUID());
+        workOrderInfo.setCode("123456");
+        workOrderInfo.setType(Byte.valueOf("0"));
+
+        workOrderInfo.setName("工单类型");
+        workOrderInfo.setContent("赶紧写代码，受不了了，快快滴");
+        workOrderInfo.setStartTime(dateDao.getTime());
+        workOrderInfo.setFinishTime(dateDao.getTime());
+        workOrderInfo.setCreateTime(dateDao.getTime());
+
+        workOrderInfo.setCreator("73155a30b2484c89b853d8683fca5935");
+        workOrderInfo.setStatus(1);
+        workOrderInfo.setFinish("73155a30b2484c89b853d8683fca5935");
+        workOrderInfo.setActualFinishTime(dateDao.getTime());
+        workOrderInfo.setComid("a3e5e868e7844c349e5cf51c5e6bc37d");
+        workOrderInfo.setReason("");
+        workOrderInfo.setMonitor("73155a30b2484c89b853d8683fca5935");
+        workOrderInfo.setTakor("73155a30b2484c89b853d8683fca5935");
+        //service 处理工单流转 更新工单当前状态
+        int i = workOrderService.sendABorC(workOrderInfo);
+        System.out.println(i);
+    }
+        public static void main(String[] args) {
+        System.out.println(WorkOrderStatus.A111.getKey());
+        System.out.println(WorkOrderStatus.R993.getStatus());
     }
 }
