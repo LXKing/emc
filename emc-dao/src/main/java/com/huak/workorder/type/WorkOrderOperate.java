@@ -12,21 +12,21 @@ package com.huak.workorder.type;
  * Function List:  <BR>
  */
 public enum WorkOrderOperate {
-    A_SAVE(11,"保存工单"),
-    A_SEND(12,"派送工单给"),
-    A_SAVE_SEND(13,"保存并派送工单给"),
-    A_RESET(14,"重新派送工单，流程结束"),
-    A_CONFIRM(15,"确认工单，流程结束"),
-    A_CLOSE(16,"关闭工单，流程结束"),
+    A_SAVE(11,"{1}保存工单"),
+    A_SEND(12,"{1}派送工单给{2}"),
+    A_SAVE_SEND(13,"{1}保存并派送工单给{2}"),
+    A_RESET(14,"{1}重新派送工单给{2}，流程结束"),
+    A_CONFIRM(15,"{1}确认工单，流程结束"),
+    A_CLOSE(16,"{1}关闭工单，流程结束"),
 
-    B_TAKING(21,"接受工单"),
-    B_BACK(22,"退回工单给"),
-    B_SEND(23,"派送工单给"),
-    B_FINISH(24,"完成工单"),
+    B_TAKING(21,"{1}接受工单"),
+    B_BACK(22,"{1}退回工单给{2}"),
+    B_SEND(23,"{1}派送工单给{2}"),
+    B_FINISH(24,"{1}完成工单,待{2}确认"),
 
-    C_TAKING(31,"接受工单"),
-    C_BACK(32,"退回工单给"),
-    C_FINISH(33,"完成工单");
+    C_TAKING(31,"{1}接受工单"),
+    C_BACK(32,"{1}退回工单给{2}"),
+    C_FINISH(33,"{1}完成工单,待{2}确认");
 
     private int key;
     private String value;
