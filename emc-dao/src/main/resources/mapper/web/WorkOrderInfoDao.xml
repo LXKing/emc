@@ -222,4 +222,11 @@
       TAKOR = #{takor,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="getToDayNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        COUNT(id)+1 num
+        from t_emc_work_order_info
+        where DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
+        and COMID = #{comId,jdbcType=VARCHAR}
+    </select>
 </mapper>
