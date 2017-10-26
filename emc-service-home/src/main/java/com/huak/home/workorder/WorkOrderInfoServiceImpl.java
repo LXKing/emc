@@ -1,9 +1,14 @@
 package com.huak.home.workorder;
 
+import com.huak.base.dao.DateDao;
+import com.huak.common.UUIDGenerator;
 import com.huak.workorder.dao.WorkOrderInfoDao;
 import com.huak.workorder.dao.WorkOrderRecordDao;
 import com.huak.workorder.dao.WorkOrderResetDao;
 import com.huak.workorder.model.WorkOrderInfo;
+import com.huak.workorder.model.WorkOrderRecord;
+import com.huak.workorder.type.WorkOrderOperate;
+import com.huak.workorder.type.WorkOrderStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,6 +37,8 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     private WorkOrderRecordDao workOrderRecordDao;
     @Resource
     private WorkOrderResetDao workOrderResetDao;
+    @Resource
+    private DateDao dateDao;
     /**
      * 保存工单
      *
@@ -40,9 +47,28 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int saveA(WorkOrderInfo workOrder) {
+    public void saveA(WorkOrderInfo workOrder) {
         logger.info("保存工单");
-        return 0;
+        String dateTime = dateDao.getTime();
+        //todo 生成code
+        String code = "";
+        //封装工单
+        workOrder.setId(UUIDGenerator.getUUID());
+        workOrder.setCode(code);
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        workOrderInfoDao.insertSelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -54,12 +80,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int sendABorC(WorkOrderInfo workOrder) {
+    public void sendABorC(WorkOrderInfo workOrder) {
         logger.info("派单员派送工单给班长");
-        
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
         workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
-        
-        return 0;
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -71,9 +111,27 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int saveAndSendABorC(WorkOrderInfo workOrder) {
+    public void saveAndSendABorC(WorkOrderInfo workOrder) {
         logger.info("派单员保存工单并派送工单给班长");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
+
     }
 
     /**
@@ -85,9 +143,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int takingB(WorkOrderInfo workOrder) {
+    public void takingB(WorkOrderInfo workOrder) {
         logger.info("班长接单");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -99,9 +174,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int backB(WorkOrderInfo workOrder) {
+    public void backB(WorkOrderInfo workOrder) {
         logger.info("班长退单");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -113,9 +205,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int finishB(WorkOrderInfo workOrder) {
+    public void finishB(WorkOrderInfo workOrder) {
         logger.info("班长完成");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -127,9 +236,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int confirmAB(WorkOrderInfo workOrder) {
+    public void confirmAB(WorkOrderInfo workOrder) {
         logger.info("班长完成派单员确认");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -141,9 +267,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int resetFinishAB(WorkOrderInfo workOrder) {
+    public void resetFinishAB(WorkOrderInfo workOrder) {
         logger.info("班长完成派单员重新派送");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -155,9 +298,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int closeAB(WorkOrderInfo workOrder) {
+    public void closeAB(WorkOrderInfo workOrder) {
         logger.info("班长退单派单员关闭");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -169,9 +329,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int resetBackAB(WorkOrderInfo workOrder) {
+    public void resetBackAB(WorkOrderInfo workOrder) {
         logger.info("班长退单派单员重新派送");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -183,9 +360,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int sendAC(WorkOrderInfo workOrder) {
+    public void sendAC(WorkOrderInfo workOrder) {
         logger.info("派单员派送工单接单员");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -197,9 +391,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int saveAndSendAC(WorkOrderInfo workOrder) {
+    public void saveAndSendAC(WorkOrderInfo workOrder) {
         logger.info("派单员保存工单并派送工单接单员");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -211,9 +422,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int takingC(WorkOrderInfo workOrder) {
+    public void takingC(WorkOrderInfo workOrder) {
         logger.info("接单员接单");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -225,9 +453,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int backC(WorkOrderInfo workOrder) {
+    public void backC(WorkOrderInfo workOrder) {
         logger.info("接单员退单");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -239,9 +484,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int finishC(WorkOrderInfo workOrder) {
+    public void finishC(WorkOrderInfo workOrder) {
         logger.info("接单员完成");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -253,9 +515,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int confirmAC(WorkOrderInfo workOrder) {
+    public void confirmAC(WorkOrderInfo workOrder) {
         logger.info("接单员完成派单员确认");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -267,9 +546,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int resetFinishAC(WorkOrderInfo workOrder) {
+    public void resetFinishAC(WorkOrderInfo workOrder) {
         logger.info("接单员完成派单员重新派送");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -281,9 +577,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int closeAC(WorkOrderInfo workOrder) {
+    public void closeAC(WorkOrderInfo workOrder) {
         logger.info("接单员退单派单员关闭");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 
     /**
@@ -295,8 +608,25 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public int resetBackAC(WorkOrderInfo workOrder) {
+    public void resetBackAC(WorkOrderInfo workOrder) {
         logger.info("接单员退单派单员重新派送");
-        return 0;
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.A111.getKey());
+        //派单
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.E000.getKey());
+        record.setAfterStatus(WorkOrderStatus.A111.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(null);
+        record.setDes(WorkOrderOperate.A_SAVE.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 }
