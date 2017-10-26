@@ -168,4 +168,44 @@ public interface WorkOrderInfoService {
      * @return
      */
     void resetBackAC(WorkOrderInfo workOrder, String EmployeeId);
+
+    /**
+     * a-b/a-b-c
+     * ab派送工单c
+     * @param workOrder
+     * @return
+     */
+    int sendABorCRecord(WorkOrderInfo workOrder);
+    /**
+     * ab-c c退工单回A
+     * b退单
+     * @param workOrder
+     * @return
+     */
+    int backARecord(WorkOrderInfo workOrder);
+    /**
+     * a-b-c
+     * c完成
+     * @param workOrder
+     * @return
+     */
+    int finishCRecord(WorkOrderInfo workOrder);
+
+
+    /**
+     * c-a
+     * c退单a重新派送
+     * @param workOrder
+     * @return
+     */
+    int resetBackABCRecord(WorkOrderInfo workOrder);
+
+    /**
+     * a-b-c
+     * c完成a确认
+     * @param workOrder
+     * @return
+     */
+    int confirmACRecord(WorkOrderInfo workOrder);
+
 }

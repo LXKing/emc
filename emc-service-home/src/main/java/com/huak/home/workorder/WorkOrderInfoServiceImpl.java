@@ -648,4 +648,92 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setDes(WorkOrderOperate.A_RESET.getValue());
         workOrderRecordDao.insertSelective(record);
     }
+    @Override
+    public int sendABorCRecord(WorkOrderInfo workOrder) {
+        logger.info("班长发送工单到接单员");
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.B214.getKey());
+        record.setOperateTime(dateDao.getTime());
+        record.setOpertor(workOrder.getMonitor());
+        record.setSendee(workOrder.getTakor());
+        record.setAfterStatus(WorkOrderStatus.C311.getKey());
+        record.setDes("班长发送工单到接单员");
+        //更新当前工单状态
+        workOrder.setStatus(WorkOrderStatus.C311.getKey());
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+        return workOrderRecordDao.insertSelective(record);
+    }
+    @Override
+    public int backARecord(WorkOrderInfo workOrder) {
+        logger.info("接单员退回工单到派单员");
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.C311.getKey());
+        record.setOperateTime(dateDao.getTime());
+        record.setOpertor(workOrder.getMonitor());
+        record.setSendee(workOrder.getTakor());
+        record.setAfterStatus(WorkOrderStatus.C312.getKey());
+        record.setDes("接单员退回工单到派单员");
+        //更新当前工单状态 包括退回原因
+        workOrder.setStatus(WorkOrderStatus.C312.getKey());
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+        return workOrderRecordDao.insertSelective(record);
+    }
+
+    @Override
+    public int finishCRecord(WorkOrderInfo workOrder) {
+        logger.info("接单员端确认并且完成");
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.C311.getKey());
+        record.setOperateTime(dateDao.getTime());
+        record.setOpertor(workOrder.getMonitor());
+        record.setSendee(workOrder.getTakor());
+        record.setAfterStatus(WorkOrderStatus.C311.getKey());
+        record.setDes("接单员端确认并且完成");
+        //更新当前工单状态
+        workOrder.setStatus(WorkOrderStatus.C311.getKey());
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+        return workOrderRecordDao.insertSelective(record);
+    }
+
+    @Override
+    public int confirmACRecord(WorkOrderInfo workOrder) {
+        logger.info("接端确认并且完成等待派单员确认完成且派单员确认完成");
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.C311.getKey());
+        record.setOperateTime(dateDao.getTime());
+        record.setOpertor(workOrder.getMonitor());
+        record.setSendee(workOrder.getTakor());
+        record.setAfterStatus(WorkOrderStatus.A121.getKey());
+        record.setDes("接端确认并且完成等待派单员确认完成且派单员确认完成");
+        //更新当前工单状态
+        workOrder.setStatus(WorkOrderStatus.A121.getKey());
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+        return workOrderRecordDao.insertSelective(record);
+    }
+    @Override
+    public int resetBackABCRecord(WorkOrderInfo workOrder) {
+        logger.info("派单员关闭退单，且派单员重新发送到班长");
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());//重新发送，工单号为新工单号，与旧工单号无关(状态有关)
+        record.setBeforStatus(WorkOrderStatus.C312.getKey());
+        record.setOperateTime(dateDao.getTime());
+        record.setOpertor(workOrder.getMonitor());
+        record.setSendee(workOrder.getTakor());
+        record.setAfterStatus(WorkOrderStatus.A131.getKey());
+        record.setDes("派单员关闭退单，且派单员重新发送到班长");
+        //更新当前工单状态  工单号为新工单号 (状态有关，延续之前状态)
+        workOrder.setStatus(WorkOrderStatus.A131.getKey());
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+        return workOrderRecordDao.insertSelective(record);
+    }
+
 }
