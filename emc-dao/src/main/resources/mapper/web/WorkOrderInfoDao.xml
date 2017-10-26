@@ -12,16 +12,18 @@
       <arg column="FINISH_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="FINISH" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ACTUAL_FINISH_TIME" javaType="java.util.Date" jdbcType="VARCHAR" />
       <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MONITOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TAKOR" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     ID, CODE, TYPE, NAME, CONTENT, START_TIME, FINISH_TIME, CREATE_TIME, CREATOR, STATUS, 
-    FINISH, ACTUAL_FINISH_TIME, COMID, REASON
+    FINISH, ACTUAL_FINISH_TIME, COMID, REASON, MONITOR, TAKOR
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -38,12 +40,14 @@
       NAME, CONTENT, START_TIME, 
       FINISH_TIME, CREATE_TIME, CREATOR, 
       STATUS, FINISH, ACTUAL_FINISH_TIME, 
-      COMID, REASON)
+      COMID, REASON, MONITOR, 
+      TAKOR)
     values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
       #{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
       #{finishTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{finish,jdbcType=VARCHAR}, #{actualFinishTime,jdbcType=VARCHAR}, 
-      #{comid,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR})
+      #{status,jdbcType=INTEGER}, #{finish,jdbcType=VARCHAR}, #{actualFinishTime,jdbcType=VARCHAR}, 
+      #{comid,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{monitor,jdbcType=VARCHAR}, 
+      #{takor,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.workorder.model.WorkOrderInfo">
     insert into t_emc_work_order_info
@@ -90,6 +94,12 @@
       <if test="reason != null">
         REASON,
       </if>
+      <if test="monitor != null">
+        MONITOR,
+      </if>
+      <if test="takor != null">
+        TAKOR,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -120,7 +130,7 @@
         #{creator,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="finish != null">
         #{finish,jdbcType=VARCHAR},
@@ -133,6 +143,12 @@
       </if>
       <if test="reason != null">
         #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="monitor != null">
+        #{monitor,jdbcType=VARCHAR},
+      </if>
+      <if test="takor != null">
+        #{takor,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -164,7 +180,7 @@
         CREATOR = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        STATUS = #{status,jdbcType=TINYINT},
+        STATUS = #{status,jdbcType=INTEGER},
       </if>
       <if test="finish != null">
         FINISH = #{finish,jdbcType=VARCHAR},
@@ -177,6 +193,12 @@
       </if>
       <if test="reason != null">
         REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="monitor != null">
+        MONITOR = #{monitor,jdbcType=VARCHAR},
+      </if>
+      <if test="takor != null">
+        TAKOR = #{takor,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
@@ -191,11 +213,13 @@
       FINISH_TIME = #{finishTime,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATOR = #{creator,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=TINYINT},
+      STATUS = #{status,jdbcType=INTEGER},
       FINISH = #{finish,jdbcType=VARCHAR},
       ACTUAL_FINISH_TIME = #{actualFinishTime,jdbcType=VARCHAR},
       COMID = #{comid,jdbcType=VARCHAR},
-      REASON = #{reason,jdbcType=VARCHAR}
+      REASON = #{reason,jdbcType=VARCHAR},
+      MONITOR = #{monitor,jdbcType=VARCHAR},
+      TAKOR = #{takor,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

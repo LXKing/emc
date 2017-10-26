@@ -1,10 +1,9 @@
 package com.huak.workorder.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class WorkOrderInfo implements Serializable{
-    private static final long serialVersionUID = -1758831625704939057L;
+    private static final long serialVersionUID = 8403971488402595499L;
     private String id;
 
     private String code;
@@ -23,17 +22,21 @@ public class WorkOrderInfo implements Serializable{
 
     private String creator;
 
-    private Byte status;
+    private Integer status;
 
     private String finish;
 
-    private Date actualFinishTime;
+    private String actualFinishTime;
 
     private String comid;
 
     private String reason;
 
-    public WorkOrderInfo(String id, String code, Byte type, String name, String content, String startTime, String finishTime, String createTime, String creator, Byte status, String finish, Date actualFinishTime, String comid, String reason) {
+    private String monitor;
+
+    private String takor;
+
+    public WorkOrderInfo(String id, String code, Byte type, String name, String content, String startTime, String finishTime, String createTime, String creator, Integer status, String finish, String actualFinishTime, String comid, String reason, String monitor, String takor) {
         this.id = id;
         this.code = code;
         this.type = type;
@@ -48,6 +51,8 @@ public class WorkOrderInfo implements Serializable{
         this.actualFinishTime = actualFinishTime;
         this.comid = comid;
         this.reason = reason;
+        this.monitor = monitor;
+        this.takor = takor;
     }
 
     public WorkOrderInfo() {
@@ -126,11 +131,11 @@ public class WorkOrderInfo implements Serializable{
         this.creator = creator == null ? null : creator.trim();
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -142,11 +147,11 @@ public class WorkOrderInfo implements Serializable{
         this.finish = finish == null ? null : finish.trim();
     }
 
-    public Date getActualFinishTime() {
+    public String getActualFinishTime() {
         return actualFinishTime;
     }
 
-    public void setActualFinishTime(Date actualFinishTime) {
+    public void setActualFinishTime(String actualFinishTime) {
         this.actualFinishTime = actualFinishTime;
     }
 
@@ -164,5 +169,21 @@ public class WorkOrderInfo implements Serializable{
 
     public void setReason(String reason) {
         this.reason = reason == null ? null : reason.trim();
+    }
+
+    public String getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(String monitor) {
+        this.monitor = monitor == null ? null : monitor.trim();
+    }
+
+    public String getTakor() {
+        return takor;
+    }
+
+    public void setTakor(String takor) {
+        this.takor = takor == null ? null : takor.trim();
     }
 }
