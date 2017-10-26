@@ -42,9 +42,9 @@ public class StringUtils {
     }
 
     public static boolean isEmpty(Object obj) {
-        if(obj!=null&&!obj.toString().trim().equals("")){
+        if (obj != null && !obj.toString().trim().equals("")) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -52,17 +52,38 @@ public class StringUtils {
     /**
      * 解析公式里面的所有code
      * code A00112
+     *
      * @param formula
      * @return
      */
-    public static List<String> paresCodes(String formula){
+    public static List<String> paresCodes(String formula) {
         String A = "A[0-9]{5}";
         List<String> list = new ArrayList<>();
         Pattern pattern = Pattern.compile(A);
         Matcher matcher = pattern.matcher(formula);
-        while (matcher.find()){
+        while (matcher.find()) {
             list.add(matcher.group());
         }
         return list;
+    }
+
+    /**
+     * 字符串前补位
+     *
+     * @param str    原字符串
+     * @param pad    补位字符
+     * @param length 最后长度
+     * @return
+     */
+    public static String cover(String str, String pad, int length) {
+        if (str.length() >= length) {
+            return str;
+        }
+
+        int l = length - str.length();
+        for (int i = 0; i < l; i++) {
+            str = pad.concat(str);
+        }
+        return str;
     }
 }
