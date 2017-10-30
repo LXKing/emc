@@ -22,6 +22,9 @@ document.onkeydown = function(e){
 //以下为官方示例
 $(function () {
     $("#login").click(function(){
+            var index = top.layer.load(1, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
             $.ajax({
                 url:ctx + '/login-in?' + Math.random(),
                 data:$('form').serialize(),
@@ -32,8 +35,9 @@ $(function () {
                         window.location.replace(ctx + "/index");
                     }else{
                         $('.login-error').remove();
-                        $("#login").after('<span style="color: red;" class="help-block m-b-none login-error"><i class="fa fa-times-circle"></i> '+result.msg+'</span>');
-                        $('.ver-code-img').click();
+                        $("#msg").append('<span style="color: red;" class="help-block m-b-none login-error"><i class="fa fa-times-circle"></i> '+result.msg+'</span>');
+                        //$('.ver-code-img').click();
+                        top.layer.close(index);
                     }
                 }
             })

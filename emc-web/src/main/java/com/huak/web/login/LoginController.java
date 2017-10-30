@@ -2,7 +2,9 @@ package com.huak.web.login;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Producer;
+import com.huak.auth.EmployeeService;
 import com.huak.auth.UserService;
+import com.huak.auth.model.Employee;
 import com.huak.auth.model.User;
 import com.huak.auth.type.UserStatusType;
 import com.huak.base.ReversibleEncryption;
@@ -53,6 +55,8 @@ public class LoginController {
     private Producer captchaProducer;
     @Resource
     private ReversibleEncryption reversibleEncryption;
+    @Resource
+    private EmployeeService employeeService;
 
     private String IS_LOGIN = "isLogin";
     @RequestMapping(value = "/login")
@@ -79,15 +83,15 @@ public class LoginController {
         JSONObject jo = new JSONObject();
         jo.put(IS_LOGIN, true);
         try {
-            String kpvc = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-            // 校验验证码
-            if (kpvc.equals(vc)) {
-                jo.put(IS_LOGIN, true);
-            } else {
-                jo.put(IS_LOGIN, false);
-                jo.put("msg", "验证码错误");
-                return jo.toJSONString();
-            }
+//            String kpvc = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+//            // 校验验证码
+//            if (kpvc.equals(vc)) {
+//                jo.put(IS_LOGIN, true);
+//            } else {
+//                jo.put(IS_LOGIN, false);
+//                jo.put("msg", "验证码错误");
+//                return jo.toJSONString();
+//            }
             // 校验用户密码
             pwd = reversibleEncryption.encode(pwd);
             User loginUser = new User();
@@ -100,9 +104,12 @@ public class LoginController {
                     String id = user.getId();
                     Org org = orgService.selectByPrimaryKey(user.getOrgId());
                     Company company = companyService.selectByPrimaryKey(org.getComId());
+                    Employee employee = employeeService.getEmployeeByUserId(id);
                     session.setAttribute(Constants.SESSION_KEY, user);
                     session.setAttribute(Constants.SESSION_ORG_KEY, org);
                     session.setAttribute(Constants.SESSION_COM_KEY, company);
+                    //员工信息
+                    session.setAttribute(Constants.SESSION_EMPLOYEE_KEY, employee);
                     //权限
                     session.setAttribute(com.huak.common.Constants.SESSION_AUTH_KEY, userService.getAuths(id));
                     userService.update2LoginSuccess(id);
