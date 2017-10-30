@@ -132,8 +132,8 @@ public class TopTest extends BaseTest{
         workOrderInfo.setMonitor("73155a30b2484c89b853d8683fca5935");
         workOrderInfo.setTakor("73155a30b2484c89b853d8683fca5935");
         //service 处理工单流转 更新工单当前状态
-        int i = workOrderService.sendABorC(workOrderInfo);
-        System.out.println(i);
+//        int i = workOrderService.sendABorC(workOrderInfo);
+//        System.out.println(i);
     }
         public static void main(String[] args) {
         System.out.println(WorkOrderStatus.A111.getKey());
