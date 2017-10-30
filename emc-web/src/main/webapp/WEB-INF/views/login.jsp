@@ -24,10 +24,10 @@
         <div class="title">能源管控中心 &#183; 供热版</div>
         <div class="d1"><input type="text" maxlength="64" name="login" placeholder="请输入用户名" /></div>
         <div class="d2"><input type="password" maxlength="64" name="pwd"  placeholder="请输入您的密码" /></div>
-        <%--<div class="d3">--%>
-            <%--<label><input type="checkbox" />下次自动登录</label>--%>
-            <%--<a>忘记密码</a>--%>
-        <%--</div>--%>
+        <div class="d3">
+            <label><input type="checkbox" id="isAutoLogin"/>下次自动登录</label>
+            <a>忘记密码</a>
+        </div>
         <a class="btnsubmit" id="login">登  录  系  统</a>
         <div style="text-align: center" id="msg"></div>
     </div>
