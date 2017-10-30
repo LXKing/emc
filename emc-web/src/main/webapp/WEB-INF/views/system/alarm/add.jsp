@@ -39,9 +39,8 @@
                             class="red">*</span>点名：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="tag" name="tag" class="chosen-select form-control">
+                        <input name="tag" class="form-control inputs-lg"  type="text" maxlength="32" placeholder="请输入点名">
 
-                        </select>
                     </div>
                 </div>
 
@@ -159,7 +158,7 @@
         //加载用能单位
         getUnitSelect();
         //加载tag
-        getTagSelect();
+        //getTagSelect();
 
         //小数校验
         $.validator.addMethod("isFloat", function(value, element){
@@ -219,7 +218,7 @@
                     required: icon + "请选择用能单位"
                 },
                 tag: {
-                    required: icon + "请选择点名"
+                    required: icon + "请输入点名"
                 },
                 alarmName: {
                     required: icon + "请输入报警描述"
@@ -270,19 +269,19 @@
         });
     }
 
-    function getTagSelect() {
-        $.ajax({
-            url: _web + '/select/tags',
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                var $element = $("#tag");
-                $element.empty();
-                $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.TAG + '">' + item.TAG + '</option>');
-                });
-                $element.chosen("destroy").chosen();
-            }
-        });
-    }
+//    function getTagSelect() {
+//        $.ajax({
+//            url: _web + '/select/tags',
+//            type: 'POST',
+//            dataType: 'json',
+//            success: function (result) {
+//                var $element = $("#tag");
+//                $element.empty();
+//                $.each(result, function (idx, item) {
+//                    $element.append('<option value="' + item.TAG + '">' + item.TAG + '</option>');
+//                });
+//                $element.chosen("destroy").chosen();
+//            }
+//        });
+//    }
 </script>
