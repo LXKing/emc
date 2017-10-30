@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <%--<meta name="renderer" content="webkit">--%>
     <meta name="decorator" content="login"/>
-    <title>能源管控中心后台管理系统 - 登录</title>
+    <title>能源管控中心 - 登录</title>
     <script src="${web}/script/huak.login.js"></script>
     <script>
         var ctx = '${web}';
@@ -21,13 +21,13 @@
     <h1><img src="${web}/static/img/login_logo.png"></h1>
     <form id="form" onsubmit="false" autocomplete="off">
     <div class="form">
-        <div class="title">能源管控系统 &#183; 供热版</div>
+        <div class="title">能源管控中心 &#183; 供热版</div>
         <div class="d1"><input type="text" maxlength="64" name="login" placeholder="请输入用户名" /></div>
         <div class="d2"><input type="password" maxlength="64" name="pwd"  placeholder="请输入您的密码" /></div>
-        <div class="d3">
-            <label><input type="checkbox" />下次自动登录</label>
-            <a>忘记密码</a>
-        </div>
+        <%--<div class="d3">--%>
+            <%--<label><input type="checkbox" />下次自动登录</label>--%>
+            <%--<a>忘记密码</a>--%>
+        <%--</div>--%>
         <a class="btnsubmit" id="login">登  录  系  统</a>
         <div style="text-align: center" id="msg"></div>
     </div>
