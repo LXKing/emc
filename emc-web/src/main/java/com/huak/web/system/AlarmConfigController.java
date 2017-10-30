@@ -163,6 +163,7 @@ public class AlarmConfigController extends BaseController {
         String workBookName = "工况报警配置列表";//文件名
         Map<String, String> cellName = new LinkedHashMap<>();//列标题(有序)
 
+        cellName.put("ID", "主键(存在即修改)");
         cellName.put("TAG", "点名");
         cellName.put("ALARM_NAME", "描述");
         cellName.put("ALARM_TYPE", "类型0-开关1-模拟");
