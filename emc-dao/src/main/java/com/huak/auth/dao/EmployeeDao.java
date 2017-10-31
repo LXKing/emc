@@ -77,4 +77,20 @@ public interface EmployeeDao {
      * @return
      */
     List<Map<String,Object>> export(Map<String, Object> paramsMap);
+
+    /**
+     * 根据用户查询员工，可能是空的
+     * @param userId
+     * @return
+     */
+    Employee getEmployeeByUserId(String userId);
+
+    /**
+     * 根据班长的主键找到下级员工的信息列表
+     * @param pid
+     * @return
+     */
+    List<Employee> getEmployeeByPId(String pid);
+
+    List<Map<String,Object>> selectAllOrderEmployee(Map<String, Object> paramsMap);
 }

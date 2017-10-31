@@ -3,7 +3,7 @@
 <mapper namespace="com.huak.auth.dao.EmployeeDao">
     <resultMap id="BaseResultMap" type="com.huak.auth.model.Employee">
         <constructor>
-            <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="ORG_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
             <arg column="EMP_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="SEX" javaType="java.lang.Byte" jdbcType="TINYINT" />
@@ -23,11 +23,11 @@
         ID, ORG_ID, EMP_NAME, SEX, AGE, BIRTHDAY, JOB_NUM, TEL, PHONE, EMAIL, MEMO, CREATOR,
         CREATE_TIME,STATUS
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_emc_auth_employee
-        where ID = #{id,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=VARCHAR}
     </select>
 
     <select id="selectPageByMap" parameterType="java.util.Map"  resultMap="BaseResultMap">
@@ -132,7 +132,7 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from t_emc_auth_employee
-        where ID = #{id,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=VARCHAR}
     </delete>
     <update id="deleteByStatus" parameterType="java.lang.String">
         update t_emc_auth_employee
@@ -147,7 +147,7 @@
         TEL, PHONE, EMAIL,
         MEMO, CREATOR, CREATE_TIME,STATUS
         )
-        values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{empName,jdbcType=VARCHAR},
+        values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{empName,jdbcType=VARCHAR},
         #{sex,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR},
         #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
         #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
@@ -201,7 +201,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=BIGINT},
+                #{id,jdbcType=VARCHAR},
             </if>
             <if test="orgId != null">
                 #{orgId,jdbcType=BIGINT},
@@ -313,4 +313,42 @@
         where ID in
         <foreach  index="index" item="id" collection="array" open="(" separator="," close=")"> #{id} </foreach>
     </delete>
+
+    <select id="getEmployeeByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_employee
+        where USERID = #{userId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllOrderEmployee" parameterType="java.util.HashMap" resultType="java.util.Map">
+        SELECT
+	e.ID employeeId,
+	e.EMP_NAME employeeName,
+	r.ID roleId,
+	r.ROLE_NAME roleName
+FROM
+	t_emc_auth_employee e,
+	t_emc_auth_user u,
+	t_emc_auth_role_user_rel ru,
+	t_emc_auth_role r,
+	t_emc_org o
+WHERE
+	e.USERID = u.ID
+AND ru.USER_ID = u.ID
+AND r.ID = ru.ROLE_ID
+AND e.ORG_ID = o.ID
+AND e. STATUS = 0
+AND u.USE_STATUS = 0
+AND (r.ID ='57acca2ba1aa4122a0d748de2b6bdf70' OR r.ID = 'd6e1edaf99fa4acaba3ddf1632842a20')
+AND o.COM_ID = 'a3e5e868e7844c349e5cf51c5e6bc37d'
+ORDER BY r.ID ASC,e.EMP_NAME DESC
+    </select>
+
+    <select id="getEmployeeByPId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_emc_auth_employee
+        where PID = #{pid,jdbcType=VARCHAR}
+    </select>
 </mapper>

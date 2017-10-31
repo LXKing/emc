@@ -2000,12 +2000,12 @@ function chart13Fun() {
                 var recentdata = result.object;
                 var recenthtml = "";
                 var recentlisthtml = "";
-                var unitlist = ['T/万m²', 'kW·h/万m²', 'm³/万m²', 'GJ/万m²'];
+                //var unitlist = ['T/万m²', 'kW·h/万m²', 'm³/万m²', 'GJ/万m²'];
                 for (var i = 0; i < recentdata.length; i++) {
                     recenthtml += "<div>" + recentdata[i].value + "<p>标煤</p></div>";
                     recentlisthtml += "<ul>";
                     for (var j = 0; j < recentdata[i].list.length; j++) {
-                        recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span><span>" + unitlist[j] + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : (recentdata[i].list[j].trend == 2 ? "↓" : "→")) + "</span></li>";
+                        recentlisthtml += "<li><p><span>" + recentdata[i].list[j].value + "</span></p><span>" + recentdata[i].list[j].value2 + "</span><span  >" + (recentdata[i].list[j].trend == 1 ? "↑" : (recentdata[i].list[j].trend == 2 ? "↓" : "→")) + "</span></li>";
                     }
                     recentlisthtml += "</ul>";
                 }

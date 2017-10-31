@@ -105,4 +105,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Map<String, Object>> export(Map<String, Object> paramsMap) {
         return employeeDao.export(paramsMap);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Employee getEmployeeByUserId(String userId) {
+        return employeeDao.getEmployeeByUserId(userId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Employee> getEmployeeByPId(String pid) {
+        return employeeDao.getEmployeeByPId(pid);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectAllOrderEmployee(Map<String, Object> paramsMap) {
+        return employeeDao.selectAllOrderEmployee(paramsMap);
+    }
 }

@@ -193,10 +193,10 @@
                 <div>今天</div>
             </div>
             <div id="recenttitle" class="clearfix">
-                <div>水</div>
-                <div>电</div>
-                <div>气</div>
-                <div>热</div>
+                <div>水<br><span>(T/万m²)</span></div>
+                <div>电<br><span>(kW·h/万m²)</span></div>
+                <div>气<br><span>(m³/万m²)</span></div>
+                <div>热<br><span>(GJ/万m²)</span></div>
             </div>
             <div id="recentlist" class="clearfix"></div>
         </div>

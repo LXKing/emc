@@ -64,4 +64,10 @@ public interface EmployeeService {
      * @return
      */
     List<Map<String,Object>> export(Map<String, Object> paramsMap);
+
+    Employee getEmployeeByUserId(String userId);
+
+    List<Employee> getEmployeeByPId(String pid);
+
+    List<Map<String,Object>> selectAllOrderEmployee(Map<String, Object> paramsMap);
 }

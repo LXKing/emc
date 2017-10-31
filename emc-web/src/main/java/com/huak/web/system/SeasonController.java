@@ -48,7 +48,7 @@ public class SeasonController {
     public String listPage() {
         logger.info("转至系统采暖季列表页");
 
-        return "/sys/season/list";
+        return "/system/season/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
@@ -69,7 +69,7 @@ public class SeasonController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPage(Model model) {
         model.addAttribute("todayNow", seasonService.getNowTime());
-        return "/sys/season/add";
+        return "/system/season/add";
     }
 
     @ResponseBody
@@ -136,7 +136,7 @@ public class SeasonController {
         } catch (Exception e) {
             logger.error("跳转修改采暖页异常" + e.getMessage());
         }
-        return "/sys/season/edit";
+        return "/system/season/edit";
     }
     @ResponseBody
     @RequestMapping(value = "/editvalue", method = RequestMethod.POST)
