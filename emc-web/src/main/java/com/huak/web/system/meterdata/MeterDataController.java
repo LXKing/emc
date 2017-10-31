@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -51,8 +49,8 @@ public class MeterDataController {
     @Resource
     private ChangeService changeService;
     private static AtomicLong counter = new AtomicLong(0L);
-    private static String UPLOAD_TEMP_DIR = "/usr/software/upload/sysmagent";
-    private static String UPLOAD_TEMP_DIR1 = "D:\\workSp\\code\\upload";
+    @Value("${upload.file.dir}")
+    private String UPLOAD_FILE_DIR;
 
     private static final String COM_ID = "comId";
     /**
@@ -75,7 +73,8 @@ public class MeterDataController {
     @RequestMapping(value = "/uploadPage", method = RequestMethod.GET)
     public String toUpload(Model model) {
         logger.info(" 前台-安全与后台-跳转至计量器具导入跳转");
-        return "/system/metermanage/upload";
+        model.addAttribute("uploadUrl","/meterData/upload");
+        return "/system/upload";
     }
 
     /**
@@ -505,9 +504,9 @@ public class MeterDataController {
             long chunkSize = 512 * 1024;
             if (param.isMultipart()) {
                 String tempFileName = param.getFileName();
-                File confFile = new File(UPLOAD_TEMP_DIR1, param.getFileName() + ".conf");
-                File tmpDir = new File(UPLOAD_TEMP_DIR1);
-                File tmpFile = new File(UPLOAD_TEMP_DIR1, tempFileName);
+                File confFile = new File(UPLOAD_FILE_DIR, param.getFileName() + ".conf");
+                File tmpDir = new File(UPLOAD_FILE_DIR);
+                File tmpFile = new File(UPLOAD_FILE_DIR, tempFileName);
                 if (!tmpDir.exists()) {
                     tmpDir.mkdirs();
                 }
@@ -533,7 +532,7 @@ public class MeterDataController {
                     isComplete = (byte) (isComplete & completeList[i]);
                 }
                 if (isComplete == Byte.MAX_VALUE) {
-                    obj = this.getMap(UPLOAD_TEMP_DIR1 + "\\" + param.getFileName());
+                    obj = this.getMap(UPLOAD_FILE_DIR + "\\" + param.getFileName());
                 }
 
             }
@@ -563,7 +562,7 @@ public class MeterDataController {
                 }
             }
 
-            File file = new File(UPLOAD_TEMP_DIR1);
+            File file = new File(UPLOAD_FILE_DIR);
             if (file.exists()) {
                 System.out.println("删除excel");
                 File[] files = file.listFiles();
@@ -579,6 +578,24 @@ public class MeterDataController {
 
     //获取数据
     private Map<String, Object> getMap(String path) {
+        Map<String,String> cellMap = new LinkedHashMap<>();
+        cellMap.put("CODE", "代码");
+        cellMap.put("SERIAL_NO", "出厂编号");
+        cellMap.put("NAME", "名称");
+        cellMap.put("UNIT_ID", "单位名称");
+        cellMap.put("ENERGY_TYPE_ID", "能源类型");
+        cellMap.put("ISREAL", "实虚表");
+        cellMap.put("ISTOTAL", "是否总表");
+        cellMap.put("COEF", "系数");
+        cellMap.put("UNIT_TYPE", "单位类型");
+        cellMap.put("ISAUTO", "采集");
+        cellMap.put("TAG", "点表");
+        cellMap.put("FORMULA", "公式");
+        cellMap.put("ISPRESTORE", "预存");
+        cellMap.put("ISDELETE", "删除标识");
+        cellMap.put("DEPICT", "描述");
+        cellMap.put("COM_ID", "所属公司");
+
         List<Map<String, Object>> tempdata = meterCollectService.selectByMaps(new HashMap<String, Object>());
         System.out.println("-------------------------path:" + path + "-------------------------------");
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
@@ -606,7 +623,7 @@ public class MeterDataController {
                 for (int k = 1; k < hssFSheet.getPhysicalNumberOfRows(); k++) {
                     xssfRow = hssFSheet.getRow(k);
                     try {
-                        meterCollect = (MeterCollect) FileParseUtil.digitData(xssfRow, MeterCollect.class);
+                        meterCollect = (MeterCollect) FileParseUtil.digitData(xssfRow, cellMap, MeterCollect.class);
                         list.add(meterCollect);
                     } catch (Exception e) {
                         message.append("第" + (k) + "行数据有问题：新增失败");

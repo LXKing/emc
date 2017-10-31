@@ -112,6 +112,8 @@ public class Constants {
     public final static String SESSION_ORG_KEY = "org_key";
     //所属公司
     public final static String SESSION_COM_KEY = "com_key";
+    //员工
+    public final static String SESSION_EMPLOYEE_KEY = "employee_key";
     public static final String XAXIS = "xaxis";
     public static final String LEGENDS = "legends";
     public static Map<String,String> CELL_NAME = new LinkedHashMap<>();

@@ -1,6 +1,8 @@
 jQuery(document).ready(function($){
     top.uploader = null;
     var $t = $(top.document);
+
+    var server = _web + $("#upload-url").val();
     $btn = $t.find("#ctlBtn");
     $wrap = $t.find('#uploader'),
         $queue = $t.find('#thelist').appendTo( $wrap.find('.uploader-list') );
@@ -9,7 +11,7 @@ jQuery(document).ready(function($){
         pick:{id:$t.find('#picker')},
         swf:  _web + '/static/js/webuploader/Uploader.swf',
         chunked: false,
-        server: _web+'/meterData/upload',
+        server: server,
         // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
         disableGlobalDnd: true,
         threads:1,
@@ -95,7 +97,7 @@ jQuery(document).ready(function($){
             return false;
 
         }else{
-            top.layer.msg("保存成功！");
+            top.layer.msg("上传导入成功，请刷新页面查看！");
             return true;
         }
 

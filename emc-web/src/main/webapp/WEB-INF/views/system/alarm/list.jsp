@@ -145,7 +145,7 @@
         <a class="btns btnsfl btns-green export-emc" href="javascript:void(0);" export-url="${web}/alarm/config/export">导出</a>
     </c:if>
     <c:if test="${sessionScope._auth['alarmImport']}">
-        <a class="btns btnsfl btns-green" href="javascript:void(0);">导入</a>
+        <a class="btns btnsfl btns-green" href="javascript:void(0);" onclick="uploaderExcel()">导入</a>
     </c:if>
     </div>
 

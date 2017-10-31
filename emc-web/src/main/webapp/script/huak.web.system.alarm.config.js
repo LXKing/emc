@@ -97,6 +97,35 @@ function delAlarmConfig(id) {
     });
 }
 
+/**
+ * 前台-安全与后台-工况报警-批量导入-excel
+ */
+function uploaderExcel() {
+    $.get(_web + '/alarm/config/upload/page', function (result) {
+        var $top = $(top.document);
+        var layerDiv = '<div id="layer-div"></div>';
+        $top.find('body').append(layerDiv);
+        $top.find("#layer-div").html(result);
+        top.layer.open({
+            area: ['550px', '500px'],
+            type: 1,
+            title: "批量上传",
+            scrollbar: false,
+            maxmin: true,
+            skin: 'layer-ext-moon', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            shift: 2,//出场动画
+            shadeClose: true, //开启遮罩关闭
+            cancel: function (index, layero) {
+                top.uploader.destroy();
+                top.layer.closeAll();
+                return false;
+            },
+            content: $top.find("#layer-div")
+        });
+    });
+}
+
 function fromatStr(str,num){
     if(num<str.length){
         return str.substr(0,num)+'...';

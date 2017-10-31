@@ -30,10 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -169,6 +166,23 @@ public class MeterCollectController {
 
     //获取数据
     private Map<String, Object> getMap(String path) {
+        Map<String,String> cellMap = new LinkedHashMap<>();
+        cellMap.put("CODE", "代码");
+        cellMap.put("SERIAL_NO", "出厂编号");
+        cellMap.put("NAME", "名称");
+        cellMap.put("UNIT_ID", "单位名称");
+        cellMap.put("ENERGY_TYPE_ID", "能源类型");
+        cellMap.put("ISREAL", "实虚表");
+        cellMap.put("ISTOTAL", "是否总表");
+        cellMap.put("COEF", "系数");
+        cellMap.put("UNIT_TYPE", "单位类型");
+        cellMap.put("ISAUTO", "采集");
+        cellMap.put("TAG", "点表");
+        cellMap.put("FORMULA", "公式");
+        cellMap.put("ISPRESTORE", "预存");
+        cellMap.put("ISDELETE", "删除标识");
+        cellMap.put("DEPICT", "描述");
+        cellMap.put("COM_ID", "所属公司");
         List<Map<String, Object>> tempdata = meterCollectService.selectByMaps(new HashMap<String, Object>());
         System.out.println("-------------------------path:" + path + "-------------------------------");
         String prefix = "req_count:" + counter.incrementAndGet() + ":";
@@ -196,7 +210,7 @@ public class MeterCollectController {
                 for (int k = 1; k < hssFSheet.getPhysicalNumberOfRows(); k++) {
                     xssfRow = hssFSheet.getRow(k);
                     try {
-                        meterCollect = (MeterCollect) FileParseUtil.digitData(xssfRow, MeterCollect.class);
+                        meterCollect = (MeterCollect) FileParseUtil.digitData(xssfRow,cellMap, MeterCollect.class);
                         list.add(meterCollect);
                     } catch (Exception e) {
                         message.append("第" + (k) + "行数据有问题：新增失败");

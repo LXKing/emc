@@ -14,6 +14,7 @@
 
 <body class="gray-bg" >
 <div class="wrapper wrapper-content animated fadeIn" >
+    <input type="hidden" id="upload-url" value="${uploadUrl}">
     <div id="uploader" class="wu-example" >
         <!--用来存放文件信息-->
         <div id="thelist" class="uploader-list box4">

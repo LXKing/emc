@@ -3,12 +3,7 @@ package com.huak.common;
 import com.huak.common.utils.ColumUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,7 +26,7 @@ public class FileParseUtil {
      * @throws ClassNotFoundException
      * @throws InstantiationException
      */
-    public static Object digitData(Row xssfRow , Class<?> classz) throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+    public static Object digitData(Row xssfRow ,Map<String,String> cellMap, Class<?> classz) throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         Object obj = null;
         obj =Class.forName(classz.getName()).newInstance();
         Method[] methods = classz.getMethods();
@@ -44,7 +39,7 @@ public class FileParseUtil {
 //                   Constants.CELL_NAME.put( ColumUtil.getColumn(field.getName()),field.getName());
 //               }
 //           }
-        Iterator iter = Constants.CELL_NAME.entrySet().iterator();
+        Iterator iter = cellMap.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             String key =  entry.getKey().toString();
@@ -83,7 +78,7 @@ public class FileParseUtil {
                                 tag =  new Byte(tag.toString().substring(0, tag.toString().length() - 2));
                             }
                             if(tag != null ){
-                                method.invoke(obj, (byte)tag);
+                                method.invoke(obj, Byte.valueOf(tag.toString()));
                             }else{
                                 method.invoke(obj,0);
                             }
