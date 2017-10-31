@@ -57,7 +57,8 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -87,7 +88,8 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -121,7 +123,8 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -152,7 +155,8 @@
         ) tmo
         WHERE tmo.ID = t.fgsid) a
         RIGHT JOIN (SELECT DATE_FORMAT(DOSAGE_TIME,'%Y-%m-%d') DOSAGE_TIME FROM ${tableName}  WHERE DOSAGE_TIME<![CDATA[ >= ]]> #{startTime} AND DOSAGE_TIME<![CDATA[ <= ]]> #{endTime} GROUP BY DATE_FORMAT(DOSAGE_TIME,'%y-%m-%d') ORDER BY DOSAGE_TIME) dt ON 1=1
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -192,7 +196,8 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -222,7 +227,10 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''">
+        AND vu.HEAT_TYPE=#{feedType}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -260,7 +268,10 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''">
+        AND vu.HEAT_TYPE=#{feedType}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -314,7 +325,8 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>
@@ -344,7 +356,8 @@
         </if>
         ) tmo
         WHERE tmo.ID = t.fgsid) a
-        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid AND vu.HEAT_TYPE=#{feedType}
+        LEFT JOIN v_emc_unit vu ON vu.ORGID = a.orgid
+        <if test="feedType != null and feedType !=''"> AND vu.HEAT_TYPE=#{feedType} </if>
         <if test="orgType != null and orgType !=''">
             AND vu.UNITTYPE=#{orgType}
         </if>

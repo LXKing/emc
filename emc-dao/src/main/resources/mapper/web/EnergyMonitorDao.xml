@@ -33,7 +33,8 @@
         SELECT ROUND(SUM(b.BM),2) dayValue,b.DOSAGE_TIME dayDate FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.BM) BM,d.UNITID,d.DOSAGE_TIME FROM
@@ -58,7 +59,8 @@
         SELECT ROUND(SUM(b.BM),2) dayValue,b.DOSAGE_TIME dayDate FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.BM) BM,d.UNITID,d.DOSAGE_TIME FROM
@@ -83,7 +85,8 @@
         SELECT ROUND(SUM(b.BM),2) BM FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.BM) BM,d.UNITID FROM
@@ -106,7 +109,8 @@
         SELECT ROUND(SUM(b.BM),2) BM FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.BM) BM,d.UNITID FROM
@@ -138,7 +142,8 @@
         SUM( CASE b.TYPE WHEN '6' THEN b.DOSAGE ELSE 0 END ) AS oil,  b.DOSAGE_TIME dayDate FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME,t.TYPE FROM
@@ -162,7 +167,8 @@
         SUM( CASE b.TYPE WHEN '6' THEN b.DOSAGE ELSE 0 END ) AS oil,b.DOSAGE_TIME dayDate FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,d.DOSAGE_TIME,t.TYPE FROM
@@ -188,7 +194,8 @@
         FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,t.TYPE FROM
@@ -212,7 +219,8 @@
         FROM (
         SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''"> AND HEAT_TYPE=#{feedType} </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a,
         (SELECT SUM(d.DOSAGE) DOSAGE,d.UNITID,t.TYPE FROM

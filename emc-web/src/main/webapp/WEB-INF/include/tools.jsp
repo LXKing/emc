@@ -35,7 +35,8 @@
                 </div>
             </div>
             <div class="select-box select-boxbtnAlarm clearfix">
-                <a href="javascript:;" class="btnAlarm btnAlarm-on">集中供暖</a>
+                <a href="javascript:;" class="btnAlarm btnAlarm-on">全部</a>
+                <a href="javascript:;" class="btnAlarm ">集中供暖</a>
                 <a href="javascript:;" class="btnAlarm ">区域供暖</a>
             </div>
 

@@ -163,7 +163,7 @@ $(function () {
     });
     //默认类型
     if (getCookie("toolFeedType") == null || getCookie("toolFeedType") == "") {
-        $('#toolFeedType').val(2);
+        $('#toolFeedType').val("");
     } else {
         var toolFeedType = getCookie("toolFeedType");
         $('#toolFeedType').val(toolFeedType);
@@ -173,6 +173,19 @@ $(function () {
                     $(this).removeClass("btnAlarm-on");
                 } else if ("区域供暖" == $(this).text()) {
                     $(this).addClass("btnAlarm-on");
+                } else if ("全部" == $(this).text()) {
+                    $(this).removeClass("btnAlarm-on");
+                }
+            });
+        }
+        if (toolFeedType == 2) {
+            $('.btnAlarm').each(function () {
+                if ("集中供暖" == $(this).text()) {
+                    $(this).addClass("btnAlarm-on");
+                } else if ("区域供暖" == $(this).text()) {
+                    $(this).removeClass("btnAlarm-on");
+                } else if ("全部" == $(this).text()) {
+                    $(this).removeClass("btnAlarm-on");
                 }
             });
         }
@@ -374,7 +387,11 @@ $(function () {
             $('#toolFeedType').val(2);
             setCookie('toolFeedType', 2, 3);
             toolReplace();
-        } else {
+        } else if (thisText == "全部") {
+            $('#toolFeedType').val("");
+            setCookie('toolFeedType', "", 3);
+            toolReplace();
+        }else {
             $(".select-boxWdate input").attr("disabled", true).addClass("time-input-disable");
         }
 

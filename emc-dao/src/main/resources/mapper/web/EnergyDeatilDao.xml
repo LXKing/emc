@@ -65,7 +65,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) m,v_emc_unit v
 
         WHERE m.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>
@@ -105,7 +107,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) m,v_emc_unit v
 
         WHERE m.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>
@@ -137,7 +141,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) c,v_emc_unit v
 
         WHERE c.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>
@@ -176,8 +182,8 @@
         GROUP BY
         DATE_FORMAT(a.DOSAGE_TIME,'%Y-%m-%d'),
         a.TYPEID,
-        a.UNITID) b group by b.UNITID,b.DOSAGE_TIME) c,	(select * from v_emc_unit where
-         HEAT_TYPE =#{feedType,jdbcType=VARCHAR}
+        a.UNITID) b group by b.UNITID,b.DOSAGE_TIME) c,	(select * from v_emc_unit where 1=1
+        <if test="feedType != null and feedType !=''"> and HEAT_TYPE =#{feedType,jdbcType=VARCHAR} </if>
         <if test="orgType != null and orgType !=''">
             AND UNITTYPE=#{orgType}
         </if>
@@ -213,7 +219,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) m,v_emc_unit v
 
         WHERE m.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>
@@ -241,7 +249,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) m,v_emc_unit v
 
         WHERE m.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>
@@ -303,7 +313,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) m,v_emc_unit v
 
         WHERE m.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>
@@ -343,7 +355,9 @@
         t_emc_org o WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId,jdbcType=VARCHAR})) and o.COM_ID=#{comId,jdbcType=VARCHAR}) m,v_emc_unit v
 
         WHERE m.ID=v.ORGID
+        <if test="feedType != null and feedType !=''">
         and v.HEAT_TYPE=#{feedType,jdbcType=VARCHAR}
+        </if>
         <if test="orgType != null and orgType !=''">
             AND v.UNITTYPE=#{orgType}
         </if>

@@ -806,7 +806,10 @@
     <select id="getWorkAlarmTotal" parameterType="java.util.Map" resultType="java.lang.Double">
         SELECT count(*) FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''">
+        AND HEAT_TYPE=#{feedType}
+        </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a ,
         t_emc_alarm_config c WHERE c.COM_ID=a.COMID AND c.UNIT_ID = a.UNITID AND c.UNIT_TYPE = a.UNITTYPE
@@ -821,7 +824,10 @@
         FROM (
         SELECT COUNT(r.id) num,c.ALARM_LEVEL LEVEL FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''">
+        AND HEAT_TYPE=#{feedType}
+        </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a ,
         t_emc_alarm_config c,t_emc_alarm_record r WHERE c.COM_ID=a.COMID AND c.UNIT_ID = a.UNITID AND c.UNIT_TYPE = a.UNITTYPE
@@ -831,7 +837,10 @@
     <select id="getTempAlarmTotal" parameterType="java.util.Map" resultType="java.lang.Double">
         SELECT count(*) FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''">
+        AND HEAT_TYPE=#{feedType}
+        </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a ,
         t_emc_temperature_tj t,t_emc_alarm_config_temp c
@@ -844,7 +853,10 @@
         SELECT sum(c.MINTEMP>t.TEMP) min,sum(t.TEMP>c.MAXTEMP) max
         FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
-        WHERE o.ID=v.ORGID AND COMID=#{comId} AND HEAT_TYPE=#{feedType}
+        WHERE o.ID=v.ORGID AND COMID=#{comId}
+        <if test="feedType != null and feedType !=''">
+        AND HEAT_TYPE=#{feedType}
+        </if>
         <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a ,
         t_emc_temperature_tj t,t_emc_alarm_config_temp c
