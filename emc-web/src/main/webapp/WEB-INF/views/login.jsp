@@ -18,7 +18,9 @@
 </head>
 <body>
 <div class="formwrap">
-    <h1><img src="${web}/static/img/login_logo.png"></h1>
+    <h1>
+        <img src="${web}/static/img/logo/login_logo.png" />
+    </h1>
     <form id="form" onsubmit="false" autocomplete="off">
     <div class="form">
         <div class="title">能源管控中心 &#183; 供热版</div>

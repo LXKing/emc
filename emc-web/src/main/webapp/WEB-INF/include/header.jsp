@@ -16,12 +16,12 @@
                 <span class="icon-bar"></span>
             </button>-->
             <div class="navbar-header pull-left">
-                <a href="index.html" class="navbar-brand">
+                <a href="${web}/index" class="navbar-brand">
                     <c:if test="${sessionScope.com_key.logoImg eq null||sessionScope.com_key.logoImg eq ''}">
-                        <img src="${web}/static/img/logo.png" width="296" height="31" alt="华热能源管控" />
+                        <img src="${web}/static/img/logo/logo.png" width="296" height="31" alt="华热能源管控" />
                     </c:if>
                     <c:if test="${sessionScope.com_key.logoImg ne null&&sessionScope.com_key.logoImg ne ''}">
-                        <img src="${web}/static/img/${sessionScope.com_key.logoImg}" width="296" height="31" alt="${sessionScope.com_key.cname}" />
+                        <img src="${web}/static/img/logo/${sessionScope.com_key.logoImg}" width="296" height="31" alt="${sessionScope.com_key.cname}" />
                     </c:if>
 
 

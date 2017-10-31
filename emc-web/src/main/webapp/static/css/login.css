@@ -42,8 +42,9 @@ body {
 .formwrap .form .title {
     position: absolute;
     top: 14px;
-    left: 236px;
     font-size: 18px;
+    width: 100%;
+    text-align: center;
 }
 
 .formwrap .form div {
