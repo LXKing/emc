@@ -59,10 +59,16 @@
                             <p>报警管理</p>
                         </a>
                     </li>
+                    <%--<li class="navlh">--%>
+                        <%--<a href="${web}/project/appraisal/index">--%>
+                            <%--<div class="icon-pg"></div>--%>
+                            <%--<p>项目后评估</p>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
                     <li class="navlh">
-                        <a href="${web}/project/appraisal/index">
+                        <a href="${web}/process/index">
                             <div class="icon-pg"></div>
-                            <p>项目后评估</p>
+                            <p>流程调度</p>
                         </a>
                     </li>
                     <li class="navlh">

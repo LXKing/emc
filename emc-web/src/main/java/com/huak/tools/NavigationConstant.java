@@ -67,6 +67,9 @@ public class NavigationConstant {
     /*后台*/
     public final static Navigation SYSTEM = new Navigation(null,"安全与后台","/system/index");
 
+    /*流程调度*/
+    public final static Navigation PROCESS = new Navigation(null,"流程调度","/process/index");
+
     /*全部*/
     public final static List<Navigation> NAVIGATIONS = new ArrayList<>();
 
@@ -103,6 +106,8 @@ public class NavigationConstant {
         NAVIGATIONS.add(HEALTH);
 
         NAVIGATIONS.add(SYSTEM);
+
+        NAVIGATIONS.add(PROCESS);
     }
 
 }

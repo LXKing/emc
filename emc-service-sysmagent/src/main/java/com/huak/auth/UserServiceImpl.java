@@ -347,6 +347,9 @@ public class UserServiceImpl implements UserService {
         paramsMap.put("menuType",model.getMenuType());
         paramsMap.put("type",model.getType());
         Menu menu = menuDao.getMenuModel(paramsMap);
+        if(null == menu){
+            return null;
+        }
         //查询后台一级菜单
         paramsMap.clear();
         paramsMap.put("menuType",model.getMenuType());
