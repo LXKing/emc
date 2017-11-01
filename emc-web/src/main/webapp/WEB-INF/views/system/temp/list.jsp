@@ -70,12 +70,14 @@
     <c:if test="${sessionScope._auth['tempAdd']}">
         <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="alarmConfigTempAddForm" layer-title="添加室温配置" layer-url="${web}/temp/config/add">添加</a>
     </c:if>
+
+    <a class="btns btnsfl exportchange btns-green" export-url="${web}/temp/config/export" href="javascript:void(0);">导出</a>
+
+    <a class="btns btnsfl btns-green" href="javascript:void(0);" onclick="uploaderExcel()">导入</a>
     <%--<c:if test="${sessionScope._auth['alarmExport']}">--%>
         <%--<a class="btns btnsfl btns-green" href="javascript:void(0);">导出</a>--%>
     <%--</c:if>--%>
-    <%--<c:if test="${sessionScope._auth['alarmImport']}">--%>
-        <%--<a class="btns btnsfl btns-green" href="javascript:void(0);">导入</a>--%>
-    <%--</c:if>--%>
+
     </div>
 
 

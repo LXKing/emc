@@ -23,7 +23,7 @@ import java.util.Map;
 public interface AlarmConfigTempService {
     int deleteByPrimaryKey(String id);
 
-    int insert(AlarmConfig record);
+    int insert(AlarmConfigTemp record);
 
     int insertSelective(AlarmConfigTemp record);
 
@@ -31,11 +31,12 @@ public interface AlarmConfigTempService {
 
     int updateByPrimaryKeySelective(AlarmConfigTemp record);
 
-    int updateByPrimaryKey(AlarmConfig record);
+    int updateByPrimaryKey(AlarmConfigTemp record);
 
     PageResult<AlarmConfigTempVo> queryByPage(Map<String, Object> paramsMap, Page page);
 
     AlarmConfigTemp selectUpdateMap(String id);
 
-    List<Map<String,Object>> exportAlarmConfig(Map<String, Object> paramsMap);
+    List<Map<String,Object>> exportTempConfig(Map<String, Object> paramsMap);
+
 }

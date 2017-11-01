@@ -19,16 +19,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
- * ProjectName:emc<BR>
- * File name:  com.huak.web.system<BR>
- * Author:  Administrator  <BR>
- * Project:emc    <BR>
- * Version: v 1.0      <BR>
- * Date: 2017-10-26<BR>
- * Description: 工单信息    <BR>
- * Function List:  <BR>
- */
+* Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
+* ProjectName:emc<BR>
+* File name:  com.huak.web.system<BR>
+* Author:  Administrator  <BR>
+* Project:emc    <BR>
+* Version: v 1.0      <BR>
+* Date: 2017-10-26<BR>
+* Description: 工单信息    <BR>
+* Function List:  <BR>
+*/
 @Controller
 @RequestMapping("/work/order/info")
 public class WorkOrderInfoController {

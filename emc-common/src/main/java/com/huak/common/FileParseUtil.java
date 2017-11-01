@@ -66,7 +66,7 @@ public class FileParseUtil {
                             if(tag.toString().endsWith(".0")){
                                 tag =  tag.toString().substring(0, tag.toString().length() - 2);
                             }
-                            if(tag != null ){
+                            if(tag != null && tag !=""){
                                 method.invoke(obj,tag.toString());
                             }else{
                                 method.invoke(obj,"");
@@ -131,12 +131,14 @@ public class FileParseUtil {
     }
 
     private static Object getValue(Cell hssfCell){
-        if(hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN){
-            return String.valueOf( hssfCell.getBooleanCellValue());
+        if(hssfCell==null){
+            return "";
         }else if(hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC){
             return String.valueOf( hssfCell.getNumericCellValue());
         }else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_STRING){
             return String.valueOf( hssfCell.getStringCellValue());
+        }else if(hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN){
+            return String.valueOf( hssfCell.getBooleanCellValue());
         }else{
             return String.valueOf( hssfCell.getStringCellValue());
         }

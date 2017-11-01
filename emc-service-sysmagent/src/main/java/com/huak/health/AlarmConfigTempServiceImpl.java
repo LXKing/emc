@@ -46,9 +46,9 @@ public class AlarmConfigTempServiceImpl implements AlarmConfigTempService {
 
     @Override
     @Transactional(readOnly = false)
-    public int insert(AlarmConfig record) {
+    public int insert(AlarmConfigTemp record) {
         logger.info("新增报温度置");
-        return alarmConfigDao.insert(record);
+        return alarmConfigtempDao.insert(record);
     }
 
     @Override
@@ -74,9 +74,9 @@ public class AlarmConfigTempServiceImpl implements AlarmConfigTempService {
 
     @Override
     @Transactional(readOnly = false)
-    public int updateByPrimaryKey(AlarmConfig record) {
+    public int updateByPrimaryKey(AlarmConfigTemp record) {
         logger.info("更新报温度置");
-        return alarmConfigDao.updateByPrimaryKey(record);
+        return alarmConfigtempDao.updateByPrimaryKey(record);
     }
 
     @Override
@@ -96,8 +96,8 @@ public class AlarmConfigTempServiceImpl implements AlarmConfigTempService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Map<String, Object>> exportAlarmConfig(Map<String, Object> paramsMap) {
+    public List<Map<String, Object>> exportTempConfig(Map<String, Object> paramsMap) {
         logger.info("导出报温度置");
-        return null;
+        return alarmConfigtempDao.exportTempConfig(paramsMap);
     }
 }

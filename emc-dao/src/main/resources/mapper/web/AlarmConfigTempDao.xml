@@ -158,4 +158,22 @@
                         where c.id=#{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="exportTempConfig" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+        c.ID,c.MAXTEMP,c.MINTEMP,c.COM_ID,c.UNIT_ID,c.UNIT_TYPE,c.ISENABLE,
+        v.UNITNAME from t_emc_alarm_config_temp c,v_emc_unit v where c.COM_ID = v.COMID
+        AND c.UNIT_TYPE = v.UNITTYPE
+        AND c.UNIT_ID = v.UNITID
+        <if test="unitType != null and unitType !=''">
+            AND c.UNIT_TYPE=#{unitType}
+        </if>
+        <if test="comId != null and comId !=''">
+            AND c.COM_ID = #{comId}
+        </if>
+        <if test="unitName != null and unitName !=''">
+            and  v.UNITNAME like CONCAT('%',#{unitName},'%')
+        </if>
+        order by c.UNIT_TYPE,c.UNIT_ID,v.UNITNAME ASC
+    </select>
+
 </mapper>
