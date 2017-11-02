@@ -18,8 +18,8 @@ public class Constants {
     /* 能耗数据异常数据统一返回值 */
     public final static Double EXPTION_NUM = -999d;
     /* 统一登录url */
-    public final static String LOGIN_URL = "http://www.e-heating.org/login.html";
-    //public final static String LOGIN_URL = "http://localhost:8081/emc-web/login";
+    //public final static String LOGIN_URL = "http://www.e-heating.org/login.html";
+    public final static String LOGIN_URL = "http://localhost:8081/emc-web/login";
 
     /* 分页常量 */
     public final static String OFFSET = "offset";
@@ -118,21 +118,25 @@ public class Constants {
     public static final String LEGENDS = "legends";
     public static Map<String,String> CELL_NAME = new LinkedHashMap<>();
     static {
+        CELL_NAME.put("ID", "指标主键");
         CELL_NAME.put("CODE", "代码");
         CELL_NAME.put("SERIAL_NO", "出厂编号");
         CELL_NAME.put("NAME", "名称");
-        CELL_NAME.put("UNIT_ID", "单位名称");
-        CELL_NAME.put("ENERGY_TYPE_ID", "能源类型");
-        CELL_NAME.put("ISREAL", "实虚表");
-        CELL_NAME.put("ISTOTAL", "是否总表");
+        CELL_NAME.put("UNIT_ID", "单位名称主键");
+        CELL_NAME.put("ENERGY_TYPE_ID", "能源类型1-水2-电3-气4-热5-煤");
+        CELL_NAME.put("ISREAL", "实虚表(0-实表 1-虚表)");
+        CELL_NAME.put("ISTOTAL", "是否总表(0-否 1-单位总表 2-系统总表)");
         CELL_NAME.put("COEF", "系数");
-        CELL_NAME.put("UNIT_TYPE", "单位类型");
-        CELL_NAME.put("ISAUTO", "采集");
+        CELL_NAME.put("UNIT_TYPE", "单位类型1-源2-网3-站4-线5-户");
+        CELL_NAME.put("ISAUTO", "采集(0-自动采集 1-手工)");
         CELL_NAME.put("TAG", "点表");
         CELL_NAME.put("FORMULA", "公式");
-        CELL_NAME.put("ISPRESTORE", "预存");
-        CELL_NAME.put("ISDELETE", "删除标识");
+        CELL_NAME.put("ISPRESTORE", "预存(0-不是 1-是)");
+        CELL_NAME.put("ISDELETE", "删除标识(软删除标识1 未删除0)");
         CELL_NAME.put("DEPICT", "描述");
-        CELL_NAME.put("COM_ID", "所属公司");
+        CELL_NAME.put("COM_ID", "所属公司id");
+        CELL_NAME.put("CNAME", "所属公司名称");
+        CELL_NAME.put("UNITNAME", "用能单位名称");
+
     }
 }
