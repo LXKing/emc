@@ -70,12 +70,12 @@ public class CodeUtil {
 
         dontNeedEncoding = new BitSet(256);
         int i;
-        for (i = 'a'; i <= 'z'; i++) {
-            dontNeedEncoding.set(i);
-        }
-        for (i = 'A'; i <= 'Z'; i++) {
-            dontNeedEncoding.set(i);
-        }
+//        for (i = 'a'; i <= 'z'; i++) {
+//            dontNeedEncoding.set(i);
+//        }
+//        for (i = 'A'; i <= 'Z'; i++) {
+//            dontNeedEncoding.set(i);
+//        }
         dontNeedEncoding.set(' '); /* encoding a space to a + is done
                                     * in the encode() method */
         dontNeedEncoding.set('-');
@@ -188,7 +188,8 @@ public class CodeUtil {
 //        System.out.println(URLEncoder.encode(str, "UTF8"));
 //        System.out.println(CodeUtil.encodeURIComponent(str));
 
-        String uri = "流程图演示.流程演示1";
+        System.out.println(CodeUtil.encodeURIComponent("流程图演示.流程演示1","GBK"));
+        String uri = "zzrl.九四家属院换热站";
         System.out.println(CodeUtil.encodeURIComponent(uri,"GBK"));
         //System.out.println(CodeUtil.encodeURIComponent(".1","GBK"));
 

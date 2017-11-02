@@ -57,7 +57,29 @@
         * @param url
          */
         function openPageToSrc(url){
-            $("#proecssFrame").attr("src",url);
+            var suff = url.substr(url.lastIndexOf('&file=')+6,url.length);
+            console.info(suff);
+            var index = top.layer.load(1, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            $.ajax({
+                url: _web + '/process/decode',
+                type: 'POST',
+                data:{"code":suff,"enc":"GBK"},
+                dataType: 'json',
+                success: function (result) {
+                    if (result.flag) {
+                        top.layer.closeAll();
+                        top.layer.msg(result.msg);
+                        url = url.replace(suff,result.code);
+                        $("#proecssFrame").attr("src",url);
+                    } else {
+                        top.layer.close(index);
+                        top.layer.msg(result.msg);
+                    }
+                }
+            });
+
         }
     </script>
 </head>
@@ -75,7 +97,7 @@
                 <a href="javascript:void(0);" menu-url="/process/index">流程首页</a>
             </li>
             <li class="">
-                <a href="javascript:void(0);" menu-url="/process/index">流程测试1</a>
+                <a href="javascript:void(0);" menu-url="http://121.18.114.66:8084/hdb3.2/HdbGraph.aspx?type=1&user=system&active=1&file=zzrl.东关新村换热站">东关新村换热站</a>
             </li>
             <li class="">
                 <a href="javascript:void(0);" menu-url="/process/index">流程测试2</a>

@@ -1,8 +1,10 @@
 package com.huak.web.module;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.UserService;
 import com.huak.auth.model.User;
+import com.huak.common.CodeUtil;
 import com.huak.common.Constants;
 import com.huak.sys.type.MenuModel;
 import org.slf4j.Logger;
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -47,5 +51,23 @@ public class ProcessController {
 
         model.addAttribute("menus", JSONArray.toJSON(menus));
         return "process/index";
+    }
+
+    @RequestMapping(value = "/decode", method = RequestMethod.POST)
+    @ResponseBody
+    public String decode(String code,String enc) {
+        logger.info("任务调度解码");
+
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            code = CodeUtil.encodeURIComponent(code,enc);
+            jo.put("code",code);
+            jo.put(Constants.FLAG, true);
+        } catch (UnsupportedEncodingException e) {
+            logger.error("任务调度解码异常" + e.getMessage());
+            jo.put(Constants.MSG, "任务调度解码失败");
+        }
+        return jo.toJSONString();
     }
 }
