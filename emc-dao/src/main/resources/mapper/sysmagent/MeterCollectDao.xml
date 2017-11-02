@@ -365,34 +365,21 @@
         a. CODE,
         a. NAME,
         a.SERIAL_NO,
-        d.NAME_ZH AS ENERGY_TYPE_ID,
-        (CASE a.ISREAL WHEN 0 THEN '实表' WHEN 1 THEN '虚表'  ELSE '' END )  ISREAL,
-        (CASE a.ISTOTAL WHEN 0 THEN '否' WHEN 1 THEN '单位总表' WHEN 2 THEN '系统总表' ELSE '' END ) ISTOTAL,
-        b.UNITNAME AS UNIT_ID,
-        (
-        CASE b.UNITTYPE
-        WHEN 1 THEN
-        '热源'
-        WHEN 2 THEN
-        '一次网'
-        WHEN 3 THEN
-        '换热站'
-        WHEN 4 THEN
-        '二次线'
-        WHEN 5 THEN
-        '用户'
-        ELSE
-        ''
-        END
-        ) AS UNIT_TYPE,
-        (CASE a.ISAUTO WHEN 0 THEN '自动采集' WHEN 1 THEN '手工' ELSE '' END ) ISAUTO,
+        d.TYPE AS ENERGY_TYPE_ID,
+        a.ISREAL,
+        a.ISTOTAL,
+        b.UNITID AS UNIT_ID,
+        b.UNITTYPE as UNIT_TYPE,
+        a.ISAUTO,
         a.DEPICT,
         a.TAG,
         a.COEF,
         a.FORMULA,
-        (CASE a.ISPRESTORE WHEN 0 THEN '不是' WHEN 1 THEN '是'  ELSE '' END ) ISPRESTORE,
-        (CASE a.ISDELETE WHEN 0 THEN '软删除标识' WHEN 1 THEN '未删除' ELSE '' END ) ISDELETE,
-        c.CNAME AS COM_ID
+        a.ISPRESTORE,
+        a.ISDELETE,
+        c.ID AS COM_ID,
+        c.CNAME,
+        b.UNITNAME
         from t_emc_meter_collect a left  join  v_emc_unit b on a.UNIT_ID = b.UNITID AND a.COM_ID = b.COMID
         left  join t_emc_company c on a.COM_ID = c.ID
         left  join t_emc_energy_type d on a.ENERGY_TYPE_ID = d.ID

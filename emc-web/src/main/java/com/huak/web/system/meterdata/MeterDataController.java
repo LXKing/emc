@@ -579,22 +579,24 @@ public class MeterDataController {
     //获取数据
     private Map<String, Object> getMap(String path) {
         Map<String,String> cellMap = new LinkedHashMap<>();
+        cellMap.put("ID", "指标主键");
         cellMap.put("CODE", "代码");
         cellMap.put("SERIAL_NO", "出厂编号");
         cellMap.put("NAME", "名称");
-        cellMap.put("UNIT_ID", "单位名称");
-        cellMap.put("ENERGY_TYPE_ID", "能源类型");
-        cellMap.put("ISREAL", "实虚表");
-        cellMap.put("ISTOTAL", "是否总表");
+        cellMap.put("UNIT_ID", "单位名称主键");
+        cellMap.put("ENERGY_TYPE_ID", "能源类型1-水2-电3-气4-热5-煤");
+        cellMap.put("ISREAL", "实虚表(0-实表 1-虚表)");
+        cellMap.put("ISTOTAL", "是否总表(0-否 1-单位总表 2-系统总表)");
         cellMap.put("COEF", "系数");
-        cellMap.put("UNIT_TYPE", "单位类型");
-        cellMap.put("ISAUTO", "采集");
+        cellMap.put("UNIT_TYPE", "单位类型1-源2-网3-站4-线5-户");
+        cellMap.put("ISAUTO", "采集(0-自动采集 1-手工)");
         cellMap.put("TAG", "点表");
         cellMap.put("FORMULA", "公式");
-        cellMap.put("ISPRESTORE", "预存");
-        cellMap.put("ISDELETE", "删除标识");
+        cellMap.put("ISPRESTORE", "预存(0-不是 1-是)");
+        cellMap.put("ISDELETE", "删除标识(软删除标识1 未删除0)");
         cellMap.put("DEPICT", "描述");
-        cellMap.put("COM_ID", "所属公司");
+        cellMap.put("COM_ID", "所属公司id");
+
 
         List<Map<String, Object>> tempdata = meterCollectService.selectByMaps(new HashMap<String, Object>());
         System.out.println("-------------------------path:" + path + "-------------------------------");
@@ -636,80 +638,16 @@ public class MeterDataController {
             }
             for (int m = 0; m < list.size(); m++) {
                 MeterCollect data = list.get(m);
-                if (null != data.getIsauto()) {
-                    if (data.getIsauto().equals("自动采集")) {
-                        data.setIsauto((byte) 0);
-                    }
-                    if (data.getIsauto().equals("手工")) {
-                        data.setIsauto((byte) 1);
-                    }
-                }
-                if (null != data.getIsprestore()) {
-                    if (data.getIsprestore().equals("不是")) {
-                        data.setIsprestore((byte) 0);
-                    }
-                    if (data.getIsprestore().equals("是")) {
-                        data.setIsprestore((byte) 1);
-                    }
-                }
-                if (null != data.getIsreal()) {
-                    if (data.getIsreal().equals("否")) {
-                        data.setIsreal((byte) 0);
-                    }
-                    if (data.getIsreal().equals("单位总表")) {
-                        data.setIsreal((byte) 1);
-                    }
-                    if (data.getIsreal().equals("系统总表")) {
-                        data.setIsreal((byte) 2);
-                    }
-                }
-                if (null != data.getIsdelete()) {
-                    if (data.getIsdelete().equals("软删除标识")) {
-                        data.setIsdelete((byte) 0);
-                    }
-                    if (data.getIsdelete().equals("未删除")) {
-                        data.setIsdelete((byte) 1);
-                    }
-                }
-                if (null != data.getUnitType()) {
-                    if (data.getUnitType().equals("热源")) {
-                        data.setUnitType((byte) 1);
-                    }
-                    if (data.getUnitType().equals("一次网")) {
-                        data.setUnitType((byte) 2);
-                    }
-                    if (data.getUnitType().equals("换热站")) {
-                        data.setUnitType((byte) 3);
-                    }
-                    if (data.getUnitType().equals("二次线")) {
-                        data.setUnitType((byte) 4);
-                    }
-                    if (data.getUnitType().equals("用户")) {
-                        data.setUnitType((byte) 5);
-                    }
-                }
-                boolean index = false;
-                String codeFlag = data.getCode() + "-" + data.getComId();
-                for (Map f : tempdata) {
-                    if (f.containsValue(codeFlag)) {
-                        index = true;
-                        break;
-                    }
-                }
-                if (!index) {
+                if(StringUtils.isEmpty(data.getId())){
                     data.setId(UUIDGenerator.getUUID());
                     try {
                         meterCollectService.insert(data);
-                        Map<String, Object> meter = new HashMap<>();
-                        meter.put("code", codeFlag);
-                        tempdata.add(meter);
-
                     } catch (Exception e) {
                         message.append("第" + (m + 1) + "行数据有问题：新增失败");
                         message.append(",");
                         result.put("flag", "2");
                     }
-                } else {
+                }else{
                     try {
                         meterCollectService.updateByPrimaryKeySelective(data);
                     } catch (Exception e) {

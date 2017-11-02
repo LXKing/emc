@@ -39,7 +39,7 @@ jQuery(document).ready(function($){
     });
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadProgress', function( file, percentage ) {
-        debugger;
+        //debugger;
         var $li = $t.find( '#'+file.id ),
         $percent = $li.find('.progress .progress-bar');
 //        $percent.css("float","left");
@@ -87,7 +87,7 @@ jQuery(document).ready(function($){
 
     //当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。
     uploader.on("uploadAccept",function(object,ret){
-        debugger;
+        //debugger;
         //服务器响应了
         //ret._raw  类似于 data
         var data =ret.message;
