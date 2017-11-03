@@ -9,7 +9,7 @@ import com.huak.mdc.model.EnergyDataHis;
 import com.huak.mdc.model.FinalDataHour;
 import com.huak.mdc.model.MeterCollect;
 import com.huak.org.model.Company;
-import com.huak.sys.WeatherService;
+import com.huak.sys.SysWeatherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -58,7 +58,7 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
     private UnitAreaService unitAreaService;
     //天气
     @Resource
-    private WeatherService weatherService;
+    private SysWeatherService sysWeatherService;
 
     /**
      * 时间段能耗更新
@@ -128,7 +128,7 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             //查询该时间的能源单价
             BigDecimal energyPrice = energyPriceService.getEnergyPriceByTime(company.getId(), meterCollect.getEnergyTypeId(), time);
             //查询该时间的天气温度
-            Double weather = weatherService.getWeatherByTime(company.getWcode(), time);
+            Double weather = sysWeatherService.getWeatherByTime(company.getWcode(), time);
             //todo 计算折算天气温度
             //todo 查询该时间段的室内温度
             Double cWeather = weather;
@@ -177,7 +177,7 @@ public class FinalDataHourServiceImpl implements FinalDataHourService {
             //查询该时间的能源单价
             BigDecimal energyPrice = energyPriceService.getEnergyPriceByTime(company.getId(), meterCollect.getEnergyTypeId(), time);
             //查询该时间的天气温度
-            Double weather = weatherService.getWeatherByTime(company.getWcode(), time);
+            Double weather = sysWeatherService.getWeatherByTime(company.getWcode(), time);
             //todo 计算折算天气温度
             //todo 查询该时间段的室内温度
             Double cWeather = weather;

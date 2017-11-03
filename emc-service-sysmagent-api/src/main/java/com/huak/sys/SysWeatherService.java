@@ -11,7 +11,7 @@ package com.huak.sys;
  * Description:     <BR>
  * Function List:  <BR>
  */
-public interface WeatherService {
+public interface SysWeatherService {
     /**
      * 找到公司本小时的平均天气温度
      * @param wcode 可能是公司code,也可能是weather唯一码
