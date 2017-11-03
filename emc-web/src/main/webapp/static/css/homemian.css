@@ -2533,6 +2533,15 @@ input {
 .ztree li span.button.center_docu,.ztree li span.button.bottom_docu{
     background:none;
 }
+.iframepublicmenu{
+    width:196px;
+    position: fixed;
+    box-sizing: border-box;  
+    top:0px;
+    left:0px;
+    height: 100%;
+    z-index:9;
+}
 .publicmenu{
     width:196px;
     position: fixed;

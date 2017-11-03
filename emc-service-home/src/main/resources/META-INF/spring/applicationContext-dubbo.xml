@@ -27,7 +27,7 @@
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <bean id="componentService" class="com.huak.home.component.ComponentServiceImpl"></bean>
-    <dubbo:service interface="com.huak.home.component.ComponentService" ref="componentService" timeout="3000" loadbalance="random"
+    <dubbo:service interface="com.huak.home.component.ComponentService" ref="componentService" timeout="30000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
     <bean id="healthScoreRecordService" class="com.huak.home.component.HealthScoreRecordServiceImpl"></bean>

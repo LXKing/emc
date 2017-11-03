@@ -53,6 +53,18 @@ public class ProcessController {
         return "process/index";
     }
 
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    public String menuPage(Model model,HttpServletRequest request){
+        logger.info("流程调度菜单");
+        /*根据用户加载后台菜单*/
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Constants.SESSION_KEY);
+        List<Map<String, Object>> menus =  userService.getSystemMenusByUser(MenuModel.PROCESS,user);
+
+        model.addAttribute("menus", JSONArray.toJSON(menus));
+        return "process/menu";
+    }
+
     @RequestMapping(value = "/decode", method = RequestMethod.POST)
     @ResponseBody
     public String decode(String code,String enc) {

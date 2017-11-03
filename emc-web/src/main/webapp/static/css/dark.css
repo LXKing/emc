@@ -1579,6 +1579,12 @@ background-image: url(../imgdark/ss1.png);
     background-image: url(../imgdark/ss2.png);
     opacity: 1;
 }
+.facedark .ztree li span.button.chk.checkbox_false_part,
+.facedark .ztree li span.button.chk.checkbox_false_part_focus,
+.facedark .ztree li span.button.chk.checkbox_false_full,
+.facedark .ztree li span.button.chk.checkbox_false_full_focus{
+    background-image: url(../imgdark/shensemeigou.png);
+}
 .facedark .ztree li span.button.chk.checkbox_true_full{
     background-image: url(../imgdark/shensegou.png);
 }
@@ -1588,7 +1594,6 @@ background-image: url(../imgdark/ss1.png);
     border-right: 1px solid #21404e;
     border-bottom: 1px solid #21404e;
 }
-
 
 .facedark body ::-webkit-scrollbar-track {
     background-color: rgba(57, 220, 214, .07);
@@ -1620,4 +1625,7 @@ background-image: url(../imgdark/ss1.png);
 
 .facedark .btn-down{
     background-image: url('../imgdark/xiagun.png');
+}
+.facedark  .grouplist ::-webkit-scrollbar-thumb{
+    border: 1px solid rgba(51, 255, 248, 1);
 }
