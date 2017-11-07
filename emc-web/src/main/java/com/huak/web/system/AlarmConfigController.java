@@ -269,7 +269,7 @@ public class AlarmConfigController extends BaseController {
                     isComplete = (byte) (isComplete & completeList[i]);
                 }
                 if (isComplete == Byte.MAX_VALUE) {
-                    obj = this.importData(UPLOAD_FILE_DIR + "\\" + param.getFileName());
+                    obj = this.importData(UPLOAD_FILE_DIR + File.separator + param.getFileName());
                 }
 
             }
