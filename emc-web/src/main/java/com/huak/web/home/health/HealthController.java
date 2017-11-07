@@ -187,8 +187,8 @@ public class HealthController extends BaseController {
                 List<PollingMessage> listp = new ArrayList<PollingMessage>();
                 int count = 0;
                 for (int m = 0; m < listm.size(); m++) {
-                    if (Double.valueOf(listm.get(m).getTemp()) >= listm.get(m).getMinTemp()
-                            && Double.valueOf(listm.get(m).getTemp()) <= listm.get(m).getMaxTemp()) {
+                    if (Double.valueOf(listm.get(m).getTemp()) < listm.get(m).getMinTemp()
+                            || Double.valueOf(listm.get(m).getTemp()) > listm.get(m).getMaxTemp()) {
                         count++;
                     }
                     String s1 = listm.get(m).getStationName() + listm.get(m).getCommunityName() + listm.get(m).getRoomCode() + "室温" + listm.get(m).getTemp() + "℃";
