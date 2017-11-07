@@ -152,6 +152,17 @@
         order by c.UNIT_TYPE,c.UNIT_ID,v.UNITNAME ASC
     </select>
 
+    <select id="selectAll"  resultMap="BaseResultMapA">
+        SELECT
+        c.*,
+        v.ORGID,
+        v.ORGNAME,
+        v.UNITNAME from t_emc_alarm_config_temp c,v_emc_unit v where c.COM_ID = v.COMID
+        AND c.UNIT_TYPE = v.UNITTYPE
+        AND c.UNIT_ID = v.UNITID
+        order by c.UNIT_TYPE,c.UNIT_ID,v.UNITNAME ASC
+    </select>
+
     <select id="selectUpdate" parameterType="java.lang.String" resultMap="BaseResultMap">
 
         SELECT <include refid="Base_Column_List" />  from t_emc_alarm_config_temp c
