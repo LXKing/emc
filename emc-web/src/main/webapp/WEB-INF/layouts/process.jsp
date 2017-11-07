@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="renderer" content="webkit">
+    <meta name="renderer" content="ie-comp">
     <meta name="keywords" content="HUAK,能源管控中心,能管,能管后台">
     <meta name="description" content="HUAK 能源管控中心">
     <title><sitemesh:title/></title>
