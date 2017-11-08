@@ -152,16 +152,13 @@
         order by c.UNIT_TYPE,c.UNIT_ID,v.UNITNAME ASC
     </select>
 
-    <select id="selectAll"  resultMap="BaseResultMapA">
+    <select id="checkUnitName" parameterType="java.util.HashMap"  resultType="java.lang.Long">
         SELECT
-        c.*,
-        v.ORGID,
-        v.ORGNAME,
-        v.UNITNAME from t_emc_alarm_config_temp c,v_emc_unit v where c.COM_ID = v.COMID
-        AND c.UNIT_TYPE = v.UNITTYPE
-        AND c.UNIT_ID = v.UNITID
-        order by c.UNIT_TYPE,c.UNIT_ID,v.UNITNAME ASC
+        count(id) num
+        from t_emc_alarm_config_temp
+        where UNIT_ID = #{unitId}
     </select>
+
 
     <select id="selectUpdate" parameterType="java.lang.String" resultMap="BaseResultMap">
 
