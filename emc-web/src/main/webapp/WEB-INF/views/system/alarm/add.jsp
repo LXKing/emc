@@ -80,7 +80,7 @@
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>报警模式：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="alarmModel" name="alarmModel" class="chosen-select form-control">
+                        <select id="alarmModel" name="model" class="chosen-select form-control">
                             <c:forEach items="${sysDic['alarmModel']}" var="type">
                                 <option value="${type.seq}">${type.des}</option>
                             </c:forEach>
