@@ -229,9 +229,43 @@ function deleteFeed(id) {
 function queryParams(params) {
     var ts = $(top.document).find("[name='searchComp']").val();
     $("#comId").val(ts);
-    return $("#feed-searchform").serialize();
+    var param = {
+        pageNumber: params.pageNumber,
+        pageSize: params.pageSize
+    };
+
+    formsParam(param,'feed-searchform',false);
+    return param;
 }
 
+/**
+ * 获取页面表单中的input和select元素的name和value，并放入param对象中
+ * @param param form请求参数对象
+ * @param formId form表单id
+ * @param isVisible 是否只获取可见元素
+ */
+function formsParam(param,formId,isVisible){
+    var paramStr="";
+    var forms=[];
+    var selects = [];
+    if(isVisible){
+        forms = $('#'+formId+' input:visible');
+        selects = $('#'+formId+' select:visible');
+    }else{
+        forms = $('#'+formId+' input');
+        selects = $('#'+formId+' select');
+    }
+    for(var j=0;j<selects.length;j++){
+        forms.push(selects[j]);
+    }
+    for(var i=0;i<forms.length;i++){
+        var k = $(forms[i]).attr("name");
+        var v = $(forms[i]).val();
+        param[k] = v;
+        paramStr+=k+"="+v+"&";
+    }
+    return paramStr.substring(0,paramStr.length-1);
+}
 function treeNodeClick(e,treeId,treeNode){
     top.orgId = treeNode.id;
     $("#orgId").val(treeNode.id);
