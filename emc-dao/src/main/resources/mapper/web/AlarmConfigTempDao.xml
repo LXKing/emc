@@ -154,12 +154,9 @@
 
     <select id="checkUnitName" parameterType="java.util.HashMap"  resultType="java.lang.Long">
         SELECT
-        count(unitid) num
-        from v_emc_unit
-        where  1=1
-        <if test="unitId != null and unitId !=''">
-            and  UNITID = #{unitId}
-        </if>
+        count(id) num
+        from t_emc_alarm_config_temp
+        where UNIT_ID = #{unitId}
     </select>
 
 

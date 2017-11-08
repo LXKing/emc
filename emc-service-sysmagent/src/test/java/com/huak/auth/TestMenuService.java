@@ -2,6 +2,7 @@ package com.huak.auth;
 
 import com.huak.auth.model.Menu;
 import com.huak.base.BaseTest;
+import com.huak.health.AlarmConfigTempService;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 
@@ -24,6 +25,8 @@ import java.util.Map;
 public class TestMenuService extends BaseTest {
     @Resource
     private MenuService menuService;
+    @Resource
+    private AlarmConfigTempService alarmConfigTempService;
 //    @Test
 //    @Rollback
 //    public void testSelectDemo(){
@@ -58,6 +61,13 @@ public class TestMenuService extends BaseTest {
         for (Map season : seasons){
             System.err.println(season.get("name"));
         }
+    }
+    @Test
+    public void testCount(){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("unitId","11");
+        System.out.println(alarmConfigTempService.checkUnitName(params));
+
     }
 
 

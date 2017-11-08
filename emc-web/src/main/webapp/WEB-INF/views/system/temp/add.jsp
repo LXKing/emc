@@ -113,10 +113,10 @@
 
         //部门名唯一验证
 
-        $("#unitId").chosen().on('change',function () {
+        /*$("#unitId").chosen().on('change',function () {
             //加载用能单位
             getUnitSelect();
-        });
+        });*/
 
         $.validator.addMethod("checkName", function (value, element) {
             var deferred = $.Deferred();//创建一个延迟对象
