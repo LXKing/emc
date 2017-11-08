@@ -39,4 +39,5 @@ public interface AlarmConfigTempService {
 
     List<Map<String,Object>> exportTempConfig(Map<String, Object> paramsMap);
 
+    Long checkUnitName(Map<String, Object> paramsMap);
 }

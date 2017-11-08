@@ -65,6 +65,8 @@ public class AlarmConfigTempServiceImpl implements AlarmConfigTempService {
         return alarmConfigDao.selectByPrimaryKey(id);
     }
 
+
+
     @Override
     @Transactional(readOnly = false)
     public int updateByPrimaryKeySelective(AlarmConfigTemp record) {
@@ -87,6 +89,7 @@ public class AlarmConfigTempServiceImpl implements AlarmConfigTempService {
         return Convert.convert(alarmConfigtempDao.selectPageByMap(paramsMap));
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public AlarmConfigTemp selectUpdateMap(String id) {
@@ -99,5 +102,11 @@ public class AlarmConfigTempServiceImpl implements AlarmConfigTempService {
     public List<Map<String, Object>> exportTempConfig(Map<String, Object> paramsMap) {
         logger.info("导出报温度置");
         return alarmConfigtempDao.exportTempConfig(paramsMap);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Long checkUnitName(Map<String, Object> paramsMap) {
+        return alarmConfigtempDao.checkUnitName(paramsMap);
     }
 }

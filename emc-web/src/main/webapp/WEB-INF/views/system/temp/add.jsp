@@ -96,10 +96,14 @@
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
 
+
+
         $("#unitType").chosen().on('change',function () {
             //加载用能单位
             getUnitSelect();
         });
+
+
 
 
         //加载用能单位
@@ -107,6 +111,32 @@
         //加载tag
         getTagSelect();
 
+        //部门名唯一验证
+
+        $("#unitId").chosen().on('change',function () {
+            //加载用能单位
+            getUnitSelect();
+        });
+
+        $.validator.addMethod("checkName", function (value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url: _web + '/temp/config/check/name',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {unitId: value},
+                dataType: 'json',
+                success: function (result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, icon+"用能单位已存在");
 
         $.validator.addMethod("checkTemp", function(value, element){
             if(value<-30){
@@ -115,6 +145,8 @@
             }else if(value>50){
                 top.layer.msg("最高温度不能高于50℃");
                 return false;
+            }else if(isNaN(value)){
+                top.layer.msg("请输入正确温度数( -30℃~50℃)");
             }else{
                 return true;
             }
@@ -151,7 +183,8 @@
                     required: true
                 },
                 unitId: {
-                    required: true
+                    required: true,
+                    checkName: true
                 },
                 mintemp: {
                     required: true,

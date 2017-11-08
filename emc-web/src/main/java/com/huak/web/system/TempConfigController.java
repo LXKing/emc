@@ -92,10 +92,10 @@ public class TempConfigController extends BaseController {
 
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
+
         try {
             HttpSession session = request.getSession();
             User user = (User)session.getAttribute(Constants.SESSION_KEY);
-
             alarmConfigTemp.setId(UUIDGenerator.getUUID());
             alarmConfigTempService.insertSelective(alarmConfigTemp);
             jo.put(Constants.FLAG, true);
@@ -104,7 +104,7 @@ public class TempConfigController extends BaseController {
             logger.error("添加室温配置异常" + e.getMessage());
             jo.put(Constants.MSG, "添加室温配置失败");
         }
-        return jo.toJSONString();
+            return jo.toJSONString();
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
@@ -401,5 +401,22 @@ public class TempConfigController extends BaseController {
         }
         result.put("message", message);
         return result;
+    }
+
+    @RequestMapping(value = "/check/name", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkUnitName(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("用能单位唯一性校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = alarmConfigTempService.checkUnitName(paramsMap);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("用能单位唯一性校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
     }
 }
