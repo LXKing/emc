@@ -276,4 +276,28 @@
 
 
     </select>
+
+    <select id="checkAddRepeat" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        select count(id) num
+        from t_emc_alarm_config
+        where 1=1
+        <if test="alarmType != null and alarmType !=''">
+            and  ALARM_TYPE = #{alarmType}
+        </if>
+        <if test="alarmLevel != null and alarmLevel !=''">
+            and  ALARM_LEVEL = #{alarmLevel}
+        </if>
+        <if test="model != null and model !=''">
+            and  MODEL = #{model}
+        </if>
+        <if test="unitId != null and unitId !=''">
+            and  UNIT_ID = #{unitId}
+        </if>
+        <if test="unitType != null and unitType !=''">
+            and  UNIT_TYPE = #{unitType}
+        </if>
+        <if test="id != null and id !=''">
+            and  ID <![CDATA[ <> ]]> #{id}
+        </if>
+    </select>
 </mapper>

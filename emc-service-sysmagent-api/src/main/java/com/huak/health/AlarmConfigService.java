@@ -37,4 +37,6 @@ public interface AlarmConfigService {
     AlarmConfigVO selectUpdateMap(String id);
 
     List<Map<String,Object>> exportAlarmConfig(Map<String, Object> paramsMap);
+
+    Long checkAddRepeat(Map<String, Object> paramsMap);
 }

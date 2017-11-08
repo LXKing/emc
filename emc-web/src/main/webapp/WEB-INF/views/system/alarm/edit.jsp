@@ -158,6 +158,32 @@
         //加载tag
         //getTagSelect();
 
+        //校验重复添加
+        $.validator.addMethod("checkAddRepeat", function (value, element) {
+            var deferred = $.Deferred();//创建一个延迟对象
+            $.ajax({
+                url: _web + '/alarm/config/check/repeat',
+                type: 'POST',
+                async: false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
+                data: {unitType: $("#unitType").val(),
+                    unitId: $("#unitId").val(),
+                    alarmType: $("#alarmType").val(),
+                    alarmLevel: $("#alarmLevel").val(),
+                    model: $("#alarmModel").val(),
+                    id:$("#id").val()},
+                dataType: 'json',
+                success: function (result) {
+                    if (!result.flag) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+            });
+            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
+            return deferred.state() == "resolved" ? true : false;
+        }, icon + "工况报警配置重复添加");
+
         //小数校验
         $.validator.addMethod("isFloat", function(value, element){
             var tel = /^\d+(\.\d{1,4})?$/;
@@ -200,6 +226,10 @@
                 num: {
                     required: true,
                     isFloat: true
+                },
+                alarmLevel: {
+                    required: true,
+                    checkAddRepeat: true
                 }
             },
             messages: {
@@ -211,6 +241,9 @@
                 },
                 num: {
                     required: icon + "请输入报警阈值"
+                },
+                alarmLevel: {
+                    required: icon + "请选择报警等级"
                 }
             },
             submitHandler: function () {

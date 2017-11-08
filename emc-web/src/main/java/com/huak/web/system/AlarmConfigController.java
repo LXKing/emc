@@ -408,4 +408,22 @@ public class AlarmConfigController extends BaseController {
         result.put("message", message);
         return result;
     }
+
+
+    @RequestMapping(value = "/check/repeat", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkAddRepeat(@RequestParam Map<String, Object> paramsMap) {
+        logger.info("工况报警配置重复校验");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            Long num = alarmConfigService.checkAddRepeat(paramsMap);
+            if (num == 0) {
+                jo.put(Constants.FLAG, true);
+            }
+        } catch (Exception e) {
+            logger.error("工况报警配置重复校验异常" + e.getMessage());
+        }
+        return jo.toJSONString();
+    }
 }

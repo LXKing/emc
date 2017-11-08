@@ -96,4 +96,11 @@ public class AlarmConfigServiceImpl implements AlarmConfigService {
         logger.info("导出报警配置");
         return alarmConfigDao.exportAlarmConfig(paramsMap);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long checkAddRepeat(Map<String, Object> paramsMap) {
+        logger.info("导出报警配置");
+        return alarmConfigDao.checkAddRepeat(paramsMap);
+    }
 }
