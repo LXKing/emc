@@ -4,6 +4,7 @@ import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.workorder.model.WorkOrderInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -214,4 +215,9 @@ public interface WorkOrderInfoService {
      */
     int confirmACRecord(WorkOrderInfo workOrder);
 
+    /**
+     * 查询班长和接单员的信息
+     * @return
+     */
+    List<Map<String,Object>> getEmployee();
 }

@@ -23,7 +23,7 @@
             <arg column="SENDEE" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="AFTER_STATUS" javaType="java.lang.Integer" jdbcType="VARCHAR" />
             <arg column="DES" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="USER_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="EMP_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="RECIVER" javaType="java.lang.String" jdbcType="VARCHAR" />
 
         </constructor>

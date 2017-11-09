@@ -243,4 +243,14 @@
         LEFT JOIN t_emc_work_order_record r ON i.CODE = r. CODE
 
     </select>
+    <select id="getEmployee" parameterType="java.util.Map" resultType="java.util.Map">
+
+       SELECT e.ID,CONCAT(e.EMP_NAME,'(',r.ROLE_NAME,')') name from t_emc_auth_employee e LEFT JOIN
+
+			t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
+			LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
+			('57acca2ba1aa4122a0d748de2b6bdf70'
+			,'6e1d558c506a4ed6a43a1ecf237d2f88')
+
+    </select>
 </mapper>

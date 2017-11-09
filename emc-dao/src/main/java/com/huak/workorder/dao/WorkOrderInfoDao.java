@@ -23,4 +23,6 @@ public interface WorkOrderInfoDao {
     int getToDayNum(Map<String, Object> params);
 
     List<WorkOrderInfo> selectWorkOrderInfo(Map<String, Object> params);
+
+    List<Map<String,Object>> getEmployee();
 }

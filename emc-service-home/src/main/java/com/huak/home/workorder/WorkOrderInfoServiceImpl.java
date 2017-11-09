@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -748,4 +749,8 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         return workOrderRecordDao.insertSelective(record);
     }
 
+    @Override
+    public List<Map<String, Object>> getEmployee() {
+        return workOrderInfoDao.getEmployee();
+    }
 }

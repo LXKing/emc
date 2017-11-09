@@ -20,11 +20,11 @@ public class WorkOrderRecordA implements Serializable{
 
     private String des;
 
-    private String userName;
+    private String empName;
 
     private String reciver;
 
-    public WorkOrderRecordA(String id, String code, Integer beforStatus, String operateTime, String opertor, String sendee, Integer afterStatus, String des, String userName,String reciver) {
+    public WorkOrderRecordA(String id, String code, Integer beforStatus, String operateTime, String opertor, String sendee, Integer afterStatus, String des, String empName,String reciver) {
         this.id = id;
         this.code = code;
         this.beforStatus = beforStatus;
@@ -33,7 +33,7 @@ public class WorkOrderRecordA implements Serializable{
         this.sendee = sendee;
         this.afterStatus = afterStatus;
         this.des = des;
-        this.userName=userName;
+        this.empName=empName;
         this.reciver=reciver;
     }
 
@@ -104,11 +104,13 @@ public class WorkOrderRecordA implements Serializable{
     public void setDes(String des) {
         this.des = des == null ? null : des.trim();
     }
-    public String getUserName() {
-        return userName;
+
+    public String getEmpName() {
+        return empName;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
     }
 
     public String getReciver() {

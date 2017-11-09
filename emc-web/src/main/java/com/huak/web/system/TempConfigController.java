@@ -9,6 +9,7 @@ import com.huak.common.utils.MultipartFileUploadUtil;
 import com.huak.health.AlarmConfigService;
 import com.huak.health.AlarmConfigTempService;
 import com.huak.health.model.AlarmConfigTemp;
+import com.huak.home.workorder.WorkOrderInfoService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.web.home.BaseController;
@@ -60,7 +61,8 @@ public class TempConfigController extends BaseController {
     private AlarmConfigService alarmConfigService;
     @Resource
     private AlarmConfigTempService alarmConfigTempService;
-
+    @Resource
+    private WorkOrderInfoService workOrderInfoService;
     @RequestMapping(value = "/page",method = RequestMethod.GET)
     public String page(HttpServletRequest request,Model model){
         logger.info("打开室温配置页");
@@ -84,7 +86,13 @@ public class TempConfigController extends BaseController {
         model.addAttribute(ORG,org);
         return "system/temp/add";
     }
-
+    @RequestMapping(value = "/add1",method = RequestMethod.GET)
+    public String addPage1(HttpServletRequest request,Model model){
+        logger.info("打开室温添加配置页");
+        List<Map<String,Object>> list = workOrderInfoService.getEmployee();
+        model.addAttribute("list",list);
+        return "system/workorder/add";
+    }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(AlarmConfigTemp alarmConfigTemp, HttpServletRequest request) {

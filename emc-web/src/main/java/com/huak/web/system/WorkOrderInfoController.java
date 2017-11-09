@@ -82,7 +82,7 @@ public class WorkOrderInfoController {
 
         JSONObject jo = new JSONObject();
         try {
-            jo.put(Constants.LIST,workOrderInfoService.selectWorkOrderInfo(map,page));
+            jo.put(Constants.LIST,workOrderInfoService.selectWorkOrderInfo(map, page));
         } catch (Exception e) {
             logger.error("计量器具列表页分页查询异常" + e.getMessage());
         }
@@ -195,6 +195,28 @@ public class WorkOrderInfoController {
         }else {
             jo.put(Constants.FLAG,false);
             jo.put(Constants.MSG,"操作失败");
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
+        logger.info("添加工单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            HttpSession session = request.getSession();
+            Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
+            Employee emp = (Employee)session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
+            workOrderInfo.setComid(company.getId());
+            workOrderInfo.setCreator(emp.getId());
+            workOrderInfoService.saveA(workOrderInfo);
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "添加工单成功");
+        } catch (Exception e) {
+            logger.error("添加工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "添加工单失败");
         }
         return jo.toJSONString();
     }

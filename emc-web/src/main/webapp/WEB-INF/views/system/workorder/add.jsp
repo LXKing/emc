@@ -15,65 +15,57 @@
                 <input type="hidden" id="orgId" name="orgId" value="${org.id}">
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>单位类型：</label>
+                            class="red">*</span>任务单类型：</label>
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <select id="type" name="type" class="chosen-select form-control">
+                            <option value="">请输入任务类型</option>
+
+                            <option value="0">指定时间</option>
+                            <option value="1">非指定时间</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>任务单名称：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="unitType" name="unitType" class="chosen-select form-control">
-                            <c:forEach items="${sysDic['orgType']}" var="type">
-                                <option value="${type.seq}">${type.des}</option>
+                        <input id="name" name="name" class="form-control inputs-lg" value="" type="text" maxlength="16" placeholder="请输任务单名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>指令内容：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <textarea content="content" id="content" name="content" class="form-control inputs-lg" value="" type="text" maxlength="256" placeholder="请输任务单名称"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group starttime">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>任务开始时间：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input id="startTime" type="text" class="laydate-icon  form-control inputs-lg layer-date"  name="startTime" placeholder="请选择任务开始时间"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>完成时间：</label>
+
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <input id="finishTime" type="text" class="laydate-icon  form-control inputs-lg layer-date"  name="finishTime" placeholder="请选择完成时间"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
+                            class="red">*</span>选人：</label>
+                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
+                        <select id="takor" name="takor" class="chosen-select form-control">
+                            <option value="">请选择人员</option>
+                            <c:forEach items="${list}" var="emp">
+                                <option value="${emp.ID}">${emp.name}</option>
                             </c:forEach>
                         </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>用能单位：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="unitId" name="unitId" class="chosen-select form-control">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>指标类型：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <select id="typeId" name="typeId" class="chosen-select form-control">
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>企业指标：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="enterprise" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入企业指标">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>地方指标：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="local" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入地方指标">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red">*</span>行业指标：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="industry" class="form-control inputs-lg" value="${typeZh}" type="text" maxlength="16" placeholder="请输入行业指标">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span class="red">*</span>生效时间：</label>
-
-                    <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input id="indexTime" type="text" class="laydate-icon  form-control inputs-lg layer-date"  name="indexTime" placeholder="请选择生效时间"/>
                     </div>
                 </div>
             </form>
@@ -112,14 +104,21 @@
         var icon = "<i class='fa fa-times-circle'></i> ";
 
         laydate({
-            elem: '#indexTime',
+            elem: '#startTime',
             format: 'YYYY-MM-DD hh:00:00',
             max: '2099-06-16 ', //最大日期
             istime: true,
             istoday: false,
             event: 'focus'
         });
-
+        laydate({
+            elem: '#finishTime',
+            format: 'YYYY-MM-DD hh:00:00',
+            max: '2099-06-16 ', //最大日期
+            istime: true,
+            istoday: false,
+            event: 'focus'
+        });
         $("#unitType").chosen().on('change',function () {
             //加载用能单位
             getUnitSelect();
@@ -184,41 +183,43 @@
             },
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
-                typeId: {
-                    required: true,
-                    checkType:true
+                type: {
+                    required: true
                 },
-                industry: {
-                    required: true,
-                    isFloat: true
+                name: {
+                    required: true
                 },
-                local: {
-                    required: true,
-                    isFloat: true
+                content: {
+                    required: true
                 },
-                enterprise: {
-                    required: true,
-                    isFloat: true
+                startTime: {
+                    required: true
                 },
-                indexTime:{
+                finishTime:{
+                    required: true
+                },
+                takor:{
                     required: true
                 }
             },
             messages: {
-                typeId: {
-                    required: icon + "请选择指标类型"
+                type: {
+                    required: icon + "请选择类型"
                 },
-                industry: {
-                    required: icon + "请输入行业指标"
+                name: {
+                    required: icon + "请输入工单代码"
                 } ,
-                local: {
-                    required: icon + "请输入地方指标"
+                content: {
+                    required: icon + "请输入内容"
                 },
-                enterprise: {
-                    required: icon + "请输入企业指标"
+                startTime: {
+                    required: icon + "请输入开始时间"
                 },
-                indexTime:{
-                    required: icon + "请选择生效时间"
+                finishTime:{
+                    required: icon + "请选择完成时间"
+                },
+                takor:{
+                    required: icon + "请选择人员"
                 }
             },
             submitHandler: function () {
@@ -226,7 +227,7 @@
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
                 $.ajax({
-                    url: _web + '/index/allocation/add',
+                    url: _web + '/work/order/info/add',
                     data: $form.serialize(),
                     type: 'POST',
                     dataType: 'json',
@@ -234,7 +235,7 @@
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            queryAllocation();
+                            //queryAllocation();
                         } else {
                             top.layer.close(index);
                             top.layer.msg(result.msg);
@@ -279,4 +280,13 @@
             }
         });
     }
+    $(top.document).find("#type").on('change', function () {
+        var real = $(this).val();
+        if(real==1){
+            $(".starttime").hide();
+        }
+        if(real==0){
+            $(".starttime").show();
+        }
+    });
 </script>
