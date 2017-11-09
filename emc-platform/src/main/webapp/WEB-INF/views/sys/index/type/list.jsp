@@ -71,10 +71,10 @@
                                 <button type="button" class="btn btn-sm btn-primary emc-search" bootstrap-table-id="indexType-table-list"> 搜索
                                 </button>
                                 <button type="button" class="btn btn-sm btn-success emc-reset"> 重置</button>
-                                <c:if test="${sessionScope._auth['indexTypeExport']}">
-                                <button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/index/type/export"> 导出Excel
-                                </button>
-                                </c:if>
+                                <%--<c:if test="${sessionScope._auth['indexTypeExport']}">--%>
+                                <%--<button type="button" class="btn btn-sm btn-primary excel-export-btn" export-url="${platform}/index/type/export"> 导出Excel--%>
+                                <%--</button>--%>
+                                <%--</c:if>--%>
                             </div>
                         </div>
                     </form>

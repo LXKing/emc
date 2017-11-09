@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Employee implements Serializable{
     private static final long serialVersionUID = 1L;
-    private Long id;
+    private String id;
 
     private Long orgId;
 
@@ -32,7 +32,11 @@ public class Employee implements Serializable{
 
     private Byte status;
 
-    public Employee(Long id, Long orgId, String empName, Byte sex, Integer age, String birthday, String jobNum, String tel, String phone, String email, String memo, String creator, String createTime,Byte status) {
+    private String userid;
+
+    private String pId;
+
+    public Employee(String id, Long orgId, String empName, Byte sex, Integer age, String birthday, String jobNum, String tel, String phone, String email, String memo, String creator, String createTime,Byte status,String userid,String pId) {
         this.id = id;
         this.orgId = orgId;
         this.empName = empName;
@@ -47,17 +51,19 @@ public class Employee implements Serializable{
         this.creator = creator;
         this.createTime = createTime;
         this.status = status;
+        this.userid=userid;
+        this.pId=pId;
     }
 
     public Employee() {
         super();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -163,5 +169,21 @@ public class Employee implements Serializable{
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
     }
 }

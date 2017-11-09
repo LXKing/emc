@@ -141,7 +141,7 @@
                             class="red"></span>描述：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="depict" id="depict" class="form-control" type="text" maxlength="16" placeholder="请输入计量器具描述">
+                        <input name="depict" id="depict" class="form-control" type="text" maxlength="32" placeholder="请输入计量器具描述">
                     </div>
                 </div>
 
@@ -222,14 +222,18 @@ $(function () {
 //            $(top.document).find("#yucun").html(html);
         }
     });
-
+    $(top.document).undelegate(".btnFun",'click');
     $(top.document).delegate(".btnFun",'click', function () {
-        //alert($(this).text());
+
+//        alert($(this).text());
         var value = $(this).text();
+
         var v = $(top.document).find("#formula").val();
 
         if(value=="("){
+//            alert(v+"------"+value);
             $(top.document).find("#formula").val(v+value);
+            return false;
         }
         if(v==''||v==null){
             top.layer.msg("请填写公式或组成公式的代码");
@@ -254,7 +258,7 @@ $(function () {
                         top.layer.msg("请输入正确的公式!");
                         return false;
                     } else {
-                        //alert(v+value);
+                        //alert(v+"---"+value);
                         $(top.document).find("#formula").val(v+value);
                     }
                 }

@@ -4,6 +4,8 @@ import com.huak.workorder.model.WorkOrderRecord;
 import com.huak.workorder.vo.WorkOrderRecordA;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface WorkOrderRecordDao {
     int deleteByPrimaryKey(String id);
@@ -18,5 +20,6 @@ public interface WorkOrderRecordDao {
 
     int updateByPrimaryKey(WorkOrderRecord record);
 
-    WorkOrderRecordA selectAllRecord(String code);
+    List<WorkOrderRecordA> selectAllRecord(String code);
+
 }

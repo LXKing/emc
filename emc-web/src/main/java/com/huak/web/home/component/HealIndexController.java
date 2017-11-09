@@ -17,6 +17,7 @@ import com.huak.web.home.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -153,23 +154,17 @@ public class HealIndexController   extends BaseController {
 
     @RequestMapping(value = "/list/second", method = RequestMethod.POST)
     @ResponseBody
-    public String second(ToolVO toolVO,HttpServletRequest request) {
+    public String second(ToolVO toolVO,HttpServletRequest request,@CookieValue(name="toolEndDate")String endTime,
+                         @CookieValue(name="toolStartDate")String toolStartDate) {
         logger.info("健康指数检测二级页面分数计算");
         JSONObject jo = new JSONObject();
-        String startTime=null;
-        String endTime=null;
         jo.put(Constants.FLAG, false);
         if(toolVO.getToolEndDate()==null&&toolVO.getToolStartDate()==null&&toolVO.getToolOrgId()==null){
             HttpSession session = request.getSession();
-            Org org = (Org) session.getAttribute(Constants.SESSION_ORG_KEY);
-            Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
-            Calendar calendar = Calendar.getInstance();
-//            startTime = calendar.getWeekYear()-1+"-11-15 00:00:00";
-//            endTime = calendar.getWeekYear()+"-03-15 23:59:59";
-            JSONObject season = searchService.getSeason(company.getId());
-            toolVO.setToolStartDate(season.getString("startDate"));
-            toolVO.setToolEndDate(season.getString("endDate"));
-            toolVO.setToolOrgId(org.getId().toString());
+            User user = (User) session.getAttribute(Constants.SESSION_KEY);
+            toolVO.setToolOrgId(user.getOrgId());
+            toolVO.setToolEndDate(endTime);
+            toolVO.setToolStartDate(toolStartDate);
         }
         try {
              /*封装条件*/
