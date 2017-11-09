@@ -19,11 +19,49 @@
       <arg column="REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="MONITOR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="TAKOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="FINISH_REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <arg column="READ_STAUTS" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
+    <resultMap id="BaseResultMapDetail" type="com.huak.workorder.vo.WorkOrderInfoDetail">
+        <constructor>
+            <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="TYPE" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CONTENT" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="START_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="FINISH_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="FINISH" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="ACTUAL_FINISH_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MONITOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="TAKOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="FINISH_REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="READ_STAUTS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="CREATORNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="MONITORNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="TAKORNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="FINISHNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+
+        </constructor>
+    </resultMap>
+    <resultMap id="BaseResultMapRel" type="com.huak.workorder.vo.WorkOrderInfoRel">
+        <constructor>
+            <arg column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="PARENTCODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="RESETNUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
   <sql id="Base_Column_List">
     ID, CODE, TYPE, NAME, CONTENT, START_TIME, FINISH_TIME, CREATE_TIME, CREATOR, STATUS, 
-    FINISH, ACTUAL_FINISH_TIME, COMID, REASON, MONITOR, TAKOR
+    FINISH, ACTUAL_FINISH_TIME, COMID, REASON, MONITOR, TAKOR,FINISH_REASON,READ_STAUTS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -41,13 +79,13 @@
       FINISH_TIME, CREATE_TIME, CREATOR, 
       STATUS, FINISH, ACTUAL_FINISH_TIME, 
       COMID, REASON, MONITOR, 
-      TAKOR)
+      TAKOR,FINISH_REASON,READ_STAUTS)
     values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
       #{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
       #{finishTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{finish,jdbcType=VARCHAR}, #{actualFinishTime,jdbcType=VARCHAR}, 
       #{comid,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{monitor,jdbcType=VARCHAR}, 
-      #{takor,jdbcType=VARCHAR})
+      #{takor,jdbcType=VARCHAR},#{finishReason,jdbcType=VARCHAR},#{readStauts,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.huak.workorder.model.WorkOrderInfo">
     insert into t_emc_work_order_info
@@ -100,6 +138,12 @@
       <if test="takor != null">
         TAKOR,
       </if>
+        <if test="finishReason != null">
+            FINISH_REASON,
+        </if>
+        <if test="readStauts != null">
+            READ_STAUTS,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -150,6 +194,12 @@
       <if test="takor != null">
         #{takor,jdbcType=VARCHAR},
       </if>
+        <if test="finishReason != null">
+            #{finishReason,jdbcType=VARCHAR},
+        </if>
+        <if test="readStauts != null">
+            #{readStauts,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huak.workorder.model.WorkOrderInfo">
@@ -200,6 +250,12 @@
       <if test="takor != null">
         TAKOR = #{takor,jdbcType=VARCHAR},
       </if>
+        <if test="finishReason != null">
+            FINISH_REASON = #{finishReason,jdbcType=VARCHAR},
+        </if>
+        <if test="readStauts != null">
+            READ_STAUTS = #{readStauts,jdbcType=VARCHAR},
+        </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -219,7 +275,9 @@
       COMID = #{comid,jdbcType=VARCHAR},
       REASON = #{reason,jdbcType=VARCHAR},
       MONITOR = #{monitor,jdbcType=VARCHAR},
-      TAKOR = #{takor,jdbcType=VARCHAR}
+      TAKOR = #{takor,jdbcType=VARCHAR},
+      FINISH_REASON = #{finishReason,jdbcType=VARCHAR},
+       READ_STAUTS = #{readStauts,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
     <select id="getToDayNum" parameterType="java.util.Map" resultType="java.lang.Integer">
@@ -242,6 +300,30 @@
             t_emc_work_order_info i
         LEFT JOIN t_emc_work_order_record r ON i.CODE = r. CODE
 
+    </select>
+
+    <select id="getWorkInfoByCode" parameterType="java.lang.String" resultMap="BaseResultMapDetail">
+        SELECT
+        woi.*, e1.EMP_NAME CREATORNAME,
+        e2.EMP_NAME MONITORNAME,
+        e3.EMP_NAME TAKORNAME,
+        e4.EMP_NAME FINISHNAME
+        FROM
+            t_emc_work_order_info woi
+        LEFT JOIN t_emc_auth_employee e1 ON e1.ID = woi.CREATOR
+        LEFT JOIN t_emc_auth_employee e2 ON e2.ID = woi.MONITOR
+        LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
+        LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
+        WHERE
+        woi. CODE = #{code,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectWorkRelByCode" parameterType="java.lang.String" resultMap="BaseResultMapRel">
+        SELECT woi.CODE,woi.NAME,woi.STATUS,wor.PARENT_CODE PARENTCODE,wor.RESET_NUM RESETNUM
+    FROM t_emc_work_order_info woi
+    LEFT JOIN t_emc_work_order_reset wor ON woi.CODE = wor. ORDER_CODE
+    WHERE woi.code =  #{code,jdbcType=VARCHAR}
+    OR woi.code in ( SELECT ORDER_CODE FROM t_emc_work_order_reset WHERE PARENT_CODE= #{code,jdbcType=VARCHAR})
     </select>
     <select id="getEmployee" parameterType="java.util.Map" resultType="java.util.Map">
 

@@ -70,4 +70,12 @@
       RESET_NUM = #{resetNum,jdbcType=INTEGER}
     where ORDER_CODE = #{orderCode,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectByCode" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+        	PARENT_CODE
+        from t_emc_work_order_reset
+        where ORDER_CODE = #{code,jdbcType=VARCHAR} OR PARENT_CODE = #{code,jdbcType=VARCHAR}
+        GROUP BY PARENT_CODE
+    </select>
 </mapper>

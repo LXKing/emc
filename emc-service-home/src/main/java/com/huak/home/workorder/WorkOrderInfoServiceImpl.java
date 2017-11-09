@@ -14,6 +14,8 @@ import com.huak.workorder.model.WorkOrderInfo;
 import com.huak.workorder.model.WorkOrderRecord;
 import com.huak.workorder.type.WorkOrderOperate;
 import com.huak.workorder.type.WorkOrderStatus;
+import com.huak.workorder.vo.WorkOrderInfoDetail;
+import com.huak.workorder.vo.WorkOrderInfoRel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -731,6 +733,43 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
         return workOrderRecordDao.insertSelective(record);
     }
+
+    /**
+     * 根据code查询工单详细信息
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public WorkOrderInfoDetail getWorkInfoByCode(String code) {
+        return workOrderInfoDao.getWorkInfoByCode(code);
+    }
+
+    /**
+     * 根据code查询工单关联列表
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<WorkOrderInfoRel> selectWorkRelByCode(String code) {
+        return workOrderInfoDao.selectWorkRelByCode(code);
+    }
+
+    /**
+     * 根据code查询parentcode
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public String selectByCode(String code) {
+        return workOrderResetDao.selectByCode(code);
+    }
+
     @Override
     public int resetBackABCRecord(WorkOrderInfo workOrder) {
         logger.info("派单员关闭退单，且派单员重新发送到班长");

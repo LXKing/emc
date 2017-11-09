@@ -4,26 +4,28 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Employee;
 import com.huak.auth.model.Role;
 import com.huak.common.Constants;
+import com.huak.common.StringUtils;
 import com.huak.common.page.Page;
 import com.huak.home.workorder.WorkOrderInfoService;
 import com.huak.home.workorder.WorkOrderRecordService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.workorder.model.WorkOrderInfo;
+import com.huak.workorder.vo.WorkOrderInfoDetail;
+import com.huak.workorder.vo.WorkOrderInfoRel;
+import com.huak.workorder.vo.WorkOrderRecordA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -219,5 +221,26 @@ public class WorkOrderInfoController {
             jo.put(Constants.MSG, "添加工单失败");
         }
         return jo.toJSONString();
+    }
+
+
+    @RequestMapping(value = "/detail/{code}",method = RequestMethod.GET)
+    public String detailPage(HttpServletRequest request, Model model,@PathVariable("code") String code) {
+        logger.info("打开工单详情页");
+        //根据code查询工单信息
+        WorkOrderInfoDetail detail = workOrderInfoService.getWorkInfoByCode(code);
+        //根据code查询工单操作记录
+        List<WorkOrderRecordA> records = workOrderRecordService.selectAllRecord(code);
+        //根据code查询关联工单信息列表
+        String pCode = workOrderInfoService.selectByCode(code);
+        if(!StringUtils.isEmpty(pCode)){
+            List<WorkOrderInfoRel> rels = workOrderInfoService.selectWorkRelByCode(pCode);
+            model.addAttribute("rels", rels);
+        }
+
+        model.addAttribute("detail", detail);
+        model.addAttribute("records", records);
+
+        return "system/workorder/detail";
     }
 }

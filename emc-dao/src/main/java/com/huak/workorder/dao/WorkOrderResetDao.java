@@ -17,4 +17,6 @@ public interface WorkOrderResetDao {
     int updateByPrimaryKeySelective(WorkOrderReset record);
 
     int updateByPrimaryKey(WorkOrderReset record);
+
+    String selectByCode(String code);
 }

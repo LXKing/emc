@@ -1,9 +1,26 @@
-package com.huak.workorder.model;
+package com.huak.workorder.vo;
+
+import com.huak.common.StringUtils;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class WorkOrderInfo implements Serializable{
-    private static final long serialVersionUID = 8403971488402595499L;
+/**
+ * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
+ * ProjectName:emc<BR>
+ * File name:  com.huak.workorder.vo<BR>
+ * Author:  lc  <BR>
+ * Project:emc    <BR>
+ * Version: v 1.0      <BR>
+ * Date: 2017-11-09<BR>
+ * Description:  工单视图   <BR>
+ * Function List:  <BR>
+ */
+public class WorkOrderInfoDetail implements Serializable {
+    private static final long serialVersionUID = -7153362290008631096L;
     private String id;
 
     private String code;
@@ -35,12 +52,16 @@ public class WorkOrderInfo implements Serializable{
     private String monitor;
 
     private String takor;
-
     private String finishReason;
 
     private Integer readStauts;
+    private String creatorName;
+    private String monitorName;
+    private String takorName;
+    private String finishName;
 
-    public WorkOrderInfo(String id, String code, Byte type, String name, String content, String startTime, String finishTime, String createTime, String creator, Integer status, String finish, String actualFinishTime, String comid, String reason, String monitor, String takor, String finishReason, Integer readStauts) {
+
+    public WorkOrderInfoDetail(String id, String code, Byte type, String name, String content, String startTime, String finishTime, String createTime, String creator, Integer status, String finish, String actualFinishTime, String comid, String reason, String monitor, String takor, String finishReason, Integer readStauts, String creatorName, String monitorName, String takorName, String finishName) {
         this.id = id;
         this.code = code;
         this.type = type;
@@ -59,10 +80,18 @@ public class WorkOrderInfo implements Serializable{
         this.takor = takor;
         this.finishReason = finishReason;
         this.readStauts = readStauts;
+        this.creatorName = creatorName;
+        this.monitorName = monitorName;
+        this.takorName = takorName;
+        this.finishName = finishName;
     }
 
-    public WorkOrderInfo() {
+    public WorkOrderInfoDetail() {
         super();
+    }
+
+    public String getCreatorName() {
+        return creatorName;
     }
 
     public String getFinishReason() {
@@ -79,6 +108,34 @@ public class WorkOrderInfo implements Serializable{
 
     public void setReadStauts(Integer readStauts) {
         this.readStauts = readStauts;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getMonitorName() {
+        return monitorName;
+    }
+
+    public void setMonitorName(String monitorName) {
+        this.monitorName = monitorName;
+    }
+
+    public String getTakorName() {
+        return takorName;
+    }
+
+    public void setTakorName(String takorName) {
+        this.takorName = takorName;
+    }
+
+    public String getFinishName() {
+        return finishName;
+    }
+
+    public void setFinishName(String finishName) {
+        this.finishName = finishName;
     }
 
     public String getId() {
@@ -121,7 +178,12 @@ public class WorkOrderInfo implements Serializable{
         this.content = content == null ? null : content.trim();
     }
 
-    public String getStartTime() {
+    public String getStartTime() throws ParseException {
+        if(!StringUtils.isEmpty(startTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(startTime);
+            startTime = format.format(date);
+        }
         return startTime;
     }
 
@@ -129,7 +191,12 @@ public class WorkOrderInfo implements Serializable{
         this.startTime = startTime;
     }
 
-    public String getFinishTime() {
+    public String getFinishTime() throws ParseException {
+        if(!StringUtils.isEmpty(finishTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(finishTime);
+            finishTime = format.format(date);
+        }
         return finishTime;
     }
 
@@ -137,7 +204,12 @@ public class WorkOrderInfo implements Serializable{
         this.finishTime = finishTime;
     }
 
-    public String getCreateTime() {
+    public String getCreateTime() throws ParseException {
+        if(!StringUtils.isEmpty(createTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(createTime);
+            createTime = format.format(date);
+        }
         return createTime;
     }
 
@@ -169,7 +241,12 @@ public class WorkOrderInfo implements Serializable{
         this.finish = finish == null ? null : finish.trim();
     }
 
-    public String getActualFinishTime() {
+    public String getActualFinishTime() throws ParseException {
+        if(!StringUtils.isEmpty(actualFinishTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(actualFinishTime);
+            actualFinishTime = format.format(date);
+        }
         return actualFinishTime;
     }
 

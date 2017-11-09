@@ -1,6 +1,8 @@
 package com.huak.workorder.dao;
 
 import com.huak.workorder.model.WorkOrderInfo;
+import com.huak.workorder.vo.WorkOrderInfoDetail;
+import com.huak.workorder.vo.WorkOrderInfoRel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +25,10 @@ public interface WorkOrderInfoDao {
     int getToDayNum(Map<String, Object> params);
 
     List<WorkOrderInfo> selectWorkOrderInfo(Map<String, Object> params);
+
+    WorkOrderInfoDetail getWorkInfoByCode(String code);
+
+    List<WorkOrderInfoRel> selectWorkRelByCode(String code);
 
     List<Map<String,Object>> getEmployee();
 }

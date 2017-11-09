@@ -3,6 +3,8 @@ package com.huak.home.workorder;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.workorder.model.WorkOrderInfo;
+import com.huak.workorder.vo.WorkOrderInfoDetail;
+import com.huak.workorder.vo.WorkOrderInfoRel;
 
 import java.util.List;
 import java.util.Map;
@@ -220,4 +222,24 @@ public interface WorkOrderInfoService {
      * @return
      */
     List<Map<String,Object>> getEmployee();
+    /**
+     * 根据code查询工单详细信息
+     * @param code
+     * @return
+     */
+    WorkOrderInfoDetail getWorkInfoByCode(String code);
+
+    /**
+     * 根据code查询工单关联列表
+     * @param code
+     * @return
+     */
+    List<WorkOrderInfoRel> selectWorkRelByCode(String code);
+
+    /**
+     * 根据code查询parentcode
+     * @param code
+     * @return
+     */
+    String selectByCode(String code);
 }

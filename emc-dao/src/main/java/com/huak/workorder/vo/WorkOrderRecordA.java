@@ -1,6 +1,12 @@
 package com.huak.workorder.vo;
 
+import com.huak.common.StringUtils;
+
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class WorkOrderRecordA implements Serializable{
     private static final long serialVersionUID = 2067628565652894835L;
@@ -65,7 +71,12 @@ public class WorkOrderRecordA implements Serializable{
         this.beforStatus = beforStatus;
     }
 
-    public String getOperateTime() {
+    public String getOperateTime() throws ParseException {
+        if(!StringUtils.isEmpty(operateTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(operateTime);
+            operateTime = format.format(date);
+        }
         return operateTime;
     }
 

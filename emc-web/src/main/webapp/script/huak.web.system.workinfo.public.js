@@ -51,3 +51,15 @@ function openDetail(code){
     var url = _web + "/work/order/info/detail/" + code;
     $("#panelright").empty().load(url);
 }
+
+/**
+ * 工单操作翻译
+ * desc 操作说明
+ * opertor 操作人
+ * sendee 接收人
+ */
+function workOrderOperate(desc,opertor,sendee){
+    var opertorSitg = "{1}";
+    var sendeeSitg = "{2}";
+    return desc.replaceAll(opertorSitg,opertor).replaceAll(sendeeSitg,sendee);
+}
