@@ -24,6 +24,7 @@
             <arg column="AFTER_STATUS" javaType="java.lang.Integer" jdbcType="VARCHAR" />
             <arg column="DES" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="USER_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="RECIVER" javaType="java.lang.String" jdbcType="VARCHAR" />
 
         </constructor>
     </resultMap>
@@ -144,11 +145,17 @@
 
     <select id="selectAllRecord" parameterType="java.lang.String" resultMap="BaseResultMapA">
         SELECT
-        wor.*,au.USER_NAME
+        wor.*,em.EMP_NAME,em1.EMP_NAME RECIVER
         FROM
         t_emc_work_order_record wor
         LEFT JOIN
-        t_emc_auth_user au ON wor.OPERTOR = au.ID
+        t_emc_auth_employee em ON wor.OPERTOR = em.ID
+				LEFT JOIN
+        t_emc_auth_employee em1 ON wor.SENDEE = em1.ID
         where wor.CODE=#{code,jdbcType=VARCHAR}
+				ORDER BY wor.OPERATE_TIME desc
+
+
     </select>
+
 </mapper>

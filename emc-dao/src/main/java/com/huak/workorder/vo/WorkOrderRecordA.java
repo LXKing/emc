@@ -22,7 +22,9 @@ public class WorkOrderRecordA implements Serializable{
 
     private String userName;
 
-    public WorkOrderRecordA(String id, String code, Integer beforStatus, String operateTime, String opertor, String sendee, Integer afterStatus, String des, String userName) {
+    private String reciver;
+
+    public WorkOrderRecordA(String id, String code, Integer beforStatus, String operateTime, String opertor, String sendee, Integer afterStatus, String des, String userName,String reciver) {
         this.id = id;
         this.code = code;
         this.beforStatus = beforStatus;
@@ -32,6 +34,7 @@ public class WorkOrderRecordA implements Serializable{
         this.afterStatus = afterStatus;
         this.des = des;
         this.userName=userName;
+        this.reciver=reciver;
     }
 
     public WorkOrderRecordA() {
@@ -106,5 +109,13 @@ public class WorkOrderRecordA implements Serializable{
     }
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getReciver() {
+        return reciver;
+    }
+
+    public void setReciver(String reciver) {
+        this.reciver = reciver;
     }
 }
