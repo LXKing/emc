@@ -23,7 +23,7 @@
                             class="red">*</span>用能单位：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input class="form-control inputs-lg" value="${indexRecord.UNITNAME}" readonly>//
+                        <input class="form-control inputs-lg" value="${indexRecord.UNITNAME}" readonly>
                     </div>
                 </div>
                 <div class="form-group">
@@ -116,7 +116,7 @@
         getIndexTypeSelect();
 
         $.validator.addMethod("checkType", function(value, element) {
-            if(value=='${indexRecoed.TYPE_ID}'){
+            if(value=='${indexRecord.TYPE_ID}'){
                 return true;
             }
             var deferred = $.Deferred();//创建一个延迟对象
