@@ -293,7 +293,7 @@ function initable() {
 
                     var html = "";
                     if ($("#meterCollectUpdate").val()) {
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="MeterCollectEditForm" layer-title="编辑计量器具" layer-url="' + _platform + '/meterCollect/edit/' + row.id + '"> <i class="fa fa-edit"></i></a>&nbsp;';
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="MeterCollectEditForm" layer-title="编辑计量器具" layer-url="' + _platform + '/meterCollect/edit/' + row.id + '/'+row.comId+'"> <i class="fa fa-edit"></i></a>&nbsp;';
                     }
                     if ($("#meterCollectDelete").val()) {
                         html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteMeter(&quot;' + row.id + '&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';

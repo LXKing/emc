@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -36,7 +37,7 @@ public class WorkOrderRecordServiceImpl implements WorkOrderRecordService {
     private DateDao dateDao;
 
     @Override
-    public WorkOrderRecordA selectAllRecord(String code) {
+    public List<WorkOrderRecordA> selectAllRecord(String code) {
 
         logger.info("查询记录表中所有的记录");
         return workOrderRecordDao.selectAllRecord(code);

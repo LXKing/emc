@@ -475,14 +475,18 @@ public class MeterCollectController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("id") String id) {
+    @RequestMapping(value = "/edit/{id}/{comId}", method = RequestMethod.GET)
+    public String edit(Model model, @PathVariable("id") String id,@PathVariable("comId") String comId,HttpServletRequest request) {
         logger.info("跳转修改热源页");
         try {
 
             MeterCollect mec = meterCollectService.selectByPrimaryKey(id);
+
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute(Constants.SESSION_KEY);
             Map<String, Object> params = new HashMap<>();
             params.put("unitType", mec.getUnitType().toString());
+            params.put("comId",comId);
             List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
             List<EnergyType> listE  = meterCollectService.getEnergyType();
             model.addAttribute("energy",listE);

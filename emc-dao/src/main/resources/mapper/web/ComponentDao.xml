@@ -631,8 +631,8 @@
     <!--获取报警数据-->
     <select id="getAlarms" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT
-        SUM(case when (c.m <![CDATA[ >= ]]>  d.ENTERPRISE and c.m <![CDATA[ < ]]> d.LOCAL) then 1 else 0 end ) mild,
-        SUM(case when (c.m <![CDATA[ >= ]]>  d.LOCAL and c.m <![CDATA[ < ]]> d.INDUSTRY) then 1 else 0 end ) moderate,
+        SUM(case when c.m <![CDATA[ >= ]]>  d.ENTERPRISE  then 1 else 0 end ) mild,
+        SUM(case when c.m <![CDATA[ >= ]]>  d.LOCAL  then 1 else 0 end ) moderate,
         SUM(case when c.m <![CDATA[ >= ]]>  d.INDUSTRY then 1 else 0 end ) serious,
         count(1) total
         FROM
@@ -807,10 +807,6 @@
         SELECT count(*) FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId}
-        <if test="feedType != null and feedType !=''">
-        AND HEAT_TYPE=#{feedType}
-        </if>
-        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
         ) a ,
         t_emc_alarm_config c WHERE c.COM_ID=a.COMID AND c.UNIT_ID = a.UNITID AND c.UNIT_TYPE = a.UNITTYPE
         AND c.ISENABLE = 0
@@ -825,10 +821,7 @@
         SELECT COUNT(r.id) num,c.ALARM_LEVEL LEVEL FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId}
-        <if test="feedType != null and feedType !=''">
-        AND HEAT_TYPE=#{feedType}
-        </if>
-        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+
         ) a ,
         t_emc_alarm_config c,t_emc_alarm_record r WHERE c.COM_ID=a.COMID AND c.UNIT_ID = a.UNITID AND c.UNIT_TYPE = a.UNITTYPE
         AND c.ISENABLE = 0 AND r.CONFIG_ID = c.ID AND r.END_TIME IS NULL
@@ -838,10 +831,7 @@
         SELECT count(*) FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId}
-        <if test="feedType != null and feedType !=''">
-        AND HEAT_TYPE=#{feedType}
-        </if>
-        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+
         ) a ,
         t_emc_temperature_tj t,t_emc_alarm_config_temp c
         WHERE t.COM_ID = a.COMID AND t.STATION_NAME = a.UNITNAME
@@ -854,10 +844,7 @@
         FROM (SELECT v.UNITID,v.UNITNAME,v.HEAT_TYPE,v.UNITTYPE,v.COMID
         FROM (SELECT ID FROM t_emc_org WHERE FIND_IN_SET( ID, emc_func_org_getchilds (#{orgId}))) o,v_emc_unit v
         WHERE o.ID=v.ORGID AND COMID=#{comId}
-        <if test="feedType != null and feedType !=''">
-        AND HEAT_TYPE=#{feedType}
-        </if>
-        <if test="orgType!=null and orgType!=''"> AND UNITTYPE = #{orgType,jdbcType=VARCHAR} </if>
+
         ) a ,
         t_emc_temperature_tj t,t_emc_alarm_config_temp c
         WHERE t.COM_ID = a.COMID AND t.STATION_NAME = a.UNITNAME

@@ -243,7 +243,7 @@ $(function () {
 //            $(top.document).find("#isprestore").chosen();
         }
     });
-
+    $(top.document).undelegate(".btnFun",'click');
     $(top.document).delegate(".btnFun",'click', function () {
         //alert($(this).text());
         var value = $(this).text();

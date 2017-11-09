@@ -68,6 +68,7 @@ public class HealthController extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public String page(Model model, HttpServletRequest request) {
         logger.info("跳转健康指数页面");
+        //Map param = paramsPackageOrg(model., request);
         Map<String, Object> params = new HashMap<String, Object>();
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute(Constants.SESSION_KEY);
@@ -84,11 +85,12 @@ public class HealthController extends BaseController {
         }
         String key = UUIDGenerator.getUUID();
         Queue<PollingMessage> pollingMessageQueue = new ConcurrentLinkedQueue<>();//消息队列
-
+       // model.addAttribute("tools",param);
         queueMap.put(key+Q,pollingMessageQueue);
         queueMap.put(key+F,false);
         model.addAttribute("healthItem", JSONArray.toJSONString(HealthItem.HEALTH_ITEM));
         model.addAttribute(KEY,key);
+
         return "health/inspect";
     }
 

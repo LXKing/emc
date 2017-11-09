@@ -12,7 +12,7 @@
     <div class="row col-sm-12 col-xs-12 col-md-12 col-lg-12">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <form class="form-horizontal" id="indexEditForm" dic="form">
-                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_method" value="PUT" >
                 <input type="hidden" id="comId" name="comId" value="${company.id}">
                 <input type="hidden" id="orgId" name="orgId" value="${org.id}">
                 <input type="hidden" id="unitType" name="unitType" value="${indexRecord.UNITTYPE}">
@@ -23,7 +23,7 @@
                             class="red">*</span>用能单位：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input class="form-control inputs-lg" value="${indexRecord.UNITNAME}">
+                        <input class="form-control inputs-lg" value="${indexRecord.UNITNAME}" readonly>//
                     </div>
                 </div>
                 <div class="form-group">

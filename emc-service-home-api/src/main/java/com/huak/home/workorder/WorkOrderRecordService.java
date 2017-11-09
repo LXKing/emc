@@ -2,6 +2,8 @@ package com.huak.home.workorder;
 
 import com.huak.workorder.vo.WorkOrderRecordA;
 
+import java.util.List;
+
 /**
  * Created by MR-BIN on 2017/8/2.
  */
@@ -14,7 +16,7 @@ public interface WorkOrderRecordService {
      * @param code
      * @return
      */
-    public WorkOrderRecordA selectAllRecord(String code);
+    public List<WorkOrderRecordA> selectAllRecord(String code);
 
 
 

@@ -17,11 +17,13 @@
             <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="USERID" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="PID" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
         ID, ORG_ID, EMP_NAME, SEX, AGE, BIRTHDAY, JOB_NUM, TEL, PHONE, EMAIL, MEMO, CREATOR,
-        CREATE_TIME,STATUS
+        CREATE_TIME,STATUS,USERID,PID
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -78,6 +80,12 @@
         <if test="status != null and status !=''">
             and  e.STATUS = #{status,jdbcType=TINYINT}
         </if>
+        <if test="userid != null and userid !=''">
+            and  e.USERID = #{userid,jdbcType=TINYINT}
+        </if>
+        <if test="pId != null and pId !=''">
+            and  e.PID = #{pId,jdbcType=TINYINT}
+        </if>
     </select>
 
     <select id="export" parameterType="java.util.Map"  resultType="java.util.Map">
@@ -128,6 +136,12 @@
         <if test="status != null and status !=''">
             and  e.STATUS = #{status,jdbcType=TINYINT}
         </if>
+        <if test="userid != null and userid !=''">
+            and  e.USERID = #{userid,jdbcType=TINYINT}
+        </if>
+        <if test="pId != null and pId !=''">
+            and  e.PID = #{pId,jdbcType=TINYINT}
+        </if>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -145,12 +159,13 @@
         insert into t_emc_auth_employee (ID, ORG_ID, EMP_NAME,
         SEX, AGE, BIRTHDAY, JOB_NUM,
         TEL, PHONE, EMAIL,
-        MEMO, CREATOR, CREATE_TIME,STATUS
+        MEMO, CREATOR, CREATE_TIME,STATUS,USERID,PID
         )
         values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{empName,jdbcType=VARCHAR},
         #{sex,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR},
         #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-        #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
+        #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+        #{userid,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.huak.auth.model.Employee">
@@ -198,6 +213,12 @@
             <if test="status != null">
                 STATUS,
             </if>
+            <if test="userid != null">
+                USERID,
+            </if>
+            <if test="pId != null">
+                PID,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -241,6 +262,12 @@
             </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="pId != null">
+                #{pId,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -286,6 +313,12 @@
             <if test="status != null">
                 AGE = #{status,jdbcType=TINYINT},
             </if>
+            <if test="userid != null">
+                USERID = #{userid,jdbcType=TINYINT},
+            </if>
+            <if test="pId != null">
+                PID = #{pId,jdbcType=TINYINT},
+            </if>
         </set>
         where ID = #{id,jdbcType=BIGINT}
     </update>
@@ -303,8 +336,10 @@
       MEMO = #{memo,jdbcType=VARCHAR},
       CREATOR = #{creator,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=TINYINT}
-    where ID = #{id,jdbcType=BIGINT}
+      STATUS = #{status,jdbcType=TINYINT},
+      USERID = #{userid,jdbcType=VARCHAR},
+      PID = #{pId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
 
 
