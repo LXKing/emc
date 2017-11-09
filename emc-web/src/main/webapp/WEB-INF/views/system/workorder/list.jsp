@@ -14,7 +14,7 @@
 
 
 <div class="main-box">
-    <form id="allocationSearch">
+    <form id="workInfoSearch">
         <input type="hidden" name="_method" value="PATCH">
         <input type="hidden" name="pageNumber" value="1">
         <input type="hidden" name="orgId" value="${org.id}">
@@ -79,7 +79,7 @@
             </div>
 
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <a href="javascipt:;" class="btns btnsfl btns-lookin" onclick="queryAllocation()">查询</a>
+                <a href="javascipt:;" class="btns btnsfl btns-lookin" onclick="queryWorkInfo()">查询</a>
                 <a href="javascipt:;" class="btns btnsfl btns-reset" onclick =reset()>重置</a>
             </div>
         </div>
@@ -98,33 +98,32 @@
             <tr>
                 <td width="4%">序号</td>
                 <td width="12%">
-                    <div class="text-left">单位名称</div>
+                    <div class="text-left">工单编号</div>
                 </td>
                 <td width="10%">
-                    <div class="text-left">指标类型</div>
+                    <div class="text-left">工单名称</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">企业指标</div>
+                    <div class="text-left">开始时间</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">地方指标</div>
+                    <div class="text-left">完成时间</div>
                 </td>
                 <td width="6%">
-                    <div class="text-left">行业指标</div>
-                </td>
-                <td width="15%">
-                    <div class="text-left">生效时间</div>
+                    <div class="text-left">创建时间</div>
                 </td>
                 <td width="8%">
                     <div class="text-left">创建人<i class="icon-sort"></i></div>
                 </td>
-                <td width="15%">创建时间<i class="icon-sort"></i></td>
+                <td width="15%">
+                    <div class="text-left">工单状态</div>
+                </td>
                 <td width="10%">
                     <div>操作</div>
                 </td>
             </tr>
             </thead>
-            <tbody id="allocationBody">
+            <tbody id="workOrderBody">
 
             </tbody>
         </table>
@@ -147,36 +146,35 @@
     <tr>
         <td>{$T.record$index+1}</td>
         <td>
-            <div class="text-left">{$T.record.unitName}</div>
+            <div class="text-left">{$T.record.code}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.name}({$T.record.unitMeter})</div>
+            <div class="text-left">{$T.record.name}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.enterprise}</div>
+            <div class="text-left">{$T.record.startTime}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.local}</div>
+            <div class="text-left">{$T.record.finishTime}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.industry}</div>
+            <div class="text-left">{$T.record.createTime}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.indexTime}</div>
+            <div class="text-left">{$T.record.creator}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.userName}</div>
+            <div class="text-left">{$T.record.status}</div>
         </td>
-        <td>{$T.record.createTime}</td>
         <td>
             <div>
-                <c:if test="${sessionScope._auth['indexUpdate']}">
+--                 <c:if test="${sessionScope._auth['indexUpdate']}">
                 <a href="javascript:void(0);" title="修改" class="operationbtn icon-edit top-layer-min"
                     layer-form-id="indexEditForm" layer-title="修改指标配置" layer-url="${web}/index/allocation/edit/{$T.record.id}"></a>
-                </c:if>
-                <c:if test="${sessionScope._auth['indexDelete']}">
+--                 </c:if>
+--                 <c:if test="${sessionScope._auth['indexDelete']}">
                 <a href="javascript:delAllocation('{$T.record.id}');" title="删除" class="operationbtn icon-delete"></a>
-                </c:if>
+--                 </c:if>
             </div>
         </td>
     </tr>

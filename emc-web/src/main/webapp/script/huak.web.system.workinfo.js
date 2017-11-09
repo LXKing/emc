@@ -61,21 +61,21 @@ function queryWorkInfo() {
         shade: [0.1, '#fff'] //0.1透明度的白色背景
     });
     $.ajax({
-        url: _web + '/index/allocation/list',
+        url: _web + '/work/order/info/list',
         type: 'POST',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: $("#allocationSearch").serialize(),
         dataType: "json",
         success: function (data) {
             $("#redtipspad").text(data.list.page.total);
-            $("#allocationBody").setTemplateElement("tpl-allocation");
-            $("#allocationBody").processTemplate(data.list);
+            $("#workOrderBody").setTemplateElement("tpl-allocation");
+            $("#workOrderBody").processTemplate(data.list);
             /*分页效果*/
             $("#paging").createPage({
                 pageCount: data.list.page.pages, //总页数
                 current: data.list.page.pageNumber, //当前页数
                 backFn: function (p) { //单击回调方法，p是当前页码
-                    $("#allocationSearch").find('input[name="pageNumber"]').val(p);
+                    $("#workInfoSearch").find('input[name="pageNumber"]').val(p);
                     queryWorkInfo();
                 }
             });

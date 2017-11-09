@@ -14,7 +14,7 @@
       <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="FINISH" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ACTUAL_FINISH_TIME" javaType="java.util.Date" jdbcType="VARCHAR" />
+      <arg column="ACTUAL_FINISH_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="COMID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="MONITOR" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -228,5 +228,19 @@
         from t_emc_work_order_info
         where DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
         and COMID = #{comId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectWorkOrderInfo" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT *
+--             i.CODE,
+--             i.NAME,
+--             i.START_TIME,
+--             i.FINISH_TIME,
+--             i.CREATE_TIME,
+--             i.CREATOR,
+--             i.STATUS
+        FROM
+            t_emc_work_order_info i
+        LEFT JOIN t_emc_work_order_record r ON i.CODE = r. CODE
+
     </select>
 </mapper>

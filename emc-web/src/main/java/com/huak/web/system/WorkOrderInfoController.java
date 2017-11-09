@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Employee;
 import com.huak.auth.model.Role;
 import com.huak.common.Constants;
+import com.huak.common.page.Page;
 import com.huak.home.workorder.WorkOrderInfoService;
 import com.huak.home.workorder.WorkOrderRecordService;
 import com.huak.org.model.Company;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -66,6 +69,27 @@ public class WorkOrderInfoController {
         model.addAttribute(ROLE, role);
         model.addAttribute(EMPLOYEE, employee);
         return "system/workorder/list";
+    }
+
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public String list(HttpServletRequest request, Model model, Page page) {
+        logger.info("打开工单管理页");
+        HttpSession session = request.getSession();
+        Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
+        Role role = (Role) session.getAttribute(Constants.SESSION_ROLE_KEY);
+        Employee employee = (Employee) session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put(Constants.LIST,workOrderInfoService.selectWorkOrderInfo(map,page));
+        } catch (Exception e) {
+            logger.error("计量器具列表页分页查询异常" + e.getMessage());
+        }
+        jo.put(COMPANY, company);
+        jo.put(ROLE, role);
+        jo.put(EMPLOYEE, employee);
+        return jo.toJSONString();
     }
 
     @RequestMapping(value = "/send",method = RequestMethod.GET)

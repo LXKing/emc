@@ -1,8 +1,12 @@
 package com.huak.home.workorder;
 
+import com.github.pagehelper.PageHelper;
 import com.huak.base.dao.DateDao;
 import com.huak.common.StringUtils;
 import com.huak.common.UUIDGenerator;
+import com.huak.common.page.Convert;
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import com.huak.workorder.dao.WorkOrderInfoDao;
 import com.huak.workorder.dao.WorkOrderRecordDao;
 import com.huak.workorder.dao.WorkOrderResetDao;
@@ -59,7 +63,15 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         String code = date + StringUtils.cover(num.toString(), "0", 4) + StringUtils.getRandomString(3);
         return code;
     }
-
+    /**
+     * 查询工单所有信息
+     *
+     */
+    @Override
+    public PageResult<WorkOrderInfo> selectWorkOrderInfo(Map<String, Object> params, Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert( workOrderInfoDao.selectWorkOrderInfo(params));
+    }
     /**
      * 保存工单
      *

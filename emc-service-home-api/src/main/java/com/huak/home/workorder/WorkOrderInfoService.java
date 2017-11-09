@@ -1,6 +1,10 @@
 package com.huak.home.workorder;
 
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import com.huak.workorder.model.WorkOrderInfo;
+
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -14,6 +18,8 @@ import com.huak.workorder.model.WorkOrderInfo;
  * Function List:  <BR>
  */
 public interface WorkOrderInfoService {
+
+    PageResult<WorkOrderInfo>  selectWorkOrderInfo(Map<String,Object> params,Page page);
     /**
      * 保存工单
      * @param workOrder
