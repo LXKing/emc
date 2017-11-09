@@ -68,7 +68,7 @@
                     <li class="navlh">
                         <a href="${web}/process/index">
                             <div class="icon-pg"></div>
-                            <p>流程调度</p>
+                            <p>生产调度</p>
                         </a>
                     </li>
                     <li class="navlh">

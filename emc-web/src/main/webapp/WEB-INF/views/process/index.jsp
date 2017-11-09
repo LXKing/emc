@@ -23,7 +23,7 @@
 <body>
 
 <div class="main-box">
-<iframe id="proecssFrame" src=""  frameborder="0" style="min-height: 800px;width: 100%;border:none"></iframe>
+<%--<iframe id="proecssFrame" src=""  frameborder="0" style="min-height: 800px;width: 100%;border:none"></iframe>--%>
 </div>
 
 </body>
