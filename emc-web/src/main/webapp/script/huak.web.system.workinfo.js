@@ -3,7 +3,7 @@ $(function () {
 });
 
 function loadDataFun() {
-    queryAllocation();
+    queryWorkInfo();
 
     $("body").off("click", ".x-sfbgbox1").on("click", ".x-sfbgbox1", function () {
         $(this).next().stop(true, false).slideToggle(200, function () {
@@ -64,7 +64,7 @@ function queryWorkInfo() {
         url: _web + '/work/order/info/list',
         type: 'POST',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
-        data: $("#allocationSearch").serialize(),
+        data: $("#workInfoSearch").serialize(),
         dataType: "json",
         success: function (data) {
             $("#redtipspad").text(data.list.page.total);
@@ -102,7 +102,7 @@ function delAllocation(id) {
                 if (result.flag) {
                     top.layer.closeAll();
                     top.layer.msg(result.msg);
-                    queryAllocation();
+                    queryWorkInfo();
                 } else {
                     top.layer.close(index);
                     top.layer.msg(result.msg);

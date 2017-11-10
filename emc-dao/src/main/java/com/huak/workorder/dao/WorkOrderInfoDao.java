@@ -31,4 +31,10 @@ public interface WorkOrderInfoDao {
     List<WorkOrderInfoRel> selectWorkRelByCode(String code);
 
     List<Map<String,Object>> getEmployee();
+
+    List<WorkOrderInfo> selectWorkOrderInfoByCreator(Map<String, Object> params);
+
+    List<WorkOrderInfo> selectWorkOrderInfoByMonitor(Map<String, Object> params);
+
+    List<WorkOrderInfo> selectWorkOrderInfoByTakor(Map<String, Object> params);
 }

@@ -1,8 +1,10 @@
 package com.huak.web.system;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huak.auth.UserService;
 import com.huak.auth.model.Employee;
 import com.huak.auth.model.Role;
+import com.huak.auth.model.User;
 import com.huak.common.Constants;
 import com.huak.common.StringUtils;
 import com.huak.common.page.Page;
@@ -47,6 +49,8 @@ public class WorkOrderInfoController {
     private WorkOrderInfoService workOrderInfoService;
     @Resource
     private WorkOrderRecordService workOrderRecordService;
+    @Resource
+    private UserService userService;
 
     @Value("${work.order.creator}")
     private String creator;
@@ -66,7 +70,6 @@ public class WorkOrderInfoController {
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         Role role = (Role) session.getAttribute(Constants.SESSION_ROLE_KEY);
         Employee employee = (Employee) session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
-
         model.addAttribute(COMPANY, company);
         model.addAttribute(ROLE, role);
         model.addAttribute(EMPLOYEE, employee);
@@ -74,22 +77,32 @@ public class WorkOrderInfoController {
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public String list(HttpServletRequest request, Model model, Page page) {
-        logger.info("打开工单管理页");
+    @ResponseBody
+    public String list(HttpServletRequest request, Page page) {
+        logger.info("工单分页查询");
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
-        Role role = (Role) session.getAttribute(Constants.SESSION_ROLE_KEY);
+        User user = (User)session.getAttribute(Constants.SESSION_KEY);
         Employee employee = (Employee) session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
+        Role role=userService.getRole(user.getId());
         Map<String, Object> map = new HashMap<String, Object>();
-
         JSONObject jo = new JSONObject();
         try {
-            jo.put(Constants.LIST,workOrderInfoService.selectWorkOrderInfo(map, page));
+            map.put("employee_id",employee.getId());
+            if(creator.equals(role.getId())){
+                jo.put(Constants.LIST, workOrderInfoService.selectWorkOrderInfoByCreator(map, page));
+                jo.put(ROLE,1);
+            }else if(monitor.equals(role.getId())){
+                jo.put(Constants.LIST, workOrderInfoService.selectWorkOrderInfoByMonitor(map, page));
+                jo.put(ROLE,2);
+            }else if(takor.equals(role.getId())){
+                jo.put(Constants.LIST, workOrderInfoService.selectWorkOrderInfoByTakor(map, page));
+                jo.put(ROLE,3);
+            }
         } catch (Exception e) {
-            logger.error("计量器具列表页分页查询异常" + e.getMessage());
+            logger.error("工单分页查询异常" + e.getMessage());
         }
         jo.put(COMPANY, company);
-        jo.put(ROLE, role);
         jo.put(EMPLOYEE, employee);
         return jo.toJSONString();
     }

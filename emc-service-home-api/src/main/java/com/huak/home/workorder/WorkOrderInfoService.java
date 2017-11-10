@@ -22,7 +22,13 @@ import java.util.Map;
  */
 public interface WorkOrderInfoService {
 
-    PageResult<WorkOrderInfo>  selectWorkOrderInfo(Map<String,Object> params,Page page);
+    PageResult<WorkOrderInfo>  selectWorkOrderInfoByMonitor(Map<String,Object> params,Page page);
+
+    PageResult<WorkOrderInfo>  selectWorkOrderInfoByCreator(Map<String,Object> params,Page page);
+
+    PageResult<WorkOrderInfo>  selectWorkOrderInfoByTakor(Map<String,Object> params,Page page);
+
+
     /**
      * 保存工单
      * @param workOrder

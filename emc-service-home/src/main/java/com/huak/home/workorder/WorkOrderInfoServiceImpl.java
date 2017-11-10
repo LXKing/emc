@@ -50,6 +50,39 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     @Resource
     private DateDao dateDao;
 
+
+
+
+    /**
+     * 派单员查询工单所有信息
+     *
+     */
+    @Override
+    public PageResult<WorkOrderInfo> selectWorkOrderInfoByMonitor(Map<String, Object> params, Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByMonitor(params));
+    }
+    /**
+     * 班长查询工单所有信息
+     *
+     */
+    @Override
+    public PageResult<WorkOrderInfo> selectWorkOrderInfoByCreator(Map<String, Object> params, Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByCreator(params));
+    }
+    /**
+     * 接单员查询工单所有信息
+     *
+     */
+    @Override
+    public PageResult<WorkOrderInfo> selectWorkOrderInfoByTakor(Map<String, Object> params, Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByTakor(params));
+    }
+
+
+
     /**
      * 生成code
      * 年月日4位编号3位随机码
@@ -66,15 +99,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         String code = date + StringUtils.cover(num.toString(), "0", 4) + StringUtils.getRandomString(3);
         return code;
     }
-    /**
-     * 查询工单所有信息
-     *
-     */
-    @Override
-    public PageResult<WorkOrderInfo> selectWorkOrderInfo(Map<String, Object> params, Page page) {
-        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
-        return Convert.convert( workOrderInfoDao.selectWorkOrderInfo(params));
-    }
+
     /**
      * 保存工单
      *
@@ -792,4 +817,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     public List<Map<String, Object>> getEmployee() {
         return workOrderInfoDao.getEmployee();
     }
+
+
+
 }
