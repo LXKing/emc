@@ -193,28 +193,6 @@ public class WorkOrderInfoController {
         return jo.toJSONString();
     }
 
-    @RequestMapping(value = "/resetBack",method = RequestMethod.GET)
-    @ResponseBody
-    public String resetBackOrder(HttpServletRequest request,Model model,
-                                 @RequestBody WorkOrderInfo info){
-
-        logger.info("派单员关闭退单，且派单员重新发送到班长");
-        JSONObject jo = new JSONObject();
-        HttpSession session = request.getSession();
-        Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
-        Org org = (Org)session.getAttribute(Constants.SESSION_ORG_KEY);
-        WorkOrderInfo workOrderInfo = new WorkOrderInfo();
-        int i = workOrderInfoService.resetBackABCRecord(workOrderInfo);
-        if(i>0){
-            jo.put(Constants.FLAG,true);
-            jo.put(Constants.MSG,"操作成功");
-        }else {
-            jo.put(Constants.FLAG,false);
-            jo.put(Constants.MSG,"操作失败");
-        }
-        return jo.toJSONString();
-    }
-
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
