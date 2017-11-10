@@ -1,8 +1,8 @@
 $(function () {
     loadDataFun();
 });
-
 function loadDataFun() {
+
     queryWorkInfo();
 
     $("body").off("click", ".x-sfbgbox1").on("click", ".x-sfbgbox1", function () {
@@ -62,13 +62,12 @@ function queryWorkInfo() {
     });
     $.ajax({
         url: _web + '/work/order/info/list',
-        type: 'GET',
-        async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
+        type: 'POST',
         data: $("#workInfoSearch").serialize(),
         dataType: "json",
         success: function (data) {
             $("#redtipspad").text(data.list.page.total);
-            $("#workOrderBody").setTemplateElement("tpl-allocation");
+            $("#workOrderBody").setTemplateElement("tpl-workOrder");
             $("#workOrderBody").processTemplate(data.list);
             /*分页效果*/
             $("#paging").createPage({
@@ -111,6 +110,7 @@ function delAllocation(id) {
         });
     });
 }
+
 
 /**
  * 关闭工单
@@ -169,3 +169,12 @@ function confirmOrder(id) {
         });
     });
 }
+function fromatStr(str,num){
+    if(num<str.length){
+        return str.substr(0,num)+'...';
+    }else{
+        return str;
+    }
+
+}
+

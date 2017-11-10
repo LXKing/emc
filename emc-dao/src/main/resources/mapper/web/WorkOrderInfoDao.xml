@@ -313,7 +313,7 @@
         LEFT JOIN t_emc_auth_employee tec
         ON ti.TAKOR = tec.ID
         WHERE 1=1
-        <if test="type != null and type !=''">
+        <if test="type != null and type !=' '">
             AND TYPE=#{type}
         </if>
         <if test="name != null and name !=''">
