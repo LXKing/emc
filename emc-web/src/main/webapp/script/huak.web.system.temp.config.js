@@ -126,7 +126,7 @@ function uploaderExcel() {
         });
     });
 }
-
+//截串
 function fromatStr(str,num){
     if(num<str.length){
         return str.substr(0,num)+'...';

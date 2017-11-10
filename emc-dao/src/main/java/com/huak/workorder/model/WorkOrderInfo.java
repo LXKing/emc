@@ -1,6 +1,12 @@
 package com.huak.workorder.model;
 
+import com.huak.common.StringUtils;
+
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class WorkOrderInfo implements Serializable{
     private static final long serialVersionUID = 8403971488402595499L;
@@ -121,7 +127,12 @@ public class WorkOrderInfo implements Serializable{
         this.content = content == null ? null : content.trim();
     }
 
-    public String getStartTime() {
+    public String getStartTime() throws ParseException {
+        if(!StringUtils.isEmpty(startTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(startTime);
+            startTime = format.format(date);
+        }
         return startTime;
     }
 
@@ -129,7 +140,12 @@ public class WorkOrderInfo implements Serializable{
         this.startTime = startTime;
     }
 
-    public String getFinishTime() {
+    public String getFinishTime() throws ParseException {
+        if(!StringUtils.isEmpty(finishTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(finishTime);
+            finishTime = format.format(date);
+        }
         return finishTime;
     }
 
@@ -137,7 +153,12 @@ public class WorkOrderInfo implements Serializable{
         this.finishTime = finishTime;
     }
 
-    public String getCreateTime() {
+    public String getCreateTime() throws ParseException {
+        if(!StringUtils.isEmpty(createTime)){
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = format.parse(createTime);
+            createTime = format.format(date);
+        }
         return createTime;
     }
 

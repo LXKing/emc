@@ -287,11 +287,31 @@
         where DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
         and COMID = #{comId,jdbcType=VARCHAR}
     </select>
-    <select id="selectWorkOrderInfoByCreator" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="selectWorkOrderInfoByCreator" parameterType="java.util.Map" resultType="com.huak.workorder.model.WorkOrderInfo">
         SELECT
-        <include refid="Base_Column_List" />
+        ti.CODE,
+        ti.TYPE,
+        ti.NAME,
+        ti.CONTENT,
+        ti.START_TIME startTime,
+        ti.FINISH_TIME finishTime,
+        ti.STATUS,
+        tea.EMP_NAME CREATOR,
+        ti.CREATE_TIME createTime,
+        ti.FINISH_TIME,
+        ti.STATUS,
+        tea.EMP_NAME CREATOR,
+        ti.CREATE_TIME,
+        teb.EMP_NAME MONITOR,
+        tec.EMP_NAME TAKOR
         FROM
-        t_emc_work_order_info
+        t_emc_work_order_info ti
+        LEFT JOIN t_emc_auth_employee tea
+        ON ti.CREATOR = tea.ID
+        LEFT JOIN t_emc_auth_employee teb
+        ON ti.MONITOR = teb.ID
+        LEFT JOIN t_emc_auth_employee tec
+        ON ti.TAKOR = tec.ID
         WHERE 1=1
         <if test="type != null and type !=''">
             AND TYPE=#{type}
@@ -307,19 +327,27 @@
         ti.TYPE,
         ti.NAME,
         ti.CONTENT,
-        ti.START_TIME,
+        ti.START_TIME startTime,
+        ti.FINISH_TIME finishTime,
+        ti.STATUS,
+        tea.EMP_NAME CREATOR,
+        ti.CREATE_TIME createTime,,
         ti.FINISH_TIME,
         ti.STATUS,
-        ti.CREATOR,
+        tea.EMP_NAME CREATOR,
         ti.CREATE_TIME,
-        ti.MONITOR,
-        ti.TAKOR
+        teb.EMP_NAME MONITOR,
+        tec.EMP_NAME TAKOR
         FROM
         t_emc_work_order_info ti
-        left join t_emc_auth_employee te
-        on ti.CREATOR = te.ID
+        left join t_emc_auth_employee tea
+        on ti.CREATOR = tea.ID
+        LEFT JOIN t_emc_auth_employee teb
+        ON ti.MONITOR = teb.ID
+        LEFT JOIN t_emc_auth_employee tec
+        ON ti.TAKOR = tec.ID
         where ti.CREATOR=#{employee_id,jdbcType=VARCHAR}
-        or te.pid = #{employee_id,jdbcType=VARCHAR}
+        or tea.pid = #{employee_id,jdbcType=VARCHAR}
         <if test="type != null and type !=''">
             AND TYPE=#{type}
         </if>
@@ -330,13 +358,29 @@
 
 
 
-    <select id="selectWorkOrderInfoByTakor" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="selectWorkOrderInfoByTakor" parameterType="java.util.Map" resultType="com.huak.workorder.model.WorkOrderInfo">
         SELECT
-        <include refid="Base_Column_List" />
+        ti.CODE,
+        ti.TYPE,
+        ti.NAME,
+        ti.CONTENT,
+        ti.START_TIME startTime,
+        ti.FINISH_TIME finishTime,
+        ti.STATUS,
+        tea.EMP_NAME CREATOR,
+        ti.CREATE_TIME createTime,
+        teb.EMP_NAME MONITOR,
+        tec.EMP_NAME TAKOR
         FROM
-        t_emc_work_order_info
+        t_emc_work_order_info ti
+        left join t_emc_auth_employee tea
+        on ti.CREATOR = tea.ID
+        LEFT JOIN t_emc_auth_employee teb
+        ON ti.MONITOR = teb.ID
+        LEFT JOIN t_emc_auth_employee tec
+        ON ti.TAKOR = tec.ID
         where
-        CREATOR = #{employee_id,jdbcType=VARCHAR}
+        ti.CREATOR = #{employee_id,jdbcType=VARCHAR}
         <if test="type != null and type !=''">
             AND TYPE=#{type}
         </if>

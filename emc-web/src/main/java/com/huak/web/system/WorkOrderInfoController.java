@@ -69,15 +69,23 @@ public class WorkOrderInfoController {
         logger.info("打开工单管理页");
         HttpSession session = request.getSession();
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
-        Role role = (Role) session.getAttribute(Constants.SESSION_ROLE_KEY);
         Employee employee = (Employee) session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
         model.addAttribute(COMPANY, company);
-        model.addAttribute(ROLE, role);
         model.addAttribute(EMPLOYEE, employee);
+        User user = (User)session.getAttribute(Constants.SESSION_KEY);
+        Role role=userService.getRole(user.getId());
+            model.addAttribute("employee_id",employee.getId());
+            if(creator.equals(role.getId())){
+                model.addAttribute("roleType",1);
+            }else if(monitor.equals(role.getId())){
+                model.addAttribute("roleType",2);
+            }else if(takor.equals(role.getId())){
+                model.addAttribute("roleType",3);
+            }
         return "system/workorder/list";
     }
 
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.PATCH)
     @ResponseBody
     public String list(HttpServletRequest request, Page page) {
         logger.info("工单分页查询");
@@ -92,19 +100,14 @@ public class WorkOrderInfoController {
             map.put("employee_id",employee.getId());
             if(creator.equals(role.getId())){
                 jo.put(Constants.LIST, workOrderInfoService.selectWorkOrderInfoByCreator(map, page));
-                jo.put(ROLE,1);
             }else if(monitor.equals(role.getId())){
                 jo.put(Constants.LIST, workOrderInfoService.selectWorkOrderInfoByMonitor(map, page));
-                jo.put(ROLE,2);
             }else if(takor.equals(role.getId())){
                 jo.put(Constants.LIST, workOrderInfoService.selectWorkOrderInfoByTakor(map, page));
-                jo.put(ROLE,3);
             }
         } catch (Exception e) {
             logger.error("工单分页查询异常" + e.getMessage());
         }
-        jo.put(COMPANY, company);
-        jo.put(EMPLOYEE, employee);
         return jo.toJSONString();
     }
 
