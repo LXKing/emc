@@ -36,8 +36,10 @@ public interface WorkOrderInfoService {
      */
     void saveA(WorkOrderInfo workOrder);
 
-
-
+    /**
+     * close a-b-c 关闭
+     */
+    void closeABC(WorkOrderInfo workOrder);
     /**
      * a-b/a-b-c
      * a派送工单b
@@ -227,7 +229,19 @@ public interface WorkOrderInfoService {
      * 查询班长和接单员的信息
      * @return
      */
-    List<Map<String,Object>> getEmployee();
+    List<Map<String,Object>> getEmployee(Map<String,Object> map);
+
+    /**
+     * 根据Id查询班长和接单员的信息
+     * @return
+     */
+    List<Map<String,Object>> getEmployeeById(Map<String,Object> map);
+
+    /**
+     * 查询班长和接单员的信息
+     * @return
+     */
+    //List<Map<String,Object>> getEmployee();
     /**
      * 根据code查询工单详细信息
      * @param code

@@ -796,8 +796,8 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     }
 
     @Override
-    public int resetBackABCRecord(WorkOrderInfo workOrder) {
-        logger.info("派单员关闭退单，且派单员重新发送到班长");
+    public void closeABC(WorkOrderInfo workOrder) {
+        logger.info("派单员关闭工单");
         WorkOrderRecord record = new WorkOrderRecord();
         record.setId(UUIDGenerator.getUUID());
         record.setCode(workOrder.getCode());//重新发送，工单号为新工单号，与旧工单号无关(状态有关)
@@ -806,18 +806,26 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setOpertor(workOrder.getMonitor());
         record.setSendee(workOrder.getTakor());
         record.setAfterStatus(WorkOrderStatus.A131.getKey());
-        record.setDes("派单员关闭退单，且派单员重新发送到班长");
+        record.setDes("派单员关闭工单");
         //更新当前工单状态  工单号为新工单号 (状态有关，延续之前状态)
         workOrder.setStatus(WorkOrderStatus.A131.getKey());
         workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
-        return workOrderRecordDao.insertSelective(record);
+        workOrderRecordDao.insertSelective(record);
     }
 
     @Override
-    public List<Map<String, Object>> getEmployee() {
-        return workOrderInfoDao.getEmployee();
+    public List<Map<String, Object>> getEmployee(Map<String,Object> map) {
+        return workOrderInfoDao.getEmployee(map);
     }
 
 
+    @Override
+    public List<Map<String, Object>> getEmployeeById(Map<String,Object> map) {
+        return workOrderInfoDao.getEmployeeById(map);
+    };
 
+    @Override
+    public int resetBackABCRecord(WorkOrderInfo workOrder) {
+        return 0;
+    }
 }
