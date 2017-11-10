@@ -275,6 +275,8 @@ public class WorkOrderInfoController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
+            //查询工单当前信息
+            workOrderInfo = workOrderInfoService.selectByPrimaryKey(workOrderInfo.getId());
             if(WorkOrderStatus.B212.getKey() == workOrderInfo.getStatus()){
                 workOrderInfoService.closeAB(workOrderInfo);
             }else if(WorkOrderStatus.C312.getKey() == workOrderInfo.getStatus()){
@@ -301,6 +303,8 @@ public class WorkOrderInfoController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
+            //查询工单当前信息
+            workOrderInfo = workOrderInfoService.selectByPrimaryKey(workOrderInfo.getId());
             if(WorkOrderStatus.B213.getKey() == workOrderInfo.getStatus()){
                 workOrderInfoService.confirmAB(workOrderInfo);
             }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){

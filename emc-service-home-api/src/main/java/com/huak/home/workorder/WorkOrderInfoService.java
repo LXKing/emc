@@ -28,6 +28,8 @@ public interface WorkOrderInfoService {
 
     PageResult<WorkOrderInfo>  selectWorkOrderInfoByTakor(Map<String,Object> params,Page page);
 
+    WorkOrderInfo selectByPrimaryKey(String id);
+
 
     /**
      * 保存工单

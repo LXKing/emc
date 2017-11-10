@@ -81,6 +81,11 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByTakor(params));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public WorkOrderInfo selectByPrimaryKey(String id) {
+        return workOrderInfoDao.selectByPrimaryKey(id);
+    }
 
 
     /**

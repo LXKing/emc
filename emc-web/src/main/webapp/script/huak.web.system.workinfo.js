@@ -111,3 +111,61 @@ function delAllocation(id) {
         });
     });
 }
+
+/**
+ * 关闭工单
+ */
+function closeOrder(id) {
+    top.layer.confirm('您是否确定关闭工单？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        var index = top.layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.ajax({
+            url: _web + '/work/order/info/close',
+            type: 'POST',
+            data:{"id":id},
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag) {
+                    top.layer.closeAll();
+                    top.layer.msg(result.msg);
+                    queryWorkInfo();
+                } else {
+                    top.layer.close(index);
+                    top.layer.msg(result.msg);
+                }
+            }
+        });
+    });
+}
+
+/**
+ * 确认工单
+ */
+function confirmOrder(id) {
+    top.layer.confirm('您是否确定工单？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        var index = top.layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.ajax({
+            url: _web + '/work/order/info/confirm',
+            type: 'POST',
+            data:{"id":id},
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag) {
+                    top.layer.closeAll();
+                    top.layer.msg(result.msg);
+                    queryWorkInfo();
+                } else {
+                    top.layer.close(index);
+                    top.layer.msg(result.msg);
+                }
+            }
+        });
+    });
+}
