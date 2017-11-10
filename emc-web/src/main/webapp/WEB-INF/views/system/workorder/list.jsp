@@ -177,9 +177,6 @@
             <div class="text-left">{$T.record.takor}</div>
         </td>
         <td>
-
-
-
                 <%--<a href="javascript:send(0);" title="修改" class="operationbtn icon-edit top-layer-min"
                    layer-form-id="indexEditForm" layer-title="修改指标配置"  layer-url="${web}/work/order/info/edit?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                 <a href="javascript:delAllocation('{$T.record.id}');" title="删除" class="operationbtn icon-delete"></a>--%>
@@ -204,7 +201,7 @@
                     <a href="javascript:void(0);" title="接单" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="接单" layer-url="${web}/work/order/info/"></a>
                 </c:if>
-                <c:if test="${sessionScope._auth['workOrderBack'] && roleType==2 && $T.record.status==112}">
+                <c:if test="${sessionScope._auth['workOrderBack'] && $T.record.status==112}">
                     <a href="javascript:void(0);" title="退单" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="退单" layer-url="${web}/work/order/info/"></a>
                 </c:if>
@@ -212,21 +209,18 @@
                     <a href="javascript:void(0);" title="完成" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="完成" layer-url="${web}/"></a>
                 </c:if>
-                <c:if test="${sessionScope._auth['workOrderTaking'] && roleType==3 && $T.record.status==113}">
+                <c:if test="${sessionScope._auth['workOrderTaking'] && $T.record.status==113}">
                     <a href="javascript:void(0);" title="接单" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="接单" layer-url="${web}/work/order/info/"></a>
                 </c:if>
-                <c:if test="${sessionScope._auth['workOrderBack'] && (roleType==3 && $T.record.status==113 || $T.record.status==214)}">
+                <c:if test="${sessionScope._auth['workOrderBack'] && ($T.record.status==113 || $T.record.status==214)}">
                     <a href="javascript:void(0);" title="退单" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="退单" layer-url="${web}/work/order/info/"></a>
                 </c:if>
-                <c:if test="${sessionScope._auth['workOrderFinish'] && (roleType==3 && $T.record.status==322 ||  $T.record.status==214)}">
+                <c:if test="${sessionScope._auth['workOrderFinish'] && ($T.record.status==322 ||  $T.record.status==214)}">
                     <a href="javascript:void(0);" title="完成" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="完成" layer-url="${web}/work/order/info/"></a>
                 </c:if>
-
-
-
         </td>
     </tr>
     {#/for}
