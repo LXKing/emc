@@ -113,7 +113,6 @@ public interface WorkOrderInfoService {
     void resetBackAB(WorkOrderInfo workOrder, String EmployeeId);
 
 
-
     /**
      * a-c
      * a派送工单c
@@ -215,7 +214,7 @@ public interface WorkOrderInfoService {
      * @param workOrder
      * @return
      */
-    int resetBackABCRecord(WorkOrderInfo workOrder);
+    void resetBackABCRecord(WorkOrderInfo workOrder,String EmployeeId);
 
     /**
      * a-b-c

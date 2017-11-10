@@ -825,7 +825,24 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     };
 
     @Override
-    public int resetBackABCRecord(WorkOrderInfo workOrder) {
-        return 0;
+    public void resetBackABCRecord(WorkOrderInfo workOrder,String EmployeeId) {
+        logger.info("接单员退单派单员重新派送");
+        String dateTime = dateDao.getTime();
+
+        //封装工单
+        workOrder.setStatus(WorkOrderStatus.R996.getKey());
+        workOrderInfoDao.updateByPrimaryKeySelective(workOrder);
+
+        //保存工单操作记录
+        WorkOrderRecord record = new WorkOrderRecord();
+        record.setId(UUIDGenerator.getUUID());
+        record.setCode(workOrder.getCode());
+        record.setBeforStatus(WorkOrderStatus.C321.getKey());
+        record.setAfterStatus(WorkOrderStatus.R996.getKey());
+        record.setOpertor(workOrder.getCreator());
+        record.setOperateTime(dateTime);
+        record.setSendee(EmployeeId);
+        record.setDes(WorkOrderOperate.A_RESET.getValue());
+        workOrderRecordDao.insertSelective(record);
     }
 }
