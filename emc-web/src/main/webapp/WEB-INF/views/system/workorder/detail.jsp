@@ -10,7 +10,35 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="${web}/script/huak.web.system.workinfo.public.js"></script>
+<script>
+    $(function(){
+        var roleType = '${roleType}';
+        $('#workOrderStatus').text(workOrderStatus('${detail.status}',roleType));
 
+        $.ajax({
+            url: _web + '/work/order/info/record/${detail.code}',
+            type: 'POST',
+            dataType: "json",
+            success: function (data) {
+                $("#recordsBody").setTemplateElement("tpl-records");
+                $("#recordsBody").processTemplate(data.list);
+            }
+        });
+
+        $.ajax({
+            url: _web + '/work/order/info/rel/${detail.code}',
+            type: 'POST',
+            dataType: "json",
+            success: function (data) {
+                if(null != data.list){
+                    $("#relBody").setTemplateElement("tpl-rel");
+                    $("#relBody").processTemplate(data.list);
+                }
+            }
+        });
+
+    })
+</script>
 <div class="main-box">
 
         <div class="selectbg clearfix">
@@ -78,7 +106,7 @@
                         <label for="">工单状态</label>
                     </div>
                     <div class="select-box col-xs-8 col-sm-8 col-md-8  col-lg-8">
-                        <label for="">${detail.status}</label>
+                        <label id="workOrderStatus" for="">${detail.status}</label>
                     </div>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -190,15 +218,15 @@
                 </td>
             </tr>
             </thead>
-            <tbody>
-            <c:forEach items="${records}" var="item">
-                <tr>
-                    <td>${item.operateTime}</td>
-                    <td>${item.beforStatus}</td>
-                    <td>${item.afterStatus}</td>
-                    <td class="text-left">${item.empName}${item.reciver}${item.des}</td>
-                </tr>
-            </c:forEach>
+            <tbody id="recordsBody">
+            <%--<c:forEach items="${records}" var="item">--%>
+                <%--<tr>--%>
+                    <%--<td>${item.operateTime}</td>--%>
+                    <%--<td class="workOrderStatus">${item.beforStatus}</td>--%>
+                    <%--<td class="workOrderStatus">${item.afterStatus}</td>--%>
+                    <%--<td class="text-left">${item.empName}${item.reciver}${item.des}</td>--%>
+                <%--</tr>--%>
+            <%--</c:forEach>--%>
 
             </tbody>
         </table>
@@ -229,18 +257,18 @@
 
                     </tr>
                     </thead>
-                    <tbody>
-                    <c:if test="${rels ne null}">
-                    <c:forEach items="${rels}" var="item">
-                        <tr>
-                            <td>${item.parentCode}</td>
-                            <td><a href="javascript:void(0);" onclick="openDetail('${item.code}')">${item.code}</a></td>
-                            <td>${item.resetNum}</td>
-                            <td>${item.name}</td>
-                            <td>${item.status}</td>
-                        </tr>
-                    </c:forEach>
-                    </c:if>
+                    <tbody id="relBody">
+                    <%--<c:if test="${rels ne null}">--%>
+                    <%--<c:forEach items="${rels}" var="item">--%>
+                        <%--<tr>--%>
+                            <%--<td>${item.parentCode}</td>--%>
+                            <%--<td><a href="javascript:void(0);" onclick="openDetail('${roleType}','${item.code}')">${item.code}</a></td>--%>
+                            <%--<td>${item.resetNum}</td>--%>
+                            <%--<td>${item.name}</td>--%>
+                            <%--<td class="workOrderStatus">${item.status}</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:forEach>--%>
+                    <%--</c:if>--%>
                     </tbody>
                 </table>
             </div>
@@ -248,43 +276,26 @@
 </div>
 
 <!-- 模板内容 -->
-<textarea id="tpl-allocation" style="display:none">
-    {#foreach $T.list as record}
+<textarea id="tpl-records" style="display:none">
+    {#foreach $T as record}
     <tr>
-        <td>{$T.record$index+1}</td>
-        <td>
-            <div class="text-left">{$T.record.unitName}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.name}({$T.record.unitMeter})</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.enterprise}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.local}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.industry}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.indexTime}</div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.userName}</div>
-        </td>
-        <td>{$T.record.createTime}</td>
-        <td>
-            <div>
-                <c:if test="${sessionScope._auth['indexUpdate']}">
-                    <a href="javascript:void(0);" title="修改" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="indexEditForm" layer-title="修改指标配置" layer-url="${web}/index/allocation/edit/{$T.record.id}"></a>
-                </c:if>
-                <c:if test="${sessionScope._auth['indexDelete']}">
-                    <a href="javascript:delAllocation('{$T.record.id}');" title="删除" class="operationbtn icon-delete"></a>
-                </c:if>
-            </div>
-        </td>
+        <td>{$T.record.operateTime}</td>
+        <td>{workOrderStatus($T.record.beforStatus,'${roleType}')}</td>
+        <td>{workOrderStatus($T.record.afterStatus,'${roleType}')}</td>
+        <td class="text-left">{workOrderOperate($T.record.des,$T.record.empName,$T.record.reciver)}</td>
+    </tr>
+    {#/for}
+</textarea>
+
+<!-- 模板内容 -->
+<textarea id="tpl-rel" style="display:none">
+    {#foreach $T as rel}
+    <tr>
+        <td>{$T.rel.parentCode}</td>
+        <td><a href="javascript:void(0);" onclick="openDetail('${roleType}','{$T.rel.code}')">{$T.rel.code}</a></td>
+        <td>{$T.rel.resetNum}</td>
+        <td>{$T.rel.name}</td>
+        <td>{workOrderStatus($T.rel.status,'${roleType}')}</td>
     </tr>
     {#/for}
 </textarea>

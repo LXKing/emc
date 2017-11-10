@@ -47,8 +47,8 @@ function workOrderStatus(statusCode,roleType){
  * 打开工单详情页
  * code 工单编号
  */
-function openDetail(code){
-    var url = _web + "/work/order/info/detail/" + code;
+function openDetail(type,code){
+    var url = _web + "/work/order/info/detail/" + type + '/'+ code;
     $("#panelright").empty().load(url);
 }
 

@@ -224,23 +224,55 @@ public class WorkOrderInfoController {
     }
 
 
-    @RequestMapping(value = "/detail/{code}",method = RequestMethod.GET)
-    public String detailPage(HttpServletRequest request, Model model,@PathVariable("code") String code) {
+    @RequestMapping(value = "/detail/{type}/{code}",method = RequestMethod.GET)
+    public String detailPage(HttpServletRequest request, Model model,@PathVariable("code") String code,@PathVariable("type") Integer type) {
         logger.info("打开工单详情页");
         //根据code查询工单信息
         WorkOrderInfoDetail detail = workOrderInfoService.getWorkInfoByCode(code);
-        //根据code查询工单操作记录
-        List<WorkOrderRecordA> records = workOrderRecordService.selectAllRecord(code);
-        //根据code查询关联工单信息列表
-        String pCode = workOrderInfoService.selectByCode(code);
-        if(!StringUtils.isEmpty(pCode)){
-            List<WorkOrderInfoRel> rels = workOrderInfoService.selectWorkRelByCode(pCode);
-            model.addAttribute("rels", rels);
-        }
 
         model.addAttribute("detail", detail);
-        model.addAttribute("records", records);
+        model.addAttribute("roleType", type);
 
         return "system/workorder/detail";
+    }
+
+    @RequestMapping(value = "/record/{code}", method = RequestMethod.POST)
+    @ResponseBody
+    public String getRecord(@PathVariable("code") String code) {
+        logger.info("查询工单操作记录");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            //根据code查询工单操作记录
+            List<WorkOrderRecordA> records = workOrderRecordService.selectAllRecord(code);
+            jo.put(Constants.LIST,records);
+            jo.put(Constants.FLAG, true);
+        } catch (Exception e) {
+            logger.error("查询工单操作记录异常" + e.getMessage());
+            jo.put(Constants.MSG, "查询工单操作记录失败");
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/rel/{code}", method = RequestMethod.POST)
+    @ResponseBody
+    public String getRel(@PathVariable("code") String code) {
+        logger.info("查询工单关联记录");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            List<WorkOrderInfoRel> rels = null;
+            //根据code查询关联工单信息列表
+            String pCode = workOrderInfoService.selectByCode(code);
+            if(!StringUtils.isEmpty(pCode)){
+                rels = workOrderInfoService.selectWorkRelByCode(pCode);
+            }
+            jo.put(Constants.LIST, rels);
+            jo.put(Constants.FLAG, true);
+        } catch (Exception e) {
+            logger.error("查询工单关联记录异常" + e.getMessage());
+            jo.put(Constants.MSG, "查询工单关联记录失败");
+        }
+        return jo.toJSONString();
     }
 }
