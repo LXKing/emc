@@ -19,7 +19,7 @@ public enum MenuModel {
     WARN(5, "报警管理",0,0),
     PROJECT(6, "项目后评估",0,0),
     SYSTEM(7, "安全与后台",0,0),
-    PROCESS(8, "流程调度",0,0);
+    PROCESS(8, "生产调度",0,0);
 
     private int key;
     private String value;
