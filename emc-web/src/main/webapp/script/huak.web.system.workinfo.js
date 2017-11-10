@@ -62,7 +62,7 @@ function queryWorkInfo() {
     });
     $.ajax({
         url: _web + '/work/order/info/list',
-        type: 'POST',
+        type: 'GET',
         async: true,//要指定不能异步,必须等待后台服务校验完成再执行后续代null码
         data: $("#workInfoSearch").serialize(),
         dataType: "json",

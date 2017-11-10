@@ -98,7 +98,7 @@
             <thead>
             <tr>
                 <td width="4%">序号</td>
-                <td width="9%">
+                <td width="8%">
                     <div class="text-left">工单编号</div>
                 </td>
                 <td width="7%">
@@ -107,25 +107,25 @@
                 <td width="8%">
                     <div class="text-left">工单内容</div>
                 </td>
-                <td width="6%">
+                <td width="5%">
                     <div class="text-left">开始时间</div>
                 </td>
-                <td width="6%">
+                <td width="5%">
                     <div class="text-left">完成时间</div>
                 </td>
-                <td width="6%">
+                <td width="5%">
                     <div class="text-left">创建时间</div>
                 </td>
-                <td width="6%">
+                <td width="5%">
                     <div class="text-left">创建人<i class="icon-sort"></i></div>
                 </td>
-                <td width="7%">
+                <td width="6%">
                     <div class="text-left">班长</div>
                 </td>
-                <td width="7%">
+                <td width="6%">
                     <div class="text-left">接单员</div>
                 </td>
-                <td width="10%">
+                <td width="9%">
                     <div>操作</div>
                 </td>
             </tr>
