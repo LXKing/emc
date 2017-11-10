@@ -13,6 +13,7 @@ import com.huak.home.workorder.WorkOrderRecordService;
 import com.huak.org.model.Company;
 import com.huak.org.model.Org;
 import com.huak.workorder.model.WorkOrderInfo;
+import com.huak.workorder.type.WorkOrderStatus;
 import com.huak.workorder.vo.WorkOrderInfoDetail;
 import com.huak.workorder.vo.WorkOrderInfoRel;
 import com.huak.workorder.vo.WorkOrderRecordA;
@@ -285,6 +286,90 @@ public class WorkOrderInfoController {
         } catch (Exception e) {
             logger.error("查询工单关联记录异常" + e.getMessage());
             jo.put(Constants.MSG, "查询工单关联记录失败");
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/close", method = RequestMethod.POST)
+    @ResponseBody
+    public String close(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
+        logger.info("关闭工单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            if(WorkOrderStatus.B212.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.closeAB(workOrderInfo);
+            }else if(WorkOrderStatus.C312.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.closeABC(workOrderInfo);
+            }else if(WorkOrderStatus.C321.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.closeAC(workOrderInfo);
+            }else{
+                throw new IllegalArgumentException("没有此流程");
+            }
+
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "关闭工单成功");
+        } catch (Exception e) {
+            logger.error("关闭工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "关闭工单失败");
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/confirm", method = RequestMethod.POST)
+    @ResponseBody
+    public String confirm(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
+        logger.info("确认工单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            if(WorkOrderStatus.B213.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmAB(workOrderInfo);
+            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmACRecord(workOrderInfo);
+            }else if(WorkOrderStatus.C323.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmAC(workOrderInfo);
+            }else{
+                throw new IllegalArgumentException("没有此流程");
+            }
+
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "确认工单成功");
+        } catch (Exception e) {
+            logger.error("确认工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "确认工单失败");
+        }
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @ResponseBody
+    public String reset(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
+        logger.info("重新派送工单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        try {
+            if(WorkOrderStatus.C323.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmAB(workOrderInfo);
+            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmACRecord(workOrderInfo);
+            }else if(WorkOrderStatus.C323.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmAC(workOrderInfo);
+            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmACRecord(workOrderInfo);
+            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmACRecord(workOrderInfo);
+            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
+                workOrderInfoService.confirmACRecord(workOrderInfo);
+            }else{
+                throw new IllegalArgumentException("没有此流程");
+            }
+
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "重新派送工单成功");
+        } catch (Exception e) {
+            logger.error("重新派送工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "重新派送工单失败");
         }
         return jo.toJSONString();
     }
