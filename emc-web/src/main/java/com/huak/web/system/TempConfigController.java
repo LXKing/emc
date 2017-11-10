@@ -86,13 +86,7 @@ public class TempConfigController extends BaseController {
         model.addAttribute(ORG,org);
         return "system/temp/add";
     }
-    @RequestMapping(value = "/add1",method = RequestMethod.GET)
-    public String addPage1(HttpServletRequest request,Model model){
-        logger.info("打开室温添加配置页");
-        List<Map<String,Object>> list = workOrderInfoService.getEmployee();
-        model.addAttribute("list",list);
-        return "system/workorder/add";
-    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(AlarmConfigTemp alarmConfigTemp, HttpServletRequest request) {

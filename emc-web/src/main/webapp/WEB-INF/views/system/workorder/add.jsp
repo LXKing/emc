@@ -13,6 +13,8 @@
             <form class="form-horizontal" id="indexAddForm" dic="form">
                 <input type="hidden" id="comId" name="comId" value="${company.id}">
                 <input type="hidden" id="orgId" name="orgId" value="${org.id}">
+                <input type="hidden" id="urlType" name="urlType" value="">
+
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
                             class="red">*</span>任务单类型：</label>
@@ -63,7 +65,7 @@
                         <select id="takor" name="takor" class="chosen-select form-control">
                             <option value="">请选择人员</option>
                             <c:forEach items="${list}" var="emp">
-                                <option value="${emp.ID}">${emp.name}</option>
+                                <option value="${emp.id}">${emp.name}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -242,9 +244,29 @@
                         }
                     }
                 });
+            },
+            btn2: function () {
+                var index = top.layer.load(1, {
+                    shade: [0.1, '#fff'] //0.1透明度的白色背景
+                });
+                $.ajax({
+                    url: _web + '/work/order/info/add',
+                    data: $form.serialize(),
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.flag) {
+                            top.layer.closeAll();
+                            top.layer.msg(result.msg);
+                            //queryAllocation();
+                        } else {
+                            top.layer.close(index);
+                            top.layer.msg(result.msg);
+                        }
+                    }
+                });
             }
         });
-
     });
 
     function getUnitSelect() {
@@ -263,7 +285,6 @@
             }
         });
     }
-
     function getIndexTypeSelect() {
         $.ajax({
             url: _web + '/select/index/type',

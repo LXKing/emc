@@ -192,7 +192,16 @@ public class WorkOrderInfoController {
         }
         return jo.toJSONString();
     }
-
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public String addPage1(HttpServletRequest request,Model model){
+        logger.info("打开室温添加配置页");
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("monitor",monitor);
+        map.put("receiver",takor);
+        List<Map<String,Object>> list = workOrderInfoService.getEmployee(map);
+        model.addAttribute("list",list);
+        return "system/workorder/add";
+    }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
@@ -354,5 +363,91 @@ public class WorkOrderInfoController {
             jo.put(Constants.MSG, "重新派送工单失败");
         }
         return jo.toJSONString();
+    }
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(WorkOrderInfo workOrderInfo, HttpServletRequest request,
+                      @RequestParam  String urlType) {
+        logger.info("添加工单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        String[]  ss = workOrderInfo.getTakor().split(",");
+        if(urlType.equals("0")){
+            try {
+                HttpSession session = request.getSession();
+                Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
+                Employee emp = (Employee)session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
+                workOrderInfo.setComid(company.getId());
+                workOrderInfo.setCreator(emp.getId());
+                if(monitor.equals(ss[1])){
+                    //班长
+                    workOrderInfo.setMonitor(ss[0]);
+                }
+                if(takor.equals(ss[1])){
+                    //接单员
+                    workOrderInfo.setTakor(ss[0]);
+                }
+                workOrderInfo.setTakor(ss[0]);
+                workOrderInfoService.saveA(workOrderInfo);
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.MSG, "添加工单成功");
+            } catch (Exception e) {
+                logger.error("添加工单异常" + e.getMessage());
+                jo.put(Constants.MSG, "添加工单失败");
+            }
+        }else if(urlType.equals("1")){
+            try {
+                HttpSession session = request.getSession();
+                Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
+                Employee emp = (Employee)session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
+                workOrderInfo.setComid(company.getId());
+                workOrderInfo.setCreator(emp.getId());
+                if(monitor.equals(ss[1])){
+                    //班长
+                    workOrderInfo.setMonitor(ss[0]);
+                    workOrderInfoService.saveAndSendABorC(workOrderInfo);
+                }
+                if(takor.equals(ss[1])){
+                    //接单员
+                    workOrderInfo.setTakor(ss[0]);
+                    workOrderInfoService.saveAndSendAC(workOrderInfo);
+                }
+                jo.put(Constants.FLAG, true);
+                jo.put(Constants.MSG, "添加且发送工单成功");
+            } catch (Exception e) {
+                logger.error("添加且发送工单异常" + e.getMessage());
+                jo.put(Constants.MSG, "添加且发送工单失败");
+            }
+        }
+        return jo.toJSONString();
+    }
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String addPage1(HttpServletRequest request,Model model,
+                           @RequestParam("code")  String code,
+                           @RequestParam("mid")  String mid,
+                           @RequestParam("reid")  String reid){
+        logger.info("派单并编辑当前订单");
+        Map<String,Object> map1 = new HashMap<String,Object>();
+        map1.put("monitor",monitor);
+        map1.put("receiver",takor);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("monitor",monitor);
+        map.put("receiver",takor);
+        if(mid!=null&&mid!=""){
+            map.put("id",mid);
+        }
+        if(reid!=null&&reid!=""){
+            map.put("id",reid);
+        }
+        List<Map<String,Object>> list = workOrderInfoService.getEmployee(map1);
+
+        List<Map<String,Object>> listemp =workOrderInfoService.getEmployeeById(map);
+
+        WorkOrderInfoDetail detail = workOrderInfoService.getWorkInfoByCode(code);
+
+        model.addAttribute("list",list);
+        model.addAttribute("listemp",listemp);
+        model.addAttribute("detail",detail);
+        return "system/workorder/edit";
     }
 }

@@ -32,6 +32,17 @@ $(document).on('click', '.top-layer-min', function () {
     var height = 0.85;
     openLayer(url,title,form,width,height);
 });
+//绑定弹出层小
+$(document).on('click', '.top-layer-min-work', function () {
+    var $this = $(this);
+    var url = $this.attr("layer-url");
+    var title = $this.attr("layer-title");
+    var form = $this.attr("layer-form-id");
+
+    var width = 0.7;
+    var height = 0.85;
+    openLayerWork(url,title,form,width,height);
+});
 //绑定弹出层满
 $(document).on('click', '.top-layer-max', function () {
     var $this = $(this);
@@ -68,6 +79,45 @@ function openLayer(url,title,form,width,height){
             btn: ['保存', '取消'],
             maxmin:true,
             yes: function () {
+                $top.find("#"+form).submit();
+            },
+            skin: 'layer-ext-moon', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            shift: 2,//出场动画
+            shadeClose: true, //开启遮罩关闭
+            content: $top.find("#layer-div")
+        });
+    });
+}
+function openLayerWork(url,title,form,width,height){
+    if(width==null||width=='undefined'){
+        width = top.document.documentElement.clientWidth*0.7+"px";
+    }else{
+        width = top.document.documentElement.clientWidth*width+"px";
+    }
+    if(height==null||height=='undefined'){
+        height = top.document.documentElement.clientHeight*0.85+"px";
+    }else{
+        height = top.document.documentElement.clientHeight*height+"px";
+    }
+
+    var $top = $(top.document);
+    var layerDiv = '<div id="layer-div"></div>';
+    $top.find('body').append(layerDiv);
+    $.get(url, function (result) {
+        $top.find("#layer-div").html(result);
+        top.layer.open({
+            area: [width, height],
+            type: 1,
+            title: title,
+            btn: ['保存',"保存并发送", '取消' ],
+            maxmin:true,
+            yes: function () {
+                $top.find("#urlType").val(0);
+                $top.find("#"+form).submit();
+            },
+            btn2: function(index, layero){
+                $top.find("#urlType").val(1);
                 $top.find("#"+form).submit();
             },
             skin: 'layer-ext-moon', //样式类名

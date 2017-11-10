@@ -87,9 +87,7 @@
         </div>
     </form>
     <div class="col-xs-12 btngroups   ">
-        <c:if test="${sessionScope._auth['indexAdd']}">
-            <a class="btns btnsfl btns-green top-layer-min" href="javascipt:;"  layer-form-id="indexAddForm" layer-title="添加指标配置" layer-url="${web}/index/allocation/add">添加</a>
-        </c:if>
+        <a class="btns btnsfl btns-green top-layer-min-work" href="javascript:void(0);"  layer-form-id="indexAddForm" layer-title="添加工单" layer-url="${web}/work/order/info/add">添加</a>
     </div>
 
 
@@ -181,13 +179,11 @@
         </td>
         <td>
             <div>
-                --                 <c:if test="${sessionScope._auth['indexUpdate']}">
-                <a href="javascript:void(0);" title="修改" class="operationbtn icon-edit top-layer-min"
-                   layer-form-id="indexEditForm" layer-title="修改指标配置" layer-url="${web}/index/allocation/edit/{$T.record.id}"></a>
-                --                 </c:if>
-                --                 <c:if test="${sessionScope._auth['indexDelete']}">
+
+                <a href="javascript:send(0);" title="修改" class="operationbtn icon-edit top-layer-min"
+                   layer-form-id="indexEditForm" layer-title="修改指标配置"  layer-url="${web}/work/order/info/edit?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                 <a href="javascript:delAllocation('{$T.record.id}');" title="删除" class="operationbtn icon-delete"></a>
-                --                 </c:if>
+
             </div>
         </td>
     </tr>
