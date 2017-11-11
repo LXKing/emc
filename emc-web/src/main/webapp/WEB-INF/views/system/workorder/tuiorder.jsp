@@ -17,7 +17,7 @@
 
                 <div class="form-group">
                     <label class="col-sm-3  col-xs-3 col-md-3 col-lg-3 control-label"><span
-                            class="red"></span>退单原因：</label>
+                            class="red">*</span>退单原因：</label>
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
                         <textarea content="content" id="reason" name="reason" class="form-control inputs-lg" rows="3" cols="20"  type="text" maxlength="512" placeholder="请输退单原因"></textarea>
                     </div>
@@ -93,7 +93,7 @@
             onkeyup: false,// 是否在敲击键盘时验证
             rules: {
                 reason: {
-                    required: false
+                    required: true
                 }
             },
             messages: {

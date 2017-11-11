@@ -451,12 +451,13 @@ public class WorkOrderInfoController {
                 if(monitor.equals(ss[1])){
                     //班长
                     workOrderInfo.setMonitor(ss[0]);
+                    workOrderInfo.setTakor(null);
                 }
                 if(takor.equals(ss[1])){
                     //接单员
                     workOrderInfo.setTakor(ss[0]);
+                    workOrderInfo.setMonitor(null);
                 }
-                workOrderInfo.setTakor(ss[0]);
                 workOrderInfoService.saveA(workOrderInfo);
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.MSG, "添加工单成功");
@@ -502,11 +503,13 @@ public class WorkOrderInfoController {
             if(monitor.equals(ss[1])){
                 //班长
                 workOrderInfo.setMonitor(ss[0]);
+                workOrderInfo.setTakor(null);
                 workOrderInfoService.sendABorC(workOrderInfo);
             }
             if(takor.equals(ss[1])){
                 //接单员
                 workOrderInfo.setTakor(ss[0]);
+                workOrderInfo.setMonitor(null);
                 workOrderInfoService.sendAC(workOrderInfo);
             }
 

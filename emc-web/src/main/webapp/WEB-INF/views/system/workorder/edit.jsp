@@ -69,7 +69,7 @@
                         <select id="takor" name="takor" class="chosen-select form-control">
                             <option value="">请选择人员</option>
                             <c:forEach items="${list}" var="emp">
-                                <option <c:if test="${emp.id eq eid}">selected="selected" </c:if> value="${emp.id}">${emp.name}</option>
+                                <option <c:if test="${emp.id eq listemp}">selected="selected" </c:if> value="${emp.id}">${emp.name}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -211,7 +211,7 @@ $(function () {
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
-                        //queryAllocation();
+                        queryWorkInfo();
                     } else {
                         top.layer.close(index);
                         top.layer.msg(result.msg);
