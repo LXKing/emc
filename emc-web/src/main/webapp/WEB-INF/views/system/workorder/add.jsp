@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-content">
     <div class="row col-sm-12 col-xs-12 col-md-12 col-lg-12">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" id="indexAddForm" dic="form">
+            <form class="form-horizontal" id="workSendAddForm" dic="form">
                 <input type="hidden" id="comId" name="comId" value="${company.id}">
                 <input type="hidden" id="orgId" name="orgId" value="${org.id}">
                 <input type="hidden" id="urlType" name="urlType" value="">
@@ -40,7 +40,7 @@
                             class="red">*</span>指令内容：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <textarea content="content" id="content" name="content" class="form-control inputs-lg" value="" type="text" maxlength="256" placeholder="请输任务单名称"></textarea>
+                        <textarea content="content" id="content" name="content" rows="3" cols="20" class="form-control inputs-lg" value="" type="text" maxlength="512" placeholder="请输指令内容"></textarea>
                     </div>
                 </div>
 
@@ -100,7 +100,7 @@
 
     //以下为官方示例
     $(function () {
-        var $form = $(top.document).find("#indexAddForm");
+        var $form = $(top.document).find("#workSendAddForm");
 
         // validate signup form on keyup and submit
         var icon = "<i class='fa fa-times-circle'></i> ";
@@ -121,36 +121,6 @@
             istoday: false,
             event: 'focus'
         });
-        $("#unitType").chosen().on('change',function () {
-            //加载用能单位
-            getUnitSelect();
-            //加载指标类型
-            getIndexTypeSelect();
-        });
-        //加载用能单位
-        getUnitSelect();
-        //加载指标类型
-        getIndexTypeSelect();
-
-        $.validator.addMethod("checkType", function(value, element) {
-            var deferred = $.Deferred();//创建一个延迟对象
-            $.ajax({
-                url:_web + '/index/allocation/check/type',
-                type:'POST',
-                async:false,//要指定不能异步,必须等待后台服务校验完成再执行后续代码
-                data: {unitId:$("#unitId").val(),typeId:$("#typeId").val(),comId:$("#comId").val()},
-                dataType: 'json',
-                success:function(result) {
-                    if (!result.flag) {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve();
-                    }
-                }
-            });
-            //deferred.state()有3个状态:pending:还未结束,rejected:失败,resolved:成功
-            return deferred.state() == "resolved" ? true : false;
-        }, icon + '该单位下指标类型已经存在');
 
         //小数校验
         $.validator.addMethod("isFloat", function(value, element){
@@ -237,7 +207,7 @@
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            //queryAllocation();
+                            queryWorkInfo();
                         } else {
                             top.layer.close(index);
                             top.layer.msg(result.msg);
@@ -258,7 +228,7 @@
                         if (result.flag) {
                             top.layer.closeAll();
                             top.layer.msg(result.msg);
-                            //queryAllocation();
+                            queryWorkInfo();
                         } else {
                             top.layer.close(index);
                             top.layer.msg(result.msg);
@@ -268,39 +238,6 @@
             }
         });
     });
-
-    function getUnitSelect() {
-        $.ajax({
-            url: _web + '/select/org/unit',
-            type: 'POST',
-            data: {comId: $("#comId").val(),orgId:$("#orgId").val(),unitType:$("#unitType").val()},
-            dataType: 'json',
-            success: function (result) {
-                var $element = $("#unitId");
-                $element.empty();
-                $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.UNITID + '">' + item.UNITNAME + '</option>');
-                });
-                $element.chosen("destroy").chosen();
-            }
-        });
-    }
-    function getIndexTypeSelect() {
-        $.ajax({
-            url: _web + '/select/index/type',
-            type: 'POST',
-            data: {unitType:$("#unitType").val()},
-            dataType: 'json',
-            success: function (result) {
-                var $element = $("#typeId");
-                $element.empty();
-                $.each(result, function (idx, item) {
-                    $element.append('<option value="' + item.INDEXID + '">' + item.INDEXNAME + '</option>');
-                });
-                $element.chosen("destroy").chosen();
-            }
-        });
-    }
     $(top.document).find("#type").on('change', function () {
         var real = $(this).val();
         if(real==1){

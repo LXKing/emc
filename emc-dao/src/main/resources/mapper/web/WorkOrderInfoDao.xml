@@ -422,16 +422,6 @@
 			,#{receiver,jdbcType=VARCHAR})
 
     </select>
-    <select id="getEmployeeById" parameterType="java.util.Map" resultType="java.util.Map">
-
-        SELECT CONCAT(e.ID,',',r.ID) id,CONCAT(e.EMP_NAME,'(',r.ROLE_NAME,')') name from t_emc_auth_employee e LEFT JOIN
-
-        t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
-        LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
-       (#{monitor,jdbcType=VARCHAR}
-			,#{receiver,jdbcType=VARCHAR}) and e.id=#{id,jdbcType=VARCHAR}
-
-    </select>
 
     <select id="getEmployeeAndRole" parameterType="java.util.Map" resultType="java.util.Map">
 
@@ -443,5 +433,21 @@
         ,#{receiver,jdbcType=VARCHAR})
 
     </select>
+    <select id="getEmployeeById" parameterType="java.util.Map" resultType="java.lang.String">
+
+        SELECT CONCAT(e.ID,',',r.ID) id  from t_emc_auth_employee e LEFT JOIN
+
+        t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
+        LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
+        (#{monitor,jdbcType=VARCHAR}
+        ,#{receiver,jdbcType=VARCHAR}) and e.id=#{id,jdbcType=VARCHAR}
+
+    </select>
+    <select id="selectOneByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        from t_emc_work_order_info i where i.code=#{code,jdbcType=VARCHAR}
+
+    </select>
+
 
 </mapper>

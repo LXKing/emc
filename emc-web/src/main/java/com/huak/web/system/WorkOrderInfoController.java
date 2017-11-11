@@ -193,16 +193,7 @@ public class WorkOrderInfoController {
         }
         return jo.toJSONString();
     }
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public String addPage1(HttpServletRequest request,Model model){
-        logger.info("打开室温添加配置页");
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("monitor",monitor);
-        map.put("receiver",takor);
-        List<Map<String,Object>> list = workOrderInfoService.getEmployee(map);
-        model.addAttribute("list",list);
-        return "system/workorder/add";
-    }
+
 
 
 
@@ -380,6 +371,68 @@ public class WorkOrderInfoController {
         }
         return jo.toJSONString();
     }
+
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String addPage1(HttpServletRequest request,Model model,
+                           @RequestParam("code")  String code,
+                           @RequestParam("mid")  String mid,
+                           @RequestParam("reid")  String reid){
+        logger.info("派单并编辑当前订单");
+        Map<String,Object> map1 = new HashMap<String,Object>();
+        map1.put("monitor",monitor);
+        map1.put("receiver",takor);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("monitor",monitor);
+        map.put("receiver",takor);
+        if(mid!=null&&mid!=""){
+            map.put("id",mid);
+        }
+        if(reid!=null&&reid!=""){
+            map.put("id",reid);
+        }
+        List<Map<String,Object>> list = workOrderInfoService.getEmployee(map1);
+
+        String listemp =workOrderInfoService.getEmployeeById(map);
+
+        WorkOrderInfoDetail detail = workOrderInfoService.getWorkInfoByCode(code);
+
+        model.addAttribute("list",list);
+        model.addAttribute("listemp",listemp);
+        model.addAttribute("detail",detail);
+        return "system/workorder/edit";
+    }
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public String addPage1(HttpServletRequest request,Model model){
+        logger.info("打开室温添加配置页");
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("monitor",monitor);
+        map.put("receiver",takor);
+        List<Map<String,Object>> list = workOrderInfoService.getEmployee(map);
+        model.addAttribute("list",list);
+        return "system/workorder/add";
+    }
+    @RequestMapping(value = "/do",method = RequestMethod.GET)
+    public String doWork(HttpServletRequest request,Model model,
+                         @RequestParam("code")  String code,
+                         @RequestParam("mid")  String mid,
+                         @RequestParam("reid")  String reid){
+        logger.info("跳转到处理订单");
+        model.addAttribute("code", code);
+        model.addAttribute("mid", mid);
+        model.addAttribute("reid", reid);
+        return "system/workorder/doorder";
+    }
+    @RequestMapping(value = "/tui",method = RequestMethod.GET)
+    public String tuiWork(HttpServletRequest request,Model model,
+                          @RequestParam("code")  String code,
+                          @RequestParam("mid")  String mid,
+                          @RequestParam("reid")  String reid){
+        logger.info("跳转到处理订单");
+        model.addAttribute("code", code);
+        model.addAttribute("mid", mid);
+        model.addAttribute("reid", reid);
+        return "system/workorder/tuiorder";
+    }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(WorkOrderInfo workOrderInfo, HttpServletRequest request,
@@ -437,12 +490,45 @@ public class WorkOrderInfoController {
         }
         return jo.toJSONString();
     }
-    @RequestMapping(value = "/edit",method = RequestMethod.GET)
-    public String addPage1(HttpServletRequest request,Model model,
+
+    @RequestMapping(value = "/edit/send", method = RequestMethod.POST)
+    @ResponseBody
+    public String editAndSend(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
+        logger.info("编辑工单并派送工单");
+        JSONObject jo = new JSONObject();
+        jo.put(Constants.FLAG, false);
+        String[]  ss = workOrderInfo.getTakor().split(",");
+        try {
+            if(monitor.equals(ss[1])){
+                //班长
+                workOrderInfo.setMonitor(ss[0]);
+                workOrderInfoService.sendABorC(workOrderInfo);
+            }
+            if(takor.equals(ss[1])){
+                //接单员
+                workOrderInfo.setTakor(ss[0]);
+                workOrderInfoService.sendAC(workOrderInfo);
+            }
+
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "派送工单成功");
+        } catch (Exception e) {
+            logger.error("派送工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "派送工单失败");
+        }
+
+        return jo.toJSONString();
+    }
+
+    @RequestMapping(value = "/received",method = RequestMethod.GET)
+    public String received(HttpServletRequest request,Model model,
                            @RequestParam("code")  String code,
                            @RequestParam("mid")  String mid,
                            @RequestParam("reid")  String reid){
-        logger.info("派单并编辑当前订单");
+        logger.info("接收当前订单");
+        JSONObject jo = new JSONObject();
+        WorkOrderInfo info = workOrderInfoService.selectOneByCode(code);
+
         Map<String,Object> map1 = new HashMap<String,Object>();
         map1.put("monitor",monitor);
         map1.put("receiver",takor);
@@ -455,15 +541,107 @@ public class WorkOrderInfoController {
         if(reid!=null&&reid!=""){
             map.put("id",reid);
         }
-        List<Map<String,Object>> list = workOrderInfoService.getEmployee(map1);
-
-        List<Map<String,Object>> listemp =workOrderInfoService.getEmployeeById(map);
-
-        WorkOrderInfoDetail detail = workOrderInfoService.getWorkInfoByCode(code);
-
-        model.addAttribute("list",list);
-        model.addAttribute("listemp",listemp);
-        model.addAttribute("detail",detail);
-        return "system/workorder/edit";
+        String eid =workOrderInfoService.getEmployeeById(map);
+        String[]  ss = eid.split(",");
+        try {
+            if(monitor.equals(ss[1])){
+                //班长接单
+                workOrderInfoService.takingB(info);
+            }
+            if(takor.equals(ss[1])){
+                //接单员接单
+                workOrderInfoService.takingC(info);
+            }
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "接收工单成功");
+        } catch (Exception e) {
+            logger.error("接收工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "接收工单失败");
+        }
+        return jo.toJSONString();
+    }
+    @RequestMapping(value = "/done/order",method = RequestMethod.POST)
+    @ResponseBody
+    public String doingOrder(HttpServletRequest request,Model model,
+                             @RequestParam("code")  String code,
+                             @RequestParam("mid")  String mid,
+                             @RequestParam("reid")  String reid,
+                             @RequestParam("finishReason")  String finishReason) {
+        logger.info("处理完成当前订单");
+        JSONObject jo = new JSONObject();
+        WorkOrderInfo info = workOrderInfoService.selectOneByCode(code);
+        info.setFinishReason(finishReason);
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("monitor", monitor);
+        map1.put("receiver", takor);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("monitor", monitor);
+        map.put("receiver", takor);
+        if (mid != null && mid != "") {
+            map.put("id", mid);
+        }
+        if (reid != null && reid != "") {
+            map.put("id", reid);
+        }
+        String eid = workOrderInfoService.getEmployeeById(map);
+        String[] ss = eid.split(",");
+        try {
+            if (monitor.equals(ss[1])) {
+                //班长接单
+                workOrderInfoService.finishB(info);
+            }
+            if (takor.equals(ss[1])) {
+                //接单员接单
+                workOrderInfoService.finishC(info);
+            }
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "处理完成工单成功");
+        } catch (Exception e) {
+            logger.error("处理完成工单异常" + e.getMessage());
+            jo.put(Constants.MSG, "处理完成工单失败");
+        }
+        return jo.toJSONString();
+    }
+    @RequestMapping(value = "/tui/order",method = RequestMethod.POST)
+    @ResponseBody
+    public String tuiOrder(HttpServletRequest request,Model model,
+                           @RequestParam("code")  String code,
+                           @RequestParam("mid")  String mid,
+                           @RequestParam("reid")  String reid,
+                           @RequestParam("reason")  String reason) {
+        logger.info("退当前订单");
+        JSONObject jo = new JSONObject();
+        WorkOrderInfo info = workOrderInfoService.selectOneByCode(code);
+        info.setReason(reason);
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("monitor", monitor);
+        map1.put("receiver", takor);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("monitor", monitor);
+        map.put("receiver", takor);
+        if (mid != null && mid != "") {
+            map.put("id", mid);
+        }
+        if (reid != null && reid != "") {
+            map.put("id", reid);
+        }
+        String eid = workOrderInfoService.getEmployeeById(map);
+        String[] ss = eid.split(",");
+        try {
+            if (monitor.equals(ss[1])) {
+                //班长接单
+                workOrderInfoService.backB(info);
+            }
+            if (takor.equals(ss[1])) {
+                //接单员接单
+                workOrderInfoService.backC(info);
+            }
+            jo.put(Constants.FLAG, true);
+            jo.put(Constants.MSG, "退单成功");
+        } catch (Exception e) {
+            logger.error("退单异常" + e.getMessage());
+            jo.put(Constants.MSG, "退单失败");
+        }
+        return jo.toJSONString();
     }
 }

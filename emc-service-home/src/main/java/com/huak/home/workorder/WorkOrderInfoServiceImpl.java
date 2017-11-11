@@ -862,10 +862,9 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
     }
 
     @Override
-    public List<Map<String, Object>> getEmployeeById(Map<String,Object> map) {
+    public String getEmployeeById(Map<String,Object> map) {
         return workOrderInfoDao.getEmployeeById(map);
     };
-
     @Override
     public void resetBackABCRecord(WorkOrderInfo workOrder,String EmployeeId) {
         logger.info("接单员退单派单员重新派送");
@@ -886,5 +885,10 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setSendee(EmployeeId);
         record.setDes(WorkOrderOperate.A_RESET.getValue());
         workOrderRecordDao.insertSelective(record);
+    }
+
+    @Override
+    public WorkOrderInfo selectOneByCode(String code) {
+        return workOrderInfoDao.selectOneByCode(code);
     }
 }

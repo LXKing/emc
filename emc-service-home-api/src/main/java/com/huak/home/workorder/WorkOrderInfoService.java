@@ -30,6 +30,7 @@ public interface WorkOrderInfoService {
 
     WorkOrderInfo selectByPrimaryKey(String id);
 
+    WorkOrderInfo selectOneByCode(String code);
 
     /**
      * 保存工单
@@ -242,8 +243,7 @@ public interface WorkOrderInfoService {
      * 根据Id查询班长和接单员的信息
      * @return
      */
-    List<Map<String,Object>> getEmployeeById(Map<String,Object> map);
-
+    String getEmployeeById(Map<String,Object> map);
     /**
      * 查询班长和接单员的信息
      * @return

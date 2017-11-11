@@ -63,13 +63,10 @@
 
         </div>
     </form>
-   <%-- <div class="col-xs-12 btngroups   ">
-        <a class="btns btnsfl btns-green top-layer-min-work" href="javascript:void(0);"  layer-form-id="indexAddForm" layer-title="添加工单" layer-url="${web}/work/order/info/add">添加</a>
---%>
 
     <div class="col-xs-12 btngroups">
         <c:if test="${sessionScope._auth['workOrderAdd']}">
-            <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="indexAddForm" layer-title="添加工单" layer-url="${web}/work/order/info/add">添加</a>
+            <a class="btns btnsfl btns-green top-layer-min-work" href="javascript:void(0);"  layer-form-id="workSendAddForm" layer-title="添加工单" layer-url="${web}/work/order/info/add">添加</a>
         </c:if>
 
         <a class="btns btnsfl exportchange btns-green" export-url="${web}/temp/config/export" href="javascript:void(0);">导出</a>
@@ -186,8 +183,8 @@
 
 
                 {#if ($T.record.status == 111)&&${sessionScope._auth['workOrderSend']}}
-                    <a href="javascript:void(0);" title="派单" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="workOrderSend" layer-title="派单" layer-url="${web}/work/order/info/"></a>
+                    <a href="javascript:send(0);" title="派单" class="operationbtn icon-edit top-layer-min-send"
+                       layer-form-id="workSendEditForm" layer-title="工单派送"  layer-url="${web}/work/order/info/edit?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                 {#/if}
                 {#if ($T.record.status == 321 || $T.record.status == 212 || $T.record.status == 312)&&${sessionScope._auth['workOrderClose']}}
                     <a href="javascript:closeOrder('{$T.record.id}');" title="关闭" class="operationbtn icon-delete"></a>
@@ -199,16 +196,16 @@
                     <a href="javascript:void(0);" title="重新派送" class="operationbtn icon-edit top-layer-min" layer-form-id="workOrderResetForm" layer-title="重新派送工单" layer-url="${web}/work/order/info/reset/{$T.record.id}"></a>
                  {#/if}
                     {#if ($T.record.status == 112 || $T.record.status == 113)&&${sessionScope._auth['workOrderTaking']}}
-                    <a href="javascript:void(0);" title="接单" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="workOrderTaking" layer-title="接单" layer-url="${web}/work/order/info/"></a>
+                    <a href="javascript:send(0);" title="接单" class="operationbtn icon-edit top-layer-min-send"
+                       layer-form-id="workSendEditForm" layer-title="接收工单"  layer-url="${web}/work/order/info/received?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                     {#/if}
                     {#if ($T.record.status == 112 || $T.record.status == 113 || $T.record.status == 214)&&${sessionScope._auth['workOrderBack']}}
-                    <a href="javascript:void(0);" title="退单" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="workOrderBack" layer-title="退单" layer-url="${web}/work/order/info/"></a>
+                    <a class="operationbtn icon-edit top-layer-min-done" href="javascript:void(0);"
+                       layer-form-id="workTuiForm" layer-title="退单" layer-url="${web}/work/order/info/tui?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                     {#/if}
                     {#if ($T.record.status == 211 || $T.record.status == 322 || $T.record.status == 214)&&${sessionScope._auth['workOrderFinish']}}
-                    <a href="javascript:void(0);" title="完成" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="workOrderFinish" layer-title="完成" layer-url="${web}/"></a>
+                    <a class="operationbtn icon-edit top-layer-min-done" href="javascript:void(0);"
+                       layer-form-id="workDoForm" layer-title="处理工单" layer-url="${web}/work/order/info/do?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                     {#/if}
         </td>
     </tr>
