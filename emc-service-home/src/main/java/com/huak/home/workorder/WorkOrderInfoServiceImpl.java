@@ -12,6 +12,7 @@ import com.huak.workorder.dao.WorkOrderRecordDao;
 import com.huak.workorder.dao.WorkOrderResetDao;
 import com.huak.workorder.model.WorkOrderInfo;
 import com.huak.workorder.model.WorkOrderRecord;
+import com.huak.workorder.model.WorkOrderReset;
 import com.huak.workorder.type.WorkOrderOperate;
 import com.huak.workorder.type.WorkOrderStatus;
 import com.huak.workorder.vo.WorkOrderInfoDetail;
@@ -183,6 +184,21 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         String dateTime = dateDao.getTime();
         //生成code
         String code = generatorCode(workOrder.getComid());
+        //添加关联
+        if(!StringUtils.isEmpty(workOrder.getCode())){
+            WorkOrderReset workOrderReset = workOrderResetDao.selectByPrimaryKey(workOrder.getCode());
+            WorkOrderReset reset = new WorkOrderReset();
+            if(null == workOrderReset){
+                reset.setParentCode(workOrder.getCode());
+                reset.setResetNum(1);
+            }else{
+                reset.setParentCode(workOrderReset.getParentCode());
+                reset.setResetNum(workOrderReset.getResetNum()+1);
+            }
+            reset.setOrderCode(code);
+            workOrderResetDao.insertSelective(reset);
+        }
+
         //封装工单
         workOrder.setId(UUIDGenerator.getUUID());
         workOrder.setCode(code);
@@ -462,6 +478,22 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         String dateTime = dateDao.getTime();
         //生成code
         String code = generatorCode(workOrder.getComid());
+
+        //添加关联
+        if(!StringUtils.isEmpty(workOrder.getCode())){
+            WorkOrderReset workOrderReset = workOrderResetDao.selectByPrimaryKey(workOrder.getCode());
+            WorkOrderReset reset = new WorkOrderReset();
+            if(null == workOrderReset){
+                reset.setParentCode(workOrder.getCode());
+                reset.setResetNum(1);
+            }else{
+                reset.setParentCode(workOrderReset.getParentCode());
+                reset.setResetNum(workOrderReset.getResetNum()+1);
+            }
+            reset.setOrderCode(code);
+            workOrderResetDao.insertSelective(reset);
+        }
+
         //封装工单
         workOrder.setId(UUIDGenerator.getUUID());
         workOrder.setCode(code);
@@ -823,6 +855,11 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         return workOrderInfoDao.getEmployee(map);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> getEmployeeAndRole(Map<String,Object> map) {
+        return workOrderInfoDao.getEmployeeAndRole(map);
+    }
 
     @Override
     public List<Map<String, Object>> getEmployeeById(Map<String,Object> map) {

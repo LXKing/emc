@@ -432,4 +432,16 @@
 			,#{receiver,jdbcType=VARCHAR}) and e.id=#{id,jdbcType=VARCHAR}
 
     </select>
+
+    <select id="getEmployeeAndRole" parameterType="java.util.Map" resultType="java.util.Map">
+
+        SELECT e.ID empId,r.ID roleId,e.EMP_NAME empName,r.ROLE_NAME roleName from t_emc_auth_employee e LEFT JOIN
+
+        t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
+        LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
+        (#{monitor,jdbcType=VARCHAR}
+        ,#{receiver,jdbcType=VARCHAR})
+
+    </select>
+
 </mapper>

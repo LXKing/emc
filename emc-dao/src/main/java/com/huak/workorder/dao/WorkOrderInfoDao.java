@@ -32,6 +32,8 @@ public interface WorkOrderInfoDao {
 
     List<Map<String,Object>> getEmployee(Map<String,Object> map);
 
+    List<Map<String,Object>> getEmployeeAndRole(Map<String,Object> map);
+
     List<Map<String,Object>> getEmployeeById(Map<String,Object> map);
 
     List<WorkOrderInfo> selectWorkOrderInfoByCreator(Map<String, Object> params);

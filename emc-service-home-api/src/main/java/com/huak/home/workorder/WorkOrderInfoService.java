@@ -233,6 +233,12 @@ public interface WorkOrderInfoService {
     List<Map<String,Object>> getEmployee(Map<String,Object> map);
 
     /**
+     * 查询班长和接单员的角色信息
+     * @return
+     */
+    List<Map<String,Object>> getEmployeeAndRole(Map<String,Object> map);
+
+    /**
      * 根据Id查询班长和接单员的信息
      * @return
      */

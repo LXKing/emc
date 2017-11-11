@@ -314,27 +314,62 @@ public class WorkOrderInfoController {
         return jo.toJSONString();
     }
 
+    @RequestMapping(value = "/reset/{id}",method = RequestMethod.GET)
+    public String resetPage(@PathVariable("id") String id, HttpServletRequest request, Model model) {
+        logger.info("打开重新派送工单页面");
+        //旧工单信息
+        WorkOrderInfo workOrderInfo = workOrderInfoService.selectByPrimaryKey(id);
+        //员工列表
+        Map<String,Object> paramsMap = new HashMap<String,Object>();
+        paramsMap.put("monitor",monitor);
+        paramsMap.put("receiver",takor);
+        List<Map<String,Object>> employees = workOrderInfoService.getEmployeeAndRole(paramsMap);
+        //员工列表
+        model.addAttribute("employees",employees);
+        model.addAttribute("workOrder",workOrderInfo);
+        return "system/workorder/reset";
+    }
+
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     @ResponseBody
-    public String reset(WorkOrderInfo workOrderInfo, HttpServletRequest request) {
+    public String reset(WorkOrderInfo workOrderInfo, HttpServletRequest request,String roleId) {
         logger.info("重新派送工单");
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {
-            if(WorkOrderStatus.C323.getKey() == workOrderInfo.getStatus()){
-                workOrderInfoService.confirmAB(workOrderInfo);
-            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
-                workOrderInfoService.confirmACRecord(workOrderInfo);
-            }else if(WorkOrderStatus.C323.getKey() == workOrderInfo.getStatus()){
-                workOrderInfoService.confirmAC(workOrderInfo);
-            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
-                workOrderInfoService.confirmACRecord(workOrderInfo);
-            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
-                workOrderInfoService.confirmACRecord(workOrderInfo);
-            }else if(WorkOrderStatus.C311.getKey() == workOrderInfo.getStatus()){
-                workOrderInfoService.confirmACRecord(workOrderInfo);
+            //老单
+            WorkOrderInfo oldOrder = workOrderInfoService.selectByPrimaryKey(workOrderInfo.getId());
+            if(WorkOrderStatus.C321.getKey() == oldOrder.getStatus()){
+                workOrderInfoService.resetBackAC(oldOrder,workOrderInfo.getTakor());
+            }else if(WorkOrderStatus.C323.getKey() == oldOrder.getStatus()){
+                workOrderInfoService.resetFinishAC(oldOrder,workOrderInfo.getTakor());
+            }else if(WorkOrderStatus.B213.getKey() == oldOrder.getStatus()){
+                workOrderInfoService.resetFinishAB(oldOrder,workOrderInfo.getTakor());
+            }else if(WorkOrderStatus.B212.getKey() == oldOrder.getStatus()){
+                workOrderInfoService.resetBackAB(oldOrder,workOrderInfo.getTakor());
+            }else if(WorkOrderStatus.C311.getKey() == oldOrder.getStatus()){
+                workOrderInfoService.confirmACRecord(oldOrder);
+            }else if(WorkOrderStatus.C312.getKey() == oldOrder.getStatus()){
+                workOrderInfoService.confirmACRecord(oldOrder);
             }else{
                 throw new IllegalArgumentException("没有此流程");
+            }
+
+            //新单
+            WorkOrderInfo newOrder = new WorkOrderInfo();
+            newOrder.setCode(oldOrder.getCode());//添加关联标记
+            newOrder.setType(workOrderInfo.getType());
+            newOrder.setName(workOrderInfo.getName());
+            newOrder.setContent(workOrderInfo.getContent());
+            newOrder.setStartTime(workOrderInfo.getStartTime());
+            newOrder.setFinishTime(workOrderInfo.getFinishTime());
+            newOrder.setCreator(workOrderInfo.getCreator());
+            if(monitor.equals(roleId)){//班长
+                newOrder.setMonitor(workOrderInfo.getTakor());
+                workOrderInfoService.saveAndSendABorC(newOrder);
+            }else if(takor.equals(roleId)){//接单员
+                newOrder.setTakor(workOrderInfo.getTakor());
+                workOrderInfoService.saveAndSendAC(newOrder);
             }
 
             jo.put(Constants.FLAG, true);

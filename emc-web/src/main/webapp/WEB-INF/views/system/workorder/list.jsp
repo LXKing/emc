@@ -22,7 +22,6 @@
         <div class="selectbg clearfix">
             <div class="sele-row clearfix row">
                 <!--<div class="clearfix row">-->
-
                 <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <label>工单名称</label>
@@ -186,16 +185,13 @@
                        layer-form-id="alarmConfigEditForm" layer-title="派单" layer-url="${web}/work/order/info/"></a>
                 </c:if>
                 <c:if test="${sessionScope._auth['workOrderClose'] && ($T.record.status==321 || $T.record.status==321 || $T.record.status==212)}">
-                    <a href="javascript:void(0);" title="关闭" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="alarmConfigEditForm" layer-title="关闭" layer-url="${web}/work/order/info/"></a>
+                    <a href="javascript:closeOrder('{$T.record.id}');" title="关闭" class="operationbtn icon-delete"></a>
                 </c:if>
                 <c:if test="${sessionScope._auth['workOrderConfirm'] && ($T.record.status==311 || $T.record.status==323 ||$T.record.status==213)}">
-                    <a href="javascript:void(0);" title="确认" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="alarmConfigEditForm" layer-title="确认" layer-url="${web}/work/order/info/"></a>
+                    <a href="javascript:confirmOrder('{$T.record.id}');" title="确认" class="operationbtn icon-delete"></a>
                 </c:if>
                 <c:if test="${sessionScope._auth['workOrderReset'] && ($T.record.status==212 || $T.record.status==213 || $T.record.status==321 || $T.record.status==323 || $T.record.status== 311 || $T.record.status== 312)}">
-                    <a href="javascript:void(0);" title="重新发送" class="operationbtn icon-edit top-layer-min"
-                       layer-form-id="alarmConfigEditForm" layer-title="重新发送" layer-url="${web}/work/order/info/"></a>
+                    <a href="javascript:void(0);" title="重新派送" class="operationbtn icon-edit top-layer-min" layer-form-id="workOrderResetForm" layer-title="重新派送工单" layer-url="${web}/work/order/info/reset/{$T.record.id}"></a>
                 </c:if>
                 <c:if test="${sessionScope._auth['workOrderTaking'] && roleType==2 && $T.record.status==112}">
                     <a href="javascript:void(0);" title="接单" class="operationbtn icon-edit top-layer-min"
@@ -221,6 +217,7 @@
                     <a href="javascript:void(0);" title="完成" class="operationbtn icon-edit top-layer-min"
                        layer-form-id="alarmConfigEditForm" layer-title="完成" layer-url="${web}/work/order/info/"></a>
                 </c:if>
+            </div>
         </td>
     </tr>
     {#/for}
