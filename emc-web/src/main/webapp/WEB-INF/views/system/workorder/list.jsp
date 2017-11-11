@@ -204,8 +204,8 @@
                        layer-form-id="workTuiForm" layer-title="退单" layer-url="${web}/work/order/info/tui?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                     {#/if}
                     {#if ($T.record.status == 211 || $T.record.status == 322 || $T.record.status == 214)&&${sessionScope._auth['workOrderFinish']}}
-                    <a class="operationbtn icon-edit top-layer-min-done" title="处理工单" href="javascript:void(0);"
-                       layer-form-id="workDoForm" layer-title="处理工单" layer-url="${web}/work/order/info/do?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
+                    <a class="operationbtn icon-edit top-layer-min-done" title="处理完成" href="javascript:void(0);"
+                       layer-form-id="workDoForm" layer-title="处理完成" layer-url="${web}/work/order/info/do?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
                     {#/if}
         </td>
     </tr>

@@ -476,11 +476,13 @@ public class WorkOrderInfoController {
                 if(monitor.equals(ss[1])){
                     //班长
                     workOrderInfo.setMonitor(ss[0]);
+                    workOrderInfo.setTakor(null);
                     workOrderInfoService.saveAndSendABorC(workOrderInfo);
                 }
                 if(takor.equals(ss[1])){
                     //接单员
                     workOrderInfo.setTakor(ss[0]);
+                    workOrderInfo.setMonitor(null);
                     workOrderInfoService.saveAndSendAC(workOrderInfo);
                 }
                 jo.put(Constants.FLAG, true);
