@@ -320,7 +320,6 @@
         LEFT JOIN t_emc_auth_employee e2 ON e2.ID = woi.MONITOR
         LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
         LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
-        WHERE
         where woi.CREATOR=#{employee_id,jdbcType=VARCHAR}
         or e1.pid = #{employee_id,jdbcType=VARCHAR}
         <if test="type != null and type !=''">
@@ -345,7 +344,7 @@
         LEFT JOIN t_emc_auth_employee e2 ON e2.ID = woi.MONITOR
         LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
         LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
-        WHERE
+        WHERE woi.creator=#{employee_id,jdbcType=VARCHAR}
         <if test="type != null and type !=''">
             AND woi.TYPE=#{type}
         </if>
