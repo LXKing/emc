@@ -22,11 +22,11 @@ import java.util.Map;
  */
 public interface WorkOrderInfoService {
 
-    PageResult<WorkOrderInfo>  selectWorkOrderInfoByMonitor(Map<String,Object> params,Page page);
+    PageResult<WorkOrderInfoDetail>  selectWorkOrderInfoByMonitor(Map<String,Object> params,Page page);
 
-    PageResult<WorkOrderInfo>  selectWorkOrderInfoByCreator(Map<String,Object> params,Page page);
+    PageResult<WorkOrderInfoDetail>  selectWorkOrderInfoByCreator(Map<String,Object> params,Page page);
 
-    PageResult<WorkOrderInfo>  selectWorkOrderInfoByTakor(Map<String,Object> params,Page page);
+    PageResult<WorkOrderInfoDetail>  selectWorkOrderInfoByTakor(Map<String,Object> params,Page page);
 
     WorkOrderInfo selectByPrimaryKey(String id);
 

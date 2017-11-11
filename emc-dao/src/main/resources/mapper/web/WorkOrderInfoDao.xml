@@ -287,105 +287,70 @@
         where DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
         and COMID = #{comId,jdbcType=VARCHAR}
     </select>
-    <select id="selectWorkOrderInfoByCreator" parameterType="java.util.Map" resultType="com.huak.workorder.model.WorkOrderInfo">
+    <select id="selectWorkOrderInfoByCreator" parameterType="java.util.Map" resultMap="BaseResultMapDetail">
         SELECT
-        ti.CODE,
-        ti.TYPE,
-        ti.NAME,
-        ti.CONTENT,
-        ti.START_TIME startTime,
-        ti.FINISH_TIME finishTime,
-        ti.STATUS,
-        tea.EMP_NAME CREATOR,
-        ti.CREATE_TIME createTime,
-        ti.FINISH_TIME,
-        ti.STATUS,
-        tea.EMP_NAME CREATOR,
-        ti.CREATE_TIME,
-        teb.EMP_NAME MONITOR,
-        tec.EMP_NAME TAKOR
+        woi.*, e1.EMP_NAME CREATORNAME,
+        e2.EMP_NAME MONITORNAME,
+        e3.EMP_NAME TAKORNAME,
+        e4.EMP_NAME FINISHNAME
         FROM
-        t_emc_work_order_info ti
-        LEFT JOIN t_emc_auth_employee tea
-        ON ti.CREATOR = tea.ID
-        LEFT JOIN t_emc_auth_employee teb
-        ON ti.MONITOR = teb.ID
-        LEFT JOIN t_emc_auth_employee tec
-        ON ti.TAKOR = tec.ID
+        t_emc_work_order_info woi
+        LEFT JOIN t_emc_auth_employee e1 ON e1.ID = woi.CREATOR
+        LEFT JOIN t_emc_auth_employee e2 ON e2.ID = woi.MONITOR
+        LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
+        LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
         WHERE 1=1
         <if test="type != null and type !=' '">
-            AND TYPE=#{type}
+            AND woi.TYPE=#{type}
         </if>
         <if test="name != null and name !=''">
-            AND NAME = #{name}
+            AND woi.NAME = #{name}
         </if>
     </select>
 
-    <select id="selectWorkOrderInfoByMonitor" parameterType="java.util.Map" resultType="com.huak.workorder.model.WorkOrderInfo">
+    <select id="selectWorkOrderInfoByMonitor" parameterType="java.util.Map" resultMap="BaseResultMapDetail">
         SELECT
-        ti.CODE,
-        ti.TYPE,
-        ti.NAME,
-        ti.CONTENT,
-        ti.START_TIME startTime,
-        ti.FINISH_TIME finishTime,
-        ti.STATUS,
-        tea.EMP_NAME CREATOR,
-        ti.CREATE_TIME createTime,,
-        ti.FINISH_TIME,
-        ti.STATUS,
-        tea.EMP_NAME CREATOR,
-        ti.CREATE_TIME,
-        teb.EMP_NAME MONITOR,
-        tec.EMP_NAME TAKOR
+        woi.*, e1.EMP_NAME CREATORNAME,
+        e2.EMP_NAME MONITORNAME,
+        e3.EMP_NAME TAKORNAME,
+        e4.EMP_NAME FINISHNAME
         FROM
-        t_emc_work_order_info ti
-        left join t_emc_auth_employee tea
-        on ti.CREATOR = tea.ID
-        LEFT JOIN t_emc_auth_employee teb
-        ON ti.MONITOR = teb.ID
-        LEFT JOIN t_emc_auth_employee tec
-        ON ti.TAKOR = tec.ID
-        where ti.CREATOR=#{employee_id,jdbcType=VARCHAR}
-        or tea.pid = #{employee_id,jdbcType=VARCHAR}
+        t_emc_work_order_info woi
+        LEFT JOIN t_emc_auth_employee e1 ON e1.ID = woi.CREATOR
+        LEFT JOIN t_emc_auth_employee e2 ON e2.ID = woi.MONITOR
+        LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
+        LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
+        WHERE
+        where woi.CREATOR=#{employee_id,jdbcType=VARCHAR}
+        or e1.pid = #{employee_id,jdbcType=VARCHAR}
         <if test="type != null and type !=''">
-            AND TYPE=#{type}
+            AND woi.TYPE=#{type}
         </if>
         <if test="name != null and name !=''">
-            AND NAME = #{name}
+            AND woi.NAME = #{name}
         </if>
     </select>
 
 
 
-    <select id="selectWorkOrderInfoByTakor" parameterType="java.util.Map" resultType="com.huak.workorder.model.WorkOrderInfo">
+    <select id="selectWorkOrderInfoByTakor" parameterType="java.util.Map" resultMap="BaseResultMapDetail">
         SELECT
-        ti.CODE,
-        ti.TYPE,
-        ti.NAME,
-        ti.CONTENT,
-        ti.START_TIME startTime,
-        ti.FINISH_TIME finishTime,
-        ti.STATUS,
-        tea.EMP_NAME CREATOR,
-        ti.CREATE_TIME createTime,
-        teb.EMP_NAME MONITOR,
-        tec.EMP_NAME TAKOR
+        woi.*, e1.EMP_NAME CREATORNAME,
+        e2.EMP_NAME MONITORNAME,
+        e3.EMP_NAME TAKORNAME,
+        e4.EMP_NAME FINISHNAME
         FROM
-        t_emc_work_order_info ti
-        left join t_emc_auth_employee tea
-        on ti.CREATOR = tea.ID
-        LEFT JOIN t_emc_auth_employee teb
-        ON ti.MONITOR = teb.ID
-        LEFT JOIN t_emc_auth_employee tec
-        ON ti.TAKOR = tec.ID
-        where
-        ti.CREATOR = #{employee_id,jdbcType=VARCHAR}
+        t_emc_work_order_info woi
+        LEFT JOIN t_emc_auth_employee e1 ON e1.ID = woi.CREATOR
+        LEFT JOIN t_emc_auth_employee e2 ON e2.ID = woi.MONITOR
+        LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
+        LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
+        WHERE
         <if test="type != null and type !=''">
-            AND TYPE=#{type}
+            AND woi.TYPE=#{type}
         </if>
         <if test="name != null and name !=''">
-            AND NAME = #{name}
+            AND woi.NAME = #{name}
         </if>
     </select>
 

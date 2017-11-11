@@ -59,7 +59,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      *
      */
     @Override
-    public PageResult<WorkOrderInfo> selectWorkOrderInfoByMonitor(Map<String, Object> params, Page page) {
+    public PageResult<WorkOrderInfoDetail> selectWorkOrderInfoByMonitor(Map<String, Object> params, Page page) {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByMonitor(params));
     }
@@ -68,7 +68,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      *
      */
     @Override
-    public PageResult<WorkOrderInfo> selectWorkOrderInfoByCreator(Map<String, Object> params, Page page) {
+    public PageResult<WorkOrderInfoDetail> selectWorkOrderInfoByCreator(Map<String, Object> params, Page page) {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByCreator(params));
     }
@@ -77,7 +77,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      *
      */
     @Override
-    public PageResult<WorkOrderInfo> selectWorkOrderInfoByTakor(Map<String, Object> params, Page page) {
+    public PageResult<WorkOrderInfoDetail> selectWorkOrderInfoByTakor(Map<String, Object> params, Page page) {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert( workOrderInfoDao.selectWorkOrderInfoByTakor(params));
     }

@@ -163,13 +163,13 @@
             <div class="text-left">{workOrderStatus($T.record.status,${roleType})}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.creator}</div>
+            <div class="text-left">{$T.record.creatorName}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.monitor}</div>
+            <div class="text-left">{$T.record.monitorName}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.takor}</div>
+            <div class="text-left">{$T.record.takorName}</div>
         </td>
         <td>
                 <%--<a href="javascript:send(0);" title="修改" class="operationbtn icon-edit top-layer-min"

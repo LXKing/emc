@@ -36,11 +36,11 @@ public interface WorkOrderInfoDao {
 
     String getEmployeeById(Map<String,Object> map);
 
-    List<WorkOrderInfo> selectWorkOrderInfoByCreator(Map<String, Object> params);
+    List<WorkOrderInfoDetail> selectWorkOrderInfoByCreator(Map<String, Object> params);
 
-    List<WorkOrderInfo> selectWorkOrderInfoByMonitor(Map<String, Object> params);
+    List<WorkOrderInfoDetail> selectWorkOrderInfoByMonitor(Map<String, Object> params);
 
-    List<WorkOrderInfo> selectWorkOrderInfoByTakor(Map<String, Object> params);
+    List<WorkOrderInfoDetail> selectWorkOrderInfoByTakor(Map<String, Object> params);
 
 
     WorkOrderInfo selectOneByCode(String code);
