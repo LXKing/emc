@@ -322,6 +322,7 @@
         LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
         where woi.CREATOR=#{employee_id,jdbcType=VARCHAR}
         or e1.pid = #{employee_id,jdbcType=VARCHAR}
+        AND woi.STATUS != 111
         <if test="type != null and type !=''">
             AND woi.TYPE=#{type}
         </if>
@@ -345,6 +346,7 @@
         LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
         LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
         WHERE woi.creator=#{employee_id,jdbcType=VARCHAR}
+        AND woi.STATUS != 111
         <if test="type != null and type !=''">
             AND woi.TYPE=#{type}
         </if>
