@@ -59,7 +59,16 @@ function openDetail(type,code){
  * sendee 接收人
  */
 function workOrderOperate(desc,opertor,sendee){
-    var opertorSitg = "{1}";
-    var sendeeSitg = "{2}";
-    return desc.replaceAll(opertorSitg,opertor).replaceAll(sendeeSitg,sendee);
+    debugger
+    desc += "";
+    opertor += "";
+    if(null!=sendee&&"undefined"!=sendee){
+        sendee += "";
+    }else{
+        sendee = "";
+    }
+
+    var opertorSitg = '{1}';
+    var sendeeSitg = '{2}';
+    return desc.replace(opertorSitg,opertor).replace(sendeeSitg,sendee);
 }
