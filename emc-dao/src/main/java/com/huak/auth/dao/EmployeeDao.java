@@ -41,7 +41,7 @@ public interface EmployeeDao {
      * @param id
      * @return
      */
-    Employee selectByPrimaryKey(Long id);
+    Employee selectByPrimaryKey(String id);
 
     /**
      * 修改

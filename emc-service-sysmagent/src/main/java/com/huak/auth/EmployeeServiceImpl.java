@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Employee getEmployeeById(Long id) throws Exception {
+    public Employee getEmployeeById(String id) throws Exception {
         return employeeDao.selectByPrimaryKey(id);
     }
 

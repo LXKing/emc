@@ -32,7 +32,7 @@ public interface EmployeeService {
 	 * @param id
 	 * @return
 	 */
-    Employee getEmployeeById(Long id) throws Exception;
+    Employee getEmployeeById(String id) throws Exception;
 
 	/**
 	 * 编辑员工信息 

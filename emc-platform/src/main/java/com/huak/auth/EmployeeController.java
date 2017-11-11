@@ -3,13 +3,10 @@ package com.huak.auth;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.Employee;
-import com.huak.auth.model.Menu;
 import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
-import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
-import com.huak.org.model.Feed;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +103,7 @@ public class EmployeeController {
      * @return
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("id") Long id) {
+    public String edit(Model model, @PathVariable("id") String id) {
         logger.info("跳转修改员工页");
         try {
             Employee employee = employeeService.getEmployeeById(id);
