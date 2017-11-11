@@ -295,7 +295,7 @@
         <td><a href="javascript:void(0);" onclick="openDetail('${roleType}','{$T.rel.code}')">{$T.rel.code}</a></td>
         <td>{$T.rel.resetNum}</td>
         <td>{$T.rel.name}</td>
-        <td>{workOrderStatus($T.rel.status,'${roleType}')}</td>
+        <td>{workOrderOperate($T.rel.des,$T.rel.empName,$T.rel.reciver)}</td>
     </tr>
     {#/for}
 </textarea>
