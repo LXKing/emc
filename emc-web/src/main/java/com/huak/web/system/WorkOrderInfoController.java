@@ -354,7 +354,8 @@ public class WorkOrderInfoController {
             newOrder.setContent(workOrderInfo.getContent());
             newOrder.setStartTime(workOrderInfo.getStartTime());
             newOrder.setFinishTime(workOrderInfo.getFinishTime());
-            newOrder.setCreator(workOrderInfo.getCreator());
+            newOrder.setCreator(oldOrder.getCreator());
+            newOrder.setComid(oldOrder.getComid());
             if(monitor.equals(roleId)){//班长
                 newOrder.setMonitor(workOrderInfo.getTakor());
                 workOrderInfoService.saveAndSendABorC(newOrder);

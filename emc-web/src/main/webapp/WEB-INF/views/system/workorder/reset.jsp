@@ -39,7 +39,7 @@
                             class="red">*</span>指令内容：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <textarea rows="3" content="content" id="content" name="content" class="form-control inputs-lg" value="${workOrder.content}" type="text" maxlength="512" placeholder="请输指令内容"></textarea>
+                        <textarea rows="3" content="content" id="content" name="content" class="form-control inputs-lg" type="text" maxlength="512" placeholder="请输指令内容">${workOrder.content}</textarea>
                     </div>
                 </div>
 
@@ -193,7 +193,8 @@ $(function () {
             }
         },
         submitHandler: function () {
-            $("#roleId").val($("#takor option[selected='selected']").attr('role_id'));
+            debugger
+            $("#roleId").val($("#takor option:selected").attr('role_id'));
             var index = top.layer.load(1, {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景
             });
