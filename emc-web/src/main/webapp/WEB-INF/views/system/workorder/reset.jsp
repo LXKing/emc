@@ -193,7 +193,6 @@ $(function () {
             }
         },
         submitHandler: function () {
-            debugger
             $("#roleId").val($("#takor option:selected").attr('role_id'));
             var index = top.layer.load(1, {
                 shade: [0.1, '#fff'] //0.1透明度的白色背景

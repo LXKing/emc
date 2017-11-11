@@ -59,7 +59,6 @@ function openDetail(type,code){
  * sendee 接收人
  */
 function workOrderOperate(desc,opertor,sendee){
-    debugger
     desc += "";
     opertor += "";
     if(null!=sendee&&"undefined"!=sendee){
