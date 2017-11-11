@@ -105,7 +105,10 @@ $.validator.setDefaults({
 //以下为官方示例
 $(function () {
     var $form = $(top.document).find("#workSendEditForm");
-
+    var orderType = ${detail.type};
+    if(orderType==1){
+        $(".starttime").hide();
+    }
     // validate signup form on keyup and submit
     var icon = "<i class='fa fa-times-circle'></i> ";
 

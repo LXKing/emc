@@ -196,8 +196,9 @@
                     <a href="javascript:void(0);" title="重新派送" class="operationbtn icon-edit top-layer-min" layer-form-id="workOrderResetForm" layer-title="重新派送工单" layer-url="${web}/work/order/info/reset/{$T.record.id}"></a>
                  {#/if}
                     {#if ($T.record.status == 112 || $T.record.status == 113)&&${sessionScope._auth['workOrderTaking']}}
-                    <a href="javascript:send(0);" title="接单" class="operationbtn icon-edit top-layer-min-send"
-                       layer-form-id="workSendEditForm" layer-title="接收工单"  layer-url="${web}/work/order/info/received?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>
+                    <%--<a href="javascript:send(0);" title="接单" class="operationbtn icon-edit top-layer-min-send"--%>
+                       <%--layer-form-id="workSendEditForm" layer-title="接收工单"  layer-url="${web}/work/order/info/received?code={$T.record.code}&mid={$T.record.monitor}&reid={$T.record.takor}"></a>--%>
+                    <a href="javascript:receivedOrder('{$T.record.code}','{$T.record.monitor}','{$T.record.takor}');" title="接单" class="operationbtn icon-edit"></a>
                     {#/if}
                     {#if ($T.record.status == 112 || $T.record.status == 113 || $T.record.status == 214)&&${sessionScope._auth['workOrderBack']}}
                     <a class="operationbtn icon-edit top-layer-min-done" title="退单" href="javascript:void(0);"

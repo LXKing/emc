@@ -404,7 +404,7 @@ public class WorkOrderInfoController {
     }
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     public String addPage1(HttpServletRequest request,Model model){
-        logger.info("打开室温添加配置页");
+        logger.info("添加工单");
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("monitor",monitor);
         map.put("receiver",takor);
@@ -449,6 +449,9 @@ public class WorkOrderInfoController {
                 Employee emp = (Employee)session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
                 workOrderInfo.setComid(company.getId());
                 workOrderInfo.setCreator(emp.getId());
+                if("1".equals(workOrderInfo.getType().toString())){
+                    workOrderInfo.setStartTime(null);
+                }
                 if(monitor.equals(ss[1])){
                     //班长
                     workOrderInfo.setMonitor(ss[0]);
@@ -473,6 +476,10 @@ public class WorkOrderInfoController {
                 Employee emp = (Employee)session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);
                 workOrderInfo.setComid(company.getId());
                 workOrderInfo.setCreator(emp.getId());
+                if("1".equals(workOrderInfo.getType().toString())){
+                    workOrderInfo.setStartTime(null);
+                }
+
                 if(monitor.equals(ss[1])){
                     //班长
                     workOrderInfo.setMonitor(ss[0]);
@@ -502,7 +509,11 @@ public class WorkOrderInfoController {
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         String[]  ss = workOrderInfo.getTakor().split(",");
+
         try {
+            if("1".equals(workOrderInfo.getType().toString())){
+                workOrderInfo.setStartTime(null);
+            }
             if(monitor.equals(ss[1])){
                 //班长
                 workOrderInfo.setMonitor(ss[0]);
@@ -527,6 +538,7 @@ public class WorkOrderInfoController {
     }
 
     @RequestMapping(value = "/received",method = RequestMethod.GET)
+    @ResponseBody
     public String received(HttpServletRequest request,Model model,
                            @RequestParam("code")  String code,
                            @RequestParam("mid")  String mid,

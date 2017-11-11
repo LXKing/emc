@@ -140,7 +140,34 @@ function closeOrder(id) {
         });
     });
 }
-
+/**
+ * 接收工单
+ */
+function receivedOrder(code,mid,reid) {
+    top.layer.confirm('您是否确定接收工单？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        var index = top.layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.ajax({
+            url: _web + '/work/order/info/received',
+            type: 'GET',
+            data:{"code":code,"mid":mid,"reid":reid},
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag) {
+                    top.layer.closeAll();
+                    top.layer.msg(result.msg);
+                    queryWorkInfo();
+                } else {
+                    top.layer.close(index);
+                    top.layer.msg(result.msg);
+                }
+            }
+        });
+    });
+}
 /**
  * 确认工单
  */
