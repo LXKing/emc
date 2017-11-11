@@ -142,7 +142,7 @@
     <tr>
         <td>{$T.record$index+1}</td>
         <td>
-           <a href="_web/work/order/info/detail/${roleType}/{$T.record.code}"> <div class="text-left">{$T.record.code}</div></a>
+           <a href="${web}/work/order/info/detail/${roleType}/{$T.record.code}"> <div class="text-left">{$T.record.code}</div></a>
         </td>
         <td>
            <a> <div class="text-left">{$T.record.name}</div></a>
