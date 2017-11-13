@@ -2,7 +2,9 @@ package com.huak.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.StringUtils;
 import com.huak.common.UUIDGenerator;
+import com.huak.org.model.Company;
 import com.huak.org.model.Node;
 import com.huak.task.model.EmcOrgInter;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,6 +44,8 @@ public class StationApi {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private RoomTempService roomTempService;
+    @Resource
+    private EnergyAnalyService energyAnalyService;
 
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -90,6 +95,15 @@ public class StationApi {
         jbAll.put("ORGID","-1");
         Node eccNode = JSON.parseObject(jbAll.toString(),Node.class);
         JSONObject jsonObj = new JSONObject();
+        if(StringUtils.isEmpty(eccNode.getComId())){
+            jsonObj.put("status","2");
+            jsonObj.put("msg","条件异常");
+        }
+        Company company = energyAnalyService.selectCompanyByKey(eccNode.getComId());
+        if(null == company){
+            jsonObj.put("status","2");
+            jsonObj.put("msg","条件异常");
+        }
         EmcOrgInter orgInter = new EmcOrgInter();
         orgInter.setComId(eccNode.getComId());
         orgInter.setOrgId(eccNode.getId());

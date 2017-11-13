@@ -1,5 +1,6 @@
 package com.huak.api;
 
+import com.huak.org.model.Company;
 import com.huak.task.model.EnergyAnalySisdata;
 
 import java.util.List;
@@ -55,4 +56,11 @@ public interface EnergyAnalyService {
      * 查询标煤
      */
     public String selectCoal(Map<String,Object> map);
+
+    /**
+     * 查询公司
+     * @param id
+     * @return
+     */
+    public Company selectCompanyByKey(String id);
 }

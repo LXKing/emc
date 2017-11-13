@@ -2,6 +2,8 @@ package com.huak.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.StringUtils;
+import com.huak.org.model.Company;
 import com.huak.task.model.Temperature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +40,8 @@ public class RoomTempApi {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private RoomTempService roomTempService;
+    @Resource
+    private EnergyAnalyService energyAnalyService;
 
   @ResponseBody
   @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -82,6 +87,15 @@ public class RoomTempApi {
       Object o =jb.get("json");
       Temperature t = JSON.parseObject(o.toString(),Temperature.class);
       JSONObject jsonObj = new JSONObject();
+      if(StringUtils.isEmpty(t.getComId())){
+          jsonObj.put("status","2");
+          jsonObj.put("msg","条件异常");
+      }
+      Company company = energyAnalyService.selectCompanyByKey(t.getComId());
+      if(null == company){
+          jsonObj.put("status","2");
+          jsonObj.put("msg","条件异常");
+      }
       List<Temperature> list = roomTempService.isExsistTemp(t);
         if(list.size()>0){
             jsonObj.put("status","0");

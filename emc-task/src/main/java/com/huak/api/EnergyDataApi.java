@@ -2,6 +2,8 @@ package com.huak.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.huak.common.StringUtils;
+import com.huak.org.model.Company;
 import com.huak.task.model.EnergyAnalySisdata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +84,16 @@ public class EnergyDataApi {
         JSONObject jb = JSON.parseObject(data);
         Object o =jb.get("json");
         EnergyAnalySisdata energyAnalySisdata = JSON.parseObject(o.toString(),EnergyAnalySisdata.class);
+
+        if(StringUtils.isEmpty(energyAnalySisdata.getComId())){
+            jsonObj.put("status","2");
+            jsonObj.put("msg","条件异常");
+        }
+        Company company = energyAnalyService.selectCompanyByKey(energyAnalySisdata.getComId());
+        if(null == company){
+            jsonObj.put("status","2");
+            jsonObj.put("msg","条件异常");
+        }
         boolean flag = energyAnalyService.selectEnergyAnalySisdata(energyAnalySisdata.getUnitid());
         if(flag){
             jsonObj.put("status","0");
@@ -93,6 +105,7 @@ public class EnergyDataApi {
 
             //水的录入 type=2
             Map<String,Object> params = new HashMap<String,Object>();
+            params.put("tableName",company.getTableName());
             params.put("comId",energyAnalySisdata.getComId());
             params.put("typeId","2");
             params.put("sdate",energyAnalySisdata.getScadatime());
@@ -103,11 +116,13 @@ public class EnergyDataApi {
             energyAnalyService.selectInsertIntoFinalDataHourById(map);
             //电量的录入
             Map<String,Object> params1 = new HashMap<String,Object>();
+            params1.put("tableName",company.getTableName());
             params1.put("comId",energyAnalySisdata.getComId());
             params1.put("typeId","1");
             params1.put("sdate",energyAnalySisdata.getScadatime());
             String coef1 = energyAnalyService.selectCoal(params);
             Map<String,Object> map1 =new HashMap<String,Object>();
+            map1.put("tableName",company.getTableName());
             map1.put("id",energyAnalySisdata.getId());
             map1.put("coef",coef1);
             energyAnalyService.selectPowerInsertFinalDataById(map1);
@@ -115,6 +130,7 @@ public class EnergyDataApi {
             if("1".equals(energyAnalySisdata.getType())){
                 //热量的录入
                 Map<String,Object> params3 = new HashMap<String,Object>();
+                params3.put("tableName",company.getTableName());
                 params3.put("comId",energyAnalySisdata.getComId());
                 params3.put("typeId","3");
                 params3.put("sdate",energyAnalySisdata.getScadatime());
@@ -127,6 +143,7 @@ public class EnergyDataApi {
             if("2".equals(energyAnalySisdata.getType())){
                 //天燃气的录入
                 Map<String,Object> params4 = new HashMap<String,Object>();
+                params4.put("tableName",company.getTableName());
                 params4.put("comId",energyAnalySisdata.getComId());
                 params4.put("typeId","4");
                 params4.put("sdate",energyAnalySisdata.getScadatime());

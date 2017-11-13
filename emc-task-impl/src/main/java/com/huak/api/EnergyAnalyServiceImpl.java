@@ -1,10 +1,13 @@
 package com.huak.api;
 
+import com.huak.org.dao.CompanyDao;
+import com.huak.org.model.Company;
 import com.huak.task.dao.EmcOrgInterDao;
 import com.huak.task.dao.EnergyAnalySisdataDao;
 import com.huak.task.model.EmcOrgInter;
 import com.huak.task.model.EnergyAnalySisdata;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,6 +31,8 @@ public class EnergyAnalyServiceImpl implements EnergyAnalyService {
     EnergyAnalySisdataDao energyAnalySisdataDao;
     @Resource
     EmcOrgInterDao emcOrgInterDao;
+    @Resource
+    private CompanyDao companyDao;
 
     @Override
     public boolean selectEnergyAnalySisdata(String unitid) {
@@ -68,5 +73,17 @@ public class EnergyAnalyServiceImpl implements EnergyAnalyService {
     @Override
     public String selectCoal(Map<String,Object> map) {
         return energyAnalySisdataDao.selectCoal(map);
+    }
+
+    /**
+     * 查询公司
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Company selectCompanyByKey(String id) {
+        return companyDao.selectByPrimaryKey(id);
     }
 }
