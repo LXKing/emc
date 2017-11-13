@@ -1,7 +1,7 @@
 package com.huak.mdc;
 
 import com.huak.base.BaseTest;
-import com.huak.mdc.model.EnergyDataHis;
+import com.huak.mdc.model.MeterCollect;
 import com.huak.org.CompanyService;
 import com.huak.org.model.Company;
 import org.junit.Test;
@@ -27,6 +27,8 @@ public class TestEnergyData extends BaseTest {
     private EnergyDataHisService energyDataHisService;
     @Resource
     private CompanyService companyService;
+    @Resource
+    private MeterCollectService meterCollectService;
 
 //    @Test
 //    @Rollback
@@ -62,22 +64,34 @@ public class TestEnergyData extends BaseTest {
 //        System.err.println("-------------[isTrue = " + isTrue + "]----------");
 //    }
 
+//    @Test
+//    @Rollback
+//    public void testHb() {
+//        List<EnergyDataHis> dataHisList = new ArrayList<>();
+//        EnergyDataHis energyDataHis = new EnergyDataHis();
+//        energyDataHis.setCollectNum(85d);
+//        energyDataHis.setCollectId("5");
+//        energyDataHis.setCollectTime("2017-07-05 08:00:00");
+//        energyDataHis.setIsprestore((byte) 0);
+//        energyDataHis.setIschange((byte) 0);
+////        energyDataHis.setPrestoreNum(10d);
+////        energyDataHis.setChangeNum(100d);
+//        dataHisList.add(energyDataHis);
+//
+//        Company company = companyService.selectByPrimaryKey("a3e5e868e7844c349e5cf51c5e6bc37d");
+//        boolean isTrue = energyDataHisService.saveEnergyDatas(dataHisList, company);
+//        System.err.println("-------------[isTrue = " + isTrue + "]----------");
+//    }
+
     @Test
     @Rollback
-    public void testHb() {
-        List<EnergyDataHis> dataHisList = new ArrayList<>();
-        EnergyDataHis energyDataHis = new EnergyDataHis();
-        energyDataHis.setCollectNum(90d);
-        energyDataHis.setCollectId("3");
-        energyDataHis.setCollectTime("2017-07-03 08:00:00");
-        energyDataHis.setIsprestore((byte) 1);
-        energyDataHis.setIschange((byte) 1);
-        energyDataHis.setPrestoreNum(10d);
-        energyDataHis.setChangeNum(100d);
-        dataHisList.add(energyDataHis);
+    public void testXBNHSJ() {
+        List<MeterCollect> meterCollects = new ArrayList<>();
+        MeterCollect meterCollect = meterCollectService.selectByPrimaryKey("6");
+        meterCollects.add(meterCollect);
 
         Company company = companyService.selectByPrimaryKey("a3e5e868e7844c349e5cf51c5e6bc37d");
-        boolean isTrue = energyDataHisService.saveEnergyDatas(dataHisList, company);
+        boolean isTrue = energyDataHisService.saveVirtualDatas(meterCollects,"2017-07-02 08:00:00", company);
         System.err.println("-------------[isTrue = " + isTrue + "]----------");
     }
 }
