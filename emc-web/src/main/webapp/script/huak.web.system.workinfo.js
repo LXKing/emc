@@ -16,25 +16,6 @@ function loadDataFun() {
 
         $(this).parent().siblings('input:hidden').val(selectid);
         $(this).parent().prev().find("input").val(selectval);
-
-        if('unit_type'==$(this).parent().attr('id')){
-            $("#index_type").find('.x-sfbgbox1').find(':input').val('请选择指标类型');
-            $("#index_type").find('input:hidden').val('');
-            var $sfoption1 =  $("#index_type").find('.x-sfoption1:hidden');
-            $.ajax({
-                url: _web + '/select/index/type',
-                type: 'POST',
-                async:true,
-                data: {unitType:selectid},
-                dataType: 'json',
-                success: function (result) {
-                    $sfoption1.empty();
-                    $.each(result, function (idx, item) {
-                        $sfoption1.append('<p value="' + item.INDEXID + '">' + item.INDEXNAME + '</p>');
-                    });
-                }
-            });
-        }
         $(this).parent().slideUp(200, function () {
         });
         event.stopPropagation();
@@ -47,11 +28,9 @@ function loadDataFun() {
 }
 
 function reset() {
-    $("#unitNameSearch").val("");
-    $("#unit_type").siblings('.x-sfbgbox1').find(':input').val('请选择单位类型');
-    $("#index_type").find('.x-sfbgbox1').find(':input').val('请先选择单位类型');
-    $("#unitTypeSearch").val("");
-    $("#typeIdSearch").val("");
+    $("#workOrderNameSearch").val("");
+    $("#workOrder_type").siblings('.x-sfbgbox1').find(':input').val('请选择工单类型');
+    $("#workOrderTypeSearch").val("");
 }
 /**
  * 分页查询

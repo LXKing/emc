@@ -89,6 +89,10 @@ public class WorkOrderInfoController {
     @ResponseBody
     public String list(@RequestParam Map<String, Object> paramsMap,HttpServletRequest request, Page page) {
         logger.info("工单分页查询");
+        for (String s : paramsMap.keySet()) {
+            System.out.println(s+"------------------------------"+paramsMap.get(s));
+        }
+
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute(Constants.SESSION_KEY);
         Employee employee = (Employee) session.getAttribute(Constants.SESSION_EMPLOYEE_KEY);

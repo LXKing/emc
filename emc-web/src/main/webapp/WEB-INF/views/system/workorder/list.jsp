@@ -27,7 +27,7 @@
                         <label>工单名称</label>
                     </div>
                     <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                        <input class="inputs-lg" id="unitNameSearch" name="workOrderName" type="text" placeholder=" 请输入工单名称"/>
+                        <input class="inputs-lg" id="workOrderNameSearch" name="name" type="text" placeholder=" 请输入工单名称"/>
                     </div>
                 </div>
                 <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -48,14 +48,14 @@
                                             <p value="0">指定时间</p>
                                             <p value="1">非指定时间</p>
                                     </div>
-                                    <input type="hidden" id="workOrderTypeSearch" name="workOrderType" value="" />
+                                    <input type="hidden" id="workOrderTypeSearch" name="type" value="" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a href="javascript:void(0);" class="btns btnsfl btns-lookin" onclick="queryAlarmConfig()">查询</a>
+                    <a href="javascript:void(0);" class="btns btnsfl btns-lookin" onclick="queryWorkInfo()">查询</a>
                     <a href="javascript:void(0);" class="btns btnsfl btns-reset" onclick =reset()>重置</a>
                 </div>
 
