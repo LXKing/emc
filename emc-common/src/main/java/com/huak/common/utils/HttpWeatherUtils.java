@@ -269,4 +269,16 @@ public class HttpWeatherUtils {
         }
         return sendPost(URL, param, "utf-8") ;
     }
+
+    /**
+     * 工单消息推送
+     * @param code
+     * @param url
+     * @return
+     */
+    public static  String sendWorkOrderMsg(String code , String url){
+        Map<String , String > param = new HashMap<String , String>();
+        param.put("code",code);
+        return sendPost(url, param, "utf-8") ;
+    }
 }
