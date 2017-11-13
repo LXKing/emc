@@ -42,7 +42,7 @@
                                         <p value="${type.seq}">${type.des}</p>
                                     </c:forEach>
                                 </div>
-                                <input type="hidden" id="unitTypeSearch" name="unitType" value="" />
+                                <input type="hidden" id="unitTypeSearch" name="type" value="" />
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                     <label>单位名称</label>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="unitNameSearch" name="unitName" type="text" placeholder=" 请输入单位名称"/>
+                    <input class="inputs-lg" id="workOrderNameSearch" name="name" type="text" placeholder=" 请输入单位名称"/>
                 </div>
             </div>
 
@@ -70,9 +70,6 @@
     <c:if test="${sessionScope._auth['tempAdd']}">
         <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="alarmConfigTempAddForm" layer-title="添加室温配置" layer-url="${web}/temp/config/add">添加</a>
     </c:if>
-        <c:if test="${sessionScope._auth['tempAdd']}">
-            <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="indexAddForm" layer-title="添加工单" layer-url="${web}/temp/config/add1">添加</a>
-        </c:if>
 
     <a class="btns btnsfl exportchange btns-green" export-url="${web}/temp/config/export" href="javascript:void(0);">导出</a>
 
