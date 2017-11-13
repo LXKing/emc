@@ -206,7 +206,7 @@ $(function () {
                     if (result.flag) {
                         top.layer.closeAll();
                         top.layer.msg(result.msg);
-                        //queryAllocation();
+                        queryWorkInfo();
                     } else {
                         top.layer.close(index);
                         top.layer.msg(result.msg);
