@@ -29,7 +29,7 @@ function loadDataFun() {
 
 function reset() {
     $("#workOrderNameSearch").val("");
-    $("#workOrder_type").siblings('.x-sfbgbox1').find(':input').val('请选择工单类型');
+    $("#workerOder_type").siblings('.x-sfbgbox1').find(':input').val('请选择工单类型');
     $("#workOrderTypeSearch").val("");
 }
 /**
