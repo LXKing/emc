@@ -219,19 +219,19 @@
                     <td width="4%">
                         <div class="text-center">代码</div>
                     </td>
-                    <td width="4%">
+                    <td width="6%">
                         <div class="text-center">出厂编号</div>
                     </td>
                     <td width="6%">
                         <div class="text-center">名称</div>
                     </td>
-                    <td width="6%">
+                    <td width="8%">
                         <div class="text-center">单位名称</div>
                     </td>
-                    <td width="6%">
+                    <td width="5%">
                         <div class="text-center">能源类型</div>
                     </td>
-                    <td width="6%">
+                    <td width="4%">
                         <div class="text-center">实虚表</div>
                     </td>
                     <td width="6%">
@@ -240,28 +240,28 @@
                     <td width="6%">
                         <div class="text-center">系数</div>
                     </td>
-                    <td width="6%">
-                        <div class="text-center">单位类型</div>
-                    </td>
-                    <td width="6%">
-                        <div class="text-center">采集</div>
-                    </td>
+                    <%--<td width="6%">--%>
+                        <%--<div class="text-center">单位类型</div>--%>
+                    <%--</td>--%>
+                    <%--<td width="6%">--%>
+                        <%--<div class="text-center">采集</div>--%>
+                    <%--</td>--%>
                     <td width="6%">
                         <div class="text-center">点表</div>
                     </td>
-                    <td width="6%">
+                    <td width="10%">
                         <div class="text-center">公式</div>
                     </td>
                     <td width="5%">
                         <div class="text-center">预存</div>
                     </td>
-                    <td width="7%">
-                        <div class="text-center">删除标识</div>
-                    </td>
-                    <td width="6%">
+                    <%--<td width="7%">--%>
+                        <%--<div class="text-center">删除标识</div>--%>
+                    <%--</td>--%>
+                    <td width="10%">
                         <div class="text-center">描述<i class="icon-sort"></i></div>
                     </td>
-                    <td width="15%">
+                    <td width="10%">
                         <div>操作</div>
                     </td>
                 </tr>
@@ -288,20 +288,20 @@
     <tr>
         <td>{$T.record$index+1}</td>
         <td> {$T.record.code} </td>
-        <td>{$T.record.serialNo} </td>
-        <td title="{$T.record.name}"> {formatValue($T.record.name)} </td>
-        <td title="{$T.record.unitname}">{formatValue($T.record.unitname)}</td>
+        <td title="{$T.record.serialNo}">{formatValue($T.record.serialNo,8)} </td>
+        <td title="{$T.record.name}"> {formatValue($T.record.name,4)} </td>
+        <td title="{$T.record.unitname}">{formatValue($T.record.unitname,6)}</td>
         <td>{changeValue($T.record.energyTypeId,'energy')} </td>
         <td> {changeValue($T.record.isreal,'real')}</td>
         <td> {changeValue($T.record.istotal,'total')} </td>
         <td>{$T.record.coef}</td>
-        <td>{changeValue($T.record.unitType,'unittype')}</td>
-        <td>{changeValue($T.record.isauto,'auto')}</td>
-        <td title="{$T.record.tag}">{formatValue($T.record.tag)}</td>
-        <td title="{$T.record.formula}">{formatValue($T.record.formula)}</td>
+        <%--<td>{changeValue($T.record.unitType,'unittype')}</td>--%>
+        <%--<td>{changeValue($T.record.isauto,'auto')}</td>--%>
+        <td title="{$T.record.tag}">{#if $T.record.isauto==0}{formatValue($T.record.tag,8)}{#else}手工填报{#/if}</td>
+        <td title="{$T.record.formula}">{formatValue($T.record.formula,10)}</td>
         <td>{changeValue($T.record.isprestore,'prestore')}</td>
-        <td>{changeValue($T.record.isdelete,'delete')}</td>
-        <td title="{$T.record.depict}">{formatValue($T.record.depict)}</td>
+        <%--<td>{changeValue($T.record.isdelete,'delete')}</td>--%>
+        <td title="{$T.record.depict}">{formatValue($T.record.depict,8)}</td>
         <td>
             <div>
                 <%--if ($("#meterCollectUpdate").val()) {--%>

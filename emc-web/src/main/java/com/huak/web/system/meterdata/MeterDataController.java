@@ -179,9 +179,14 @@ public class MeterDataController {
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         logger.info(" 前台-安全与后台-采集表管理-新增页面跳转");
         String code = meterCollectService.getGeneralCode(company.getId());
-        String s = code.substring(1, code.length());
-        String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
-        model.addAttribute("code", "A" + newCode);
+        if(StringUtils.isEmpty(code)){
+            model.addAttribute("code", "A00001");
+        }else{
+            String s = code.substring(1, code.length());
+            String newCode = String.format("%0" + 5 + "d", Integer.parseInt(s) + 1);
+            model.addAttribute("code", "A" + newCode);
+        }
+
         model.addAttribute(COM_ID, company.getId());
         return "/system/metermanage/add";
     }
@@ -207,6 +212,7 @@ public class MeterDataController {
             }
             meterCollect.setComId(company.getId());
             meterCollect.setId(UUIDGenerator.getUUID());
+            meterCollect.setIsdelete(Byte.valueOf("0"));
             meterCollectService.insert(meterCollect);
             jo.put(Constants.FLAG, true);
             jo.put(Constants.MSG, "添加采集表成功");

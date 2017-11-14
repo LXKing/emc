@@ -95,12 +95,15 @@ function queryMeter(num){
  * @param data
  * @returns {*}
  */
-function formatValue(data){
-        if(data.length>3){
-            return data.substr(0,2)+'...';
-        }else{
-            return data;
-        }
+function formatValue(str,num){
+    if(null == num || 'undefined' == num){
+        num = 20;
+    }
+    if(num<str.length){
+        return str.substr(0,num)+'...';
+    }else{
+        return str;
+    }
 }
 
 /**
@@ -240,7 +243,7 @@ function deleteMeter(id) {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: _platform + '/meterData/delete/' + id,
+            url: _web + '/meterData/delete/' + id,
             type: 'DELETE',
             dataType: 'json',
             success: function (result) {

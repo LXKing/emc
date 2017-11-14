@@ -289,7 +289,7 @@
         mc.NAME,
         mc.SERIAL_NO,
         vu.UNITNAME,
-        et.NAME_ZH ENERGY_TYPE_ID,
+        et.TYPE ENERGY_TYPE_ID,
         mc.ISREAL,
         mc.ISTOTAL,
         mc.UNIT_ID,
@@ -444,7 +444,7 @@
             a.CODE AS code,
             a.NAME collectName,
             #{collectTime} as collectTime,
-            c.NAME_ZH energyType,
+            c.TYPE energyType,
             (
                 CASE a.ISREAL
                 WHEN 0 THEN
@@ -546,7 +546,7 @@
         </if>
         ORDER BY
             b.UNITNAME,a.NAME,
-            c.NAME_ZH;
+            c.TYPE;
     </select>
 
     <select id="checkName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
@@ -607,7 +607,7 @@
         d.CODE AS code,
         d.NAME name,
         date_format(a.COLLECT_TIME,'%Y-%m-%d %H') collectTime,
-        c.NAME_ZH energyType,
+        c.TYPE energyType,
         (
         CASE d.ISREAL
         WHEN 0 THEN
@@ -701,7 +701,7 @@
         </if>
         ORDER BY
         b.UNITNAME,d.NAME,
-        c.NAME_ZH
+        c.TYPE
     </select>
 
 
