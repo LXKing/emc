@@ -143,7 +143,7 @@
                             class="red">*</span>点表：</label>
 
                     <div class="col-sm-7  col-xs-7 col-md-7 col-lg-7">
-                       <input  autocomplete="off"name="tag" id="tag" class="form-control inputs-lg" type="text" value="${mec.tag}" maxlength="16" placeholder="请输入点表">
+                       <input  autocomplete="off"name="tag" id="tag" class="form-control inputs-lg" type="text" value="${mec.tag}" maxlength="80" placeholder="请输入点表">
                     </div>
                 </div>
                 <%--<div class="form-group">

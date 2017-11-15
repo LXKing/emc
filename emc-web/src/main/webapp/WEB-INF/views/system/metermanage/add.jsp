@@ -131,7 +131,7 @@
                             class="red">*</span>点表：</label>
 
                     <div class="col-sm-7">
-                        <input name="tag" id="tag" class="form-control inputs-lg" type="text" maxlength="16" placeholder="请输入点表">
+                        <input name="tag" id="tag" class="form-control inputs-lg" type="text" maxlength="80" placeholder="请输入点表">
                     </div>
                 </div>
                 <%--<div class="form-group">

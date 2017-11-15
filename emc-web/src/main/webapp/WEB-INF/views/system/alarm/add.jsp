@@ -39,7 +39,7 @@
                             class="red">*</span>点名：</label>
 
                     <div class="col-sm-8  col-xs-8 col-md-8 col-lg-8">
-                        <input name="tag" class="form-control inputs-lg"  type="text" maxlength="32" placeholder="请输入点名">
+                        <input name="tag" class="form-control inputs-lg"  type="text" maxlength="80" placeholder="请输入点名">
 
                     </div>
                 </div>
