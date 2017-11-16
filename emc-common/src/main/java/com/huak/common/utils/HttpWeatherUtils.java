@@ -272,13 +272,12 @@ public class HttpWeatherUtils {
 
     /**
      * 工单消息推送
-     * @param code
+     * @param id
      * @param url
      * @return
      */
-    public static  String sendWorkOrderMsg(String code , String url){
+    public static  String sendWorkOrderMsg(String id , String url){
         Map<String , String > param = new HashMap<String , String>();
-        param.put("code",code);
-        return sendPost(url, param, "utf-8") ;
+        return sendPost(url + id, param, "utf-8") ;
     }
 }
