@@ -176,6 +176,7 @@ function loadTable(){
 }
 //加载分公司热源的单耗排名
 function loadFeedDH(type) {
+    $('.button-group:eq(1)').find('a:eq('+(type-1)+')').addClass("button-group-act").siblings().removeClass("button-group-act");
     var id = $("#id").val();
     if(type==1){
         $(".title_dw_feed").html("换热站单耗排名(T/万m²)");
@@ -186,7 +187,7 @@ function loadFeedDH(type) {
     }if(type==4){
         $(".title_dw_feed").html("换热站单耗排名(GJ/万m²)");
     }if(type==5){
-        $(".title_dw_feed").html("换热站单耗排名( T/万m²)");
+        $(".title_dw_feed").html("换热站单耗排名(T/万m²)");
     }
     $.ajax({
         url: _web + "/third/analysis/fgs/feed-dh/"+type+"/"+id,
@@ -202,6 +203,7 @@ function loadFeedDH(type) {
 
 //加载分公司换热站的单耗排名
 function loadStationDH(type) {
+    $('.button-group:eq(0)').find('a:eq('+(type-1)+')').addClass("button-group-act").siblings().removeClass("button-group-act");
     var id = $("#id").val();
     if(type==1){
         $(".title_dw_station").html("换热站单耗排名(T/万m²)");

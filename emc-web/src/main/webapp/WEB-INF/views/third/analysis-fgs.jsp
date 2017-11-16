@@ -152,7 +152,8 @@
                         </div>
                         <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                             <div class="ec_title">
-                                <span class="title_dw_feed">供热源单耗排名(Tce/万m²)</span>	<span class="button-group">
+                                <span class="title_dw_feed">供热源单耗排名(Tce/万m²)</span>
+                                <span class="button-group">
 												<a href="javascript:;" onclick="loadFeedDH(1)"  class="bg-left button-group-act">水</a><a href="javascript:;" onclick="loadFeedDH(2)"  class="bg-left">电</a><a href="javascript:;" onclick="loadFeedDH(3)" class="bg-left">气</a><a href="javascript:;" onclick="loadFeedDH(4)" class="bg-left">热</a><a href="javascript:;" onclick="loadFeedDH(5)" class="bg-right">煤</a>
 											</span>
                             </div>

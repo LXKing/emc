@@ -40,18 +40,23 @@ function initCssFunc(){
                     $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
                     var type = $(sitem).html();
                     if(type == "水"){
+                        $(".title_dw_station").html("换热站能耗排名(T)");
                         initEnergyRank01(1);
                     }
                     if(type == "电"){
+                        $(".title_dw_station").html("换热站能耗排名(kW·h)");
                         initEnergyRank01(2);
                     }
                     if(type == "气"){
+                        $(".title_dw_station").html("换热站能耗排名(m³)");
                         initEnergyRank01(3);
                     }
                     if(type == "热"){
+                        $(".title_dw_station").html("换热站能耗排名(GJ)");
                         initEnergyRank01(4);
                     }
                     if(type == "煤"){
+                        $(".title_dw_station").html("换热站能耗排名(T)");
                         initEnergyRank01(5);
                     }
                 });
@@ -63,18 +68,23 @@ function initCssFunc(){
                     $(this).addClass("button-group-act").siblings().removeClass("button-group-act");
                     var type = $(sitem).html();
                     if(type == "水"){
+                        $(".title_dw_feed").html("供热源能耗排名(T)");
                         initEnergyRank02(1);
                     }
                     if(type == "电"){
+                        $(".title_dw_feed").html("供热源能耗排名(kW·h)");
                         initEnergyRank02(2);
                     }
                     if(type == "气"){
+                        $(".title_dw_feed").html("供热源能耗排名(m³)");
                         initEnergyRank02(3);
                     }
                     if(type == "热"){
+                        $(".title_dw_feed").html("供热源能耗排名(GJ)");
                         initEnergyRank02(4);
                     }
                     if(type == "煤"){
+                        $(".title_dw_feed").html("供热源能耗排名(T)");
                         initEnergyRank02(5);
                     }
                 });

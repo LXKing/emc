@@ -141,7 +141,8 @@
                     <div class="col-lg-12 no-padding mt30">
                         <div class="col-lg-6 no-padding analyBoxList">
                             <div class="ec_title">
-                                换热站能耗排名(GJ)
+                                <span class="title_dw_station">换热站能耗排名(T)</span>
+
                                 <span class="button-group">
                                     <a href="javascript:;" class="bg-left button-group-act">水</a><a href="javascript:;"  class="bg-left">电</a><a href="javascript:;"  class="bg-left">气</a><a href="javascript:;"  class="bg-left">热</a><a href="javascript:;"  class="bg-right">煤</a>
                                 </span>
@@ -151,7 +152,8 @@
                         </div>
                         <div class="col-lg-6 no-padding analyBoxList analyBoxline">
                             <div class="ec_title">
-                                供热源能耗排名(GJ)
+                                <span class="title_dw_feed">供热源能耗排名(T)</span>
+
                                 <span class="button-group">
 									<a href="javascript:;" class="bg-left button-group-act">水</a><a href="javascript:;"  class="bg-left">电</a><a href="javascript:;"  class="bg-left">气</a><a href="javascript:;"  class="bg-left">热</a><a href="javascript:;"  class="bg-right">煤</a>
 								</span>
