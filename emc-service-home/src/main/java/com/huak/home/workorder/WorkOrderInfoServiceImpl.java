@@ -7,6 +7,7 @@ import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.common.utils.HttpWeatherUtils;
 import com.huak.workorder.dao.WorkOrderInfoDao;
 import com.huak.workorder.dao.WorkOrderRecordDao;
 import com.huak.workorder.dao.WorkOrderResetDao;
@@ -148,7 +149,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public void sendABorC(WorkOrderInfo workOrder) {
+    public void sendABorC(WorkOrderInfo workOrder,String workUrl) {
         logger.info("派单员派送工单给班长");
         String dateTime = dateDao.getTime();
 
@@ -168,6 +169,17 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setSendee(workOrder.getMonitor());
         record.setDes(WorkOrderOperate.A_SEND.getValue());
         workOrderRecordDao.insertSelective(record);
+
+        //推送工单
+        final String id = workOrder.getId();
+        final String  appUrl = workUrl;
+        new Thread() {
+            @Override
+            public void run() {
+                logger.info("---------开始给接口方推信息（接单员）----------");
+                HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
+            }
+        }.start();
     }
 
     /**
@@ -179,7 +191,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public void saveAndSendABorC(WorkOrderInfo workOrder) {
+    public void saveAndSendABorC(WorkOrderInfo workOrder,String workUrl) {
         logger.info("派单员保存工单并派送工单给班长");
         String dateTime = dateDao.getTime();
         //生成code
@@ -200,7 +212,8 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         }
 
         //封装工单
-        workOrder.setId(UUIDGenerator.getUUID());
+        final String id = UUIDGenerator.getUUID();
+        workOrder.setId(id);
         workOrder.setCode(code);
         workOrder.setStatus(WorkOrderStatus.A112.getKey());
         workOrder.setCreateTime(dateTime);
@@ -218,6 +231,15 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setDes(WorkOrderOperate.A_SAVE_SEND.getValue());
         workOrderRecordDao.insertSelective(record);
 
+        //推送工单
+        final String  appUrl = workUrl;
+        new Thread() {
+            @Override
+            public void run() {
+                logger.info("---------开始给接口方推信息（接单员）----------");
+                HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
+            }
+        }.start();
     }
 
     /**
@@ -442,7 +464,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public void sendAC(WorkOrderInfo workOrder) {
+    public void sendAC(WorkOrderInfo workOrder,String workUrl) {
         logger.info("派单员派送工单接单员");
         String dateTime = dateDao.getTime();
 
@@ -462,6 +484,17 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setSendee(workOrder.getTakor());
         record.setDes(WorkOrderOperate.A_SEND.getValue());
         workOrderRecordDao.insertSelective(record);
+
+        //推送工单
+        final String id = workOrder.getId();
+        final String  appUrl = workUrl;
+        new Thread() {
+            @Override
+            public void run() {
+                logger.info("---------开始给接口方推信息（接单员）----------");
+                HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
+            }
+        }.start();
     }
 
     /**
@@ -473,7 +506,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public void saveAndSendAC(WorkOrderInfo workOrder) {
+    public void saveAndSendAC(WorkOrderInfo workOrder,String workUrl) {
         logger.info("派单员保存工单并派送工单接单员");
         String dateTime = dateDao.getTime();
         //生成code
@@ -495,7 +528,8 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         }
 
         //封装工单
-        workOrder.setId(UUIDGenerator.getUUID());
+        final String id = UUIDGenerator.getUUID();
+        workOrder.setId(id);
         workOrder.setCode(code);
         workOrder.setStatus(WorkOrderStatus.A113.getKey());
         workOrder.setCreateTime(dateTime);
@@ -512,6 +546,16 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         record.setSendee(workOrder.getTakor());
         record.setDes(WorkOrderOperate.A_SAVE_SEND.getValue());
         workOrderRecordDao.insertSelective(record);
+
+        //推送工单
+        final String  appUrl = workUrl;
+        new Thread() {
+            @Override
+            public void run() {
+                logger.info("---------开始给接口方推信息（接单员）----------");
+                HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
+            }
+        }.start();
     }
 
     /**

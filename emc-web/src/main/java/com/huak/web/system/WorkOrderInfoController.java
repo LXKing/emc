@@ -59,6 +59,9 @@ public class WorkOrderInfoController {
     private String monitor;
     @Value("${work.order.takor}")
     private String takor;
+    @Value("work.order.url")
+    private String workAppUrl;
+
 
     private static final String COMPANY = "company";
     private static final String ROLE = "role";
@@ -362,10 +365,10 @@ public class WorkOrderInfoController {
             newOrder.setComid(oldOrder.getComid());
             if(monitor.equals(roleId)){//班长
                 newOrder.setMonitor(workOrderInfo.getTakor());
-                workOrderInfoService.saveAndSendABorC(newOrder);
+                workOrderInfoService.saveAndSendABorC(newOrder,workAppUrl);
             }else if(takor.equals(roleId)){//接单员
                 newOrder.setTakor(workOrderInfo.getTakor());
-                workOrderInfoService.saveAndSendAC(newOrder);
+                workOrderInfoService.saveAndSendAC(newOrder,workAppUrl);
             }
 
             jo.put(Constants.FLAG, true);
@@ -488,13 +491,13 @@ public class WorkOrderInfoController {
                     //班长
                     workOrderInfo.setMonitor(ss[0]);
                     workOrderInfo.setTakor(null);
-                    workOrderInfoService.saveAndSendABorC(workOrderInfo);
+                    workOrderInfoService.saveAndSendABorC(workOrderInfo,workAppUrl);
                 }
                 if(takor.equals(ss[1])){
                     //接单员
                     workOrderInfo.setTakor(ss[0]);
                     workOrderInfo.setMonitor(null);
-                    workOrderInfoService.saveAndSendAC(workOrderInfo);
+                    workOrderInfoService.saveAndSendAC(workOrderInfo,workAppUrl);
                 }
                 jo.put(Constants.FLAG, true);
                 jo.put(Constants.MSG, "添加且发送工单成功");
@@ -522,13 +525,13 @@ public class WorkOrderInfoController {
                 //班长
                 workOrderInfo.setMonitor(ss[0]);
                 workOrderInfo.setTakor(null);
-                workOrderInfoService.sendABorC(workOrderInfo);
+                workOrderInfoService.sendABorC(workOrderInfo,workAppUrl);
             }
             if(takor.equals(ss[1])){
                 //接单员
                 workOrderInfo.setTakor(ss[0]);
                 workOrderInfo.setMonitor(null);
-                workOrderInfoService.sendAC(workOrderInfo);
+                workOrderInfoService.sendAC(workOrderInfo,workAppUrl);
             }
 
             jo.put(Constants.FLAG, true);

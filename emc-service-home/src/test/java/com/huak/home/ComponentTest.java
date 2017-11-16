@@ -2,15 +2,12 @@ package com.huak.home;
 
 import com.huak.base.BaseTest;
 import com.huak.base.dao.DateDao;
-import com.huak.common.page.Page;
-import com.huak.common.page.PageResult;
 import com.huak.common.utils.DateUtils;
 import com.huak.health.model.HealthScoreRecord;
 import com.huak.health.vo.WorkWarnVo;
 import com.huak.home.component.ComponentService;
 import com.huak.home.component.HealthScoreRecordService;
 import com.huak.home.workorder.WorkOrderInfoService;
-import com.huak.workorder.model.WorkOrderInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -122,15 +119,15 @@ public class ComponentTest  extends BaseTest {
 //        }
 //
 //    }
-    @Test
-    public void testWorkOrder(){
-        Map map=new HashMap<String,Object>();
-        Page page=new Page();
-        page.setPageNumber(1);
-        PageResult<WorkOrderInfo> result=workOrderInfoService.selectWorkOrderInfoByCreator(map, page);
-        for (WorkOrderInfo info : result.getList()) {
-            System.out.println(info);
-        }
-
-    }
+//    @Test
+//    public void testWorkOrder(){
+//        Map map=new HashMap<String,Object>();
+//        Page page=new Page();
+//        page.setPageNumber(1);
+//        PageResult<WorkOrderInfo> result=workOrderInfoService.selectWorkOrderInfoByCreator(map, page);
+//        for (WorkOrderInfo info : result.getList()) {
+//            System.out.println(info);
+//        }
+//
+//    }
 }

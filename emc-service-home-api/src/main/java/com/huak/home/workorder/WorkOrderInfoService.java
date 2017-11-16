@@ -49,7 +49,7 @@ public interface WorkOrderInfoService {
      * @param workOrder
      * @return
      */
-    void sendABorC(WorkOrderInfo workOrder);
+    void sendABorC(WorkOrderInfo workOrder,String workUrl);
 
     /**
      * a-b/a-b-c
@@ -57,7 +57,7 @@ public interface WorkOrderInfoService {
      * @param workOrder
      * @return
      */
-    void saveAndSendABorC(WorkOrderInfo workOrder);
+    void saveAndSendABorC(WorkOrderInfo workOrder,String workUrl);
 
     /**
      * a-b
@@ -122,7 +122,7 @@ public interface WorkOrderInfoService {
      * @param workOrder
      * @return
      */
-    void sendAC(WorkOrderInfo workOrder);
+    void sendAC(WorkOrderInfo workOrder,String workUrl);
 
     /**
      * a-c
@@ -130,7 +130,7 @@ public interface WorkOrderInfoService {
      * @param workOrder
      * @return
      */
-    void saveAndSendAC(WorkOrderInfo workOrder);
+    void saveAndSendAC(WorkOrderInfo workOrder,String workUrl);
 
     /**
      * a-c

@@ -280,4 +280,5 @@ public class HttpWeatherUtils {
         Map<String , String > param = new HashMap<String , String>();
         return sendPost(url + id, param, "utf-8") ;
     }
+
 }

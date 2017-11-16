@@ -379,7 +379,7 @@ public class MeterCollectController {
         String code=null;
         code = meterCollectService.getGeneralCode(comId);
         if(code==null||code==""){
-            code="A00000";
+            code="A00001";
         }
         List<EnergyType> list  = meterCollectService.getEnergyType();
         String s = code.substring(1, code.length());
@@ -648,5 +648,4 @@ public class MeterCollectController {
         jo.put("result", result);
         return jo.toJSONString();
     }
-
 }
