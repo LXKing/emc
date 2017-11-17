@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src="${web}/script/huak.web.system.alarm.config.js"></script>
+<script src="${web}/script/huak.web.system.season.js"></script>
 
 
 <div class="main-box">
@@ -23,113 +23,30 @@
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
 
-            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <label for="">单位类型</label>
-                </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <div class="select-box">
-                        <div class="clearfix h-selectbox">
-                            <div class="x-selectfree fl">
-                                <div class="x-sfbgbox1">
-                                    <div class="x-sfleft1 x-sfw1">
-                                        <input type="text" value="请选择单位类型" readonly="readonly">
-                                    </div>
-                                    <div class="x-sfright1"></div>
-                                </div>
-                                <div class="x-sfoption1" id="unit_type">
-                                    <c:forEach items="${sysDic['orgType']}" var="type">
-                                        <p value="${type.seq}">${type.des}</p>
-                                    </c:forEach>
-                                </div>
-                                <input type="hidden" id="unitTypeSearch" name="unitType" value="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <label for="">单位名称</label>
-                </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="unitNameSearch" name="unitName" type="text" placeholder=" 请输入单位名称"/>
-                </div>
-            </div>
-            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <label for="">报警描述</label>
-                </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="alarmNameSearch" name="alarmName" type="text" placeholder=" 请输入报警描述"/>
-                </div>
-            </div>
-
         </div>
         <div class="sele-row clearfix row">
             <!--<div class="clearfix row">-->
             <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <label for="">点表</label>
+                    <label for="">名称</label>
                 </div>
                 <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <input class="inputs-lg" id="tagSearch" name="tag" type="text" placeholder=" 请输入点表"/>
+                    <input class="inputs-lg" id="nameSearch" name="name" type="text" placeholder=" 请输入名称"/>
                 </div>
             </div>
-            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <label for="">报警类型</label>
-                </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <div class="select-box">
-                        <div class="clearfix h-selectbox">
-                            <div class="x-selectfree fl" id="alarm_type">
-                                <div class="x-sfbgbox1">
-                                    <div class="x-sfleft1 x-sfw1">
-                                        <input type="text" value="请选择报警类型" readonly="readonly">
-                                    </div>
-                                    <div class="x-sfright1"></div>
-                                </div>
-                                <div class="x-sfoption1" >
-                                    <p value="">请选择报警类型</p>
-                                    <c:forEach items="${sysDic['alarmType']}" var="type">
-                                        <p value="${type.seq}">${type.des}</p>
-                                    </c:forEach>
-                                </div>
-                                <input type="hidden" id="alarmTypeSearch" name="alarmType" value="" />
-                            </div>
-                        </div>
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-2 col-xs-2 col-md-2 col-lg-2">创建时间</label>
+                    <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                        <input id="start" name="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
                     </div>
-                </div>
-            </div>
-            <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="select-box col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <label for="">报警等级</label>
-                </div>
-                <div class="select-box col-xs-4 col-sm-4 col-md-4  col-lg-4">
-                    <div class="select-box">
-                        <div class="clearfix h-selectbox">
-                            <div class="x-selectfree fl" id="alarm_level">
-                                <div class="x-sfbgbox1">
-                                    <div class="x-sfleft1 x-sfw1">
-                                        <input type="text" value="请选择报警等级" readonly="readonly">
-                                    </div>
-                                    <div class="x-sfright1"></div>
-                                </div>
-                                <div class="x-sfoption1" >
-                                    <p value="">请选择报警等级</p>
-                                    <c:forEach items="${sysDic['alarmLevel']}" var="type">
-                                        <p value="${type.seq}">${type.des}</p>
-                                    </c:forEach>
-                                </div>
-                                <input type="hidden" id="alarmLevelSearch" name="alarmLevel" value="" />
-                            </div>
-                        </div>
+                    <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                        <input id="end" name="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
                     </div>
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <a href="javascript:void(0);" class="btns btnsfl btns-lookin" onclick="queryAlarmConfig()">查询</a>
+                <a href="javascript:void(0);" class="btns btnsfl btns-lookin" onclick="querySeasonConfig()">查询</a>
                 <a href="javascript:void(0);" class="btns btnsfl btns-reset" onclick =reset()>重置</a>
             </div>
 
@@ -138,15 +55,12 @@
     </div>
     </form>
     <div class="col-xs-12 btngroups   ">
-    <c:if test="${sessionScope._auth['alarmAdd']}">
-        <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="seasonAddForm" layer-title="添加报警配置" layer-url="${web}/alarm/config/add">添加</a>
-    </c:if>
-    <c:if test="${sessionScope._auth['alarmExport']}">
+    <c:if test="${sessionScope._auth['alarmAdd']}"></c:if>
+        <a class="btns btnsfl btns-green top-layer-min" href="javascript:void(0);"  layer-form-id="seasonAddForm" layer-title="添加采暖季" layer-url="${web}/season/add">添加</a>
+
+    <c:if test="${sessionScope._auth['alarmExport']}"></c:if>
         <a class="btns btnsfl btns-green export-emc" href="javascript:void(0);" export-url="${web}/alarm/config/export">导出</a>
-    </c:if>
-    <c:if test="${sessionScope._auth['alarmImport']}">
-        <a class="btns btnsfl btns-green" href="javascript:void(0);">导入</a>
-    </c:if>
+
     </div>
 
 
@@ -191,44 +105,22 @@
     <tr>
         <td>{$T.record$index+1}</td>
         <td>
-            <div class="text-left">{$T.record.unitName}</div>
+            <div class="text-left">{$T.record.name}</div>
         </td>
         <td>
-            <div class="text-left">{$T.record.tag}</div>
+            <div class="text-left">{$T.record.sdate}</div>
         </td>
         <td>
-            <div class="text-left" title="{$T.record.alarmName}">{fromatStr($T.record.alarmName,10)}</div>
-        </td>
-        <td>
-            <div class="text-left">
-                {#if $T.record.alarmType==0}开关类型{#elseif $T.record.alarmType==1}模拟类型{#else}{$T.record.alarmType}{#/if}
-            </div>
-        </td>
-        <td>
-            <div class="text-left">
-                {#if $T.record.alarmLevel==0}一级{#elseif $T.record.alarmLevel==1}二级{#elseif $T.record.alarmLevel==2}三级{#elseif $T.record.alarmLevel==3}四级{#else}{$T.record.model}{#/if}
-            </div>
-        </td>
-        <td>
-            <div class="text-left">
-                {#if $T.record.model==0}低低{#elseif $T.record.model==1}低{#elseif $T.record.model==2}高{#elseif $T.record.model==3}高高{#else}{$T.record.model}{#/if}
-            </div>
-        </td>
-        <td>
-            <div class="text-left">{$T.record.num}</div>
-        </td>
-        <td>
-            <div class="text-left">{#if $T.record.isenable==0}启用{#elseif $T.record.isenable==1}停用{#else}{$T.record.isenable}{#/if}</div>
+            <div class="text-left">{$T.record.edate}</div>
         </td>
         <td>
             <div>
-                <c:if test="${sessionScope._auth['alarmUpdate']}">
+                <c:if test="${sessionScope._auth['alarmUpdate']}"></c:if>
                 <a href="javascript:void(0);" title="修改" class="operationbtn icon-edit top-layer-min"
-                    layer-form-id="seasonEditForm" layer-title="修改报警配置" layer-url="${web}/alarm/config/edit/{$T.record.id}"></a>
-                </c:if>
-                <c:if test="${sessionScope._auth['alarmDelete']}">
-                <a href="javascript:delAlarmConfig('{$T.record.id}');" title="删除" class="operationbtn icon-delete"></a>
-                </c:if>
+                    layer-form-id="seasonEditForm" layer-title="修改采暖" layer-url="${web}/season/edit/{$T.record.id}"></a>
+                <c:if test="${sessionScope._auth['alarmDelete']}"></c:if>
+                <a href="javascript:delSeasonConfig('{$T.record.id}');" title="删除" class="operationbtn icon-delete"></a>
+
             </div>
         </td>
     </tr>

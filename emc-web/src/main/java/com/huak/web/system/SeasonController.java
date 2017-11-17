@@ -6,6 +6,7 @@ import com.huak.common.Constants;
 import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
+import com.huak.org.model.Org;
 import com.huak.season.model.Season;
 import com.huak.sys.SeasonService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -46,18 +47,23 @@ public class SeasonController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage() {
-        logger.info("转至系统采暖季列表页");
-
+        logger.info("转至系统采暖季列表页面");
         return "/system/season/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.PATCH)
     @ResponseBody
-    public String list(@RequestParam Map<String, Object> paramsMap, Page page) {
+    public String list(@RequestParam Map<String, Object> paramsMap ,HttpServletRequest request, Page page) {
         logger.info("采暖季列表页分页查询");
-
         JSONObject jo = new JSONObject();
         try {
+            HttpSession session = request.getSession();
+            Org org = (Org)session.getAttribute(Constants.SESSION_ORG_KEY);
+            if(org.getComId()==null) {
+                paramsMap.put("comId","flag");
+            }else {
+                paramsMap.put("comId",org.getComId());
+            }
             PageResult<Season> result = seasonService.queryByPage(paramsMap, page);
             jo.put(Constants.LIST, result);
         } catch (Exception e) {
@@ -67,7 +73,10 @@ public class SeasonController {
         return jo.toJSONString();
     }
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage(Model model) {
+    public String addPage(HttpServletRequest request,Model model) {
+        HttpSession session = request.getSession();
+        Org org = (Org)session.getAttribute(Constants.SESSION_ORG_KEY);
+        model.addAttribute("comId",org.getComId());
         model.addAttribute("todayNow", seasonService.getNowTime());
         return "/system/season/add";
     }
@@ -76,7 +85,7 @@ public class SeasonController {
     @RequestMapping(value = "/checkname", method = RequestMethod.POST)
     public String checkNode(@RequestParam  String name,
                             @RequestParam  String comId){
-
+        System.out.println(name+"-------");
         JSONObject jo = new JSONObject();
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("name",name);
@@ -91,9 +100,9 @@ public class SeasonController {
     public String checkTime(@RequestParam  String sdate,
                             @RequestParam  String edate,
                             @RequestParam  String comId){
-
         JSONObject jo = new JSONObject();
         Map<String,Object> map = new HashMap<String,Object>();
+        System.out.println(comId+"dadaskmlndaslndasldandalndandis");
         map.put("sdate",sdate);
         map.put("edate",edate);
         map.put("comId",comId);
@@ -105,13 +114,12 @@ public class SeasonController {
     @RequestMapping(value = "/addvalue", method = RequestMethod.POST)
     public String addNodeValue(@RequestParam  String name,
                                @RequestParam  String sdate,
-                               @RequestParam  String edate, HttpServletRequest request,
+                               @RequestParam  String edate,
                                @RequestParam  String comId){
         logger.info("添加采暖");
         JSONObject jo = new JSONObject();
         try {
             // TODO 添加session，创建者
-            HttpSession session = request.getSession();
             Season season = new Season();
             season.setId(UUIDGenerator.getUUID());
             season.setComid(comId);
@@ -144,7 +152,6 @@ public class SeasonController {
                             @RequestParam  String sdate,
                             @RequestParam  String edate,
                             @RequestParam  String id,
-                            @RequestParam  String comId,
                             HttpServletRequest request){
         logger.info("修改采暖");
         com.alibaba.fastjson.JSONObject jo = new com.alibaba.fastjson.JSONObject();
@@ -154,7 +161,6 @@ public class SeasonController {
             HttpSession session = request.getSession();
             Season season = new Season();
             season.setId(id);
-            season.setComid(comId);
             season.setName(name);
             season.setSdate(sdate);
             season.setEdate(edate);
@@ -171,7 +177,6 @@ public class SeasonController {
     @ResponseBody
     public String deleteFeed(@PathVariable("id") String id) {
         logger.info("删除采暖");
-
         JSONObject jo = new JSONObject();
         jo.put(Constants.FLAG, false);
         try {

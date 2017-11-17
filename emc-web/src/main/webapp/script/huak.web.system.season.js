@@ -3,40 +3,38 @@ $(function () {
 });
 
 function loadDataFun() {
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        //min: laydate.now(), //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
     querySeasonConfig();
 
-    $("body").off("click", ".x-sfbgbox1").on("click", ".x-sfbgbox1", function () {
-        $(this).next().stop(true, false).slideToggle(200, function () {
-        });
-    });
-    //下拉切换事件
-    $("body").off("click", ".x-sfoption1 p").on("click", ".x-sfoption1 p", function (event) {
-        var selectval = $(this).html();
-        var selectid = $(this).attr("value");
 
-        $(this).parent().siblings('input:hidden').val(selectid);
-        $(this).parent().prev().find("input").val(selectval);
-        $(this).parent().slideUp(200, function () {
-        });
-        event.stopPropagation();
-    });
-    $("body").on("mouseleave", ".x-selectfree", function (event) {
-        $(this).find(".x-sfoption1").slideUp(200, function () {
-        });
-        event.stopPropagation();
-    });
 }
 
 function reset() {
-    $("#unitNameSearch").val("");
-    $("#unit_type").siblings('.x-sfbgbox1').find(':input').val('请选择单位类型');
-    $("#alarm_type").find('.x-sfbgbox1').find(':input').val('请选择报警类型');
-    $("#alarm_level").find('.x-sfbgbox1').find(':input').val('请选择报警等级');
-    $("#unitTypeSearch").val("");
-    $("#alarmLevelSearch").val("");
-    $("#alarmTypeSearch").val("");
-    $("#alarmNameSearch").val("");
-    $("#tagSearch").val("");
+    $("#nameSearch").val("");
 }
 /**
  * 分页查询
@@ -72,7 +70,7 @@ function querySeasonConfig() {
 /**
  * 删除
  */
-function delAlarmConfig(id) {
+function delSeasonConfig(id) {
     top.layer.confirm('您是否确定删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
@@ -80,14 +78,14 @@ function delAlarmConfig(id) {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $.ajax({
-            url: _web + '/alarm/config/delete/' + id,
+            url: _web + '/season/delete/' + id,
             type: 'DELETE',
             dataType: 'json',
             success: function (result) {
                 if (result.flag) {
                     top.layer.closeAll();
                     top.layer.msg(result.msg);
-                    queryAlarmConfig();
+                    querySeasonConfig();
                 } else {
                     top.layer.close(index);
                     top.layer.msg(result.msg);
