@@ -7,7 +7,6 @@ import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
 import com.huak.mdc.EnergyDataHisService;
-import com.huak.mdc.UniformityException;
 import com.huak.mdc.dao.MeterCollectDao;
 import com.huak.mdc.dao.RecordPrestoreDao;
 import com.huak.mdc.model.EnergyDataHis;
@@ -18,8 +17,9 @@ import com.huak.org.dao.CompanyDao;
 import com.huak.org.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,7 @@ public class PrestoreServiceImpl implements PrestoreService {
                 data.setCollectNum(record.getUsedNum());
                 datalist.add(data);
                 try {
-                   energyDataHisService.saveEnergyDatas(datalist, company);
+                   energyDataHisService.saveEnergyDatas(datalist, company,null);
 
                 }catch (Exception e){
                   prestoreDao.deleteByPrimaryKey(uuid);

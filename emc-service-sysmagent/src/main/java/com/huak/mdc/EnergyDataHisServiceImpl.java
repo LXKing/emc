@@ -473,4 +473,14 @@ public class EnergyDataHisServiceImpl implements EnergyDataHisService {
         return codeValues;
     }
 
+    @Override
+    public List<MeterCollect> selectFictitiousMeters(List<String> ids) {
+        List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMeters(ids);
+        return meterCollects;
+    }
+
+    @Override
+    public List<MeterCollect> selectFictitiousMetersByCode(Map<String, Object> params) {
+        return meterCollectDao.selectFictitiousMetersByCode(params);
+    }
 }

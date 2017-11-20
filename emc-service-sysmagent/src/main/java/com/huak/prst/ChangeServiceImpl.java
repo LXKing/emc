@@ -93,7 +93,7 @@ public class ChangeServiceImpl implements ChangeService {
             data.setCollectNum(record.getUsedNum());
             datalist.add(data);
             try{
-                energyDataHisService.saveEnergyDatas(datalist,company);
+                //energyDataHisService.saveEnergyDatas(datalist,company);
             }catch (Exception e){
                 recordChangeDao.deleteByPrimaryKey(uuid);
                 meterCollect.setCoef(record.getUsedCoef());
@@ -140,7 +140,7 @@ public class ChangeServiceImpl implements ChangeService {
             data.setCollectNum(record.getUsedNum());
             datalist.add(data);
             try{
-                energyDataHisService.saveEnergyDatas(datalist,company);
+                energyDataHisService.saveEnergyDatas(datalist,company,null);
             }catch (Exception e){
                 recordChangeDao.deleteByPrimaryKey(uuid);
                 meterCollect.setCoef(record.getUsedCoef());

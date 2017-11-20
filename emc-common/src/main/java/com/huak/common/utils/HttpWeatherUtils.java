@@ -196,6 +196,65 @@ public class HttpWeatherUtils {
         return result;
     }
     /**
+     * POST请求，Map形式数据
+     *
+     * @param url
+     *            请求地址
+     * @param param
+     *            请求数据
+     * @param charset
+     *            编码方式
+     */
+    public static String sendWorkPost(String url, String charset) {
+
+        StringBuffer buffer = new StringBuffer();
+
+        PrintWriter out = null;
+        BufferedReader in = null;
+        String result = "";
+        try {
+            URL realUrl = new URL(url);
+            // 打开和URL之间的连接
+            URLConnection conn = realUrl.openConnection();
+            // 设置通用的请求属性
+            conn.setRequestProperty(ACCEPT, ACCEPT_VALUE);
+            conn.setRequestProperty(CONNECT,CONNECT_VALUE);
+            conn.setRequestProperty(USER_AGENT, USER_AGENT_VALUE);
+            // 发送POST请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            // 获取URLConnection对象对应的输出流
+            out = new PrintWriter(conn.getOutputStream());
+            // 发送请求参数
+            out.print(buffer);
+            // flush输出流的缓冲
+            out.flush();
+            // 定义BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            System.out.println("发送 POST 请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输出流、输入流
+        finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
+    /**
      *
      * @param cityName 城市名字
      * @param format 返回格式  json或xml  默认json
@@ -277,8 +336,7 @@ public class HttpWeatherUtils {
      * @return
      */
     public static  String sendWorkOrderMsg(String id , String url){
-        Map<String , String > param = new HashMap<String , String>();
-        return sendPost(url + id, param, "utf-8") ;
+        return sendWorkPost(url + id, "utf-8") ;
     }
 
 }

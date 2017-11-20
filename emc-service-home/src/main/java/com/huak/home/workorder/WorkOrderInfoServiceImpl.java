@@ -236,7 +236,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         new Thread() {
             @Override
             public void run() {
-                logger.info("---------开始给接口方推信息（接单员）----------");
+                logger.info("---------开始给接口方推信息----------");
                 HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
             }
         }.start();
@@ -491,7 +491,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         new Thread() {
             @Override
             public void run() {
-                logger.info("---------开始给接口方推信息（接单员）----------");
+                logger.info("---------开始给接口方推信息----------");
                 HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
             }
         }.start();
@@ -552,7 +552,7 @@ public class WorkOrderInfoServiceImpl implements WorkOrderInfoService {
         new Thread() {
             @Override
             public void run() {
-                logger.info("---------开始给接口方推信息（接单员）----------");
+                logger.info("---------开始给接口方推信息----------");
                 HttpWeatherUtils.sendWorkOrderMsg(id, appUrl);
             }
         }.start();

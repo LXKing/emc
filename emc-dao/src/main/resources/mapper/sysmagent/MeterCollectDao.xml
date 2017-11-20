@@ -533,7 +533,7 @@
             WHERE
                 COLLECT_TIME = #{collectTime}
         ) d ON a.id = d.COLLECT_ID
-        LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%y-%M-%d %h') = #{collectTime}
+        LEFT JOIN t_emc_meta_data e on a.TAG = e.tag and DATE_FORMAT(e.COLLECT_TIME,'%Y-%m-%d %H') = DATE_FORMAT(#{collectTime},'%Y-%m-%d %H')
         where 1=1
         <if test="collectName != null and collectName!=''">
             and a.UNIT_ID  = #{collectName,jdbcType=VARCHAR}

@@ -202,10 +202,11 @@ public class MeterCollectServiceImpl implements MeterCollectService {
             }
         }
         try {
+
             List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMeters(ids);
-            if(energyDataHisService.saveEnergyDatas(datalist0,company)){
-                energyDataHisService.saveVirtualDatas(meterCollects,collectTime,company);
-            };
+//            if(energyDataHisService.saveEnergyDatas(datalist0,company)){
+//                energyDataHisService.saveVirtualDatas(meterCollects,collectTime,company);
+//            };
             return true;
         }catch (Exception e){
             logger.error("安全与后台-数据填报异常！"+e);
@@ -254,9 +255,9 @@ public class MeterCollectServiceImpl implements MeterCollectService {
                     datalist0.add(energy0);
                     try {
                         List<MeterCollect> meterCollects = meterCollectDao.selectFictitiousMetersByCode(_data);
-                        if(energyDataHisService.saveEnergyDatas(datalist0,company)){
-                            energyDataHisService.saveVirtualDatas(meterCollects,data.get(COLLECT_TIME).toString()+":00:00",company);
-                        };
+//                        if(energyDataHisService.saveEnergyDatas(datalist0,company)){
+//                            energyDataHisService.saveVirtualDatas(meterCollects,data.get(COLLECT_TIME).toString()+":00:00",company);
+//                        };
                         return true;
                     }catch (Exception e){
                         logger.error("安全与后台-数据填报异常！"+e);

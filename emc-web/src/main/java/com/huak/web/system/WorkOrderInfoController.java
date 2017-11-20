@@ -59,7 +59,7 @@ public class WorkOrderInfoController {
     private String monitor;
     @Value("${work.order.takor}")
     private String takor;
-    @Value("work.order.url")
+    @Value("${work.order.url}")
     private String workAppUrl;
 
 
