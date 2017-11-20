@@ -35,4 +35,8 @@
     <dubbo:service interface="com.huak.api.EnergyAnalyService" ref="energyAnalyService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="autoSaveEnergyService" class="com.huak.energy.AutoSaveEnergyServiceImpl"></bean>
+    <dubbo:service interface="com.huak.energy.AutoSaveEnergyService" ref="autoSaveEnergyService" timeout="120000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>

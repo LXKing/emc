@@ -1,11 +1,5 @@
 package com.huak.mdc;
 
-import com.huak.mdc.model.EnergyDataHis;
-import com.huak.mdc.model.MeterCollect;
-import com.huak.org.model.Company;
-
-import java.util.List;
-
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
  * ProjectName:emc<BR>
@@ -18,11 +12,5 @@ import java.util.List;
  * Function List:  <BR>
  */
 public interface FinalDataHourService {
-    /**
-     * 时间段能耗更新
-     * @return
-     */
-    public boolean saveDataHour(EnergyDataHis energyDataHis,EnergyDataHis data,Company company) throws Exception;
 
-    public boolean saveVirtualDataHour(MeterCollect meterCollect, List<String> dateTimes, List<String> codes, Company company) throws Exception;
 }

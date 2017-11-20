@@ -131,6 +131,10 @@
     <dubbo:service interface="com.huak.mdc.MeterCollectService" ref="meterCollectService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+    <bean id="energyDataHisService" class="com.huak.mdc.EnergyDataHisServiceImpl"></bean>
+    <dubbo:service interface="com.huak.mdc.EnergyDataHisService" ref="energyDataHisService" timeout="720000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 
     <bean id="prestoreService" class="com.huak.prst.PrestoreServiceImpl"></bean>
     <dubbo:service interface="com.huak.prst.PrestoreService" ref="prestoreService" timeout="3000" loadbalance="random"

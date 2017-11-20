@@ -451,6 +451,12 @@
             <artifactId>jedis</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <!--easygo-->
+        <!--<dependency>-->
+            <!--<groupId>com.huak</groupId>-->
+            <!--<artifactId>EasyGo-api</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

@@ -22,11 +22,6 @@ public interface EnergyDataHisService {
      * 批量保存能耗数据
      * @param dataHisList
      */
-    public boolean saveEnergyDatas(List<EnergyDataHis> dataHisList,Company company);
+    public boolean saveEnergyDatas(List<EnergyDataHis> dataHisList,Company company, List<MeterCollect> meterCollectList);
 
-    /**
-     * 批量保存虚表能耗数据
-     * @param meterCollectList
-     */
-    public boolean saveVirtualDatas(List<MeterCollect> meterCollectList,String dateTime,Company company);
 }

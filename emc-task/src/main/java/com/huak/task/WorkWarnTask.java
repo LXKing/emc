@@ -1,6 +1,8 @@
 package com.huak.task;
 
 import com.huak.diacrisis.WorkWarnService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,11 +20,14 @@ import javax.annotation.Resource;
  */
 @Component("workWarnTask")
 public class WorkWarnTask {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private WorkWarnService workWarnService;
 
 
     public void workWarnInfo(){
-       workWarnService.executeWarning();
+        logger.info("-------------定时处理工况报警数据----------------");
+        workWarnService.executeWarning();
+        logger.info("-------------工况报警数据处理完成----------------");
     }
 }
