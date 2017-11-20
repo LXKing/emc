@@ -55,7 +55,7 @@ GROUP BY a.ID,a.TIME
     </select>
 
     <update id="updateStates" parameterType="java.util.Map">
-        UPDATE t_emc_meta_data SET READ_SATE = 0
+        UPDATE t_emc_meta_data SET READ_SATE = #{status}
         WHERE TAG =#{tag}
         AND DATE_FORMAT(
         COLLECT_TIME,
