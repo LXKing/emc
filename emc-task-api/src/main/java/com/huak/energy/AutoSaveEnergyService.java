@@ -1,5 +1,8 @@
 package com.huak.energy;
 
+import com.alibaba.fastjson.JSONObject;
+import com.huak.org.model.Company;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +18,9 @@ import java.util.Map;
  * Function List:  <BR>
  */
 public interface AutoSaveEnergyService {
-    List<Map<String,Object>> autoSaveData();
+    JSONObject selectDatas(Company company);
+
+    List<String> selectTags(Map<String, Object> paramsMap);
+
+    void updateStates(Map<String, Object> params);
 }

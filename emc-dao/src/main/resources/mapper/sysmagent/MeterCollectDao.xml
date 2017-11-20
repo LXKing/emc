@@ -735,4 +735,13 @@
     <select id="selectTags"  resultType="java.util.Map">
         select TAG from t_emc_meter_collect group by TAG order by TAG DESC
     </select>
+    <select id="selectAutoMeters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_emc_meter_collect
+        WHERE ISREAL = 1
+        AND COM_ID=#{comId}
+        AND ISDELETE=0
+    </select>
 </mapper>

@@ -3,11 +3,9 @@ package com.huak.mdc;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
-import com.huak.mdc.model.EnergyDataHis;
 import com.huak.mdc.model.MeterCollect;
 import com.huak.mdc.vo.MeterCollectA;
 import com.huak.mdc.vo.MeterCollectDataA;
-import com.huak.org.model.Company;
 import com.huak.sys.model.EnergyType;
 
 import java.io.IOException;
@@ -120,4 +118,6 @@ public interface MeterCollectService {
     List<EnergyType> getEnergyType();
 
     List<Map<String,Object>> selectTags();
+
+    List<MeterCollect> selectAutoMeters(Map<String, Object> paramsMap);
 }

@@ -24,9 +24,13 @@
 
     <mvc:annotation-driven ></mvc:annotation-driven>
     <task:scheduled-tasks>
+        <!--每小时21分采集当前时间天气-->
         <task:scheduled ref="weatherTask" method="currentWeather" cron="0 21 * * * ?"/>
+        <!--每天凌晨2点采集天气预报-->
         <task:scheduled ref="weatherTask" method="forcastWeather7d" cron="0 0 2 * * ?"/>
+        <!--每隔10分钟检测一次报警-->
         <task:scheduled ref="workWarnTask" method="workWarnInfo" cron="0 0/10 * * * ?"/>
+        <!--每天晚22点自动填报一次-->
         <task:scheduled ref="energyDataTask" method="autoSaveEnergyData" cron="0 0 22 * * ?"/>
     </task:scheduled-tasks>
 

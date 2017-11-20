@@ -65,4 +65,6 @@ public interface MeterCollectDao {
 
 
     List<Map<String,Object>> selectTags();
+
+    List<MeterCollect> selectAutoMeters(Map<String, Object> paramsMap);
 }

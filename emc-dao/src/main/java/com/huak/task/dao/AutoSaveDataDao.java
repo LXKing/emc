@@ -21,4 +21,8 @@ public interface AutoSaveDataDao {
     String getMaxDataTime(Map<String, Object> params);
 
     List<Map<String,Object>> selectAutoDataByTime(Map<String, Object> params);
+
+    List<String> selectTags(Map<String, Object> paramsMap);
+
+    void updateStates(Map<String, Object> params);
 }

@@ -279,4 +279,10 @@ public class MeterCollectServiceImpl implements MeterCollectService {
     public List<Map<String, Object>> selectTags() {
         return meterCollectDao.selectTags();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MeterCollect> selectAutoMeters(Map<String, Object> paramsMap) {
+        return meterCollectDao.selectAutoMeters(paramsMap);
+    }
 }
