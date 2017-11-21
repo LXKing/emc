@@ -386,9 +386,12 @@ public class WorkOrderInfoController {
                            @RequestParam("mid")  String mid,
                            @RequestParam("reid")  String reid){
         logger.info("派单并编辑当前订单");
+        HttpSession session = request.getSession();
+        Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         Map<String,Object> map1 = new HashMap<String,Object>();
         map1.put("monitor",monitor);
         map1.put("receiver",takor);
+        map1.put("comId",company.getId());
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("monitor",monitor);
         map.put("receiver",takor);
@@ -412,9 +415,12 @@ public class WorkOrderInfoController {
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     public String addPage1(HttpServletRequest request,Model model){
         logger.info("添加工单");
+        HttpSession session = request.getSession();
+        Company company = (Company)session.getAttribute(Constants.SESSION_COM_KEY);
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("monitor",monitor);
         map.put("receiver",takor);
+        map.put("comId",company.getId());
         List<Map<String,Object>> list = workOrderInfoService.getEmployee(map);
         model.addAttribute("list",list);
         return "system/workorder/add";
@@ -554,9 +560,6 @@ public class WorkOrderInfoController {
         JSONObject jo = new JSONObject();
         WorkOrderInfo info = workOrderInfoService.selectOneByCode(code);
 
-        Map<String,Object> map1 = new HashMap<String,Object>();
-        map1.put("monitor",monitor);
-        map1.put("receiver",takor);
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("monitor",monitor);
         map.put("receiver",takor);
@@ -596,9 +599,6 @@ public class WorkOrderInfoController {
         JSONObject jo = new JSONObject();
         WorkOrderInfo info = workOrderInfoService.selectOneByCode(code);
         info.setFinishReason(finishReason);
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("monitor", monitor);
-        map1.put("receiver", takor);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("monitor", monitor);
         map.put("receiver", takor);
@@ -638,9 +638,6 @@ public class WorkOrderInfoController {
         JSONObject jo = new JSONObject();
         WorkOrderInfo info = workOrderInfoService.selectOneByCode(code);
         info.setReason(reason);
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("monitor", monitor);
-        map1.put("receiver", takor);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("monitor", monitor);
         map.put("receiver", takor);

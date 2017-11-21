@@ -390,14 +390,23 @@
     </select>
 
     <select id="getEmployeeAndRole" parameterType="java.util.Map" resultType="java.util.Map">
-
-        SELECT e.ID empId,r.ID roleId,e.EMP_NAME empName,r.ROLE_NAME roleName from t_emc_auth_employee e LEFT JOIN
-
-        t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
-        LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
-        (#{monitor,jdbcType=VARCHAR}
-        ,#{receiver,jdbcType=VARCHAR})
-
+	SELECT e.ID empId,r.ID roleId,e.EMP_NAME empName,r.ROLE_NAME roleName
+FROM
+	t_emc_auth_employee e,
+	t_emc_auth_user u,
+	t_emc_auth_role_user_rel ru,
+	t_emc_auth_role r,
+	t_emc_org o
+WHERE
+	e.ID = u.EMP_ID
+AND ru.USER_ID = u.ID
+AND r.ID = ru.ROLE_ID
+AND e.ORG_ID = o.ID
+AND e. STATUS = 0
+AND u.USE_STATUS = 0
+AND (r.ID =#{monitor,jdbcType=VARCHAR} OR r.ID = #{receiver,jdbcType=VARCHAR})
+AND o.COM_ID = #{comId}
+ORDER BY r.ID ASC,e.EMP_NAME DESC
     </select>
     <select id="getEmployeeById" parameterType="java.util.Map" resultType="java.lang.String">
 
