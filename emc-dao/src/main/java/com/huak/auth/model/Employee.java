@@ -32,11 +32,9 @@ public class Employee implements Serializable{
 
     private Byte status;
 
-    private String userid;
-
     private String pId;
 
-    public Employee(String id, Long orgId, String empName, Byte sex, Integer age, String birthday, String jobNum, String tel, String phone, String email, String memo, String creator, String createTime,Byte status,String userid,String pId) {
+    public Employee(String id, Long orgId, String empName, Byte sex, Integer age, String birthday, String jobNum, String tel, String phone, String email, String memo, String creator, String createTime,Byte status,String pId) {
         this.id = id;
         this.orgId = orgId;
         this.empName = empName;
@@ -51,7 +49,6 @@ public class Employee implements Serializable{
         this.creator = creator;
         this.createTime = createTime;
         this.status = status;
-        this.userid=userid;
         this.pId=pId;
     }
 
@@ -169,14 +166,6 @@ public class Employee implements Serializable{
 
     public void setStatus(Byte status) {
         this.status = status;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
     }
 
     public String getpId() {

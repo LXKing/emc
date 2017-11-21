@@ -17,13 +17,12 @@
             <arg column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="CREATE_TIME" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="STATUS" javaType="java.lang.Byte" jdbcType="TINYINT" />
-            <arg column="USERID" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="PID" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
         ID, ORG_ID, EMP_NAME, SEX, AGE, BIRTHDAY, JOB_NUM, TEL, PHONE, EMAIL, MEMO, CREATOR,
-        CREATE_TIME,STATUS,USERID,PID
+        CREATE_TIME,STATUS,PID
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -80,9 +79,6 @@
         <if test="status != null and status !=''">
             and  e.STATUS = #{status,jdbcType=TINYINT}
         </if>
-        <if test="userid != null and userid !=''">
-            and  e.USERID = #{userid,jdbcType=TINYINT}
-        </if>
         <if test="pId != null and pId !=''">
             and  e.PID = #{pId,jdbcType=TINYINT}
         </if>
@@ -136,9 +132,6 @@
         <if test="status != null and status !=''">
             and  e.STATUS = #{status,jdbcType=TINYINT}
         </if>
-        <if test="userid != null and userid !=''">
-            and  e.USERID = #{userid,jdbcType=TINYINT}
-        </if>
         <if test="pId != null and pId !=''">
             and  e.PID = #{pId,jdbcType=TINYINT}
         </if>
@@ -159,13 +152,13 @@
         insert into t_emc_auth_employee (ID, ORG_ID, EMP_NAME,
         SEX, AGE, BIRTHDAY, JOB_NUM,
         TEL, PHONE, EMAIL,
-        MEMO, CREATOR, CREATE_TIME,STATUS,USERID,PID
+        MEMO, CREATOR, CREATE_TIME,STATUS,PID
         )
         values (#{id,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{empName,jdbcType=VARCHAR},
         #{sex,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR},
         #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
         #{memo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
-        #{userid,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}
+         #{pId,jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.huak.auth.model.Employee">
@@ -212,9 +205,6 @@
             </if>
             <if test="status != null">
                 STATUS,
-            </if>
-            <if test="userid != null">
-                USERID,
             </if>
             <if test="pId != null">
                 PID,
@@ -263,9 +253,6 @@
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
             </if>
-            <if test="userid != null">
-                #{userid,jdbcType=VARCHAR},
-            </if>
             <if test="pId != null">
                 #{pId,jdbcType=VARCHAR},
             </if>
@@ -313,9 +300,6 @@
             <if test="status != null">
                 AGE = #{status,jdbcType=TINYINT},
             </if>
-            <if test="userid != null">
-                USERID = #{userid,jdbcType=TINYINT},
-            </if>
             <if test="pId != null">
                 PID = #{pId,jdbcType=TINYINT},
             </if>
@@ -337,7 +321,6 @@
       CREATOR = #{creator,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=TINYINT},
-      USERID = #{userid,jdbcType=VARCHAR},
       PID = #{pId,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -351,9 +334,10 @@
 
     <select id="getEmployeeByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from t_emc_auth_employee
-        where USERID = #{userId,jdbcType=VARCHAR}
+        e.ID, e.ORG_ID, e.EMP_NAME, e.SEX, e.AGE, e.BIRTHDAY, e.JOB_NUM, e.TEL, e.PHONE, e.EMAIL, e.MEMO, e.CREATOR,
+        e.CREATE_TIME,e.STATUS,e.PID
+        from t_emc_auth_employee e,t_emc_auth_user u
+        where e.ID = u.EMP_ID AND u.ID = #{userId,jdbcType=VARCHAR}
     </select>
 
     <select id="selectAllOrderEmployee" parameterType="java.util.HashMap" resultType="java.util.Map">
@@ -369,7 +353,7 @@ FROM
 	t_emc_auth_role r,
 	t_emc_org o
 WHERE
-	e.USERID = u.ID
+	e.ID = u.EMP_ID
 AND ru.USER_ID = u.ID
 AND r.ID = ru.ROLE_ID
 AND e.ORG_ID = o.ID
