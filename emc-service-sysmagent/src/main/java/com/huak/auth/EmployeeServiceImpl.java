@@ -123,4 +123,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Map<String, Object>> selectAllOrderEmployee(Map<String, Object> paramsMap) {
         return employeeDao.selectAllOrderEmployee(paramsMap);
     }
+
+    @Override
+    public List<Map<String, Object>> getEmployee(Map<String, Object> paramsMap) {
+        return employeeDao.getEmployee(paramsMap);
+    }
 }
