@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huak.data.dao.DataStatisticsDao">
+
+
+
+    <select id="selectTableTimeByMap" parameterType="java.util.Map" resultType="com.huak.data.vo.LookupTableTime">
+        SELECT  t.thisTime thisTime,
+                 t.lastTime lastTime,
+                 TIMESTAMPDIFF(Day,t.lastTime,t.thisTime) timeDifference
+        FROM(
+          SELECT  date_format(th.COLLECT_TIME,'%Y-%m-%d %H') thisTime,
+                 (SELECT date_format(th1.COLLECT_TIME,'%Y-%m-%d %H')
+                  FROM t_emc_energy_data_his th1,t_emc_meter_collect tc1
+                  WHERE th1.COLLECT_ID=tc1.ID
+                  AND th1.COLLECT_TIME <![CDATA[ <= ]]> #{time}
+                  AND tc1.COM_ID=#{comId}
+                  ORDER BY collect_time desc
+                  LIMIT 1) lastTime
+        FROM t_emc_energy_data_his th,t_emc_meter_collect tc
+        WHERE th.COLLECT_ID=tc.ID
+        AND th.COLLECT_TIME <![CDATA[ <= ]]> date_sub(#{time},interval -1 day)
+        AND tc.COM_ID=#{comId}
+        ORDER BY collect_time desc
+        LIMIT 1
+        ) t
+    </select>
+
+    <select id="selectWeatherByMap" parameterType="java.util.Map" resultType="com.huak.data.vo.Weather">
+      SELECT REPORT_DATE dateTime,
+              TEMP_HIGH highTemp,
+              TEMP_LOW lowTemp,
+              (TEMP_HIGH+TEMP_LOW)/2 avgTemp
+      FROM t_emc_weather_weekforcast tw,
+            t_emc_company ec
+      WHERE tw.CODE=ec.WCODE
+      AND ec.ID=#{comId}
+      AND tw.REPORT_DATE in(#{time},date_sub(#{time},interval 1 day))
+    </select>
+
+
+</mapper>
