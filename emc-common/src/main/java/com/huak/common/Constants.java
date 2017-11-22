@@ -118,7 +118,7 @@ public class Constants {
     public static final String LEGENDS = "legends";
     public static Map<String,String> CELL_NAME = new LinkedHashMap<>();
     static {
-        CELL_NAME.put("ID", "指标主键");
+        CELL_NAME.put("ID", "主键");
         CELL_NAME.put("CODE", "代码");
         CELL_NAME.put("SERIAL_NO", "出厂编号");
         CELL_NAME.put("NAME", "名称");

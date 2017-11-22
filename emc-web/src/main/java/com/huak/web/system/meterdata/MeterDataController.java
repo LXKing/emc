@@ -585,7 +585,7 @@ public class MeterDataController {
     //获取数据
     private Map<String, Object> getMap(String path) {
         Map<String,String> cellMap = new LinkedHashMap<>();
-        cellMap.put("ID", "指标主键");
+        cellMap.put("ID", "主键");
         cellMap.put("CODE", "代码");
         cellMap.put("SERIAL_NO", "出厂编号");
         cellMap.put("NAME", "名称");
