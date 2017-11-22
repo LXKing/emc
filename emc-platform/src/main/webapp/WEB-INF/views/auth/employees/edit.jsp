@@ -35,6 +35,20 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3  control-label">所属班长：</label>
+                    <div class="col-sm-8">
+                        <select id="pId" name="pId" class="chosen-select form-control">
+                            <option value="">请选择员工</option>
+                            <c:forEach items="${emp}" var="item">
+                                <option value="${item.userId}">${item.userName}</option>
+                            </c:forEach>
+                            <c:forEach items="${emp}" var="item">
+                                <option <c:if test="${item.employeeId eq object.pId}">selected="selected" </c:if> value="${item.employeeId}">${item.empName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label"><span class="red">*</span>生日：</label>
                     <div class="col-sm-8">
                         <input id="birthday" type="text" class="laydate-icon  form-control layer-date"  name="birthday" value="${object.birthday}"

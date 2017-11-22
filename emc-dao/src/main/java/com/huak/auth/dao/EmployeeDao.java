@@ -93,4 +93,7 @@ public interface EmployeeDao {
     List<Employee> getEmployeeByPId(String pid);
 
     List<Map<String,Object>> selectAllOrderEmployee(Map<String, Object> paramsMap);
+
+    List<Map<String,Object>> getEmployee(Map<String, Object> paramsMap);
+
 }

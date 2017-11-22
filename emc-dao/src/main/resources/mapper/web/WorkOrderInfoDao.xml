@@ -380,12 +380,23 @@
     </select>
     <select id="getEmployee" parameterType="java.util.Map" resultType="java.util.Map">
 
-       SELECT CONCAT(e.ID,',',r.ID) id,CONCAT(e.EMP_NAME,'(',r.ROLE_NAME,')') name from t_emc_auth_employee e LEFT JOIN
-
-			t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
-			LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
-			(#{monitor,jdbcType=VARCHAR}
+       SELECT CONCAT(e.ID,',',r.ID) id,CONCAT(e.EMP_NAME,'(',r.ROLE_NAME,')') name
+       FROM  t_emc_auth_employee e,
+                    t_emc_auth_user u,
+                    t_emc_auth_role_user_rel ru,
+                    t_emc_auth_role r,
+                    t_emc_org o
+                WHERE
+                    e.ID = u.EMP_ID
+                AND ru.USER_ID = u.ID
+                AND r.ID = ru.ROLE_ID
+                AND e.ORG_ID = o.ID
+                AND e. STATUS = 0
+                AND u.USE_STATUS = 0
+                AND r.ID in (#{monitor,jdbcType=VARCHAR}
 			,#{receiver,jdbcType=VARCHAR})
+                AND o.COM_ID = #{comId}
+                ORDER BY r.ID ASC,e.EMP_NAME DESC
 
     </select>
 
@@ -410,12 +421,25 @@ ORDER BY r.ID ASC,e.EMP_NAME DESC
     </select>
     <select id="getEmployeeById" parameterType="java.util.Map" resultType="java.lang.String">
 
-        SELECT CONCAT(e.ID,',',r.ID) id  from t_emc_auth_employee e LEFT JOIN
+        SELECT CONCAT(e.ID,',',r.ID) id
+FROM  t_emc_auth_employee e,
+                    t_emc_auth_user u,
+                    t_emc_auth_role_user_rel ru,
+                    t_emc_auth_role r,
+                    t_emc_org o
+                WHERE
+                    e.ID = u.EMP_ID
+                AND ru.USER_ID = u.ID
+                AND r.ID = ru.ROLE_ID
+                AND e.ORG_ID = o.ID
+                AND e. STATUS = 0
+                AND u.USE_STATUS = 0
+                AND r.ID in (#{monitor,jdbcType=VARCHAR}
+			,#{receiver,jdbcType=VARCHAR})
+                AND o.COM_ID = #{comId}
+                and e.id=#{id,jdbcType=VARCHAR}
+                ORDER BY r.ID ASC,e.EMP_NAME DESC
 
-        t_emc_auth_role_user_rel ur on e.id=ur.USER_ID
-        LEFT JOIN t_emc_auth_role r on ur.ROLE_ID=r.id  where ur.ROLE_ID in
-        (#{monitor,jdbcType=VARCHAR}
-        ,#{receiver,jdbcType=VARCHAR}) and e.id=#{id,jdbcType=VARCHAR}
 
     </select>
     <select id="selectOneByCode" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -6,10 +6,12 @@ import com.huak.auth.model.Employee;
 import com.huak.auth.model.User;
 import com.huak.common.CommonExcelExport;
 import com.huak.common.Constants;
+import com.huak.common.UUIDGenerator;
 import com.huak.common.page.Page;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +49,8 @@ public class EmployeeController {
 
     @Resource
     private EmployeeService employeeService;
-
-
+    @Value("${work.order.monitor}")
+    private String monitor;
     /**
      * 转至系统员工列表页
      * @return
@@ -84,14 +87,22 @@ public class EmployeeController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(value = "/add/{orgId}", method = RequestMethod.GET)
-    public String addPage(@PathVariable("orgId") String orgId,ModelMap modelMap) {
+    @RequestMapping(value = "/add/{orgId}/{comId}", method = RequestMethod.GET)
+    public String addPage(@PathVariable("orgId") String orgId,ModelMap modelMap
+                           ,@PathVariable("comId") String comId) {
         try {
             Employee obj = new Employee();
+            Map<String,Object> map = new HashMap<String,Object>();
+
+            map.put("comId",comId);
+            map.put("monitor",monitor);
+            List<Map<String,Object>> emp = employeeService.getEmployee(map);
+
             obj.setOrgId(Long.parseLong(orgId));
             modelMap.put(Constants.OBJECT,obj);
+            modelMap.put("emp",emp);
         } catch (Exception e) {
-            logger.error("跳转到员工编辑页出错！");
+            logger.error("跳转到员工编辑页出错！"+e.getMessage());
         }
         return "/auth/employees/add";
     }
@@ -102,12 +113,18 @@ public class EmployeeController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("id") String id) {
+    @RequestMapping(value = "/edit/{id}/{comId}", method = RequestMethod.GET)
+    public String edit(Model model, @PathVariable("id") String id ,ModelMap modelMap,@PathVariable("comId") String comId) {
         logger.info("跳转修改员工页");
         try {
             Employee employee = employeeService.getEmployeeById(id);
+            Map<String,Object> map = new HashMap<String,Object>();
+
+            map.put("comId",comId);
+            map.put("monitor",monitor);
+            List<Map<String,Object>> emp = employeeService.getEmployee(map);
             model.addAttribute(Constants.OBJECT, employee);
+            modelMap.put("emp",emp);
         } catch (Exception e) {
             logger.error("跳转修改员工页异常" + e.getMessage());
         }
@@ -131,6 +148,7 @@ public class EmployeeController {
             // TODO 添加session，创建者
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(Constants.SESSION_KEY);
+            employee.setId(UUIDGenerator.getUUID());
             employee.setCreator(user.getId());
             employeeService.addEmployee(employee);
             jo.put(Constants.FLAG, true);

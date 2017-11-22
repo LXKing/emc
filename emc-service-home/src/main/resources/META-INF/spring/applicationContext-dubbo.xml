@@ -67,4 +67,9 @@
     <dubbo:service interface="com.huak.home.thiredpage.ThirdAnalysisService" ref="thirdAnalysisService" timeout="3000" loadbalance="random"
                    executes="200"
                    actives="0" owner="${dubbo.owner}" version="${service.version}"/>
+
+    <bean id="dataStatisticsService" class="com.huak.home.DataStatisticsServiceImpl"></bean>
+    <dubbo:service interface="com.huak.home.DataStatisticsService" ref="dataStatisticsService" timeout="3000" loadbalance="random"
+                   executes="200"
+                   actives="0" owner="${dubbo.owner}" version="${service.version}"/>
 </beans>

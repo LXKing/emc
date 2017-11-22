@@ -395,6 +395,7 @@ public class WorkOrderInfoController {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("monitor",monitor);
         map.put("receiver",takor);
+        map.put("comId",company.getId());
         if(mid!=null&&mid!=""){
             map.put("id",mid);
         }

@@ -98,4 +98,5 @@ public class EnergyDataTask {
 
         logger.info("-------------自动填报自动采集数据完成----------------");
     }
+
 }

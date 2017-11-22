@@ -127,12 +127,14 @@ function dataSave (){
         timeout : 720000,
         data:data,            //将Json对象序列化成Json字符串，toJSON()需要引用jquery.json.min.js
         success: function(data){
+            console.log(data);
            if(data == "1"){
+               top.layer.close(index);
                top.layer.alert("数据填报失败！");
            }
             if(data == "0"){
-                top.layer.alert("数据已填报！");
-                layer.close(index);
+                top.layer.closeAll();
+                top.layer.msg("填报成功，能耗数据正在计算，根据填报周期长短会有延迟！");
                 hideOverlay("overlay");
                 dataMap.clear();
             }

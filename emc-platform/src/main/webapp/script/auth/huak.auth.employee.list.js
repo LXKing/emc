@@ -146,9 +146,10 @@ function bootstraplist(){
                 field: 'opt',
                 align: 'center' ,
                 formatter:function(value,row,index){
+                    var ts = $(top.document).find("[name='searchComp']").val();
                     var html = "";
                     if($("#employeeUpdateAuth").val()){
-                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="employee_edit_Form" layer-title="编辑员工" layer-url="'+_platform+'/employee/edit/'+row.id+'"> <i class="fa fa-edit"></i></a>&nbsp;';
+                        html += '<a title="编辑" class="btn btn-xs btn-info top-layer-min" layer-form-id="employee_edit_Form" layer-title="编辑员工" layer-url="'+_platform+'/employee/edit/'+row.id+'/'+ts+'"> <i class="fa fa-edit"></i></a>&nbsp;';
                     }
                     if($("#employeeDeleteAuth").val()){
                         html += '<a title="删除" class="btn btn-xs btn-danger" onclick="deleteemployee(&quot;'+row.id+'&quot;)"><i class="fa fa-trash-o"></i></a>&nbsp;';
@@ -214,6 +215,6 @@ function addEmployee(){
         layer.warn("只能选择一个上级组织！");
         return;
     }
-    openLayer(_platform+"/employee/add/"+treeNode[0].id,"添加员工","employee_add_Form",null,null);
+    openLayer(_platform+"/employee/add/"+treeNode[0].id+"/"+ts,"添加员工","employee_add_Form",null,null);
 }
 
