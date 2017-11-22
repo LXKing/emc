@@ -40,6 +40,7 @@
     <dubbo:reference id="changeService"    interface="com.huak.prst.ChangeService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="meterCollectService"    interface="com.huak.mdc.MeterCollectService" timeout="720000" retries="0" check="true" version="${service.version}" />
     <dubbo:reference id="energyDataHisService"    interface="com.huak.mdc.EnergyDataHisService" timeout="720000" retries="0" check="true" version="${service.version}" />
+    <dubbo:reference id="energyTypeService"    interface="com.huak.sys.EnergyTypeService" timeout="12000" check="true" version="${service.version}" />
 
     <!--组件-->
     <dubbo:reference id="componentService"    interface="com.huak.home.component.ComponentService" timeout="120000"  check="true" version="${service.version}" />

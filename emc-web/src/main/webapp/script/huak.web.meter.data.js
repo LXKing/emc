@@ -105,7 +105,16 @@ function formatValue(str,num){
         return str;
     }
 }
-
+//id翻译
+function getTypeName(id){
+    var energyTypes = $("#energyTypes").val();
+    $.each(energyTypes,function(idx,item){
+        if(id = item.id){
+            return item.typeZh;
+        }
+    });
+    return id;
+}
 /**
  *  前台-安全与后台-采集表管理-列表-字段动态替换
  * @param value

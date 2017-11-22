@@ -13,6 +13,7 @@
 <script src="${web}/script/huak.web.meter.data.js"></script>
 <input id="meterUpdate" VALUE="${sessionScope._auth['feedUpdate']}"  type="hidden"/>
 <input id="meterDelete" VALUE="${sessionScope._auth['feedDelete']}"  type="hidden"/>
+<input id="energyTypes" VALUE="${energyTypes}"  type="hidden"/>
 <form id="meter-search-form">
 
     <div class="main-box">
@@ -86,12 +87,9 @@
                                         <div class="x-sfright1"></div>
                                     </div>
                                     <div class="x-sfoption1 select">
-                                        <p value="1">水</p>
-                                        <p value="2">电</p>
-                                        <p value="3">气</p>
-                                        <p value="4">热</p>
-                                        <p value="5">煤</p>
-                                        <p value="6">油</p>
+                                        <c:forEach items="${energyTypes}" var="item">
+                                            <p value="${item.id}">${item.nameZh}</p>
+                                        </c:forEach>
                                     </div>
                                     <input  name="energyTypeId" type="hidden" value="" />
                                 </div>
@@ -291,7 +289,7 @@
         <td title="{$T.record.serialNo}">{formatValue($T.record.serialNo,8)} </td>
         <td title="{$T.record.name}"> {formatValue($T.record.name,4)} </td>
         <td title="{$T.record.unitname}">{formatValue($T.record.unitname,6)}</td>
-        <td>{changeValue($T.record.energyTypeId,'energy')} </td>
+        <td> {getTypeName($T.record.energyTypeId)} </td>
         <td> {changeValue($T.record.isreal,'real')}</td>
         <td> {changeValue($T.record.istotal,'total')} </td>
         <td>{$T.record.coef}</td>

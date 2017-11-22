@@ -13,6 +13,8 @@ import com.huak.mdc.model.RecordPrestore;
 import com.huak.org.model.Company;
 import com.huak.prst.ChangeService;
 import com.huak.prst.PrestoreService;
+import com.huak.sys.EnergyTypeService;
+import com.huak.sys.model.EnergyType;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -48,6 +50,8 @@ public class MeterDataController {
     private PrestoreService prestoreService;
     @Resource
     private ChangeService changeService;
+    @Resource
+    private EnergyTypeService energyTypeService;
     private static AtomicLong counter = new AtomicLong(0L);
     @Value("${upload.file.dir}")
     private String UPLOAD_FILE_DIR;
@@ -61,6 +65,9 @@ public class MeterDataController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listPage(Model model) {
         logger.info("前台-安全与后台-转至系统计量器具列表页");
+
+        List<EnergyType> energyTypes = energyTypeService.queryByMap(new HashMap<String, Object>());
+        model.addAttribute("energyTypes",energyTypes);
         return "/system/metermanage/list";
     }
 
