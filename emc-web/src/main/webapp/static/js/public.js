@@ -119,10 +119,15 @@ $(function () {
         contentType: "application/x-www-form-urlencoded;charset=utf-8",
         complete: function (XMLHttpRequest, textStatus) {
             var sessionStatus = XMLHttpRequest.getResponseHeader("sessionStatus");
-            var locat = window.location.protocol + window.location.host + window.location.port + "/login";
+            var locat = "";
+            if(_web.indexOf('www.e-heating.org')!=-1){
+                locat = _web + "/login.html";
+            }else{
+                locat = _web + "/login";
+            }
             if (sessionStatus == "timeout") {
                 layer.alert("会话超时，请重新登录",function(){
-                    window.location.replace("http://www.e-heating.org/login.html");
+                    window.location.replace(locat);
                 });
                 //使用 setTimeout 时需注意，当该代码执行时，JS 会立即编译函数第一个参数“code”
                 //所以该函数的第一个参数应该为：需要编译的代码、或者一个函数
