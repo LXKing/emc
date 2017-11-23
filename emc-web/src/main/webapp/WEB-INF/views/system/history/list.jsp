@@ -28,7 +28,7 @@
                                 <div class="x-selectfree fl">
                                     <div class="x-sfbgbox1">
                                         <div class="x-sfleft1 x-sfw1">
-                                            <input type="text" value="请选择电厂类型" readonly="readonly">
+                                            <input type="text" value="东线" readonly="readonly">
                                         </div>
                                         <div class="x-sfright1"></div>
                                     </div>
@@ -65,7 +65,7 @@
         </div>
 
 
-        <div class="col-xs-12 main-table no-padding" style="overflow:scroll;width:100%;height: 100%">
+        <div class="col-xs-12 main-table no-padding" style="overflow-x:scroll;width:100%">
             <table class="table table-striped table-bordered table-hover pgtable" style="width:2600px">
                 <thead>
                 <tr>

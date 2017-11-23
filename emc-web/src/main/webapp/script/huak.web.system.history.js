@@ -37,7 +37,7 @@ function loadDataFun() {
 
 
 function reset(){
-    $("#power_type").siblings('.x-sfbgbox1').find(':input').val('请选择电厂类型');
+    $("#power_type").siblings('.x-sfbgbox1').find(':input').val('东线');
     $("#powertype").val("");
    $("#startTime").val("");
    $("#endTime").val("");
