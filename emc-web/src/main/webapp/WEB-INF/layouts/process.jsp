@@ -60,11 +60,11 @@
 </head>
 <body>
 <%-- 菜单 --%>
-<div class="publicmenu" style="left:-196px">
+<div class="publicmenu">
 
-    <a href="javascript:void(0);" class="scbtn" style="left:0px"></a>
+    <a href="javascript:void(0);" class="scbtn" style="left:196px"></a>
     <div class="title">生产调度</div>
-    <div class="publicmenu-con" style="display: none">
+    <div class="publicmenu-con">
         <a href="javascript:void(0);" class="btn-up btngun"></a>
         <a href="javascript:void(0);" class="btn-down btngun"></a>
         <ul>
