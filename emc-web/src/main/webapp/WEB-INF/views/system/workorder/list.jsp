@@ -45,7 +45,7 @@
                                         <div class="x-sfright1"></div>
                                     </div>
                                     <div class="x-sfoption1" id="workerOder_type">
-                                            <p value="">全部</p>
+                                            <p value="">请选择工单类型</p>
                                             <p value="0">指定时间</p>
                                             <p value="1">非指定时间</p>
                                     </div>
