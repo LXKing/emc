@@ -52,12 +52,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3  control-label"><span class="red">*</span>能源类型：</label>
+                    <label class="col-sm-3  control-label"><span class="red">*</span>能源类型123：</label>
                     <div class="col-sm-7">
                         <select id="energyTypeId" name="energyTypeId" class="chosen-select form-control">
                             <option value="">请选择类型</option>
-                            <c:forEach items="${sysDic['energyType']}" var="type">
-                                <option value="${type.seq}">${type.des}</option>
+                            <c:forEach items="${energy}" var="item">
+                                <option value="${item.id}">${item.nameZh}</option>
                             </c:forEach>
                         </select>
                     </div>

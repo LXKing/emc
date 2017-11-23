@@ -41,7 +41,11 @@
                     $('.publicmenu .scbtn').animate({left:'0px'});
                     $('.publicmenu .scbtn').addClass('close');
 
-                    openPage(_web + url);
+                    if(url.indexOf("http://")!=-1){
+                        window.open(url);
+                    }else{
+                        openPage(_web + url);
+                    }
                 }else{
                     return false;
                 }

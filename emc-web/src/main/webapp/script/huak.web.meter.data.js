@@ -107,13 +107,15 @@ function formatValue(str,num){
 }
 //id翻译
 function getTypeName(id){
-    var energyTypes = $("#energyTypes").val();
+    var name = id;
+    var energyTypes = eval('('+$("#energyTypeJson").val()+')');
     $.each(energyTypes,function(idx,item){
-        if(id = item.id){
-            return item.typeZh;
+        if(id == item.id){
+            name = item.nameZh;
+            return false;
         }
     });
-    return id;
+    return name;
 }
 /**
  *  前台-安全与后台-采集表管理-列表-字段动态替换

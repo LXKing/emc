@@ -289,7 +289,7 @@
         mc.NAME,
         mc.SERIAL_NO,
         vu.UNITNAME,
-        et.TYPE ENERGY_TYPE_ID,
+        et.ID ENERGY_TYPE_ID,
         mc.ISREAL,
         mc.ISTOTAL,
         mc.UNIT_ID,
@@ -319,7 +319,7 @@
             and SERIAL_NO = #{serialNo,jdbcType=VARCHAR}
         </if>
         <if test="energyTypeId != null and energyTypeId!=''">
-            and et.TYPE = #{energyTypeId,jdbcType=VARCHAR}
+            and et.ID = #{energyTypeId,jdbcType=VARCHAR}
         </if>
         <if test="isreal != null and isreal !=''">
             and ISREAL = #{isreal,jdbcType=TINYINT}
@@ -357,7 +357,7 @@
         <if test="comId != null and comId!=''">
             and COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
-        order by vu.UNITNAME,mc.CODE,et.TYPE,mc.ISREAL asc
+        order by vu.UNITNAME,mc.CODE,et.ID,mc.ISREAL asc
     </select>
     <select id="selectAllByMap" parameterType="java.util.Map" resultType="java.util.Map">
         select
@@ -365,7 +365,7 @@
         a. CODE,
         a. NAME,
         a.SERIAL_NO,
-        d.TYPE AS ENERGY_TYPE_ID,
+        d.ID AS ENERGY_TYPE_ID,
         a.ISREAL,
         a.ISTOTAL,
         b.UNITID AS UNIT_ID,
@@ -444,7 +444,7 @@
             a.CODE AS code,
             a.NAME collectName,
             #{collectTime} as collectTime,
-            c.TYPE energyType,
+            c.ID energyType,
             (
                 CASE a.ISREAL
                 WHEN 0 THEN
@@ -542,11 +542,11 @@
             and a.COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         <if test="energyType != null and energyType!=''">
-            and c.TYPE = #{energyType,jdbcType=VARCHAR}
+            and c.ID = #{energyType,jdbcType=VARCHAR}
         </if>
         ORDER BY
             b.UNITNAME,a.NAME,
-            c.TYPE;
+            c.ID;
     </select>
 
     <select id="checkName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
@@ -607,7 +607,7 @@
         d.CODE AS code,
         d.NAME name,
         date_format(a.COLLECT_TIME,'%Y-%m-%d %H') collectTime,
-        c.TYPE energyType,
+        c.ID energyType,
         (
         CASE d.ISREAL
         WHEN 0 THEN
@@ -697,11 +697,11 @@
             and d.COM_ID = #{comId,jdbcType=VARCHAR}
         </if>
         <if test="energyType != null and energyType!=''">
-            and c.TYPE = #{energyType,jdbcType=VARCHAR}
+            and c.ID = #{energyType,jdbcType=VARCHAR}
         </if>
         ORDER BY
         b.UNITNAME,d.NAME,
-        c.TYPE
+        c.ID
     </select>
 
 
