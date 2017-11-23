@@ -56,7 +56,7 @@ function reset() {
 /**
  * 分页查询
  */
-function queryWorkInfo() {
+function queryAllocation() {
     var index = top.layer.load(1, {
         shade: [0.1, '#fff'] //0.1透明度的白色背景
     });
@@ -76,7 +76,7 @@ function queryWorkInfo() {
                 current: data.list.page.pageNumber, //当前页数
                 backFn: function (p) { //单击回调方法，p是当前页码
                     $("#allocationSearch").find('input[name="pageNumber"]').val(p);
-                    queryWorkInfo();
+                    queryAllocation();
                 }
             });
             top.layer.close(index);

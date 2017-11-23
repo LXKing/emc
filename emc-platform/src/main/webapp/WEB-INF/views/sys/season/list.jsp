@@ -39,12 +39,12 @@
 
                             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2 col-xs-2 col-md-2 col-lg-2">创建时间</label>
+                                    <label class="control-label col-sm-2 col-xs-2 col-md-2 col-lg-2">时间查询</label>
                                     <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                        <input id="start" name="start" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
+                                        <input id="start" name="sdate" class="laydate-icon form-control layer-date" placeholder="请输入开始时间">
                                     </div>
                                     <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
-                                        <input id="end" name="end" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
+                                        <input id="end" name="edate" class="laydate-icon form-control layer-date" placeholder="请输入结束时间">
                                     </div>
                                 </div>
                             </div>
