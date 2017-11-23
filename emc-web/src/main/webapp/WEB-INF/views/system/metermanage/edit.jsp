@@ -67,8 +67,8 @@
                     <div class="col-sm-7  col-xs-7 col-md-7 col-lg-7">
                         <select id="energyTypeId" name="energyTypeId" class="chosen-select form-control inputs-lg">
                             <option value="">请选择类型</option>
-                            <c:forEach items="${sysDic['energyType']}" var="type">
-                                <option <c:if test="${mec.energyTypeId eq type.seq}">selected="selected" </c:if> value="${type.seq}">${type.des}</option>
+                            <c:forEach items="${energy}" var="type">
+                                <option <c:if test="${mec.energyTypeId eq type.id}">selected="selected" </c:if> value="${type.id}">${type.nameZh}</option>
                             </c:forEach>
                         </select>
                     </div>

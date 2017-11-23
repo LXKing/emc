@@ -1,5 +1,6 @@
 package com.huak.web.system.meterdata;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.huak.auth.model.User;
 import com.huak.common.*;
@@ -68,6 +69,7 @@ public class MeterDataController {
 
         List<EnergyType> energyTypes = energyTypeService.queryByMap(new HashMap<String, Object>());
         model.addAttribute("energyTypes",energyTypes);
+        model.addAttribute("energyTypeJson", JSONArray.toJSONString(energyTypes));
         return "/system/metermanage/list";
     }
 
@@ -186,6 +188,8 @@ public class MeterDataController {
         Company company = (Company) session.getAttribute(Constants.SESSION_COM_KEY);
         logger.info(" 前台-安全与后台-采集表管理-新增页面跳转");
         String code = meterCollectService.getGeneralCode(company.getId());
+        List<EnergyType> list  = meterCollectService.getEnergyType();
+        model.addAttribute("energy",list);
         if(StringUtils.isEmpty(code)){
             model.addAttribute("code", "A00001");
         }else{
@@ -323,6 +327,8 @@ public class MeterDataController {
             Map<String, Object> params = new HashMap<>();
             params.put("unitType", mec.getUnitType().toString());
             List<Map<String, Object>> list = meterCollectService.getUnitInfo(params);
+            List<EnergyType> list1  = meterCollectService.getEnergyType();
+            model.addAttribute("energy",list1);
             model.addAttribute("mec", mec);
             model.addAttribute("uList", list);
         } catch (Exception e) {

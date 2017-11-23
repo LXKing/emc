@@ -13,7 +13,7 @@
 <script src="${web}/script/huak.web.meter.data.js"></script>
 <input id="meterUpdate" VALUE="${sessionScope._auth['feedUpdate']}"  type="hidden"/>
 <input id="meterDelete" VALUE="${sessionScope._auth['feedDelete']}"  type="hidden"/>
-<input id="energyTypes" VALUE="${energyTypes}"  type="hidden"/>
+<input id="energyTypeJson" VALUE='${energyTypeJson}'  type="hidden"/>
 <form id="meter-search-form">
 
     <div class="main-box">

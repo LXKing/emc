@@ -321,6 +321,7 @@ public class WorkOrderInfoController {
         Map<String,Object> paramsMap = new HashMap<String,Object>();
         paramsMap.put("monitor",monitor);
         paramsMap.put("receiver",takor);
+        paramsMap.put("comId",workOrderInfo.getComid());
         List<Map<String,Object>> employees = workOrderInfoService.getEmployeeAndRole(paramsMap);
         //员工列表
         model.addAttribute("employees",employees);

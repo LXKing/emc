@@ -35,6 +35,8 @@ function loadDataFun() {
 
 function reset() {
     $("#nameSearch").val("");
+    $("#start").val("");
+    $("#end").val("");
 }
 /**
  * 分页查询
