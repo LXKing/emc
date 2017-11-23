@@ -38,12 +38,16 @@
         });
 
     })
+    function back(){
+        $("#panelright").empty().load(_web + '/work/order/info');
+    }
 </script>
 <div class="main-box">
 
         <div class="selectbg clearfix">
             <div class="col-xs-12 btngroups   ">
-                <h4>工单详细信息</h4>
+                <h4>工单详细信息 &nbsp&nbsp&nbsp&nbsp<span><a style="font-size: 13px" href="javascript:(0)" onclick="back()">返回工单列表</a></span></h4>
+
             </div>
             <div class="sele-row clearfix row">
                 <!--<div class="clearfix row">-->
@@ -196,7 +200,6 @@
                 </div>
             </div>
         </div>
-
 
     <div class="selectbg clearfix" style="margin-top: 10px;">
     <div class="col-xs-12 btngroups   ">
