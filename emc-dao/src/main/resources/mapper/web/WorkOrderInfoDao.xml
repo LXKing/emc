@@ -300,7 +300,7 @@
         LEFT JOIN t_emc_auth_employee e3 ON e3.ID = woi.TAKOR
         LEFT JOIN t_emc_auth_employee e4 ON e4.ID = woi.FINISH
         WHERE 1=1
-        <if test="type != null and type !=' '">
+        <if test="type != null and type !=''">
             AND woi.TYPE=#{type}
         </if>
         <if test="name != null and name !=''">
