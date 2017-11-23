@@ -9,6 +9,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<style>
+    div label{
+        color: #e4ebef!important;
+    }
+</style>
 <script src="${web}/script/huak.web.system.workinfo.public.js"></script>
 <script>
     $(function(){
