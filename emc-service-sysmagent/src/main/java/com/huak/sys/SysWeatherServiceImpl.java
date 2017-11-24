@@ -23,7 +23,7 @@ import java.util.Map;
  * Function List:  <BR>
  */
 @Service
-public class SysSysWeatherServiceImpl implements SysWeatherService {
+public class SysWeatherServiceImpl implements SysWeatherService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
