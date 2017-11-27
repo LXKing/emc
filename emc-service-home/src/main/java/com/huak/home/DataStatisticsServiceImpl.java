@@ -4,6 +4,7 @@ package com.huak.home;
 import com.huak.data.dao.DataStatisticsDao;
 import com.huak.data.vo.LookupTableTime;
 import com.huak.data.vo.Weather;
+import com.huak.weather.model.HTSYWeather;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,10 +31,24 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
     private DataStatisticsDao dataStatisticsDao;
 
 
+    /**
+     * 查询航天三院天气数据接口
+     *
+     * @param params params.comId 公司主键
+     *               params.startDate 开始日期 2017-01-01
+     *               params.endDate 结束日期 2017-01-20
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<HTSYWeather> getHTSYWeather(Map<String, Object> params) {
+        return null;
+    }
+
     /*
-    * 查表时间
-    *
-    * */
+        * 查表时间
+        *
+        * */
     @Override
     @Transactional(readOnly = true)
     public LookupTableTime getLookupTableTime(Map<String, Object> params) {
