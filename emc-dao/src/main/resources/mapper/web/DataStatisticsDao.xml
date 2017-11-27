@@ -63,4 +63,39 @@
         </if>
     </select>
 
+
+    <select id="selectTempHTSY" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        s.cdate cdate,
+        s.minTemp minTemp,
+        s.maxTemp maxTemp,
+        s.avgTemp avgTemp,
+        d.detail detail
+        FROM
+        (
+        SELECT
+        a.cdate cdate,
+        MIN(a.COLLECT_VALUE) minTemp,
+        MAX(a.COLLECT_VALUE) maxTemp,
+        ROUND(AVG(a.COLLECT_VALUE), 1) avgTemp
+        FROM
+        (
+        SELECT
+        DATE_FORMAT(COLLECT_TIME, '%Y-%m-%d') cdate,
+        COLLECT_VALUE
+        FROM
+        t_emc_meta_data
+        WHERE
+        TAG = #{tag}
+        AND COLLECT_TIME <![CDATA[ >= ]]> #{startTime}
+        AND COLLECT_TIME <![CDATA[ <= ]]> #{endTime}
+        ) a
+        GROUP BY
+        a.cdate
+        ) s
+        LEFT JOIN t_emc_weather_detail d ON d.W_DATE = s.cdate
+        AND d.COM_ID = #{comId}
+        ORDER BY
+        s.cdate ASC
+    </select>
 </mapper>

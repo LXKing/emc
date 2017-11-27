@@ -2,6 +2,7 @@ package com.huak.data.dao;
 
 import com.huak.data.vo.HistoryData;
 import com.huak.data.vo.LookupTableTime;
+import com.huak.weather.model.HTSYWeather;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,4 +36,15 @@ public interface DataStatisticsDao {
 *
 * */
     List<HistoryData> selectHistoryDataByMap(Map<String,Object> map);
+
+    /**
+     * 查询航天三院天气数据接口
+     *
+     * @param params params.comId 公司主键
+     *               params.startDate 开始日期 2017-01-01
+     *               params.endDate 结束日期 2017-01-20
+     *               params.tag 点表 研发区1号站.AI_out_T
+     * @return
+     */
+    List<HTSYWeather> selectTempHTSY(Map<String,Object> params);
 }

@@ -2,6 +2,7 @@ package com.huak.home;
 
 
 import com.github.pagehelper.PageHelper;
+import com.huak.common.StringUtils;
 import com.huak.common.page.Convert;
 import com.huak.common.page.Page;
 import com.huak.common.page.PageResult;
@@ -47,7 +48,20 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
     @Override
     @Transactional(readOnly = true)
     public List<HTSYWeather> getHTSYWeather(Map<String, Object> params) {
-        return null;
+        if(StringUtils.isEmpty(params.get("tag"))){
+            params.put("tag", "研发区1号站.AI_out_T");
+        }
+        if(StringUtils.isEmpty(params.get("startDate"))){
+            params.put("startTime", "2017-11-15 00:00:00");
+        }else{
+            params.put("startTime", params.get("startDate") + " 00:00:00");
+        }
+        if(StringUtils.isEmpty(params.get("endDate"))){
+            params.put("startTime", "2017-11-16 23:59:59");
+        }else{
+            params.put("endTime", params.get("endDate") + " 23:59:59");
+        }
+        return dataStatisticsDao.selectTempHTSY(params);
     }
 
     /*
