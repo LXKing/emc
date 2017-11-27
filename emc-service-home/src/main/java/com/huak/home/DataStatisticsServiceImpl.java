@@ -1,9 +1,13 @@
 package com.huak.home;
 
 
+import com.github.pagehelper.PageHelper;
+import com.huak.common.page.Convert;
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
 import com.huak.data.dao.DataStatisticsDao;
+import com.huak.data.vo.HistoryData;
 import com.huak.data.vo.LookupTableTime;
-import com.huak.data.vo.Weather;
 import com.huak.weather.model.HTSYWeather;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,13 +59,15 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
        return dataStatisticsDao.selectTableTimeByMap(params);
     }
 
+
     /*
-   * 天气预报
-   *
-   * */
+ * 历史数据
+ *
+ * */
     @Override
     @Transactional(readOnly = true)
-    public List<Weather> getWeatherByDate(Map<String, Object> params) {
-        return dataStatisticsDao.selectWeatherByMap(params);
+    public PageResult<HistoryData> getHistoryData(Map<String, Object> params,Page page) {
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        return Convert.convert(dataStatisticsDao.selectHistoryDataByMap(params));
     }
 }

@@ -1,7 +1,7 @@
 package com.huak.data.dao;
 
+import com.huak.data.vo.HistoryData;
 import com.huak.data.vo.LookupTableTime;
-import com.huak.data.vo.Weather;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,9 +27,12 @@ public interface DataStatisticsDao {
 * */
     LookupTableTime selectTableTimeByMap(Map<String,Object> map);
 
-/*
-* 查询天气
+
+
+
+    /*
+* 查询历史数据
 *
 * */
-    List<Weather> selectWeatherByMap(Map<String,Object> map);
+    List<HistoryData> selectHistoryDataByMap(Map<String,Object> map);
 }

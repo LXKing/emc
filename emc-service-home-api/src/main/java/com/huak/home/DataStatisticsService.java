@@ -1,7 +1,9 @@
 package com.huak.home;
 
+import com.huak.common.page.Page;
+import com.huak.common.page.PageResult;
+import com.huak.data.vo.HistoryData;
 import com.huak.data.vo.LookupTableTime;
-import com.huak.data.vo.Weather;
 import com.huak.weather.model.HTSYWeather;
 
 import java.util.List;
@@ -20,17 +22,9 @@ import java.util.Map;
  */
 public interface DataStatisticsService {
 
-    /**
-     * 查询航天三院天气数据接口
-     * @param params
-     * params.comId 公司主键
-     * params.startDate 开始日期 2017-01-01
-     * params.endDate 结束日期 2017-01-20
-     * @return
-     */
-    List<HTSYWeather> getHTSYWeather(Map<String,Object> params);
-
     LookupTableTime getLookupTableTime(Map<String,Object> params);
 
-    List<Weather> getWeatherByDate(Map<String,Object> params);
+    List<HTSYWeather> getHTSYWeather(Map<String,Object> params);
+
+    PageResult<HistoryData> getHistoryData(Map<String, Object> params,Page page);
 }

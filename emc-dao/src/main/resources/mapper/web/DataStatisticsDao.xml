@@ -26,17 +26,41 @@
         ) t
     </select>
 
-    <select id="selectWeatherByMap" parameterType="java.util.Map" resultType="com.huak.data.vo.Weather">
-      SELECT REPORT_DATE dateTime,
-              TEMP_HIGH highTemp,
-              TEMP_LOW lowTemp,
-              (TEMP_HIGH+TEMP_LOW)/2 avgTemp
-      FROM t_emc_weather_weekforcast tw,
-            t_emc_company ec
-      WHERE tw.CODE=ec.WCODE
-      AND ec.ID=#{comId}
-      AND tw.REPORT_DATE in(#{time},date_sub(#{time},interval 1 day))
-    </select>
 
+
+    <select id="selectHistoryDataByMap" parameterType="java.util.Map" resultType="com.huak.data.vo.HistoryData">
+        SELECT T.*
+        FROM(
+        SELECT  COLLECT_TIME collect_Time,
+        MAX(CASE COLLECT_TYPE WHEN '6区03号站累计流量' THEN COLLECT_VALUE ELSE 0 END ) aI_03pri_rb_Fl,
+        MAX(CASE COLLECT_TYPE WHEN '6区03号站累计热量' THEN COLLECT_VALUE ELSE 0 END ) aI_03pri_rb_Hl,
+        MAX(CASE COLLECT_TYPE WHEN '中支回温' THEN COLLECT_VALUE ELSE 0 END ) aI_n_c_T,
+        MAX(CASE COLLECT_TYPE WHEN '供水压力' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_g_P,
+        MAX(CASE COLLECT_TYPE WHEN '供水温度' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_g_T,
+        MAX(CASE COLLECT_TYPE WHEN '供水瞬时流量' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_g_Ft,
+        MAX(CASE COLLECT_TYPE WHEN '供水瞬时热量' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_g_Ht,
+        MAX(CASE COLLECT_TYPE WHEN '供水累计流量' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_g_Fl,
+        MAX(CASE COLLECT_TYPE WHEN '供水累计热量' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_g_Hl,
+        MAX(CASE COLLECT_TYPE WHEN '回水压力' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_h_P,
+        MAX(CASE COLLECT_TYPE WHEN '回水温度' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_h_T,
+        MAX(CASE COLLECT_TYPE WHEN '回水瞬时流量 ' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_h_Ft ,
+        MAX(CASE COLLECT_TYPE WHEN '回水瞬时热量 ' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_h_Ht ,
+        MAX(CASE COLLECT_TYPE WHEN '回水累计流量 ' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_h_Fl ,
+        MAX(CASE COLLECT_TYPE WHEN '回水累计热量 ' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_h_Hl ,
+        MAX(CASE COLLECT_TYPE WHEN '室外温度' THEN COLLECT_VALUE ELSE 0 END ) aI_out_T,
+        MAX(CASE COLLECT_TYPE WHEN '有功电能' THEN COLLECT_VALUE ELSE 0 END ) aI_E_KWH,
+        MAX(CASE COLLECT_TYPE WHEN '瞬时热量' THEN COLLECT_VALUE ELSE 0 END ) aI_E_rb_Ht,
+        MAX(CASE COLLECT_TYPE WHEN '累计流量' THEN COLLECT_VALUE ELSE 0 END ) aI_pri_rb_Fl,
+        MAX(CASE COLLECT_TYPE WHEN '累计热量' THEN COLLECT_VALUE ELSE 0 END ) aI_pri_rb_Hl,
+        MAX(CASE COLLECT_TYPE WHEN '补水表量' THEN COLLECT_VALUE ELSE 0 END ) aI_add_Fl
+        FROM t_emc_meta_data
+        GROUP BY COLLECT_TIME
+        ) T
+        WHERE DATE_FORMAT(T.COLLECT_TIME,'%H:%i:%S')='09:00:00'
+        <if test="collectTime != null and collectTime !=''">
+          AND T.COLLECT_TIME <![CDATA[ <= ]]> date_sub(#{collectTime},interval -1 day)
+          AND T.COLLECT_TIME <![CDATA[ >= ]]> date_format(#{collectTime},'%Y-%m-%%01')
+        </if>
+    </select>
 
 </mapper>
