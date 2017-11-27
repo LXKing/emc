@@ -22,9 +22,18 @@ import java.util.Map;
  */
 public interface DataStatisticsService {
 
-    LookupTableTime getLookupTableTime(Map<String,Object> params);
+    LookupTableTime getLookupTableTime(Map<String, Object> params);
 
-    List<HTSYWeather> getHTSYWeather(Map<String,Object> params);
+    /**
+     * 查询航天三院天气数据接口
+     *
+     * @param params params.comId 公司主键
+     *               params.startDate 开始日期 2017-01-01
+     *               params.endDate 结束日期 2017-01-20
+     *               params.tag 点表 研发区1号站.AI_out_T
+     * @return
+     */
+    List<HTSYWeather> getHTSYWeather(Map<String, Object> params);
 
-    PageResult<HistoryData> getHistoryData(Map<String, Object> params,Page page);
+    PageResult<HistoryData> getHistoryData(Map<String, Object> params, Page page);
 }

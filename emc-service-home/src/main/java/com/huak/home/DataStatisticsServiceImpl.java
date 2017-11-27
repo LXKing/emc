@@ -41,6 +41,7 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
      * @param params params.comId 公司主键
      *               params.startDate 开始日期 2017-01-01
      *               params.endDate 结束日期 2017-01-20
+     *               params.tag 点表 研发区1号站.AI_out_T
      * @return
      */
     @Override
