@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huak.data.dao.DataStatisticsDao">
-
+    <resultMap id="BaseResultMap" type="com.huak.weather.model.HTSYWeather">
+        <constructor>
+            <arg column="cdate" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="maxTemp" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="minTemp" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="avgTemp" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="tempDetail" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
 
 
     <select id="selectTableTimeByMap" parameterType="java.util.Map" resultType="com.huak.data.vo.LookupTableTime">
@@ -70,7 +78,7 @@
         s.minTemp minTemp,
         s.maxTemp maxTemp,
         s.avgTemp avgTemp,
-        d.detail detail
+        d.detail tempDetail
         FROM
         (
         SELECT
