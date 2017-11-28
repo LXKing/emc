@@ -63,6 +63,7 @@
     <dubbo:reference id="frameService"    interface="com.huak.home.FrameService" timeout="120000"  check="true" version="${service.version}" />
     <dubbo:reference id="workOrderRecordService"    interface="com.huak.home.workorder.WorkOrderRecordService" timeout="120000"  check="true" version="${service.version}" />
     <dubbo:reference id="workOrderInfoService"    interface="com.huak.home.workorder.WorkOrderInfoService" timeout="120000"  check="true" version="${service.version}" />
+    <dubbo:reference id="dataStatisticsService"    interface="com.huak.home.DataStatisticsService" timeout="120000"  check="true" version="${service.version}" />
     <!--三级页面-->
     <dubbo:reference id="thiredpageEnergyService"  interface="com.huak.home.thiredpage.ThiredpageEnergyService" timeout="12000"  check="true" version="${service.version}" />
     <dubbo:reference id="thirdAnalysisService"    interface="com.huak.home.thiredpage.ThirdAnalysisService" timeout="120000"  check="true" version="${service.version}" />
