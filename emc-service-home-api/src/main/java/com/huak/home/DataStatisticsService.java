@@ -36,4 +36,11 @@ public interface DataStatisticsService {
     List<HTSYWeather> getHTSYWeather(Map<String, Object> params);
 
     PageResult<HistoryData> getHistoryData(Map<String, Object> params, Page page);
+
+    LookupTableTime getDataTime(Map<String,Object> map);
+
+    Map<String,Object> getSanWestLine(Map<String,Object> map);
+
+    Map<String,Object> getTotal(Map<String,Object> map);
+
 }

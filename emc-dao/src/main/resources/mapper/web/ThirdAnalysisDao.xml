@@ -1628,7 +1628,7 @@
     <!--三级页面-用能单位-各个能源类型计划、同期对比图-->
     <select id="getUnitsEnergyDetail"  resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
-        b.unitname,
+        b.unitname as unitname,
         ROUND(IFNULL(( CASE WHEN b.DOSAGE IS NULL THEN 0 ELSE b.DOSAGE/b.area END),0),2) AS jn_num,
         ROUND(IFNULL(( CASE WHEN q.DOSAGE IS NULL THEN 0 ELSE q.DOSAGE/q.area END),0),2) AS qn_num,
         ROUND(IFNULL(( CASE WHEN b.plan IS NULL THEN 0 ELSE b.plan END ),0),2) AS jn_plan,
@@ -1755,7 +1755,7 @@
     <!--三级页面-用能单位-各个能源类型的排名-->
     <select id="getUnitsAssessment"  resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
-        b.unitname,
+        b.unitname as unitname,
         ROUND(IFNULL(( CASE WHEN b.DOSAGE IS NULL THEN 0 ELSE b.DOSAGE/b.area END),0),2) AS jn_num,
         ROUND(IFNULL(( CASE WHEN q.DOSAGE IS NULL THEN 0 ELSE q.DOSAGE/q.area END),0),2) AS qn_num,
         ROUND(IFNULL(( CASE WHEN b.plan IS NULL THEN 0 ELSE b.plan END ),0),2) AS jn_plan,

@@ -273,7 +273,7 @@ public class ComponentServiceImpl implements ComponentService{
     public List<Map<String, Object>> selectrecentDetail(Map<String, Object> paramsMap) {
        Map<String,Object> result = null;
         try {
-            String date = dateDao.getDate();
+            String date = "2017-11-19";
             String yesterday = DateUtils.getDay(date,-1);
             String towdayago = DateUtils.getDay(date,-2);
             String treedayago = DateUtils.getDay(date,-3);

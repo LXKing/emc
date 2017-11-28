@@ -19,7 +19,7 @@
 <body>
 <div class="formwrap">
     <h1>
-        <img src="${web}/static/img/logo/login_logo.png" />
+        <img src="${web}/static/img/logo/login_logozz.png" />
     </h1>
     <form id="form" onsubmit="false" autocomplete="off">
     <div class="form">

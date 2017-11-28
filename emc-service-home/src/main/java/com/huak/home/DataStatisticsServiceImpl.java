@@ -85,4 +85,19 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         return Convert.convert(dataStatisticsDao.selectHistoryDataByMap(params));
     }
+
+    @Override
+    public LookupTableTime getDataTime(Map<String, Object> map) {
+        return dataStatisticsDao.getSecondTime(map);
+    }
+
+    @Override
+    public Map<String, Object> getSanWestLine(Map<String, Object> map) {
+        return dataStatisticsDao.getSanWestLine(map);
+    }
+
+    @Override
+    public Map<String, Object> getTotal(Map<String, Object> map) {
+        return  dataStatisticsDao.getTotal(map);
+    }
 }

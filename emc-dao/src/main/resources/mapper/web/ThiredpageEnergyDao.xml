@@ -289,7 +289,7 @@
     </select>
 
      <select id="selectassessment" resultType="java.util.Map" parameterType="java.util.Map">
-        SELECT round(SUM(B.dosage),2) dosage, A.UNITID,A.unitname FROM (
+        SELECT round(SUM(B.dosage),2) dosage, A.UNITID,A.unitname as unitname FROM (
 
          <if test="orgType!= null and orgId !='' and  orgType == 3">
          SELECT vu.UNITID,b.STATION_NAME as unitname FROM v_emc_unit vu,
@@ -508,7 +508,7 @@
     <!--三级页面-用能单位-各个能源类型计划、同期对比图-->
     <select id="getUnitsEnergyDetail"  resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
-        b.unitname,
+        b.unitname as unitname,
         ( CASE WHEN b.DOSAGE IS NULL THEN 0 ELSE b.DOSAGE END) AS jn_num,
         ( CASE WHEN q.DOSAGE IS NULL THEN 0 ELSE q.DOSAGE END) AS qn_num,
         ( CASE WHEN b.plan IS NULL THEN 0 ELSE b.plan END ) AS jn_plan,
@@ -629,7 +629,7 @@
     <!--三级页面-用能单位-各个能源类型的排名-->
     <select id="getUnitsAssessment"  resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
-        b.unitname,
+        b.unitname as unitname,
         ( CASE WHEN b.DOSAGE IS NULL THEN 0 ELSE b.DOSAGE END) AS jn_num,
         ( CASE WHEN q.DOSAGE IS NULL THEN 0 ELSE q.DOSAGE END) AS qn_num,
         ( CASE WHEN b.plan IS NULL THEN 0 ELSE b.plan END ) AS jn_plan,

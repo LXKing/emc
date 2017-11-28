@@ -1,6 +1,13 @@
 package com.huak.home;
 
 import com.huak.base.BaseTest;
+import com.huak.data.vo.LookupTableTime;
+import org.junit.Test;
+import org.springframework.test.annotation.Rollback;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Copyright (C), 2009-2012, 北京华热科技发展有限公司.<BR>
@@ -14,6 +21,9 @@ import com.huak.base.BaseTest;
  * Function List:  <BR>
  */
 public class TopTest extends BaseTest{
+
+    @Resource
+    private  DataStatisticsService dataStatisticsService;
 //
 //    @Resource
 //    private  FrameService frameService;
@@ -87,4 +97,31 @@ public class TopTest extends BaseTest{
 //        record.setOperateTime(dateDao.getTime());
 //        workOrderService.insertWorkOrderRecord(record);
 //    }
+     @Test
+     @Rollback
+     public  void testTime(){
+         Map<String,Object> params = new HashMap<String,Object>();
+         params.put("startTime","2017-11-15");
+         params.put("endTime","2017-11-16");
+         LookupTableTime list =  dataStatisticsService.getDataTime(params);
+         System.out.println(list.getLastTime());
+     }
+    @Test
+    @Rollback
+    public  void testSanLine(){
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("bcTime","2017-11-19 21:00");
+        params.put("scTime","2017-11-18 21:00");
+        Map<String,Object> map =  dataStatisticsService.getSanWestLine(params);
+        System.out.println(map.get("bc"));
+    }
+    @Test
+    @Rollback
+    public  void testTotal(){
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("bcTime","2017-11-19 21:00");
+        params.put("scTime","2017-11-18 21:00");
+        Map<String,Object> map =  dataStatisticsService.getTotal(params);
+        System.out.println(map.get("bc"));
+    }
 }

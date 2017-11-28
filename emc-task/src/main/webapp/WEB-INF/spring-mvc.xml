@@ -30,7 +30,7 @@
         <task:scheduled ref="weatherTask" method="forcastWeather7d" cron="0 0 2 * * ?"/>
         <!--每隔10分钟检测一次报警-->
         <task:scheduled ref="workWarnTask" method="workWarnInfo" cron="0 0/10 * * * ?"/>
-        <!--每天晚21点50自动填报一次-->
+        <!--每天晚22点自动填报一次-->
         <task:scheduled ref="energyDataTask" method="autoSaveEnergyData" cron="0 50 21 * * ?"/>
     </task:scheduled-tasks>
 

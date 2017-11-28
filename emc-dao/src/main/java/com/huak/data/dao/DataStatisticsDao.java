@@ -2,7 +2,6 @@ package com.huak.data.dao;
 
 import com.huak.data.vo.HistoryData;
 import com.huak.data.vo.LookupTableTime;
-import com.huak.weather.model.HTSYWeather;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,10 +21,10 @@ import java.util.Map;
 
 @Repository
 public interface DataStatisticsDao {
-/*
-* 查表时间
-*
-* */
+    /*
+    * 查表时间
+    *
+    * */
     LookupTableTime selectTableTimeByMap(Map<String,Object> map);
 
 
@@ -38,13 +37,18 @@ public interface DataStatisticsDao {
     List<HistoryData> selectHistoryDataByMap(Map<String,Object> map);
 
     /**
-     * 查询航天三院天气数据接口
-     *
-     * @param params params.comId 公司主键
-     *               params.startDate 开始日期 2017-01-01
-     *               params.endDate 结束日期 2017-01-20
-     *               params.tag 点表 研发区1号站.AI_out_T
-     * @return
+     * 查询时间，本次查表时间、上次查表时间
      */
-    List<HTSYWeather> selectTempHTSY(Map<String,Object> params);
+    LookupTableTime getSecondTime(Map<String,Object> map);
+
+
+    /**
+     * 三院西线能耗数据
+     */
+    Map<String,Object> getSanWestLine(Map<String,Object> map);
+
+    /**
+     * 除了三院西线的，所有热力站的合计
+     */
+    Map<String,Object> getTotal(Map<String,Object> map);
 }

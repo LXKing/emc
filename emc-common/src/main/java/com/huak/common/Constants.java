@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class Constants {
     /* 能耗数据异常数据统一返回值 */
-    public final static Double EXPTION_NUM = -999d;
+    public final static Double EXPTION_NUM = -1d;
     /* 统一登录url */
     //public final static String LOGIN_URL = "http://www.e-heating.org/login.html";
     public final static String LOGIN_URL = "http://localhost:8081/emc-web/login";

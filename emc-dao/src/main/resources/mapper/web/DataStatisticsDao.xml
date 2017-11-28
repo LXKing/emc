@@ -33,9 +33,63 @@
         LIMIT 1
         ) t
     </select>
+    <select id="getSecondTime" parameterType="java.util.Map" resultType="com.huak.data.vo.LookupTableTime">
+
+            SELECT a.thisTime,b.lastTime,TIMESTAMPDIFF(Day,b.lastTime,a.thisTime) timeDifference
+            from (
+            SELECT
+                date_format(dh1.COLLECT_TIME,'%Y-%m-%d %H:%i') thisTime
+            FROM
+                t_emc_energy_data_his dh1
+            WHERE
+                date_format(
+                    dh1.COLLECT_TIME,
+                    '%Y-%m-%d'
+                ) = #{endTime}
+            ORDER BY
+                dh1.COLLECT_TIME desc LIMIT 1) a LEFT JOIN
+            (SELECT
+                date_format(dh2.COLLECT_TIME,'%Y-%m-%d %H:%i') lastTime
+            FROM
+                t_emc_energy_data_his dh2
+            WHERE
+                date_format(
+                    dh2.COLLECT_TIME,
+                    '%Y-%m-%d'
+                ) = #{startTime}
+            ORDER BY
+                dh2.COLLECT_TIME desc LIMIT 1) b on 1=1
+
+    </select>
+    <select id="getSanWestLine" parameterType="java.util.Map" resultType="java.util.Map">
+         				SELECT
+             IFNULL(a.bc,0) as bc,IFNULL(b.sc,0) as sc,IFNULL((a.bc-b.sc),0) as nh
+             from(
+							SELECT  ROUND(sum(md.COLLECT_VALUE),0) bc from t_emc_meta_data md  where md.TAG like '%电厂计量.AI_rb%'
+																	and md.COLLECT_TIME = #{bcTime}
+																	and md.COLLECT_TYPE='累计热量')a
+            LEFT JOIN
+								 (SELECT  ROUND(sum(md.COLLECT_VALUE),0) sc from t_emc_meta_data md  where
+												md.TAG like '%电厂计量.AI_rb%'
+																	and md.COLLECT_TIME = #{scTime}
+																	and md.COLLECT_TYPE='累计热量')b on 1=1
 
 
+    </select>
+    <select id="getTotal" parameterType="java.util.Map" resultType="java.util.Map">
+            SELECT
+             IFNULL(a.bc,0) as bc,IFNULL(b.sc,0) as sc,IFNULL((a.bc-b.sc),0) as nh
+             from(
+             SELECT  ROUND(sum(md.COLLECT_VALUE),0) bc from t_emc_meta_data md  where md.TAG not like '%电厂计量.AI_rb%'
+																	and md.COLLECT_TIME =#{bcTime}
+																	and md.COLLECT_TYPE='累计热量')a
+            LEFT JOIN
+								 (SELECT  ROUND(sum(md.COLLECT_VALUE),0) sc from t_emc_meta_data md  where
+												md.TAG not like '%电厂计量.AI_rb%'
+																	and md.COLLECT_TIME = #{scTime}
+																	and md.COLLECT_TYPE='累计热量')b on 1=1;
 
+    </select>
     <select id="selectHistoryDataByMap" parameterType="java.util.Map" resultType="com.huak.data.vo.HistoryData">
         SELECT T.*
         FROM(

@@ -466,7 +466,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="today != null and today !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{today},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{today},' 23:59:59')
@@ -501,7 +501,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="yesterday != null and yesterday !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{yesterday},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{yesterday},' 23:59:59')
@@ -535,7 +535,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="towdayago != null and towdayago !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{towdayago},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{towdayago},' 23:59:59')
@@ -570,7 +570,7 @@
             and  UNITTYPE  = #{orgType}
         </if>
         GROUP BY UNITID ) c
-        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id AND bbb.type <![CDATA[<>]]> 4
+        WHERE  a.UNITID = c.unitid and a.TYPEID = bbb.id
         <if test="treedayago != null and treedayago !=''">
             and   a.DOSAGE_TIME <![CDATA[>=]]> CONCAT(#{treedayago},' 00:00:00')
             and   a.DOSAGE_TIME <![CDATA[<=]]> CONCAT(#{treedayago},' 23:59:59')
